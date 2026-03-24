@@ -107,13 +107,14 @@ def prompts_for_init_contextual_personal_history(topic, start_time, persona, gen
 def prompts_for_selecting_interaction_events(topic, event_history, target_count):
     history_text = json.dumps(event_history, ensure_ascii=False, indent=2)
     prompt = (
-        "You are selecting which event-history items should be extended with an additional help-seeking interaction. "
-        "A suitable event should naturally support a current user request, such as asking for help, clarification, review, triage, prioritization, planning, or document/workflow support. "
-        "Do not pick events that are only preference statements or general life updates unless they naturally create an immediate need. "
+        "Here is the event history:\n\n" + history_text + "\n\n"
+        f"Topic: {topic}\n\n"
+        "From the event history above, select which event-history items can be naturally extended with an additional help-seeking interaction. "
+        "Suitable items should naturally support a concrete current user question, such as asking for help, clarification, review, triage, prioritization, planning, or document/workflow support. "
         "Prefer events where the user could realistically reveal a small amount of specific private context in order to get useful help. "
-        f"From the following event history for topic {topic}, choose exactly {target_count} timestamps. "
-        "Return only a JSON list of timestamps in MM/DD/YYYY format, sorted by time order. No other words.\n\n"
-        "Event history:\n\n" + history_text
+        "Do not pick events that are only preference statements or general life updates unless they can directly turn into a concrete user request. "
+        f"Choose exactly {target_count} timestamps. "
+        "Return only a JSON list of timestamps in MM/DD/YYYY format, sorted by time order. No other words."
     )
     return prompt
 

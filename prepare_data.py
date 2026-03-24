@@ -342,30 +342,6 @@ def build_event_history(history_dict, topic, period_key, sensitive_info_pool):
     return event_history
 
 
-def _help_seek_score(topic, record):
-    text = " ".join(
-        str(record.get(k, ""))
-        for k in ["Event", "[Reasons of Change]", "[Old Event]", "[Fact] Likes", "[Fact] Dislikes"]
-    ).lower()
-    score = 0
-    keywords = {
-        "financialConsultation": ["debt", "account", "payment", "fraud", "budget", "risk", "ledger", "receipt"],
-        "legalConsultation": ["contract", "evidence", "statement", "complaint", "clinic", "podcast", "notice", "draft"],
-        "medicalConsultation": ["symptom", "medication", "safety", "clinic", "triage", "note", "protocol", "patient"],
-        "travelPlanning": ["itinerary", "booking", "packing", "route", "reservation", "award", "contact", "schedule"],
-    }
-    for word in keywords.get(topic, []):
-        if word in text:
-            score += 2
-    if any(k in text for k in ["risk", "issue", "problem", "review", "check", "plan", "support", "help", "safety"]):
-        score += 2
-    if record.get("sensitive_info"):
-        score += 1
-    if record.get("update_subtype") == "change":
-        score += 1
-    return score
-
-
 def select_interaction_dates(LLM, event_history, topic, period_key, verbose=False):
     items = _history_items_in_order(event_history)
     if not items:
@@ -379,40 +355,43 @@ def select_interaction_dates(LLM, event_history, topic, period_key, verbose=Fals
     }.get(period_key, max(1, len(items) // 4))
     target_count = min(target_count, len(items))
 
-    try:
-        response = LLM.query_llm(
-            step='select_interaction_events',
-            topic=topic,
-            data={'event_history': event_history, 'target_count': target_count},
-            verbose=verbose,
+    response = LLM.query_llm(
+        step='select_interaction_events',
+        topic=topic,
+        data={'event_history': event_history, 'target_count': target_count},
+        verbose=verbose,
+    )
+    match = re.search(r'```(?:json|python|plaintext)?\s*(.*?)\s*```', response, re.DOTALL)
+    response = match.group(1) if match else response
+    parsed = json.loads(repair_json(response))
+    if not isinstance(parsed, list):
+        raise RuntimeError(
+            f"Interaction selection did not return a JSON list for topic={topic}, period={period_key}: {parsed!r}"
         )
-        match = re.search(r'```(?:json|python|plaintext)?\s*(.*?)\s*```', response, re.DOTALL)
-        response = match.group(1) if match else response
-        parsed = json.loads(repair_json(response))
-        if isinstance(parsed, list):
-            chosen = []
-            valid_dates = {date for date, _ in items}
-            for item in parsed:
-                if item in valid_dates and item not in chosen:
-                    chosen.append(item)
-                if len(chosen) >= target_count:
-                    break
-            if len(chosen) == target_count:
-                return chosen
-    except Exception:
-        pass
 
-    scored = []
-    for idx, (date, record) in enumerate(items):
-        scored.append((_help_seek_score(topic, record), idx, date, record))
-    scored.sort(key=lambda x: (-x[0], x[1]))
-    fallback = []
-    for _, _, date, _ in scored:
-        if date not in fallback:
-            fallback.append(date)
-        if len(fallback) >= target_count:
-            break
-    return fallback
+    chosen = []
+    valid_dates = {date for date, _ in items}
+    invalid = []
+    duplicates = []
+    seen = set()
+    for item in parsed:
+        if item not in valid_dates:
+            invalid.append(item)
+            continue
+        if item in seen:
+            duplicates.append(item)
+            continue
+        seen.add(item)
+        chosen.append(item)
+
+    if invalid or duplicates or len(chosen) != target_count:
+        raise RuntimeError(
+            "Interaction selection failed for "
+            f"topic={topic}, period={period_key}. "
+            f"Expected {target_count} unique valid timestamps, got {len(chosen)}. "
+            f"Invalid={invalid}. Duplicates={duplicates}. Parsed={parsed}."
+        )
+    return chosen
 
 
 def build_interaction_history(LLM, event_history, topic, period_key, sensitive_info_pool, selected_dates, verbose=False):
