@@ -261,7 +261,7 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
         prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
                   "but with a new conversation history from the late stage following the earlier stages:\n\n" + curr_personal_history + "\n\n"
 
-    prompt += "Except for the initial sentences as the introduction, here is the template you should follow for each pair of utterance that mentions a fact in the personal history:\n\n" \
+    prompt += "Here is the template you should follow for each pair of utterance that mentions a fact in the personal history, including the very first block:\n\n" \
               "[\n" \
               '"Side_Note: [xxx] TIMESTAMP",' \
               '"' + user + ': yyy",' \
