@@ -122,9 +122,10 @@ def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info
     pool_text = json.dumps(sensitive_info_pool or {}, ensure_ascii=False, indent=2)
     prompt = (
         f"Here is an event-history item under the topic {topic}:\n\n" + event_text + "\n\n"
-        "Derive a realistic help-seeking interaction by simulating what the user would naturally ask for right now, "
-        "what background context they could naturally add, and which concrete sensitive information is truly relevant. "
-        "Write a task_goal that follows naturally from this event. "
+        "Extend this event into a realistic help-seeking interaction. The event itself should still remain true in the conversation; "
+        "your job is to infer what the user might naturally ask next, what background context they could naturally add on top of the event, "
+        "and which concrete sensitive information would be relevant if the user chose to share it. "
+        "Write a task_goal that follows naturally from this event and feels like the next step of the same situation, rather than a new unrelated request. "
         "Then write 3-5 context_can_add items as a JSON object. Each key should be one concrete piece of background context that the user could naturally add in the conversation. "
         "Include sensitive background when it would be natural and useful. "
         "Each value should be a short explanation of why that context is relevant to the current request and how it should guide the conversation from the user's perspective. "
@@ -263,6 +264,8 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
         history_text = json.dumps(interaction_history, ensure_ascii=False, indent=2)
         prompt += "Use the following derived interaction history to decide where the conversation should become more explicitly help-seeking. " \
                   "Each interaction item is linked to a source event and should appear near that source event in the final conversation. " \
+                  "When a source event and a derived interaction share the same timestamp, you should usually realize them as one combined conversation block for that date, not as two separate timestamp blocks. " \
+                  "In that combined block, the base event should set up the situation and the interaction should extend it into a concrete help-seeking request. " \
                   "For derived interaction items, the user must ask for concrete help right now and reveal the context_can_add details naturally when they fit the request. " \
                   "Use the 'User would like to ...' guidance in each context_can_add value to decide how those details should shape the user turn. " \
                   "Use 'sensitive_info' as guidance for what concrete private details may be naturally revealed. " \
@@ -307,7 +310,7 @@ def prompts_for_reflecting_conversations(topic, data, round, period='INIT'):
         conversation_block = "'Conversation Late Stage'"
 
     if round == 1:
-        prompt = "Given the following " + history_block + " and the " + conversation_block + ", check if the " + conversation_block + " has covered every single item in the " + history_block + ". If the same MM/DD/YYYY appears multiple times in the history block, the conversation should cover it the same number of times. All [Old Event Date] does NOT count! Ignore them! " \
+        prompt = "Given the following " + history_block + " and the " + conversation_block + ", check if the " + conversation_block + " has covered every single item in the " + history_block + ". If the same MM/DD/YYYY appears multiple times in the history block because a base event and a derived interaction share that date, they may be combined into one conversation block for that date as long as both are clearly covered. All [Old Event Date] does NOT count! Ignore them! " \
                  "List all missed ones in the conversation, as well as those in the conversation but not in the " + history_block + ":\n\n" + history_block + "\n\n" + data['history_block'] + "\n\n" + conversation_block + "\n\n" + data['conversation_block']
         schema = None
     elif round == 2:

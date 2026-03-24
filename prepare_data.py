@@ -714,18 +714,22 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
 
     def _assert_conversation_aligned(conversation_lines, expected_history_dict, label):
         side_note_dates = _extract_side_note_dates(conversation_lines)
-        expected_counts = {}
+        expected_items_by_date = {}
         if isinstance(expected_history_dict, dict):
-            for date in expected_history_dict.keys():
-                base_date = date.split("#")[0]
-                expected_counts[base_date] = expected_counts.get(base_date, 0) + 1
+            iterable = expected_history_dict.items()
         elif isinstance(expected_history_dict, list):
+            iterable = []
             for item in expected_history_dict:
                 if isinstance(item, dict) and item.get("timestamp"):
-                    base_date = str(item["timestamp"]).split("#")[0]
-                    expected_counts[base_date] = expected_counts.get(base_date, 0) + 1
+                    iterable.append((item["timestamp"], item))
+        else:
+            iterable = []
 
-        expected_dates = set(expected_counts.keys())
+        for raw_date, item in iterable:
+            base_date = str(raw_date).split("#")[0]
+            expected_items_by_date.setdefault(base_date, []).append(item)
+
+        expected_dates = set(expected_items_by_date.keys())
         invalid_dates = [d for d in side_note_dates if d not in expected_dates]
         if invalid_dates:
             sample = ", ".join(invalid_dates[:5])
@@ -737,17 +741,17 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
         for d in side_note_dates:
             counts[d] = counts.get(d, 0) + 1
         mismatched_dates = [
-            d for d, expected_count in expected_counts.items()
-            if counts.get(d, 0) != expected_count
+            d for d in expected_dates
+            if counts.get(d, 0) != 1
         ]
         if mismatched_dates:
             sample = ", ".join(
-                f"{d} expected {expected_counts[d]} got {counts.get(d, 0)}"
+                f"{d} expected 1 got {counts.get(d, 0)}"
                 for d in mismatched_dates[:5]
             )
             raise RuntimeError(
                 f"Conversation/history date mismatch at {label}. "
-                f"Side_Note count mismatch: {sample}"
+                f"Side_Note count mismatch after date-level merging: {sample}"
             )
         missing_dates = [d for d in expected_dates if d not in counts]
         if missing_dates:
