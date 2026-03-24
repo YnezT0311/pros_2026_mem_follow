@@ -392,10 +392,10 @@ def build_interaction_history(LLM, event_history, topic, period_key, sensitive_i
             "timestamp": f"{date}-I{interaction_idx:02d}",
             "source_event_id": base_event_id,
             "source_event_date": date,
-            "event": record.get("Event", ""),
-            "task_goal": meta["task_goal"],
-            "context_can_add": meta["context_can_add"],
-            "sensitive_info": meta["sensitive_info"],
+            "[Prev Event]": record.get("Event", ""),
+            "[Task Goal]": meta["task_goal"],
+            "[Context Can Add]": meta["context_can_add"],
+            "[Sensitive Info]": meta["sensitive_info"],
             "relations": [{"type": "derived_from", "source_event_id": base_event_id}],
         }
         interaction_idx += 1
@@ -422,7 +422,7 @@ def build_conversation_history(event_history, interaction_history):
             "[Old Event Date]": record.get("[Old Event Date]") or record.get("Old Event Date"),
             "[Old Event]": record.get("[Old Event]") or record.get("Old Event"),
             "[Reasons of Change]": record.get("[Reasons of Change]") or record.get("Reasons of Change"),
-            "sensitive_info": record.get("sensitive_info", {}),
+            "[Sensitive Info]": record.get("sensitive_info", {}),
             "relations": record.get("relations", []),
         }
         for key in (
