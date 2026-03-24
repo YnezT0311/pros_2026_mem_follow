@@ -180,11 +180,18 @@ def _choose_help_seek_metadata(topic, event_text, index, sensitive_info_pool):
         needed_context.append("the exact document, dispute detail, or communication detail relevant to the request")
     if any(k in event_lower for k in ["flight", "route", "packing", "itinerary", "hostel", "award", "points", "schedule"]):
         needed_context.append("the concrete travel constraint, schedule detail, or booking detail relevant to the request")
-    needed_context = needed_context[:2]
+    if any(k in event_lower for k in ["budget", "price", "cost", "afford", "cheap"]):
+        needed_context.append("the user's concrete budget range or cost constraint for this request")
+    if any(k in event_lower for k in ["friend", "family", "relative", "collaborator", "mentor", "contact"]):
+        needed_context.append("the relevant personal connection or recommendation shaping the decision")
+    needed_context = needed_context[:5]
+    context_can_add = {}
+    for item in needed_context:
+        context_can_add[item] = "User would like to provide this detail so the assistant can give a more concrete and useful answer."
 
     return {
         "task_goal": goal,
-        "needed_context": needed_context,
+        "context_can_add": context_can_add,
         "sensitive_info": _project_sensitive_info(event_text, sensitive_info_pool, topic),
     }
 
@@ -205,26 +212,36 @@ def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, 
         response = match.group(1) if match else response
         parsed = json.loads(repair_json(response))
         task_goal = parsed.get("task_goal") or fallback["task_goal"]
-        needed_context = parsed.get("needed_context")
-        if not isinstance(needed_context, list):
-            needed_context = fallback["needed_context"]
+        context_can_add = parsed.get("context_can_add")
+        if not isinstance(context_can_add, dict):
+            context_can_add = fallback["context_can_add"]
         else:
-            needed_context = [str(x).strip() for x in needed_context if str(x).strip()][:2]
-            if not needed_context:
-                needed_context = []
-        sensitive_info_types = parsed.get("sensitive_info_types")
-        selected_sensitive_info = {}
-        if isinstance(sensitive_info_types, list):
-            for key in sensitive_info_types:
-                if key in (sensitive_info_pool or {}):
-                    values = list((sensitive_info_pool or {}).get(key, []))
-                    if values:
-                        selected_sensitive_info[key] = values[:2]
-        if not selected_sensitive_info:
+            cleaned = {}
+            for k, v in list(context_can_add.items())[:5]:
+                key = str(k).strip()
+                val = str(v).strip()
+                if key and val:
+                    cleaned[key] = val
+            context_can_add = cleaned
+        selected_sensitive_info = parsed.get("sensitive_info")
+        if not isinstance(selected_sensitive_info, dict):
             selected_sensitive_info = fallback["sensitive_info"]
+        else:
+            cleaned_info = {}
+            for k, v in selected_sensitive_info.items():
+                key = str(k).strip()
+                if not key:
+                    continue
+                if isinstance(v, list):
+                    vals = [str(x).strip() for x in v if str(x).strip()][:2]
+                else:
+                    vals = [str(v).strip()] if str(v).strip() else []
+                if vals:
+                    cleaned_info[key] = vals
+            selected_sensitive_info = cleaned_info or fallback["sensitive_info"]
         return {
             "task_goal": task_goal,
-            "needed_context": needed_context,
+            "context_can_add": context_can_add,
             "sensitive_info": selected_sensitive_info,
         }
     except Exception:
@@ -365,7 +382,7 @@ def build_interaction_history(LLM, event_history, topic, period_key, sensitive_i
             "source_event_date": date,
             "event": record.get("Event", ""),
             "task_goal": meta["task_goal"],
-            "needed_context": meta["needed_context"],
+            "context_can_add": meta["context_can_add"],
             "sensitive_info": meta["sensitive_info"] or record.get("sensitive_info", {}),
             "relations": [{"type": "derived_from", "source_event_id": base_event_id}],
         }

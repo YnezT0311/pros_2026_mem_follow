@@ -123,21 +123,26 @@ def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info
     prompt = (
         f"Here is an event-history item under the topic {topic}:\n\n" + event_text + "\n\n"
         "derive a realistic help-seeking interaction by simulating what the user would naturally ask for right now, "
-        "what context they would actually need to reveal, and which specific sensitive information types are truly relevant. "
+        "what context they could naturally add, and which concrete sensitive information is truly relevant. "
         "Write a task_goal that naturally follows from this event. "
-        "Then write needed_context as a list of 0 to 2 short phrases that capture the information the user would need to provide in order to achieve that goal. "
-        "After that, identify which sensitive information types are required by the needed_context.\n\n"
-        "Here is the persona-level sensitive information pool:\n\n" + pool_text + "\n\n"
-        "The pool provides recurring synthetic anchors such as contact details, identifiers, schedules, document references, or other persona-consistent private details. "
-        "You may choose the relevant sensitive information types from this pool when they are genuinely needed. "
-        "If the event naturally requires a private detail that is not explicitly present in the pool, you may still identify the sensitive information type as long as it remains reasonable and consistent with the persona and history. "
+        "Then write 3-5 context_can_add items as a JSON object. Each key should be one concrete piece of background context that the user would naturally add in the conversation. "
+        "Include sensitive background that the user might want to share if possible. "
+        "Each value should be a short explanation of why that context is relevant to the current request and how it should guide the conversation from the user's perspective. "
+        "After that, write sensitive_info as a JSON object containing the concrete sensitive details that are relevant to the context_can_add items.\n\n"
+        "You may select info and their concrete values from the persona-level sensitive information pool, which provides recurring synthetic anchors such as contact details, identifiers, schedules, document references, or other persona-consistent private details, if they are genuinely needed. "
+        "If the event naturally requires a private detail that is not explicitly present in the pool, you may generate a reasonable synthetic detail as long as it remains consistent with the persona and history. "
+        "Below is the pool:\n\n" + pool_text + "\n\n"
         "Do not force booking identifiers, contacts, schedules, or any other sensitive details unless the event really requires them. "
-        "If the event does not naturally support a detailed private request, keep the context minimal.\n\n"
+        "If the event does not naturally support a detailed private request, keep context_can_add and sensitive_info minimal.\n\n"
         "Output JSON only in this exact format:\n"
         "{\n"
         '  "task_goal": "...",\n'
-        '  "needed_context": ["..."],\n'
-        '  "sensitive_info_types": ["..."]\n'
+        '  "context_can_add": {\n'
+        '    "...": "User would like to ..."\n'
+        '  },\n'
+        '  "sensitive_info": {\n'
+        '    "...": ["..."]\n'
+        '  }\n'
         "}\n"
         "No other words."
     )
@@ -257,8 +262,8 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
         history_text = json.dumps(interaction_history, ensure_ascii=False, indent=2)
         prompt += "Use the following derived interaction history to decide where the conversation should become more explicitly help-seeking. " \
                   "Each interaction item is linked to a source event and should appear near that source event in the final conversation. " \
-                  "For derived interaction items, the user must ask for concrete help right now and reveal the needed context naturally. " \
-                  "When 'needed_context' includes sensitive items, surface one or two of them naturally in the user turn so the assistant truly needs them. " \
+                  "For derived interaction items, the user must ask for concrete help right now and reveal the context_can_add details naturally when they fit the request. " \
+                  "Use the 'User would like to ...' guidance in each context_can_add value to decide how those details should shape the user turn. " \
                   "Use 'sensitive_info' as guidance for what concrete private details may be naturally revealed. " \
                   "Do not mention the history labels or metadata explicitly in the dialogue.\n\n" \
                   "Derived interaction history:\n\n" + history_text + "\n\n"
