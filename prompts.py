@@ -117,19 +117,22 @@ def prompts_for_selecting_interaction_events(topic, event_history, target_count)
     return prompt
 
 
-def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info_pool):
+def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info_pool, persona=None, history=None):
     event_text = json.dumps(event_record, ensure_ascii=False, indent=2)
     pool_text = json.dumps(sensitive_info_pool or {}, ensure_ascii=False, indent=2)
+    history_text = json.dumps(history or {}, ensure_ascii=False, indent=2)
     prompt = (
+        f"Here is the expanded persona:\n\n{persona}\n\n"
+        f"Here is the current event history under the topic {topic}:\n\n{history_text}\n\n"
         f"Here is an event-history item under the topic {topic}:\n\n" + event_text + "\n\n"
-        "Derive a realistic help-seeking interaction by simulating what the user would naturally ask for right now, "
+        "Derive a realistic help-seeking interaction by simulating what the user would naturally ask for after this event, "
         "what background context they could naturally add, and which concrete sensitive information would be relevant if the user chose to share it. "
         "Write a task_goal that follows naturally from this event and feels like the next step of the same situation, rather than a new unrelated request. "
         "Then write 3-5 context_can_add items as a JSON object. Each key should be one concrete piece of background context that the user could naturally add in the conversation. "
         "Include sensitive background when it would be natural and useful. "
         "Each value should be a short explanation of why that context is relevant to the current request and how it should guide the conversation from the user's perspective. "
         "After that, write sensitive_info as a JSON object containing the concrete sensitive details that correspond to the sensitive background items in context_can_add.\n\n"
-        "You may use the persona-level sensitive information pool when those details are genuinely needed. "
+        "You may use some of the details provided in the following persona-level sensitive information pool when they are genuinely needed. "
         "The pool provides recurring synthetic anchors such as contact details, identifiers, schedules, document references, and other persona-consistent private details. "
         "Here is the pool:\n\n" + pool_text + "\n\n"
         "If the event naturally requires a private detail that is not explicitly present in the pool, you may generate a reasonable synthetic detail as long as it remains consistent with the persona and history.\n\n"
