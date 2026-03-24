@@ -620,11 +620,7 @@ def parse_conversation_sections(LLM, input_conversation, topic, last_timestamp, 
         # print('section', section, '\n\n')
         expanded_section = expand_section(LLM, section, last_timestamp)
 
-        if idx == 0:
-            if any(expanded_section[0].startswith(keyword) for keyword in keywords) and not any(section[0].startswith(keyword) for keyword in keywords):
-                expanded_conversation += expanded_section[1:]  # Remove extra side note not existed in the original data, resulting from the prompt template to expand those sections
-        else:
-            expanded_conversation += expanded_section
+        expanded_conversation += expanded_section
 
     if verbose:
         print(f'{utils.Colors.OKGREEN}{"Expanded Conversation"}:{utils.Colors.ENDC}')
