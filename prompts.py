@@ -121,14 +121,17 @@ def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info
     event_text = json.dumps(event_record, ensure_ascii=False, indent=2)
     pool_text = json.dumps(sensitive_info_pool or {}, ensure_ascii=False, indent=2)
     prompt = (
-        "Event-history item:\n\n" + event_text + "\n\n"
         f"Topic: {topic}\n\n"
-        "From the event-history item above, derive a realistic help-seeking interaction that follows naturally from the event semantics. "
-        "Decide what the user would actually ask for right now, what context they would truly need to reveal, and which sensitive information types are genuinely relevant.\n\n"
+        "Given this event-history item:\n\n" + event_text + "\n\n"
+        "derive a realistic help-seeking interaction by simulating what the user would naturally ask for right now, "
+        "what context they would actually need to reveal, and which specific sensitive information types are truly relevant. "
+        "Write a task_goal that naturally follows from this event. "
+        "Then write needed_context as a list of 0 to 2 short phrases that capture the information the user would need to provide in order to achieve that goal. "
+        "After that, identify which sensitive information types are required by the needed_context.\n\n"
         "Persona-level sensitive information pool:\n\n" + pool_text + "\n\n"
-        "Write a task_goal that follows naturally from this event. "
-        "Write needed_context as a list of 0 to 2 short phrases. Include only context that the assistant would truly need. "
-        "Choose sensitive_info_types as a list of keys from the pool that are actually needed; it may be empty. "
+        "The pool provides recurring synthetic anchors such as contact details, identifiers, schedules, document references, or other persona-consistent private details. "
+        "You may choose the relevant sensitive information types from this pool when they are genuinely needed. "
+        "If the event naturally requires a private detail that is not explicitly present in the pool, you may still identify the sensitive information type as long as it remains reasonable and consistent with the persona and history. "
         "Do not force booking identifiers, contacts, schedules, or any other sensitive details unless the event really requires them. "
         "If the event does not naturally support a detailed private request, keep the context minimal.\n\n"
         "Output JSON only in this exact format:\n"
@@ -136,7 +139,8 @@ def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info
         '  "task_goal": "...",\n'
         '  "needed_context": ["..."],\n'
         '  "sensitive_info_types": ["..."]\n'
-        "}"
+        "}\n"
+        "No other words."
     )
     return prompt
 
