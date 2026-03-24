@@ -231,11 +231,11 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
         topic_name, user, agent = topic, 'User', 'Assistant'
 
     prompt = "Your task is to rewrite the following conversation history as a conversation record under the topic of " + topic_name + ". " \
-             "The conversation should follow each item in the conversation history and mention them one by one, using MM/DD/YYYY timestamps as the skeleton. Do NOT change timestamps. " \
+             "The conversation should follow each item in the conversation history and mention them one by one, using the provided timestamps as the skeleton. Timestamps may appear either as MM/DD/YYYY or as a derived interaction timestamp such as MM/DD/YYYY-I01. Do NOT change timestamps. " \
              "Think about what challenges in this persona and history could lead the person to seek help from a " + agent.lower() + ". " \
              "Write the conversation as a Python list of strings, where each line starts with either '" + user + "', '" + agent + "', or 'Side_Note'. " \
-             "Include ALL items in the given conversation history. For each item, add one separate Side_Note line in square brackets containing the event text and MM/DD/YYYY BEFORE the related conversation line. Do not mention underlying '[Fact]' fields. " \
-             "Do NOT modify any MM/DD/YYYY above. If a sentence is not relevant to any bullet point, no need for a preceding Side_Note. " \
+             "Include ALL items in the given conversation history. For each item, add one separate Side_Note line in square brackets containing the event text and its exact provided timestamp BEFORE the related conversation line. Do not mention underlying '[Fact]' fields. " \
+             "Do NOT modify any timestamp above. If a sentence is not relevant to any bullet point, no need for a preceding Side_Note. " \
              "Use natural, human-like dialogue: specific and grounded in concrete details. Avoid repetitive restatement and avoid generic over-explanation. " \
              "User lines must sound like everyday human speech, not prompt instructions to a model. " \
              "When a Side_Note contains relevant concrete anchors (names, locations, organizations, amounts), naturally carry some of them into the user/assistant turns instead of generic phrasing; do not force anchors when they sound unnatural. " \
@@ -263,9 +263,8 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
     if interaction_history is not None:
         history_text = json.dumps(interaction_history, ensure_ascii=False, indent=2)
         prompt += "Use the following derived interaction history to decide where the conversation should become more explicitly help-seeking. " \
-                  "Each interaction item is linked to a source event and should appear near that source event in the final conversation. " \
-                  "When a source event and a derived interaction share the same timestamp, you should usually realize them as one combined conversation block for that date, not as two separate timestamp blocks. " \
-                  "In that combined block, the base event should set up the situation and the interaction should extend it into a concrete help-seeking request. " \
+                  "Each interaction item is linked to a source event and should appear as its own follow-up conversation block after that source event. " \
+                  "Derived interaction items use their own timestamps and should therefore have their own Side_Note lines and their own user-assistant exchange. " \
                   "For derived interaction items, the user must ask for concrete help right now and reveal the context_can_add details naturally when they fit the request. " \
                   "Use the 'User would like to ...' guidance in each context_can_add value to decide how those details should shape the user turn. " \
                   "Use 'sensitive_info' as guidance for what concrete private details may be naturally revealed. " \
@@ -282,11 +281,11 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
 
     prompt += "Except for the initial sentences as the introduction, here is the template you should follow for each pair of utterance that mentions a fact in the personal history:\n\n" \
               "[\n" \
-              '"Side_Note: [xxx] MM/DD/YYYY",' \
+              '"Side_Note: [xxx] TIMESTAMP",' \
               '"' + user + ': yyy",' \
               '"' + agent + ': zzz",' \
-              "...] Use a Python list of strings where each sentence is one string. Fill in the actual data at placeholders 'MM/DD/YYYY', 'xxx', 'yyy', and 'zzz' in the template. " \
-              "Use double quotes for each sentence. Do NOT use JSON. Please make sure every timestamp in the Side_Note can be found in the given list of personal history. No other words."
+              "...] Use a Python list of strings where each sentence is one string. Fill in the actual data at placeholders 'TIMESTAMP', 'xxx', 'yyy', and 'zzz' in the template. " \
+              "Use double quotes for each sentence. Do NOT use JSON. Please make sure every timestamp in the Side_Note exactly matches a timestamp in the given conversation history. No other words."
     return prompt
 
 
@@ -310,21 +309,21 @@ def prompts_for_reflecting_conversations(topic, data, round, period='INIT'):
         conversation_block = "'Conversation Late Stage'"
 
     if round == 1:
-        prompt = "Given the following " + history_block + " and the " + conversation_block + ", check if the " + conversation_block + " has covered every single item in the " + history_block + ". If the same MM/DD/YYYY appears multiple times in the history block because a base event and a derived interaction share that date, they may be combined into one conversation block for that date as long as both are clearly covered. All [Old Event Date] does NOT count! Ignore them! " \
+        prompt = "Given the following " + history_block + " and the " + conversation_block + ", check if the " + conversation_block + " has covered every single item in the " + history_block + ". Every history item should have its own matching timestamped Side_Note block in the conversation, including derived interaction items with timestamps such as MM/DD/YYYY-I01. All [Old Event Date] does NOT count! Ignore them! " \
                  "List all missed ones in the conversation, as well as those in the conversation but not in the " + history_block + ":\n\n" + history_block + "\n\n" + data['history_block'] + "\n\n" + conversation_block + "\n\n" + data['conversation_block']
         schema = None
     elif round == 2:
         prompt = "Please fill in these missed timestamps with their corresponding events mentioned in the " + history_block + " into the " + conversation_block + ". " \
-                 "Make sure every single timestamp in the Side_Note in this conversation can be found in the given " + history_block + ", instead of personal history in other time periods. " \
+                 "Make sure every single timestamp in the Side_Note in this conversation can be found exactly in the given " + history_block + ", instead of personal history in other time periods. " \
                  "You may add some transition sentences to make it smooth, but do NOT modify any other words in the original conversation, except for the sentences with incorrect timestamps. " \
                  "If there is no missed timestamp, no need to change any part of the original conversation. " \
                  "Follow exactly the SAME template in the original conversation:\n\n" \
                  "[\n" \
-                 '"Side_Note: [xxx] MM/DD/YYYY",' \
+                 '"Side_Note: [xxx] TIMESTAMP",' \
                  '"' + user + ': yyy",' \
                  '"' + agent + ': zzz",' \
                  "...] " \
-                 "The whole output should be a Python list of strings where each utterance is one string. Fill in the actual data at placeholders 'MM/DD/YYYY', 'xxx', 'yyy', and 'zzz' in the template. Use double quotes for each sentence. Do NOT use JSON. Just output the completed conversation. No other words."
+                 "The whole output should be a Python list of strings where each utterance is one string. Fill in the actual data at placeholders 'TIMESTAMP', 'xxx', 'yyy', and 'zzz' in the template. Use double quotes for each sentence. Do NOT use JSON. Just output the completed conversation. No other words."
     else:
         raise ValueError("Invalid round", round)
     return prompt

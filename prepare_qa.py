@@ -25,7 +25,7 @@ def extract_side_notes_with_timestamps(conversation):
     Extracts Side_Notes with timestamps from a conversation.
     """
     text_pattern = r'\b\[?Side[\s_]?Notes?\]?\b'
-    timestamp_pattern = r"\b\d{2}/\d{2}/\d{4}\b"
+    timestamp_pattern = r"\b\d{2}/\d{2}/\d{4}(?:-I\d{2})?\b"
 
     # Extract lines with 'Side_Nodes' and their timestamps
     filtered_lines = [line for line in conversation if re.search(text_pattern, line)]

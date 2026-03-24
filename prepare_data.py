@@ -405,7 +405,7 @@ def build_interaction_history(LLM, event_history, topic, period_key, sensitive_i
             "event_id": f"I_{period_key.upper()}_{interaction_idx:03d}",
             "turn_type": "help_seek",
             "update_subtype": None,
-            "timestamp": date,
+            "timestamp": f"{date}-I{interaction_idx:02d}",
             "source_event_id": base_event_id,
             "source_event_date": date,
             "event": record.get("Event", ""),
@@ -681,7 +681,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
                 continue
             if not (line.startswith("Side_Note") or line.startswith("Side_Note:")):
                 continue
-            for m in re.findall(r"\b\d{2}/\d{2}/\d{4}\b", line):
+            for m in re.findall(r"\b\d{2}/\d{2}/\d{4}(?:-I\d{2})?\b", line):
                 dates.append(m)
         return dates
 
@@ -708,7 +708,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
                 j += 1
             block = conversation_lines[i:j]
 
-            dates = re.findall(r"\b\d{2}/\d{2}/\d{4}\b", line)
+            dates = re.findall(r"\b\d{2}/\d{2}/\d{4}(?:-I\d{2})?\b", line)
             key = dates[0] if dates else f"__no_date_{i}"
             if key not in seen_dates:
                 out.extend(block)
@@ -718,7 +718,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
 
     def _assert_conversation_aligned(conversation_lines, expected_history_dict, label):
         side_note_dates = _extract_side_note_dates(conversation_lines)
-        expected_items_by_date = {}
+        expected_items_by_timestamp = {}
         if isinstance(expected_history_dict, dict):
             iterable = expected_history_dict.items()
         elif isinstance(expected_history_dict, list):
@@ -730,10 +730,10 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
             iterable = []
 
         for raw_date, item in iterable:
-            base_date = str(raw_date).split("#")[0]
-            expected_items_by_date.setdefault(base_date, []).append(item)
+            timestamp = str(raw_date).split("#")[0]
+            expected_items_by_timestamp.setdefault(timestamp, []).append(item)
 
-        expected_dates = set(expected_items_by_date.keys())
+        expected_dates = set(expected_items_by_timestamp.keys())
         invalid_dates = [d for d in side_note_dates if d not in expected_dates]
         if invalid_dates:
             sample = ", ".join(invalid_dates[:5])
@@ -744,10 +744,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
         counts = {}
         for d in side_note_dates:
             counts[d] = counts.get(d, 0) + 1
-        mismatched_dates = [
-            d for d in expected_dates
-            if counts.get(d, 0) != 1
-        ]
+        mismatched_dates = [d for d in expected_dates if counts.get(d, 0) != 1]
         if mismatched_dates:
             sample = ", ".join(
                 f"{d} expected 1 got {counts.get(d, 0)}"
@@ -755,7 +752,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
             )
             raise RuntimeError(
                 f"Conversation/history date mismatch at {label}. "
-                f"Side_Note count mismatch after date-level merging: {sample}"
+                f"Side_Note count mismatch: {sample}"
             )
         missing_dates = [d for d in expected_dates if d not in counts]
         if missing_dates:

@@ -305,7 +305,7 @@ def clean_generated_line(text: str, prefix: str) -> Optional[str]:
 def parse_side_note(line: str) -> Tuple[Optional[str], Optional[str]]:
     if not isinstance(line, str) or not line.startswith("Side_Note:"):
         return None, None
-    m = re.match(r"Side_Note:\s*\[(.*)\]\s+(\d{2}/\d{2}/\d{4})\s*$", line)
+    m = re.match(r"Side_Note:\s*\[(.*)\]\s+(\d{2}/\d{2}/\d{4}(?:-I\d{2})?)\s*$", line)
     if not m:
         return None, None
     return m.group(1).strip(), m.group(2).strip()
