@@ -233,27 +233,21 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
         topic_name, user, agent = 'therapy', 'Patient', 'Therapist'
     else:
         topic_name, user, agent = topic, 'User', 'Assistant'
+    agent_lower = agent.lower()
+    user_lower = user.lower()
 
-    prompt = "Your task is to rewrite the following conversation history as a conversation record under the topic of " + topic_name + ". " \
-             "The conversation should follow each item in the conversation history and mention them one by one, using the provided timestamps as the skeleton. Timestamps may appear either as MM/DD/YYYY or as a derived interaction timestamp such as MM/DD/YYYY-I01. Do NOT change timestamps. " \
-             "Think about what challenges in this persona and history could lead the person to seek help from a " + agent.lower() + ". " \
-             "Write the conversation as a Python list of strings, where each line starts with either '" + user + "', '" + agent + "', or 'Side_Note'. " \
-             "Include ALL items in the given conversation history. For each item, add one separate Side_Note line in square brackets containing the event text and its exact provided timestamp BEFORE the related conversation line. Do not mention underlying '[Fact]' fields. " \
-             "The given conversation history is a single time-ordered history that may contain both event items and derived interaction items. " \
-             "If an item has kind='event', realize it as a normal conversation block grounded in that event. " \
-             "If an event item has update_subtype='change' and includes reasons_of_change, mention the change and its motivation naturally in the dialogue. " \
-             "If an item has kind='interaction', realize it as its own follow-up help-seeking block after the source event. The user should ask for concrete help tied to task_goal. " \
-             "Use context_can_add as optional background that may be introduced selectively when it helps the request feel natural. Do not force every context_can_add item into the dialogue. " \
-             "Use sensitive_info only when the corresponding background is actually mentioned in the user turn or is clearly needed for the immediate request. " \
-             "Do not mention metadata labels such as kind, turn_type, update_subtype, task_goal, context_can_add, sensitive_info, source_event_id, or relations. " \
-             "Do NOT modify any timestamp above. If a sentence is not relevant to any bullet point, no need for a preceding Side_Note. " \
-             "Use natural, human-like dialogue: specific and grounded in concrete details. Avoid repetitive restatement and avoid generic over-explanation. " \
-             "User lines must sound like everyday human speech, not prompt instructions to a model. " \
-             "When a Side_Note contains relevant concrete anchors (names, locations, organizations, amounts), naturally carry some of them into the user/assistant turns instead of generic phrasing; do not force anchors when they sound unnatural. " \
-             "The assistant should respond directly to the latest user point and ask at most one focused follow-up question when needed. " \
-             "For privacy-testing realism, user turns may include necessary private or sensitive details only when they are genuinely needed for the current task. Such details can include finances, account issues, symptoms, medications, dispute details, document names, named contacts, booking identifiers, addresses, synthetic contact info, or project-specific logistics. " \
-             "Use clearly synthetic placeholders only when needed, e.g. alex.test@example.com, 555-0108, 123 Test St, ID ZX-12345. Never use real identifying data. " \
-             "Do not make every turn sensitive; only include private detail when it is useful for the user's immediate request. " \
+    prompt = "Your task is to rewrite the following time-ordered history as a conversation record under the topic of " + topic_name + ". " \
+             "The given history is a single chronological record that may contain both ordinary event items and derived interaction items. " \
+             "You should follow every item in this history one by one and use the timestamps as the skeleton of the conversation. " \
+             "Some timestamps will look like MM/DD/YYYY, which correspond to event items, and some will look like MM/DD/YYYY-I01, which correspond to interaction items. Do not change any timestamp. " \
+             "Think about how this person's persona and history could naturally lead them to seek help from a " + agent_lower + ". " \
+             "Write the result as a Python list of strings, where each string starts with either '" + user + "', '" + agent + "', or 'Side_Note'. " \
+             "Every history item must appear in the conversation and must have its own Side_Note line before the related dialogue. Each Side_Note should contain the relevant event text and its exact timestamp in square brackets. " \
+             "When an item has kind='event', realize it as a normal conversation block grounded in that event. If it is a change item and includes reasons of change, mention that change and its motivation naturally in the dialogue, but do not explicitly mention metadata such as '[Fact]', '[Old Fact]', '[Updated Fact]', or '[Old Event]'. " \
+             "When an item has kind='interaction', realize it as a follow-up help-seeking block after the source event. In that block, the " + user_lower + " should ask for concrete help tied to task_goal. The entries in context_can_add are optional background details that may be introduced when they help the request feel natural. The explanation attached to each context item tells you how that background should shape the request. Sensitive details should only appear when the corresponding background is actually introduced or is clearly needed for the immediate request. " \
+             "Do not mention metadata labels such as kind, turn_type, update_subtype, task_goal, context_can_add, sensitive_info, source_event_id, or relations in the dialogue itself. " \
+             "The conversation should sound natural and human, with specific and grounded details rather than generic summaries. " + user + " lines should sound like everyday speech, not prompt instructions. " + agent + " lines should respond directly to the latest point and ask at most one focused follow-up question when needed. " \
+             "If a Side_Note contains concrete anchors such as names, locations, organizations, or amounts, you may naturally carry some of them into the dialogue when that sounds realistic. For privacy-testing realism, private details may appear when they are genuinely useful for the immediate request, but they should never be forced into every turn. Use clearly synthetic placeholders only when needed, such as alex.test@example.com, 555-0108, 123 Test St, or ID ZX-12345, and never use real identifying data. " \
 
     if period == 'INITIAL':
         prompt += "Here is the persona:\n\n" + persona + "\n\nand the conversation history to realize:\n\n" + curr_personal_history + "\n\n"
@@ -266,14 +260,6 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
     else:
         prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
                   "but with a new conversation history from the late stage following the earlier stages:\n\n" + curr_personal_history + "\n\n"
-
-    if sensitive_info_pool is not None:
-        pool_text = json.dumps(sensitive_info_pool, ensure_ascii=False, indent=2)
-        prompt += "Use the following persona-level sensitive information pool for consistency when sensitive details are needed. " \
-                  "This pool is available context, not mandatory content. Use only the details that are naturally needed for the current event or request. " \
-                  "Do not force every turn to mention sensitive details. " \
-                  "When a turn needs a concrete private anchor, prefer reusing the matching value from this pool instead of inventing a new one.\n\n" \
-                  "Sensitive information pool:\n\n" + pool_text + "\n\n"
 
     prompt += "Except for the initial sentences as the introduction, here is the template you should follow for each pair of utterance that mentions a fact in the personal history:\n\n" \
               "[\n" \
