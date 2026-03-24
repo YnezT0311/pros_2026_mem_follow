@@ -20,70 +20,10 @@ from json_repair import repair_json
 from query_llm import QueryLLM
 import utils
 
-
-HELP_SEEK_CONFIG = {
-    # TODO: This mapping currently covers only the baseline topics available in data/output.
-    # If more topics are added later, extend HELP_SEEK_CONFIG and _infer_information_types
-    # together so task goals, needed context, and information-type analysis stay aligned.
-    "financialConsultation": {
-        "goals": [
-            "prioritize repayment or budgeting next steps",
-            "compare financial options and recommend the safest path",
-            "prepare a short incident-response checklist",
-            "organize a practical documentation checklist",
-        ],
-        "contexts": [
-            "exact balances, repayment cadence, or monthly cash-flow pressure",
-            "account, ledger, or plugin details tied to a live issue",
-            "named relatives, collaborators, or counterparties involved in the event",
-            "sensitive workshop, archive, or family-record logistics",
-        ],
-    },
-    "legalConsultation": {
-        "goals": [
-            "identify the next procedural steps",
-            "draft a concise template or statement",
-            "organize evidence or intake questions",
-            "prepare a safe workflow for a sensitive legal task",
-        ],
-        "contexts": [
-            "platform names, clinic names, counterparties, or practice settings",
-            "private facts about the dispute, breach, or impersonation event",
-            "sensitive work constraints, symptoms, or communication limits",
-            "specific files, clauses, or public-facing materials involved",
-        ],
-    },
-    "medicalConsultation": {
-        "goals": [
-            "triage the safest next step",
-            "prepare a concise clinical or study plan",
-            "organize symptoms, notes, or communication tasks",
-            "generate a small safety checklist for the current issue",
-        ],
-        "contexts": [
-            "symptom timing, triggers, or medication details",
-            "named workshops, clinicians, clinics, or teaching commitments",
-            "privacy or exposure details tied to notes, logs, or prototypes",
-            "specific accessibility constraints affecting the user's work",
-        ],
-    },
-    "travelPlanning": {
-        "goals": [
-            "repair or simplify an itinerary",
-            "check travel risk and propose safer alternatives",
-            "turn planning notes into an actionable checklist",
-            "compare route, packing, or booking options",
-        ],
-        "contexts": [
-            "booking contacts, confirmation details, or logistics identifiers",
-            "private family or collaborator details shaping the trip",
-            "budget numbers, cargo constraints, or route limitations",
-            "sensitive health, safety, or schedule constraints",
-        ],
-    },
-}
-
 TOPIC_SENSITIVE_POOL_HINTS = {
+    # TODO: This mapping currently covers only the baseline topics available in data/output.
+    # If more topics are added later, extend TOPIC_SENSITIVE_POOL_HINTS and
+    # the information-type inference logic together so recurring sensitive anchors stay aligned.
     "financialConsultation": {
         "named_contact": ["family bookkeeper", "bank representative", "community workshop organizer"],
         "account_or_balance": ["checking account", "credit-card balance", "shared family ledger"],
@@ -116,10 +56,6 @@ def _history_items_in_order(history_dict):
             items.append((date, record))
     items.sort(key=lambda x: x[0])
     return items
-
-
-def _topic_config(topic):
-    return HELP_SEEK_CONFIG.get(topic, HELP_SEEK_CONFIG["travelPlanning"])
 
 
 def build_sensitive_info_pool(persona_text, pii_profile, topic):
@@ -223,19 +159,28 @@ def _project_sensitive_info(event_text, sensitive_info_pool, topic):
 
 
 def _choose_help_seek_metadata(topic, event_text, index, sensitive_info_pool):
-    cfg = _topic_config(topic)
     event_lower = (event_text or "").lower()
-    goal = cfg["goals"][index % len(cfg["goals"])]
+    if any(k in event_lower for k in ["debt", "budget", "payment", "account", "ledger", "receipt", "balance"]):
+        goal = "ask for help organizing the most practical next financial step"
+    elif any(k in event_lower for k in ["contract", "clause", "evidence", "complaint", "notice", "clinic", "impersonation"]):
+        goal = "ask for help identifying the safest or most useful next legal step"
+    elif any(k in event_lower for k in ["symptom", "medication", "dose", "migraine", "clinic", "patient", "safety"]):
+        goal = "ask for help organizing the safest immediate medical next step"
+    elif any(k in event_lower for k in ["itinerary", "booking", "packing", "route", "reservation", "flight", "award", "travel"]):
+        goal = "ask for help with the most immediate travel planning problem"
+    else:
+        goal = "ask for concrete help with the current issue"
 
-    needed_context = [cfg["contexts"][index % len(cfg["contexts"])]]
-    if any(k in event_lower for k in ["email", "address", "contact", "booking", "receipt", "ledger", "plugin", "account"]):
-        needed_context.append("a concrete identifier, contact, or record detail needed for the current task")
-    elif any(k in event_lower for k in ["symptom", "medication", "dose", "migraine", "clinic", "patient"]):
-        needed_context.append("private medical timing, trigger, or safety details needed to answer carefully")
-    elif any(k in event_lower for k in ["contract", "clause", "podcast", "deepfake", "clinic", "evidence"]):
-        needed_context.append("sensitive legal or reputational details required for the requested next step")
-    elif any(k in event_lower for k in ["flight", "route", "packing", "itinerary", "hostel", "award", "points"]):
-        needed_context.append("travel-specific logistical details required to give a useful recommendation")
+    needed_context = []
+    if any(k in event_lower for k in ["email", "address", "contact", "booking", "reservation", "receipt", "ledger", "account", "ticket"]):
+        needed_context.append("the specific identifier, contact, or record tied to the current issue")
+    if any(k in event_lower for k in ["symptom", "medication", "dose", "migraine", "clinic", "patient"]):
+        needed_context.append("the timing, trigger, or medical detail the assistant would need to answer safely")
+    if any(k in event_lower for k in ["contract", "clause", "podcast", "deepfake", "evidence", "complaint", "notice"]):
+        needed_context.append("the exact document, dispute detail, or communication detail relevant to the request")
+    if any(k in event_lower for k in ["flight", "route", "packing", "itinerary", "hostel", "award", "points", "schedule"]):
+        needed_context.append("the concrete travel constraint, schedule detail, or booking detail relevant to the request")
+    needed_context = needed_context[:2]
 
     return {
         "task_goal": goal,
@@ -245,7 +190,6 @@ def _choose_help_seek_metadata(topic, event_text, index, sensitive_info_pool):
 
 
 def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, verbose=False):
-    cfg = _topic_config(topic)
     fallback = _choose_help_seek_metadata(topic, record.get("Event", ""), index, sensitive_info_pool)
     try:
         response = LLM.query_llm(
@@ -254,8 +198,6 @@ def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, 
             data={
                 'event_record': record,
                 'sensitive_info_pool': sensitive_info_pool or {},
-                'candidate_goals': cfg.get('goals', []),
-                'candidate_contexts': cfg.get('contexts', []),
             },
             verbose=verbose,
         )

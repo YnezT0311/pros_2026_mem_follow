@@ -446,8 +446,6 @@ class QueryLLM:
                 topic,
                 data['event_record'],
                 data.get('sensitive_info_pool'),
-                candidate_goals=data.get('candidate_goals'),
-                candidate_contexts=data.get('candidate_contexts'),
             )
 
         # Generate once across multiple contexts
