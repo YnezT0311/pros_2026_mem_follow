@@ -277,18 +277,11 @@ def build_event_history(history_dict, topic, period_key, sensitive_info_pool):
         return {}
 
     event_history = {}
-    init_assigned = False
     date_to_event_id = {}
     for idx, (date, record) in enumerate(items):
         event_text = record.get("Event", "")
         has_change = bool(record.get("[Old Event]") or record.get("Old Event") or record.get("[Reasons of Change]") or record.get("Reasons of Change"))
-        if not init_assigned and not has_change:
-            subtype = "init"
-            init_assigned = True
-        elif has_change:
-            subtype = "change"
-        else:
-            subtype = "continuation"
+        subtype = "change" if has_change else "init"
         event_id = f"E_{period_key.upper()}_{idx + 1:03d}"
         date_to_event_id[date] = event_id
         event_history[date] = {
@@ -314,12 +307,6 @@ def build_event_history(history_dict, topic, period_key, sensitive_info_pool):
                 "type": "evolves_from",
                 "source_event_id": date_to_event_id[old_date],
             })
-
-    if not any(r.get("update_subtype") == "init" for r in event_history.values()):
-        for record in event_history.values():
-            if record.get("update_subtype") == "continuation":
-                record["update_subtype"] = "init"
-                break
 
     return event_history
 
