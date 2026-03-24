@@ -8,17 +8,17 @@ from typing import Dict, List, Tuple
 
 
 PERIODS = [
-    "Init Conversation",
-    "Conversation Next Week",
-    "Conversation Next Month",
-    "Conversation Next Year",
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage",
 ]
 
 PERIOD_SHORT = {
-    "Init Conversation": "init",
-    "Conversation Next Week": "week",
-    "Conversation Next Month": "month",
-    "Conversation Next Year": "year",
+    "Conversation Initial Stage": "initial",
+    "Conversation Early Stage": "early",
+    "Conversation Intermediate Stage": "intermediate",
+    "Conversation Late Stage": "late",
 }
 
 LOW_SIGNAL_PREFIXES = (

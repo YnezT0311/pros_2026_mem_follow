@@ -15,6 +15,11 @@ import utils
 from query_llm import QueryLLM
 
 
+CANONICAL_CONVERSATION_PERIODS = utils.CANONICAL_CONVERSATION_PERIODS
+CONVERSATION_PERIOD_ALIASES = utils.CONVERSATION_PERIOD_ALIASES
+CONTEXTUAL_HISTORY_SECTION_ALIASES = utils.CONTEXTUAL_HISTORY_SECTION_ALIASES
+
+
 def extract_side_notes_with_timestamps(conversation):
     """
     Extracts Side_Notes with timestamps from a conversation.
@@ -45,14 +50,14 @@ def find_related_data(timestamp, history_blocks):
 
 
 def get_time_period_from_block_name(bname):
-    if "Next Year" in bname:
-        return "Conversation Next Year"
-    elif "Next Month" in bname:
-        return "Conversation Next Month"
-    elif "Next Week" in bname:
-        return "Conversation Next Week"
+    if "Late Stage" in bname or "Next Year" in bname:
+        return "Conversation Late Stage"
+    elif "Intermediate Stage" in bname or "Next Month" in bname:
+        return "Conversation Intermediate Stage"
+    elif "Early Stage" in bname or "Next Week" in bname:
+        return "Conversation Early Stage"
     else:
-        return "Init Conversation"
+        return "Conversation Initial Stage"
 
 
 def trace_event_history(timestamp, previous_history_blocks, previous_conversation_blocks, verbose=False):
@@ -761,23 +766,30 @@ def evaluate_memory_from_conversation(action, LLM, SentenceBERT, conversation_ke
     # Collect all side notes with timestamps in the current conversation
     side_notes = extract_side_notes_with_timestamps(conversation)
 
+    conversation_key = utils.normalize_conversation_period(conversation_key)
     previous_personal_histories = {
-        "Init Conversation": ["Init Contextual Personal History"],
-        "Conversation Next Week": ["Init Contextual Personal History", "Contextual Personal History Next Week"],
-        "Conversation Next Month": ["Init Contextual Personal History", "Contextual Personal History Next Week",
-                                    "Contextual Personal History Next Month"],
-        "Conversation Next Year": ["Init Contextual Personal History", "Contextual Personal History Next Week",
-                                   "Contextual Personal History Next Month", "Contextual Personal History Next Year"]
+        "Conversation Initial Stage": ["Contextual Personal History Initial Stage"],
+        "Conversation Early Stage": ["Contextual Personal History Initial Stage", "Contextual Personal History Early Stage"],
+        "Conversation Intermediate Stage": ["Contextual Personal History Initial Stage", "Contextual Personal History Early Stage",
+                                            "Contextual Personal History Intermediate Stage"],
+        "Conversation Late Stage": ["Contextual Personal History Initial Stage", "Contextual Personal History Early Stage",
+                                    "Contextual Personal History Intermediate Stage", "Contextual Personal History Late Stage"]
     }
     previous_conversations = {
-        "Init Conversation": ["Init Conversation"],
-        "Conversation Next Week": ["Init Conversation", "Conversation Next Week"],
-        "Conversation Next Month": ["Init Conversation", "Conversation Next Week", "Conversation Next Month"],
-        "Conversation Next Year": ["Init Conversation", "Conversation Next Week", "Conversation Next Month", "Conversation Next Year"]
+        "Conversation Initial Stage": ["Conversation Initial Stage"],
+        "Conversation Early Stage": ["Conversation Initial Stage", "Conversation Early Stage"],
+        "Conversation Intermediate Stage": ["Conversation Initial Stage", "Conversation Early Stage", "Conversation Intermediate Stage"],
+        "Conversation Late Stage": ["Conversation Initial Stage", "Conversation Early Stage", "Conversation Intermediate Stage", "Conversation Late Stage"]
     }
 
-    previous_history_blocks = {key: data.get(key, {}) for key in previous_personal_histories.get(conversation_key, [])}
-    previous_conversation_blocks = {key: data.get(key, []) for key in previous_conversations.get(conversation_key, [])}
+    previous_history_blocks = {
+        key: utils.get_first_present(data, CONTEXTUAL_HISTORY_SECTION_ALIASES.get(key, [key]), {})
+        for key in previous_personal_histories.get(conversation_key, [])
+    }
+    previous_conversation_blocks = {
+        key: utils.get_first_present(data, CONVERSATION_PERIOD_ALIASES.get(key, [key]), [])
+        for key in previous_conversations.get(conversation_key, [])
+    }
     all_qa_entries = []
 
 
@@ -958,15 +970,15 @@ if __name__ == "__main__":
     # data_path = './data/output/' + match.group(1) + '/conversation_' + cmd_args.data + '.json'
 
     if cmd_args.time == 'init':
-        time_periods = ['Init Conversation']
+        time_periods = ['Conversation Initial Stage']
     elif cmd_args.time == 'next_week':
-        time_periods = ['Conversation Next Week']
+        time_periods = ['Conversation Early Stage']
     elif cmd_args.time == 'next_month':
-        time_periods = ['Conversation Next Month']
+        time_periods = ['Conversation Intermediate Stage']
     elif cmd_args.time == 'next_year':
-        time_periods = ['Conversation Next Year']
+        time_periods = ['Conversation Late Stage']
     elif cmd_args.time == 'all':
-        time_periods = ['Init Conversation', 'Conversation Next Week', 'Conversation Next Month', 'Conversation Next Year']
+        time_periods = CANONICAL_CONVERSATION_PERIODS
     else:
         raise ValueError("Invalid time", cmd_args.time)
 

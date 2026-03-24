@@ -9,6 +9,12 @@ from query_llm import QueryLLM
 import utils
 from prepare_qa import evaluate_memory_from_conversation, evaluate_content_generation_from_memory, trace_event_history, extract_side_notes_with_timestamps
 
+
+CANONICAL_CONVERSATION_PERIODS = utils.CANONICAL_CONVERSATION_PERIODS
+CONVERSATION_PERIOD_ALIASES = utils.CONVERSATION_PERIOD_ALIASES
+GENERAL_HISTORY_SECTION_ALIASES = utils.GENERAL_HISTORY_SECTION_ALIASES
+CONTEXTUAL_HISTORY_SECTION_ALIASES = utils.CONTEXTUAL_HISTORY_SECTION_ALIASES
+
 # TODO #1: adapt the prompts to this specific question type which ask about users' preference changes. Input and expected output for the prompt specification are below.
 # Input: for the linear graph of every user, taken two concecutive events as the references.
 # Output: if action == "preference_change": generate the correct response -- LLM should first acknowledge the older preference based on the [Old Fact] and [Old Event] part and then add something neutral to finish this utterance. 
@@ -75,13 +81,13 @@ if __name__ == "__main__":
     data_path = './data/output/' + match.group(1) + '/conversation_' + cmd_args.data + '.json'
 
     if cmd_args.time == 'init':
-        time_period = 'Init Conversation'
+        time_period = 'Conversation Initial Stage'
     elif cmd_args.time == 'next_week':
-        time_period = 'Conversation Next Week'
+        time_period = 'Conversation Early Stage'
     elif cmd_args.time == 'next_month':
-        time_period = 'Conversation Next Month'
+        time_period = 'Conversation Intermediate Stage'
     elif cmd_args.time == 'next_year':
-        time_period = 'Conversation Next Year'
+        time_period = 'Conversation Late Stage'
     else:
         raise ValueError("Invalid time", cmd_args.time)
 
@@ -100,7 +106,7 @@ if __name__ == "__main__":
     persona = {"Original Persona": data.get("Original Persona", ""), "Expanded Persona": data.get("Expanded Persona", "")}
     # print("persona")
     # print(persona)
-    conversation = data.get(conversation_key, [])
+    conversation = utils.get_first_present(data, CONVERSATION_PERIOD_ALIASES.get(conversation_key, [conversation_key]), [])
     # print("conversation")
     # print(type(conversation))
     # print(conversation[0])
@@ -112,27 +118,33 @@ if __name__ == "__main__":
     # print("side_notes")
     # print(side_notes)
     previous_personal_histories = {
-            "Init Conversation": ["Init General Personal History", "Init Contextual Personal History"],
-            "Conversation Next Week": ["Init General Personal History", "General Personal History Next Week",
-                                    "Init Contextual Personal History", "Contextual Personal History Next Week"],
-            "Conversation Next Month": ["Init General Personal History", "General Personal History Next Week",
-                                        "General Personal History Next Month",
-                                        "Init Contextual Personal History", "Contextual Personal History Next Week",
-                                        "Contextual Personal History Next Month"],
-            "Conversation Next Year": ["Init General Personal History", "General Personal History Next Week",
-                                    "General Personal History Next Month", "General Personal History Next Year",
-                                    "Init Contextual Personal History", "Contextual Personal History Next Week",
-                                    "Contextual Personal History Next Month", "Contextual Personal History Next Year"]
+            "Conversation Initial Stage": ["General Personal History Initial Stage", "Contextual Personal History Initial Stage"],
+            "Conversation Early Stage": ["General Personal History Initial Stage", "General Personal History Early Stage",
+                                    "Contextual Personal History Initial Stage", "Contextual Personal History Early Stage"],
+            "Conversation Intermediate Stage": ["General Personal History Initial Stage", "General Personal History Early Stage",
+                                        "General Personal History Intermediate Stage",
+                                        "Contextual Personal History Initial Stage", "Contextual Personal History Early Stage",
+                                        "Contextual Personal History Intermediate Stage"],
+            "Conversation Late Stage": ["General Personal History Initial Stage", "General Personal History Early Stage",
+                                    "General Personal History Intermediate Stage", "General Personal History Late Stage",
+                                    "Contextual Personal History Initial Stage", "Contextual Personal History Early Stage",
+                                    "Contextual Personal History Intermediate Stage", "Contextual Personal History Late Stage"]
         }
     previous_conversations = {
-        "Init Conversation": ["Init Conversation"],
-        "Conversation Next Week": ["Init Conversation", "Conversation Next Week"],
-        "Conversation Next Month": ["Init Conversation", "Conversation Next Week", "Conversation Next Month"],
-        "Conversation Next Year": ["Init Conversation", "Conversation Next Week", "Conversation Next Month", "Conversation Next Year"]
+        "Conversation Initial Stage": ["Conversation Initial Stage"],
+        "Conversation Early Stage": ["Conversation Initial Stage", "Conversation Early Stage"],
+        "Conversation Intermediate Stage": ["Conversation Initial Stage", "Conversation Early Stage", "Conversation Intermediate Stage"],
+        "Conversation Late Stage": ["Conversation Initial Stage", "Conversation Early Stage", "Conversation Intermediate Stage", "Conversation Late Stage"]
     }
 
-    previous_history_blocks = {key: data.get(key, {}) for key in previous_personal_histories.get(conversation_key, [])}
-    previous_conversation_blocks = {key: data.get(key, []) for key in previous_conversations.get(conversation_key, [])}
+    previous_history_blocks = {}
+    for key in previous_personal_histories.get(conversation_key, []):
+        aliases = GENERAL_HISTORY_SECTION_ALIASES.get(key) or CONTEXTUAL_HISTORY_SECTION_ALIASES.get(key) or [key]
+        previous_history_blocks[key] = utils.get_first_present(data, aliases, {})
+    previous_conversation_blocks = {
+        key: utils.get_first_present(data, CONVERSATION_PERIOD_ALIASES.get(key, [key]), [])
+        for key in previous_conversations.get(conversation_key, [])
+    }
 
     all_conv_infill_entries = []
 
@@ -194,5 +206,4 @@ if __name__ == "__main__":
     print(f'{utils.Colors.OKGREEN}Saved conversation infill entries to {output_path}{utils.Colors.ENDC}')
 
 # TODO #3: Add the generative evaluation methods for comparing joint probabilities.
-
 

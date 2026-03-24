@@ -23,6 +23,10 @@ of the same persona before the inference step, as well as some testing codes.
 no_timestamp_record = 0
 
 
+CANONICAL_CONVERSATION_PERIODS = utils.CANONICAL_CONVERSATION_PERIODS
+CONVERSATION_PERIOD_ALIASES = utils.CONVERSATION_PERIOD_ALIASES
+
+
 def parse_date(date_str):
     return datetime.strptime(date_str, "%m/%d/%Y").date()
 
@@ -228,14 +232,10 @@ def load_n_conversation_blocks(idx_persona, n_blocks, base_dir="./data/output", 
                         candidates[(file_name, "Conversation")] = data["Conversation"]
                 else:
                     # Regular topics
-                    if "Init Conversation" in data:
-                        candidates[(file_name, "Init Conversation")] = data["Init Conversation"]
-                    if "Conversation Next Week" in data:
-                        candidates[(file_name, "Conversation Next Week")] = data["Conversation Next Week"]
-                    if "Conversation Next Month" in data:
-                        candidates[(file_name, "Conversation Next Month")] = data["Conversation Next Month"]
-                    if "Conversation Next Year" in data:
-                        candidates[(file_name, "Conversation Next Year")] = data["Conversation Next Year"]
+                    for canonical_key in CANONICAL_CONVERSATION_PERIODS:
+                        value = utils.get_first_present(data, CONVERSATION_PERIOD_ALIASES[canonical_key])
+                        if value is not None:
+                            candidates[(file_name, canonical_key)] = value
 
     if len(candidates) == 0:
         raise ValueError("No conversation blocks found for the given persona.")
@@ -254,13 +254,13 @@ def load_n_conversation_blocks(idx_persona, n_blocks, base_dir="./data/output", 
             if key == "Conversation":
                 init_candidates[(fname, key)] = val
         else:
-            if key == "Init Conversation":
+            if key == "Conversation Initial Stage":
                 init_candidates[(fname, key)] = val
-            elif key == "Conversation Next Week":
+            elif key == "Conversation Early Stage":
                 week_candidates[(fname, key)] = val
-            elif key == "Conversation Next Month":
+            elif key == "Conversation Intermediate Stage":
                 month_candidates[(fname, key)] = val
-            elif key == "Conversation Next Year":
+            elif key == "Conversation Late Stage":
                 year_candidates[(fname, key)] = val
 
     # chosen will store the selected blocks
@@ -275,18 +275,18 @@ def load_n_conversation_blocks(idx_persona, n_blocks, base_dir="./data/output", 
     # Helper functions to unlock next-level blocks
     def unlock_week_blocks(fname):
         # If this init block's next-week block exists, add it
-        wk_key = (fname, "Conversation Next Week")
+        wk_key = (fname, "Conversation Early Stage")
         # For writing topic, there's no next-week block.
         if wk_key in week_candidates:
             available_weeks.add(wk_key)
 
     def unlock_month_blocks(fname):
-        mn_key = (fname, "Conversation Next Month")
+        mn_key = (fname, "Conversation Intermediate Stage")
         if mn_key in month_candidates:
             available_months.add(mn_key)
 
     def unlock_year_blocks(fname):
-        yr_key = (fname, "Conversation Next Year")
+        yr_key = (fname, "Conversation Late Stage")
         if yr_key in year_candidates:
             available_years.add(yr_key)
 
@@ -382,15 +382,15 @@ def topological_sort(processed_blocks, tokenizer=None, num_variants=1, verbose=F
 
     # Map time_period to a causal order value.
     causal_order_mapping = {
-        "Init Conversation": 0,
-        "Conversation Next Week": 1,
-        "Conversation Next Month": 2,
-        "Conversation Next Year": 3,
+        "Conversation Initial Stage": 0,
+        "Conversation Early Stage": 1,
+        "Conversation Intermediate Stage": 2,
+        "Conversation Late Stage": 3,
         "Conversation": 0  # for topics like writing, email, coding
     }
 
     def get_causal_order(block):
-        return causal_order_mapping.get(block["time_period"], float("inf"))
+        return causal_order_mapping.get(utils.normalize_conversation_period(block["time_period"]), float("inf"))
 
     # Group blocks by topic.
     topics = defaultdict(list)
@@ -417,15 +417,15 @@ def topological_sort(processed_blocks, tokenizer=None, num_variants=1, verbose=F
         else:
             mode = "A" if random.random() < 0.5 else "B"
 
-        # Step 1: Randomly sample one "Conversation Next Year" session (from any topic)
+        # Step 1: Randomly sample one late-stage session (from any topic)
         next_year_blocks = [
             block
             for blocks in topics.values()
             for block in blocks
-            if block["time_period"] == "Conversation Next Year"
+            if utils.normalize_conversation_period(block["time_period"]) == "Conversation Late Stage"
         ]
         if not next_year_blocks:
-            raise ValueError("No 'Conversation Next Year' sessions available.")
+            raise ValueError("No late-stage conversation sessions available.")
         chosen_next_year_block = random.choice(next_year_blocks)
         chosen_topic = extract_topic(chosen_next_year_block["file_name"])
 
@@ -449,16 +449,16 @@ def topological_sort(processed_blocks, tokenizer=None, num_variants=1, verbose=F
         if mode == "A":
             # Mode A: Long distance to the previous session.
             # Step 3A: Split the chosen topic's sessions into two parts.
-            # Search for the "Conversation Next Month" session.
+            # Search for the intermediate-stage session.
             split_index = None
             for i, block in enumerate(t_sessions):
-                if block["time_period"] == "Conversation Next Month":
+                if utils.normalize_conversation_period(block["time_period"]) == "Conversation Intermediate Stage":
                     split_index = i
                     break
-            # Fallback: use the first "Conversation Next Year" if no Next Month found.
+            # Fallback: use the first late-stage session if no intermediate-stage block is found.
             if split_index is None:
                 for i, block in enumerate(t_sessions):
-                    if block["time_period"] == "Conversation Next Year":
+                    if utils.normalize_conversation_period(block["time_period"]) == "Conversation Late Stage":
                         split_index = i
                         break
             if split_index is None:

@@ -13,17 +13,24 @@ except Exception:
 
 
 PERIODS = [
-    "Init Conversation",
-    "Conversation Next Week",
-    "Conversation Next Month",
-    "Conversation Next Year",
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage",
 ]
 
+PERIOD_ALIASES = {
+    "Conversation Initial Stage": ["Conversation Initial Stage", "Init Conversation"],
+    "Conversation Early Stage": ["Conversation Early Stage", "Conversation Next Week"],
+    "Conversation Intermediate Stage": ["Conversation Intermediate Stage", "Conversation Next Month"],
+    "Conversation Late Stage": ["Conversation Late Stage", "Conversation Next Year"],
+}
+
 PERIOD_SHORT = {
-    "Init Conversation": "init",
-    "Conversation Next Week": "week",
-    "Conversation Next Month": "month",
-    "Conversation Next Year": "year",
+    "Conversation Initial Stage": "initial",
+    "Conversation Early Stage": "early",
+    "Conversation Intermediate Stage": "intermediate",
+    "Conversation Late Stage": "late",
 }
 
 STOPWORDS = {
@@ -72,18 +79,44 @@ LOW_SIGNAL_PHRASES = (
 )
 
 PERIOD_TO_CONTEXT_HISTORY = {
-    "Init Conversation": "Init Contextual Personal History",
-    "Conversation Next Week": "Contextual Personal History Next Week",
-    "Conversation Next Month": "Contextual Personal History Next Month",
-    "Conversation Next Year": "Contextual Personal History Next Year",
+    "Conversation Initial Stage": "Contextual Personal History Initial Stage",
+    "Conversation Early Stage": "Contextual Personal History Early Stage",
+    "Conversation Intermediate Stage": "Contextual Personal History Intermediate Stage",
+    "Conversation Late Stage": "Contextual Personal History Late Stage",
 }
 
 PERIOD_TO_GENERAL_HISTORY = {
-    "Init Conversation": "Init General Personal History",
-    "Conversation Next Week": "General Personal History Next Week",
-    "Conversation Next Month": "General Personal History Next Month",
-    "Conversation Next Year": "General Personal History Next Year",
+    "Conversation Initial Stage": "General Personal History Initial Stage",
+    "Conversation Early Stage": "General Personal History Early Stage",
+    "Conversation Intermediate Stage": "General Personal History Intermediate Stage",
+    "Conversation Late Stage": "General Personal History Late Stage",
 }
+
+HISTORY_ALIASES = {
+    "Contextual Personal History Initial Stage": ["Contextual Personal History Initial Stage", "Init Contextual Personal History"],
+    "Contextual Personal History Early Stage": ["Contextual Personal History Early Stage", "Contextual Personal History Next Week"],
+    "Contextual Personal History Intermediate Stage": ["Contextual Personal History Intermediate Stage", "Contextual Personal History Next Month"],
+    "Contextual Personal History Late Stage": ["Contextual Personal History Late Stage", "Contextual Personal History Next Year"],
+    "General Personal History Initial Stage": ["General Personal History Initial Stage", "Init General Personal History"],
+    "General Personal History Early Stage": ["General Personal History Early Stage", "General Personal History Next Week"],
+    "General Personal History Intermediate Stage": ["General Personal History Intermediate Stage", "General Personal History Next Month"],
+    "General Personal History Late Stage": ["General Personal History Late Stage", "General Personal History Next Year"],
+}
+
+
+def get_first_present(data: Dict, keys: List[str], default=None):
+    for key in keys:
+        if key in data:
+            return data[key]
+    return default
+
+
+def get_period_lines(data: Dict, period: str):
+    return get_first_present(data, PERIOD_ALIASES[period], [])
+
+
+def get_history_block(data: Dict, hist_key: str):
+    return get_first_present(data, HISTORY_ALIASES.get(hist_key, [hist_key]), None)
 
 GENERIC_CONFLICT_WORDS = {
     "clinic", "session", "client", "clients", "legal", "data", "checklist",
@@ -152,7 +185,7 @@ def iter_conversation_files(source_dir: str) -> List[str]:
 def missing_conversation_periods(data: Dict) -> List[str]:
     missing = []
     for period in PERIODS:
-        value = data.get(period)
+        value = get_period_lines(data, period)
         if not isinstance(value, list) or not value:
             missing.append(period)
     return missing
@@ -270,7 +303,7 @@ def is_conflict_match(text: str, fact: str, threshold: float = 4.5) -> Tuple[boo
 def format_history_block(data: Dict, period: str) -> str:
     parts = []
     for hist_key in [PERIOD_TO_CONTEXT_HISTORY[period], PERIOD_TO_GENERAL_HISTORY[period]]:
-        hist = data.get(hist_key)
+        hist = get_history_block(data, hist_key)
         if not isinstance(hist, dict) or not hist:
             continue
         parts.append(f"{hist_key}:\n{json.dumps(hist, ensure_ascii=False, indent=2)}")
@@ -376,7 +409,7 @@ def rewrite_user_with_model(
     if client is None:
         return None
     persona = str(data.get("Expanded Persona", "")).strip()
-    lines = data.get(period, [])
+    lines = get_period_lines(data, period)
     history_block = format_history_block(data, period)
     dialogue_context = build_local_dialogue_context(lines, line_index)
     sys_msg = {
@@ -399,7 +432,7 @@ def rewrite_user_with_model(
             f"Updated history for this period:\n{history_block}\n\n"
             f"Local conversation section:\n{dialogue_context}\n\n"
             f"Current side note / event:\n{event_text}\n\n"
-            f"Original user utterance:\n{split_user_prefix(data[period][line_index])}\n\n"
+            f"Original user utterance:\n{split_user_prefix(get_period_lines(data, period)[line_index])}\n\n"
             f"Forbidden no-store fact:\n{forbidden_fact}\n\n"
             "Return only the rewritten user utterance text. Do not add 'User:'. Do not output explanation."
         ),
@@ -431,7 +464,7 @@ def rewrite_assistant_with_model(
     if client is None:
         return None
     persona = str(data.get("Expanded Persona", "")).strip()
-    lines = data.get(period, [])
+    lines = get_period_lines(data, period)
     history_block = format_history_block(data, period)
     dialogue_context = build_local_dialogue_context(lines, assistant_index)
     sys_msg = {
@@ -452,7 +485,7 @@ def rewrite_assistant_with_model(
             f"Current period: {period}\n"
             f"Updated history for this period:\n{history_block}\n\n"
             f"Local conversation section:\n{dialogue_context}\n\n"
-            f"Latest user utterance:\n{split_user_prefix(data[period][user_index])}\n\n"
+            f"Latest user utterance:\n{split_user_prefix(get_period_lines(data, period)[user_index])}\n\n"
             f"Original assistant reply:\n{lines[assistant_index][len('Assistant:'):].strip() if isinstance(lines[assistant_index], str) and lines[assistant_index].startswith('Assistant:') else str(lines[assistant_index])}\n\n"
             f"Forbidden no-store fact:\n{forbidden_fact}\n\n"
             "Return only the rewritten assistant reply text. Do not add 'Assistant:'. Do not output explanation."
@@ -549,7 +582,7 @@ def sanitize_future_history_and_user_turns(
     start_idx = PERIODS.index(start_period)
     for period in PERIODS[start_idx + 1:]:
         for hist_key in [PERIOD_TO_CONTEXT_HISTORY[period], PERIOD_TO_GENERAL_HISTORY[period]]:
-            hist = data.get(hist_key)
+            hist = get_history_block(data, hist_key)
             if not isinstance(hist, dict):
                 continue
             for date_key, record in hist.items():
@@ -589,7 +622,7 @@ def sanitize_future_history_and_user_turns(
                             "after": new_text,
                         })
                 if event_changed and hist_key == PERIOD_TO_CONTEXT_HISTORY[period]:
-                    lines = data.get(period, [])
+                    lines = get_period_lines(data, period)
                     if not isinstance(lines, list):
                         continue
                     for i, line in enumerate(lines):
@@ -749,7 +782,7 @@ def extract_utility_facts_from_non_injected_turns(
     facts: List[str] = []
     seen = set()
     for period in PERIODS:
-        lines = baseline_data.get(period, [])
+        lines = get_period_lines(baseline_data, period)
         if not isinstance(lines, list):
             continue
         for i, line in enumerate(lines):
@@ -886,7 +919,7 @@ def detect_conflicts(data: Dict, ops: List[Dict]) -> List[Dict]:
 
         for p_idx in range(start_period_idx, len(PERIODS)):
             p = PERIODS[p_idx]
-            lines = data.get(p, [])
+            lines = get_period_lines(data, p)
             if not isinstance(lines, list):
                 continue
             if p == period:
@@ -937,7 +970,7 @@ def local_repair_conflicts(data: Dict, conflicts: List[Dict]) -> List[Dict]:
         seen.add(key)
         period = cf["period"]
         line_idx = cf["line_index"]
-        line = data[period][line_idx]
+        line = get_period_lines(data, period)[line_idx]
         fixed = line
         fact = cf["forbidden_fact"]
         line_body = line[len("Assistant:"):].strip() if line.startswith("Assistant:") else line
@@ -975,7 +1008,7 @@ def local_repair_conflicts(data: Dict, conflicts: List[Dict]) -> List[Dict]:
             )
 
         if fixed != line:
-            data[period][line_idx] = fixed
+            get_period_lines(data, period)[line_idx] = fixed
             repair_logs.append({
                 "sample_id": cf["sample_id"],
                 "period": period,
@@ -1132,9 +1165,9 @@ def build_retention_world(args: argparse.Namespace) -> None:
         file_meta_indices = []
 
         for period in PERIODS:
-            if period not in updated or not isinstance(updated[period], list):
+            lines = get_period_lines(updated, period)
+            if not isinstance(lines, list) or not lines:
                 continue
-            lines = updated[period]
             # First pick the user turn to inject instruction
             turn_idx = pick_user_turn(lines, args.instruction_type)
             if turn_idx is None:
@@ -1215,7 +1248,7 @@ def build_retention_world(args: argparse.Namespace) -> None:
             for op in curr_ops:
                 p = op["period"]
                 i = op["turn_index"]
-                lines = data.get(p, [])
+                lines = get_period_lines(data, p)
                 if isinstance(lines, list) and 0 <= i < len(lines):
                     raw = lines[i]
                     if isinstance(raw, str) and raw.startswith("User:"):

@@ -12,18 +12,43 @@ except Exception:
     OpenAI = None
 
 PERIODS = [
-    "Init Conversation",
-    "Conversation Next Week",
-    "Conversation Next Month",
-    "Conversation Next Year",
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage",
 ]
 
-PERIOD_SHORT = {
-    "Init Conversation": "init",
-    "Conversation Next Week": "week",
-    "Conversation Next Month": "month",
-    "Conversation Next Year": "year",
+PERIOD_ALIASES = {
+    "Conversation Initial Stage": ["Conversation Initial Stage", "Init Conversation"],
+    "Conversation Early Stage": ["Conversation Early Stage", "Conversation Next Week"],
+    "Conversation Intermediate Stage": ["Conversation Intermediate Stage", "Conversation Next Month"],
+    "Conversation Late Stage": ["Conversation Late Stage", "Conversation Next Year"],
 }
+
+PERIOD_SHORT = {
+    "Conversation Initial Stage": "initial",
+    "Conversation Early Stage": "early",
+    "Conversation Intermediate Stage": "intermediate",
+    "Conversation Late Stage": "late",
+}
+
+CONTEXTUAL_HISTORY_ALIASES = {
+    "Contextual Personal History Initial Stage": ["Contextual Personal History Initial Stage", "Init Contextual Personal History"],
+    "Contextual Personal History Early Stage": ["Contextual Personal History Early Stage", "Contextual Personal History Next Week"],
+    "Contextual Personal History Intermediate Stage": ["Contextual Personal History Intermediate Stage", "Contextual Personal History Next Month"],
+    "Contextual Personal History Late Stage": ["Contextual Personal History Late Stage", "Contextual Personal History Next Year"],
+}
+
+
+def get_first_present(data: Dict, keys: List[str], default=None):
+    for key in keys:
+        if key in data:
+            return data[key]
+    return default
+
+
+def get_period_lines(data: Dict, period: str):
+    return get_first_present(data, PERIOD_ALIASES[period], [])
 
 NO_USE_ON_TEMPLATES = [
     "For now, do not use what I told you before.",
@@ -111,7 +136,7 @@ def iter_conversation_files(source_dir: str) -> List[str]:
 def missing_conversation_periods(data: Dict) -> List[str]:
     missing = []
     for period in PERIODS:
-        value = data.get(period)
+        value = get_period_lines(data, period)
         if not isinstance(value, list) or not value:
             missing.append(period)
     return missing
@@ -201,7 +226,7 @@ def detect_scope_conflicts(data: Dict, rows: List[Dict]) -> List[Dict]:
         active_end = PERIODS.index(off_period) if off_period in PERIODS else len(PERIODS) - 1
         for p_idx in range(active_start, active_end + 1):
             period = PERIODS[p_idx]
-            lines = data.get(period, [])
+            lines = get_period_lines(data, period)
             if not isinstance(lines, list):
                 continue
             if period == on_period:
@@ -239,7 +264,7 @@ def local_repair_scope_conflicts(data: Dict, conflicts: List[Dict]) -> List[Dict
         seen.add(key)
         period = cf["period"]
         idx = cf["line_index"]
-        line = data[period][idx]
+        line = get_period_lines(data, period)[idx]
         body = line[len("Assistant:"):].strip() if line.startswith("Assistant:") else str(line)
         parts = [p.strip() for p in re.split(r"(?<=[.!?])\s+", body) if p.strip()]
         kept = []
@@ -254,7 +279,7 @@ def local_repair_scope_conflicts(data: Dict, conflicts: List[Dict]) -> List[Dict
         else:
             new_line = "Assistant: I can still help with the current question without relying on earlier restricted details."
         if new_line != line:
-            data[period][idx] = new_line
+            get_period_lines(data, period)[idx] = new_line
             logs.append({
                 "sample_id": cf["sample_id"],
                 "period": period,
@@ -268,20 +293,16 @@ def local_repair_scope_conflicts(data: Dict, conflicts: List[Dict]) -> List[Dict
 
 def format_history_block(data: Dict, period: str) -> str:
     parts = []
-    for key in [
-        "Expanded Persona",
-        "Init Contextual Personal History",
-        "Contextual Personal History Next Week",
-        "Contextual Personal History Next Month",
-        "Contextual Personal History Next Year",
-    ]:
-        value = data.get(key)
-        if not value:
-            continue
-        if key == "Expanded Persona":
-            parts.append(f"{key}:\n{value}")
-        elif key.endswith(period.replace("Conversation ", "")) or (period == "Init Conversation" and key == "Init Contextual Personal History"):
-            parts.append(f"{key}:\n{json.dumps(value, ensure_ascii=False, indent=2)}")
+    parts.append(f"Expanded Persona:\n{data.get('Expanded Persona', '')}")
+    history_key = {
+        "Conversation Initial Stage": "Contextual Personal History Initial Stage",
+        "Conversation Early Stage": "Contextual Personal History Early Stage",
+        "Conversation Intermediate Stage": "Contextual Personal History Intermediate Stage",
+        "Conversation Late Stage": "Contextual Personal History Late Stage",
+    }[period]
+    value = get_first_present(data, CONTEXTUAL_HISTORY_ALIASES[history_key], {})
+    if value:
+        parts.append(f"{history_key}:\n{json.dumps(value, ensure_ascii=False, indent=2)}")
     return "\n\n".join(parts).strip()
 
 
@@ -290,7 +311,7 @@ def build_allowed_scope_context(data: Dict, row: Dict, target_period: str, targe
     on_ack = row["no_use_on_ack_index"]
     messages = []
     for period in PERIODS[PERIODS.index(on_period): PERIODS.index(target_period) + 1]:
-        lines = data.get(period, [])
+        lines = get_period_lines(data, period)
         if not isinstance(lines, list):
             continue
         start_i = 0
@@ -320,7 +341,8 @@ def rewrite_scope_assistant_with_model(
         return None
     history_block = format_history_block(data, period)
     allowed_context = build_allowed_scope_context(data, row, period, line_index)
-    original_reply = data.get(period, [])[line_index] if isinstance(data.get(period), list) and 0 <= line_index < len(data.get(period, [])) else ""
+    period_lines = get_period_lines(data, period)
+    original_reply = period_lines[line_index] if isinstance(period_lines, list) and 0 <= line_index < len(period_lines) else ""
     sys_msg = {
         "role": "system",
         "content": (
@@ -438,7 +460,7 @@ def extract_utility_facts(data: Dict, blocked_user_texts: set, max_items: int = 
     facts: List[str] = []
     seen = set()
     for p in PERIODS:
-        lines = data.get(p, [])
+        lines = get_period_lines(data, p)
         if not isinstance(lines, list):
             continue
         for line in lines:

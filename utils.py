@@ -11,6 +11,35 @@ import hashlib
 import base64
 
 
+CANONICAL_CONVERSATION_PERIODS = [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage",
+]
+
+CONVERSATION_PERIOD_ALIASES = {
+    "Conversation Initial Stage": ["Conversation Initial Stage", "Init Conversation"],
+    "Conversation Early Stage": ["Conversation Early Stage", "Conversation Next Week"],
+    "Conversation Intermediate Stage": ["Conversation Intermediate Stage", "Conversation Next Month"],
+    "Conversation Late Stage": ["Conversation Late Stage", "Conversation Next Year"],
+}
+
+GENERAL_HISTORY_SECTION_ALIASES = {
+    "General Personal History Initial Stage": ["General Personal History Initial Stage", "Init General Personal History"],
+    "General Personal History Early Stage": ["General Personal History Early Stage", "General Personal History Next Week"],
+    "General Personal History Intermediate Stage": ["General Personal History Intermediate Stage", "General Personal History Next Month"],
+    "General Personal History Late Stage": ["General Personal History Late Stage", "General Personal History Next Year"],
+}
+
+CONTEXTUAL_HISTORY_SECTION_ALIASES = {
+    "Contextual Personal History Initial Stage": ["Contextual Personal History Initial Stage", "Init Contextual Personal History"],
+    "Contextual Personal History Early Stage": ["Contextual Personal History Early Stage", "Contextual Personal History Next Week"],
+    "Contextual Personal History Intermediate Stage": ["Contextual Personal History Intermediate Stage", "Contextual Personal History Next Month"],
+    "Contextual Personal History Late Stage": ["Contextual Personal History Late Stage", "Contextual Personal History Next Year"],
+}
+
+
 class Colors:
     HEADER = '\033[95m'  # Purple
     OKBLUE = '\033[94m'  # Blue
@@ -18,6 +47,20 @@ class Colors:
     WARNING = '\033[93m'  # Yellow
     FAIL = '\033[91m'    # Red
     ENDC = '\033[0m'     # Reset color
+
+
+def get_first_present(mapping, keys, default=None):
+    for key in keys:
+        if key in mapping:
+            return mapping[key]
+    return default
+
+
+def normalize_conversation_period(name):
+    for canonical, aliases in CONVERSATION_PERIOD_ALIASES.items():
+        if name in aliases:
+            return canonical
+    return name
 
 
 def preprocess_source_data(data, topic):

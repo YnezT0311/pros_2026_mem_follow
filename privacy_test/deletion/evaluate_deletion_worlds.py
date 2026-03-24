@@ -14,10 +14,10 @@ from openai import OpenAI
 
 
 PERIODS = [
-    "Init Conversation",
-    "Conversation Next Week",
-    "Conversation Next Month",
-    "Conversation Next Year",
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage",
 ]
 
 _THREAD_LOCAL = threading.local()
