@@ -900,7 +900,6 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
             idx_topic=idx_topic,
             start_time=start_time,
             verbose=args['inference']['verbose'],
-            interaction_history=interaction_histories[conv_idx],
             sensitive_info_pool=sensitive_info_pool,
         )
         response = LLM.query_llm(

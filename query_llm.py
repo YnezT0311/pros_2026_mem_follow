@@ -477,7 +477,6 @@ class QueryLLM:
                 self.expanded_persona,
                 curr_personal_history=self.init_personal_history,
                 period='INIT',
-                interaction_history=interaction_history,
                 sensitive_info_pool=sensitive_info_pool,
             )
         elif step == 'first_expand_conversation':
@@ -486,7 +485,6 @@ class QueryLLM:
                 self.expanded_persona,
                 curr_personal_history=self.first_expand_personal_history,
                 period='WEEK',
-                interaction_history=interaction_history,
                 sensitive_info_pool=sensitive_info_pool,
             )
         elif step == 'second_expand_conversation':
@@ -495,7 +493,6 @@ class QueryLLM:
                 self.expanded_persona,
                 curr_personal_history=self.second_expand_personal_history,
                 period='MONTH',
-                interaction_history=interaction_history,
                 sensitive_info_pool=sensitive_info_pool,
             )
         elif step == 'third_expand_conversation':
@@ -504,7 +501,6 @@ class QueryLLM:
                 self.expanded_persona,
                 curr_personal_history=self.third_expand_personal_history,
                 period='YEAR',
-                interaction_history=interaction_history,
                 sensitive_info_pool=sensitive_info_pool,
             )
 
