@@ -410,7 +410,7 @@ def build_conversation_history(event_history, interaction_history):
         interaction_by_source.setdefault(interaction.get("source_event_date"), []).append(interaction)
 
     for date, record in _history_items_in_order(event_history):
-        conversation_history.append({
+        event_item = {
             "timestamp": date,
             "kind": "event",
             "event_id": record.get("event_id"),
@@ -419,15 +419,23 @@ def build_conversation_history(event_history, interaction_history):
             "event": record.get("Event", ""),
             "category": record.get("Category"),
             "anchors": record.get("Anchors", {}),
-            "[Fact]": record.get("[Fact] Likes") or record.get("[Fact] Dislikes"),
-            "[Old Fact]": record.get("[Old Fact] Likes") or record.get("[Old Fact] Dislikes"),
-            "[Updated Fact]": record.get("[Updated Fact] Likes") or record.get("[Updated Fact] Dislikes"),
             "[Old Event Date]": record.get("[Old Event Date]") or record.get("Old Event Date"),
             "[Old Event]": record.get("[Old Event]") or record.get("Old Event"),
             "[Reasons of Change]": record.get("[Reasons of Change]") or record.get("Reasons of Change"),
             "sensitive_info": record.get("sensitive_info", {}),
             "relations": record.get("relations", []),
-        })
+        }
+        for key in (
+            "[Fact] Likes",
+            "[Fact] Dislikes",
+            "[Old Fact] Likes",
+            "[Old Fact] Dislikes",
+            "[Updated Fact] Likes",
+            "[Updated Fact] Dislikes",
+        ):
+            if key in record:
+                event_item[key] = record.get(key)
+        conversation_history.append(event_item)
         for interaction in interaction_by_source.get(date, []):
             conversation_history.append({
                 "timestamp": interaction.get("timestamp", date),
