@@ -149,14 +149,20 @@ def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info
     return prompt
 
 
-def prompts_for_expanding_personal_history(topic=None, type='general', period='WEEK'):
+def prompts_for_expanding_personal_history(topic=None, type='general', period='EARLY'):
     if type != 'general':
         assert topic is not None
 
+    period_phrase = {
+        'EARLY': 'early stage',
+        'INTERMEDIATE': 'intermediate stage',
+        'LATE': 'late stage',
+    }.get(period, period.lower())
+
     if type == 'general':
-        prompt = "Given the initial general personal history, think about what would happen to the same person in a " + period + ". "
+        prompt = "Given the initial general personal history, think about what would happen to the same person in the " + period_phrase + ". "
     else:
-        prompt = "Given the initial contextual personal history, think about what would happen to the same person in a " + period + " related to the " + topic + ". "
+        prompt = "Given the initial contextual personal history, think about what would happen to the same person in the " + period_phrase + " related to the " + topic + ". "
     prompt += "More than half of those new points could be, though logically still make sense, but contradictory to the original persona and personal history, especially those ['Short-Term'] facts." \
               "If there is any contradictions or knowledge updates, remember to include why, i.e., the user's reasons and intentions using an additional key '[Reasons of Change]'. " \
               "Try finding some very unique and personal reasons for this person, uncommon for the general public, that trigger the change. " \
@@ -222,7 +228,7 @@ def prompts_for_expanding_personal_history(topic=None, type='general', period='W
     return prompt
 
 
-def prompts_for_generating_conversations(topic, persona, curr_personal_history=None, period='INIT', sensitive_info_pool=None):
+def prompts_for_generating_conversations(topic, persona, curr_personal_history=None, period='INITIAL', sensitive_info_pool=None):
     if topic == 'therapy':
         topic_name, user, agent = 'therapy', 'Patient', 'Therapist'
     else:
@@ -249,12 +255,12 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
              "Use clearly synthetic placeholders only when needed, e.g. alex.test@example.com, 555-0108, 123 Test St, ID ZX-12345. Never use real identifying data. " \
              "Do not make every turn sensitive; only include private detail when it is useful for the user's immediate request. " \
 
-    if period == 'INIT':
+    if period == 'INITIAL':
         prompt += "Here is the persona:\n\n" + persona + "\n\nand the conversation history to realize:\n\n" + curr_personal_history + "\n\n"
-    elif period == 'WEEK':
+    elif period == 'EARLY':
         prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
                   "but with a new conversation history from the early stage following the initial stage:\n\n" + curr_personal_history + "\n\n"
-    elif period == 'MONTH':
+    elif period == 'INTERMEDIATE':
         prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
                   "but with a new conversation history from the intermediate stage following the earlier stages:\n\n" + curr_personal_history + "\n\n"
     else:
@@ -279,19 +285,19 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
     return prompt
 
 
-def prompts_for_reflecting_conversations(topic, data, round, period='INIT'):
+def prompts_for_reflecting_conversations(topic, data, round, period='INITIAL'):
     if topic == 'therapy':
         topic_name, user, agent = 'therapy', 'Patient', 'Therapist'
     else:
         topic_name, user, agent = topic, 'User', 'Assistant'
 
-    if period == 'INIT':
+    if period == 'INITIAL':
         history_block = "'Conversation History Initial Stage'"
         conversation_block = "'Conversation Initial Stage'"
-    elif period == 'WEEK':
+    elif period == 'EARLY':
         history_block = "'Conversation History Early Stage'"
         conversation_block = "'Conversation Early Stage'"
-    elif period == 'MONTH':
+    elif period == 'INTERMEDIATE':
         history_block = "'Conversation History Intermediate Stage'"
         conversation_block = "'Conversation Intermediate Stage'"
     else:
