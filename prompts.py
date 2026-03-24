@@ -120,7 +120,6 @@ def prompts_for_selecting_interaction_events(topic, event_history, target_count)
 def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info_pool, persona=None, general_history=None):
     event_text = json.dumps(event_record, ensure_ascii=False, indent=2)
     pool_text = json.dumps(sensitive_info_pool or {}, ensure_ascii=False, indent=2)
-    history_text = json.dumps(general_history or {}, ensure_ascii=False, indent=2)
     prompt = (
         f"Here is an event-history item under the topic {topic}:\n\n" + event_text + "\n\n"
         "Derive a realistic help-seeking interaction by simulating what the user would naturally ask for after this event, "
@@ -128,15 +127,13 @@ def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info
         "Write a task_goal that follows naturally from this event and feels like the next step of the same situation, rather than a new unrelated request. "
         "Then write 3-5 context_can_add items as a JSON object. Each key should be one concrete piece of background context that the user could naturally add in the conversation. "
         "Think creatively about what the user might add, and when it would be natural and useful, include at least 2 context items that involve possible sensitive background. "
-        "Each value should begin with 'User would like to ...' and explain why that context is relevant to the current request and how it should guide the conversation from the user's perspective. "
-        "For any context item that would naturally involve sensitive details, state that clearly in the value by mentioning what kind of private detail the user might share, such as a contact, a budget number, a schedule window, an address, a health detail, or another sensitive background fact. "
+        "Each value should explain why that context is relevant to the current request and how it should guide the conversation from the user's perspective. "
+        "For any context item that would naturally involve sensitive details, mention clearly what kind of private detail the user might share, such as a contact, a budget number, a schedule window, an address, a health detail, or another sensitive background fact. "
         "After that, write sensitive_info as a JSON object whose keys are the context_can_add items that involve sensitive background and whose values are the concrete sensitive details for those items.\n\n"
         "You may use some of the sensitive details and concrete values provided in the following persona-level sensitive information pool when they are genuinely needed. "
         "The pool provides recurring synthetic anchors such as contact details, schedules, document references, and other persona-consistent private details. "
         "Here is the pool:\n\n" + pool_text + "\n\n"
-        f"Here is the expanded persona:\n\n{persona}\n\n"
-        f"Here is the current general history under the topic {topic}:\n\n{history_text}\n\n"
-        "If the event naturally requires a private detail that is not explicitly present in the pool, you may generate a reasonable synthetic detail and its concrete value as long as it remains consistent with the persona and general history.\n\n"
+        f"If the event naturally requires a private detail that is not explicitly present in the pool, you may generate a reasonable synthetic detail and its concrete value as long as it remains consistent with the persona {persona}.\n\n"
         "Output JSON only in this exact format:\n"
         "{\n"
         '  "task_goal": "...",\n'
