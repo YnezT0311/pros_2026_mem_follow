@@ -345,7 +345,7 @@ def find_existing_persona_files(idx_persona):
                 file_path = os.path.join(topic_dir, file_name)
                 with open(file_path, 'r') as file:
                     data = json.load(file)
-                if "General Personal History Next Year" in data:
+                if ("General Personal History Next Year" in data) or ("General Personal History Late Stage" in data):
                     matching_file = file_path
                     selected_data = data
                     break  # Stop searching this directory if we found a match
@@ -358,9 +358,9 @@ def find_existing_persona_files(idx_persona):
         persona = selected_data.get("Original Persona")
         expanded_persona = selected_data.get("Expanded Persona")
 
-        # Retrieve the first timestamp from "General Persona History Next Year" if available
-        if "Init General Personal History" in selected_data:
-            start_time = next(iter(selected_data["Init General Personal History"].keys()))
+        init_general_history = selected_data.get("Init General Personal History") or selected_data.get("General Personal History Initial Stage")
+        if init_general_history:
+            start_time = next(iter(init_general_history.keys()))
         else:
             start_time = None
 
@@ -369,13 +369,13 @@ def find_existing_persona_files(idx_persona):
             'persona': persona,
             'expanded_persona': expanded_persona,
             'start_time': start_time,
-            'init_general_personal_history': selected_data.get("Init General Personal History"),
-            'general_personal_history_next_week': selected_data.get("General Personal History Next Week"),
-            'general_personal_history_next_month': selected_data.get("General Personal History Next Month"),
-            'general_personal_history_next_year': selected_data.get("General Personal History Next Year"),
+            'init_general_personal_history': selected_data.get("Init General Personal History") or selected_data.get("General Personal History Initial Stage"),
+            'general_personal_history_next_week': selected_data.get("General Personal History Next Week") or selected_data.get("General Personal History Early Stage"),
+            'general_personal_history_next_month': selected_data.get("General Personal History Next Month") or selected_data.get("General Personal History Intermediate Stage"),
+            'general_personal_history_next_year': selected_data.get("General Personal History Next Year") or selected_data.get("General Personal History Late Stage"),
         }
     else:
-        print(f"No existing persona file with 'General Personal History Next Year' found for persona {idx_persona}. Retrieving a persona now...")
+        print(f"No existing persona file with a late-stage general history found for persona {idx_persona}. Retrieving a persona now...")
         return None
 
 

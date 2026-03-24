@@ -20,6 +20,55 @@ from json_repair import repair_json
 from query_llm import QueryLLM
 import utils
 
+GENERAL_HISTORY_SECTION_NAMES = [
+    "General Personal History Initial Stage",
+    "General Personal History Early Stage",
+    "General Personal History Intermediate Stage",
+    "General Personal History Late Stage",
+]
+
+CONTEXTUAL_HISTORY_SECTION_NAMES = [
+    "Contextual Personal History Initial Stage",
+    "Contextual Personal History Early Stage",
+    "Contextual Personal History Intermediate Stage",
+    "Contextual Personal History Late Stage",
+]
+
+EVENT_HISTORY_SECTION_NAMES = [
+    "Event History Initial Stage",
+    "Event History Early Stage",
+    "Event History Intermediate Stage",
+    "Event History Late Stage",
+]
+
+INTERACTION_SOURCE_SECTION_NAMES = [
+    "Interaction Source Dates Initial Stage",
+    "Interaction Source Dates Early Stage",
+    "Interaction Source Dates Intermediate Stage",
+    "Interaction Source Dates Late Stage",
+]
+
+INTERACTION_HISTORY_SECTION_NAMES = [
+    "Interaction History Initial Stage",
+    "Interaction History Early Stage",
+    "Interaction History Intermediate Stage",
+    "Interaction History Late Stage",
+]
+
+CONVERSATION_HISTORY_SECTION_NAMES = [
+    "Conversation History Initial Stage",
+    "Conversation History Early Stage",
+    "Conversation History Intermediate Stage",
+    "Conversation History Late Stage",
+]
+
+CONVERSATION_SECTION_NAMES = [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage",
+]
+
 TOPIC_SENSITIVE_POOL_HINTS = {
     # TODO: This mapping currently covers only the baseline topics available in data/output.
     # If more topics are added later, extend TOPIC_SENSITIVE_POOL_HINTS and
@@ -158,44 +207,6 @@ def _project_sensitive_info(event_text, sensitive_info_pool, topic):
     return info
 
 
-def _choose_help_seek_metadata(topic, event_text, index, sensitive_info_pool):
-    event_lower = (event_text or "").lower()
-    if any(k in event_lower for k in ["debt", "budget", "payment", "account", "ledger", "receipt", "balance"]):
-        goal = "ask for help organizing the most practical next financial step"
-    elif any(k in event_lower for k in ["contract", "clause", "evidence", "complaint", "notice", "clinic", "impersonation"]):
-        goal = "ask for help identifying the safest or most useful next legal step"
-    elif any(k in event_lower for k in ["symptom", "medication", "dose", "migraine", "clinic", "patient", "safety"]):
-        goal = "ask for help organizing the safest immediate medical next step"
-    elif any(k in event_lower for k in ["itinerary", "booking", "packing", "route", "reservation", "flight", "award", "travel"]):
-        goal = "ask for help with the most immediate travel planning problem"
-    else:
-        goal = "ask for concrete help with the current issue"
-
-    needed_context = []
-    if any(k in event_lower for k in ["email", "address", "contact", "booking", "reservation", "receipt", "ledger", "account", "ticket"]):
-        needed_context.append("the specific identifier, contact, or record tied to the current issue")
-    if any(k in event_lower for k in ["symptom", "medication", "dose", "migraine", "clinic", "patient"]):
-        needed_context.append("the timing, trigger, or medical detail the assistant would need to answer safely")
-    if any(k in event_lower for k in ["contract", "clause", "podcast", "deepfake", "evidence", "complaint", "notice"]):
-        needed_context.append("the exact document, dispute detail, or communication detail relevant to the request")
-    if any(k in event_lower for k in ["flight", "route", "packing", "itinerary", "hostel", "award", "points", "schedule"]):
-        needed_context.append("the concrete travel constraint, schedule detail, or booking detail relevant to the request")
-    if any(k in event_lower for k in ["budget", "price", "cost", "afford", "cheap"]):
-        needed_context.append("the user's concrete budget range or cost constraint for this request")
-    if any(k in event_lower for k in ["friend", "family", "relative", "collaborator", "mentor", "contact"]):
-        needed_context.append("the relevant personal connection or recommendation shaping the decision")
-    needed_context = needed_context[:5]
-    context_can_add = {}
-    for item in needed_context:
-        context_can_add[item] = "User would like to provide this detail so the assistant can give a more concrete and useful answer."
-
-    return {
-        "task_goal": goal,
-        "context_can_add": context_can_add,
-        "sensitive_info": _project_sensitive_info(event_text, sensitive_info_pool, topic),
-    }
-
-
 def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, verbose=False):
     response = LLM.query_llm(
         step='derive_interaction_details',
@@ -248,6 +259,11 @@ def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, 
             vals = [str(v).strip()] if str(v).strip() else []
         if vals:
             cleaned_info[key] = vals
+
+    if not cleaned_info:
+        raise RuntimeError(
+            f"Interaction detail derivation produced empty sensitive_info for topic={topic}, event_id={record.get('event_id')}: {parsed!r}"
+        )
 
     return {
         "task_goal": task_goal,
@@ -450,12 +466,7 @@ def get_missing_output_sections(data, topic):
     if topic in ("writing", "email"):
         required = ["Conversation"]
     else:
-        required = [
-            "Init Conversation",
-            "Conversation Next Week",
-            "Conversation Next Month",
-            "Conversation Next Year",
-        ]
+        required = CONVERSATION_SECTION_NAMES
 
     missing = []
     for key in required:
@@ -755,8 +766,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
     # Generate general and contextual personal histories across time frames
     steps = ['init_general_personal_history', 'first_expand_general_personal_history', 'second_expand_general_personal_history', 'third_expand_general_personal_history',
              'init_contextual_personal_history', 'first_expand_contextual_personal_history', 'second_expand_contextual_personal_history', 'third_expand_contextual_personal_history']
-    data_names = ['Init General Personal History', 'General Personal History Next Week', 'General Personal History Next Month', 'General Personal History Next Year',
-                  'Init Contextual Personal History', 'Contextual Personal History Next Week', 'Contextual Personal History Next Month', 'Contextual Personal History Next Year']
+    data_names = GENERAL_HISTORY_SECTION_NAMES + CONTEXTUAL_HISTORY_SECTION_NAMES
     existing_general_personal_history = {'init_general_personal_history': init_general_personal_history, 'first_expand_general_personal_history': first_expand_general_personal_history,
                                          'second_expand_general_personal_history': second_expand_general_personal_history, 'third_expand_general_personal_history': third_expand_general_personal_history}
     # steps = ['init_general_personal_history', 'init_contextual_personal_history']
@@ -832,7 +842,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
 
     # Populate personal history into conversation
     steps = ['init_conversation', 'first_expand_conversation', 'second_expand_conversation', 'third_expand_conversation']
-    data_names = ['Init Conversation', 'Conversation Next Week', 'Conversation Next Month', 'Conversation Next Year']
+    data_names = CONVERSATION_SECTION_NAMES
     # steps = ['init_conversation']
     # data_names = ['Init Conversation']
 
@@ -853,12 +863,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
         build_event_history(raw_context_histories[2], curr_topic, "month", sensitive_info_pool),
         build_event_history(raw_context_histories[3], curr_topic, "year", sensitive_info_pool),
     ]
-    event_history_names = [
-        'Init Event History',
-        'Event History Next Week',
-        'Event History Next Month',
-        'Event History Next Year',
-    ]
+    event_history_names = EVENT_HISTORY_SECTION_NAMES
     for event_name, hist in zip(event_history_names, event_histories):
         utils.append_json_to_file(hist, output_file_path, curr_data_name=event_name, parse_json=False)
 
@@ -868,12 +873,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
         select_interaction_dates(LLM, event_histories[2], curr_topic, "month", verbose=args['inference']['verbose']),
         select_interaction_dates(LLM, event_histories[3], curr_topic, "year", verbose=args['inference']['verbose']),
     ]
-    interaction_date_names = [
-        'Init Interaction Source Dates',
-        'Interaction Source Dates Next Week',
-        'Interaction Source Dates Next Month',
-        'Interaction Source Dates Next Year',
-    ]
+    interaction_date_names = INTERACTION_SOURCE_SECTION_NAMES
     for data_name, dates in zip(interaction_date_names, interaction_dates):
         utils.append_json_to_file(dates, output_file_path, curr_data_name=data_name, parse_json=False)
 
@@ -883,12 +883,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
         build_interaction_history(LLM, event_histories[2], curr_topic, "month", sensitive_info_pool, interaction_dates[2], verbose=args['inference']['verbose']),
         build_interaction_history(LLM, event_histories[3], curr_topic, "year", sensitive_info_pool, interaction_dates[3], verbose=args['inference']['verbose']),
     ]
-    interaction_history_names = [
-        'Init Interaction History',
-        'Interaction History Next Week',
-        'Interaction History Next Month',
-        'Interaction History Next Year',
-    ]
+    interaction_history_names = INTERACTION_HISTORY_SECTION_NAMES
     for hist_name, hist in zip(interaction_history_names, interaction_histories):
         utils.append_json_to_file(hist, output_file_path, curr_data_name=hist_name, parse_json=False)
 
@@ -898,12 +893,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
         build_conversation_history(event_histories[2], interaction_histories[2]),
         build_conversation_history(event_histories[3], interaction_histories[3]),
     ]
-    conversation_history_names = [
-        'Init Conversation History',
-        'Conversation History Next Week',
-        'Conversation History Next Month',
-        'Conversation History Next Year',
-    ]
+    conversation_history_names = CONVERSATION_HISTORY_SECTION_NAMES
     for hist_name, hist in zip(conversation_history_names, conversation_histories):
         utils.append_json_to_file(hist, output_file_path, curr_data_name=hist_name, parse_json=False)
 

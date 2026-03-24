@@ -251,13 +251,13 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
         prompt += "Here is the persona:\n\n" + persona + "\n\nand the conversation history to realize:\n\n" + curr_personal_history + "\n\n"
     elif period == 'WEEK':
         prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
-                  "but with a new conversation history happened in the next week following the previous conversation:\n\n" + curr_personal_history + "\n\n"
+                  "but with a new conversation history from the early stage following the initial stage:\n\n" + curr_personal_history + "\n\n"
     elif period == 'MONTH':
         prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
-                  "but with a new conversation history happened in the next month following the previous conversation:\n\n" + curr_personal_history + "\n\n"
+                  "but with a new conversation history from the intermediate stage following the earlier stages:\n\n" + curr_personal_history + "\n\n"
     else:
         prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
-                  "but with a new conversation history happened in the next year following the previous conversation:\n\n" + curr_personal_history + "\n\n"
+                  "but with a new conversation history from the late stage following the earlier stages:\n\n" + curr_personal_history + "\n\n"
 
     if interaction_history is not None:
         history_text = json.dumps(interaction_history, ensure_ascii=False, indent=2)
@@ -294,17 +294,17 @@ def prompts_for_reflecting_conversations(topic, data, round, period='INIT'):
         topic_name, user, agent = topic, 'User', 'Assistant'
 
     if period == 'INIT':
-        history_block = "'Init Conversation History'"
-        conversation_block = "'Init Conversation'"
+        history_block = "'Conversation History Initial Stage'"
+        conversation_block = "'Conversation Initial Stage'"
     elif period == 'WEEK':
-        history_block = "'Conversation History Next Week'"
-        conversation_block = "'Conversation Next Week'"
+        history_block = "'Conversation History Early Stage'"
+        conversation_block = "'Conversation Early Stage'"
     elif period == 'MONTH':
-        history_block = "'Conversation History Next Month'"
-        conversation_block = "'Conversation Next Month'"
+        history_block = "'Conversation History Intermediate Stage'"
+        conversation_block = "'Conversation Intermediate Stage'"
     else:
-        history_block = "'Conversation History Next Year'"
-        conversation_block = "'Conversation Next Year'"
+        history_block = "'Conversation History Late Stage'"
+        conversation_block = "'Conversation Late Stage'"
 
     if round == 1:
         prompt = "Given the following " + history_block + " and the " + conversation_block + ", check if the " + conversation_block + " has covered every single item in the " + history_block + ". If the same MM/DD/YYYY appears multiple times in the history block, the conversation should cover it the same number of times. All [Old Event Date] does NOT count! Ignore them! " \
