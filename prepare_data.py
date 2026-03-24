@@ -244,6 +244,51 @@ def _choose_help_seek_metadata(topic, event_text, index, sensitive_info_pool):
     }
 
 
+def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, verbose=False):
+    cfg = _topic_config(topic)
+    fallback = _choose_help_seek_metadata(topic, record.get("Event", ""), index, sensitive_info_pool)
+    try:
+        response = LLM.query_llm(
+            step='derive_interaction_details',
+            topic=topic,
+            data={
+                'event_record': record,
+                'sensitive_info_pool': sensitive_info_pool or {},
+                'candidate_goals': cfg.get('goals', []),
+                'candidate_contexts': cfg.get('contexts', []),
+            },
+            verbose=verbose,
+        )
+        match = re.search(r'```(?:json|python|plaintext)?\s*(.*?)\s*```', response, re.DOTALL)
+        response = match.group(1) if match else response
+        parsed = json.loads(repair_json(response))
+        task_goal = parsed.get("task_goal") or fallback["task_goal"]
+        needed_context = parsed.get("needed_context")
+        if not isinstance(needed_context, list):
+            needed_context = fallback["needed_context"]
+        else:
+            needed_context = [str(x).strip() for x in needed_context if str(x).strip()][:2]
+            if not needed_context:
+                needed_context = []
+        sensitive_info_types = parsed.get("sensitive_info_types")
+        selected_sensitive_info = {}
+        if isinstance(sensitive_info_types, list):
+            for key in sensitive_info_types:
+                if key in (sensitive_info_pool or {}):
+                    values = list((sensitive_info_pool or {}).get(key, []))
+                    if values:
+                        selected_sensitive_info[key] = values[:2]
+        if not selected_sensitive_info:
+            selected_sensitive_info = fallback["sensitive_info"]
+        return {
+            "task_goal": task_goal,
+            "needed_context": needed_context,
+            "sensitive_info": selected_sensitive_info,
+        }
+    except Exception:
+        return fallback
+
+
 def build_event_history(history_dict, topic, period_key, sensitive_info_pool):
     items = _history_items_in_order(history_dict)
     if not items:
@@ -370,18 +415,26 @@ def select_interaction_dates(LLM, event_history, topic, period_key, verbose=Fals
     return fallback
 
 
-def build_interaction_history(event_history, topic, period_key, sensitive_info_pool, selected_dates):
+def build_interaction_history(LLM, event_history, topic, period_key, sensitive_info_pool, selected_dates, verbose=False):
     items = _history_items_in_order(event_history)
     if not items:
         return {}
 
     interaction_history = {}
+    selected_set = set(selected_dates)
     interaction_idx = 1
     for date, record in items:
-        if date not in set(selected_dates):
+        if date not in selected_set:
             continue
         base_event_id = record.get("event_id")
-        meta = _choose_help_seek_metadata(topic, record.get("Event", ""), interaction_idx - 1, sensitive_info_pool)
+        meta = derive_interaction_metadata(
+            LLM,
+            topic,
+            record,
+            interaction_idx - 1,
+            sensitive_info_pool,
+            verbose=verbose,
+        )
         interaction_history[f"{date}#I{interaction_idx:02d}"] = {
             "event_id": f"I_{period_key.upper()}_{interaction_idx:03d}",
             "turn_type": "help_seek",
@@ -879,10 +932,10 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
         utils.append_json_to_file(dates, output_file_path, curr_data_name=data_name, parse_json=False)
 
     interaction_histories = [
-        build_interaction_history(event_histories[0], curr_topic, "init", sensitive_info_pool, interaction_dates[0]),
-        build_interaction_history(event_histories[1], curr_topic, "week", sensitive_info_pool, interaction_dates[1]),
-        build_interaction_history(event_histories[2], curr_topic, "month", sensitive_info_pool, interaction_dates[2]),
-        build_interaction_history(event_histories[3], curr_topic, "year", sensitive_info_pool, interaction_dates[3]),
+        build_interaction_history(LLM, event_histories[0], curr_topic, "init", sensitive_info_pool, interaction_dates[0], verbose=args['inference']['verbose']),
+        build_interaction_history(LLM, event_histories[1], curr_topic, "week", sensitive_info_pool, interaction_dates[1], verbose=args['inference']['verbose']),
+        build_interaction_history(LLM, event_histories[2], curr_topic, "month", sensitive_info_pool, interaction_dates[2], verbose=args['inference']['verbose']),
+        build_interaction_history(LLM, event_histories[3], curr_topic, "year", sensitive_info_pool, interaction_dates[3], verbose=args['inference']['verbose']),
     ]
     interaction_history_names = [
         'Init Interaction History',

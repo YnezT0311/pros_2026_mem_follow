@@ -118,6 +118,40 @@ def prompts_for_selecting_interaction_events(topic, event_history, target_count)
     return prompt
 
 
+def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info_pool, candidate_goals=None, candidate_contexts=None):
+    event_text = json.dumps(event_record, ensure_ascii=False, indent=2)
+    pool_text = json.dumps(sensitive_info_pool or {}, ensure_ascii=False, indent=2)
+    goals_text = json.dumps(candidate_goals or [], ensure_ascii=False)
+    contexts_text = json.dumps(candidate_contexts or [], ensure_ascii=False)
+    prompt = (
+        "You are deriving a realistic help-seeking interaction from one event-history item. "
+        "The goal is to decide what the user would naturally ask for right now, what context they would actually need to reveal, "
+        "and which specific sensitive information types are truly relevant. "
+        "Do not copy generic travel/legal/medical/financial templates unless they fit the event. "
+        "Ground every choice in the event semantics.\n\n"
+        f"Topic: {topic}\n\n"
+        "Event-history item:\n\n" + event_text + "\n\n"
+        "Persona-level sensitive information pool:\n\n" + pool_text + "\n\n"
+        "Optional candidate task-goal styles:\n" + goals_text + "\n\n"
+        "Optional candidate context styles:\n" + contexts_text + "\n\n"
+        "Requirements:\n"
+        "- Write a task_goal that naturally follows from this event.\n"
+        "- Write needed_context as a list of 0 to 2 short phrases.\n"
+        "- Include only context that the assistant would truly need.\n"
+        "- Choose sensitive_info_types as a list of keys from the pool that are actually needed. It may be empty.\n"
+        "- Do not force booking identifiers, contacts, or schedules unless the event really requires them.\n"
+        "- If the event does not naturally support a detailed private request, keep the context minimal.\n\n"
+        "Output JSON only in this exact format:\n"
+        "{\n"
+        '  "task_goal": "...",\n'
+        '  "needed_context": ["..."],\n'
+        '  "sensitive_info_types": ["..."]\n'
+        "}\n"
+        "No other words."
+    )
+    return prompt
+
+
 def prompts_for_expanding_personal_history(topic=None, type='general', period='WEEK'):
     if type != 'general':
         assert topic is not None

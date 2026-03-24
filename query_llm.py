@@ -441,6 +441,14 @@ class QueryLLM:
             prompt = prompts.prompts_for_rewriting_creative_writing(data, persona)
         elif step == 'select_interaction_events':
             prompt = prompts.prompts_for_selecting_interaction_events(topic, data['event_history'], data['target_count'])
+        elif step == 'derive_interaction_details':
+            prompt = prompts.prompts_for_deriving_interaction_details(
+                topic,
+                data['event_record'],
+                data.get('sensitive_info_pool'),
+                candidate_goals=data.get('candidate_goals'),
+                candidate_contexts=data.get('candidate_contexts'),
+            )
 
         # Generate once across multiple contexts
         elif step == 'init_general_personal_history':
@@ -530,7 +538,7 @@ class QueryLLM:
         # Independent API calls every time
         if (step == 'expand_persona' or step == 'qa_helper' or step == 'expand_conversation_section' or step == 'translate_code'
                 or step == 'rewrite_email' or step == 'rewrite_creative_writing' or step == 'new_content' or step == 'find_stereotype'
-                or step == 'select_interaction_events'):
+                or step == 'select_interaction_events' or step == 'derive_interaction_details'):
             try:
                 model = self._model_for_step(step)
                 response = self._request_single_turn(
