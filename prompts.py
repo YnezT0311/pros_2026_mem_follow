@@ -121,14 +121,13 @@ def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info
     event_text = json.dumps(event_record, ensure_ascii=False, indent=2)
     pool_text = json.dumps(sensitive_info_pool or {}, ensure_ascii=False, indent=2)
     prompt = (
-        f"Topic: {topic}\n\n"
-        "Given this event-history item:\n\n" + event_text + "\n\n"
+        f"Here is an event-history item under the topic {topic}:\n\n" + event_text + "\n\n"
         "derive a realistic help-seeking interaction by simulating what the user would naturally ask for right now, "
         "what context they would actually need to reveal, and which specific sensitive information types are truly relevant. "
         "Write a task_goal that naturally follows from this event. "
         "Then write needed_context as a list of 0 to 2 short phrases that capture the information the user would need to provide in order to achieve that goal. "
         "After that, identify which sensitive information types are required by the needed_context.\n\n"
-        "Persona-level sensitive information pool:\n\n" + pool_text + "\n\n"
+        "Here is the persona-level sensitive information pool:\n\n" + pool_text + "\n\n"
         "The pool provides recurring synthetic anchors such as contact details, identifiers, schedules, document references, or other persona-consistent private details. "
         "You may choose the relevant sensitive information types from this pool when they are genuinely needed. "
         "If the event naturally requires a private detail that is not explicitly present in the pool, you may still identify the sensitive information type as long as it remains reasonable and consistent with the persona and history. "
