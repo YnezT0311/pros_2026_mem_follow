@@ -207,7 +207,7 @@ def _project_sensitive_info(event_text, sensitive_info_pool, topic):
     return info
 
 
-def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, persona_text, history, verbose=False):
+def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, persona_text, general_history, verbose=False):
     response = LLM.query_llm(
         step='derive_interaction_details',
         topic=topic,
@@ -215,7 +215,7 @@ def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, 
             'event_record': record,
             'sensitive_info_pool': sensitive_info_pool or {},
             'persona': persona_text,
-            'history': history or {},
+            'general_history': general_history or {},
         },
         verbose=verbose,
     )
@@ -379,7 +379,7 @@ def select_interaction_dates(LLM, event_history, topic, period_key, verbose=Fals
     return chosen
 
 
-def build_interaction_history(LLM, event_history, topic, period_key, sensitive_info_pool, selected_dates, persona_text, verbose=False):
+def build_interaction_history(LLM, event_history, topic, period_key, sensitive_info_pool, selected_dates, persona_text, general_history, verbose=False):
     items = _history_items_in_order(event_history)
     if not items:
         return {}
@@ -398,7 +398,7 @@ def build_interaction_history(LLM, event_history, topic, period_key, sensitive_i
             interaction_idx - 1,
             sensitive_info_pool,
             persona_text,
-            event_history,
+            general_history,
             verbose=verbose,
         )
         interaction_history[f"{date}#I{interaction_idx:02d}"] = {
@@ -886,10 +886,10 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
         utils.append_json_to_file(dates, output_file_path, curr_data_name=data_name, parse_json=False)
 
     interaction_histories = [
-        build_interaction_history(LLM, event_histories[0], curr_topic, "init", sensitive_info_pool, interaction_dates[0], expanded_persona, verbose=args['inference']['verbose']),
-        build_interaction_history(LLM, event_histories[1], curr_topic, "week", sensitive_info_pool, interaction_dates[1], expanded_persona, verbose=args['inference']['verbose']),
-        build_interaction_history(LLM, event_histories[2], curr_topic, "month", sensitive_info_pool, interaction_dates[2], expanded_persona, verbose=args['inference']['verbose']),
-        build_interaction_history(LLM, event_histories[3], curr_topic, "year", sensitive_info_pool, interaction_dates[3], expanded_persona, verbose=args['inference']['verbose']),
+        build_interaction_history(LLM, event_histories[0], curr_topic, "init", sensitive_info_pool, interaction_dates[0], expanded_persona, normalized_history.get('init_general_personal_history', {}), verbose=args['inference']['verbose']),
+        build_interaction_history(LLM, event_histories[1], curr_topic, "week", sensitive_info_pool, interaction_dates[1], expanded_persona, normalized_history.get('first_expand_general_personal_history', {}), verbose=args['inference']['verbose']),
+        build_interaction_history(LLM, event_histories[2], curr_topic, "month", sensitive_info_pool, interaction_dates[2], expanded_persona, normalized_history.get('second_expand_general_personal_history', {}), verbose=args['inference']['verbose']),
+        build_interaction_history(LLM, event_histories[3], curr_topic, "year", sensitive_info_pool, interaction_dates[3], expanded_persona, normalized_history.get('third_expand_general_personal_history', {}), verbose=args['inference']['verbose']),
     ]
     interaction_history_names = INTERACTION_HISTORY_SECTION_NAMES
     for hist_name, hist in zip(interaction_history_names, interaction_histories):

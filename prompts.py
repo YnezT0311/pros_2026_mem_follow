@@ -117,13 +117,13 @@ def prompts_for_selecting_interaction_events(topic, event_history, target_count)
     return prompt
 
 
-def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info_pool, persona=None, history=None):
+def prompts_for_deriving_interaction_details(topic, event_record, sensitive_info_pool, persona=None, general_history=None):
     event_text = json.dumps(event_record, ensure_ascii=False, indent=2)
     pool_text = json.dumps(sensitive_info_pool or {}, ensure_ascii=False, indent=2)
-    history_text = json.dumps(history or {}, ensure_ascii=False, indent=2)
+    history_text = json.dumps(general_history or {}, ensure_ascii=False, indent=2)
     prompt = (
         f"Here is the expanded persona:\n\n{persona}\n\n"
-        f"Here is the current event history under the topic {topic}:\n\n{history_text}\n\n"
+        f"Here is the current general history under the topic {topic}:\n\n{history_text}\n\n"
         f"Here is an event-history item under the topic {topic}:\n\n" + event_text + "\n\n"
         "Derive a realistic help-seeking interaction by simulating what the user would naturally ask for after this event, "
         "what background context they could naturally add, and which concrete sensitive information would be relevant if the user chose to share it. "

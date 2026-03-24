@@ -447,7 +447,7 @@ class QueryLLM:
                 data['event_record'],
                 data.get('sensitive_info_pool'),
                 persona=data.get('persona'),
-                history=data.get('history'),
+                general_history=data.get('general_history'),
             )
 
         # Generate once across multiple contexts
