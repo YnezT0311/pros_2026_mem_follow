@@ -413,28 +413,8 @@ def build_conversation_history(event_history, interaction_history):
         event_item = {
             "timestamp": date,
             "kind": "event",
-            "event_id": record.get("event_id"),
-            "turn_type": "update",
-            "update_subtype": record.get("update_subtype"),
-            "event": record.get("Event", ""),
-            "category": record.get("Category"),
-            "anchors": record.get("Anchors", {}),
-            "[Old Event Date]": record.get("[Old Event Date]") or record.get("Old Event Date"),
-            "[Old Event]": record.get("[Old Event]") or record.get("Old Event"),
-            "[Reasons of Change]": record.get("[Reasons of Change]") or record.get("Reasons of Change"),
-            "sensitive_info": record.get("sensitive_info", {}),
-            "relations": record.get("relations", []),
+            **record,
         }
-        for key in (
-            "[Fact] Likes",
-            "[Fact] Dislikes",
-            "[Old Fact] Likes",
-            "[Old Fact] Dislikes",
-            "[Updated Fact] Likes",
-            "[Updated Fact] Dislikes",
-        ):
-            if key in record:
-                event_item[key] = record.get(key)
         conversation_history.append(event_item)
         for interaction in interaction_by_source.get(date, []):
             conversation_history.append({
