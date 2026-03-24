@@ -90,8 +90,8 @@ TOPIC_SENSITIVE_POOL_HINTS = {
     },
     "travelPlanning": {
         "named_contact": ["guesthouse contact", "residency coordinator", "cargo liaison"],
-        "booking_identifier": ["reservation code", "award itinerary reference", "route briefing ID"],
         "private_schedule": ["departure window", "residency calendar", "cargo handoff slot"],
+        "document_or_record_reference": ["lodging note", "route note", "packing checklist"],
     },
 }
 
@@ -164,8 +164,10 @@ def _infer_information_types(topic, event_text):
         info_types.append("address")
     if any(k in event_lower for k in ["account", "balance", "debt", "payment", "credit", "ledger", "receipt", "cash-flow"]):
         info_types.append("account_or_balance")
-    if any(k in event_lower for k in ["booking", "confirmation", "ticket", "reservation", "route", "flight", "award"]):
-        info_types.append("booking_identifier")
+    if any(k in event_lower for k in ["booking", "confirmation", "ticket", "reservation", "flight", "voucher", "pass"]):
+        info_types.append("document_or_record_reference")
+    if any(k in event_lower for k in ["route", "itinerary", "connection", "departure window", "arrival window"]):
+        info_types.append("private_schedule")
     if any(k in event_lower for k in ["symptom", "migraine", "diagnosis", "dosing", "medication", "clinical", "patient"]):
         info_types.append("medical_symptom")
     if any(k in event_lower for k in ["dose", "dosing", "medication", "prescription"]):
@@ -185,7 +187,7 @@ def _infer_information_types(topic, event_text):
             "financialConsultation": "account_or_balance",
             "legalConsultation": "legal_dispute_detail",
             "medicalConsultation": "medical_symptom",
-            "travelPlanning": "booking_identifier",
+            "travelPlanning": "private_schedule",
         }
         info_types.append(default_by_topic.get(topic, "document_or_record_reference"))
 
@@ -261,11 +263,6 @@ def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, 
             vals = [str(v).strip()] if str(v).strip() else []
         if vals:
             cleaned_info[key] = vals
-
-    if not cleaned_info:
-        raise RuntimeError(
-            f"Interaction detail derivation produced empty sensitive_info for topic={topic}, event_id={record.get('event_id')}: {parsed!r}"
-        )
 
     return {
         "task_goal": task_goal,
@@ -411,7 +408,7 @@ def build_interaction_history(LLM, event_history, topic, period_key, sensitive_i
             "event": record.get("Event", ""),
             "task_goal": meta["task_goal"],
             "context_can_add": meta["context_can_add"],
-            "sensitive_info": meta["sensitive_info"] or record.get("sensitive_info", {}),
+            "sensitive_info": meta["sensitive_info"],
             "relations": [{"type": "derived_from", "source_event_id": base_event_id}],
         }
         interaction_idx += 1
