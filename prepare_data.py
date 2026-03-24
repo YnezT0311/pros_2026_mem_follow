@@ -197,55 +197,63 @@ def _choose_help_seek_metadata(topic, event_text, index, sensitive_info_pool):
 
 
 def derive_interaction_metadata(LLM, topic, record, index, sensitive_info_pool, verbose=False):
-    fallback = _choose_help_seek_metadata(topic, record.get("Event", ""), index, sensitive_info_pool)
-    try:
-        response = LLM.query_llm(
-            step='derive_interaction_details',
-            topic=topic,
-            data={
-                'event_record': record,
-                'sensitive_info_pool': sensitive_info_pool or {},
-            },
-            verbose=verbose,
+    response = LLM.query_llm(
+        step='derive_interaction_details',
+        topic=topic,
+        data={
+            'event_record': record,
+            'sensitive_info_pool': sensitive_info_pool or {},
+        },
+        verbose=verbose,
+    )
+    match = re.search(r'```(?:json|python|plaintext)?\s*(.*?)\s*```', response, re.DOTALL)
+    response = match.group(1) if match else response
+    parsed = json.loads(repair_json(response))
+
+    task_goal = str(parsed.get("task_goal", "")).strip()
+    if not task_goal:
+        raise RuntimeError(
+            f"Interaction detail derivation missing task_goal for topic={topic}, event_id={record.get('event_id')}: {parsed!r}"
         )
-        match = re.search(r'```(?:json|python|plaintext)?\s*(.*?)\s*```', response, re.DOTALL)
-        response = match.group(1) if match else response
-        parsed = json.loads(repair_json(response))
-        task_goal = parsed.get("task_goal") or fallback["task_goal"]
-        context_can_add = parsed.get("context_can_add")
-        if not isinstance(context_can_add, dict):
-            context_can_add = fallback["context_can_add"]
+
+    context_can_add = parsed.get("context_can_add")
+    if not isinstance(context_can_add, dict):
+        raise RuntimeError(
+            f"Interaction detail derivation missing dict context_can_add for topic={topic}, event_id={record.get('event_id')}: {parsed!r}"
+        )
+    cleaned_context = {}
+    for k, v in list(context_can_add.items())[:5]:
+        key = str(k).strip()
+        val = str(v).strip()
+        if key and val:
+            cleaned_context[key] = val
+    if len(cleaned_context) < 1:
+        raise RuntimeError(
+            f"Interaction detail derivation produced empty context_can_add for topic={topic}, event_id={record.get('event_id')}: {parsed!r}"
+        )
+
+    selected_sensitive_info = parsed.get("sensitive_info")
+    if not isinstance(selected_sensitive_info, dict):
+        raise RuntimeError(
+            f"Interaction detail derivation missing dict sensitive_info for topic={topic}, event_id={record.get('event_id')}: {parsed!r}"
+        )
+    cleaned_info = {}
+    for k, v in selected_sensitive_info.items():
+        key = str(k).strip()
+        if not key:
+            continue
+        if isinstance(v, list):
+            vals = [str(x).strip() for x in v if str(x).strip()][:3]
         else:
-            cleaned = {}
-            for k, v in list(context_can_add.items())[:5]:
-                key = str(k).strip()
-                val = str(v).strip()
-                if key and val:
-                    cleaned[key] = val
-            context_can_add = cleaned
-        selected_sensitive_info = parsed.get("sensitive_info")
-        if not isinstance(selected_sensitive_info, dict):
-            selected_sensitive_info = fallback["sensitive_info"]
-        else:
-            cleaned_info = {}
-            for k, v in selected_sensitive_info.items():
-                key = str(k).strip()
-                if not key:
-                    continue
-                if isinstance(v, list):
-                    vals = [str(x).strip() for x in v if str(x).strip()][:2]
-                else:
-                    vals = [str(v).strip()] if str(v).strip() else []
-                if vals:
-                    cleaned_info[key] = vals
-            selected_sensitive_info = cleaned_info or fallback["sensitive_info"]
-        return {
-            "task_goal": task_goal,
-            "context_can_add": context_can_add,
-            "sensitive_info": selected_sensitive_info,
-        }
-    except Exception:
-        return fallback
+            vals = [str(v).strip()] if str(v).strip() else []
+        if vals:
+            cleaned_info[key] = vals
+
+    return {
+        "task_goal": task_goal,
+        "context_can_add": cleaned_context,
+        "sensitive_info": cleaned_info,
+    }
 
 
 def build_event_history(history_dict, topic, period_key, sensitive_info_pool):
