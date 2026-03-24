@@ -19,24 +19,24 @@ CANONICAL_CONVERSATION_PERIODS = [
 ]
 
 CONVERSATION_PERIOD_ALIASES = {
-    "Conversation Initial Stage": ["Conversation Initial Stage", "Init Conversation"],
-    "Conversation Early Stage": ["Conversation Early Stage", "Conversation Next Week"],
-    "Conversation Intermediate Stage": ["Conversation Intermediate Stage", "Conversation Next Month"],
-    "Conversation Late Stage": ["Conversation Late Stage", "Conversation Next Year"],
+    "Conversation Initial Stage": ["Conversation Initial Stage"],
+    "Conversation Early Stage": ["Conversation Early Stage"],
+    "Conversation Intermediate Stage": ["Conversation Intermediate Stage"],
+    "Conversation Late Stage": ["Conversation Late Stage"],
 }
 
 GENERAL_HISTORY_SECTION_ALIASES = {
-    "General Personal History Initial Stage": ["General Personal History Initial Stage", "Init General Personal History"],
-    "General Personal History Early Stage": ["General Personal History Early Stage", "General Personal History Next Week"],
-    "General Personal History Intermediate Stage": ["General Personal History Intermediate Stage", "General Personal History Next Month"],
-    "General Personal History Late Stage": ["General Personal History Late Stage", "General Personal History Next Year"],
+    "General Personal History Initial Stage": ["General Personal History Initial Stage"],
+    "General Personal History Early Stage": ["General Personal History Early Stage"],
+    "General Personal History Intermediate Stage": ["General Personal History Intermediate Stage"],
+    "General Personal History Late Stage": ["General Personal History Late Stage"],
 }
 
 CONTEXTUAL_HISTORY_SECTION_ALIASES = {
-    "Contextual Personal History Initial Stage": ["Contextual Personal History Initial Stage", "Init Contextual Personal History"],
-    "Contextual Personal History Early Stage": ["Contextual Personal History Early Stage", "Contextual Personal History Next Week"],
-    "Contextual Personal History Intermediate Stage": ["Contextual Personal History Intermediate Stage", "Contextual Personal History Next Month"],
-    "Contextual Personal History Late Stage": ["Contextual Personal History Late Stage", "Contextual Personal History Next Year"],
+    "Contextual Personal History Initial Stage": ["Contextual Personal History Initial Stage"],
+    "Contextual Personal History Early Stage": ["Contextual Personal History Early Stage"],
+    "Contextual Personal History Intermediate Stage": ["Contextual Personal History Intermediate Stage"],
+    "Contextual Personal History Late Stage": ["Contextual Personal History Late Stage"],
 }
 
 
@@ -388,7 +388,7 @@ def find_existing_persona_files(idx_persona):
                 file_path = os.path.join(topic_dir, file_name)
                 with open(file_path, 'r') as file:
                     data = json.load(file)
-                if ("General Personal History Next Year" in data) or ("General Personal History Late Stage" in data):
+                if "General Personal History Late Stage" in data:
                     matching_file = file_path
                     selected_data = data
                     break  # Stop searching this directory if we found a match
@@ -401,7 +401,7 @@ def find_existing_persona_files(idx_persona):
         persona = selected_data.get("Original Persona")
         expanded_persona = selected_data.get("Expanded Persona")
 
-        init_general_history = selected_data.get("Init General Personal History") or selected_data.get("General Personal History Initial Stage")
+        init_general_history = selected_data.get("General Personal History Initial Stage")
         if init_general_history:
             start_time = next(iter(init_general_history.keys()))
         else:
@@ -412,10 +412,10 @@ def find_existing_persona_files(idx_persona):
             'persona': persona,
             'expanded_persona': expanded_persona,
             'start_time': start_time,
-            'init_general_personal_history': selected_data.get("Init General Personal History") or selected_data.get("General Personal History Initial Stage"),
-            'general_personal_history_next_week': selected_data.get("General Personal History Next Week") or selected_data.get("General Personal History Early Stage"),
-            'general_personal_history_next_month': selected_data.get("General Personal History Next Month") or selected_data.get("General Personal History Intermediate Stage"),
-            'general_personal_history_next_year': selected_data.get("General Personal History Next Year") or selected_data.get("General Personal History Late Stage"),
+            'init_general_personal_history': selected_data.get("General Personal History Initial Stage"),
+            'general_personal_history_next_week': selected_data.get("General Personal History Early Stage"),
+            'general_personal_history_next_month': selected_data.get("General Personal History Intermediate Stage"),
+            'general_personal_history_next_year': selected_data.get("General Personal History Late Stage"),
         }
     else:
         print(f"No existing persona file with a late-stage general history found for persona {idx_persona}. Retrieving a persona now...")

@@ -23,10 +23,10 @@ PERIODS = [
 ]
 
 PERIOD_ALIASES = {
-    "Conversation Initial Stage": ["Conversation Initial Stage", "Init Conversation"],
-    "Conversation Early Stage": ["Conversation Early Stage", "Conversation Next Week"],
-    "Conversation Intermediate Stage": ["Conversation Intermediate Stage", "Conversation Next Month"],
-    "Conversation Late Stage": ["Conversation Late Stage", "Conversation Next Year"],
+    "Conversation Initial Stage": ["Conversation Initial Stage"],
+    "Conversation Early Stage": ["Conversation Early Stage"],
+    "Conversation Intermediate Stage": ["Conversation Intermediate Stage"],
+    "Conversation Late Stage": ["Conversation Late Stage"],
 }
 
 PERIOD_SHORT = {
@@ -118,14 +118,14 @@ PERIOD_TO_GENERAL_HISTORY = {
 }
 
 HISTORY_ALIASES = {
-    "Contextual Personal History Initial Stage": ["Contextual Personal History Initial Stage", "Init Contextual Personal History"],
-    "Contextual Personal History Early Stage": ["Contextual Personal History Early Stage", "Contextual Personal History Next Week"],
-    "Contextual Personal History Intermediate Stage": ["Contextual Personal History Intermediate Stage", "Contextual Personal History Next Month"],
-    "Contextual Personal History Late Stage": ["Contextual Personal History Late Stage", "Contextual Personal History Next Year"],
-    "General Personal History Initial Stage": ["General Personal History Initial Stage", "Init General Personal History"],
-    "General Personal History Early Stage": ["General Personal History Early Stage", "General Personal History Next Week"],
-    "General Personal History Intermediate Stage": ["General Personal History Intermediate Stage", "General Personal History Next Month"],
-    "General Personal History Late Stage": ["General Personal History Late Stage", "General Personal History Next Year"],
+    "Contextual Personal History Initial Stage": ["Contextual Personal History Initial Stage"],
+    "Contextual Personal History Early Stage": ["Contextual Personal History Early Stage"],
+    "Contextual Personal History Intermediate Stage": ["Contextual Personal History Intermediate Stage"],
+    "Contextual Personal History Late Stage": ["Contextual Personal History Late Stage"],
+    "General Personal History Initial Stage": ["General Personal History Initial Stage"],
+    "General Personal History Early Stage": ["General Personal History Early Stage"],
+    "General Personal History Intermediate Stage": ["General Personal History Intermediate Stage"],
+    "General Personal History Late Stage": ["General Personal History Late Stage"],
 }
 
 

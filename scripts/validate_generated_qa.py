@@ -13,10 +13,10 @@ class Colors:
 
 def validate_json(file_path):
     required_subkeys = [
-        "Init Conversation",
-        "Conversation Next Week",
-        "Conversation Next Month",
-        "Conversation Next Year"
+        "Conversation Initial Stage",
+        "Conversation Early Stage",
+        "Conversation Intermediate Stage",
+        "Conversation Late Stage"
     ]
     required_types = {
         "recalling_facts_mentioned_by_the_user": 0,
@@ -79,7 +79,7 @@ def validate_json(file_path):
         # Check if each required_type has been mentioned
         valid = True
         for type in required_types.keys():
-            if required_types[type] == 0 and not (period == "Init Conversation" and type in ignored_types_in_init) and type not in temp_ignored_types:
+            if required_types[type] == 0 and not (period == "Conversation Initial Stage" and type in ignored_types_in_init) and type not in temp_ignored_types:
                 print(f"{Colors.FAIL}Error generating 'Type' {type} in {file_path}:{period}{Colors.END}")
                 valid = False
 

@@ -106,7 +106,7 @@ for d, _, fs in os.walk(root):
         except Exception:
             missing.append(p)
             continue
-        if "Conversation Next Year" not in obj:
+        if "Conversation Late Stage" not in obj:
             missing.append(p)
 print(len(missing))
 if missing:
@@ -120,7 +120,7 @@ MISSING_COUNT="$(echo "${CHECK_OUTPUT}" | head -n 1)"
 echo "${CHECK_OUTPUT}" | tail -n +2
 
 if [[ "${MISSING_COUNT}" != "0" ]]; then
-  echo "[check] Incomplete output files detected (missing Conversation Next Year): ${MISSING_COUNT}"
+  echo "[check] Incomplete output files detected (missing Conversation Late Stage): ${MISSING_COUNT}"
   if [[ "${ALLOW_PARTIAL_OUTPUT}" != "1" ]]; then
     echo "[check] Set ALLOW_PARTIAL_OUTPUT=1 to continue anyway."
     exit 1
