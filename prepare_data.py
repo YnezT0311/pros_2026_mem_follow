@@ -15,6 +15,7 @@ import sys
 import ast
 import traceback
 import hashlib
+import shutil
 from json_repair import repair_json
 
 from query_llm import QueryLLM
@@ -486,6 +487,14 @@ def _conversation_log_dir(output_file_path):
 
 def _safe_log_slug(text):
     return re.sub(r"[^A-Za-z0-9._-]+", "_", text).strip("_")
+
+
+def clear_conversation_logs(output_file_path, args):
+    if not args.get('inference', {}).get('save_output_response', False):
+        return
+    log_dir = _conversation_log_dir(output_file_path)
+    if os.path.isdir(log_dir):
+        shutil.rmtree(log_dir)
 
 
 def maybe_write_conversation_log(output_file_path, args, stage_name, artifact_name, payload):
@@ -1217,6 +1226,7 @@ def prepare_data(args):
                     for attempt in range(max_retries + 1):
                         if attempt > 0 and os.path.exists(output_file_path) and not regenerate_conversation_only:
                             os.remove(output_file_path)
+                        clear_conversation_logs(output_file_path, args)
                         try:
                             LLM = QueryLLM(args)
                             if parsed_pii:
