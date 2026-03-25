@@ -1163,7 +1163,7 @@ def prepare_data(args):
                                                     os.path.join(f'{curr_topic}', f'{args["inference"]["output_file_name"]}_{curr_topic}_persona{idx_persona}_sample{idx_sample}.json'))
                     if (
                         args['inference'].get('skip_existing', False)
-                        and not args['inference'].get('regenerate_history_conversation_only', False)
+                        and not args['inference'].get('regenerate_conversation_only', False)
                         and is_output_complete(output_file_path, curr_topic)
                     ):
                         print(f'{utils.Colors.WARNING}Skipping existing complete file: {output_file_path}{utils.Colors.ENDC}')
@@ -1173,16 +1173,16 @@ def prepare_data(args):
                     source_data = utils.load_one_source_data(source_dir, all_source_files, curr_topic) if all_source_files is not None else None
                     max_retries = int(args['inference'].get('max_retries', 0))
                     retry_backoff = float(args['inference'].get('retry_backoff', 2.0))
-                    regenerate_history_only = bool(args['inference'].get('regenerate_history_conversation_only', False))
+                    regenerate_conversation_only = bool(args['inference'].get('regenerate_conversation_only', False))
                     success = False
                     for attempt in range(max_retries + 1):
-                        if attempt > 0 and os.path.exists(output_file_path) and not regenerate_history_only:
+                        if attempt > 0 and os.path.exists(output_file_path) and not regenerate_conversation_only:
                             os.remove(output_file_path)
                         try:
                             LLM = QueryLLM(args)
                             if parsed_pii:
                                 LLM.pii_profile = parsed_pii
-                            if regenerate_history_only and os.path.exists(output_file_path):
+                            if regenerate_conversation_only and os.path.exists(output_file_path):
                                 with open(output_file_path, "r", encoding="utf-8") as f:
                                     existing_data = json.load(f)
                                 missing_prereqs = get_missing_conversation_prereq_sections(existing_data, curr_topic)
@@ -1329,8 +1329,8 @@ if __name__ == "__main__":
                         help='Max retries for retryable API/network errors')
     parser.add_argument('--retry_backoff', type=float, default=2.0,
                         help='Base seconds for exponential backoff between retries')
-    parser.add_argument('--regenerate_history_conversation_only', dest='regenerate_history_conversation_only', action='store_true',
-                        help='Reuse persona but fully regenerate history/event and conversation blocks for matched files')
+    parser.add_argument('--regenerate_conversation_only', dest='regenerate_conversation_only', action='store_true',
+                        help='Reuse existing generated content and rewrite only the conversation sections')
     parser.add_argument('--force_regen_persona', dest='force_regen_persona', action='store_true',
                         help='Ignore existing persona cache and regenerate Original/Expanded Persona')
     cmd_args = parser.parse_args()
@@ -1350,7 +1350,7 @@ if __name__ == "__main__":
     args['inference']['workers'] = cmd_args.workers
     args['inference']['max_retries'] = cmd_args.max_retries
     args['inference']['retry_backoff'] = cmd_args.retry_backoff
-    args['inference']['regenerate_history_conversation_only'] = cmd_args.regenerate_history_conversation_only
+    args['inference']['regenerate_conversation_only'] = cmd_args.regenerate_conversation_only
     args['inference']['force_regen_persona'] = cmd_args.force_regen_persona
 
     # Start inference
