@@ -242,7 +242,8 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
              "Some timestamps will look like MM/DD/YYYY, which correspond to event items, and some will look like MM/DD/YYYY-I01, which correspond to interaction items. Do not change any timestamp. " \
              "Think about how this person's persona and history could naturally lead them to seek help from a " + agent_lower + ". " \
              "Write the result as a Python list of strings, where each string starts with either '" + user + "', '" + agent + "', or 'Side_Note'. " \
-             "Every history item must appear in the conversation and must have its own Side_Note line before the related dialogue. Each Side_Note should contain the relevant event text and its exact timestamp in square brackets. " \
+             "You may begin with a brief natural opening that introduces the topic and smoothly leads into the first event; this opening does not need a Side_Note. " \
+             "After that opening, every history item must appear in the conversation and must have its own Side_Note line before the related dialogue. Each Side_Note should contain the relevant event text and its exact timestamp in square brackets. " \
              "When an item has kind='event', realize it as a normal conversation block grounded in that event. If it is a change item and includes reasons of change, mention that change and its motivation naturally in the dialogue, but do not explicitly mention metadata such as '[Fact]', '[Old Fact]', '[Updated Fact]', or '[Old Event]'. " \
              "When an item has kind='interaction', realize it as a follow-up help-seeking block after the source event. In that block, the " + user_lower + " should ask for concrete help tied to '[Task Goal]'. The entries in '[Context Can Add]' are optional background details that may be introduced when they help the request feel natural. The explanation attached to each context item tells you how that background should shape the request. Sensitive details should only appear when the corresponding background is actually introduced or is clearly needed for the immediate request, and the concrete values for those details are provided in '[Sensitive Info]'. " \
              "Do not mention metadata labels such as kind, turn_type, update_subtype, [Task Goal], [Context Can Add], [Sensitive Info], source_event_id, or relations in the dialogue itself. " \
@@ -261,7 +262,7 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
         prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
                   "but with a new conversation history from the late stage following the earlier stages:\n\n" + curr_personal_history + "\n\n"
 
-    prompt += "Here is the template you should follow for each pair of utterance that mentions a fact in the personal history, including the very first block:\n\n" \
+    prompt += "After any brief opening lines, here is the template you should follow for each pair of utterance that mentions a fact in the personal history:\n\n" \
               "[\n" \
               '"Side_Note: [xxx] TIMESTAMP",' \
               '"' + user + ': yyy",' \
