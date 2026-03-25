@@ -62,7 +62,12 @@ def get_time_period_from_block_name(bname):
 
 def trace_event_history(timestamp, previous_history_blocks, previous_conversation_blocks, verbose=False):
     """
-    Traces the event history recursively for knowledge updates.
+    Traces the event-history chain recursively for event-level reasoning utility.
+    This function is designed for the original update/reasoning QA path:
+    it resolves one timestamped event back through previous history blocks and
+    follows [Old Event Date] links. It does not use interaction metadata such
+    as source_event_id or relations, and should not be treated as the tracing
+    mechanism for interaction-level instruction-following QA.
     """
     linear_graph = {}
 
