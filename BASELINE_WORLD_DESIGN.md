@@ -19,8 +19,8 @@ Baseline generation uses three linked representations:
 
 Recommended ratio:
 
-- `Initial Stage`: 15 event-history items and 5 derived interaction items
-- each later stage: 9 event-history items and 3 derived interaction items
+- `Initial Stage`: 12 event-history items and 8 derived interaction items
+- each later stage: 6 event-history items and 4 derived interaction items
 
 Event history remains the broader longitudinal world state. Interaction history is a smaller, derived help-seeking layer. Conversation history is the combined, time-ordered realization skeleton used for conversation generation.
 

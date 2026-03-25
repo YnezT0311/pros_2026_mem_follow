@@ -320,10 +320,10 @@ def select_interaction_dates(LLM, event_history, topic, period_key, verbose=Fals
         return []
 
     target_count = {
-        "init": 5,
-        "week": 3,
-        "month": 3,
-        "year": 3,
+        "init": 8,
+        "week": 4,
+        "month": 4,
+        "year": 4,
     }.get(period_key, max(1, len(items) // 4))
     target_count = min(target_count, len(items))
 
