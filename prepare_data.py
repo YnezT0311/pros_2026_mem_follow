@@ -282,6 +282,7 @@ def build_event_history(history_dict, topic, period_key, sensitive_info_pool):
     event_history = {}
     date_to_event_id = {}
     for idx, (date, record) in enumerate(items):
+        record = {k: v for k, v in record.items() if k != "Anchors"}
         event_text = record.get("Event", "")
         has_change = bool(record.get("[Old Event]") or record.get("Old Event") or record.get("[Reasons of Change]") or record.get("Reasons of Change"))
         subtype = "change" if has_change else "init"
@@ -295,7 +296,7 @@ def build_event_history(history_dict, topic, period_key, sensitive_info_pool):
             "sensitive_info": _project_sensitive_info(
                 " ".join(
                     str(record.get(k, ""))
-                    for k in ["Event", "[Old Event]", "[Reasons of Change]", "Anchors"]
+                    for k in ["Event", "[Old Event]", "[Reasons of Change]"]
                 ),
                 sensitive_info_pool,
                 topic,
@@ -421,7 +422,6 @@ def build_conversation_history(event_history, interaction_history):
             "update_subtype": record.get("update_subtype"),
             "event": record.get("Event", ""),
             "category": record.get("Category"),
-            "anchors": record.get("Anchors", {}),
             "[Old Event Date]": record.get("[Old Event Date]") or record.get("Old Event Date"),
             "[Old Event]": record.get("[Old Event]") or record.get("Old Event"),
             "[Reasons of Change]": record.get("[Reasons of Change]") or record.get("Reasons of Change"),

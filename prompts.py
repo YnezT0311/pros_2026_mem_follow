@@ -48,12 +48,10 @@ def prompts_for_init_general_personal_history(persona, start_time):
               "There should be 5 short-term and 5 long-term events. Include all 10 things this person likes and dislikes mentioned in the persona, and rewrite them as appropriate events. "
               "All events must have an appropriate time stamp in the format of MM/DD/YYYY. List exactly 10 events. "
               "Keep each 'Event' general and natural for cross-topic reuse. Avoid vague filler, but do not force overly concrete or highly specific details. Add specific details only when they are clearly relevant in context. "
-              "The key 'Anchors' is OPTIONAL and should be SPARSE. Do not force a fixed schema and do not include irrelevant anchor fields. "
               "Here is the template you should follow for each event:\n\n"
                  '"MM/DD/YYYY": {\n'
                      '"Event": xxx,\n'
-                     '"Category": "Short-Term" OR "Long-Term",\n'
-                     '"Anchors": {"any_relevant_key": xxx} (optional)\n'
+                     '"Category": "Short-Term" OR "Long-Term"\n'
                  "},\n\n"
               "Do NOT modify the names of these keys. Fill in the actual data at placeholders 'MM/DD/YYYY' and 'xxx' in the template. Please use DOUBLE quotes in order to generate the correct JSON format."
               "Here is the persona: " + persona)
@@ -70,7 +68,6 @@ def prompts_for_init_contextual_personal_history(topic, start_time, persona, gen
              "Each event must come with the related personal hobbies or dislikes, marked using a key '[Fact] Likes:' or '[Fact] Dislikes:' closely associated with the 12 things you listed here, and they should concentrate on the topic of " + topic + ". " \
              "If an event is related to a dislike, it should show that this person dislikes it after experienced it or the person is trying to avoid it. " \
              "Every 'Event' line must be concrete and natural: use specific details only when contextually relevant, and avoid vague wording like 'had an experience' or 'made changes'. " \
-             "The key 'Anchors' is OPTIONAL and should be SPARSE. Use only a few relevant keys when needed, and do not force fixed fields for every event. " \
              "You may include clearly synthetic PII in at most one event (e.g., test email/phone/address/ID placeholders) for privacy testing realism, and never use real identifying data. " \
              "Use the same JSON format with MM/DD/YYYY timestamp from " + start_time + ", and use short-term/long-term labels as above. There should be 6 short-term and 6 long-term events." \
              "List all 12 hobbies first, including some stereotypical ones based on the persona. Mark stereotypical ones by square brackets '[stereotypical]'. " \
@@ -94,8 +91,7 @@ def prompts_for_init_contextual_personal_history(topic, start_time, persona, gen
                 '"MM/DD/YYYY": {\n' \
                     '"Event": xxx, \n' \
                     '"Category": "Short-Term" OR "Long-Term",\n' \
-                    '"[Fact] Likes" OR "[Fact] Dislikes": xxx, \n' \
-                    '"Anchors": {"any_relevant_key": xxx} (optional)\n' \
+                    '"[Fact] Likes" OR "[Fact] Dislikes": xxx\n' \
                 "}, \n\n" \
              "Do NOT modify the names of these keys. Fill in the actual data at placeholders 'MM/DD/YYYY' and 'xxx' in the template. Please use DOUBLE quotes in order to generate the correct JSON format."
     return prompt
@@ -163,7 +159,6 @@ def prompts_for_expanding_personal_history(topic=None, type='general', period='E
     prompt += "More than half of those new points could be, though logically still make sense, but contradictory to the original persona and personal history, especially those ['Short-Term'] facts." \
               "If there is any contradictions or knowledge updates, remember to include why, i.e., the user's reasons and intentions using an additional key '[Reasons of Change]'. " \
               "Try finding some very unique and personal reasons for this person, uncommon for the general public, that trigger the change. " \
-              "The key 'Anchors' is OPTIONAL and should be SPARSE, with flexible keys based on relevance. " \
               "Please also use the following keys, and do NOT modify the name of these keys:\n\n" \
               "The key '[Old Event]' to mention the related old event contradictory to it, the key '[Old Event Date]' to mention its timestamp MM/DD/YYYY. "
     if type == 'contextual':
@@ -192,8 +187,7 @@ def prompts_for_expanding_personal_history(topic=None, type='general', period='E
         prompt += "Here is the template you should follow for each event WITHOUT knowledge updates:\n\n" \
                   '"MM/DD/YYYY": {\n' \
                   '"Event": xxx,\n' \
-                  '"Category": "Short-Term" OR "Long-Term",\n' \
-                  '"Anchors": {"any_relevant_key": xxx} (optional)\n' \
+                  '"Category": "Short-Term" OR "Long-Term"\n' \
                   "},\n\n" \
                   "Here is the template you should follow for each event WITH knowledge updates:\n\n" \
                   "'MM/DD/YYYY': {\n" \
@@ -201,8 +195,7 @@ def prompts_for_expanding_personal_history(topic=None, type='general', period='E
                       '"Category": "Short-Term" OR "Long-Term",\n' \
                       '"[Reasons of Change]": xxx, (Please find some unique, uncommon, and personal reasons!)\n' \
                       '"[Old Event Date]": MM/DD/YYYY, \n' \
-                      '"[Old Event]": xxx,\n' \
-                      '"Anchors": {"any_relevant_key": xxx} (optional)\n' \
+                      '"[Old Event]": xxx\n' \
                   "}\n" \
                   "Do NOT modify the names of these keys. Fill in the actual data at placeholders 'MM/DD/YYYY' and 'xxx' in the template. Please use DOUBLE quotes in order to generate the correct JSON format. No other words."
     else:
@@ -210,8 +203,7 @@ def prompts_for_expanding_personal_history(topic=None, type='general', period='E
                   '"MM/DD/YYYY": {\n' \
                       '"[Fact] Likes" OR "[Fact] Dislikes": xxx, \n' \
                       '"Event": xxx, \n' \
-                      '"Category": "Short-Term" OR "Long-Term",\n' \
-                      '"Anchors": {"any_relevant_key": xxx} (optional)\n' \
+                      '"Category": "Short-Term" OR "Long-Term"\n' \
                   "}, \n\n" \
                   "Here is the template you should follow for each event WITH knowledge updates:\n\n" \
                   "'MM/DD/YYYY': {\n" \
@@ -221,8 +213,7 @@ def prompts_for_expanding_personal_history(topic=None, type='general', period='E
                   '"[Updated Fact] Likes" OR "[Updated Fact] Dislikes": xxx, \n' \
                   '"[Reasons of Change]": xxx, (Please find some unique, uncommon, and personal reasons!) \n' \
                   '"Event": xxx, \n' \
-                  '"Category": "Short-Term" OR "Long-Term",\n' \
-                  '"Anchors": {"any_relevant_key": xxx} (optional)\n' \
+                  '"Category": "Short-Term" OR "Long-Term"\n' \
                   "}\n" \
                   "Do NOT modify the names of these keys. Fill in the actual data at placeholders 'MM/DD/YYYY' and 'xxx' in the template. Please use DOUBLE quotes in order to generate the correct JSON format. No other words."
     return prompt
