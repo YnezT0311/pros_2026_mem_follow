@@ -1132,12 +1132,20 @@ def prepare_data(args):
 
         def process_persona(idx_persona):
             errored = {}
+            regenerate_conversation_only = bool(args['inference'].get('regenerate_conversation_only', False))
             LLM = QueryLLM(args)
-            persona, expanded_persona, start_time, init_general_personal_history, general_personal_history_next_week, \
-                general_personal_history_next_month, general_personal_history_next_year = prepare_persona(LLM, idx_persona, all_personas, args)
-            parsed_pii = QueryLLM.parse_synthetic_pii_from_persona_text(expanded_persona)
-            if parsed_pii:
-                LLM.pii_profile = parsed_pii
+            if regenerate_conversation_only:
+                persona = expanded_persona = None
+                init_general_personal_history = general_personal_history_next_week = None
+                general_personal_history_next_month = general_personal_history_next_year = None
+                parsed_pii = None
+                start_time = None
+            else:
+                persona, expanded_persona, start_time, init_general_personal_history, general_personal_history_next_week, \
+                    general_personal_history_next_month, general_personal_history_next_year = prepare_persona(LLM, idx_persona, all_personas, args)
+                parsed_pii = QueryLLM.parse_synthetic_pii_from_persona_text(expanded_persona)
+                if parsed_pii:
+                    LLM.pii_profile = parsed_pii
 
             # Clean up the names of topics
             if args['datasets']['topics'] == ['all']:
@@ -1164,7 +1172,7 @@ def prepare_data(args):
                 source_dir, all_source_files = prepare_topics(idx_topic, all_topics, curr_topic, args)
 
                 # Set a consecutive time frame for different topics for each persona, while all samples below are independent
-                if idx_topic > 0:
+                if idx_topic > 0 and start_time is not None:
                     start_time = utils.pick_a_random_time_within_a_year(start_time)
 
                 for idx_sample in range(int(args['inference']['start_sample_idx']), int(args['inference']['num_samples_per_topic'])):
@@ -1182,7 +1190,6 @@ def prepare_data(args):
                     source_data = utils.load_one_source_data(source_dir, all_source_files, curr_topic) if all_source_files is not None else None
                     max_retries = int(args['inference'].get('max_retries', 0))
                     retry_backoff = float(args['inference'].get('retry_backoff', 2.0))
-                    regenerate_conversation_only = bool(args['inference'].get('regenerate_conversation_only', False))
                     success = False
                     for attempt in range(max_retries + 1):
                         if attempt > 0 and os.path.exists(output_file_path) and not regenerate_conversation_only:
