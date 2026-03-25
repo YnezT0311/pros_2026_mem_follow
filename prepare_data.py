@@ -713,7 +713,7 @@ def prepare_topics(idx_topic, all_topics, curr_topic, args):
     return source_dir, all_source_files
 
 
-def parse_conversation_sections(LLM, input_conversation, topic, last_timestamp, verbose):
+def parse_conversation_sections(LLM, input_conversation, topic, last_timestamp, verbose, debug_writer=None):
     """
     :param input_conversation: A list of strings representing the conversation
     We define each section in the conversation as a group of lines before the next Side_Note
@@ -785,9 +785,14 @@ def parse_conversation_sections(LLM, input_conversation, topic, last_timestamp, 
     # Add the last section if there is one
     if current_section:
         sections.append(current_section)
-    # print('all sections', sections, '\n\n')
+    if debug_writer is not None:
+        debug_writer("sections_raw", {
+            "section_count": len(sections),
+            "sections": sections,
+        })
 
     expanded_conversation = []
+    expanded_sections = []
     for idx, section in enumerate(sections):
         # print('section', section, '\n\n')
         if section and not any(isinstance(line, str) and any(line.startswith(keyword) for keyword in keywords) for line in section):
@@ -795,10 +800,24 @@ def parse_conversation_sections(LLM, input_conversation, topic, last_timestamp, 
             # a Side_Note-oriented block template and would otherwise invent a fake
             # timestamped Side_Note for this opening.
             expanded_section = section
+            expanded_via_llm = False
         else:
             expanded_section = expand_section(LLM, section, last_timestamp)
+            expanded_via_llm = True
 
         expanded_conversation += expanded_section
+        expanded_sections.append({
+            "section_index": idx,
+            "expanded_via_llm": expanded_via_llm,
+            "original": section,
+            "expanded": expanded_section,
+        })
+
+    if debug_writer is not None:
+        debug_writer("sections_expanded", {
+            "section_count": len(expanded_sections),
+            "sections": expanded_sections,
+        })
 
     if verbose:
         print(f'{utils.Colors.OKGREEN}{"Expanded Conversation"}:{utils.Colors.ENDC}')
@@ -1013,12 +1032,32 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
             maybe_write_conversation_log(output_file_path, args, data_name, "reflect_round1", reflected)
             response = LLM.query_llm(step='reflect_' + step, topic=curr_topic, action=2, verbose=args['inference']['verbose'])
             maybe_write_conversation_log(output_file_path, args, data_name, "reflect_round2", response)
-            expanded_conversation = parse_conversation_sections(LLM, response, curr_topic, last_timestamps[conv_idx], verbose=args['inference']['verbose'])
+            expanded_conversation = parse_conversation_sections(
+                LLM,
+                response,
+                curr_topic,
+                last_timestamps[conv_idx],
+                verbose=args['inference']['verbose'],
+                debug_writer=lambda artifact_name, payload: maybe_write_conversation_log(
+                    output_file_path, args, data_name, artifact_name, payload
+                ),
+            )
             maybe_write_conversation_log(output_file_path, args, data_name, "parsed", expanded_conversation)
             expanded_conversation = _dedupe_side_note_blocks(expanded_conversation)
             maybe_write_conversation_log(output_file_path, args, data_name, "deduped", expanded_conversation)
             _assert_conversation_aligned(expanded_conversation, conversation_histories[conv_idx], data_name)
             utils.append_json_to_file(expanded_conversation, output_file_path, curr_data_name=data_name, parse_json=False, parse_list=False)
+            maybe_write_conversation_log(
+                output_file_path,
+                args,
+                data_name,
+                "append_success",
+                {
+                    "line_count": len(expanded_conversation) if isinstance(expanded_conversation, list) else None,
+                    "side_note_count": len(_extract_side_note_dates(expanded_conversation)),
+                    "status": "appended",
+                },
+            )
         except Exception as e:
             maybe_write_conversation_log(output_file_path, args, data_name, "error", repr(e))
             raise
