@@ -172,7 +172,7 @@ Conversation is generated from conversation history.
 
 The intended format is:
 
-- an optional brief topic-related intro without `Side_Note`
+- an optional brief topic-related intro without `Side_Note`, written as one `User` line followed by one `Assistant` line
 - then, for every history item:
   - one `Side_Note`
   - one user line
@@ -184,7 +184,7 @@ So each history-related block should follow:
 - `User`
 - `Assistant`
 
-The intro may exist, but it should not invent a timestamped `Side_Note`.
+The intro may exist, but it should not invent a timestamped `Side_Note`. User turns should not feel overly compressed; they should usually share enough context, motivation, or practical detail to sound like a real person who is willing to explain what is going on.
 
 ## Minimal Schema
 
