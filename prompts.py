@@ -228,7 +228,7 @@ def prompts_for_expanding_personal_history(topic=None, type='general', period='E
     return prompt
 
 
-def prompts_for_generating_conversations(topic, persona, curr_personal_history=None, period='INITIAL', sensitive_info_pool=None):
+def prompts_for_generating_conversations(topic, persona, curr_personal_history=None, period='INITIAL'):
     if topic == 'therapy':
         topic_name, user, agent = 'therapy', 'Patient', 'Therapist'
     else:
@@ -253,14 +253,14 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
     if period == 'INITIAL':
         prompt += "Here is the persona:\n\n" + persona + "\n\nand the conversation history to realize:\n\n" + curr_personal_history + "\n\n"
     elif period == 'EARLY':
-        prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
-                  "but with a new conversation history from the early stage following the initial stage:\n\n" + curr_personal_history + "\n\n"
+        prompt += "Continue using the same persona already established in this conversation thread. " \
+                  "Here is the new conversation history from the early stage following the initial stage:\n\n" + curr_personal_history + "\n\n"
     elif period == 'INTERMEDIATE':
-        prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
-                  "but with a new conversation history from the intermediate stage following the earlier stages:\n\n" + curr_personal_history + "\n\n"
+        prompt += "Continue using the same persona already established in this conversation thread. " \
+                  "Here is the new conversation history from the intermediate stage following the earlier stages:\n\n" + curr_personal_history + "\n\n"
     else:
-        prompt += "Please use the same persona:\n\n" + persona + "\n\n" \
-                  "but with a new conversation history from the late stage following the earlier stages:\n\n" + curr_personal_history + "\n\n"
+        prompt += "Continue using the same persona already established in this conversation thread. " \
+                  "Here is the new conversation history from the late stage following the earlier stages:\n\n" + curr_personal_history + "\n\n"
 
     prompt += "After any brief opening lines, here is the template you should follow for each pair of utterance that mentions a fact in the personal history:\n\n" \
               "[\n" \

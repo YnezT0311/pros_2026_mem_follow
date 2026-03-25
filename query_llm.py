@@ -477,7 +477,6 @@ class QueryLLM:
                 self.expanded_persona,
                 curr_personal_history=self.init_personal_history,
                 period='INITIAL',
-                sensitive_info_pool=sensitive_info_pool,
             )
         elif step == 'first_expand_conversation':
             prompt = prompts.prompts_for_generating_conversations(
@@ -485,7 +484,6 @@ class QueryLLM:
                 self.expanded_persona,
                 curr_personal_history=self.first_expand_personal_history,
                 period='EARLY',
-                sensitive_info_pool=sensitive_info_pool,
             )
         elif step == 'second_expand_conversation':
             prompt = prompts.prompts_for_generating_conversations(
@@ -493,7 +491,6 @@ class QueryLLM:
                 self.expanded_persona,
                 curr_personal_history=self.second_expand_personal_history,
                 period='INTERMEDIATE',
-                sensitive_info_pool=sensitive_info_pool,
             )
         elif step == 'third_expand_conversation':
             prompt = prompts.prompts_for_generating_conversations(
@@ -501,7 +498,6 @@ class QueryLLM:
                 self.expanded_persona,
                 curr_personal_history=self.third_expand_personal_history,
                 period='LATE',
-                sensitive_info_pool=sensitive_info_pool,
             )
 
         # Reflect on the conversation
