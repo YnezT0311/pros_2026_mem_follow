@@ -14,6 +14,18 @@ PERIODS = [
 
 INITIAL_INTERACTION_HISTORY = "Interaction History Initial Stage"
 INITIAL_CONVERSATION_HISTORY = "Conversation History Initial Stage"
+EVENT_HISTORY_SECTIONS = [
+    "Event History Initial Stage",
+    "Event History Early Stage",
+    "Event History Intermediate Stage",
+    "Event History Late Stage",
+]
+INTERACTION_HISTORY_SECTIONS = [
+    "Interaction History Initial Stage",
+    "Interaction History Early Stage",
+    "Interaction History Intermediate Stage",
+    "Interaction History Late Stage",
+]
 
 SIDE_NOTE_RE = re.compile(r"^Side_Note:\s*\[(.*)\]\s+(\d{2}/\d{2}/\d{4}(?:-I\d{2})?)\s*$")
 TOKEN_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9'-]*")
@@ -126,78 +138,164 @@ def extract_interaction_candidates(data: Dict) -> List[Dict]:
     return candidates
 
 
-def weighted_terms(text: str) -> Dict[str, float]:
-    weights: Dict[str, float] = {}
+def content_tokens(text: str) -> List[str]:
+    tokens = []
     for raw in TOKEN_RE.findall(text or ""):
         token = raw.lower().strip(".,!?;:'\"()[]{}")
-        if not token or token in STOPWORDS:
+        if not token or token in STOPWORDS or len(token) < 4:
             continue
-        if any(ch.isdigit() for ch in token):
-            weight = 3.0
-        elif len(token) >= 10:
-            weight = 2.5
-        elif len(token) >= 7:
-            weight = 2.0
-        elif len(token) >= 5:
-            weight = 1.5
-        else:
-            weight = 1.0
-        weights[token] = max(weight, weights.get(token, 0.0))
-    return weights
+        tokens.append(token)
+    return tokens
 
 
-def candidate_fact_string(candidate: Dict) -> str:
-    parts = list((candidate.get("context_can_add") or {}).keys())
-    parts.extend(candidate.get("sensitive_values", []))
-    return " ".join(p for p in parts if p)
+def normalize_context_key(key: str) -> str:
+    return normalize_text(str(key).replace("_", " "))
 
 
-def score_conflict(text: str, candidate: Dict) -> Tuple[float, List[str]]:
-    text_norm = normalize_text(text)
-    hits: List[str] = []
-    score = 0.0
-
-    for value in candidate.get("sensitive_values", []):
-        value_norm = normalize_sensitive_value(value)
-        if value_norm and value_norm in text_norm:
-            hits.append(value)
-            score += 6.0
-
-    fact_terms = weighted_terms(candidate_fact_string(candidate))
-    tokens = {
-        token.lower().strip(".,!?;:'\"()[]{}")
-        for token in TOKEN_RE.findall(text or "")
-    }
-    for term, weight in fact_terms.items():
-        if term in tokens:
-            hits.append(term)
-            score += weight
-
-    return score, sorted(set(hits))
+def similar_task_goal(goal_a: str, goal_b: str) -> bool:
+    a = set(content_tokens(goal_a))
+    b = set(content_tokens(goal_b))
+    if not a or not b:
+        return False
+    overlap = a & b
+    if len(overlap) < 4:
+        return False
+    jaccard = len(overlap) / max(1, len(a | b))
+    containment = max(len(overlap) / len(a), len(overlap) / len(b))
+    return jaccard >= 0.5 or containment >= 0.7
 
 
-def detect_future_mentions(data: Dict, candidate: Dict, threshold: float = 8.0) -> List[Dict]:
-    mentions: List[Dict] = []
-    start = period_index("Conversation Early Stage")
-    for period in PERIODS[start:]:
-        lines = data.get(period, [])
-        if not isinstance(lines, list):
+def get_event_parent_map(data: Dict) -> Dict[str, str]:
+    parent_map: Dict[str, str] = {}
+    for section in EVENT_HISTORY_SECTIONS:
+        history = data.get(section, {})
+        if not isinstance(history, dict):
             continue
-        for idx, line in enumerate(lines):
-            if not isinstance(line, str) or line.startswith("Side_Note"):
+        for record in history.values():
+            if not isinstance(record, dict):
                 continue
-            score, hits = score_conflict(line, candidate)
-            if score >= threshold:
-                mentions.append(
+            event_id = record.get("event_id")
+            relations = record.get("relations", []) or []
+            if not event_id:
+                continue
+            for relation in relations:
+                if relation.get("type") == "evolves_from" and relation.get("source_event_id"):
+                    parent_map[event_id] = relation["source_event_id"]
+    return parent_map
+
+
+def is_descendant_event(event_id: Optional[str], ancestor_event_id: Optional[str], parent_map: Dict[str, str]) -> bool:
+    if not event_id or not ancestor_event_id or event_id == ancestor_event_id:
+        return False
+    current = event_id
+    seen = set()
+    while current and current not in seen:
+        seen.add(current)
+        current = parent_map.get(current)
+        if current == ancestor_event_id:
+            return True
+    return False
+
+
+def detect_future_conflicts(data: Dict, candidate: Dict) -> Dict[str, List[Dict]]:
+    sensitive_values = {
+        normalize_sensitive_value(value): value
+        for value in candidate.get("sensitive_values", [])
+        if normalize_sensitive_value(value)
+    }
+    context_keys = {
+        normalize_context_key(key): key
+        for key in (candidate.get("context_can_add") or {})
+        if normalize_context_key(key)
+    }
+    parent_map = get_event_parent_map(data)
+
+    reused_sensitive_info: List[Dict] = []
+    reused_context_can_add: List[Dict] = []
+    event_lineage_reuse: List[Dict] = []
+    similar_task_goals: List[Dict] = []
+
+    for section in INTERACTION_HISTORY_SECTIONS[1:]:
+        history = data.get(section, {})
+        if not isinstance(history, dict):
+            continue
+        for ts, record in history.items():
+            later_sensitive = {
+                normalize_sensitive_value(value): value
+                for value in flatten_sensitive_values(record)
+                if normalize_sensitive_value(value)
+            }
+            shared_sensitive = sorted(set(sensitive_values) & set(later_sensitive))
+            if shared_sensitive:
+                reused_sensitive_info.append(
                     {
-                        "period": period,
-                        "line_index": idx,
-                        "line": line,
-                        "score": round(score, 3),
-                        "hits": hits,
+                        "section": section,
+                        "timestamp": record.get("timestamp", ts),
+                        "matched_values": [sensitive_values[v] for v in shared_sensitive],
                     }
                 )
-    return mentions
+
+            later_context = {
+                normalize_context_key(key): key
+                for key in (record.get("[Context Can Add]") or {})
+                if normalize_context_key(key)
+            }
+            shared_context = sorted(set(context_keys) & set(later_context))
+            if shared_context:
+                reused_context_can_add.append(
+                    {
+                        "section": section,
+                        "timestamp": record.get("timestamp", ts),
+                        "matched_context_keys": [context_keys[k] for k in shared_context],
+                    }
+                )
+
+            if similar_task_goal(candidate.get("task_goal", ""), record.get("[Task Goal]", "")):
+                similar_task_goals.append(
+                    {
+                        "section": section,
+                        "timestamp": record.get("timestamp", ts),
+                        "task_goal": record.get("[Task Goal]", ""),
+                    }
+                )
+
+            later_source = record.get("source_event_id")
+            if later_source == candidate.get("source_event_id") or is_descendant_event(
+                later_source,
+                candidate.get("source_event_id"),
+                parent_map,
+            ):
+                event_lineage_reuse.append(
+                    {
+                        "section": section,
+                        "timestamp": record.get("timestamp", ts),
+                        "source_event_id": later_source,
+                        "kind": "interaction",
+                    }
+                )
+
+    for section in EVENT_HISTORY_SECTIONS[1:]:
+        history = data.get(section, {})
+        if not isinstance(history, dict):
+            continue
+        for ts, record in history.items():
+            later_event_id = record.get("event_id")
+            if is_descendant_event(later_event_id, candidate.get("source_event_id"), parent_map):
+                event_lineage_reuse.append(
+                    {
+                        "section": section,
+                        "timestamp": ts,
+                        "event_id": later_event_id,
+                        "kind": "event",
+                    }
+                )
+
+    return {
+        "reused_sensitive_info": reused_sensitive_info,
+        "reused_context_can_add": reused_context_can_add,
+        "event_lineage_reuse": event_lineage_reuse,
+        "similar_task_goals": similar_task_goals,
+    }
 
 
 def annotate_duplicate_sensitive_values(candidates: List[Dict]) -> None:
@@ -229,8 +327,16 @@ def annotate_duplicate_sensitive_values(candidates: List[Dict]) -> None:
 def choose_key_and_probe_turns(candidates: List[Dict]) -> Dict[str, List[Dict]]:
     annotate_duplicate_sensitive_values(candidates)
     for candidate in candidates:
-        candidate["future_mentions"] = candidate.get("future_mentions", [])
-        candidate["future_conflict_count"] = len(candidate["future_mentions"])
+        candidate["future_conflicts"] = candidate.get("future_conflicts", {})
+        candidate["future_conflict_count"] = sum(
+            len(candidate["future_conflicts"].get(key, []))
+            for key in (
+                "reused_sensitive_info",
+                "reused_context_can_add",
+                "event_lineage_reuse",
+                "similar_task_goals",
+            )
+        )
         candidate["needs_revision"] = candidate["future_conflict_count"] > 0
 
     if not candidates:
@@ -265,7 +371,7 @@ def choose_key_and_probe_turns(candidates: List[Dict]) -> Dict[str, List[Dict]]:
 def build_baseline_spec(data: Dict, source_path: str) -> Dict:
     candidates = extract_interaction_candidates(data)
     for candidate in candidates:
-        candidate["future_mentions"] = detect_future_mentions(data, candidate)
+        candidate["future_conflicts"] = detect_future_conflicts(data, candidate)
 
     selection = choose_key_and_probe_turns(candidates)
     return {
@@ -276,7 +382,12 @@ def build_baseline_spec(data: Dict, source_path: str) -> Dict:
             "key_target_count": len(selection["keys"]),
             "probe_target_count": len(selection["probes"]),
             "prefer_last_exact_sensitive_occurrence": True,
-            "future_conflict_detection": "later-stage line match using exact sensitive values plus weighted lexical overlap from task/context",
+            "future_conflict_detection": [
+                "exact reuse of later [Sensitive Info] values",
+                "exact reuse of later [Context Can Add] keys",
+                "later event or interaction belonging to the source event's descendant chain",
+                "boolean high-similarity check over later [Task Goal] text",
+            ],
         },
         "key_turns": selection["keys"],
         "protected_probe_turns": selection["probes"],

@@ -55,12 +55,14 @@ The offline conflict check intentionally uses only information already present i
 
 This is important because the current history pipeline already exposes a traceable chain and explicit sensitive anchors. We do not need to guess conflicts from scratch.
 
-Future mentions are detected with:
+Future conflicts are now detected with hard rules instead of line-level scoring:
 
-- exact matching on normalized sensitive values
-- weighted lexical overlap from task/context text
+- exact reuse of normalized `[Sensitive Info]` values in later interaction history
+- exact reuse of normalized `[Context Can Add]` keys in later interaction history
+- later events or interactions that belong to the candidate source event's descendant chain
+- a boolean high-similarity check on later `[Task Goal]` text
 
-If a candidate has no later-stage hits, it is treated as baseline-safe. If it has hits, the spec marks it as `needs_revision`.
+If a candidate has no later-stage hits under these rules, it is treated as baseline-safe. If it has hits, the spec marks it as `needs_revision`.
 
 ## World Semantics
 
