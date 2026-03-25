@@ -60,33 +60,39 @@ def prompts_for_init_general_personal_history(persona, start_time):
 
 def prompts_for_init_contextual_personal_history(topic, start_time, persona, general_personal_history):
     prompt = "Here is the persona:\n\n" + persona + "\n\nHere are some events related to the person's general background history:\n\n" + general_personal_history + "\n\n" \
-             "Given the persona above, please first list 12 hobbies related to " + topic + ". Next, please randomly assign 6 of them to the likes of this person, and the remaining 6 to the dislikes of this person. " \
+             "Given the persona above, please first list 18 hobbies related to " + topic + ". Next, please randomly assign 9 of them to the likes of this person, and the remaining 9 to the dislikes of this person. " \
              "Make sure every hobby, regardless of whether it is a like or dislike, is unique and attractive in common, so that the exact dislikes can potentially be turned into likes in the future." \
-             "Next, write 12 events related to the topic of " + topic + ". Think about how this person's general background history may affect their events under " + topic + ". " \
-             "Include all these 12 new things this person likes and dislikes, and rewrite them as appropriate events. " \
+             "Next, write 18 events related to the topic of " + topic + ". Think about how this person's general background history may affect their events under " + topic + ". " \
+             "Include all these 18 new things this person likes and dislikes, and rewrite them as appropriate events. " \
              "Do NOT mention anything already mentioned above. Do NOT mention anything about the general personal history, like the professional development. " \
-             "Each event must come with the related personal hobbies or dislikes, marked using a key '[Fact] Likes:' or '[Fact] Dislikes:' closely associated with the 12 things you listed here, and they should concentrate on the topic of " + topic + ". " \
+             "Each event must come with the related personal hobbies or dislikes, marked using a key '[Fact] Likes:' or '[Fact] Dislikes:' closely associated with the 18 things you listed here, and they should concentrate on the topic of " + topic + ". " \
              "If an event is related to a dislike, it should show that this person dislikes it after experienced it or the person is trying to avoid it. " \
              "Every 'Event' line must be concrete and natural: use specific details only when contextually relevant, and avoid vague wording like 'had an experience' or 'made changes'. " \
              "You may include clearly synthetic PII in at most one event (e.g., test email/phone/address/ID placeholders) for privacy testing realism, and never use real identifying data. " \
-             "Use the same JSON format with MM/DD/YYYY timestamp from " + start_time + ", and use short-term/long-term labels as above. There should be 6 short-term and 6 long-term events." \
-             "List all 12 hobbies first, including some stereotypical ones based on the persona. Mark stereotypical ones by square brackets '[stereotypical]'. " \
-             "Next, randomly assign those 12 hobbies into likes or dislikes for this person. " \
-             "After you have generated the list above, generate one dict for each event following those 12 likes and dislikes. " \
+             "Use the same JSON format with MM/DD/YYYY timestamp from " + start_time + ", and use short-term/long-term labels as above. There should be 9 short-term and 9 long-term events." \
+             "List all 18 hobbies first, including some stereotypical ones based on the persona. Mark stereotypical ones by square brackets '[stereotypical]'. " \
+             "Next, randomly assign those 18 hobbies into likes or dislikes for this person. " \
+             "After you have generated the list above, generate one dict for each event following those 18 likes and dislikes. " \
              "Then follow this template in string to present the random assignment:\n\n" \
-             "12 hobbies: xxx, ..., xxx\n" \
+             "18 hobbies: xxx, ..., xxx\n" \
              "Initial preferences randomly assigned: [1] Likes xxx (Add [stereotypical] here if appropriate, same for each of the 12 rows below)\n" \
              "[2] Likes xxx\n" \
              "[3] Likes xxx\n" \
              "[4] Likes xxx\n" \
              "[5] Likes xxx\n" \
              "[6] Likes xxx\n" \
+             "[7] Likes xxx\n" \
+             "[8] Likes xxx\n" \
+             "[9] Likes xxx\n" \
              "[1] Dislikes xxx\n" \
              "[2] Dislikes xxx\n" \
              "[3] Dislikes xxx\n" \
              "[4] Dislikes xxx\n" \
              "[5] Dislikes xxx\n" \
              "[6] Dislikes xxx\n" \
+             "[7] Dislikes xxx\n" \
+             "[8] Dislikes xxx\n" \
+             "[9] Dislikes xxx\n" \
              "After you have generated the list above, here is the template in JSON you should follow for each event. PLEASE MUST USE JSON FOR THIS PART:\n\n" \
                 '"MM/DD/YYYY": {\n' \
                     '"Event": xxx, \n' \
@@ -177,11 +183,11 @@ def prompts_for_expanding_personal_history(topic=None, type='general', period='E
     if type == 'general':
         prompt += "Now, please continue to write 10 more events aligned with this persona. Do NOT repeat anything already mentioned above. "
     else:
-        prompt += "Now, please continue to write 6 more events aligned with this persona. Do NOT repeat anything already mentioned above. "
+        prompt += "Now, please continue to write 9 more events aligned with this persona. Do NOT repeat anything already mentioned above. "
     if type == 'general':
         prompt += "Use the same JSON format with MM/DD/YYYY timestamp starting at the end of the previous general personal history, and use short-term/long-term labels as above. There should be 5 short-term and 5 long-term events."
     else:
-        prompt += "Use the same JSON format with MM/DD/YYYY timestamp starting at the end of the previous contextual personal history, and use short-term/long-term labels as above. There should be 3 short-term and 3 long-term events."
+        prompt += "Use the same JSON format with MM/DD/YYYY timestamp starting at the end of the previous contextual personal history, and use short-term/long-term labels as above. There should be 4 short-term and 5 long-term events."
 
     if type == 'general':
         prompt += "Here is the template you should follow for each event WITHOUT knowledge updates:\n\n" \
