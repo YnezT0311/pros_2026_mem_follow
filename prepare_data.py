@@ -1022,16 +1022,6 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
                 sensitive_info_pool=sensitive_info_pool,
             )
             maybe_write_conversation_log(output_file_path, args, data_name, "raw", response)
-            reflected = LLM.query_llm(
-                step='reflect_' + step,
-                topic=curr_topic,
-                data=response,
-                action=1,
-                verbose=args['inference']['verbose'],
-            )
-            maybe_write_conversation_log(output_file_path, args, data_name, "reflect_round1", reflected)
-            response = LLM.query_llm(step='reflect_' + step, topic=curr_topic, action=2, verbose=args['inference']['verbose'])
-            maybe_write_conversation_log(output_file_path, args, data_name, "reflect_round2", response)
             expanded_conversation = parse_conversation_sections(
                 LLM,
                 response,
