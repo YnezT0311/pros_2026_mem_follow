@@ -69,6 +69,9 @@ CONVERSATION_SECTION_NAMES = [
     "Conversation Late Stage",
 ]
 
+
+TQDM_DISABLE = not sys.stderr.isatty()
+
 TOPIC_SENSITIVE_POOL_HINTS = {
     # TODO: This mapping currently covers only the baseline topics available in data/output.
     # If more topics are added later, extend TOPIC_SENSITIVE_POOL_HINTS and
@@ -809,6 +812,10 @@ def parse_conversation_sections(LLM, input_conversation, topic, last_timestamp, 
     for idx, section in enumerate(sections):
         # print('section', section, '\n\n')
         expanded_section = expand_section(LLM, section, last_timestamp)
+        # Preserve a plain intro section without inventing a Side_Note for it.
+        if section and not any(isinstance(line, str) and any(line.startswith(keyword) for keyword in keywords) for line in section):
+            while expanded_section and isinstance(expanded_section[0], str) and any(expanded_section[0].startswith(keyword) for keyword in keywords):
+                expanded_section = expanded_section[1:]
 
         expanded_conversation += expanded_section
 
@@ -874,7 +881,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
 
     last_timestamps = []
     normalized_history = {}
-    for step, data_name in tqdm(zip(steps, data_names)):
+    for step, data_name in tqdm(zip(steps, data_names), disable=TQDM_DISABLE):
         print(f'{utils.Colors.OKGREEN}Processing step: {step}{utils.Colors.ENDC}')
         # Only generate general personal history once, to be shared across multiple topics for the same persona
         # if idx_topic > 0 and step in existing_general_personal_history:
@@ -1079,7 +1086,7 @@ def prepare_irrelevant_contexts(LLM, args):
         with open(output_file_path, "w", encoding="utf-8") as file:
             json.dump(ordered_entries, file, indent=4)
 
-    for index, question in enumerate(tqdm(all_random_questions)):
+    for index, question in enumerate(tqdm(all_random_questions, disable=TQDM_DISABLE)):
         if index in completed_map:
             continue
 
@@ -1149,7 +1156,7 @@ def prepare_data(args):
                             break
 
             # Loop through each topic in the list
-            for idx_topic, curr_topic in tqdm(enumerate(all_topics)):
+            for idx_topic, curr_topic in tqdm(enumerate(all_topics), disable=TQDM_DISABLE):
                 if curr_topic == '' or curr_topic is None:
                     continue
                 source_dir, all_source_files = prepare_topics(idx_topic, all_topics, curr_topic, args)
@@ -1261,14 +1268,14 @@ def prepare_data(args):
 
         workers = int(args['inference'].get('workers', 1))
         if workers <= 1:
-            for idx_persona in tqdm(persona_indices):
+            for idx_persona in tqdm(persona_indices, disable=TQDM_DISABLE):
                 curr_errors = process_persona(idx_persona)
                 all_errored_data_paths.update(curr_errors)
         else:
             print(f'{utils.Colors.OKBLUE}Running with {workers} workers across persona shards.{utils.Colors.ENDC}')
             with ThreadPoolExecutor(max_workers=workers) as ex:
                 futures = {ex.submit(process_persona, idx): idx for idx in persona_indices}
-                for fut in tqdm(as_completed(futures), total=len(futures)):
+                for fut in tqdm(as_completed(futures), total=len(futures), disable=TQDM_DISABLE):
                     curr_errors = fut.result()
                     all_errored_data_paths.update(curr_errors)
 

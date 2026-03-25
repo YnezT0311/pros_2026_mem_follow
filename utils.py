@@ -66,6 +66,13 @@ def normalize_conversation_period(name):
     return name
 
 
+def safe_print(*args, **kwargs):
+    try:
+        print(*args, **kwargs)
+    except BrokenPipeError:
+        return
+
+
 def _parse_persona_line(raw_line):
     raw_line = raw_line.strip()
     if not raw_line:
@@ -315,7 +322,7 @@ def append_json_to_file(response, output_file_path, curr_data_name, parse_json=F
         json.dump(existing_json_file, json_file, indent=4)
 
     section_count = len(existing_json_file.keys())
-    print(
+    safe_print(
         f"{Colors.OKBLUE}[write]{Colors.ENDC} "
         f"{os.path.basename(output_file_path)} :: {curr_data_name} "
         f"(total sections: {section_count})"
