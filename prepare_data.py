@@ -811,11 +811,13 @@ def parse_conversation_sections(LLM, input_conversation, topic, last_timestamp, 
     expanded_conversation = []
     for idx, section in enumerate(sections):
         # print('section', section, '\n\n')
-        expanded_section = expand_section(LLM, section, last_timestamp)
-        # Preserve a plain intro section without inventing a Side_Note for it.
         if section and not any(isinstance(line, str) and any(line.startswith(keyword) for keyword in keywords) for line in section):
-            while expanded_section and isinstance(expanded_section[0], str) and any(expanded_section[0].startswith(keyword) for keyword in keywords):
-                expanded_section = expanded_section[1:]
+            # Keep a plain intro section as-is. The downstream section expander assumes
+            # a Side_Note-oriented block template and would otherwise invent a fake
+            # timestamped Side_Note for this opening.
+            expanded_section = section
+        else:
+            expanded_section = expand_section(LLM, section, last_timestamp)
 
         expanded_conversation += expanded_section
 
