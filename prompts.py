@@ -254,15 +254,15 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
         prompt += "Here is the persona:\n\n" + persona + "\n\nand the conversation history to realize:\n\n" + curr_personal_history + "\n\n"
     elif period == 'EARLY':
         prompt += "Continue using the same persona already established in this conversation thread. " \
-                  "The person is coming back later with a new cluster of travel events and help-seeking moments. " \
+                  "Some time has passed since the earlier conversation, and the person is coming back with a new cluster of travel events and help-seeking moments. " \
                   "Here is the next time-ordered history to realize naturally as a later continuation of the same relationship:\n\n" + curr_personal_history + "\n\n"
     elif period == 'INTERMEDIATE':
         prompt += "Continue using the same persona already established in this conversation thread. " \
-                  "This conversation should feel like the person is returning later with another set of experiences, updates, and requests. " \
+                  "More time has passed since the earlier conversation, and this should feel like the person is returning with another set of experiences, updates, and requests. " \
                   "Here is the next time-ordered history to realize as a later return to the same assistant:\n\n" + curr_personal_history + "\n\n"
     else:
         prompt += "Continue using the same persona already established in this conversation thread. " \
-                  "This should read like a much later return in the same ongoing relationship, with accumulated preferences, events, and follow-up requests. " \
+                  "A long time has passed since the earliest exchanges, so this should read like a much later return in the same ongoing relationship, with accumulated preferences, events, and follow-up requests. " \
                   "Here is the next time-ordered history to realize as that later conversation:\n\n" + curr_personal_history + "\n\n"
 
     prompt += "After any brief opening lines, here is the template you should follow for each pair of utterance that mentions a fact in the personal history:\n\n" \
