@@ -50,22 +50,11 @@ def _pick(pool: List[str], template_index: Optional[int]) -> str:
         return random.choice(pool)
     return pool[template_index % len(pool)]
 
-
-def _template_group(world_type: str, template_style: str) -> Dict[str, List[str]]:
-    group = TEMPLATES.get(world_type, {})
-    if isinstance(group, dict) and template_style in group:
-        return group[template_style]
-    if isinstance(group, dict):
-        return group
-    return {}
-
-
 def apply_no_store(
     data: Dict,
     period: str,
     key_timestamp: str,
     template_index: Optional[int] = None,
-    template_style: str = "explicit",
     placement: str = "suffix",
 ) -> Dict:
     out = copy.deepcopy(data)
@@ -76,7 +65,7 @@ def apply_no_store(
     if not block:
         return out
 
-    group = _template_group("no_store", template_style)
+    group = TEMPLATES.get("no_store", {})
     user_key = "user_prefix" if placement == "prefix" else "user_suffix"
     user_text = _pick(group.get(user_key, []), template_index)
     assistant_ack = _pick(group.get("assistant_ack", []), template_index)
@@ -116,9 +105,8 @@ def apply_forget(
     data: Dict,
     instruction_period: str = "Conversation Early Stage",
     template_index: Optional[int] = None,
-    template_style: str = "explicit",
 ) -> Dict:
-    group = _template_group("forget", template_style)
+    group = TEMPLATES.get("forget", {})
     user_line = _pick(group.get("user", []), template_index)
     assistant_line = _pick(group.get("assistant", []), template_index)
     return append_instruction_turn(data, instruction_period, user_line, assistant_line)
@@ -129,9 +117,8 @@ def apply_no_use(
     restrict_period: str = "Conversation Early Stage",
     release_period: Optional[str] = None,
     template_index: Optional[int] = None,
-    template_style: str = "explicit",
 ) -> Dict:
-    group = _template_group("no_use", template_style)
+    group = TEMPLATES.get("no_use", {})
     out = append_instruction_turn(
         data,
         restrict_period,

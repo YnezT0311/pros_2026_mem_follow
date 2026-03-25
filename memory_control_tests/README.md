@@ -86,14 +86,7 @@ All three test settings reuse the same baseline and the same QA.
 
 The concrete instruction/reply pools live in `templates.json`.
 
-The template pool is now organized into two styles:
-
-- `explicit`
-  - direct instruction wording such as “do not remember this later”
-- `implicit`
-  - softer wording that still communicates the same control preference
-
-For `no_store`, both styles support either front-loaded insertion or end-loaded insertion inside the key turn.
+The template pool uses direct instruction wording. For `no_store`, templates support either front-loaded insertion or end-loaded insertion inside the key turn.
 
 ## Evaluation-Time Transform
 
