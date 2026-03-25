@@ -29,6 +29,7 @@ The sidecar spec records:
 - suggested `key_turns`
 - suggested `protected_probe_turns`
 - future-mention evidence for each candidate
+- a `baseline_resolution` summary describing whether the selected keys are already conflict-free or would need later targeted revision
 
 ## Candidate Selection
 
@@ -63,6 +64,8 @@ Future conflicts are now detected with hard rules instead of line-level scoring:
 - a boolean high-similarity check on later `[Task Goal]` text
 
 If a candidate has no later-stage hits under these rules, it is treated as baseline-safe. If it has hits, the spec marks it as `needs_revision`.
+
+When the selected key set is already conflict-free, the baseline conversation can be copied directly from `data/output/` without editing. That is the preferred path because it keeps the baseline world maximally close to the original generated conversation.
 
 ## World Semantics
 

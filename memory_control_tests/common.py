@@ -346,7 +346,7 @@ def choose_key_and_probe_turns(candidates: List[Dict]) -> Dict[str, List[Dict]]:
     target_keys = len(candidates) // 2
     target_probes = len(candidates) - target_keys
 
-    ranked = sorted(
+    ranked_for_keys = sorted(
         candidates,
         key=lambda c: (
             c["future_conflict_count"],
@@ -355,19 +355,40 @@ def choose_key_and_probe_turns(candidates: List[Dict]) -> Dict[str, List[Dict]]:
         ),
     )
 
-    keys: List[Dict] = []
-    probes: List[Dict] = []
-    for candidate in ranked:
-        if len(keys) < target_keys and (len(keys) <= len(probes) or len(probes) >= target_probes):
-            keys.append(candidate)
-        elif len(probes) < target_probes:
-            probes.append(candidate)
-        else:
-            break
+    keys = ranked_for_keys[:target_keys]
+
+    remaining = [c for c in candidates if c not in keys]
+    probes = sorted(
+        remaining,
+        key=lambda c: (
+            c["future_conflict_count"],
+            c["history_index"],
+        ),
+    )[:target_probes]
 
     rejected = [c for c in candidates if c not in keys and c not in probes]
 
     return {"keys": keys, "probes": probes, "rejected": rejected}
+
+
+def summarize_key_resolution(selection: Dict[str, List[Dict]]) -> Dict:
+    keys = selection.get("keys", [])
+    key_conflicts = {
+        key["timestamp"]: key.get("future_conflicts", {})
+        for key in keys
+        if key.get("needs_revision")
+    }
+    return {
+        "selected_key_timestamps": [key.get("timestamp") for key in keys],
+        "all_selected_keys_conflict_free": not key_conflicts,
+        "keys_requiring_revision": sorted(key_conflicts),
+        "key_conflicts": key_conflicts,
+        "baseline_conversation_action": (
+            "copy_source_conversation_unchanged"
+            if not key_conflicts
+            else "manual_or_future_targeted_revision_needed"
+        ),
+    }
 
 
 def build_baseline_spec(data: Dict, source_path: str) -> Dict:
@@ -376,6 +397,7 @@ def build_baseline_spec(data: Dict, source_path: str) -> Dict:
         candidate["future_conflicts"] = detect_future_conflicts(data, candidate)
 
     selection = choose_key_and_probe_turns(candidates)
+    resolution = summarize_key_resolution(selection)
     return {
         "source_file": source_path,
         "periods": PERIODS,
@@ -390,7 +412,13 @@ def build_baseline_spec(data: Dict, source_path: str) -> Dict:
                 "later event or interaction belonging to the source event's descendant chain",
                 "boolean high-similarity check over later [Task Goal] text",
             ],
+            "key_selection_priority": [
+                "lower future conflict count",
+                "prefer the last exact sensitive-value occurrence",
+                "earlier history index as a stable tiebreaker",
+            ],
         },
+        "baseline_resolution": resolution,
         "key_turns": selection["keys"],
         "protected_probe_turns": selection["probes"],
         "rejected_turns": selection["rejected"],
