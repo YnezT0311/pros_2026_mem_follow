@@ -226,6 +226,8 @@ def detect_future_conflicts(data: Dict, candidate: Dict) -> Dict[str, List[Dict]
                     {
                         "section": section,
                         "timestamp": record.get("timestamp", ts),
+                        "event_id": record.get("event_id"),
+                        "source_event_id": record.get("source_event_id"),
                         "matched_values": [sensitive_values[v] for v in shared_sensitive],
                     }
                 )
@@ -241,6 +243,8 @@ def detect_future_conflicts(data: Dict, candidate: Dict) -> Dict[str, List[Dict]
                     {
                         "section": section,
                         "timestamp": record.get("timestamp", ts),
+                        "event_id": record.get("event_id"),
+                        "source_event_id": record.get("source_event_id"),
                         "matched_context_keys": [context_keys[k] for k in shared_context],
                     }
                 )
@@ -250,6 +254,8 @@ def detect_future_conflicts(data: Dict, candidate: Dict) -> Dict[str, List[Dict]
                     {
                         "section": section,
                         "timestamp": record.get("timestamp", ts),
+                        "event_id": record.get("event_id"),
+                        "source_event_id": record.get("source_event_id"),
                         "task_goal": record.get("[Task Goal]", ""),
                     }
                 )
@@ -345,19 +351,20 @@ def choose_key_and_probe_turns(candidates: List[Dict]) -> Dict[str, List[Dict]]:
         key=lambda c: (
             c["future_conflict_count"],
             0 if c["prefer_as_key"] else 1,
-            -c["history_index"],
+            c["history_index"],
         ),
     )
 
-    keys = ranked[:target_keys]
-    remaining = [c for c in ranked if c not in keys]
-    probes = sorted(
-        remaining,
-        key=lambda c: (
-            c["future_conflict_count"],
-            c["history_index"],
-        ),
-    )[:target_probes]
+    keys: List[Dict] = []
+    probes: List[Dict] = []
+    for candidate in ranked:
+        if len(keys) < target_keys and (len(keys) <= len(probes) or len(probes) >= target_probes):
+            keys.append(candidate)
+        elif len(probes) < target_probes:
+            probes.append(candidate)
+        else:
+            break
+
     rejected = [c for c in candidates if c not in keys and c not in probes]
 
     return {"keys": keys, "probes": probes, "rejected": rejected}
