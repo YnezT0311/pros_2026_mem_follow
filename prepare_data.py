@@ -657,12 +657,20 @@ def prepare_persona(LLM, idx_persona, all_personas, args):
             print(persona)
             print(f'{utils.Colors.OKGREEN}{"Expanded Persona"}:{utils.Colors.ENDC}')
             print(expanded_persona)
+        row_idx = utils.find_persona_row_index(persona, all_personas)
+        if row_idx is not None:
+            mapping = utils.load_persona_index_map()
+            mapping[str(idx_persona)] = {
+                "source_row_index": row_idx,
+                "persona": persona,
+            }
+            utils.save_persona_index_map(mapping)
     else:
         # Create a new persona for the new idx_persona
-        random_row = random.choice(all_personas)
-        persona = random_row.strip()[13:-2]  # Remove prefix '{"persona":' and suffix '"}'
+        persona, row_idx, _ = utils.get_or_create_persona_for_index(idx_persona, all_personas)
         if args['inference']['verbose']:
             print(f'{utils.Colors.OKGREEN}{"Original Persona"}:{utils.Colors.ENDC}{persona}')
+            print(f'{utils.Colors.OKBLUE}Persona mapping:{utils.Colors.ENDC} idx={idx_persona} -> source_row_index={row_idx}')
 
         # Expand the persona to at least five sentences
         start_time = utils.pick_a_random_time()

@@ -49,6 +49,9 @@ class Colors:
     ENDC = '\033[0m'     # Reset color
 
 
+PERSONA_INDEX_MAP_PATH = "./data/persona_index_map.json"
+
+
 def get_first_present(mapping, keys, default=None):
     for key in keys:
         if key in mapping:
@@ -61,6 +64,80 @@ def normalize_conversation_period(name):
         if name in aliases:
             return canonical
     return name
+
+
+def _parse_persona_line(raw_line):
+    raw_line = raw_line.strip()
+    if not raw_line:
+        return None
+    try:
+        parsed = json.loads(raw_line)
+        if isinstance(parsed, dict):
+            return parsed.get("persona")
+    except Exception:
+        pass
+    return None
+
+
+def load_persona_index_map(mapping_path=PERSONA_INDEX_MAP_PATH):
+    if not os.path.exists(mapping_path):
+        return {}
+    try:
+        with open(mapping_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def save_persona_index_map(mapping, mapping_path=PERSONA_INDEX_MAP_PATH):
+    os.makedirs(os.path.dirname(mapping_path), exist_ok=True)
+    with open(mapping_path, "w", encoding="utf-8") as f:
+        json.dump(mapping, f, indent=2, ensure_ascii=False)
+
+
+def find_persona_row_index(persona_text, all_personas):
+    target = (persona_text or "").strip()
+    if not target:
+        return None
+    for idx, raw_line in enumerate(all_personas):
+        parsed = _parse_persona_line(raw_line)
+        if parsed and parsed.strip() == target:
+            return idx
+    return None
+
+
+def get_or_create_persona_for_index(idx_persona, all_personas, mapping_path=PERSONA_INDEX_MAP_PATH):
+    mapping = load_persona_index_map(mapping_path)
+    idx_key = str(idx_persona)
+
+    if idx_key in mapping:
+        row_idx = mapping[idx_key].get("source_row_index")
+        if isinstance(row_idx, int) and 0 <= row_idx < len(all_personas):
+            persona = _parse_persona_line(all_personas[row_idx])
+            if persona:
+                return persona, row_idx, mapping
+
+    used_row_indices = {
+        entry.get("source_row_index")
+        for entry in mapping.values()
+        if isinstance(entry, dict) and isinstance(entry.get("source_row_index"), int)
+    }
+    available_indices = [i for i in range(len(all_personas)) if i not in used_row_indices]
+    if not available_indices:
+        available_indices = list(range(len(all_personas)))
+
+    row_idx = random.choice(available_indices)
+    persona = _parse_persona_line(all_personas[row_idx])
+    if not persona:
+        raise ValueError(f"Failed to parse persona at row {row_idx}")
+
+    mapping[idx_key] = {
+        "source_row_index": row_idx,
+        "persona": persona,
+    }
+    save_persona_index_map(mapping, mapping_path)
+    return persona, row_idx, mapping
 
 
 def preprocess_source_data(data, topic):
