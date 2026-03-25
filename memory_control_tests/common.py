@@ -54,11 +54,6 @@ def normalize_text(text: str) -> str:
 def normalize_sensitive_value(value: str) -> str:
     return normalize_text(value)
 
-
-def period_index(period: str) -> int:
-    return PERIODS.index(period)
-
-
 def parse_side_note(line: str) -> Optional[Tuple[str, str]]:
     match = SIDE_NOTE_RE.match((line or "").strip())
     if not match:
