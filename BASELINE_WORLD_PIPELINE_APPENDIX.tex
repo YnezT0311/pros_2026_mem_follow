@@ -39,6 +39,9 @@ After the first conversation draft is generated, the pipeline runs a two-stage r
 \paragraph{Conversation-only regeneration.}
 The pipeline now also supports a \texttt{--regenerate\_conversation\_only} mode. In this mode, the code reuses the existing persona, history sections, and conversation-history sections from an existing output file and rewrites only the final \texttt{Conversation Initial/Early/Intermediate/Late Stage} sections. This avoids regenerating earlier histories while allowing prompt and formatting improvements to be reapplied to existing samples.
 
+\paragraph{LLM configuration used in the current codebase.}
+The default generation model in both \texttt{prepare\_data.py} and \texttt{prepare\_qa.py} is \texttt{gpt-4o}, as specified in \texttt{config.yaml} and mirrored by the command-line defaults. The API mode is configurable as \texttt{auto}, \texttt{assistants}, \texttt{responses}, or \texttt{chat}. In the current implementation, \texttt{auto} prefers the OpenAI Assistants API for \texttt{gpt-4o} when supported, and otherwise falls back to the Responses or Chat Completions APIs. The newer privacy-evaluation scripts are model-configurable and currently default to \texttt{gpt-4o-mini} at evaluation time. Some auxiliary world-building or QA-spec generation scripts under \texttt{privacy\_test/} also expose their own model flags, with a few defaults set to \texttt{gpt-5-mini}; these are not part of the baseline world generation pipeline itself, but they are part of the current broader experimental codebase.
+
 \begin{table}[t]
 \centering
 \small
