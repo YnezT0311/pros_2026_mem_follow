@@ -352,7 +352,7 @@ def main() -> None:
     parser.add_argument("--spec_path", type=str, default="data/no_use/no_use_qa_specs.jsonl")
     parser.add_argument("--out_csv", type=str, default="data/no_use/no_use_eval_results.csv")
     parser.add_argument("--summary_path", type=str, default="data/no_use/no_use_eval_summary.json")
-    parser.add_argument("--model", type=str, default="gpt-4o-mini")
+    parser.add_argument("--model", type=str, default="gpt-5-mini")
     parser.add_argument("--provider", type=str, default="auto", choices=["auto", "openai", "gemini", "claude", "xai"])
     parser.add_argument("--token_path", type=str, default=".")
     parser.add_argument("--api_key_file", type=str, default="openai_key.txt")

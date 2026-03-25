@@ -1764,7 +1764,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--rebuild_target", action="store_true")
     p.add_argument("--skip_existing", action="store_true", help="Skip source files whose world/meta/ops are already complete.")
-    p.add_argument("--model", type=str, default="gpt-4o")
+    p.add_argument("--model", type=str, default="gpt-5-mini")
     p.add_argument("--token_path", type=str, default=".")
     p.add_argument("--api_key_file", type=str, default="openai_key.txt")
     p.add_argument("--api_base_url", type=str, default="")

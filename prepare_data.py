@@ -1352,7 +1352,7 @@ if __name__ == "__main__":
 
     # Command-line argument parsing
     parser = argparse.ArgumentParser(description='Command line arguments')
-    parser.add_argument('--model', type=str, default="gpt-4o", help='Set LLM model. Choose from gpt-4-turbo, gpt-4o')
+    parser.add_argument('--model', type=str, default="gpt-5-mini", help='Set LLM model. Choose from gpt-5-mini, gpt-4o, and related available models')
     parser.add_argument('--api_mode', type=str, default='auto', choices=['auto', 'assistants', 'responses', 'chat'],
                         help='OpenAI API mode for generation: auto, assistants, responses, or chat')
     parser.add_argument('--topics', type=str, default="therapy", nargs="+",
