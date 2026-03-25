@@ -30,7 +30,7 @@ INTERACTION_HISTORY_SECTIONS = [
 SIDE_NOTE_RE = re.compile(r"^Side_Note:\s*\[(.*)\]\s+(\d{2}/\d{2}/\d{4}(?:-I\d{2})?)\s*$")
 TOKEN_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9'-]*")
 
-STOPWORDS = {
+GENERAL_WORDS = {
     "a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "from",
     "i", "in", "into", "is", "it", "me", "my", "of", "on", "or", "our",
     "that", "the", "their", "them", "they", "this", "to", "use", "using",
@@ -137,7 +137,7 @@ def content_tokens(text: str) -> List[str]:
     tokens = []
     for raw in TOKEN_RE.findall(text or ""):
         token = raw.lower().strip(".,!?;:'\"()[]{}")
-        if not token or token in STOPWORDS or len(token) < 4:
+        if not token or token in GENERAL_WORDS or len(token) < 4:
             continue
         tokens.append(token)
     return tokens
