@@ -51,11 +51,22 @@ def _pick(pool: List[str], template_index: Optional[int]) -> str:
     return pool[template_index % len(pool)]
 
 
+def _template_group(world_type: str, template_style: str) -> Dict[str, List[str]]:
+    group = TEMPLATES.get(world_type, {})
+    if isinstance(group, dict) and template_style in group:
+        return group[template_style]
+    if isinstance(group, dict):
+        return group
+    return {}
+
+
 def apply_no_store(
     data: Dict,
     period: str,
     key_timestamp: str,
     template_index: Optional[int] = None,
+    template_style: str = "explicit",
+    placement: str = "suffix",
 ) -> Dict:
     out = copy.deepcopy(data)
     lines = out.get(period, [])
@@ -65,12 +76,19 @@ def apply_no_store(
     if not block:
         return out
 
-    user_suffix = _pick(TEMPLATES["no_store"]["user_suffix"], template_index)
-    assistant_ack = _pick(TEMPLATES["no_store"]["assistant_ack"], template_index)
+    group = _template_group("no_store", template_style)
+    user_key = "user_prefix" if placement == "prefix" else "user_suffix"
+    user_text = _pick(group.get(user_key, []), template_index)
+    assistant_ack = _pick(group.get("assistant_ack", []), template_index)
 
     for idx in range(block["start"], block["end"]):
         if lines[idx].startswith("User:"):
-            lines[idx] = _append_sentence(lines[idx], user_suffix)
+            if placement == "prefix":
+                if lines[idx].startswith("User:"):
+                    content = lines[idx][len("User:"):].strip()
+                    lines[idx] = f"User: {user_text} {content}".strip()
+            else:
+                lines[idx] = _append_sentence(lines[idx], user_text)
             break
     for idx in range(block["start"], block["end"]):
         if lines[idx].startswith("Assistant:"):
@@ -98,9 +116,11 @@ def apply_forget(
     data: Dict,
     instruction_period: str = "Conversation Early Stage",
     template_index: Optional[int] = None,
+    template_style: str = "explicit",
 ) -> Dict:
-    user_line = _pick(TEMPLATES["forget"]["user"], template_index)
-    assistant_line = _pick(TEMPLATES["forget"]["assistant"], template_index)
+    group = _template_group("forget", template_style)
+    user_line = _pick(group.get("user", []), template_index)
+    assistant_line = _pick(group.get("assistant", []), template_index)
     return append_instruction_turn(data, instruction_period, user_line, assistant_line)
 
 
@@ -109,19 +129,21 @@ def apply_no_use(
     restrict_period: str = "Conversation Early Stage",
     release_period: Optional[str] = None,
     template_index: Optional[int] = None,
+    template_style: str = "explicit",
 ) -> Dict:
+    group = _template_group("no_use", template_style)
     out = append_instruction_turn(
         data,
         restrict_period,
-        _pick(TEMPLATES["no_use"]["restrict_user"], template_index),
-        _pick(TEMPLATES["no_use"]["restrict_assistant"], template_index),
+        _pick(group.get("restrict_user", []), template_index),
+        _pick(group.get("restrict_assistant", []), template_index),
     )
     if release_period:
         out = append_instruction_turn(
             out,
             release_period,
-            _pick(TEMPLATES["no_use"]["release_user"], template_index),
-            _pick(TEMPLATES["no_use"]["release_assistant"], template_index),
+            _pick(group.get("release_user", []), template_index),
+            _pick(group.get("release_assistant", []), template_index),
         )
     return out
 
@@ -145,4 +167,3 @@ def build_context_messages(data: Dict, ask_period: str) -> List[Dict]:
             elif line.strip():
                 messages.append({"role": "user", "content": line.strip()})
     return messages
-
