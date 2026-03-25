@@ -477,6 +477,27 @@ def get_missing_output_sections(data, topic):
     return missing
 
 
+def get_missing_conversation_prereq_sections(data, topic):
+    if topic in ("writing", "email"):
+        return []
+
+    required = [
+        "Original Persona",
+        "Expanded Persona",
+        "Topic",
+        "Sensitive Info Pool",
+        *GENERAL_HISTORY_SECTION_NAMES,
+        *CONTEXTUAL_HISTORY_SECTION_NAMES,
+        *CONVERSATION_HISTORY_SECTION_NAMES,
+    ]
+    missing = []
+    for key in required:
+        value = data.get(key)
+        if value is None or value == {} or value == []:
+            missing.append(key)
+    return missing
+
+
 def is_output_complete(output_file_path, topic):
     if not os.path.exists(output_file_path):
         return False
@@ -486,6 +507,138 @@ def is_output_complete(output_file_path, topic):
     except Exception:
         return False
     return not get_missing_output_sections(data, topic)
+
+
+def _extract_side_note_dates(conversation_lines):
+    dates = []
+    if not isinstance(conversation_lines, list):
+        return dates
+    for line in conversation_lines:
+        if not isinstance(line, str):
+            continue
+        if not (line.startswith("Side_Note") or line.startswith("Side_Note:")):
+            continue
+        for m in re.findall(r"\b\d{2}/\d{2}/\d{4}(?:-I\d{2})?\b", line):
+            dates.append(m)
+    return dates
+
+
+def _dedupe_side_note_blocks(conversation_lines):
+    if not isinstance(conversation_lines, list):
+        return conversation_lines
+    out = []
+    seen_dates = set()
+    i = 0
+    n = len(conversation_lines)
+    while i < n:
+        line = conversation_lines[i]
+        if not isinstance(line, str) or not (line.startswith("Side_Note") or line.startswith("Side_Note:")):
+            out.append(line)
+            i += 1
+            continue
+
+        j = i + 1
+        while j < n:
+            nxt = conversation_lines[j]
+            if isinstance(nxt, str) and (nxt.startswith("Side_Note") or nxt.startswith("Side_Note:")):
+                break
+            j += 1
+        block = conversation_lines[i:j]
+
+        dates = re.findall(r"\b\d{2}/\d{2}/\d{4}(?:-I\d{2})?\b", line)
+        key = dates[0] if dates else f"__no_date_{i}"
+        if key not in seen_dates:
+            out.extend(block)
+            seen_dates.add(key)
+        i = j
+    return out
+
+
+def _assert_conversation_aligned(conversation_lines, expected_history_dict, label):
+    side_note_dates = _extract_side_note_dates(conversation_lines)
+    expected_items_by_timestamp = {}
+    if isinstance(expected_history_dict, dict):
+        iterable = expected_history_dict.items()
+    elif isinstance(expected_history_dict, list):
+        iterable = []
+        for item in expected_history_dict:
+            if isinstance(item, dict) and item.get("timestamp"):
+                iterable.append((item["timestamp"], item))
+    else:
+        iterable = []
+
+    for raw_date, item in iterable:
+        timestamp = str(raw_date).split("#")[0]
+        expected_items_by_timestamp.setdefault(timestamp, []).append(item)
+
+    expected_dates = set(expected_items_by_timestamp.keys())
+    invalid_dates = [d for d in side_note_dates if d not in expected_dates]
+    if invalid_dates:
+        sample = ", ".join(invalid_dates[:5])
+        raise RuntimeError(
+            f"Conversation/history date mismatch at {label}. "
+            f"Found Side_Note dates not in expected history: {sample}"
+        )
+    counts = {}
+    for d in side_note_dates:
+        counts[d] = counts.get(d, 0) + 1
+    mismatched_dates = [d for d in expected_dates if counts.get(d, 0) != 1]
+    if mismatched_dates:
+        sample = ", ".join(
+            f"{d} expected 1 got {counts.get(d, 0)}"
+            for d in mismatched_dates[:5]
+        )
+        raise RuntimeError(
+            f"Conversation/history date mismatch at {label}. "
+            f"Side_Note count mismatch: {sample}"
+        )
+    missing_dates = [d for d in expected_dates if d not in counts]
+    if missing_dates:
+        raise RuntimeError(
+            f"Conversation/history date mismatch at {label}. "
+            f"Missing Side_Note dates from expected history: {', '.join(missing_dates[:5])}"
+        )
+
+
+def rewrite_conversations_from_existing(LLM, existing_data, curr_topic, start_time, output_file_path, args):
+    conversation_histories = [existing_data[name] for name in CONVERSATION_HISTORY_SECTION_NAMES]
+    LLM.expanded_persona = existing_data["Expanded Persona"]
+    LLM.init_personal_history = json.dumps(conversation_histories[0], ensure_ascii=False, indent=2)
+    LLM.first_expand_personal_history = json.dumps(conversation_histories[1], ensure_ascii=False, indent=2)
+    LLM.second_expand_personal_history = json.dumps(conversation_histories[2], ensure_ascii=False, indent=2)
+    LLM.third_expand_personal_history = json.dumps(conversation_histories[3], ensure_ascii=False, indent=2)
+
+    last_timestamps = []
+    for section_name in GENERAL_HISTORY_SECTION_NAMES + CONTEXTUAL_HISTORY_SECTION_NAMES:
+        last_timestamps.append(utils.extract_last_timestamp(existing_data[section_name]))
+    last_timestamps = utils.merge_timestamps(last_timestamps)
+
+    sensitive_info_pool = existing_data["Sensitive Info Pool"]
+    steps = ['init_conversation', 'first_expand_conversation', 'second_expand_conversation', 'third_expand_conversation']
+    data_names = CONVERSATION_SECTION_NAMES
+
+    for conv_idx, (step, data_name) in enumerate(zip(steps, data_names)):
+        print(f'{utils.Colors.OKGREEN}Processing step: {step}{utils.Colors.ENDC}')
+        response = LLM.query_llm(
+            step=step,
+            topic=curr_topic,
+            idx_topic=0,
+            start_time=start_time,
+            verbose=args['inference']['verbose'],
+            sensitive_info_pool=sensitive_info_pool,
+        )
+        response = LLM.query_llm(
+            step='reflect_' + step,
+            topic=curr_topic,
+            data=response,
+            action=1,
+            verbose=args['inference']['verbose'],
+        )
+        response = LLM.query_llm(step='reflect_' + step, topic=curr_topic, action=2, verbose=args['inference']['verbose'])
+        expanded_conversation = parse_conversation_sections(LLM, response, curr_topic, last_timestamps[conv_idx], verbose=args['inference']['verbose'])
+        expanded_conversation = _dedupe_side_note_blocks(expanded_conversation)
+        _assert_conversation_aligned(expanded_conversation, conversation_histories[conv_idx], data_name)
+        utils.append_json_to_file(expanded_conversation, output_file_path, curr_data_name=data_name, parse_json=False, parse_list=False)
 
 
 def prepare_persona(LLM, idx_persona, all_personas, args):
@@ -665,95 +818,6 @@ def prepare_data_on_writing_topic(LLM, topic, persona, source_data, output_file_
 
 def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir, curr_topic, idx_topic, start_time, output_file_path,
                                  init_general_personal_history, first_expand_general_personal_history, second_expand_general_personal_history, third_expand_general_personal_history, args):
-    def _extract_side_note_dates(conversation_lines):
-        dates = []
-        if not isinstance(conversation_lines, list):
-            return dates
-        for line in conversation_lines:
-            if not isinstance(line, str):
-                continue
-            if not (line.startswith("Side_Note") or line.startswith("Side_Note:")):
-                continue
-            for m in re.findall(r"\b\d{2}/\d{2}/\d{4}(?:-I\d{2})?\b", line):
-                dates.append(m)
-        return dates
-
-    def _dedupe_side_note_blocks(conversation_lines):
-        if not isinstance(conversation_lines, list):
-            return conversation_lines
-        out = []
-        seen_dates = set()
-        i = 0
-        n = len(conversation_lines)
-        while i < n:
-            line = conversation_lines[i]
-            if not isinstance(line, str) or not (line.startswith("Side_Note") or line.startswith("Side_Note:")):
-                out.append(line)
-                i += 1
-                continue
-
-            # Capture this side-note block: Side_Note + subsequent lines until the next Side_Note.
-            j = i + 1
-            while j < n:
-                nxt = conversation_lines[j]
-                if isinstance(nxt, str) and (nxt.startswith("Side_Note") or nxt.startswith("Side_Note:")):
-                    break
-                j += 1
-            block = conversation_lines[i:j]
-
-            dates = re.findall(r"\b\d{2}/\d{2}/\d{4}(?:-I\d{2})?\b", line)
-            key = dates[0] if dates else f"__no_date_{i}"
-            if key not in seen_dates:
-                out.extend(block)
-                seen_dates.add(key)
-            i = j
-        return out
-
-    def _assert_conversation_aligned(conversation_lines, expected_history_dict, label):
-        side_note_dates = _extract_side_note_dates(conversation_lines)
-        expected_items_by_timestamp = {}
-        if isinstance(expected_history_dict, dict):
-            iterable = expected_history_dict.items()
-        elif isinstance(expected_history_dict, list):
-            iterable = []
-            for item in expected_history_dict:
-                if isinstance(item, dict) and item.get("timestamp"):
-                    iterable.append((item["timestamp"], item))
-        else:
-            iterable = []
-
-        for raw_date, item in iterable:
-            timestamp = str(raw_date).split("#")[0]
-            expected_items_by_timestamp.setdefault(timestamp, []).append(item)
-
-        expected_dates = set(expected_items_by_timestamp.keys())
-        invalid_dates = [d for d in side_note_dates if d not in expected_dates]
-        if invalid_dates:
-            sample = ", ".join(invalid_dates[:5])
-            raise RuntimeError(
-                f"Conversation/history date mismatch at {label}. "
-                f"Found Side_Note dates not in expected history: {sample}"
-            )
-        counts = {}
-        for d in side_note_dates:
-            counts[d] = counts.get(d, 0) + 1
-        mismatched_dates = [d for d in expected_dates if counts.get(d, 0) != 1]
-        if mismatched_dates:
-            sample = ", ".join(
-                f"{d} expected 1 got {counts.get(d, 0)}"
-                for d in mismatched_dates[:5]
-            )
-            raise RuntimeError(
-                f"Conversation/history date mismatch at {label}. "
-                f"Side_Note count mismatch: {sample}"
-            )
-        missing_dates = [d for d in expected_dates if d not in counts]
-        if missing_dates:
-            raise RuntimeError(
-                f"Conversation/history date mismatch at {label}. "
-                f"Missing Side_Note dates from expected history: {', '.join(missing_dates[:5])}"
-            )
-
     # Feed the thread with a seeding data from the real-world conversation
     if source_dir is not None:
         source_conversation = utils.preprocess_source_data(source_data, curr_topic)
@@ -1050,7 +1114,11 @@ def prepare_data(args):
                 for idx_sample in range(int(args['inference']['start_sample_idx']), int(args['inference']['num_samples_per_topic'])):
                     output_file_path = os.path.join(args['inference']['output_dir'],
                                                     os.path.join(f'{curr_topic}', f'{args["inference"]["output_file_name"]}_{curr_topic}_persona{idx_persona}_sample{idx_sample}.json'))
-                    if args['inference'].get('skip_existing', False) and is_output_complete(output_file_path, curr_topic):
+                    if (
+                        args['inference'].get('skip_existing', False)
+                        and not args['inference'].get('regenerate_history_conversation_only', False)
+                        and is_output_complete(output_file_path, curr_topic)
+                    ):
                         print(f'{utils.Colors.WARNING}Skipping existing complete file: {output_file_path}{utils.Colors.ENDC}')
                         continue
 
@@ -1061,12 +1129,42 @@ def prepare_data(args):
                     regenerate_history_only = bool(args['inference'].get('regenerate_history_conversation_only', False))
                     success = False
                     for attempt in range(max_retries + 1):
-                        if (attempt > 0 or regenerate_history_only) and os.path.exists(output_file_path):
+                        if attempt > 0 and os.path.exists(output_file_path) and not regenerate_history_only:
                             os.remove(output_file_path)
                         try:
                             LLM = QueryLLM(args)
                             if parsed_pii:
                                 LLM.pii_profile = parsed_pii
+                            if regenerate_history_only and os.path.exists(output_file_path):
+                                with open(output_file_path, "r", encoding="utf-8") as f:
+                                    existing_data = json.load(f)
+                                missing_prereqs = get_missing_conversation_prereq_sections(existing_data, curr_topic)
+                                if missing_prereqs:
+                                    raise RuntimeError(
+                                        f"cannot regenerate conversations only; missing prerequisite sections {missing_prereqs}"
+                                    )
+                                print(
+                                    f'{utils.Colors.OKGREEN}Reusing existing history and rewriting only conversations: '
+                                    f'{output_file_path}{utils.Colors.ENDC}'
+                                )
+                                LLM.create_a_thread(step='conversation')
+                                rewrite_conversations_from_existing(
+                                    LLM,
+                                    existing_data,
+                                    curr_topic,
+                                    start_time,
+                                    output_file_path,
+                                    args,
+                                )
+                                with open(output_file_path, "r", encoding="utf-8") as f:
+                                    generated = json.load(f)
+                                missing_sections = get_missing_output_sections(generated, curr_topic)
+                                if missing_sections:
+                                    raise RuntimeError(
+                                        f"incomplete output: missing sections {missing_sections} for {output_file_path}"
+                                    )
+                                success = True
+                                break
                             utils.append_json_to_file(persona, output_file_path, curr_data_name='Original Persona', parse_json=False)
                             utils.append_json_to_file(expanded_persona, output_file_path, curr_data_name='Expanded Persona', parse_json=False)
                             if parsed_pii:
