@@ -472,8 +472,10 @@ def find_existing_persona_files(idx_persona):
     # Loop over each topic directory and each file inside it
     for topic_dir in topic_dirs:
         for file_name in os.listdir(topic_dir):
+            file_path = os.path.join(topic_dir, file_name)
+            if not os.path.isfile(file_path) or not file_name.endswith(".json"):
+                continue
             if f"_persona{idx_persona}_" in file_name:
-                file_path = os.path.join(topic_dir, file_name)
                 with open(file_path, 'r') as file:
                     data = json.load(file)
                 if "General Personal History Late Stage" in data:
