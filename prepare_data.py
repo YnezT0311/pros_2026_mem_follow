@@ -498,6 +498,28 @@ def get_missing_conversation_prereq_sections(data, topic):
     return missing
 
 
+def _conversation_log_dir(output_file_path):
+    return output_file_path + ".logs"
+
+
+def _safe_log_slug(text):
+    return re.sub(r"[^A-Za-z0-9._-]+", "_", text).strip("_")
+
+
+def maybe_write_conversation_log(output_file_path, args, stage_name, artifact_name, payload):
+    if not args.get('inference', {}).get('save_output_response', False):
+        return
+    log_dir = _conversation_log_dir(output_file_path)
+    os.makedirs(log_dir, exist_ok=True)
+    stem = f"{_safe_log_slug(stage_name)}.{_safe_log_slug(artifact_name)}"
+    path = os.path.join(log_dir, stem + (".json" if isinstance(payload, (dict, list)) else ".txt"))
+    with open(path, "w", encoding="utf-8") as f:
+        if isinstance(payload, (dict, list)):
+            json.dump(payload, f, indent=2, ensure_ascii=False)
+        else:
+            f.write(str(payload))
+
+
 def is_output_complete(output_file_path, topic):
     if not os.path.exists(output_file_path):
         return False
@@ -619,26 +641,36 @@ def rewrite_conversations_from_existing(LLM, existing_data, curr_topic, start_ti
 
     for conv_idx, (step, data_name) in enumerate(zip(steps, data_names)):
         print(f'{utils.Colors.OKGREEN}Processing step: {step}{utils.Colors.ENDC}')
-        response = LLM.query_llm(
-            step=step,
-            topic=curr_topic,
-            idx_topic=0,
-            start_time=start_time,
-            verbose=args['inference']['verbose'],
-            sensitive_info_pool=sensitive_info_pool,
-        )
-        response = LLM.query_llm(
-            step='reflect_' + step,
-            topic=curr_topic,
-            data=response,
-            action=1,
-            verbose=args['inference']['verbose'],
-        )
-        response = LLM.query_llm(step='reflect_' + step, topic=curr_topic, action=2, verbose=args['inference']['verbose'])
-        expanded_conversation = parse_conversation_sections(LLM, response, curr_topic, last_timestamps[conv_idx], verbose=args['inference']['verbose'])
-        expanded_conversation = _dedupe_side_note_blocks(expanded_conversation)
-        _assert_conversation_aligned(expanded_conversation, conversation_histories[conv_idx], data_name)
-        utils.append_json_to_file(expanded_conversation, output_file_path, curr_data_name=data_name, parse_json=False, parse_list=False)
+        try:
+            maybe_write_conversation_log(output_file_path, args, data_name, "expected_history", conversation_histories[conv_idx])
+            response = LLM.query_llm(
+                step=step,
+                topic=curr_topic,
+                idx_topic=0,
+                start_time=start_time,
+                verbose=args['inference']['verbose'],
+                sensitive_info_pool=sensitive_info_pool,
+            )
+            maybe_write_conversation_log(output_file_path, args, data_name, "raw", response)
+            reflected = LLM.query_llm(
+                step='reflect_' + step,
+                topic=curr_topic,
+                data=response,
+                action=1,
+                verbose=args['inference']['verbose'],
+            )
+            maybe_write_conversation_log(output_file_path, args, data_name, "reflect_round1", reflected)
+            response = LLM.query_llm(step='reflect_' + step, topic=curr_topic, action=2, verbose=args['inference']['verbose'])
+            maybe_write_conversation_log(output_file_path, args, data_name, "reflect_round2", response)
+            expanded_conversation = parse_conversation_sections(LLM, response, curr_topic, last_timestamps[conv_idx], verbose=args['inference']['verbose'])
+            maybe_write_conversation_log(output_file_path, args, data_name, "parsed", expanded_conversation)
+            expanded_conversation = _dedupe_side_note_blocks(expanded_conversation)
+            maybe_write_conversation_log(output_file_path, args, data_name, "deduped", expanded_conversation)
+            _assert_conversation_aligned(expanded_conversation, conversation_histories[conv_idx], data_name)
+            utils.append_json_to_file(expanded_conversation, output_file_path, curr_data_name=data_name, parse_json=False, parse_list=False)
+        except Exception as e:
+            maybe_write_conversation_log(output_file_path, args, data_name, "error", repr(e))
+            raise
 
 
 def prepare_persona(LLM, idx_persona, all_personas, args):
@@ -972,26 +1004,36 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
 
     for conv_idx, (step, data_name) in enumerate(zip(steps, data_names)):
         print(f'{utils.Colors.OKGREEN}Processing step: {step}{utils.Colors.ENDC}')
-        response = LLM.query_llm(
-            step=step,
-            topic=curr_topic,
-            idx_topic=idx_topic,
-            start_time=start_time,
-            verbose=args['inference']['verbose'],
-            sensitive_info_pool=sensitive_info_pool,
-        )
-        response = LLM.query_llm(
-            step='reflect_' + step,
-            topic=curr_topic,
-            data=response,
-            action=1,
-            verbose=args['inference']['verbose'],
-        )
-        response = LLM.query_llm(step='reflect_' + step, topic=curr_topic, action=2, verbose=args['inference']['verbose'])
-        expanded_conversation = parse_conversation_sections(LLM, response, curr_topic, last_timestamps[conv_idx], verbose=args['inference']['verbose'])
-        expanded_conversation = _dedupe_side_note_blocks(expanded_conversation)
-        _assert_conversation_aligned(expanded_conversation, conversation_histories[conv_idx], data_name)
-        utils.append_json_to_file(expanded_conversation, output_file_path, curr_data_name=data_name, parse_json=False, parse_list=False)
+        try:
+            maybe_write_conversation_log(output_file_path, args, data_name, "expected_history", conversation_histories[conv_idx])
+            response = LLM.query_llm(
+                step=step,
+                topic=curr_topic,
+                idx_topic=idx_topic,
+                start_time=start_time,
+                verbose=args['inference']['verbose'],
+                sensitive_info_pool=sensitive_info_pool,
+            )
+            maybe_write_conversation_log(output_file_path, args, data_name, "raw", response)
+            reflected = LLM.query_llm(
+                step='reflect_' + step,
+                topic=curr_topic,
+                data=response,
+                action=1,
+                verbose=args['inference']['verbose'],
+            )
+            maybe_write_conversation_log(output_file_path, args, data_name, "reflect_round1", reflected)
+            response = LLM.query_llm(step='reflect_' + step, topic=curr_topic, action=2, verbose=args['inference']['verbose'])
+            maybe_write_conversation_log(output_file_path, args, data_name, "reflect_round2", response)
+            expanded_conversation = parse_conversation_sections(LLM, response, curr_topic, last_timestamps[conv_idx], verbose=args['inference']['verbose'])
+            maybe_write_conversation_log(output_file_path, args, data_name, "parsed", expanded_conversation)
+            expanded_conversation = _dedupe_side_note_blocks(expanded_conversation)
+            maybe_write_conversation_log(output_file_path, args, data_name, "deduped", expanded_conversation)
+            _assert_conversation_aligned(expanded_conversation, conversation_histories[conv_idx], data_name)
+            utils.append_json_to_file(expanded_conversation, output_file_path, curr_data_name=data_name, parse_json=False, parse_list=False)
+        except Exception as e:
+            maybe_write_conversation_log(output_file_path, args, data_name, "error", repr(e))
+            raise
 
 
 def prepare_irrelevant_contexts(LLM, args):
