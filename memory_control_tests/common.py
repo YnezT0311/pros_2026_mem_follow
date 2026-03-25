@@ -137,7 +137,7 @@ def content_tokens(text: str) -> List[str]:
     tokens = []
     for raw in TOKEN_RE.findall(text or ""):
         token = raw.lower().strip(".,!?;:'\"()[]{}")
-        if not token or token in GENERAL_WORDS or len(token) < 4:
+        if not token or token in GENERAL_WORDS or len(token) < 3:
             continue
         tokens.append(token)
     return tokens
