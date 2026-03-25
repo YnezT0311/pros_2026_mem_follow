@@ -155,60 +155,40 @@ def build_sensitive_info_pool(persona_text, pii_profile, topic):
     return pool
 
 
-def _infer_information_types(topic, event_text):
-    event_lower = (event_text or "").lower()
-    info_types = []
-
-    if any(k in event_lower for k in ["email", "e-mail"]):
-        info_types.append("email")
-    if any(k in event_lower for k in ["phone", "call", "text number", "voicemail"]):
-        info_types.append("phone_number")
-    if any(k in event_lower for k in ["address", "street", "unit", "apartment"]):
-        info_types.append("address")
-    if any(k in event_lower for k in ["account", "balance", "debt", "payment", "credit", "ledger", "receipt", "cash-flow"]):
-        info_types.append("account_or_balance")
-    if any(k in event_lower for k in ["booking", "confirmation", "ticket", "reservation", "flight", "voucher", "pass"]):
-        info_types.append("document_or_record_reference")
-    if any(k in event_lower for k in ["route", "itinerary", "connection", "departure window", "arrival window"]):
-        info_types.append("private_schedule")
-    if any(k in event_lower for k in ["symptom", "migraine", "diagnosis", "dosing", "medication", "clinical", "patient"]):
-        info_types.append("medical_symptom")
-    if any(k in event_lower for k in ["dose", "dosing", "medication", "prescription"]):
-        info_types.append("medication_or_dosing")
-    if any(k in event_lower for k in ["contract", "clause", "evidence", "clinic", "landlord", "tenant", "impersonation", "deepfake", "notice"]):
-        info_types.append("legal_dispute_detail")
-    if any(k in event_lower for k in ["cousin", "neighbor", "friend", "relative", "family", "aunt", "mentor", "collaborator"]):
-        info_types.append("family_or_relationship_detail")
-        info_types.append("named_contact")
-    if any(k in event_lower for k in ["calendar", "schedule", "timeline", "itinerary", "shift", "workshop", "slot"]):
-        info_types.append("private_schedule")
-    if any(k in event_lower for k in ["file", "record", "archive", "log", "report", "worksheet", "spreadsheet", "notebook"]):
-        info_types.append("document_or_record_reference")
-
-    if not info_types:
-        default_by_topic = {
-            "financialConsultation": "account_or_balance",
-            "legalConsultation": "legal_dispute_detail",
-            "medicalConsultation": "medical_symptom",
-            "travelPlanning": "private_schedule",
-        }
-        info_types.append(default_by_topic.get(topic, "document_or_record_reference"))
-
-    deduped = []
-    seen = set()
-    for item in info_types:
-        if item not in seen:
-            deduped.append(item)
-            seen.add(item)
-    return deduped
+def _normalize_sensitive_match_text(text):
+    return re.sub(r"\s+", " ", str(text or "").strip().lower())
 
 
-def _project_sensitive_info(event_text, sensitive_info_pool, topic):
+def _is_concrete_sensitive_value(value):
+    value = str(value or "").strip()
+    if not value:
+        return False
+    lower = value.lower()
+    if "@" in value:
+        return True
+    if re.search(r"\d", value):
+        return True
+    if any(token in lower for token in ["street", "st ", " avenue", " ave", " road", " rd", " lane", " ln", " drive", " dr", " apt", " apartment"]):
+        return True
+    return False
+
+
+def _project_sensitive_info(event_text, sensitive_info_pool):
+    event_norm = _normalize_sensitive_match_text(event_text)
     info = {}
-    for key in _infer_information_types(topic, event_text):
-        values = list((sensitive_info_pool or {}).get(key, []))
-        if values:
-            info[key] = values[:2]
+    if not event_norm:
+        return info
+
+    for key, values in (sensitive_info_pool or {}).items():
+        matched = []
+        for value in values or []:
+            value_str = str(value).strip()
+            if not _is_concrete_sensitive_value(value_str):
+                continue
+            if _normalize_sensitive_match_text(value_str) in event_norm:
+                matched.append(value_str)
+        if matched:
+            info[key] = matched[:2]
     return info
 
 
@@ -299,7 +279,6 @@ def build_event_history(history_dict, topic, period_key, sensitive_info_pool):
                     for k in ["Event", "[Old Event]", "[Reasons of Change]"]
                 ),
                 sensitive_info_pool,
-                topic,
             ),
             "relations": [],
         }

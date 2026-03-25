@@ -155,6 +155,8 @@ Event items in conversation history preserve the original event record fields an
 - `kind = "event"`
 - `[Sensitive Info]`
 
+For event items, `[Sensitive Info]` is optional and should stay empty unless the event text itself already contains concrete sensitive values.
+
 Interaction items in conversation history use explicit bracketed keys:
 
 - `timestamp`
