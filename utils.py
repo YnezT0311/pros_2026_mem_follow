@@ -81,13 +81,22 @@ def _parse_persona_line(raw_line):
 
 def load_persona_index_map(mapping_path=PERSONA_INDEX_MAP_PATH):
     if not os.path.exists(mapping_path):
-        return {}
+        return {"source_row_to_persona_idx": {}}
     try:
         with open(mapping_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        return data if isinstance(data, dict) else {}
+        if not isinstance(data, dict):
+            return {"source_row_to_persona_idx": {}}
+        if "source_row_to_persona_idx" in data and isinstance(data["source_row_to_persona_idx"], dict):
+            return data
+        # Backward compatibility for the short-lived idx->row format.
+        source_row_to_persona_idx = {}
+        for persona_idx, entry in data.items():
+            if isinstance(entry, dict) and isinstance(entry.get("source_row_index"), int):
+                source_row_to_persona_idx[str(entry["source_row_index"])] = int(persona_idx)
+        return {"source_row_to_persona_idx": source_row_to_persona_idx}
     except Exception:
-        return {}
+        return {"source_row_to_persona_idx": {}}
 
 
 def save_persona_index_map(mapping, mapping_path=PERSONA_INDEX_MAP_PATH):
@@ -109,20 +118,18 @@ def find_persona_row_index(persona_text, all_personas):
 
 def get_or_create_persona_for_index(idx_persona, all_personas, mapping_path=PERSONA_INDEX_MAP_PATH):
     mapping = load_persona_index_map(mapping_path)
-    idx_key = str(idx_persona)
+    source_row_to_persona_idx = mapping.setdefault("source_row_to_persona_idx", {})
 
-    if idx_key in mapping:
-        row_idx = mapping[idx_key].get("source_row_index")
-        if isinstance(row_idx, int) and 0 <= row_idx < len(all_personas):
-            persona = _parse_persona_line(all_personas[row_idx])
-            if persona:
-                return persona, row_idx, mapping
+    # If this persona idx was already assigned before, reuse that exact PersonaHub row.
+    for row_key, mapped_idx in source_row_to_persona_idx.items():
+        if int(mapped_idx) == int(idx_persona):
+            row_idx = int(row_key)
+            if 0 <= row_idx < len(all_personas):
+                persona = _parse_persona_line(all_personas[row_idx])
+                if persona:
+                    return persona, row_idx, mapping
 
-    used_row_indices = {
-        entry.get("source_row_index")
-        for entry in mapping.values()
-        if isinstance(entry, dict) and isinstance(entry.get("source_row_index"), int)
-    }
+    used_row_indices = {int(row_key) for row_key in source_row_to_persona_idx.keys()}
     available_indices = [i for i in range(len(all_personas)) if i not in used_row_indices]
     if not available_indices:
         available_indices = list(range(len(all_personas)))
@@ -132,10 +139,7 @@ def get_or_create_persona_for_index(idx_persona, all_personas, mapping_path=PERS
     if not persona:
         raise ValueError(f"Failed to parse persona at row {row_idx}")
 
-    mapping[idx_key] = {
-        "source_row_index": row_idx,
-        "persona": persona,
-    }
+    source_row_to_persona_idx[str(row_idx)] = int(idx_persona)
     save_persona_index_map(mapping, mapping_path)
     return persona, row_idx, mapping
 

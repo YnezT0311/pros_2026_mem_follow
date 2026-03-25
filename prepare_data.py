@@ -660,10 +660,7 @@ def prepare_persona(LLM, idx_persona, all_personas, args):
         row_idx = utils.find_persona_row_index(persona, all_personas)
         if row_idx is not None:
             mapping = utils.load_persona_index_map()
-            mapping[str(idx_persona)] = {
-                "source_row_index": row_idx,
-                "persona": persona,
-            }
+            mapping.setdefault("source_row_to_persona_idx", {})[str(row_idx)] = int(idx_persona)
             utils.save_persona_index_map(mapping)
     else:
         # Create a new persona for the new idx_persona
