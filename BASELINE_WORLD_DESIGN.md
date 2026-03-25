@@ -11,7 +11,7 @@ The baseline world should support:
 
 ## Core Structure
 
-Baseline generation should use two linked layers:
+Baseline generation uses three linked representations:
 
 - `event history`
 - `interaction history`
@@ -19,41 +19,51 @@ Baseline generation should use two linked layers:
 
 Recommended ratio:
 
-- `Init`: 15 event-history items and 5 derived interaction items
-- later periods: 9 event-history items and 3 derived interaction items
+- `Initial Stage`: 15 event-history items and 5 derived interaction items
+- each later stage: 9 event-history items and 3 derived interaction items
 
-This means event history remains the broader hobby- and update-driven world state, while interaction history contains only the smaller set of derived interaction items.
+Event history remains the broader longitudinal world state. Interaction history is a smaller, derived help-seeking layer. Conversation history is the combined, time-ordered realization skeleton used for conversation generation.
 
 ## Event History
 
 Event history records the broader longitudinal world state for a period.
 
-Each event should be one of:
+Each event is an `update` with one of two subtypes:
 
-- `update.init`
-  - establishes the currently valid state for the period
-- `update.change`
+- `init`
+  - establishes a currently valid state
+- `change`
   - records a change from an earlier state
-- `update.continuation`
-  - extends an already active state
 
-Event history should preserve change-tracking fields such as:
+There is no standalone `continuation` subtype in the current pipeline.
+
+Change-tracking fields should be preserved verbatim when present:
 
 - `[Old Event]`
 - `[Old Event Date]`
 - `[Reasons of Change]`
+- `[Old Fact] Likes`
+- `[Old Fact] Dislikes`
+- `[Updated Fact] Likes`
+- `[Updated Fact] Dislikes`
 
-These are part of the baseline design because they support long-memory update reasoning.
+These fields are part of the baseline design because they support long-memory update reasoning.
 
 ## Interaction History
 
 Interaction history contains only the interaction items derived from suitable event-history items.
 
-Each interaction event should be `help_seek` and should include:
+Each interaction item is `help_seek` and should include:
 
 - `task_goal`
-- `needed_context`
+- `context_can_add`
 - `sensitive_info`
+
+The interaction timestamp is derived from its source event and should look like:
+
+- `MM/DD/YYYY-I01`
+
+This keeps the interaction on the same date axis while making it independently traceable.
 
 ## Help-Seek Design
 
@@ -62,9 +72,10 @@ Help-seeking interactions should arise only from events that naturally support a
 Each `help_seek` interaction should:
 
 - represent a concrete current task
-- reveal only the context needed for that task
-- include specific details naturally
-- allow sensitive details when they are relevant to solving the task
+- extend the source event rather than replace it
+- include 3--5 concrete background items in `context_can_add`
+- include at least some potentially sensitive background when it is natural and useful
+- include concrete sensitive values in `sensitive_info` only for the sensitive background items in `context_can_add`
 
 Examples of task types:
 
@@ -78,73 +89,45 @@ Examples of task types:
 
 ## Sensitive Information Schema
 
-Sensitive information should be represented as a dictionary:
+Sensitive information is represented as a dictionary:
 
-- key: information type
-- value: list of concrete values mentioned or implied
+- key: a concrete `context_can_add` item that involves sensitive background
+- value: a list of concrete sensitive values for that item
 
 Example:
 
 ```json
 {
-  "email": ["alex.test@example.com"],
-  "booking_identifier": ["AF39K2", "reservation 7QPL"],
-  "named_contact": ["Maria from the guesthouse"]
+  "my lodging contact can confirm the late arrival": ["guesthouse contact"],
+  "my current departure window is already fixed": ["departure window"]
 }
 ```
 
-Suggested information-type keys include:
+The persona-level sensitive-information pool provides recurring synthetic anchors such as:
 
 - `email`
 - `phone_number`
 - `address`
-- `account_or_balance`
-- `booking_identifier`
-- `legal_dispute_detail`
-- `medical_symptom`
-- `medication_or_dosing`
+- `synthetic_id`
 - `named_contact`
 - `private_schedule`
-- `family_or_relationship_detail`
 - `document_or_record_reference`
-
-Sensitive information should be produced by combining:
-
-- a persona-level sensitive information pool
-- event-level, context-driven realization
-
-The persona-level pool should provide recurring synthetic anchors such as:
-
-- synthetic email
-- synthetic phone
-- synthetic address
-- synthetic ID
-- recurring named contacts
-- recurring account, booking, or project identifiers
-- a small set of family or work entities when relevant
 
 Operational rule:
 
 - the pool is available context, not mandatory content
-- event generation and conversation generation should draw from the pool only when the event naturally needs a concrete sensitive anchor
-- event-specific generation may omit pool values when no sensitive detail is needed
-- event-specific generation may add contextual sensitive details when they are needed, but should prefer pool-consistent values for recurring anchors
-
-TODO:
-
-- the current information-type set is expected to evolve when new topics are added
-- when new topics are added, extend the topic design, the information-type schema, and the persona-level pool design together
+- interaction derivation should reuse pool values when they are genuinely needed
+- if a suitable private detail is not in the pool, a new synthetic detail may be generated as long as it remains persona-consistent
 
 ## Relation and Lineage
 
-Each event or interaction-bearing event should support explicit relation metadata.
+Each event or interaction item should support explicit relation metadata.
 
 Required fields:
 
 - `event_id`
 - `relations`
-  - list of relation records
-  - each relation record should include:
+  - each relation record includes:
     - `type`: `evolves_from` or `derived_from`
     - `source_event_id`
 
@@ -155,42 +138,51 @@ Interpretation:
 - `derived_from`
   - used when an interaction item is derived from a base event
 
-The relation graph should remain traceable across derived and changed content.
-
-## Interaction Mapping
-
-Interaction history should be built by deriving interaction items from event-history items that naturally support:
-
-- an immediate user task
-- concrete context disclosure
-- realistic consultation behavior
-
-Every interaction item should remain linked to its source event through:
-
-- `relations`
-
 ## Conversation History
 
-Conversation history should be constructed by combining:
+Conversation history is the combined, time-ordered skeleton used by conversation generation.
+
+It contains:
 
 - all event-history items
 - all derived interaction-history items
 
-Each interaction-history item should be inserted near its source event so that the final conversation remains coherent and locally grounded.
+Each interaction item is inserted immediately after its source event.
+
+Event items in conversation history preserve the original event record fields and add:
+
+- `timestamp`
+- `kind = "event"`
+- `[Sensitive Info]`
+
+Interaction items in conversation history use explicit bracketed keys:
+
+- `timestamp`
+- `kind = "interaction"`
+- `[Prev Event]`
+- `[Task Goal]`
+- `[Context Can Add]`
+- `[Sensitive Info]`
 
 ## Conversation Construction
 
-Conversation should be generated from conversation history.
+Conversation is generated from conversation history.
 
-All conversation-history items should be explicitly expanded into conversation.
+The intended format is:
 
-Each conversation-history item should appear as:
+- an optional brief topic-related intro without `Side_Note`
+- then, for every history item:
+  - one `Side_Note`
+  - one user line
+  - one assistant line
+
+So each history-related block should follow:
 
 - `Side_Note`
-- user turn
-- assistant turn
+- `User`
+- `Assistant`
 
-The conversation should therefore fully cover conversation history, while event history remains the broader world state and interaction history remains the derived consultation layer.
+The intro may exist, but it should not invent a timestamped `Side_Note`.
 
 ## Minimal Schema
 
@@ -202,13 +194,12 @@ Base event history item:
   "turn_type": "update",
   "update_subtype": "change",
   "timestamp": "MM/DD/YYYY",
-  "event": "...",
-  "old_event": "...",
-  "old_event_date": "MM/DD/YYYY",
-  "reasons_of_change": "...",
+  "Event": "...",
+  "[Old Event]": "...",
+  "[Old Event Date]": "MM/DD/YYYY",
+  "[Reasons of Change]": "...",
   "sensitive_info": {
-    "document_or_record_reference": ["ledger snapshot"],
-    "family_or_relationship_detail": ["retired bookkeeper cousin"]
+    "document_or_record_reference": ["route note"]
   },
   "relations": [
     {
@@ -226,13 +217,17 @@ Derived interaction-history item:
   "event_id": "I05",
   "turn_type": "help_seek",
   "update_subtype": null,
-  "timestamp": "MM/DD/YYYY",
-  "event": "...",
-  "task_goal": "...",
-  "needed_context": ["...", "..."],
-  "sensitive_info": {
-    "email": ["alex.test@example.com"],
-    "named_contact": ["Maria from the guesthouse"]
+  "timestamp": "MM/DD/YYYY-I01",
+  "Event": "...",
+  "source_event_id": "E12",
+  "source_event_date": "MM/DD/YYYY",
+  "[Prev Event]": "...",
+  "[Task Goal]": "...",
+  "[Context Can Add]": {
+    "...": "..."
+  },
+  "[Sensitive Info]": {
+    "...": ["..."]
   },
   "relations": [
     {
@@ -245,15 +240,23 @@ Derived interaction-history item:
 
 ## Pipeline
 
-The baseline pipeline should follow this order:
+The baseline pipeline follows this order:
 
-1. generate event history
-2. assign update subtype and change metadata
-3. derive interaction history from suitable event-history items
-4. for each interaction item, add:
-   - `task_goal`
-   - `needed_context`
-   - `sensitive_info`
-5. attach relation metadata
-6. construct conversation history by combining event history and interaction history
-7. generate conversation from conversation history
+1. expand persona
+2. generate general personal history for the four canonical stages
+3. generate contextual personal history for each topic and stage
+4. build a persona-level sensitive-information pool
+5. normalize contextual histories into event histories
+6. select source events for help-seeking interactions
+7. derive interaction history with `task_goal`, `context_can_add`, and `sensitive_info`
+8. assemble conversation history by combining event history and interaction history
+9. generate conversation from conversation history
+10. reflect, repair, and refine the conversation while preserving timestamp alignment
+
+## Regeneration
+
+The current pipeline also supports:
+
+- `--regenerate_conversation_only`
+
+This mode reuses the existing persona, histories, and conversation-history sections from an existing output file and rewrites only the final `Conversation ... Stage` sections.
