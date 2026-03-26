@@ -75,7 +75,9 @@ Each `help_seek` interaction should:
 - extend the source event rather than replace it
 - include 3--5 concrete background items in `context_can_add`
 - include at least some potentially sensitive background when it is natural and useful
+- explain what private details those sensitive context items would involve
 - include concrete sensitive values in `sensitive_info` only for the sensitive background items in `context_can_add`
+- avoid leaving abstract pool placeholders like `departure window` or `guesthouse contact` as final sensitive values
 
 Examples of task types:
 
@@ -91,8 +93,10 @@ Examples of task types:
 
 Sensitive information is represented as a dictionary:
 
-- key: a concrete `context_can_add` item that involves sensitive background
+- key: the private detail named in the explanation of a sensitive `context_can_add` item
 - value: a list of concrete sensitive values for that item
+
+The interaction-detail prompt may reuse persona-level synthetic anchors as inspiration, but those anchors are treated as abstract hints rather than final values. If Persona PII provides a relevant concrete value, the model should use it; otherwise it should synthesize a persona-consistent concrete value instead of returning the abstract placeholder itself.
 
 Example:
 
