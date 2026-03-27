@@ -288,7 +288,6 @@ class QueryLLM:
         response = self.client.chat.completions.create(
             model=model,
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=10000
         )
         return response.choices[0].message.content
 
@@ -304,7 +303,6 @@ class QueryLLM:
             completion = self.client.chat.completions.create(
                 model=model,
                 messages=state,
-                max_tokens=10000
             )
             text = completion.choices[0].message.content
             state.append({"role": "assistant", "content": text})
@@ -333,7 +331,6 @@ class QueryLLM:
         completion = self.client.chat.completions.create(
             model=model,
             messages=messages,
-            max_tokens=10000
         )
         text = completion.choices[0].message.content
         messages.append({"role": "assistant", "content": text})
@@ -502,13 +499,17 @@ class QueryLLM:
 
         # Reflect on the conversation
         elif step == 'reflect_init_conversation':
-            prompt = prompts.prompts_for_reflecting_conversations(topic, data={'history_block': self.init_personal_history, 'conversation_block': data}, round=action, period='INITIAL')
+            reflect_data = data if isinstance(data, dict) else {'history_block': self.init_personal_history, 'conversation_block': data}
+            prompt = prompts.prompts_for_reflecting_conversations(topic, data=reflect_data, round=action, period='INITIAL')
         elif step == 'reflect_first_expand_conversation':
-            prompt = prompts.prompts_for_reflecting_conversations(topic, data={'history_block': self.first_expand_personal_history, 'conversation_block': data}, round=action, period='EARLY')
+            reflect_data = data if isinstance(data, dict) else {'history_block': self.first_expand_personal_history, 'conversation_block': data}
+            prompt = prompts.prompts_for_reflecting_conversations(topic, data=reflect_data, round=action, period='EARLY')
         elif step == 'reflect_second_expand_conversation':
-            prompt = prompts.prompts_for_reflecting_conversations(topic, data={'history_block': self.second_expand_personal_history, 'conversation_block': data}, round=action, period='INTERMEDIATE')
+            reflect_data = data if isinstance(data, dict) else {'history_block': self.second_expand_personal_history, 'conversation_block': data}
+            prompt = prompts.prompts_for_reflecting_conversations(topic, data=reflect_data, round=action, period='INTERMEDIATE')
         elif step == 'reflect_third_expand_conversation':
-            prompt = prompts.prompts_for_reflecting_conversations(topic, data={'history_block': self.third_expand_personal_history, 'conversation_block': data}, round=action, period='LATE')
+            reflect_data = data if isinstance(data, dict) else {'history_block': self.third_expand_personal_history, 'conversation_block': data}
+            prompt = prompts.prompts_for_reflecting_conversations(topic, data=reflect_data, round=action, period='LATE')
 
         elif step == 'expand_conversation_section':
             prompt = prompts.prompts_for_expanding_conversation_section(topic, data)
@@ -530,7 +531,8 @@ class QueryLLM:
         # Independent API calls every time
         if (step == 'expand_persona' or step == 'qa_helper' or step == 'expand_conversation_section' or step == 'translate_code'
                 or step == 'rewrite_email' or step == 'rewrite_creative_writing' or step == 'new_content' or step == 'find_stereotype'
-                or step == 'select_interaction_events' or step == 'derive_interaction_details'):
+                or step == 'select_interaction_events' or step == 'derive_interaction_details'
+                or step.startswith('reflect_')):
             try:
                 model = self._model_for_step(step)
                 response = self._request_single_turn(

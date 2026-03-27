@@ -446,7 +446,7 @@ def main() -> None:
         default="",
         help="Write selected qa_id list to manifest JSON.",
     )
-    parser.add_argument("--workers", type=int, default=20, help="Concurrent API workers for evaluation.")
+    parser.add_argument("--workers", type=int, default=10, help="Concurrent API workers for evaluation.")
     args = parser.parse_args()
 
     provider = infer_provider(args.model, args.provider)

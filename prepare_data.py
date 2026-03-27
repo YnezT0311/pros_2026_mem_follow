@@ -511,6 +511,51 @@ def maybe_write_conversation_log(output_file_path, args, stage_name, artifact_na
             f.write(str(payload))
 
 
+def get_output_section_snapshot(output_file_path):
+    snapshot = {"present_sections": [], "missing_sections": [], "unreadable": False}
+    if not os.path.exists(output_file_path):
+        snapshot["missing_sections"] = ["<output_file_missing>"]
+        return snapshot
+    try:
+        with open(output_file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception:
+        snapshot["unreadable"] = True
+        snapshot["missing_sections"] = ["<output_file_unreadable_json>"]
+        return snapshot
+
+    for key, value in data.items():
+        if value is None:
+            snapshot["missing_sections"].append(key)
+        elif isinstance(value, (list, dict)) and len(value) == 0:
+            snapshot["missing_sections"].append(key)
+        else:
+            snapshot["present_sections"].append(key)
+    return snapshot
+
+
+def _load_existing_output_data(output_file_path):
+    if not os.path.exists(output_file_path):
+        return {}
+    try:
+        with open(output_file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _has_existing_section(existing_output, section_name):
+    value = existing_output.get(section_name)
+    if value is None:
+        return False
+    if isinstance(value, (list, dict)) and len(value) == 0:
+        return False
+    if isinstance(value, str) and value.strip() == "":
+        return False
+    return True
+
+
 def is_output_complete(output_file_path, topic):
     if not os.path.exists(output_file_path):
         return False
@@ -651,7 +696,17 @@ def rewrite_conversations_from_existing(LLM, existing_data, curr_topic, start_ti
                 verbose=args['inference']['verbose'],
             )
             maybe_write_conversation_log(output_file_path, args, data_name, "reflect_round1", reflected)
-            response = LLM.query_llm(step='reflect_' + step, topic=curr_topic, action=2, verbose=args['inference']['verbose'])
+            response = LLM.query_llm(
+                step='reflect_' + step,
+                topic=curr_topic,
+                data={
+                    'history_block': conversation_histories[conv_idx],
+                    'conversation_block': response,
+                    'review_feedback': reflected,
+                },
+                action=2,
+                verbose=args['inference']['verbose'],
+            )
             maybe_write_conversation_log(output_file_path, args, data_name, "reflect_round2", response)
             expanded_conversation = parse_conversation_sections(LLM, response, curr_topic, last_timestamps[conv_idx], verbose=args['inference']['verbose'])
             maybe_write_conversation_log(output_file_path, args, data_name, "parsed", expanded_conversation)
@@ -871,6 +926,7 @@ def prepare_data_on_writing_topic(LLM, topic, persona, source_data, output_file_
 
 def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir, curr_topic, idx_topic, start_time, output_file_path,
                                  init_general_personal_history, first_expand_general_personal_history, second_expand_general_personal_history, third_expand_general_personal_history, args):
+    existing_output = _load_existing_output_data(output_file_path)
     # Feed the thread with a seeding data from the real-world conversation
     if source_dir is not None:
         source_conversation = utils.preprocess_source_data(source_data, curr_topic)
@@ -892,6 +948,21 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
     normalized_history = {}
     for step, data_name in tqdm(zip(steps, data_names), disable=TQDM_DISABLE):
         print(f'{utils.Colors.OKGREEN}Processing step: {step}{utils.Colors.ENDC}')
+        maybe_write_conversation_log(
+            output_file_path,
+            args,
+            data_name,
+            "step_start",
+            {"step": step, "topic": curr_topic},
+        )
+        if _has_existing_section(existing_output, data_name):
+            if step == 'init_contextual_personal_history' and _has_existing_section(existing_output, "Topic-Specific Hobbies"):
+                utils.append_json_to_file(existing_output["Topic-Specific Hobbies"], output_file_path, curr_data_name="Topic-Specific Hobbies", parse_json=False)
+            utils.append_json_to_file(existing_output[data_name], output_file_path, curr_data_name=data_name, parse_json=True)
+            maybe_write_conversation_log(output_file_path, args, data_name, "reused_existing_section", existing_output[data_name])
+            normalized_history[step] = existing_output[data_name]
+            last_timestamps.append(utils.extract_last_timestamp(existing_output[data_name]))
+            continue
         # Only generate general personal history once, to be shared across multiple topics for the same persona
         # if idx_topic > 0 and step in existing_general_personal_history:
         #     utils.append_json_to_file(existing_general_personal_history[step], output_file_path, curr_data_name=data_name, parse_json=True)
@@ -910,6 +981,7 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
                     print('Generating new general personal history.')
 
         response = LLM.query_llm(step=step, persona=expanded_persona, topic=curr_topic, idx_topic=idx_topic, start_time=start_time, verbose=args['inference']['verbose'])
+        maybe_write_conversation_log(output_file_path, args, data_name, "raw", response)
 
         if not isinstance(response, str):
             raise RuntimeError(f"LLM returned non-string response at step={step}, topic={curr_topic}: {type(response)}")
@@ -928,10 +1000,12 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
                 json_part = repair_json('[{'+json_part+'}]')
                 json_part = utils.filter_valid_dates(json_part)
                 utils.append_json_to_file(json_part, output_file_path, curr_data_name=data_name, parse_json=False)
+                maybe_write_conversation_log(output_file_path, args, data_name, "parsed", json_part)
                 normalized_history[step] = json_part
                 # print(utils.Colors.OKGREEN, "JSON Part after repair:", utils.Colors.ENDC, json_part)
                 last_timestamps.append(utils.extract_last_timestamp(json_part))
             except Exception as e:
+                maybe_write_conversation_log(output_file_path, args, data_name, "error", repr(e))
                 preview = (response[:1200] + "...") if isinstance(response, str) and len(response) > 1200 else response
                 raise RuntimeError(
                     f"Failed parsing step={step} for topic={curr_topic}. "
@@ -945,9 +1019,11 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
                 response = utils.filter_valid_dates(response)
                 # print('filtered response', response)
                 utils.append_json_to_file(response, output_file_path, curr_data_name=data_name, parse_json=False)
+                maybe_write_conversation_log(output_file_path, args, data_name, "parsed", response)
                 normalized_history[step] = response
                 last_timestamps.append(utils.extract_last_timestamp(response))
             except Exception as e:
+                maybe_write_conversation_log(output_file_path, args, data_name, "error", repr(e))
                 preview = (str(response)[:1200] + "...") if len(str(response)) > 1200 else str(response)
                 raise RuntimeError(
                     f"Failed parsing step={step} for topic={curr_topic}. "
@@ -963,7 +1039,12 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
 
     last_timestamps = utils.merge_timestamps(last_timestamps)
     sensitive_info_pool = build_sensitive_info_pool(expanded_persona, getattr(LLM, "pii_profile", None), curr_topic)
-    utils.append_json_to_file(sensitive_info_pool, output_file_path, curr_data_name='Sensitive Info Pool', parse_json=False)
+    if _has_existing_section(existing_output, 'Sensitive Info Pool'):
+        sensitive_info_pool = existing_output['Sensitive Info Pool']
+        utils.append_json_to_file(sensitive_info_pool, output_file_path, curr_data_name='Sensitive Info Pool', parse_json=False)
+        maybe_write_conversation_log(output_file_path, args, 'Sensitive Info Pool', 'reused_existing_section', sensitive_info_pool)
+    else:
+        utils.append_json_to_file(sensitive_info_pool, output_file_path, curr_data_name='Sensitive Info Pool', parse_json=False)
 
     raw_context_histories = [
         normalized_history.get('init_contextual_personal_history', {}),
@@ -980,8 +1061,12 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
     ]
     event_history_names = EVENT_HISTORY_SECTION_NAMES
     for event_name, hist in zip(event_history_names, event_histories):
+        if _has_existing_section(existing_output, event_name):
+            hist = existing_output[event_name]
+            maybe_write_conversation_log(output_file_path, args, event_name, 'reused_existing_section', hist)
         utils.append_json_to_file(hist, output_file_path, curr_data_name=event_name, parse_json=False)
 
+    maybe_write_conversation_log(output_file_path, args, "interaction_dates", "start", {"topic": curr_topic})
     interaction_dates = [
         select_interaction_dates(LLM, event_histories[0], curr_topic, "init", verbose=args['inference']['verbose']),
         select_interaction_dates(LLM, event_histories[1], curr_topic, "week", verbose=args['inference']['verbose']),
@@ -990,8 +1075,13 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
     ]
     interaction_date_names = INTERACTION_SOURCE_SECTION_NAMES
     for data_name, dates in zip(interaction_date_names, interaction_dates):
+        if _has_existing_section(existing_output, data_name):
+            dates = existing_output[data_name]
+            maybe_write_conversation_log(output_file_path, args, data_name, 'reused_existing_section', dates)
         utils.append_json_to_file(dates, output_file_path, curr_data_name=data_name, parse_json=False)
+    maybe_write_conversation_log(output_file_path, args, "interaction_dates", "done", {"counts": [len(x) if isinstance(x, list) else None for x in interaction_dates]})
 
+    maybe_write_conversation_log(output_file_path, args, "interaction_history", "start", {"topic": curr_topic})
     interaction_histories = [
         build_interaction_history(LLM, event_histories[0], curr_topic, "init", sensitive_info_pool, interaction_dates[0], expanded_persona, normalized_history.get('init_general_personal_history', {}), verbose=args['inference']['verbose']),
         build_interaction_history(LLM, event_histories[1], curr_topic, "week", sensitive_info_pool, interaction_dates[1], expanded_persona, normalized_history.get('first_expand_general_personal_history', {}), verbose=args['inference']['verbose']),
@@ -1000,8 +1090,13 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
     ]
     interaction_history_names = INTERACTION_HISTORY_SECTION_NAMES
     for hist_name, hist in zip(interaction_history_names, interaction_histories):
+        if _has_existing_section(existing_output, hist_name):
+            hist = existing_output[hist_name]
+            maybe_write_conversation_log(output_file_path, args, hist_name, 'reused_existing_section', hist)
         utils.append_json_to_file(hist, output_file_path, curr_data_name=hist_name, parse_json=False)
+    maybe_write_conversation_log(output_file_path, args, "interaction_history", "done", {"counts": [len(x) if isinstance(x, dict) else None for x in interaction_histories]})
 
+    maybe_write_conversation_log(output_file_path, args, "conversation_history", "start", {"topic": curr_topic})
     conversation_histories = [
         build_conversation_history(event_histories[0], interaction_histories[0]),
         build_conversation_history(event_histories[1], interaction_histories[1]),
@@ -1010,7 +1105,11 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
     ]
     conversation_history_names = CONVERSATION_HISTORY_SECTION_NAMES
     for hist_name, hist in zip(conversation_history_names, conversation_histories):
+        if _has_existing_section(existing_output, hist_name):
+            hist = existing_output[hist_name]
+            maybe_write_conversation_log(output_file_path, args, hist_name, 'reused_existing_section', hist)
         utils.append_json_to_file(hist, output_file_path, curr_data_name=hist_name, parse_json=False)
+    maybe_write_conversation_log(output_file_path, args, "conversation_history", "done", {"counts": [len(x) if isinstance(x, dict) else None for x in conversation_histories]})
 
     # Conversation generation should expand every conversation-history item.
     LLM.init_personal_history = json.dumps(conversation_histories[0], ensure_ascii=False, indent=2)
@@ -1020,6 +1119,10 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
 
     for conv_idx, (step, data_name) in enumerate(zip(steps, data_names)):
         print(f'{utils.Colors.OKGREEN}Processing step: {step}{utils.Colors.ENDC}')
+        if _has_existing_section(existing_output, data_name):
+            utils.append_json_to_file(existing_output[data_name], output_file_path, curr_data_name=data_name, parse_json=False, parse_list=False)
+            maybe_write_conversation_log(output_file_path, args, data_name, "reused_existing_section", existing_output[data_name])
+            continue
         try:
             maybe_write_conversation_log(output_file_path, args, data_name, "expected_history", conversation_histories[conv_idx])
             response = LLM.query_llm(
@@ -1042,6 +1145,11 @@ def prepare_data_on_other_topics(LLM, expanded_persona, source_data, source_dir,
             response = LLM.query_llm(
                 step='reflect_' + step,
                 topic=curr_topic,
+                data={
+                    'history_block': conversation_histories[conv_idx],
+                    'conversation_block': response,
+                    'review_feedback': reflected,
+                },
                 action=2,
                 verbose=args['inference']['verbose'],
             )
@@ -1227,6 +1335,20 @@ def prepare_data(args):
                         if attempt > 0 and os.path.exists(output_file_path) and not regenerate_conversation_only:
                             os.remove(output_file_path)
                         clear_conversation_logs(output_file_path, args)
+                        maybe_write_conversation_log(
+                            output_file_path,
+                            args,
+                            "generation_attempt",
+                            "started",
+                            {
+                                "topic": curr_topic,
+                                "persona_idx": idx_persona,
+                                "sample_idx": idx_sample,
+                                "attempt": attempt + 1,
+                                "regenerate_conversation_only": regenerate_conversation_only,
+                                "force_regen_persona": bool(args['inference'].get('force_regen_persona', False)),
+                            },
+                        )
                         try:
                             LLM = QueryLLM(args)
                             if parsed_pii:
@@ -1296,10 +1418,32 @@ def prepare_data(args):
                             break
                         except Exception as e:
                             if attempt < max_retries and is_retryable_error(e):
+                                maybe_write_conversation_log(
+                                    output_file_path,
+                                    args,
+                                    "generation_attempt",
+                                    "retryable_error",
+                                    {
+                                        "attempt": attempt + 1,
+                                        "error": repr(e),
+                                        "section_snapshot": get_output_section_snapshot(output_file_path),
+                                    },
+                                )
                                 sleep_seconds = retry_backoff * (2 ** attempt)
                                 print(f'{utils.Colors.WARNING}Retryable error at {output_file_path}: {e}. Retrying in {sleep_seconds:.1f}s...{utils.Colors.ENDC}')
                                 time.sleep(sleep_seconds)
                                 continue
+                            maybe_write_conversation_log(
+                                output_file_path,
+                                args,
+                                "generation_attempt",
+                                "fatal_error",
+                                {
+                                    "attempt": attempt + 1,
+                                    "error": repr(e),
+                                    "section_snapshot": get_output_section_snapshot(output_file_path),
+                                },
+                            )
                             print(f'{utils.Colors.FAIL}Error at generating file {output_file_path}: {repr(e)}{utils.Colors.ENDC}')
                             traceback.print_exc()
                             errored[output_file_path] = str(e)
@@ -1372,7 +1516,7 @@ if __name__ == "__main__":
                         help='When --topics irrelevant, ignore existing irrelevant_contexts checkpoint and regenerate from scratch')
     parser.add_argument('--skip_existing', dest='skip_existing', action='store_true',
                         help='Skip already completed output files for non-irrelevant topics')
-    parser.add_argument('--workers', type=int, default=20,
+    parser.add_argument('--workers', type=int, default=10,
                         help='Number of worker threads (persona-level parallelism)')
     parser.add_argument('--max_retries', type=int, default=2,
                         help='Max retries for retryable API/network errors')

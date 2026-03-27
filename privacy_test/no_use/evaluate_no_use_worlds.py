@@ -367,7 +367,7 @@ def main() -> None:
     parser.add_argument("--sample_manifest_in", type=str, default="")
     parser.add_argument("--sample_manifest_out", type=str, default="")
     parser.add_argument("--branch", type=str, default="all", choices=["all", "direct_cue", "reasoning"])
-    parser.add_argument("--workers", type=int, default=20)
+    parser.add_argument("--workers", type=int, default=10)
     parser.add_argument("--retries", type=int, default=8)
     parser.add_argument("--rate_limit_rounds", type=int, default=6)
     parser.add_argument("--rate_limit_sleep", type=float, default=5.0)

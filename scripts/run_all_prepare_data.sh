@@ -20,12 +20,12 @@ end_persona_id=10  # non-inclusive
 #          --topics bookRecommendation datingConsultation email familyRelations financialConsultation foodRecommendation homeDecoration \
 #                   legalConsultation medicalConsultation movieRecommendation musicRecommendation onlineShopping sportsRecommendation \
 #                   studyConsultation therapy travelPlanning writing \
-#          --n_persona ${end_persona_id} --n_samples 1 --s_persona ${start_persona_id} --s_samples 0 --workers 20 --output_dir data/output/ --skip_existing"
+#          --n_persona ${end_persona_id} --n_samples 1 --s_persona ${start_persona_id} --s_samples 0 --workers 10 --output_dir data/output/ --skip_existing"
 
 command="python prepare_data.py --model gpt-5-mini \
          --api_mode ${API_MODE} \
          --topics legalConsultation financialConsultation medicalConsultation therapy travelPlanning \
-         --n_persona ${end_persona_id} --n_samples 1 --s_persona ${start_persona_id} --s_samples 0 --workers 20 --output_dir data/output/ --skip_existing"
+         --n_persona ${end_persona_id} --n_samples 1 --s_persona ${start_persona_id} --s_samples 0 --workers 10 --output_dir data/output/ --skip_existing"
 
 
 # Print the command for debugging/logging purposes

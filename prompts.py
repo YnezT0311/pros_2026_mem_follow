@@ -273,6 +273,13 @@ def prompts_for_generating_conversations(topic, persona, curr_personal_history=N
 
 
 def prompts_for_reflecting_conversations(topic, data, round, period='INITIAL'):
+    def _stringify_block(block):
+        if isinstance(block, str):
+            return block
+        if isinstance(block, (list, dict)):
+            return json.dumps(block, ensure_ascii=False, indent=2)
+        return str(block)
+
     if topic == 'therapy':
         topic_name, user, agent = 'therapy', 'Patient', 'Therapist'
     else:
@@ -293,13 +300,16 @@ def prompts_for_reflecting_conversations(topic, data, round, period='INITIAL'):
 
     if round == 1:
         prompt = "Given the following " + history_block + " and the " + conversation_block + ", check if the " + conversation_block + " has covered every single item in the " + history_block + ". Every history item should have its own matching timestamped Side_Note block in the conversation, including derived interaction items with timestamps such as MM/DD/YYYY-I01. All [Old Event Date] does NOT count! Ignore them! " \
-                 "List all missed ones in the conversation, as well as those in the conversation but not in the " + history_block + ":\n\n" + history_block + "\n\n" + data['history_block'] + "\n\n" + conversation_block + "\n\n" + data['conversation_block']
+                 "List all missed ones in the conversation, as well as those in the conversation but not in the " + history_block + ":\n\n" + history_block + "\n\n" + _stringify_block(data['history_block']) + "\n\n" + conversation_block + "\n\n" + _stringify_block(data['conversation_block'])
         schema = None
     elif round == 2:
         prompt = "Please fill in these missed timestamps with their corresponding events mentioned in the " + history_block + " into the " + conversation_block + ". " \
                  "Make sure every single timestamp in the Side_Note in this conversation can be found exactly in the given " + history_block + ", instead of personal history in other time periods. " \
                  "You may add some transition sentences to make it smooth, but do NOT modify any other words in the original conversation, except for the sentences with incorrect timestamps. " \
                  "If there is no missed timestamp, no need to change any part of the original conversation. " \
+                 "Here is the reference " + history_block + ":\n\n" + _stringify_block(data['history_block']) + "\n\n" \
+                 "Here is the original " + conversation_block + " to repair:\n\n" + _stringify_block(data['conversation_block']) + "\n\n" \
+                 "Here is the review feedback describing the missing or mismatched timestamps:\n\n" + _stringify_block(data['review_feedback']) + "\n\n" \
                  "Follow exactly the SAME template in the original conversation:\n\n" \
                  "[\n" \
                  '"Side_Note: [xxx] TIMESTAMP",' \

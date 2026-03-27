@@ -466,7 +466,7 @@ def main() -> None:
         default="",
         help="Write selected qa_id list to manifest JSON.",
     )
-    parser.add_argument("--workers", type=int, default=20, help="Concurrent API workers for evaluation.")
+    parser.add_argument("--workers", type=int, default=10, help="Concurrent API workers for evaluation.")
     parser.add_argument("--retries", type=int, default=8)
     parser.add_argument("--rate_limit_rounds", type=int, default=6)
     parser.add_argument("--rate_limit_sleep", type=float, default=5.0)

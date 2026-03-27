@@ -384,7 +384,10 @@ def merge_timestamps(timestamps):
     print('timestamps before merging:', timestamps)
     # Function to compare dates in MM/DD/YYYY format
     def later_date(date1, date2):
-        return max(date1, date2, key=lambda x: tuple(map(int, x.split('/')[::-1])))
+        valid = [d for d in (date1, date2) if isinstance(d, str) and re.match(r"^\d{2}/\d{2}/\d{4}$", d)]
+        if not valid:
+            return None
+        return max(valid, key=lambda x: tuple(map(int, x.split('/')[::-1])))
 
     assert len(timestamps) % 2 == 0
     num_conv_blocks = len(timestamps) // 2
@@ -393,6 +396,8 @@ def merge_timestamps(timestamps):
         merged_timestamps.append(later_date(timestamps[i], timestamps[i + num_conv_blocks]))
 
     for i, timestamp in enumerate(merged_timestamps):
+        if timestamp is None:
+            continue
         random_days = random.randint(0, 6)
         random_days = timedelta(days=random_days)
         merged_timestamps[i] = (datetime.strptime(timestamp, "%m/%d/%Y") + random_days).strftime("%m/%d/%Y")

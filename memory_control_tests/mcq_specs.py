@@ -28,11 +28,26 @@ def _normalize_label(text: str) -> str:
 
 
 def _conversation_user_turn(turn: Dict) -> str:
+    if turn.get("user_turn"):
+        return str(turn["user_turn"]).strip()
     block = turn.get("conversation_block") or {}
     for line in block.get("lines", []):
         if isinstance(line, str) and line.startswith("User:"):
             return line[len("User:"):].strip()
     return ""
+
+
+def _candidate_turn_summaries(pool: List[Dict]) -> List[Dict[str, str]]:
+    summaries = []
+    for turn in pool:
+        summaries.append(
+            {
+                "timestamp": str(turn.get("timestamp", "")),
+                "task_goal": str(turn.get("task_goal", "")).strip(),
+                "user_turn": _conversation_user_turn(turn),
+            }
+        )
+    return summaries
 
 
 def _context_items(turn: Dict, max_items: int = 4) -> List[Dict[str, str]]:
@@ -86,16 +101,6 @@ def _pick_distinct(correct_seed: str, candidates: List[str], limit: int = 2) -> 
     return chosen
 
 
-def _render_prompt_common() -> str:
-    return (
-        "Return valid JSON only with keys identifier_label, question, options, and correct_option_available. "
-        "The options object must contain exactly A, B, C, and D. "
-        "Do not add markdown fences or any extra commentary. "
-        "Keep all options plausible and similar in length. "
-        "Do not change the factual ownership of the correct answer."
-    )
-
-
 def _build_whole_recall_render_prompt(turn: Dict, answer_seed: str, distractor_seeds: List[str], unavailable_option: str) -> str:
     user_turn = _conversation_user_turn(turn)
     task_goal = str(turn.get("task_goal", "")).strip()
@@ -106,76 +111,131 @@ def _build_whole_recall_render_prompt(turn: Dict, answer_seed: str, distractor_s
         "Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. "
         "You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. "
         "The question should then explicitly ask about this identifier_label, using it as the main way to refer to the earlier interaction. "
+        "The question should focus only on the overall purpose of the earlier request. "
+        "Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. "
         "If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. "
-        f"The correct answer should be based on this seed: \"{answer_seed}\". "
-        f"The incorrect answers should be based on these seeds: {json.dumps(distractor_seeds, ensure_ascii=False)}. "
-        f"The not_remember answer should be based on this seed: \"{unavailable_option}\". "
+        "Then write three answer candidates. "
+        f"\"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"{answer_seed}\". "
+        "\"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. "
+        f"\"distractor_irrelevant\" should be a distraction answer that is not actually relevant to this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: {json.dumps(distractor_seeds, ensure_ascii=False)}. "
+        f"\"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"{unavailable_option}\". "
         "Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. "
-        + _render_prompt_common()
+        "Return valid JSON only in the following format: "
+        "{"
+        "\"identifier_label\": \"...\", "
+        "\"question\": \"...\", "
+        "\"answers\": ["
+        "{"
+        "\"answer_type\": \"remember_correct\", "
+        "\"text\": \"...\""
+        "}, "
+        "{"
+        "\"answer_type\": \"distractor_irrelevant\", "
+        "\"text\": \"...\""
+        "}, "
+        "{"
+        "\"answer_type\": \"not_remember\", "
+        "\"text\": \"...\""
+        "}"
+        "]"
+        "} "
+        "No other words."
     )
 
 
-def _build_slot_recall_render_prompt(turn: Dict, answer_seed: str, distractor_seeds: List[str], unavailable_option: str, slot_name: str) -> str:
+def _build_slot_recall_render_prompt(
+    turn: Dict,
+    identifier_label: str,
+    distractor_seeds: List[str],
+) -> str:
     user_turn = _conversation_user_turn(turn)
     task_goal = str(turn.get("task_goal", "")).strip()
-    context_json = json.dumps(_context_items(turn), ensure_ascii=False, indent=2)
     sensitive_json = json.dumps(_sensitive_items(turn), ensure_ascii=False, indent=2)
     return (
-        "You are helping create a multiple-choice question for a conversation-memory evaluation. "
-        f"The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"{user_turn}\". "
+        "You are helping create multiple-choice questions for a conversation-memory evaluation. "
+        f"The target interaction is an earlier user turn related to {identifier_label} in a long conversation. "
+        f"The user's earlier message was: \"{user_turn}\". "
         f"This turn was associated with the following task goal: \"{task_goal}\". "
-        f"The structured background details tied to this interaction are: {context_json}. "
-        f"The structured sensitive details tied to this interaction are: {sensitive_json}. "
-        f"Please write one natural multiple-choice question that directly tests whether the assistant remembers the specific earlier detail \"{slot_name}\" from this interaction. "
-        "In this benchmark, it is acceptable for the question to ask directly whether the assistant remembers that earlier detail. "
-        "Also provide a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally refers to this interaction and helps distinguish it from other turns in the same sample. "
-        f"The correct answer should be based on this seed: \"{answer_seed}\". "
-        f"The incorrect answers should be based on these seeds: {json.dumps(distractor_seeds, ensure_ascii=False)}. "
-        f"The D option should be a natural unavailable or ask-again response based on this seed: \"{unavailable_option}\". "
-        "Keep the question focused on this interaction rather than the user's whole persona, and make the answer choices similar in length and equally plausible in style. "
-        + _render_prompt_common()
+        f"The sensitive details revealed in this interaction are: {sensitive_json}. "
+        "For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. "
+        "The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. "
+        "When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. "
+        "If the question needs to refer to the interaction as a whole, it should explicitly use the identifier_label as the main way to refer to this interaction, rather than inventing a new label. "
+        "Reuse the given identifier_label exactly instead of replacing it with a new phrase. "
+        "If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. "
+        f"For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. "
+        f"\"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: {json.dumps(distractor_seeds, ensure_ascii=False)}. "
+        "\"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. "
+        "Return valid JSON only in the following format: "
+        "{"
+        "\"items\": ["
+        "{"
+        "\"sensitive_key\": \"...\", "
+        "\"sensitive_value\": \"...\", "
+        "\"identifier_label\": \"...\", "
+        "\"question\": \"...\", "
+        "\"answers\": ["
+        "{"
+        "\"answer_type\": \"remember_correct\", "
+        "\"text\": \"...\""
+        "}, "
+        "{"
+        "\"answer_type\": \"distractor_irrelevant\", "
+        "\"text\": \"...\""
+        "}, "
+        "{"
+        "\"answer_type\": \"not_remember\", "
+        "\"text\": \"...\""
+        "}"
+        "]"
+        "}, "
+        "{"
+        "\"sensitive_key\": \"...\", "
+        "\"sensitive_value\": \"...\", "
+        "\"identifier_label\": \"...\", "
+        "\"question\": \"...\", "
+        "\"answers\": ["
+        "{"
+        "\"answer_type\": \"remember_correct\", "
+        "\"text\": \"...\""
+        "}, "
+        "{"
+        "\"answer_type\": \"distractor_irrelevant\", "
+        "\"text\": \"...\""
+        "}, "
+        "{"
+        "\"answer_type\": \"not_remember\", "
+        "\"text\": \"...\""
+        "}"
+        "]"
+        "}"
+        "]"
+        "} "
+        "Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. "
+        "If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. "
+        "No other words."
     )
 
 
-def _build_reasoning_render_prompt(turn: Dict, answer_seed: str, distractor_seeds: List[str], unavailable_option: str) -> str:
+def build_disambiguation_check_prompt(turn: Dict, pool: List[Dict], identifier_label: str) -> str:
     user_turn = _conversation_user_turn(turn)
-    task_goal = str(turn.get("task_goal", "")).strip()
-    context_json = json.dumps(_context_items(turn), ensure_ascii=False, indent=2)
-    sensitive_json = json.dumps(_sensitive_items(turn), ensure_ascii=False, indent=2)
+    candidate_turns = _candidate_turn_summaries(pool)
     return (
-        "You are helping create a multiple-choice application question for a conversation-memory evaluation. "
-        f"The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"{user_turn}\". "
-        f"This turn was associated with the following task goal: \"{task_goal}\". "
-        f"The structured background details tied to this interaction are: {context_json}. "
-        f"The structured sensitive details tied to this interaction are: {sensitive_json}. "
-        "Please write one natural multiple-choice question that tests whether the assistant can use the earlier interaction to continue helping appropriately. "
-        "The question should feel like a realistic follow-up need from the user and should not explicitly tell the assistant to recall memory, but the correct answer should only be the best choice if the assistant can use the earlier details from this turn. "
-        "Also provide a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally refers to this interaction and helps distinguish it from other turns in the same sample. "
-        f"The correct answer should be based on this seed: \"{answer_seed}\". "
-        f"The incorrect answers should be based on these seeds: {json.dumps(distractor_seeds, ensure_ascii=False)}. "
-        f"The D option should be a natural unavailable or ask-again response based on this seed: \"{unavailable_option}\". "
-        "Make the incorrect options still sound generally helpful, but less consistent with the earlier constraints. Do not let the correct option collapse into a plain restatement of the earlier request. "
-        + _render_prompt_common()
-    )
-
-
-def _build_disambiguation_check_prompt(turn: Dict, qa_family: str, render_prompt: str, other_turn_labels: List[str], slot_name: str = "") -> str:
-    user_turn = _conversation_user_turn(turn)
-    if qa_family == "whole_recall":
-        focus = "the whole earlier interaction"
-    elif qa_family == "slot_recall":
-        focus = f"the earlier detail \"{slot_name}\""
-    else:
-        focus = "the earlier interaction in a follow-up helping scenario"
-    return (
-        "You are checking whether a generated multiple-choice memory question is specific enough. "
-        f"The target interaction came from this earlier user message: \"{user_turn}\". "
-        f"The question is supposed to target {focus}. "
-        f"Other nearby interaction task descriptions in the same sample include: {json.dumps(other_turn_labels, ensure_ascii=False)}. "
-        "Decide whether the generated identifier_label and question are likely to point clearly to the intended interaction, rather than sounding broad enough to match another turn. "
-        "If the identifier_label or question is too broad or ambiguous, rewrite them to make the target clearer while keeping the question natural. "
-        "Return valid JSON only with keys is_clear, identifier_label, question, and rationale.\n\n"
-        f"{render_prompt}"
+        "You are checking whether a generated identifier_label for an earlier interaction is too broad or is specific enough to locate one interaction in a conversation benchmark. "
+        f"The interaction that originally motivated this check came from this earlier user message: \"{user_turn}\". "
+        f"The identifier_label is: \"{identifier_label}\". "
+        "Your job is not to judge whether the label sounds nice. Your job is to determine which candidate turns this identifier_label could naturally refer to.\n\n"
+        "You will be given an identifier_label and a set of candidate turns from the same sample. "
+        "Please list all candidate timestamps that this identifier_label could naturally refer to. "
+        "If the label is broad enough that it could plausibly point to more than one turn, include all of them. "
+        "If it clearly points to only one turn, return just that one.\n\n"
+        f"Candidate turns:\n{json.dumps(candidate_turns, ensure_ascii=False, indent=2)}\n\n"
+        "Return valid JSON only in the following format:\n"
+        "{\n"
+        '  "matched_timestamps": ["..."],\n'
+        '  "rationale": "..."\n'
+        "}\n\n"
+        "No other words."
     )
 
 
@@ -201,67 +261,46 @@ def _whole_recall_spec(turn: Dict, pool: List[Dict]) -> Dict:
     }
 
 
-def _slot_recall_specs(turn: Dict, pool: List[Dict]) -> List[Dict]:
+def _slot_recall_spec(turn: Dict, pool: List[Dict], identifier_label: str) -> Dict:
     other_values = []
     for other in pool:
         if other["timestamp"] == turn["timestamp"]:
             continue
         other_values.extend(other.get("sensitive_values", []))
 
-    specs = []
+    distractor_seeds = []
     for item in _sensitive_items(turn):
-        slot_name = item["slot_name"]
         answer_seed = item["slot_value"]
         same_type = []
         for raw in other_values:
             other_slot_name, other_slot_value = _parse_sensitive_slot(raw)
-            if normalize_text(_normalize_label(other_slot_name)) == normalize_text(slot_name):
+            if normalize_text(_normalize_label(other_slot_name)) == normalize_text(item["slot_name"]):
                 same_type.append(other_slot_value)
         if not same_type:
             same_type = [_parse_sensitive_slot(raw)[1] for raw in other_values]
         distractors = _pick_distinct(answer_seed, same_type, limit=2)
-        while len(distractors) < 2:
-            distractors.append(f"A different {slot_name} than the one mentioned earlier.")
-        unavailable = UNAVAILABLE_RESPONSES[1]
-        specs.append(
-            {
-                "qa_family": "slot_recall",
-                "slot_name": slot_name,
-                "answer_seed": answer_seed,
-                "distractor_seeds": distractors,
-                "correct_option_available": "A",
-                "correct_option_restricted": "D",
-                "render_prompt": _build_slot_recall_render_prompt(
-                    turn,
-                    answer_seed=answer_seed,
-                    distractor_seeds=distractors,
-                    unavailable_option=unavailable,
-                    slot_name=slot_name,
-                ),
-            }
-        )
-    return specs
+        distractor_seeds.extend(distractors)
+    if not distractor_seeds:
+        distractor_seeds = ["A different earlier detail from another interaction."]
+    unavailable = UNAVAILABLE_RESPONSES[1]
+    return {
+        "qa_family": "slot_recall",
+        "sensitive_items": _sensitive_items(turn),
+        "distractor_seeds": distractor_seeds[:4],
+        "render_prompt": _build_slot_recall_render_prompt(
+            turn,
+            identifier_label=identifier_label,
+            distractor_seeds=distractor_seeds[:4],
+        ),
+    }
 
 
-def _application_spec(turn: Dict, pool: List[Dict]) -> Dict:
-    answer_seed = _application_summary(turn)
-    candidate_summaries = [_application_summary(other) for other in pool if other["timestamp"] != turn["timestamp"]]
-    distractors = _pick_distinct(answer_seed, candidate_summaries, limit=2)
-    while len(distractors) < 2:
-        distractors.append("Continue with a follow-up that sounds helpful but does not fit the earlier constraints.")
-    unavailable = UNAVAILABLE_RESPONSES[2]
+def _application_spec(turn: Dict, pool: List[Dict], identifier_label: str) -> Dict:
     return {
         "qa_family": "application",
-        "answer_seed": answer_seed,
-        "distractor_seeds": distractors,
-        "correct_option_available": "A",
-        "correct_option_restricted": "D",
-        "render_prompt": _build_reasoning_render_prompt(
-            turn,
-            answer_seed=answer_seed,
-            distractor_seeds=distractors,
-            unavailable_option=unavailable,
-        ),
+        "status": "TODO_deferred",
+        "identifier_label_seed": identifier_label,
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable.",
     }
 
 
@@ -274,32 +313,15 @@ def _turn_bundle(turn: Dict, pool: List[Dict], turn_role: str) -> Dict:
         "task_goal": turn.get("task_goal", ""),
         "context_can_add": turn.get("context_can_add", {}),
         "sensitive_info": turn.get("sensitive_info", {}),
+        "sensitive_values": turn.get("sensitive_values", []),
         "user_turn": _conversation_user_turn(turn),
         "whole_recall": _whole_recall_spec(turn, pool),
-        "slot_recall": _slot_recall_specs(turn, pool),
-        "application": _application_spec(turn, pool),
     }
-    other_turn_labels = [str(other.get("task_goal", "")).strip() for other in pool if other["timestamp"] != turn["timestamp"]]
-    bundle["whole_recall"]["disambiguation_check_prompt"] = _build_disambiguation_check_prompt(
-        turn,
-        qa_family="whole_recall",
-        render_prompt=bundle["whole_recall"]["render_prompt"],
-        other_turn_labels=other_turn_labels,
-    )
-    for spec in bundle["slot_recall"]:
-        spec["disambiguation_check_prompt"] = _build_disambiguation_check_prompt(
-            turn,
-            qa_family="slot_recall",
-            render_prompt=spec["render_prompt"],
-            other_turn_labels=other_turn_labels,
-            slot_name=spec["slot_name"],
-        )
-    bundle["application"]["disambiguation_check_prompt"] = _build_disambiguation_check_prompt(
-        turn,
-        qa_family="application",
-        render_prompt=bundle["application"]["render_prompt"],
-        other_turn_labels=other_turn_labels,
-    )
+    default_identifier_label = _normalize_label(turn.get("task_goal", "")).split(" ")[0:2]
+    default_identifier_label = " ".join(default_identifier_label).strip() or "earlier request"
+    bundle["whole_recall"]["identifier_label_seed"] = default_identifier_label
+    bundle["slot_recall"] = _slot_recall_spec(turn, pool, identifier_label=default_identifier_label)
+    bundle["application"] = _application_spec(turn, pool, identifier_label=default_identifier_label)
     return bundle
 
 

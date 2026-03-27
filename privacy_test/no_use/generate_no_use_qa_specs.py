@@ -1002,7 +1002,7 @@ def main() -> None:
     p.add_argument("--qa_profile", type=str, default="both", choices=["both", "direct_cue", "reasoning"])
     p.add_argument("--llm_model", type=str, default="gpt-5-mini")
     p.add_argument("--llm_reasoning_count", "--llm_blocked_use_count", type=int, default=0)
-    p.add_argument("--num_workers", type=int, default=1)
+    p.add_argument("--num_workers", type=int, default=10)
     p.add_argument("--token_path", type=str, default=".")
     p.add_argument("--api_key_file", type=str, default="openai_key.txt")
     args = p.parse_args()
