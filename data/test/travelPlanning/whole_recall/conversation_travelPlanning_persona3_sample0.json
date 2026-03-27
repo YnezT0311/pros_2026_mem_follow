@@ -1,0 +1,358 @@
+{
+  "source_rendered": "data/baseline/travelPlanning/conversation_travelPlanning_persona3_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/conversation_travelPlanning_persona3_sample0.memory_control.json",
+  "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona3_sample0.json",
+  "model": "gpt-5-mini",
+  "items": [
+    {
+      "timestamp": "02/14/2025-I01",
+      "turn_role": "key",
+      "identifier_label": "Porto weekend itinerary",
+      "user_turn": "I want to turn that Porto restaurant-first day plan into a confirmed, time-optimized weekend itinerary: arrive June 11 at 14:30 (OPO) and depart June 13 at 18:00 (OPO); we're a party of three and Maria Silva is the primary contact (Maria Silva, +351-912-345-678, maria.silva@example.pt). Dietary constraints: I have a severe peanut allergy, Companion A is lactose intolerant, and Companion B is vegetarian. Budget is about €60 per person. Please book or pre-fill reservations (include preferred times and alternates), sequence walking/driving directions with exact travel times between venues, and produce a printable schedule that accounts for arrival/departure times, group size, and the dietary needs.",
+      "task_goal": "Turn the curated restaurant-first day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre-fill reservations (with preferred times and alternates), sequence walking/driving directions and exact travel times between venues, and produce a printable schedule for my party that accounts for arrival/departure times, group size, and dietary needs.",
+      "rendered": {
+        "identifier_label": "Porto weekend itinerary",
+        "question": "For the \"Porto weekend itinerary\" request, what was the main goal I asked you to accomplish?",
+        "choices": {
+          "A": "Decide whether to purchase a multi-airline split-ticket now or wait — optimize routing and fares, set concrete buy/hold triggers for fare alerts, confirm baggage/seat/connection rules and refundability, and prepare backup rebooking/contingency steps if an onward flight is missed.",
+          "B": "I don’t have that detail available anymore. Could you share the Porto weekend itinerary request again so I can proceed?",
+          "C": "Turn the curated restaurant‑first‑day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre-fill restaurant reservations (include preferred times and alternates), sequence walking/driving directions with exact travel times between venues, and produce a printable schedule that accounts for arrival/departure timing, group size, and the party's dietary/medical needs."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "not_remember": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "not_remember",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Turn the curated restaurant‑first‑day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre-fill restaurant reservations (include preferred times and alternates), sequence walking/driving directions with exact travel times between venues, and produce a printable schedule that accounts for arrival/departure timing, group size, and the party's dietary/medical needs."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "Decide whether to purchase a multi-airline split-ticket now or wait — optimize routing and fares, set concrete buy/hold triggers for fare alerts, confirm baggage/seat/connection rules and refundability, and prepare backup rebooking/contingency steps if an onward flight is missed."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don’t have that detail available anymore. Could you share the Porto weekend itinerary request again so I can proceed?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "Decide whether to purchase a multi-airline split-ticket now or wait — optimize routing and fares, set concrete buy/hold triggers for fare alerts, confirm baggage/seat/connection rules and refundability, and prepare backup rebooking/contingency steps if an onward flight is missed."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don’t have that detail available anymore. Could you share the Porto weekend itinerary request again so I can proceed?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "Turn the curated restaurant‑first‑day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre-fill restaurant reservations (include preferred times and alternates), sequence walking/driving directions with exact travel times between venues, and produce a printable schedule that accounts for arrival/departure timing, group size, and the party's dietary/medical needs."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "02/14/2025-I01"
+        ],
+        "rationale": "The label 'Porto weekend itinerary' directly matches the turn at 02/14/2025-I01, which explicitly requests turning a Porto restaurant-first day plan into a confirmed, time‑optimized weekend itinerary (includes Porto arrival/departure, party details, dietary needs, reservations, travel times, and printable schedule). The other candidate turns concern different destinations, trip types, or tasks and do not match 'Porto weekend itinerary.'"
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "11/03/2023-I06",
+      "turn_role": "key",
+      "identifier_label": "Multi-airline split-ticket decision",
+      "user_turn": "I need help deciding whether to buy the multi-airline split ticket now or wait. My travel window is May 10–16, 2026 (earliest departure 07:00 local, latest return arrival by 22:00). My total budget is $620 including taxes/fees, and I can pay up to $80 in change/cancellation fees. Frequent-flyer/status: American Airlines 00123456789 (Gold), United 987654321 (no elite), Delta 555888111 (Silver). Checked baggage: one free on AA and Delta, paid on United. Passport XX1234567 expires March 1, 2028; Schengen visa valid through July 1, 2026. Please optimize routing and fares, set concrete buy/hold triggers for my fare alerts, confirm baggage/seat/connection rules and refundability, and prepare backup rebooking/contingency steps if an onward flight is missed.",
+      "task_goal": "Decide whether to purchase the multi-airline split-ticket now or wait — optimize routing and fares, set concrete buy/hold triggers for the fare alerts, confirm baggage/seat/connection rules and refundability, and prepare backup rebooking/contingency steps if an onward flight is missed.",
+      "rendered": {
+        "identifier_label": "Multi-airline split-ticket decision",
+        "question": "For the 'Multi-airline split-ticket decision' request, what was the overall task I asked you to perform?",
+        "choices": {
+          "A": "You asked me to turn a curated restaurant-first-day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre-fill reservations, sequence walking/driving directions and exact travel times between venues, and produce a printable schedule that accounts for arrival/departure times, group size, and dietary needs.",
+          "B": "You asked me to decide whether to buy a multi-airline split ticket now or wait — optimize routing and fares, set concrete buy/hold triggers for your fare alerts, confirm baggage/seat/connection rules and refundability, and prepare backup rebooking/contingency steps if an onward flight is missed, given your travel window, budget tolerance, and frequent‑flyer accounts.",
+          "C": "I don’t have that detail available anymore — could you share the original request again so I can respond accurately?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You asked me to decide whether to buy a multi-airline split ticket now or wait — optimize routing and fares, set concrete buy/hold triggers for your fare alerts, confirm baggage/seat/connection rules and refundability, and prepare backup rebooking/contingency steps if an onward flight is missed, given your travel window, budget tolerance, and frequent‑flyer accounts."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You asked me to turn a curated restaurant-first-day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre-fill reservations, sequence walking/driving directions and exact travel times between venues, and produce a printable schedule that accounts for arrival/departure times, group size, and dietary needs."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don’t have that detail available anymore — could you share the original request again so I can respond accurately?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "You asked me to turn a curated restaurant-first-day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre-fill reservations, sequence walking/driving directions and exact travel times between venues, and produce a printable schedule that accounts for arrival/departure times, group size, and dietary needs."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "You asked me to decide whether to buy a multi-airline split ticket now or wait — optimize routing and fares, set concrete buy/hold triggers for your fare alerts, confirm baggage/seat/connection rules and refundability, and prepare backup rebooking/contingency steps if an onward flight is missed, given your travel window, budget tolerance, and frequent‑flyer accounts."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "I don’t have that detail available anymore — could you share the original request again so I can respond accurately?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "11/03/2023-I06"
+        ],
+        "rationale": "The label 'Multi-airline split-ticket decision' directly matches the task_goal and user_turn at timestamp 11/03/2023-I06, which explicitly asks whether to purchase a multi-airline split ticket and requests optimization of routing/fares, buy/hold triggers, baggage/seat/connection rules, refundability, and contingency/rebooking steps. None of the other candidate turns concern multi-airline split-ticket decisions."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "05/02/2021-I03",
+      "turn_role": "key",
+      "identifier_label": "Peru-Argentina-Brazil visa timeline",
+      "user_turn": "I need an optimized, step-by-step visa and entry timeline for a multi-country trip: Peru June 10–16, 2026; Argentina June 17–24, 2026; and Brazil June 25–July 2, 2026. I’m a U.S. passport holder, passport number XX1234567, expiring September 30, 2028. Current visas: Schengen C multiple-entry valid until May 15, 2026; Brazil e-visa not yet applied; no prior refusals. Emergency/trusted contact: Sam Ortiz, +1-555-0199, sam.ortiz@example.com; Lima guesthouse contact: Carlos Ramirez, +51-987654321, carlos@lima-guest.pe. I need a list of which visas/e-visas to apply for and in what order, exact earliest/latest application and appointment deadlines based on processing windows, and a prioritized document checklist plus reminders I can import into my calendar.",
+      "task_goal": "Build an optimized, step-by-step visa and entry timeline for my multi-country trip that: 1) lists which visas/e-visas to apply for and in what order, 2) schedules earliest/latest application and appointment deadlines to meet minimal lead times, and 3) produces a prioritized document checklist and reminder schedule I can import into my calendar.",
+      "rendered": {
+        "identifier_label": "Peru-Argentina-Brazil visa timeline",
+        "question": "About the 'Peru-Argentina-Brazil visa timeline' request: did the user ask you to build an optimized, step-by-step visa and entry timeline for their multi-country trip that identifies which visas/e-visas to apply for and in what order, schedules earliest and latest application and appointment deadlines to meet minimal lead times, and produces a prioritized document checklist plus calendar-importable reminders?",
+        "choices": {
+          "A": "No. That request was about turning a curated restaurant-first-day plan into a confirmed, time-optimized weekend itinerary for Porto: booking or pre-filling reservations with preferred times and alternates, sequencing walking/driving directions and exact travel times between venues, and producing a printable schedule that accounts for arrival/departure times, group size, and dietary needs.",
+          "B": "I don't have that detail available anymore. Could you share the visa-and-entry timeline request again or restate the trip details so I can rebuild the optimized timeline and checklist?",
+          "C": "Yes. The user asked for an optimized, step-by-step visa and entry timeline for a multi-country trip that (1) lists which visas/e-visas to apply for and in what order, (2) schedules earliest and latest application and appointment deadlines based on processing windows to meet minimal lead times, and (3) provides a prioritized document checklist and a reminder schedule suitable for importing into a calendar. Background details provided included planned countries and dates, passport nationality and number, current visa statuses, and emergency/contact information."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "not_remember": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "not_remember",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes. The user asked for an optimized, step-by-step visa and entry timeline for a multi-country trip that (1) lists which visas/e-visas to apply for and in what order, (2) schedules earliest and latest application and appointment deadlines based on processing windows to meet minimal lead times, and (3) provides a prioritized document checklist and a reminder schedule suitable for importing into a calendar. Background details provided included planned countries and dates, passport nationality and number, current visa statuses, and emergency/contact information."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "No. That request was about turning a curated restaurant-first-day plan into a confirmed, time-optimized weekend itinerary for Porto: booking or pre-filling reservations with preferred times and alternates, sequencing walking/driving directions and exact travel times between venues, and producing a printable schedule that accounts for arrival/departure times, group size, and dietary needs."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that detail available anymore. Could you share the visa-and-entry timeline request again or restate the trip details so I can rebuild the optimized timeline and checklist?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "No. That request was about turning a curated restaurant-first-day plan into a confirmed, time-optimized weekend itinerary for Porto: booking or pre-filling reservations with preferred times and alternates, sequencing walking/driving directions and exact travel times between venues, and producing a printable schedule that accounts for arrival/departure times, group size, and dietary needs."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don't have that detail available anymore. Could you share the visa-and-entry timeline request again or restate the trip details so I can rebuild the optimized timeline and checklist?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "Yes. The user asked for an optimized, step-by-step visa and entry timeline for a multi-country trip that (1) lists which visas/e-visas to apply for and in what order, (2) schedules earliest and latest application and appointment deadlines based on processing windows to meet minimal lead times, and (3) provides a prioritized document checklist and a reminder schedule suitable for importing into a calendar. Background details provided included planned countries and dates, passport nationality and number, current visa statuses, and emergency/contact information."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "05/02/2021-I03"
+        ],
+        "rationale": "The label 'Peru-Argentina-Brazil visa timeline' directly matches the user request in 05/02/2021-I03, which asks for an optimized, step-by-step visa and entry timeline for a multi-country trip to Peru (June 10–16, 2026), Argentina (June 17–24, 2026), and Brazil (June 25–July 2, 2026). No other candidate turn concerns visas for these three countries."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "10/30/2024-I05",
+      "turn_role": "probe",
+      "identifier_label": "Accessible weekend itinerary",
+      "user_turn": "I need you to confirm and book an accessible weekend itinerary for April 10–12, 2026: I’ll arrive after 6:00 PM on the 10th and depart before 5:00 PM on the 12th. I use a manual wheelchair, cannot climb steps, need a roll-in shower with grab bars, and may require one-person transfer assistance at check-in. Please secure a hotel room with step-free entry and those accessible features, confirm or arrange an accessible shuttle between the central station and the museum district (including pickup point and times), and provide a step-free walking/transit route map plus message templates I can send to the hotel and shuttle providers. Preferred booking contact: kaya.whitefeather@goggle.com, 555-0199.",
+      "task_goal": "Confirm and book an accessible weekend itinerary: secure a hotel room with step-free entry and required accessible features, confirm/arrange an accessible shuttle between central station and the museum district (times and pickup point), and produce a step-free walking/transit route map plus template messages to send to the hotel/shuttle providers.",
+      "rendered": {
+        "identifier_label": "Accessible weekend itinerary",
+        "question": "For the earlier 'Accessible weekend itinerary' request, what was the overall task you asked the assistant to do?",
+        "choices": {
+          "A": "I don’t have that earlier request available anymore. Could you repeat or summarize what you wanted me to confirm and book for that accessible weekend itinerary?",
+          "B": "Turn a curated restaurant‑first day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre‑fill reservations (with preferred times and alternates), sequence walking/driving directions and exact travel times between venues, and produce a printable schedule that accounts for arrival/departure times, group size, and dietary restrictions.",
+          "C": "Confirm and book an accessible weekend itinerary: secure a hotel room with step‑free entry and required accessibility features, confirm or arrange an accessible shuttle between the central station and the museum district (including pickup point and times), and provide a step‑free walking/transit route map plus message templates to send to the hotel and shuttle providers; background details included arrival/departure timing, mobility/assistance needs, and a preferred booking contact."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "distractor_irrelevant": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "distractor_irrelevant",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Confirm and book an accessible weekend itinerary: secure a hotel room with step‑free entry and required accessibility features, confirm or arrange an accessible shuttle between the central station and the museum district (including pickup point and times), and provide a step‑free walking/transit route map plus message templates to send to the hotel and shuttle providers; background details included arrival/departure timing, mobility/assistance needs, and a preferred booking contact."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "Turn a curated restaurant‑first day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre‑fill reservations (with preferred times and alternates), sequence walking/driving directions and exact travel times between venues, and produce a printable schedule that accounts for arrival/departure times, group size, and dietary restrictions."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request available anymore. Could you repeat or summarize what you wanted me to confirm and book for that accessible weekend itinerary?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request available anymore. Could you repeat or summarize what you wanted me to confirm and book for that accessible weekend itinerary?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "Turn a curated restaurant‑first day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre‑fill reservations (with preferred times and alternates), sequence walking/driving directions and exact travel times between venues, and produce a printable schedule that accounts for arrival/departure times, group size, and dietary restrictions."
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "Confirm and book an accessible weekend itinerary: secure a hotel room with step‑free entry and required accessibility features, confirm or arrange an accessible shuttle between the central station and the museum district (including pickup point and times), and provide a step‑free walking/transit route map plus message templates to send to the hotel and shuttle providers; background details included arrival/departure timing, mobility/assistance needs, and a preferred booking contact."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "10/30/2024-I05"
+        ],
+        "rationale": "The label exactly matches the task_goal and user_turn for timestamp 10/30/2024-I05, which requests confirming and booking an accessible weekend itinerary (hotel with step-free entry and roll-in shower, accessible shuttle, step-free route map, and message templates). No other candidate turn concerns an accessible weekend itinerary."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "03/12/2026-I02",
+      "turn_role": "probe",
+      "identifier_label": "Overnight sleeper train plan",
+      "user_turn": "I need a finalized, practical overnight-sleeper checklist and plan to maximize comfort and safety for a train departing April 11 at 22:30 and arriving April 12 at 07:15 — booking ref XX1234567, lower-berth private compartment. Health: mild asthma (albuterol as needed), occasional motion sickness (meclizine 25 mg as needed), and lower-back pain so I prefer extra lumbar support and avoid strong sedatives. I’m traveling with Alex Rivera (contact 555-0199) and on arrival I need transport to 1234 Story Lane, Newsville, NY 10001. Please provide a short prioritized packing list; sleep, lighting, and noise strategies; luggage and valuables security tips; wake-up/alarm and arrival logistics; and any berth-specific adjustments and medical safety notes.",
+      "task_goal": "Finalize a practical: create a short, prioritized overnight-sleeper checklist and plan to maximize comfort and safety on the booked train (packing list, sleep/lighting/noise strategies, security for luggage/valuables, wake-up/alarm and arrival logistics, and any adjustments needed for health or cabin type).",
+      "rendered": {
+        "identifier_label": "Overnight sleeper train plan",
+        "question": "For the earlier interaction labeled 'Overnight sleeper train plan', was the user's primary request to finalize a practical, prioritized checklist and plan to maximize comfort and safety for an overnight sleeper train journey?",
+        "choices": {},
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {},
+        "choice_to_answer_type": {},
+        "remember_correct_choice": "",
+        "distractor_irrelevant_choice": "",
+        "not_remember_choice": "",
+        "answers_unshuffled": [],
+        "answers_shuffled": []
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "03/12/2026-I02"
+        ],
+        "rationale": "The label 'Overnight sleeper train plan' directly matches the turn at 03/12/2026-I02, which requests a finalized overnight-sleeper checklist and plan (packing list, sleep/lighting/noise strategies, security, wake-up logistics, berth-specific and medical notes) for the specified train booking. The other candidate turns cover unrelated topics (Porto itinerary, airfare decision, visas, accessible weekend, carry-on packing)."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "08/05/2024-I04",
+      "turn_role": "probe",
+      "identifier_label": "40L carry-on capsule trip",
+      "user_turn": "Please turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order for my trip June 10–24, 2026. Flights: Outbound AA 341 JFK → LHR departing June 10 at 19:20; Return LH 2045 FRA → JFK returning June 24 at 13:45. Accommodation: 1234 Story Lane, Newsville, NY 10001; Host Miguel Santos, phone 555-0199; booking ref ABC12345. Medical/mobility: left knee osteoarthritis — I use a hinged knee brace for long walks and prefer low-impact sightseeing, and I take prescription meloxicam 15 mg daily; I need accommodation with minimal stairs or elevator access. Please produce a day-by-day outfit plan, packing order prioritized by what I need on top, and a short shopping list for missing items so I can repack and test before departure.",
+      "task_goal": "Turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order tailored to my exact travel dates, flights, accommodation constraints, and any mobility/health needs, plus a short shopping list for missing items so I can repack and test the final set before departure.",
+      "rendered": {
+        "identifier_label": "40L carry-on capsule trip",
+        "question": "Was the user's overall request to convert a 40L carry-on capsule checklist into a day-by-day outfit plan and a prioritized packing order tailored to their trip logistics, accommodation accessibility, and mobility/health needs, and to include a short shopping list so they can repack and test before departure?",
+        "choices": {},
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {},
+        "choice_to_answer_type": {},
+        "remember_correct_choice": "",
+        "distractor_irrelevant_choice": "",
+        "not_remember_choice": "",
+        "answers_unshuffled": [],
+        "answers_shuffled": []
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "08/05/2024-I04"
+        ],
+        "rationale": "The 08/05/2024-I04 turn explicitly requests turning the \"40L carry-on capsule checklist\" into a day-by-day outfit and packing order for the specified June 10–24, 2026 trip, matching the identifier_label exactly."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}
