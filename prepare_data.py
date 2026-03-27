@@ -470,7 +470,6 @@ def get_missing_conversation_prereq_sections(data, topic):
         "Topic",
         "Sensitive Info Pool",
         *GENERAL_HISTORY_SECTION_NAMES,
-        *CONTEXTUAL_HISTORY_SECTION_NAMES,
         *CONVERSATION_HISTORY_SECTION_NAMES,
     ]
     missing = []
