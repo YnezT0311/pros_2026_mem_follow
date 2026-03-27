@@ -1,0 +1,416 @@
+{
+  "source_file": "data/output/travelPlanning/conversation_travelPlanning_persona1_sample0.json",
+  "periods": [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage"
+  ],
+  "initial_interaction_count": 6,
+  "selection_policy": {
+    "key_target_count": 3,
+    "probe_target_count": 3,
+    "prefer_last_exact_sensitive_occurrence": true,
+    "future_conflict_detection": [
+      "exact reuse of later [Sensitive Info] values",
+      "exact reuse of later [Context Can Add] keys",
+      "later event or interaction belonging to the source event's descendant chain",
+      "boolean high-similarity check over later [Task Goal] text"
+    ],
+    "key_selection_priority": [
+      "lower future conflict count",
+      "prefer the last exact sensitive-value occurrence",
+      "earlier history index as a stable tiebreaker"
+    ]
+  },
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "01/08/2021-I01",
+      "04/02/2015-I02",
+      "05/16/2012-I03"
+    ],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "key_turns": [
+    {
+      "rank": 0,
+      "timestamp": "01/08/2021-I01",
+      "history_index": 1,
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_001",
+      "source_event_date": "01/08/2021",
+      "task_goal": "Give a simple, low-effort plan to get useful value from my existing frequent‑flyer balances (recommend whether to use miles or pay cash, which accounts/alliance to prioritize, and concrete booking options or tools) for an upcoming trip without requiring me to chase blackout-date gaming or micro-optimizations.",
+      "prev_event": "Attempted to optimize frequent flyer points across three alliances, ran into blackout dates and confusing rules, and found the process frustrating enough to stop chasing fine-grained points strategies.",
+      "context_can_add": {
+        "frequent_flyer_balances_and_account_ids": "User would like to share current miles/points totals and the associated frequent-flyer account IDs so the assistant can check which award charts, partner options, or upgrades are realistic. This will likely include membership numbers and exact balances (sensitive account identifiers and point balances) and should guide recommendations toward realistic redemptions instead of hypotheticals.",
+        "upcoming_travel_dates_and_constraints": "User could provide specific planned travel dates or a departure window and any hard constraints (must-travel days, morning/evening preference). These schedule details are sensitive (private calendar information) but are necessary to test award space and recommend whether flexible-dates strategies or cash fares are better.",
+        "travel_budget_and_willingness_to_pay_cash": "User may state a target budget or maximum they’re willing to pay in cash for the trip (sensitive financial detail). Knowing this lets the assistant compare cash fares vs award redemptions and recommend whether it’s worth spending miles or saving them.",
+        "preferred_destinations_and_trip_purpose": "User can list intended destination(s) and whether the trip is leisure, family, or work. This non-sensitive preference helps prioritize convenience (fewer connections) vs cost/value (maximizing miles)."
+      },
+      "sensitive_info": {
+        "frequent_flyer_balances_and_account_ids": [
+          "American AAdvantage: 85,400 miles (A12345678)",
+          "United MileagePlus: 60,200 miles (U76543210)",
+          "Flying Blue (Air France/KLM): 22,500 miles (FB998877)"
+        ],
+        "upcoming_travel_dates_and_constraints": [
+          "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+        ],
+        "travel_budget_and_willingness_to_pay_cash": [
+          "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+        ]
+      },
+      "sensitive_values": [
+        "American AAdvantage: 85,400 miles (A12345678)",
+        "United MileagePlus: 60,200 miles (U76543210)",
+        "Flying Blue (Air France/KLM): 22,500 miles (FB998877)",
+        "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)",
+        "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+      ],
+      "conversation_block": {
+        "timestamp": "01/08/2021-I01",
+        "event_text": "Attempted to optimize frequent flyer points across three alliances, ran into blackout dates and confusing rules, and found the process frustrating enough to stop chasing fine-grained points strategies.",
+        "start_index": 5,
+        "lines": [
+          "Side_Note: [Attempted to optimize frequent flyer points across three alliances, ran into blackout dates and confusing rules, and found the process frustrating enough to stop chasing fine-grained points strategies.] 01/08/2021-I01",
+          "User: Can you give me a simple, low-effort plan to get useful value from my existing frequent-flyer balances for an upcoming trip without chasing blackout-date gaming?",
+          "User: For context, I currently have American AAdvantage: 85,400 miles (A12345678); United MileagePlus: 60,200 miles (U76543210); and Flying Blue (Air France/KLM): 22,500 miles (FB998877).",
+          "User: My travel window is mid-June 2026 — I must depart the morning of the first travel day and my return is flexible by about one day.",
+          "User: Budget-wise I have a $1,200 total round-trip maximum and I'm willing to pay up to $300 extra in cash to avoid complex award routings; please recommend whether to use miles or cash, which accounts or alliances to prioritize, and concrete booking options or tools to check without relying on saver-only tricks.",
+          "Assistant: Given those balances and your constraints, here’s a straightforward, low-effort plan.",
+          "Assistant: Prioritize United MileagePlus for Star Alliance routings and AAdvantage for American or Oneworld partner flights, while treating Flying Blue as a smaller-balance option for short partner redemptions or occasional promo awards.",
+          "Assistant: Search cash fares first — if you can find a round-trip under about $900–1,000, buy it and save miles for higher-value trips.",
+          "Assistant: If cash prices push toward your $1,200 cap or force long overnight connections, consider using miles one-way with AAdvantage or United for just the outbound or the return to keep things simple.",
+          "Assistant: Quick tools to check: united.com’s award search for Star partner space, aa.com’s award search for AAdvantage options, Google Flights or Skyscanner to compare cash fares, and AwardHacker or the airlines’ flexible-date award calendars for a fast availability scan.",
+          "Assistant: To avoid phone calls, buy a straightforward cash ticket when it’s within budget, or book web-awards on United or AA and be willing to accept one- or two-stop routings rather than complex partner itineraries.",
+          "Assistant: Want me to look up live cash fares and award space for your airports and travel days now?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 1,
+      "timestamp": "04/02/2015-I02",
+      "history_index": 7,
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_006",
+      "source_event_date": "04/02/2015",
+      "task_goal": "Verify and correct the guestroom booking/confirmation email, add the confirmed reservation into the Kyoto solo-trip itinerary, and finalize emergency/medical details so the planner can produce a printable itinerary and emergency sheet for the trip.",
+      "prev_event": "Prepared a detailed solo-trip plan for Kyoto with emergency contacts, daily goals, transit notes, and a booking confirmation sent to arin.rivera-khan@goggle.com for one guestroom reservation.",
+      "context_can_add": {
+        "booking_confirmation_email": "User would like to confirm that the booking confirmation actually went to the correct email (the event shows arin.rivera-khan@goggle.com, which might contain a typo). If available the user could paste the booking reference number or a short excerpt of the confirmation email so the assistant can (a) verify reservation details (dates, room type, cancellation policy), (b) correct the recipient email if needed, and (c) add the reservation to the itinerary. This context would naturally include a private booking reference number and the guest email address.",
+        "emergency_contact": "User could provide a primary emergency contact name, relationship, and phone number to include on the emergency sheet and to attach to the itinerary. This is relevant so the assistant can format a concise emergency card and advise about local embassies or nearest hospitals. The detail is sensitive (personal contact name and phone) and would be shared explicitly by the user.",
+        "health_and_medications": "User might add health details such as allergies (e.g., severe food allergy), ongoing medications (e.g., inhaler, epinephrine), or other conditions to include tailored medical notes, local pharmacy locations, and instructions for emergencies. This is private medical information but important for travel safety planning and for drafting a short medical summary to carry.",
+        "preferred_daily_goals": "User could list specific interests or daily goals (e.g., focus on temples and tea houses, one food market visit per day, one day trip to Arashiyama) so the assistant can optimize daily schedules, transit notes, and time estimates. This is non-sensitive and guides activity prioritization and pacing."
+      },
+      "sensitive_info": {
+        "booking_confirmation_email": [
+          "KYT-2026-78901",
+          "arin.rivera-khan@goggle.com"
+        ],
+        "emergency_contact": [
+          "Maya Rivera-Khan",
+          "+1-555-0119",
+          "sister"
+        ],
+        "health_and_medications": [
+          "Severe peanut allergy (anaphylaxis)",
+          "EpiPen prescribed",
+          "Albuterol inhaler (daily)"
+        ]
+      },
+      "sensitive_values": [
+        "KYT-2026-78901",
+        "arin.rivera-khan@goggle.com",
+        "Maya Rivera-Khan",
+        "+1-555-0119",
+        "sister",
+        "Severe peanut allergy (anaphylaxis)",
+        "EpiPen prescribed",
+        "Albuterol inhaler (daily)"
+      ],
+      "conversation_block": {
+        "timestamp": "04/02/2015-I02",
+        "event_text": "Prepared a detailed solo-trip plan for Kyoto with emergency contacts, daily goals, transit notes, and a booking confirmation sent to arin.rivera-khan@goggle.com for one guestroom reservation.",
+        "start_index": 32,
+        "lines": [
+          "Side_Note: [Prepared a detailed solo-trip plan for Kyoto with emergency contacts, daily goals, transit notes, and a booking confirmation sent to arin.rivera-khan@goggle.com for one guestroom reservation.] 04/02/2015-I02",
+          "User: I need help verifying and correcting the guestroom booking/confirmation email, adding the confirmed reservation to my Kyoto solo-trip itinerary, and finishing an emergency/medical detail sheet I can print.",
+          "User: The booking confirmation number is KYT-2026-78901; it was sent to arin.rivera-khan@goggle.com.",
+          "User: My primary emergency contact is my sister, Maya Rivera-Khan: +1-555-0119.",
+          "User: Please include these medical details: severe peanut allergy with anaphylaxis (EpiPen prescribed) and a daily albuterol inhaler.",
+          "User: Also, could you flag nearby hospitals and pharmacies in central Kyoto on the sheet?",
+          "Assistant: I can draft a corrected confirmation note, add reservation KYT-2026-78901 to your Kyoto itinerary, and create a printable emergency card listing your emergency contact (Maya Rivera-Khan: +1-555-0119), your medical summary (severe peanut allergy with EpiPen prescribed, daily albuterol inhaler), and nearby hospitals and pharmacies; would you like me to assume the reservation dates match your trip or paste the exact stay dates from the confirmation?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 2,
+      "timestamp": "05/16/2012-I03",
+      "history_index": 9,
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_007",
+      "source_event_date": "05/16/2012",
+      "task_goal": "Turn the mapped scenic detours into a day-by-day, weather-aware itinerary with timed photo windows (sunrise/sunset), GPS waypoint files (GPX/KML), alternate inland routes for bad weather, recommended stop lengths for each overlook, and suggested lodging/resupply points that match my driving limits and budget.",
+      "prev_event": "Mapped scenic detours for a Pacific Coast road trip, noting overlooks, one-lane coastal stretches to avoid in bad weather, and suggested stop lengths for photography.",
+      "context_can_add": {
+        "Trip dates and flexibility": "User would like to provide exact departure and return dates or a departure window (this is a schedule-sensitive detail). Knowing the dates lets me align suggested stops with sunrise/sunset times, check historical weather for that period, and advise which one-lane coastal stretches to avoid on likely bad-weather days and when to book lodging.",
+        "Driving limitations / health constraints": "User could disclose health- or ability-related driving limits (for example: chronic lower-back pain, tendency to get car-sick, or a medical need for frequent breaks). This sensitive health detail is relevant because it affects maximum daily driving hours, ideal spacing between photo stops, how long to plan at overlooks, and whether to prioritize shorter driving segments or more accessible viewpoints.",
+        "Prebooked lodging or contact at guesthouses": "User might share existing reservation details or a contact (guesthouse name, contact person, phone/email, reservation number). This sensitive contact/scheduling info helps me sync the itinerary to fixed check-in/check-out times, propose feasible driving legs between booked stays, and generate directions and ETA adjustments for those properties.",
+        "Budget and accommodation preferences": "User could state per-night lodging budget and total trip budget (financial-sensitive). That guides lodging tier recommendations (campground, budget motels, mid-range inns, or higher-end coastal stays), whether to suggest paid guided photo shoots or permits, and trade-offs between longer scenic detours versus quicker inland bypasses."
+      },
+      "sensitive_info": {
+        "departure_window": [
+          "2026-05-10",
+          "2026-05-18"
+        ],
+        "health_constraint": [
+          "Chronic lower-back pain; requires a stop every 1.5–2 hours; prefers max 4 hours driving per day"
+        ],
+        "lodging_contact": [
+          "SeaView Inn; Maria Lopez; maria@seaviewinn.com; +1-555-0123; reservation #SVI3421"
+        ],
+        "trip_budget": [
+          "$150 per night",
+          "Total trip budget $2,000"
+        ]
+      },
+      "sensitive_values": [
+        "2026-05-10",
+        "2026-05-18",
+        "Chronic lower-back pain; requires a stop every 1.5–2 hours; prefers max 4 hours driving per day",
+        "SeaView Inn; Maria Lopez; maria@seaviewinn.com; +1-555-0123; reservation #SVI3421",
+        "$150 per night",
+        "Total trip budget $2,000"
+      ],
+      "conversation_block": {
+        "timestamp": "05/16/2012-I03",
+        "event_text": "Mapped scenic detours for a Pacific Coast road trip, noting overlooks, one-lane coastal stretches to avoid in bad weather, and suggested stop lengths for photography.",
+        "start_index": 42,
+        "lines": [
+          "Side_Note: [Mapped scenic detours for a Pacific Coast road trip, noting overlooks, one-lane coastal stretches to avoid in bad weather, and suggested stop lengths for photography.] 05/16/2012-I03",
+          "User: Please turn my mapped scenic detours into a day-by-day, weather-aware itinerary with timed photo windows, GPX/KML waypoints, inland alternates for bad weather, recommended stop lengths, and lodging/resupply suggestions that match my driving limits and budget. Relevant details: I plan to depart in mid-May 2026; I have chronic lower-back pain and need a stop every 1.5–2 hours and prefer to drive no more than about four hours per day; I already have a booking at SeaView Inn (contact Maria Lopez; maria@seaviewinn.com; +1-555-0123; reservation #SVI3421); my budget is about $150 per night with a total trip budget of $2,000. Please make the itinerary respect those stops and driving limits and produce GPX/KML files and alternates for stormy coastal days.",
+          "Assistant: I can create a day-by-day plan with GPX/KML waypoints, sunrise and sunset photo windows, inland alternates for stormy coastal stretches, and stop-length guidance timed to your need to stop every 1.5–2 hours, keeping daily driving at or below your roughly four-hour limit and nightly lodging near your $150 target. Would you like the GPX/KML files bundled as a single zip or split by day?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    }
+  ],
+  "protected_probe_turns": [
+    {
+      "rank": 3,
+      "timestamp": "07/19/2021-I04",
+      "history_index": 12,
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_009",
+      "source_event_date": "07/19/2021",
+      "task_goal": "Turn the Iceland shot list into a day-by-day, driveable itinerary (with exact times for golden hour at each GPS point), optimized routing, nightly lodging suggestions, charging/backup-power and battery-swapping stops, plus concrete cloudy-day alternate shoots and an offline map/phone-ready plan I can follow while traveling.",
+      "prev_event": "Created a travel photography shot list for Iceland including exact GPS locations for golden hour, recommended lenses, and a backup plan for cloudy days.",
+      "context_can_add": {
+        "travel_dates_and_flights": "User would like to share their exact travel dates and flight times (arrival and departure airports and times). This is relevant because golden-hour timing, daylight hours and the feasible sequence of locations depend on arrival/departure days and local daylight windows; if the user provides flight arrival/departure times I can build a realistic first/last-day plan and avoid impossible long drives. (Sensitive: this is a private travel schedule/flight info.)",
+        "accommodation_contact": "User could provide the name, address and phone number of at least one pre-booked accommodation (for example their first-night guesthouse in Reykjavik or a booked guesthouse in Vik). This helps position nightly bases on the route, suggest nearby charging/equipment-storage options, and coordinate shoot timing with check-in/out constraints. (Sensitive: this is a private lodging contact and address/phone.)",
+        "health_or_mobility_constraints": "User might mention any health or mobility limits (for example recent knee issues, difficulty with steep walks, or a need to avoid long hikes). This guides selection of photo locations and whether to recommend short, easily accessible viewpoints or require off-trail hikes, plus time allowances at each site. (Sensitive: this is a private health detail.)",
+        "preferred_shooting_pace_and_assistance": "User could describe their preferred pace (e.g., 'fast-paced, 3-5 stops per day' vs 'relaxed, 1–2 long shoots per day') and whether they're traveling with an assistant or partner who can help with driving/gear. This non-sensitive preference helps optimize the itinerary for realistic daily distances, gear handoffs, and whether to include locations that require two-person setups (drones, long tripod setups)."
+      },
+      "sensitive_info": {
+        "travel_dates_and_flights": [
+          "2026-04-10 to 2026-04-18",
+          "Arrival: KEF (Keflavík) 10 Apr 2026, 14:30 local",
+          "Departure: KEF 18 Apr 2026, 08:10 local"
+        ],
+        "accommodation_contact": [
+          "Eldhus Guesthouse, Vík",
+          "Address: Kirkjubæjarklaustur Rd 2, Vík, Iceland",
+          "Phone: +354-555-9876"
+        ],
+        "health_or_mobility_constraints": [
+          "Left knee osteoarthritis — comfortable with up to ~6 km of easy walking; avoid steep, unstable scree or long uphill hikes; needs frequent short rests."
+        ]
+      },
+      "sensitive_values": [
+        "2026-04-10 to 2026-04-18",
+        "Arrival: KEF (Keflavík) 10 Apr 2026, 14:30 local",
+        "Departure: KEF 18 Apr 2026, 08:10 local",
+        "Eldhus Guesthouse, Vík",
+        "Address: Kirkjubæjarklaustur Rd 2, Vík, Iceland",
+        "Phone: +354-555-9876",
+        "Left knee osteoarthritis — comfortable with up to ~6 km of easy walking; avoid steep, unstable scree or long uphill hikes; needs frequent short rests."
+      ],
+      "conversation_block": {
+        "timestamp": "07/19/2021-I04",
+        "event_text": "Created a travel photography shot list for Iceland including exact GPS locations for golden hour, recommended lenses, and a backup plan for cloudy days.",
+        "start_index": 51,
+        "lines": [
+          "Side_Note: [Created a travel photography shot list for Iceland including exact GPS locations for golden hour, recommended lenses, and a backup plan for cloudy days.] 07/19/2021-I04",
+          "User: Please turn my Iceland shot list into a driveable, day-by-day itinerary with exact golden-hour times at each GPS point, optimized routing that starts and ends at KEF, nightly lodging suggestions, charging or backup-power and battery-swap stops, and cloudy-day alternates plus an offline map I can follow. My travel dates are April 10–18, 2026: I arrive KEF on April 10 at 14:30 local and depart KEF on April 18 at 08:10 local. I have a contact at Eldhus Guesthouse in Vík (Kirkjubæjarklaustur Rd 2, Vík, phone +354-555-9876). Health note: I have left-knee osteoarthritis and am comfortable with up to about 6 km of easy walking but need to avoid steep scree and need frequent short rests. Please optimize daily distances and include offline navigation and battery/charging stops for camera gear.",
+          "Assistant: I can create a driveable itinerary for those dates with golden-hour times at each GPS point, optimized routing that starts and ends at KEF, nightly bases including your Eldhus Guesthouse contact in Vík, mapped charging and battery-swap stops for camera gear, and cloudy-day alternates that avoid long or steep hikes. Given your knee, would you prefer a relaxed pace (1–2 major shoots per day with short walks) or a busier pace (3–4 stops per day with only short, easy walks)?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 4,
+      "timestamp": "08/10/2024-I05",
+      "history_index": 15,
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_011",
+      "source_event_date": "08/10/2024",
+      "task_goal": "Help me finalize and prepare to book the 10-day Portugal itinerary: confirm/secure museum time slots, purchase the Porto–Lisbon regional train tickets, produce a timed day-by-day plan with door-to-door travel times and rain backups, and make (or recommend) any necessary reservations and a packing checklist for rain and museums.",
+      "prev_event": "Planned a 10-day independent itinerary for Portugal that blocks museum times, schedules regional trains between Porto and Lisbon, and lists backup activities for rain.",
+      "context_can_add": {
+        "Travel dates and flights": "User would like to share exact outbound and return flight details (dates, times, flight numbers) so the assistant can schedule arrival/departure days correctly, check realistic transfer times to/from airports, and advise whether to buy train tickets or change days. This involves sensitive schedule details like flight numbers and departure/arrival times.",
+        "Accommodation addresses and reservation contacts": "User could provide hotel/guesthouse names, addresses, booking confirmation numbers and contact phone/email so the assistant can calculate travel times from each lodging, confirm check-in/out times, and, if requested, contact accommodation or draft messages. This involves private contact details and reservation references.",
+        "Budget and payment constraints": "User might disclose a total trip budget (per person or total) and whether they prefer lower-cost trains/tickets or are willing to pay for flexibility; this financial detail will guide recommendations for ticket classes, refundable options, and restaurant/reservation suggestions.",
+        "Health or mobility constraints": "User may report health or mobility details (e.g., mild asthma, medication needs, difficulty with long walks, or accessibility needs) so the assistant can prioritize ground-floor or elevator-access rooms, suggest paced itineraries, and flag sites with stairs or limited accessibility. This is sensitive medical/physical information.",
+        "Must-see priorities and museum flexibility": "User could list priority museums, exhibitions, or neighborhoods they absolutely want to visit and which ones are flexible; this non-sensitive preference helps the assistant optimize the daily schedule, backup activities, and museum time blocks already in the itinerary."
+      },
+      "sensitive_info": {
+        "flight_details": [
+          "DL4786 departing JFK 2026-06-05 19:40 → LIS arriving 2026-06-06 07:10",
+          "IB6012 departing LIS 2026-06-15 11:55 → JFK arriving 2026-06-15 15:30"
+        ],
+        "lodging_contacts": [
+          "Guesthouse Porto Alma, Rua de Santa Catarina 123, Porto — booking ref GH-PT-78901 — +351-22-555-0123 — portoalma@example.com",
+          "Lisbon Stay B&B, Rua das Flores 45, Lisbon — booking ref LS-45678 — +351-21-555-6789 — lisbonstay@example.com"
+        ],
+        "budget": [
+          "Total trip budget €2,500 for 2 people (covers accommodations, trains, museums, meals)"
+        ],
+        "health_info": [
+          "Mild asthma — carries albuterol inhaler; prefers ground-floor or elevator-access room; limited to ~5 miles walking per day without extended rest"
+        ]
+      },
+      "sensitive_values": [
+        "DL4786 departing JFK 2026-06-05 19:40 → LIS arriving 2026-06-06 07:10",
+        "IB6012 departing LIS 2026-06-15 11:55 → JFK arriving 2026-06-15 15:30",
+        "Guesthouse Porto Alma, Rua de Santa Catarina 123, Porto — booking ref GH-PT-78901 — +351-22-555-0123 — portoalma@example.com",
+        "Lisbon Stay B&B, Rua das Flores 45, Lisbon — booking ref LS-45678 — +351-21-555-6789 — lisbonstay@example.com",
+        "Total trip budget €2,500 for 2 people (covers accommodations, trains, museums, meals)",
+        "Mild asthma — carries albuterol inhaler; prefers ground-floor or elevator-access room; limited to ~5 miles walking per day without extended rest"
+      ],
+      "conversation_block": {
+        "timestamp": "08/10/2024-I05",
+        "event_text": "Planned a 10-day independent itinerary for Portugal that blocks museum times, schedules regional trains between Porto and Lisbon, and lists backup activities for rain.",
+        "start_index": 60,
+        "lines": [
+          "Side_Note: [Planned a 10-day independent itinerary for Portugal that blocks museum times, schedules regional trains between Porto and Lisbon, and lists backup activities for rain.] 08/10/2024-I05",
+          "User: I need help finalizing and booking a 10-day Portugal trip: please confirm or secure museum time slots, buy the Porto–Lisbon regional train tickets, produce a timed day-by-day plan with door-to-door travel times and rain backups, and make or recommend any necessary reservations plus a packing checklist for rain and museum visits. Flights are outbound DL4786 departing JFK 2026-06-05 19:40 to LIS arriving 2026-06-06 07:10, returning IB6012 departing LIS 2026-06-15 11:55 to JFK arriving 2026-06-15 15:30. Lodgings are Guesthouse Porto Alma, Rua de Santa Catarina 123, Porto — booking ref GH-PT-78901 — +351-22-555-0123 — portoalma@example.com; and Lisbon Stay B&B, Rua das Flores 45, Lisbon — booking ref LS-45678 — +351-21-555-6789 — lisbonstay@example.com. Budget is €2,500 total for two people for accommodations, trains, museums, and meals. Health notes: mild asthma with an albuterol inhaler; prefers ground-floor or elevator-access rooms and can walk about five miles per day only with frequent rest. Please handle museum confirmations, buy the regional train tickets if that's best, and give me a packing checklist focused on rain gear and museum etiquette.",
+          "Assistant: I can confirm museum time slots, purchase the Porto–Lisbon regional tickets, create a timed, door-to-door daily itinerary with rain-day backups, and draft a focused packing checklist (waterproof layers, quick-dry shoes, compact umbrella, and museum dress/handling tips). Would you like me to book the train tickets now using your payment method or compile the exact tickets and booking links for your approval first?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 5,
+      "timestamp": "09/09/2016-I06",
+      "history_index": 18,
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_013",
+      "source_event_date": "09/09/2016",
+      "task_goal": "Confirm that the single travel-insurance policy I picked adequately covers my long trip (including medical evacuation, trip interruption/cancellation, and high-risk activities), identify any serious exclusions I should worry about, and recommend a clearer alternative policy or simple checklist if gaps are found.",
+      "prev_event": "Compared travel insurance policies for a longer trip, found dense exclusions and confusing clauses, and opted for a simple single-policy solution while generally disliking policy-comparison sessions.",
+      "context_can_add": {
+        "Planned trip dates and rough itinerary": "User would like to share exact travel dates and a brief multi-stop itinerary (e.g., country list and major cities). This is relevant because coverage periods, waiting-period clauses, and location-specific exclusions depend on trip dates and countries visited; the assistant should use these dates to check whether the policy's effective dates, per-country restrictions, and emergency assistance availability align with the trip.",
+        "Pre-existing medical conditions and regular medications": "User could disclose any pre-existing conditions (e.g., diabetes, asthma, hypertension) and regular medications. This sensitive health information is relevant because many policies exclude or require disclosure of pre-existing conditions or impose look-back/purchase-window rules; the assistant should flag likely exclusions and advise whether a medical-waiver or a different policy is needed.",
+        "Chosen policy document or policy number and insurer name": "User may provide the insurer name and policy number or upload/quote policy excerpts (this is a document reference / synthetic ID). Having the exact policy number and insurer lets the assistant look up that policy's standard wording or interpret quoted clauses precisely rather than giving only generic advice.",
+        "Budget and deductible preference": "User might state a maximum budget for insurance and preferred deductible amount (sensitive financial detail). This guides recommendations toward alternatives that fit the user's price sensitivity and avoids suggesting coverages that exceed their budget."
+      },
+      "sensitive_info": {
+        "departure window": [
+          "2026-06-10 to 2026-09-15; Spain (Madrid, Barcelona), Morocco (Marrakesh), Portugal (Lisbon)"
+        ],
+        "medical_conditions_and_medications": [
+          "Well-controlled Type 2 diabetes; medication: metformin 500 mg twice daily"
+        ],
+        "policy_number_and_insurer": [
+          "WanderSafe Insurance Co. – Policy SYN1234567"
+        ],
+        "budget_and_deductible": [
+          "Maximum budget $1,000 for the trip insurance; willing to accept up to $250 deductible"
+        ]
+      },
+      "sensitive_values": [
+        "2026-06-10 to 2026-09-15; Spain (Madrid, Barcelona), Morocco (Marrakesh), Portugal (Lisbon)",
+        "Well-controlled Type 2 diabetes; medication: metformin 500 mg twice daily",
+        "WanderSafe Insurance Co. – Policy SYN1234567",
+        "Maximum budget $1,000 for the trip insurance; willing to accept up to $250 deductible"
+      ],
+      "conversation_block": {
+        "timestamp": "09/09/2016-I06",
+        "event_text": "Compared travel insurance policies for a longer trip, found dense exclusions and confusing clauses, and opted for a simple single-policy solution while generally disliking policy-comparison sessions.",
+        "start_index": 69,
+        "lines": [
+          "Side_Note: [Compared travel insurance policies for a longer trip, found dense exclusions and confusing clauses, and opted for a simple single-policy solution while generally disliking policy-comparison sessions.] 09/09/2016-I06",
+          "User: Please confirm whether the single travel-insurance policy I chose covers my long trip for medical evacuation, trip interruption/cancellation, and higher-risk activities, flag any serious exclusions, and give a clear recommendation. Context: my travel is June 10 to September 15, 2026, visiting Madrid and Barcelona (Spain), Marrakesh (Morocco), and Lisbon (Portugal). I have well-controlled Type 2 diabetes and take metformin 500 mg twice daily. The insurer and policy are WanderSafe Insurance Co., Policy SYN1234567. My budget is up to $1,000 for insurance with a deductible no higher than $250. Please check whether medical evacuation, interruption, and pre-existing-condition rules are satisfied or if I need a waiver or a different policy.",
+          "Assistant: I can review WanderSafe Policy SYN1234567 to check medical evacuation, trip interruption/cancellation, coverage for higher-risk activities, and how pre-existing conditions like your well-controlled Type 2 diabetes (metformin 500 mg twice daily) are treated. I’ll summarize any gaps and recommend alternatives that fit your $1,000 budget and $250 deductible—would you like me to parse the policy text if you paste key clauses, or do a high-level check based on typical policy language?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    }
+  ],
+  "rejected_turns": []
+}

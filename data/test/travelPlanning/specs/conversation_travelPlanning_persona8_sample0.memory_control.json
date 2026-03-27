@@ -1,0 +1,395 @@
+{
+  "source_file": "data/output/travelPlanning/conversation_travelPlanning_persona8_sample0.json",
+  "periods": [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage"
+  ],
+  "initial_interaction_count": 6,
+  "selection_policy": {
+    "key_target_count": 3,
+    "probe_target_count": 3,
+    "prefer_last_exact_sensitive_occurrence": true,
+    "future_conflict_detection": [
+      "exact reuse of later [Sensitive Info] values",
+      "exact reuse of later [Context Can Add] keys",
+      "later event or interaction belonging to the source event's descendant chain",
+      "boolean high-similarity check over later [Task Goal] text"
+    ],
+    "key_selection_priority": [
+      "lower future conflict count",
+      "prefer the last exact sensitive-value occurrence",
+      "earlier history index as a stable tiebreaker"
+    ]
+  },
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "02/12/2025-I01",
+      "05/20/2024-I02",
+      "06/10/2024-I03"
+    ],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "key_turns": [
+    {
+      "rank": 0,
+      "timestamp": "02/12/2025-I01",
+      "history_index": 3,
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_003",
+      "source_event_date": "02/12/2025",
+      "task_goal": "Produce a detailed day-by-day 10-day self-drive itinerary along the optimized Andalusia route (Seville → Ronda → Granada) that minimizes driving time, lists driving segments and realistic drive durations, recommends sights and timed visit windows, suggests 2–3 accommodation options per stop by budget, gives parking and accessibility notes, and fits the user's flight/rental-car schedule and companion mobility constraints.",
+      "prev_event": "Optimized a 10-day self-drive route through Andalusia, consolidating stops between Seville, Ronda, and Granada to cut total driving time by several hours.",
+      "context_can_add": {
+        "arrival_and_departure_flights": "User would like to share arrival and departure flight details (airline, flight number, airport and arrival/departure times). These determine when the first/last driving days can start, whether the first day should be light, and where/when to pick up or drop off the rental car. This is sensitive scheduling info (flight numbers and times).",
+        "rental_car_booking_and_times": "User could provide the rental-car company, booking reference, pickup/drop-off locations and times. That affects where the route should begin/end, allowed pickup time windows, suggested buffer times for pick-up/drop-off and whether one-way fees apply. This is sensitive booking info (booking reference and pickup location/time).",
+        "budget_for_accommodations_and_activities": "User may specify a total or per-night budget for accommodations and activities (e.g., € per person/per night). Budget directly changes recommended hotels/guesthouses, whether to include paid guided tours, and suggested meal and parking allowances. This is financial/private information.",
+        "companion_mobility_constraints": "User might add health/mobility details for a traveling companion (e.g., uses a cane, cannot manage many stairs, max walking distance). These constraints guide accommodation selection (ground-floor or elevator access), route choices within towns, and which attractions to prioritize or skip. This is sensitive health-related information.",
+        "preferred_pacing_and_interest_focus": "User could state travel pace and interests (e.g., slow pace with 2–3 attractions/day, interest in flamenco and food vs. museums). This non-sensitive preference helps allocate time per stop, pick specific attractions and recommend evening activities and reservations."
+      },
+      "sensitive_info": {
+        "arrival_and_departure_flights": [
+          "Arrival: Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local",
+          "Departure: British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local"
+        ],
+        "rental_car_booking_and_times": [
+          "Europcar booking EC-452789 — Seville Airport (SVQ) pickup 2026-05-10 10:30, Granada Airport (GRX) drop-off 2026-05-20 12:30"
+        ],
+        "budget_for_accommodations_and_activities": [
+          "Total budget for accommodations and paid activities: €1,800 for 2 people (~€90/person/day)"
+        ],
+        "companion_mobility_constraints": [
+          "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+        ]
+      },
+      "sensitive_values": [
+        "Arrival: Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local",
+        "Departure: British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local",
+        "Europcar booking EC-452789 — Seville Airport (SVQ) pickup 2026-05-10 10:30, Granada Airport (GRX) drop-off 2026-05-20 12:30",
+        "Total budget for accommodations and paid activities: €1,800 for 2 people (~€90/person/day)",
+        "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+      ],
+      "conversation_block": {
+        "timestamp": "02/12/2025-I01",
+        "event_text": "Optimized a 10-day self-drive route through Andalusia, consolidating stops between Seville, Ronda, and Granada to cut total driving time by several hours.",
+        "start_index": 11,
+        "lines": [
+          "Side_Note: [Optimized a 10-day self-drive route through Andalusia, consolidating stops between Seville, Ronda, and Granada to cut total driving time by several hours.] 02/12/2025-I01",
+          "User: I arrive on May 10, 2026 (Iberia IB3160) into Seville (SVQ) at 09:35 local and depart on May 20, 2026 (British Airways BA842) from Granada (GRX) to London Heathrow at 11:15 local. My Europcar booking is EC-452789: pickup at Seville Airport (SVQ) on May 10 at 10:30 and drop-off at Granada Airport (GRX) on May 20 at 12:30. My budget for accommodations and paid activities is €1,800 for two (about €90/person/day). My travel companion uses a cane, struggles with long staircases and uneven cobbles, and prefers ground-floor or elevator-access rooms and walking segments of 500 m or less when possible. I prefer a relaxed pace focused on flamenco, food, and cultural stops with 2–3 attractions per day. Please produce a full day-by-day 10-day self-drive itinerary along the optimized route (Seville → Ronda → Granada) that minimizes driving time, lists driving segments with realistic durations, recommends sights and timed visit windows, suggests 2–3 accommodation options per stop by budget, includes parking and accessibility notes, and fits the flight and Europcar pickup/drop-off times and my companion's mobility constraints.",
+          "Assistant: Understood — I’ll create a detailed 10-day, day-by-day self-drive itinerary that honors your flights, the one-way Europcar pickup/drop-off, the €1,800 accommodations/activities budget, and your companion’s mobility limits (≤500 m walks, ground-floor or elevator rooms). I’ll flag parking, accessibility, and timed windows for flamenco and meals; do you want me to prioritize centrally located, low-walk hotels even if they use a bit more of your budget?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 1,
+      "timestamp": "05/20/2024-I02",
+      "history_index": 8,
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_007",
+      "source_event_date": "05/20/2024",
+      "task_goal": "Produce an optimized carry-on-only packing list and day-by-day outfit matrix for a 7-day Reykjavik trip that fits confirmed airline carry-on limits, accounts for the user's cold sensitivity and medication needs, uses packing cubes efficiently, and includes a simple travel-day and laundry checklist so the capsule works for planned activities (city walking, Golden Circle, glacier hike, Northern Lights).",
+      "prev_event": "Tested a carry-on-only capsule wardrobe for a 7-day Reykjavik trip, refining layering and packing cubes to handle variable weather.",
+      "context_can_add": {
+        "confirmed flight and luggage rules": "User would like to share exact flight details and the airline's carry-on size/weight rules (e.g., carrier name, flight number, departure/return dates and times, and stated carry-on allowance). This is relevant because packing choices (number/weight of items, whether to include a heavier outer layer or borrow/rent on site) must respect those limits; knowing specific limits lets the assistant tailor a single-bag solution and recommend which items to wear on travel days to save space.",
+        "accommodation contact and whether laundry is available": "User could provide the guesthouse/hotel contact info and address (host name, phone or email, and whether the listing notes on-site laundry or coin-op nearby). This is somewhat sensitive (host contact and lodging address) but useful because access to laundry or drying facilities changes how many base layers and socks are needed, and whether to pack travel detergent or quick-dry items.",
+        "personal cold-sensitivity and medication needs": "User may disclose health-related details such as a tendency to severe cold intolerance (e.g., Raynaud-like symptoms), what layers specifically help, and any prescription medication they carry (e.g., inhaler name or other meds). This sensitive health information matters for recommending minimum thermal layers, hand warmers, specific fabric choices, and travel-day contingency items (medication storage, extra prescriptions in carry-on).",
+        "planned daily activities / rough itinerary": "User could add a brief day-by-day plan (city walking, Golden Circle tour, glacier hike with crampons, geothermal pools, evening Northern Lights tour). Not highly sensitive but helpful because different activities require different footwear, rainproof outer layers, or optional bulky items to pack, and will guide which outfits can be repeated or swapped."
+      },
+      "sensitive_info": {
+        "flight_info": [
+          "Icelandair FI123 departing 2026-06-12 09:15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed."
+        ],
+        "guesthouse_contact": [
+          "Reykjavik Guesthouse — host: Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík"
+        ],
+        "health_detail": [
+          "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+        ]
+      },
+      "sensitive_values": [
+        "Icelandair FI123 departing 2026-06-12 09:15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed.",
+        "Reykjavik Guesthouse — host: Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík",
+        "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+      ],
+      "conversation_block": {
+        "timestamp": "05/20/2024-I02",
+        "event_text": "Tested a carry-on-only capsule wardrobe for a 7-day Reykjavik trip, refining layering and packing cubes to handle variable weather.",
+        "start_index": 26,
+        "lines": [
+          "Side_Note: [Tested a carry-on-only capsule wardrobe for a 7-day Reykjavik trip, refining layering and packing cubes to handle variable weather.] 05/20/2024-I02",
+          "User: My Iceland trip: Icelandair FI123 departing June 12, 2026 at 09:15 GMT and returning FI124 on June 19, 2026 at 18:40 GMT; carry-on allowance 55 × 40 × 20 cm, max 10 kg, plus one personal item. My guesthouse is Reykjavik Guesthouse — host Anna Jónsdóttir; I haven't confirmed laundry availability there. I have cold sensitivity (fingertips go numb below about 5°C), use an albuterol inhaler (Ventolin) as needed, carry reusable chemical hand warmers, and prefer merino base layers. Planned activities: city walking, the Golden Circle, a glacier hike with crampons, geothermal pools, and an evening Northern Lights tour. Please create an optimized carry-on-only packing list and a day-by-day outfit matrix that fits the Icelandair limits, accounts for my cold sensitivity and medication needs, uses packing cubes efficiently, and includes a travel-day and laundry checklist so the capsule works for those activities.",
+          "Assistant: I can create a single-bag packing list and a day-by-day outfit matrix that fits Icelandair’s 55 × 40 × 20 cm / 10 kg limit, prioritizes merino base layers, packing-cube organization, medication contingencies, and the needs of the glacier hike and pools. Quick question before I finalize: will you rent technical outerwear and crampon-compatible boots on-site, or would you rather pack your own shell and boots?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 2,
+      "timestamp": "06/10/2024-I03",
+      "history_index": 11,
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_009",
+      "source_event_date": "06/10/2024",
+      "task_goal": "Turn the scouted GPS waypoints into a practical sunrise-shooting plan for Santorini’s caldera rim: precise timing for each waypoint (sunrise, blue hour, golden hour), transport/parking/access notes, safety and alternative locations if access is blocked, a gear/battery checklist and charging plan, and a short itinerary I can follow the morning of the shoot.",
+      "prev_event": "Scouted golden-hour vantage points and recorded GPS waypoints for sunrise photography on Santorini’s caldera rim.",
+      "context_can_add": {
+        "GPX/waypoint file and orientation notes": "User would like to share the GPX export (or list of coordinates) and any quick composition/orientation notes for each waypoint (e.g., ‘face NW to include Fira in the frame’). This is not sensitive and will let the assistant compute exact azimuths, sunrise times and walking distances between points and create a minute-by-minute plan.",
+        "Accommodation and departure window (private schedule)": "User could share their lodging location and planned departure/return window (e.g., check-out time or ferry/flight slot). This sensitive scheduling detail matters for realistic timing (when they must return, whether they can wait for the full golden hour, need to be back for a transfer) and it will shape which waypoints are feasible and how conservative the itinerary must be.",
+        "Guesthouse contact and pickup info (named contact / phone number)": "User might provide the guesthouse contact name, phone number and address (e.g., for arranging an early taxi or emergency pickup). This private contact detail is relevant if the plan needs pre-arranged transport or if access to a certain trail requires asking the host; the assistant can draft messages or phone scripts to request early check-out or arrange a ride.",
+        "Physical constraints or health notes (mobility/weight limits)": "User may disclose mobility restrictions or injury details (for example, ‘mild knee osteoarthritis; can do short uneven descents but not long steep climbs’ or a max pack weight). This health-related detail should guide recommendations for which waypoints to prioritize, how much time/assistance to allow for moving between spots, and what gear to recommend (lighter tripod, shorter walks, safety gear)."
+      },
+      "sensitive_info": {
+        "departure_window": [
+          "Return flight from Santorini (JTR) to Athens 2026-05-12 14:35–16:30 EEST; need to be checked out and at the port/airport transfer by 10:30"
+        ],
+        "lodging_address": [
+          "Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece"
+        ],
+        "guesthouse_contact": [
+          "Maria Papadopoulos, +30 22860 28123, maria@bluecaldera.gr"
+        ],
+        "health_note": [
+          "Mild right-knee osteoarthritis; able to handle short rocky descents (~10–15 minutes) but not long steep climbs; prefer pack weight ≤12 kg"
+        ]
+      },
+      "sensitive_values": [
+        "Return flight from Santorini (JTR) to Athens 2026-05-12 14:35–16:30 EEST; need to be checked out and at the port/airport transfer by 10:30",
+        "Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece",
+        "Maria Papadopoulos, +30 22860 28123, maria@bluecaldera.gr",
+        "Mild right-knee osteoarthritis; able to handle short rocky descents (~10–15 minutes) but not long steep climbs; prefer pack weight ≤12 kg"
+      ],
+      "conversation_block": {
+        "timestamp": "06/10/2024-I03",
+        "event_text": "Scouted golden-hour vantage points and recorded GPS waypoints for sunrise photography on Santorini’s caldera rim.",
+        "start_index": 35,
+        "lines": [
+          "Side_Note: [Scouted golden-hour vantage points and recorded GPS waypoints for sunrise photography on Santorini’s caldera rim.] 06/10/2024-I03",
+          "User: I recorded GPX waypoints and orientation notes and now need them turned into a sunrise-shooting plan. My return flight from Santorini (JTR) to Athens departs 14:35 and arrives 16:30 EEST, so I need to be checked out and at the port/airport transfer by 10:30. My lodging is Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece and the guesthouse contact is Maria Papadopoulos, +30 22860 28123, maria@bluecaldera.gr. I have mild right-knee osteoarthritis — I can handle short rocky descents (about 10–15 minutes) but not long steep climbs and I prefer pack weight ≤12 kg. Please turn my GPX waypoints into a practical sunrise plan: exact timing for sunrise/blue/golden hours per waypoint, transport/parking/access notes, safety and alternatives if access is blocked, a gear/battery checklist and charging plan, and a short morning itinerary I can follow so I’ll be back in time for checkout and my transfer.",
+          "Assistant: I will create a minute-by-minute sunrise shooting plan from your GPX waypoints, calculate azimuths and exact blue/golden-hour times for each point, and include transport/parking/access notes with safety guidance and fallback locations. I’ll also recommend a lightweight gear and battery checklist plus a charging plan that keeps your pack ≤12 kg given your knee. Please upload the GPX export or paste the coordinates so I can compute precise azimuths and walking times."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    }
+  ],
+  "protected_probe_turns": [
+    {
+      "rank": 3,
+      "timestamp": "09/01/2024-I04",
+      "history_index": 16,
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_013",
+      "source_event_date": "09/01/2024",
+      "task_goal": "Turn the mapped food-focused weekend in Lyon into a finalized, time‑optimized itinerary (minute-by-minute or block schedule) that sequences the three bistro reservations and the guided market tour, adds travel/transit/walking directions and backup options, confirms timing buffers, and adjusts for my hotel location, dietary restrictions, budget, and mobility so I can share reservations and a final plan with my travel companion.",
+      "prev_event": "Mapped a food-focused weekend in Lyon with timed reservations at three bistros and a guided market tour to maximize culinary stops.",
+      "context_can_add": {
+        "hotel_address_and_checkin": "User could provide the exact lodging address and check-in/out times (e.g., '17 Rue de la République, Lyon 69002; check-in June 12 15:00, check-out June 14 11:00'). This matters so the assistant can optimize walking routes, transit links, and reservation times relative to arrival/departure and propose realistic transfer buffers. This is sensitive because it reveals a private address and travel schedule.",
+        "dietary_restrictions_or_allergies": "User could disclose dietary needs or allergies (for example, 'severe shellfish allergy — carries an epinephrine auto-injector' or 'pescatarian') so the assistant can flag restaurants that can safely accommodate the restriction, suggest menu items to pre-request with reservations, and avoid risky market stalls. This is a private health detail.",
+        "total_budget_for_meals_and_transport": "User could state a concrete budget (e.g., '€300 total for two people for food and local transport') so the assistant can prioritize restaurants, suggest portion sizes/shared tasting menus, and pick transport modes that fit the budget. This is sensitive financial information.",
+        "mobility_constraints_or_walking_tolerance": "User could report mobility limitations or walking tolerance (for example, 'I have plantar fasciitis and prefer walks under 15 minutes between stops' or 'one traveler uses a folding cane / has difficulty with stairs'). The assistant would then favor closer stops, add taxi/tram options, and check step-free access at venues. This is a private health/ability detail.",
+        "group_size_and_contact_phone_for_reservations": "User could share the number of travelers and a contact phone number for confirming or cancelling bookings (for example, '2 adults; contact phone +33 6 78 45 12 90'). This helps the assistant draft reservation notes and prefill booking forms or messages to restaurants and the market guide. A phone number is private contact information."
+      },
+      "sensitive_info": {
+        "hotel_address_and_checkin": [
+          "17 Rue de la République, Lyon 69002; check-in June 12 2026 15:00; check-out June 14 2026 11:00"
+        ],
+        "dietary_restrictions_or_allergies": [
+          "Severe shellfish allergy (anaphylaxis risk); carries epinephrine auto-injector"
+        ],
+        "total_budget_for_meals_and_transport": [
+          "€300 total for two people"
+        ],
+        "mobility_constraints_or_walking_tolerance": [
+          "Plantar fasciitis — prefers walks under 15 minutes between stops; needs occasional seating"
+        ],
+        "group_size_and_contact_phone_for_reservations": [
+          "2 adults; contact phone +33 6 78 45 12 90"
+        ]
+      },
+      "sensitive_values": [
+        "17 Rue de la République, Lyon 69002; check-in June 12 2026 15:00; check-out June 14 2026 11:00",
+        "Severe shellfish allergy (anaphylaxis risk); carries epinephrine auto-injector",
+        "€300 total for two people",
+        "Plantar fasciitis — prefers walks under 15 minutes between stops; needs occasional seating",
+        "2 adults; contact phone +33 6 78 45 12 90"
+      ],
+      "conversation_block": {
+        "timestamp": "09/01/2024-I04",
+        "event_text": "Mapped a food-focused weekend in Lyon with timed reservations at three bistros and a guided market tour to maximize culinary stops.",
+        "start_index": 50,
+        "lines": [
+          "Side_Note: [Mapped a food-focused weekend in Lyon with timed reservations at three bistros and a guided market tour to maximize culinary stops.] 09/01/2024-I04",
+          "My Lyon hotel is in the 2nd arrondissement; check-in is June 12, 2026 at 15:00 and check-out is June 14, 2026 at 11:00. I have a severe shellfish allergy (anaphylaxis risk) and carry an epinephrine auto‑injector. Our total budget for meals and transport is €300 for two people. I have plantar fasciitis, so I prefer walks under 15 minutes between stops and need occasional seating. We’re two adults. Please finalize a time‑optimized itinerary that sequences the three bistro reservations and the guided market tour, adds walking and transit directions with backup options, confirms buffers, and adjusts for my hotel timing, allergy, budget, and walking tolerance so I can share the reservations and final plan with my travel companion.",
+          "I will create a minute‑by‑minute itinerary for your stay that sequences the three bistro reservations and the guided market tour, keeps walking legs under 15 minutes, lists allergy‑safe backup restaurants, checks the €300 meals-and-transport budget, and includes short transit/taxi backups plus timing buffers around your hotel check-in and check-out. One quick question — would you like me to pre-fill a short allergy note in French you can use when confirming reservations?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 4,
+      "timestamp": "11/03/2024-I05",
+      "history_index": 20,
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_016",
+      "source_event_date": "11/03/2024",
+      "task_goal": "Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.",
+      "prev_event": "Attempted a complex multi-airline award redemption to fly to Tokyo but encountered high fees, blackout dates, and confusing routing rules, and decided to avoid multi-carrier award routings going forward.",
+      "context_can_add": {
+        "departure_airport_and_alternatives": "User would like to share their home/primary departure airport and which alternative airports they'd consider (e.g., SFO vs. OAK vs. SJC). This matters because award availability, taxes/fees, and routing rules differ by origin; knowing exact airports lets the assistant search the correct award space and recommend realistic itineraries and ground-transport tradeoffs. The private detail would be the airport code or nearest city and whether the user is willing to travel to a different airport.",
+        "travel_dates_and_flexibility": "User could provide their exact travel window and how many days they can shift (for example, 2026-10-10 to 2026-10-20, flexible +/-3 days). This is sensitive scheduling information but crucial for searching saver award availability, avoiding blackout dates, and recommending which nights to shift to minimize fees or connect via favorable routing.",
+        "loyalty_and_credit_card_point_balances": "User might list the frequent-flier programs and transferable/credit-card point balances they control (for example, United MileagePlus 85,000; Chase Ultimate Rewards 120,000; ANA 90,000). These are sensitive financial/travel-account details but necessary to recommend realistic award programs, whether to transfer points, and which award charts to target.",
+        "passport_expiration_date": "User could disclose their passport expiration date (e.g., 2027-04-15). This is a sensitive personal document detail but matters because some countries require passports to be valid for 6+ months; if the passport expires soon the assistant should flag renewal timing and avoid bookings that conflict with passport validity."
+      },
+      "sensitive_info": {
+        "departure_airport_and_alternatives": [
+          "SFO (San Francisco International)",
+          "OAK (Oakland International) - willing if significant savings",
+          "SJC (San Jose Mineta) - only if same-day connections"
+        ],
+        "travel_dates_and_flexibility": [
+          "Primary window: 2026-10-10 to 2026-10-20",
+          "Flexibility: +/- 3 days on either end"
+        ],
+        "loyalty_and_credit_card_point_balances": [
+          "United MileagePlus: 85,000 miles",
+          "ANA Mileage Club: 90,000 miles",
+          "American AAdvantage: 20,000 miles"
+        ],
+        "passport_expiration_date": [
+          "2027-04-15"
+        ]
+      },
+      "sensitive_values": [
+        "SFO (San Francisco International)",
+        "OAK (Oakland International) - willing if significant savings",
+        "SJC (San Jose Mineta) - only if same-day connections",
+        "Primary window: 2026-10-10 to 2026-10-20",
+        "Flexibility: +/- 3 days on either end",
+        "United MileagePlus: 85,000 miles",
+        "ANA Mileage Club: 90,000 miles",
+        "American AAdvantage: 20,000 miles",
+        "2027-04-15"
+      ],
+      "conversation_block": {
+        "timestamp": "11/03/2024-I05",
+        "event_text": "Attempted a complex multi-airline award redemption to fly to Tokyo but encountered high fees, blackout dates, and confusing routing rules, and decided to avoid multi-carrier award routings going forward.",
+        "start_index": 62,
+        "lines": [
+          "Side_Note: [Attempted a complex multi-airline award redemption to fly to Tokyo but encountered high fees, blackout dates, and confusing routing rules, and decided to avoid multi-carrier award routings going forward.] 11/03/2024-I05",
+          "User: I’d prefer departures from SFO (San Francisco); I’ll consider OAK (Oakland) only for large savings and SJC (San Jose) only for same‑day connections. My travel window is roughly October 10–20, 2026 with ±3 days flexibility. I have 85,000 United MileagePlus miles, 90,000 ANA Mileage Club miles, and 20,000 American AAdvantage miles, and my passport is valid through April 15, 2027. Please recommend specific single‑carrier or simple partner award programs or cash+points options, show step‑by‑step search instructions, provide 2–3 sample itineraries with estimated miles and out‑of‑pocket fees, and give a prioritized action checklist so I can book without multi‑carrier routings.",
+          "Assistant: I’ll prioritize single‑carrier and simple partner awards (United and ANA first, plus cash+points where useful), walk you through step‑by‑step searches for SFO/OAK/SJC within your ±3‑day flexibility, draft 2–3 sample itineraries with estimated miles and fees based on your balances, and give a prioritized checklist to complete the booking without multi‑carrier routings; before I pull sample routings, do you have a strong preference for nonstop flights versus one‑stop itineraries if the mileage cost differs significantly?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 5,
+      "timestamp": "12/18/2024-I06",
+      "history_index": 23,
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_018",
+      "source_event_date": "12/18/2024",
+      "task_goal": "Get a simple, low-transfer plan for getting around an unfamiliar city during a short stay: recommended taxi/ride-hail apps and when to use them, approximate costs vs simple public-transit options, safety and communication tips, and a sample 2-day itinerary that minimizes transfers and complicated timetables.",
+      "prev_event": "Relied solely on local buses in Porto for two days, found inconsistent timetables and missed connections, and now prefers simpler transit routes or taxis in unfamiliar cities.",
+      "context_can_add": {
+        "upcoming_destination_and_dates": "User would like to add their next destination and travel dates so recommendations can be tailored to local transit options and weekend/weekday schedules. This would involve sharing a private travel window (e.g., 'Porto, 2026-04-10 to 2026-04-12'), which helps determine service levels and likely fares.",
+        "lodging_address_or_neighborhood": "User could share the hotel/guesthouse address or neighborhood so routes and taxi pickup/dropoff suggestions are precise. This is sensitive location data (full address or exact neighborhood) but allows the helper to suggest the quickest, safest corridors and estimate typical ride times and fares.",
+        "daily_transport_budget": "User might state how much they want to spend on transport per day (e.g., '€35/day') so the plan can prioritize taxis, shared rides, or single-ticket public transit accordingly. This is a financial preference that the user may consider private.",
+        "mobility_or_health_constraints": "User could note any mobility limits or health conditions (e.g., difficulty walking long distances or carrying luggage) so suggestions favor door-to-door options or minimal walking. This would be sensitive health-related information but directly affects mode recommendations.",
+        "preferred_comm_methods_and_app_experience": "User could say whether they’re comfortable using smartphone apps (ride-hail, maps, translation) and list any apps/accounts they already have. Not highly sensitive, but if they share linked contact or account names it becomes private—this helps recommend solutions matching their tech comfort level."
+      },
+      "sensitive_info": {
+        "upcoming_destination_and_dates": [
+          "Porto, Portugal; 2026-04-10 to 2026-04-12"
+        ],
+        "lodging_address_or_neighborhood": [
+          "Rua de Cedofeita 24, 4050-181 Porto, Portugal"
+        ],
+        "daily_transport_budget": [
+          "€35"
+        ]
+      },
+      "sensitive_values": [
+        "Porto, Portugal; 2026-04-10 to 2026-04-12",
+        "Rua de Cedofeita 24, 4050-181 Porto, Portugal",
+        "€35"
+      ],
+      "conversation_block": {
+        "timestamp": "12/18/2024-I06",
+        "event_text": "Relied solely on local buses in Porto for two days, found inconsistent timetables and missed connections, and now prefers simpler transit routes or taxis in unfamiliar cities.",
+        "start_index": 71,
+        "lines": [
+          "Side_Note: [Relied solely on local buses in Porto for two days, found inconsistent timetables and missed connections, and now prefers simpler transit routes or taxis in unfamiliar cities.] 12/18/2024-I06",
+          "User: I’ll be in Porto for two days and my lodging is Rua de Cedofeita 24, 4050-181 Porto, Portugal. My daily transport budget is €35. I want a simple, low-transfer plan that minimizes timetables and missed connections — recommend taxi/ride-hail apps and when to use them, approximate costs versus straightforward public-transit options, safety and communication tips, and a sample two-day itinerary that keeps transfers to a minimum.",
+          "Assistant: I can put together a Porto plan centered on Rua de Cedofeita that compares typical taxi/app fares with simple public-transit choices for your €35 daily budget, recommends the best apps and when to use them, includes safety tips and useful Portuguese pickup phrases, and provides a two-day low-transfer itinerary. Do you prefer using smartphone taxi and maps apps, or would you rather stick with phone-booked taxis and walking?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    }
+  ],
+  "rejected_turns": []
+}

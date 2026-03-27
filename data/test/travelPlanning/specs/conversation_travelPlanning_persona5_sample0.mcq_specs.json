@@ -1,0 +1,605 @@
+{
+  "source_sidecar": "data/baseline/travelPlanning/conversation_travelPlanning_persona5_sample0.memory_control.json",
+  "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona5_sample0.json",
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "03/08/2014-I02",
+      "05/12/2019-I03",
+      "06/15/2015-I04"
+    ],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "mcq_design_version": "v2_prompt_ready",
+  "key_turns": [
+    {
+      "timestamp": "03/08/2014-I02",
+      "turn_role": "key",
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_005",
+      "task_goal": "Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants.",
+      "context_can_add": {
+        "travel_dates_and_arrival": "User would like to share exact travel dates and arrival/departure times so the assistant can align the itinerary with real opening hours, train schedules, and any day-trip feasibility. Sensitive detail that might be provided: flight or Shinkansen arrival/departure times and carrier/flight numbers (e.g., 'Arrive KIX 2026-04-10 09:35 JL123').",
+        "accommodation_and_checkin": "User could provide the accommodation name, full address, phone/contact person, and check-in/out times so the assistant can plan mornings/evenings, suggest nearby dinner options, and identify luggage-drop or storage possibilities. Sensitive detail that might be provided: exact lodging address and guesthouse contact (e.g., 'Sakura Guesthouse, 45-2 Higashiyama, Kyoto, +81‑75‑123‑4567, check-in 15:00').",
+        "mobility_or_health_constraints": "User might add mobility or medical needs (e.g., knee pain, wheelchair use, walking-distance limits) so the assistant can re-route to avoid steep climbs, recommend taxis or accessible entrances, and pace each day with realistic rest breaks. Sensitive detail that might be provided: specific health details/limitations (e.g., 'mild osteoarthritis, uses cane occasionally, prefers max 500 m walking legs').",
+        "per_person_budget_and_payment_preferences": "User could share a per-person budget for sightseeing/meals and whether they prefer paid guided tours or self-guided options so the assistant can prioritize free/low-cost alternatives or allocate funds for must-do paid experiences. Sensitive detail that might be provided: exact budget figure and spending preferences (e.g., '120,000 JPY per person for 7 days').",
+        "travel_companion_info_and_contacts": "If the user is traveling with others, they might add companion names, relationships, and a local emergency contact so the assistant can tailor pacing/activities to group needs and include contact instructions. Sensitive detail that might be provided: companion names and a local contact phone/email (e.g., 'traveling with partner: Alex Kim; guesthouse contact: +81‑75‑123‑4567')."
+      },
+      "sensitive_info": {
+        "travel_dates_and_arrival": [
+          "Arrive Kansai Intl (KIX) 2026-04-10 09:35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+        ],
+        "accommodation_and_checkin": [
+          "Sakura Guesthouse, 45-2 Higashiyama, Kyoto 605-0826, Japan; +81-75-123-4567; check-in 15:00; check-out 11:00"
+        ],
+        "mobility_or_health_constraints": [
+          "Mild osteoarthritis in knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench or requires a rest every 20 minutes; needs wheelchair-accessible entrances when available"
+        ],
+        "per_person_budget_and_payment_preferences": [
+          "120000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki bookings unless essential"
+        ],
+        "travel_companion_info_and_contacts": [
+          "Traveling with partner: Alex Kim; guesthouse contact: +81-75-123-4567"
+        ]
+      },
+      "sensitive_values": [
+        "Arrive Kansai Intl (KIX) 2026-04-10 09:35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
+        "Sakura Guesthouse, 45-2 Higashiyama, Kyoto 605-0826, Japan; +81-75-123-4567; check-in 15:00; check-out 11:00",
+        "Mild osteoarthritis in knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench or requires a rest every 20 minutes; needs wheelchair-accessible entrances when available",
+        "120000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki bookings unless essential",
+        "Traveling with partner: Alex Kim; guesthouse contact: +81-75-123-4567"
+      ],
+      "user_turn": "Please convert my drafted seven-day Kyoto itinerary into a reservation-ready, time-stamped plan. Travel: arrive Kansai Intl (KIX) at 09:35 on April 10, 2026 (JL123) and depart Kansai Intl at 14:20 on April 17, 2026 (JL456). Accommodation: Sakura Guesthouse (Kyoto); check-in 15:00, check-out 11:00. Mobility: I have mild knee osteoarthritis, use a cane occasionally, prefer walking segments of 500 meters or less without a bench, need a rest about every 20 minutes, and require wheelchair-accessible entrances when available. Budget: 120,000 JPY per person for sightseeing and meals; I prefer to avoid high-end kaiseki unless essential. I'm traveling with my partner, Alex Kim. Please include precise transit directions and durations between stops with station names, suggested meal time windows and restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.",
+        "distractor_seeds": [
+          "Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact.",
+          "Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop. Background details include Flight itinerary and baggage allowances, Accommodation addresses and local contacts, Event schedule and wardrobe needs."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please convert my drafted seven-day Kyoto itinerary into a reservation-ready, time-stamped plan. Travel: arrive Kansai Intl (KIX) at 09:35 on April 10, 2026 (JL123) and depart Kansai Intl at 14:20 on April 17, 2026 (JL456). Accommodation: Sakura Guesthouse (Kyoto); check-in 15:00, check-out 11:00. Mobility: I have mild knee osteoarthritis, use a cane occasionally, prefer walking segments of 500 meters or less without a bench, need a rest about every 20 minutes, and require wheelchair-accessible entrances when available. Budget: 120,000 JPY per person for sightseeing and meals; I prefer to avoid high-end kaiseki unless essential. I'm traveling with my partner, Alex Kim. Please include precise transit directions and durations between stops with station names, suggested meal time windows and restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants.\". This turn was associated with the following task goal: \"Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. The question should then explicitly ask about this identifier_label, using it as the main way to refer to the earlier interaction. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually relevant to this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact.\", \"Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop. Background details include Flight itinerary and baggage allowances, Accommodation addresses and local contacts, Event schedule and wardrobe needs.\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "Arrive Kansai Intl (KIX) 2026 04 10 09",
+            "slot_value": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+          },
+          {
+            "slot_name": "Sakura Guesthouse, 45 2 Higashiyama, Kyoto 605 0826, Japan; +81 75 123 4567; check in 15",
+            "slot_value": "00; check-out 11:00"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Mild osteoarthritis in knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench or requires a rest every 20 minutes; needs wheelchair-accessible entrances when available"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "120000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki bookings unless essential"
+          },
+          {
+            "slot_name": "Traveling with partner",
+            "slot_value": "Alex Kim; guesthouse contact: +81-75-123-4567"
+          }
+        ],
+        "distractor_seeds": [
+          "00 depart Hometown by car (Hometown -> Seaside, ~2.5h); expected arrival 2026-03-27 10:30",
+          "00",
+          "00 depart Hometown by car (Hometown -> Seaside, ~2.5h); expected arrival 2026-03-27 10:30",
+          "00"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"Please convert my drafted seven-day Kyoto itinerary into a reservation-ready, time-stamped plan. Travel: arrive Kansai Intl (KIX) at 09:35 on April 10, 2026 (JL123) and depart Kansai Intl at 14:20 on April 17, 2026 (JL456). Accommodation: Sakura Guesthouse (Kyoto); check-in 15:00, check-out 11:00. Mobility: I have mild knee osteoarthritis, use a cane occasionally, prefer walking segments of 500 meters or less without a bench, need a rest about every 20 minutes, and require wheelchair-accessible entrances when available. Budget: 120,000 JPY per person for sightseeing and meals; I prefer to avoid high-end kaiseki unless essential. I'm traveling with my partner, Alex Kim. Please include precise transit directions and durations between stops with station names, suggested meal time windows and restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants.\". This turn was associated with the following task goal: \"Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"Arrive Kansai Intl (KIX) 2026 04 10 09\",\n    \"slot_value\": \"35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456\"\n  },\n  {\n    \"slot_name\": \"Sakura Guesthouse, 45 2 Higashiyama, Kyoto 605 0826, Japan; +81 75 123 4567; check in 15\",\n    \"slot_value\": \"00; check-out 11:00\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Mild osteoarthritis in knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench or requires a rest every 20 minutes; needs wheelchair-accessible entrances when available\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"120000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki bookings unless essential\"\n  },\n  {\n    \"slot_name\": \"Traveling with partner\",\n    \"slot_value\": \"Alex Kim; guesthouse contact: +81-75-123-4567\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. If the question needs to refer to the interaction as a whole, it should explicitly use the identifier_label as the main way to refer to this interaction, rather than inventing a new label. Reuse the given identifier_label exactly instead of replacing it with a new phrase. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"00 depart Hometown by car (Hometown -> Seaside, ~2.5h); expected arrival 2026-03-27 10:30\", \"00\", \"00 depart Hometown by car (Hometown -> Seaside, ~2.5h); expected arrival 2026-03-27 10:30\", \"00\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "05/12/2019-I03",
+      "turn_role": "key",
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_007",
+      "task_goal": "Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in.",
+      "context_can_add": {
+        "trip_itinerary_and_times": "User would like to share exact departure and return dates/times and the planned route (e.g., driving legs or train/bus times). This is sensitive schedule information; knowing precise times lets the assistant create timed check-ins, ETA triggers, and defined escalation windows if a check-in is missed.",
+        "guesthouse_details": "User would like to provide the guesthouse names, street addresses, reservation/reference numbers, and expected arrival times. These are sensitive location/contact details and will allow the assistant to verify reviews/safety, generate step-by-step arrival verification (who to ask for, what to confirm at check-in), and prepare pre-filled messages to the guesthouse.",
+        "emergency_contact": "User could share the names, relationships and phone numbers/emails of the preloaded emergency contacts (for example: a close friend and a family member). This is sensitive contact information; having it lets the assistant create pre-filled SMS/email templates, decide primary vs secondary contacts in escalation, and recommend exactly what info to send them.",
+        "medical_info": "User could disclose relevant medical background (conditions, medications, allergies) that could affect an emergency response. This sensitive health information will guide recommendations for what to include in emergency messages, whether to carry paper medical info, and which local medical facilities to prioritize.",
+        "preferred_checkin_frequency": "User might specify how often they'd like automatic or manual check-ins (e.g., every 2 hours, at departure/arrival). This non-sensitive preference helps the assistant build a realistic schedule and choose notification/app settings that match the user's comfort level."
+      },
+      "sensitive_info": {
+        "trip_itinerary_and_times": [
+          "2026-03-27 08:00 depart Hometown by car (Hometown -> Seaside, ~2.5h); expected arrival 2026-03-27 10:30",
+          "2026-03-27 expected late arrival at guesthouse ~22:00",
+          "2026-03-29 18:00 depart Seaside for return to Hometown"
+        ],
+        "guesthouse_details": [
+          "Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in 2026-03-27 22:00"
+        ],
+        "emergency_contact": [
+          "Alex Morgan, friend, +1-555-123-4567, alex.morgan@example.com"
+        ],
+        "medical_info": [
+          "Diagnosed generalized anxiety disorder; medication: escitalopram 10 mg daily; allergy: penicillin"
+        ]
+      },
+      "sensitive_values": [
+        "2026-03-27 08:00 depart Hometown by car (Hometown -> Seaside, ~2.5h); expected arrival 2026-03-27 10:30",
+        "2026-03-27 expected late arrival at guesthouse ~22:00",
+        "2026-03-29 18:00 depart Seaside for return to Hometown",
+        "Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in 2026-03-27 22:00",
+        "Alex Morgan, friend, +1-555-123-4567, alex.morgan@example.com",
+        "Diagnosed generalized anxiety disorder; medication: escitalopram 10 mg daily; allergy: penicillin"
+      ],
+      "user_turn": "Please turn the solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: I need a timed check-in schedule with escalation windows, ready-to-send emergency message templates (SMS and email), a guesthouse verification and arrival checklist, and step-by-step actions if I miss a check-in. Trip itinerary and times: depart Hometown by car at 8:00 AM on March 27, 2026 (Hometown -> Seaside, ~2.5 hours), expected arrival about 10:30 AM; expected late guesthouse arrival around 10:00 PM on March 27; return depart Seaside at 6:00 PM on March 29, 2026. Guesthouse details: Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in ~10:00 PM on March 27. Emergency contact: Alex Morgan, friend, 555-123-4567. Medical info for emergencies: diagnosed generalized anxiety disorder, escitalopram 10 mg daily, allergic to penicillin. For check-ins I prefer an initial departure check, an ETA check, an evening arrival check, and location updates roughly every four hours while traveling. Can you build the timed schedule, pre-filled messages, guesthouse arrival checklist, and a clear escalation plan if I miss a check-in?",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact.",
+        "distractor_seeds": [
+          "Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.",
+          "Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop. Background details include Flight itinerary and baggage allowances, Accommodation addresses and local contacts, Event schedule and wardrobe needs."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please turn the solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: I need a timed check-in schedule with escalation windows, ready-to-send emergency message templates (SMS and email), a guesthouse verification and arrival checklist, and step-by-step actions if I miss a check-in. Trip itinerary and times: depart Hometown by car at 8:00 AM on March 27, 2026 (Hometown -> Seaside, ~2.5 hours), expected arrival about 10:30 AM; expected late guesthouse arrival around 10:00 PM on March 27; return depart Seaside at 6:00 PM on March 29, 2026. Guesthouse details: Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in ~10:00 PM on March 27. Emergency contact: Alex Morgan, friend, 555-123-4567. Medical info for emergencies: diagnosed generalized anxiety disorder, escitalopram 10 mg daily, allergic to penicillin. For check-ins I prefer an initial departure check, an ETA check, an evening arrival check, and location updates roughly every four hours while traveling. Can you build the timed schedule, pre-filled messages, guesthouse arrival checklist, and a clear escalation plan if I miss a check-in?\". This turn was associated with the following task goal: \"Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. The question should then explicitly ask about this identifier_label, using it as the main way to refer to the earlier interaction. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually relevant to this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.\", \"Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop. Background details include Flight itinerary and baggage allowances, Accommodation addresses and local contacts, Event schedule and wardrobe needs.\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "2026 03 27 08",
+            "slot_value": "00 depart Hometown by car (Hometown -> Seaside, ~2.5h); expected arrival 2026-03-27 10:30"
+          },
+          {
+            "slot_name": "2026 03 27 expected late arrival at guesthouse ~22",
+            "slot_value": "00"
+          },
+          {
+            "slot_name": "2026 03 29 18",
+            "slot_value": "00 depart Seaside for return to Hometown"
+          },
+          {
+            "slot_name": "Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF 4592; front desk +1 555 222 3344; expected check in 2026 03 27 22",
+            "slot_value": "00"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Alex Morgan, friend, +1-555-123-4567, alex.morgan@example.com"
+          },
+          {
+            "slot_name": "Diagnosed generalized anxiety disorder; medication",
+            "slot_value": "escitalopram 10 mg daily; allergy: penicillin"
+          }
+        ],
+        "distractor_seeds": [
+          "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
+          "00; check-out 11:00",
+          "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
+          "00; check-out 11:00"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"Please turn the solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: I need a timed check-in schedule with escalation windows, ready-to-send emergency message templates (SMS and email), a guesthouse verification and arrival checklist, and step-by-step actions if I miss a check-in. Trip itinerary and times: depart Hometown by car at 8:00 AM on March 27, 2026 (Hometown -> Seaside, ~2.5 hours), expected arrival about 10:30 AM; expected late guesthouse arrival around 10:00 PM on March 27; return depart Seaside at 6:00 PM on March 29, 2026. Guesthouse details: Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in ~10:00 PM on March 27. Emergency contact: Alex Morgan, friend, 555-123-4567. Medical info for emergencies: diagnosed generalized anxiety disorder, escitalopram 10 mg daily, allergic to penicillin. For check-ins I prefer an initial departure check, an ETA check, an evening arrival check, and location updates roughly every four hours while traveling. Can you build the timed schedule, pre-filled messages, guesthouse arrival checklist, and a clear escalation plan if I miss a check-in?\". This turn was associated with the following task goal: \"Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"2026 03 27 08\",\n    \"slot_value\": \"00 depart Hometown by car (Hometown -> Seaside, ~2.5h); expected arrival 2026-03-27 10:30\"\n  },\n  {\n    \"slot_name\": \"2026 03 27 expected late arrival at guesthouse ~22\",\n    \"slot_value\": \"00\"\n  },\n  {\n    \"slot_name\": \"2026 03 29 18\",\n    \"slot_value\": \"00 depart Seaside for return to Hometown\"\n  },\n  {\n    \"slot_name\": \"Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF 4592; front desk +1 555 222 3344; expected check in 2026 03 27 22\",\n    \"slot_value\": \"00\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Alex Morgan, friend, +1-555-123-4567, alex.morgan@example.com\"\n  },\n  {\n    \"slot_name\": \"Diagnosed generalized anxiety disorder; medication\",\n    \"slot_value\": \"escitalopram 10 mg daily; allergy: penicillin\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. If the question needs to refer to the interaction as a whole, it should explicitly use the identifier_label as the main way to refer to this interaction, rather than inventing a new label. Reuse the given identifier_label exactly instead of replacing it with a new phrase. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456\", \"00; check-out 11:00\", \"35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456\", \"00; check-out 11:00\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "06/15/2015-I04",
+      "turn_role": "key",
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_009",
+      "task_goal": "Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop.",
+      "context_can_add": {
+        "Flight itinerary and baggage allowances": "User would like to share specific flight legs, dates, times and the baggage rules for each carrier so the assistant can tailor which items must be carry-on vs. checked, prioritize what to wear on travel days, and compute exact weight/volume targets. Sensitive details that could be shared: flight numbers, departure/arrival times, and individual carrier baggage allowances (e.g., 'AA1243 2026-07-05 08:30 JFK->ORD, carry-on only 7 kg; BA302 2026-07-10 19:45 ORD->LHR, 1 checked bag 23 kg included').",
+        "Accommodation addresses and local contacts": "User could add lodging addresses, host/guesthouse contact names and phone/email so the assistant can plan what to store at particular locations, flag on-site laundry availability, and advise document/valuables distribution (e.g., leave heavier items at a mid-trip apartment). Sensitive details that could be shared: full street addresses and host contact info (phone/email).",
+        "Event schedule and wardrobe needs": "User could list specific events at each stop (conference sessions, a wedding, client meetings) and their dress codes/times so the assistant can recommend which outfits to pack, how many 'smart' garments are needed, and whether quick-press or dry-clean access is required. This helps optimize outfit rotation and laundry timing; these items are non-sensitive.",
+        "Medical needs and mobility constraints": "User could report medications, allergies, or mobility considerations that affect toiletries or carry-ons (e.g., must carry prescription meds in original packaging, need space for epinephrine autoinjector, or require a cane). Sensitive details that could be shared include medication names/doses and allergy/severity information so the plan can allocate safe, accessible pack space and note travel-document considerations."
+      },
+      "sensitive_info": {
+        "flight_itinerary": [
+          "AA1243 2026-07-05 08:30 JFK->ORD, carry-on only, 7 kg limit",
+          "AA457 2026-07-07 13:50 ORD->DEN, 1 checked bag allowed 23 kg",
+          "BA302 2026-07-10 19:45 ORD->LHR, 1 checked bag 23 kg + 1 carry-on 8 kg"
+        ],
+        "accommodation_contacts": [
+          "Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented); no on-site laundry",
+          "Lisbon guesthouse — Rua das Flores 22, 1100-123 Lisbon, Portugal; contact: Rosa Martinez, +1-555-123-4567, rosa.m@guesthouse.pt; has coin laundry"
+        ],
+        "medical_needs": [
+          "Levothyroxine 100 mcg daily (prescription) — carry-on required",
+          "Severe peanut allergy — has epinephrine autoinjector (EpiPen)",
+          "Soft contact lenses + solution (daily use)"
+        ]
+      },
+      "sensitive_values": [
+        "AA1243 2026-07-05 08:30 JFK->ORD, carry-on only, 7 kg limit",
+        "AA457 2026-07-07 13:50 ORD->DEN, 1 checked bag allowed 23 kg",
+        "BA302 2026-07-10 19:45 ORD->LHR, 1 checked bag 23 kg + 1 carry-on 8 kg",
+        "Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented); no on-site laundry",
+        "Lisbon guesthouse — Rua das Flores 22, 1100-123 Lisbon, Portugal; contact: Rosa Martinez, +1-555-123-4567, rosa.m@guesthouse.pt; has coin laundry",
+        "Levothyroxine 100 mcg daily (prescription) — carry-on required",
+        "Severe peanut allergy — has epinephrine autoinjector (EpiPen)",
+        "Soft contact lenses + solution (daily use)"
+      ],
+      "user_turn": "Please turn my master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first). My flights: AA1243 JFK→ORD (morning), carry-on only, 7 kg limit; AA457 ORD→DEN (midday), allows one checked bag up to 23 kg; BA302 ORD→LHR (evening), allows one checked bag up to 23 kg plus one carry-on up to 8 kg. Accommodation contacts: Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented), no on-site laundry; Lisbon guesthouse — Rua das Flores 22, 1100-123 Lisbon, Portugal; contact Rosa Martinez, 555-123-4567; has coin laundry. I have no special event wardrobe needs. Medical needs that affect packing: levothyroxine 100 mcg (must be carry-on), severe peanut allergy (EpiPen), and daily soft contact lenses with solution. I want prioritized outfit rotation, a laundry schedule keyed to the Lisbon coin laundry, exact allowed bag sizes/weights per flight accounted for, recommended refillable toiletry container sizes, and a pared-down packing list for each stop — starting with carry-on-first.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop. Background details include Flight itinerary and baggage allowances, Accommodation addresses and local contacts, Event schedule and wardrobe needs.",
+        "distractor_seeds": [
+          "Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.",
+          "Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please turn my master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first). My flights: AA1243 JFK→ORD (morning), carry-on only, 7 kg limit; AA457 ORD→DEN (midday), allows one checked bag up to 23 kg; BA302 ORD→LHR (evening), allows one checked bag up to 23 kg plus one carry-on up to 8 kg. Accommodation contacts: Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented), no on-site laundry; Lisbon guesthouse — Rua das Flores 22, 1100-123 Lisbon, Portugal; contact Rosa Martinez, 555-123-4567; has coin laundry. I have no special event wardrobe needs. Medical needs that affect packing: levothyroxine 100 mcg (must be carry-on), severe peanut allergy (EpiPen), and daily soft contact lenses with solution. I want prioritized outfit rotation, a laundry schedule keyed to the Lisbon coin laundry, exact allowed bag sizes/weights per flight accounted for, recommended refillable toiletry container sizes, and a pared-down packing list for each stop — starting with carry-on-first.\". This turn was associated with the following task goal: \"Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. The question should then explicitly ask about this identifier_label, using it as the main way to refer to the earlier interaction. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop. Background details include Flight itinerary and baggage allowances, Accommodation addresses and local contacts, Event schedule and wardrobe needs.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually relevant to this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.\", \"Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact.\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "AA1243 2026 07 05 08",
+            "slot_value": "30 JFK->ORD, carry-on only, 7 kg limit"
+          },
+          {
+            "slot_name": "AA457 2026 07 07 13",
+            "slot_value": "50 ORD->DEN, 1 checked bag allowed 23 kg"
+          },
+          {
+            "slot_name": "BA302 2026 07 10 19",
+            "slot_value": "45 ORD->LHR, 1 checked bag 23 kg + 1 carry-on 8 kg"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented); no on-site laundry"
+          },
+          {
+            "slot_name": "Lisbon guesthouse — Rua das Flores 22, 1100 123 Lisbon, Portugal; contact",
+            "slot_value": "Rosa Martinez, +1-555-123-4567, rosa.m@guesthouse.pt; has coin laundry"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Levothyroxine 100 mcg daily (prescription) — carry-on required"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Severe peanut allergy — has epinephrine autoinjector (EpiPen)"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Soft contact lenses + solution (daily use)"
+          }
+        ],
+        "distractor_seeds": [
+          "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
+          "00; check-out 11:00",
+          "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
+          "00; check-out 11:00"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"Please turn my master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first). My flights: AA1243 JFK→ORD (morning), carry-on only, 7 kg limit; AA457 ORD→DEN (midday), allows one checked bag up to 23 kg; BA302 ORD→LHR (evening), allows one checked bag up to 23 kg plus one carry-on up to 8 kg. Accommodation contacts: Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented), no on-site laundry; Lisbon guesthouse — Rua das Flores 22, 1100-123 Lisbon, Portugal; contact Rosa Martinez, 555-123-4567; has coin laundry. I have no special event wardrobe needs. Medical needs that affect packing: levothyroxine 100 mcg (must be carry-on), severe peanut allergy (EpiPen), and daily soft contact lenses with solution. I want prioritized outfit rotation, a laundry schedule keyed to the Lisbon coin laundry, exact allowed bag sizes/weights per flight accounted for, recommended refillable toiletry container sizes, and a pared-down packing list for each stop — starting with carry-on-first.\". This turn was associated with the following task goal: \"Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"AA1243 2026 07 05 08\",\n    \"slot_value\": \"30 JFK->ORD, carry-on only, 7 kg limit\"\n  },\n  {\n    \"slot_name\": \"AA457 2026 07 07 13\",\n    \"slot_value\": \"50 ORD->DEN, 1 checked bag allowed 23 kg\"\n  },\n  {\n    \"slot_name\": \"BA302 2026 07 10 19\",\n    \"slot_value\": \"45 ORD->LHR, 1 checked bag 23 kg + 1 carry-on 8 kg\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented); no on-site laundry\"\n  },\n  {\n    \"slot_name\": \"Lisbon guesthouse — Rua das Flores 22, 1100 123 Lisbon, Portugal; contact\",\n    \"slot_value\": \"Rosa Martinez, +1-555-123-4567, rosa.m@guesthouse.pt; has coin laundry\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Levothyroxine 100 mcg daily (prescription) — carry-on required\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Severe peanut allergy — has epinephrine autoinjector (EpiPen)\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Soft contact lenses + solution (daily use)\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. If the question needs to refer to the interaction as a whole, it should explicitly use the identifier_label as the main way to refer to this interaction, rather than inventing a new label. Reuse the given identifier_label exactly instead of replacing it with a new phrase. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456\", \"00; check-out 11:00\", \"35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456\", \"00; check-out 11:00\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ],
+  "probe_turns": [
+    {
+      "timestamp": "03/05/2021-I01",
+      "turn_role": "probe",
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_004",
+      "task_goal": "Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist.",
+      "context_can_add": {
+        "Travel dates and exact arrival/departure times": "User would like to share the specific weekend dates and exact arrival/departure times because timed bookings (museum entry slots, guided tours, restaurant reservations, check-in/out) need to be matched to the group's schedule; this is a private schedule detail that will guide which time slots to reserve and whether same-day travel windows require transport adjustments.",
+        "Health and mobility needs for each family member": "User could list medical, mobility, or allergy details (e.g., who uses a walker or wheelchair, medication schedules, oxygen, severe food allergies, dementia care needs). These sensitive health details are essential to select truly accessible activities, request accommodations, arrange seating, and prepare a medication checklist.",
+        "Overall budget and per-person spending limits": "User might disclose a total weekend budget and/or per-person limits so the assistant can propose activities, dining, and upgrades that fit financial constraints; this financial detail guides prioritization of reservations and whether cheaper/free options are needed.",
+        "Accommodation/contact details and rooming preferences": "User may provide the lodging address and a point-of-contact (email or phone) and specify rooming preferences (who shares which room, need for ground-floor/roll-in shower). Sharing the host contact (email/phone) and exact address is sensitive but useful for coordinating accessibility requests and confirming check-in logistics."
+      },
+      "sensitive_info": {
+        "travel_schedule": [
+          "2026-05-14T15:30",
+          "2026-05-16T11:00"
+        ],
+        "health_details": [
+          "Helen Parker (78): uses a walker, limited stair tolerance, takes antihypertensive medication AM/PM",
+          "George Parker (76): limited stamina, history of angina — prefers short walks and frequent rest; has nitroglycerin as needed",
+          "Lucas Parker (3): severe peanut allergy — carries EpiPen"
+        ],
+        "budget": [
+          "$2,000 total for the weekend"
+        ],
+        "lodging_contact": [
+          "emily.parker@goggle.com",
+          "555-123-4567",
+          "123 University Lane, Hometown, State, 12345"
+        ]
+      },
+      "sensitive_values": [
+        "2026-05-14T15:30",
+        "2026-05-16T11:00",
+        "Helen Parker (78): uses a walker, limited stair tolerance, takes antihypertensive medication AM/PM",
+        "George Parker (76): limited stamina, history of angina — prefers short walks and frequent rest; has nitroglycerin as needed",
+        "Lucas Parker (3): severe peanut allergy — carries EpiPen",
+        "$2,000 total for the weekend",
+        "emily.parker@goggle.com",
+        "555-123-4567",
+        "123 University Lane, Hometown, State, 12345"
+      ],
+      "user_turn": "I need help finalizing a detailed, accessible weekend itinerary for our three-generation family: day-by-day schedules with morning activity blocks and relaxed afternoons; time-sensitive reservations and accessibility requests for tickets, restaurants, and transport; room and transport seat assignments; and a printable itinerary with a packing and medication checklist. We'll arrive the afternoon of May 14, 2026 at 3:30 PM and depart the morning of May 16, 2026 at 11:00 AM. Health details to plan around: Helen Parker (78) uses a walker, has limited stair tolerance, and takes antihypertensive medication morning and evening; George Parker (76) has limited stamina and a history of angina, prefers short walks and frequent rests, and carries nitroglycerin; Lucas Parker (3) has a severe peanut allergy and carries an EpiPen. Budget is $2,000 total for the weekend. Lodging/contact details: emily.parker@goggle.com, 555-123-4567, 123 University Lane, Hometown, State, 12345. Can you finalize reservations, make the accessibility requests, assign rooms/seats as needed, and produce a printable itinerary and medication/packing checklist tailored to these constraints?",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist. Background details include Travel dates and exact arrival/departure times, Health and mobility needs for each family member, Overall budget and per person spending limits.",
+        "distractor_seeds": [
+          "Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.",
+          "Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I need help finalizing a detailed, accessible weekend itinerary for our three-generation family: day-by-day schedules with morning activity blocks and relaxed afternoons; time-sensitive reservations and accessibility requests for tickets, restaurants, and transport; room and transport seat assignments; and a printable itinerary with a packing and medication checklist. We'll arrive the afternoon of May 14, 2026 at 3:30 PM and depart the morning of May 16, 2026 at 11:00 AM. Health details to plan around: Helen Parker (78) uses a walker, has limited stair tolerance, and takes antihypertensive medication morning and evening; George Parker (76) has limited stamina and a history of angina, prefers short walks and frequent rests, and carries nitroglycerin; Lucas Parker (3) has a severe peanut allergy and carries an EpiPen. Budget is $2,000 total for the weekend. Lodging/contact details: emily.parker@goggle.com, 555-123-4567, 123 University Lane, Hometown, State, 12345. Can you finalize reservations, make the accessibility requests, assign rooms/seats as needed, and produce a printable itinerary and medication/packing checklist tailored to these constraints?\". This turn was associated with the following task goal: \"Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. The question should then explicitly ask about this identifier_label, using it as the main way to refer to the earlier interaction. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist. Background details include Travel dates and exact arrival/departure times, Health and mobility needs for each family member, Overall budget and per person spending limits.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually relevant to this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.\", \"Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact.\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Finalize a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "2026 05 14T15",
+            "slot_value": "30"
+          },
+          {
+            "slot_name": "2026 05 16T11",
+            "slot_value": "00"
+          },
+          {
+            "slot_name": "Helen Parker (78)",
+            "slot_value": "uses a walker, limited stair tolerance, takes antihypertensive medication AM/PM"
+          },
+          {
+            "slot_name": "George Parker (76)",
+            "slot_value": "limited stamina, history of angina — prefers short walks and frequent rest; has nitroglycerin as needed"
+          },
+          {
+            "slot_name": "Lucas Parker (3)",
+            "slot_value": "severe peanut allergy — carries EpiPen"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$2,000 total for the weekend"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "emily.parker@goggle.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "555-123-4567"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "123 University Lane, Hometown, State, 12345"
+          }
+        ],
+        "distractor_seeds": [
+          "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
+          "00; check-out 11:00",
+          "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
+          "00; check-out 11:00"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Finalize a in a long conversation. The user's earlier message was: \"I need help finalizing a detailed, accessible weekend itinerary for our three-generation family: day-by-day schedules with morning activity blocks and relaxed afternoons; time-sensitive reservations and accessibility requests for tickets, restaurants, and transport; room and transport seat assignments; and a printable itinerary with a packing and medication checklist. We'll arrive the afternoon of May 14, 2026 at 3:30 PM and depart the morning of May 16, 2026 at 11:00 AM. Health details to plan around: Helen Parker (78) uses a walker, has limited stair tolerance, and takes antihypertensive medication morning and evening; George Parker (76) has limited stamina and a history of angina, prefers short walks and frequent rests, and carries nitroglycerin; Lucas Parker (3) has a severe peanut allergy and carries an EpiPen. Budget is $2,000 total for the weekend. Lodging/contact details: emily.parker@goggle.com, 555-123-4567, 123 University Lane, Hometown, State, 12345. Can you finalize reservations, make the accessibility requests, assign rooms/seats as needed, and produce a printable itinerary and medication/packing checklist tailored to these constraints?\". This turn was associated with the following task goal: \"Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"2026 05 14T15\",\n    \"slot_value\": \"30\"\n  },\n  {\n    \"slot_name\": \"2026 05 16T11\",\n    \"slot_value\": \"00\"\n  },\n  {\n    \"slot_name\": \"Helen Parker (78)\",\n    \"slot_value\": \"uses a walker, limited stair tolerance, takes antihypertensive medication AM/PM\"\n  },\n  {\n    \"slot_name\": \"George Parker (76)\",\n    \"slot_value\": \"limited stamina, history of angina — prefers short walks and frequent rest; has nitroglycerin as needed\"\n  },\n  {\n    \"slot_name\": \"Lucas Parker (3)\",\n    \"slot_value\": \"severe peanut allergy — carries EpiPen\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$2,000 total for the weekend\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"emily.parker@goggle.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"555-123-4567\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"123 University Lane, Hometown, State, 12345\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. If the question needs to refer to the interaction as a whole, it should explicitly use the identifier_label as the main way to refer to this interaction, rather than inventing a new label. Reuse the given identifier_label exactly instead of replacing it with a new phrase. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456\", \"00; check-out 11:00\", \"35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456\", \"00; check-out 11:00\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Finalize a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "07/14/2022-I05",
+      "turn_role": "probe",
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_011",
+      "task_goal": "Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.",
+      "context_can_add": {
+        "flight_and_arrival_details": "User would like to share their flight number, arrival airport and arrival time so the assistant can recommend the best low-impact transfer (public bus, shared shuttle, bicycle taxi) that matches the arrival window, estimate travel time to the lodge, and flag tight connection issues. This involves a private schedule detail (flight number and arrival time) that will guide timing-specific advice and booking suggestions.",
+        "dietary_and_health_needs": "User could disclose dietary preferences and any health concerns (e.g., vegetarian/vegan preference, food allergies, mobility limitations, medication needs) so the assistant can confirm the eco-lodge can accommodate meals on-site and advise on safe snack/medication packing and emergency planning. This will likely include sensitive medical details such as allergies or mobility constraints.",
+        "local_contact_at_lodge": "User may provide the lodge or guide contact (name, phone, or email) that they already received so the assistant can draft a message to confirm pickup options, arrival instructions, and special requests (dietary/medical, arrival time). This is a private contact detail that the assistant can use to create templated communications or confirm logistics.",
+        "remaining_transport_activity_budget": "User could state how much they want to spend on ground transport and activities during the two nights (a concrete budget figure). That financial detail will help the assistant prioritize cost-effective low-impact options (public transit vs private shuttle) and select community-led activities that fit the budget."
+      },
+      "sensitive_info": {
+        "flight_and_arrival_details": [
+          "UA 476",
+          "Departs JFK 2026-07-12 08:00 EDT",
+          "Arrives SJO (San José) 2026-07-12 14:35 CST"
+        ],
+        "dietary_and_health_needs": [
+          "Severe peanut allergy (anaphylaxis) — carries EpiPen",
+          "Lacto-ovo vegetarian"
+        ],
+        "local_contact_at_lodge": [
+          "Elena Morales, Guesthouse Coordinator",
+          "elena.morales@selvaeco.cr",
+          "+506-8888-1234"
+        ],
+        "remaining_transport_activity_budget": [
+          "USD 400"
+        ]
+      },
+      "sensitive_values": [
+        "UA 476",
+        "Departs JFK 2026-07-12 08:00 EDT",
+        "Arrives SJO (San José) 2026-07-12 14:35 CST",
+        "Severe peanut allergy (anaphylaxis) — carries EpiPen",
+        "Lacto-ovo vegetarian",
+        "Elena Morales, Guesthouse Coordinator",
+        "elena.morales@selvaeco.cr",
+        "+506-8888-1234",
+        "USD 400"
+      ],
+      "user_turn": "I need help confirming low-impact transfers from SJO to the eco-lodge timed to my incoming flight UA 476 (JFK → SJO, departs 08:00 EDT, arrives 14:35 CST), verifying the lodge can safely accommodate a severe peanut allergy (anaphylaxis—I carry an EpiPen) and lacto-ovo vegetarian meals for the community-guided nature walk, and producing an eco-friendly packing checklist plus a two-night activity and transport budget that stays within USD 400; local contact: Elena Morales, elena.morales@selvaeco.cr, +506-8888-1234.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay. Background details include flight and arrival details, dietary and health needs, local contact at lodge.",
+        "distractor_seeds": [
+          "Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.",
+          "Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I need help confirming low-impact transfers from SJO to the eco-lodge timed to my incoming flight UA 476 (JFK → SJO, departs 08:00 EDT, arrives 14:35 CST), verifying the lodge can safely accommodate a severe peanut allergy (anaphylaxis—I carry an EpiPen) and lacto-ovo vegetarian meals for the community-guided nature walk, and producing an eco-friendly packing checklist plus a two-night activity and transport budget that stays within USD 400; local contact: Elena Morales, elena.morales@selvaeco.cr, +506-8888-1234.\". This turn was associated with the following task goal: \"Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. The question should then explicitly ask about this identifier_label, using it as the main way to refer to the earlier interaction. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay. Background details include flight and arrival details, dietary and health needs, local contact at lodge.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually relevant to this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.\", \"Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact.\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Confirm low"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "UA 476"
+          },
+          {
+            "slot_name": "Departs JFK 2026 07 12 08",
+            "slot_value": "00 EDT"
+          },
+          {
+            "slot_name": "Arrives SJO (San José) 2026 07 12 14",
+            "slot_value": "35 CST"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Severe peanut allergy (anaphylaxis) — carries EpiPen"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Lacto-ovo vegetarian"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Elena Morales, Guesthouse Coordinator"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "elena.morales@selvaeco.cr"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "+506-8888-1234"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "USD 400"
+          }
+        ],
+        "distractor_seeds": [
+          "Mild osteoarthritis in knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench or requires a rest every 20 minutes; needs wheelchair-accessible entrances when available",
+          "120000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki bookings unless essential",
+          "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
+          "00; check-out 11:00"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Confirm low in a long conversation. The user's earlier message was: \"I need help confirming low-impact transfers from SJO to the eco-lodge timed to my incoming flight UA 476 (JFK → SJO, departs 08:00 EDT, arrives 14:35 CST), verifying the lodge can safely accommodate a severe peanut allergy (anaphylaxis—I carry an EpiPen) and lacto-ovo vegetarian meals for the community-guided nature walk, and producing an eco-friendly packing checklist plus a two-night activity and transport budget that stays within USD 400; local contact: Elena Morales, elena.morales@selvaeco.cr, +506-8888-1234.\". This turn was associated with the following task goal: \"Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"UA 476\"\n  },\n  {\n    \"slot_name\": \"Departs JFK 2026 07 12 08\",\n    \"slot_value\": \"00 EDT\"\n  },\n  {\n    \"slot_name\": \"Arrives SJO (San José) 2026 07 12 14\",\n    \"slot_value\": \"35 CST\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Severe peanut allergy (anaphylaxis) — carries EpiPen\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Lacto-ovo vegetarian\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Elena Morales, Guesthouse Coordinator\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"elena.morales@selvaeco.cr\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"+506-8888-1234\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"USD 400\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. If the question needs to refer to the interaction as a whole, it should explicitly use the identifier_label as the main way to refer to this interaction, rather than inventing a new label. Reuse the given identifier_label exactly instead of replacing it with a new phrase. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Mild osteoarthritis in knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench or requires a rest every 20 minutes; needs wheelchair-accessible entrances when available\", \"120000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki bookings unless essential\", \"35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456\", \"00; check-out 11:00\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Confirm low",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "12/06/2016-I06",
+      "turn_role": "probe",
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_018",
+      "task_goal": "Get a practical, personalized plan for future regional train journeys that minimizes missed connections: recommended single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking trains.",
+      "context_can_add": {
+        "Typical routes and stations I use": "User would like to list the regular origin and destination stations (for example: 'Hometown Central -> Riverside Junction') so the assistant can give station-specific transfer advice, typical walking times, and alternative single-leg or faster-route suggestions. This is non-sensitive operational context.",
+        "My upcoming trip departure window": "User could share a specific upcoming travel date and departure window (this is a private schedule detail such as '2026-04-10 08:30-10:00'). That allows the assistant to search for concrete itineraries on that day and propose realistic buffers and alternatives that fit the user's timing constraints.",
+        "Mobility / health detail affecting transfer speed": "User may disclose a mild mobility limitation (sensitive health detail), e.g., 'mild knee osteoarthritis; I use a folding cane and typically need ~12–15 minutes to change platforms/stairs.' This will let the assistant recommend longer platform-transfer buffers, step-free routes, or elevator/escalator-aware connections.",
+        "Home / pickup address or nearest station": "User might provide a home address or nearest stop (sensitive location detail, e.g., '123 University Lane, Hometown, State, 12345') so the assistant can factor first-leg travel time to the station and propose feasible overall itineraries and departure times.",
+        "Accommodation or contact at destination": "User could share a destination contact or accommodation details (sensitive contact info), for example a guesthouse contact and phone, so the assistant can suggest arrival windows that match a planned pickup, late-check-in policies, or propose nearby direct options if tight transfers risk a late arrival."
+      },
+      "sensitive_info": {
+        "departure window": [
+          "2026-04-10 08:30-10:00"
+        ],
+        "medical_condition": [
+          "Mild knee osteoarthritis; uses a folding cane occasionally; needs ~12-15 minutes to change platforms"
+        ],
+        "home_address": [
+          "123 University Lane, Hometown, State, 12345"
+        ],
+        "guesthouse_contact": [
+          "Brookside Guesthouse, Sarah Linton, +1 555-123-4567, sarah.linton@brookside.com"
+        ]
+      },
+      "sensitive_values": [
+        "2026-04-10 08:30-10:00",
+        "Mild knee osteoarthritis; uses a folding cane occasionally; needs ~12-15 minutes to change platforms",
+        "123 University Lane, Hometown, State, 12345",
+        "Brookside Guesthouse, Sarah Linton, +1 555-123-4567, sarah.linton@brookside.com"
+      ],
+      "user_turn": "I need a practical, personalized plan for future regional train journeys that minimizes missed connections: recommend single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking. My upcoming departure window is April 10 between 08:30 and 10:00. Mobility/health detail: I have mild knee osteoarthritis, use a folding cane occasionally, and typically need about 12–15 minutes to change platforms. Home address for first-leg timing: 123 University Lane, Hometown, State, 12345. Destination guesthouse contact (if relevant): Brookside Guesthouse, Sarah Linton, 555-123-4567. Please give me station-specific buffer recommendations, simple alternatives when a connection is tight, and a short checklist I can use at booking time.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Get a practical, personalized plan for future regional train journeys that minimizes missed connections: recommended single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking trains. Background details include Typical routes and stations I use, My upcoming trip departure window, Mobility / health detail affecting transfer speed.",
+        "distractor_seeds": [
+          "Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.",
+          "Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I need a practical, personalized plan for future regional train journeys that minimizes missed connections: recommend single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking. My upcoming departure window is April 10 between 08:30 and 10:00. Mobility/health detail: I have mild knee osteoarthritis, use a folding cane occasionally, and typically need about 12–15 minutes to change platforms. Home address for first-leg timing: 123 University Lane, Hometown, State, 12345. Destination guesthouse contact (if relevant): Brookside Guesthouse, Sarah Linton, 555-123-4567. Please give me station-specific buffer recommendations, simple alternatives when a connection is tight, and a short checklist I can use at booking time.\". This turn was associated with the following task goal: \"Get a practical, personalized plan for future regional train journeys that minimizes missed connections: recommended single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking trains.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. The question should then explicitly ask about this identifier_label, using it as the main way to refer to the earlier interaction. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Get a practical, personalized plan for future regional train journeys that minimizes missed connections: recommended single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking trains. Background details include Typical routes and stations I use, My upcoming trip departure window, Mobility / health detail affecting transfer speed.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually relevant to this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants. Background details include travel dates and arrival, accommodation and checkin, mobility or health constraints.\", \"Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in. Background details include trip itinerary and times, guesthouse details, emergency contact.\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Get a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "2026 04 10 08",
+            "slot_value": "30-10:00"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Mild knee osteoarthritis; uses a folding cane occasionally; needs ~12-15 minutes to change platforms"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "123 University Lane, Hometown, State, 12345"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Brookside Guesthouse, Sarah Linton, +1 555-123-4567, sarah.linton@brookside.com"
+          }
+        ],
+        "distractor_seeds": [
+          "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
+          "00; check-out 11:00",
+          "Mild osteoarthritis in knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench or requires a rest every 20 minutes; needs wheelchair-accessible entrances when available",
+          "120000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki bookings unless essential"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Get a in a long conversation. The user's earlier message was: \"I need a practical, personalized plan for future regional train journeys that minimizes missed connections: recommend single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking. My upcoming departure window is April 10 between 08:30 and 10:00. Mobility/health detail: I have mild knee osteoarthritis, use a folding cane occasionally, and typically need about 12–15 minutes to change platforms. Home address for first-leg timing: 123 University Lane, Hometown, State, 12345. Destination guesthouse contact (if relevant): Brookside Guesthouse, Sarah Linton, 555-123-4567. Please give me station-specific buffer recommendations, simple alternatives when a connection is tight, and a short checklist I can use at booking time.\". This turn was associated with the following task goal: \"Get a practical, personalized plan for future regional train journeys that minimizes missed connections: recommended single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking trains.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"2026 04 10 08\",\n    \"slot_value\": \"30-10:00\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Mild knee osteoarthritis; uses a folding cane occasionally; needs ~12-15 minutes to change platforms\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"123 University Lane, Hometown, State, 12345\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Brookside Guesthouse, Sarah Linton, +1 555-123-4567, sarah.linton@brookside.com\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. If the question needs to refer to the interaction as a whole, it should explicitly use the identifier_label as the main way to refer to this interaction, rather than inventing a new label. Reuse the given identifier_label exactly instead of replacing it with a new phrase. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456\", \"00; check-out 11:00\", \"Mild osteoarthritis in knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench or requires a rest every 20 minutes; needs wheelchair-accessible entrances when available\", \"120000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki bookings unless essential\"]. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Get a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ]
+}

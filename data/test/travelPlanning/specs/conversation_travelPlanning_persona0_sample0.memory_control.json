@@ -1,0 +1,531 @@
+{
+  "source_file": "data/output/travelPlanning/conversation_travelPlanning_persona0_sample0.json",
+  "periods": [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage"
+  ],
+  "initial_interaction_count": 6,
+  "selection_policy": {
+    "key_target_count": 3,
+    "probe_target_count": 3,
+    "prefer_last_exact_sensitive_occurrence": true,
+    "future_conflict_detection": [
+      "exact reuse of later [Sensitive Info] values",
+      "exact reuse of later [Context Can Add] keys",
+      "later event or interaction belonging to the source event's descendant chain",
+      "boolean high-similarity check over later [Task Goal] text"
+    ],
+    "key_selection_priority": [
+      "lower future conflict count",
+      "prefer the last exact sensitive-value occurrence",
+      "earlier history index as a stable tiebreaker"
+    ]
+  },
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "10/12/2015-I04",
+      "11/09/2017-I05",
+      "09/22/2023-I03"
+    ],
+    "all_selected_keys_conflict_free": false,
+    "keys_requiring_revision": [
+      "09/22/2023-I03"
+    ],
+    "key_conflicts": {
+      "09/22/2023-I03": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_003",
+            "matched_context_keys": [
+              "travel_budget"
+            ]
+          }
+        ],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      }
+    },
+    "baseline_conversation_action": "manual_or_future_targeted_revision_needed"
+  },
+  "key_turns": [
+    {
+      "rank": 3,
+      "timestamp": "10/12/2015-I04",
+      "history_index": 19,
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_016",
+      "source_event_date": "10/12/2015",
+      "task_goal": "Kenji seeks assistance in finding cost-effective accommodation options in Paris that allow him to stay close to the main attractions he plans to visit.",
+      "prev_event": "Kenji meticulously created a customized travel itinerary for a weekend trip to Paris, optimizing museum visits and strolls by the Seine.",
+      "context_can_add": {
+        "budget": "User would like to ensure accommodations are within a specific budget to keep the trip affordable.",
+        "departure_dates": "User can provide exact travel dates to receive options that are only available during his stay.",
+        "guesthouse_contact": "User could share details of a previous guesthouse contact to check for availability or discounts.",
+        "travel_companion_info": "User could mention if he is traveling with companions to find accommodation suitable for multiple guests.",
+        "lodging_references": "User might provide reference details or reviews for places he has previously stayed in Paris to find similar accommodation."
+      },
+      "sensitive_info": {
+        "budget": [
+          "$150 per night"
+        ],
+        "departure_dates": [
+          "2023-10-05 to 2023-10-08"
+        ],
+        "guesthouse_contact": [
+          "previous_guesthouse@paris.hostel.co"
+        ]
+      },
+      "sensitive_values": [
+        "$150 per night",
+        "2023-10-05 to 2023-10-08",
+        "previous_guesthouse@paris.hostel.co"
+      ],
+      "conversation_block": {
+        "timestamp": "10/12/2015-I04",
+        "event_text": "Kenji meticulously created a customized travel itinerary for a weekend trip to Paris, optimizing museum visits and strolls by the Seine.",
+        "start_index": 59,
+        "lines": [
+          "Side_Note: [Kenji meticulously created a customized travel itinerary for a weekend trip to Paris, optimizing museum visits and strolls by the Seine.] 10/12/2015-I04",
+          "User: I'm planning a weekend in Paris from October 5 to October 8. My budget is $150 per night, and I may be traveling with companions. I can contact a previous guesthouse at previous_guesthouse@paris.hostel.co to check availability—could you find cost-effective accommodation near the Louvre and the Seine within my budget, and advise whether contacting that guesthouse is worth it?",
+          "Assistant: I can look for options in the 1st, 4th, or 7th arrondissements under $150 per night and compare them to that guesthouse—how many people should I search for so I can filter room types?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 4,
+      "timestamp": "11/09/2017-I05",
+      "history_index": 21,
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_017",
+      "source_event_date": "11/09/2017",
+      "task_goal": "Kenji wants recommendations for his next guided tour on the backpacking trip, considering his interest in learning about constitutional frameworks in each country's history and culture.",
+      "prev_event": "On a backpacking trip through Europe, Kenji participated in several guided tours to gain insights from local experts.",
+      "context_can_add": {
+        "Preferred Countries": "User would like to explore guided tours in France and Germany, as these countries have rich histories and legal systems that interest him.",
+        "Tour Budget": "User would like to ensure the tours fit within a budget range of $100 to $200 per tour for balancing affordability with quality.",
+        "Schedule Window": "User needs to find tours that fit within his travel schedule, particularly during late afternoons when he is free.",
+        "Recent Feedback": "User received positive feedback from a fellow traveler about a specific tour and would like details on that.",
+        "Tour Interests": "User specifically wants an educational tour, ideally focusing on the constitutional and historical development in the region."
+      },
+      "sensitive_info": {
+        "Tour Budget": [
+          "$100 to $200 per tour"
+        ],
+        "Schedule Window": [
+          "late afternoons"
+        ]
+      },
+      "sensitive_values": [
+        "$100 to $200 per tour",
+        "late afternoons"
+      ],
+      "conversation_block": {
+        "timestamp": "11/09/2017-I05",
+        "event_text": "On a backpacking trip through Europe, Kenji participated in several guided tours to gain insights from local experts.",
+        "start_index": 65,
+        "lines": [
+          "Side_Note: [On a backpacking trip through Europe, Kenji participated in several guided tours to gain insights from local experts.] 11/09/2017-I05",
+          "User: I'm planning guided tours in France and Germany focused on constitutional and historical development. My budget is $100–$200 per tour, I prefer late-afternoon time slots, and I want educational content. A fellow traveler recommended one tour—can you suggest specific tours in France and Germany that fit these constraints and explain how to book them?",
+          "Assistant: I can put together a short list of late-afternoon, educator-led tours in key cities like Paris, Berlin, and Frankfurt, filter them to $100–$200, include booking links, and point out options similar to the tour your fellow traveler recommended. Which cities and travel dates should I check for availability?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 2,
+      "timestamp": "09/22/2023-I03",
+      "history_index": 15,
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_013",
+      "source_event_date": "09/22/2023",
+      "task_goal": "Kenji wants help finding a small group travel tour in Europe that emphasizes cultural and historical experiences, ideally allowing opportunities for academic and intellectual growth.",
+      "prev_event": "Kenji avoided traveling solo to avoid loneliness, preferring companionship or organized tours.",
+      "context_can_add": {
+        "preferred_travel_destinations": "Kenji is interested in traveling to Europe, specifically regions known for their rich history and diverse cultural influences.",
+        "academic_interests": "Kenji's interest in constitutional law and how it intersects with social and economic systems globally makes him keen on tours that offer educational components related to history or governance.",
+        "available_travel_dates": "Kenji has a specific window of availability for travel next summer around June and July.",
+        "travel_budget": "Kenji has a budget of $3,000 for this trip.",
+        "health_or_accessibility_needs": "Kenji needs accommodations that can provide assurance for dietary restrictions, such as gluten-free meals."
+      },
+      "sensitive_info": {
+        "available_travel_dates": [
+          "June 15th to July 10th"
+        ],
+        "travel_budget": [
+          "$3,000"
+        ],
+        "health_or_accessibility_needs": [
+          "Gluten-free diet required"
+        ]
+      },
+      "sensitive_values": [
+        "June 15th to July 10th",
+        "$3,000",
+        "Gluten-free diet required"
+      ],
+      "conversation_block": {
+        "timestamp": "09/22/2023-I03",
+        "event_text": "Kenji avoided traveling solo to avoid loneliness, preferring companionship or organized tours.",
+        "start_index": 47,
+        "lines": [
+          "Side_Note: [Kenji avoided traveling solo to avoid loneliness, preferring companionship or organized tours.] 09/22/2023-I03",
+          "User: I'm looking for a small-group travel tour in Europe that emphasizes cultural and historical experiences and offers academic enrichment. I'm available June 15 through July 10 next summer, my budget is $3,000, and I require gluten-free meals. I'm particularly interested in regions with deep legal and constitutional history because my research links constitutional law to social systems—can you find tours or small-group programs that include lectures, museum access, or meetings with local experts and confirm dietary accommodations?",
+          "Assistant: I can shortlist educational small-group tours in Europe—focusing on France, Germany, and nearby countries—that run between June 15 and July 10, fit a $3,000 budget, include lectures or expert-led visits, and can arrange gluten-free meals; would you prefer a multi-country itinerary or a single-country deep dive?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_003",
+            "matched_context_keys": [
+              "travel_budget"
+            ]
+          }
+        ],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 1,
+      "needs_revision": true
+    }
+  ],
+  "protected_probe_turns": [
+    {
+      "rank": 1,
+      "timestamp": "07/12/2019-I02",
+      "history_index": 11,
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_010",
+      "source_event_date": "07/12/2019",
+      "task_goal": "Kenji needs assistance in planning leisurely outdoor activities in New Zealand that match his preferences.",
+      "prev_event": "While in New Zealand, Kenji refrained from adventure sports, preferring more leisurely outdoor activities.",
+      "context_can_add": {
+        "preferred_activities": "User would like to explore scenic walking trails and gentle nature hikes suitable for relaxation and appreciation of natural beauty.",
+        "duration_of_trip": "User would like to share that his stay in New Zealand is from November 5th to November 20th to ensure recommended activities fit within this timeframe.",
+        "travel_budget": "User would like to mention a budget range of $1,000 to ensure activities recommended are financially feasible.",
+        "travel_companion_info": "User would like to mention traveling with a colleague who is interested in photography, enhancing the need for picturesque activity locations.",
+        "health_restrictions": "User would like to disclose mild knee issues to ensure activities recommended do not involve extensive physical exertion."
+      },
+      "sensitive_info": {
+        "duration_of_trip": [
+          "November 5th to November 20th"
+        ],
+        "travel_budget": [
+          "$1,000"
+        ],
+        "health_restrictions": [
+          "mild knee issues"
+        ]
+      },
+      "sensitive_values": [
+        "November 5th to November 20th",
+        "$1,000",
+        "mild knee issues"
+      ],
+      "conversation_block": {
+        "timestamp": "07/12/2019-I02",
+        "event_text": "While in New Zealand, Kenji refrained from adventure sports, preferring more leisurely outdoor activities.",
+        "start_index": 35,
+        "lines": [
+          "Side_Note: [While in New Zealand, Kenji refrained from adventure sports, preferring more leisurely outdoor activities.] 07/12/2019-I02",
+          "User: I'm planning a trip to New Zealand in November with a $1,000 activity budget, traveling with a colleague who loves photography; I want gentle, scenic walks and easy nature hikes for relaxation and photo opportunities, and I have mild knee issues so please avoid long or steep routes—can you suggest day-by-day low-impact hikes, picturesque photo spots, and approximate costs and transport options that fit my budget and mobility needs?",
+          "Assistant: I can put together a relaxed November itinerary of short scenic walks, accessible viewpoints, and photo-friendly spots that work with mild knee issues and your $1,000 activities budget; will you be based on the North or South Island, or in a particular town?"
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "02/01/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_context_keys": [
+              "preferred_activities"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_003",
+            "matched_context_keys": [
+              "travel_budget"
+            ]
+          }
+        ],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 2,
+      "needs_revision": true
+    },
+    {
+      "rank": 0,
+      "timestamp": "05/21/2014-I01",
+      "history_index": 8,
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_008",
+      "source_event_date": "05/21/2014",
+      "task_goal": "Kenji wants assistance in comparing travel insurance options for his family's island getaway, particularly those that cover adventure activities and offer good family packages.",
+      "prev_event": "Kenji spent an afternoon researching exotic destinations for a family holiday, ultimately deciding on an island getaway.",
+      "context_can_add": {
+        "family_member_health_conditions": "User would like to ensure that any pre-existing health conditions of family members are covered by the travel insurance. This is important as it dictates which plans are appropriate.",
+        "budget_for_travel_insurance": "User would like to stay within a specific budget for travel insurance, which will help prioritize certain options over others.",
+        "contact_preference_for_insurance_agents": "User is open to having an insurance agent contact via email or phone to discuss policy details and get personalized advice.",
+        "preferred_activities": "User wishes to include coverage for specific adventure activities planned for the vacation, ensuring all interests are covered.",
+        "travel_itinerary": "User has a pre-planned itinerary for the trip. Sharing this could help tailor policy recommendations to the expected duration and locations."
+      },
+      "sensitive_info": {
+        "family_member_health_conditions": [
+          "asthma"
+        ],
+        "budget_for_travel_insurance": [
+          "$500 max"
+        ],
+        "contact_preference_for_insurance_agents": [
+          "kenji.tanaka@goggle.com"
+        ]
+      },
+      "sensitive_values": [
+        "asthma",
+        "$500 max",
+        "kenji.tanaka@goggle.com"
+      ],
+      "conversation_block": {
+        "timestamp": "05/21/2014-I01",
+        "event_text": "Kenji spent an afternoon researching exotic destinations for a family holiday, ultimately deciding on an island getaway.",
+        "start_index": 26,
+        "lines": [
+          "Side_Note: [Kenji spent an afternoon researching exotic destinations for a family holiday, ultimately deciding on an island getaway.] 05/21/2014-I01",
+          "User: For our family island trip, can you compare travel-insurance options that cover adventure activities and offer strong family benefits? One family member has asthma, so coverage for pre-existing respiratory conditions is essential. My budget is up to $500. An agent can contact me at kenji.tanaka@goggle.com to discuss policy details. We have specific adventure activities planned that must be covered, and I can share our itinerary to tailor recommendations—can you tell me which policies explicitly cover asthma and those activities within my budget?",
+          "Assistant: I can compare policies that include pre-existing respiratory-condition coverage and adventure-activity riders within a $500 budget. Please share your itinerary dates, the exact activities you plan to do, and whether the asthma requires regular medication or has involved recent hospitalizations so I can filter plans precisely."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "06/16/2024-I01",
+            "event_id": "I_WEEK_001",
+            "source_event_id": "E_WEEK_005",
+            "matched_values": [
+              "kenji.tanaka@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/10/2025-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "kenji.tanaka@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "12/17/2026-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_009",
+            "matched_values": [
+              "kenji.tanaka@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_003",
+            "matched_values": [
+              "kenji.tanaka@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "11/30/2028-I03",
+            "event_id": "I_YEAR_003",
+            "source_event_id": "E_YEAR_009",
+            "matched_values": [
+              "kenji.tanaka@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "02/01/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_context_keys": [
+              "preferred_activities"
+            ]
+          }
+        ],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 6,
+      "needs_revision": true
+    },
+    {
+      "rank": 5,
+      "timestamp": "11/18/2020-I06",
+      "history_index": 23,
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_018",
+      "source_event_date": "11/18/2020",
+      "task_goal": "Kenji would like assistance in finding recommendations for safe and reliable transportation options in Cambodia that align with his preference for conventional modes of travel, such as private cars or well-reviewed taxi services.",
+      "prev_event": "Kenji hesitated to try new modes of transportation on a trip in Cambodia, favoring more conventional options.",
+      "context_can_add": {
+        "Current Travel Itinerary": "User would like to ensure that his transportation choices align with his current travel itinerary in Cambodia, ensuring timely arrivals for scheduled activities.",
+        "Contact Information of Accommodation": "User would like the transport options to coordinate with his accommodation, providing them with his hotel or guesthouse contact details for possible pickup arrangements.",
+        "Budget Constraints": "User would appreciate guidance on conventional transportation options that fit within a set budget for travel costs.",
+        "Health Concerns": "User may have concerns about using certain types of transportation due to a condition or preference for safety and comfort, such as needing more space or air conditioning in tropical climates.",
+        "Transitional Schedule": "User is looking to accommodate plans involving a specific itinerary which affects transport needs based on the schedule of events he is attending."
+      },
+      "sensitive_info": {
+        "Contact Information of Accommodation": [
+          "guesthouse contact"
+        ],
+        "Budget Constraints": [
+          "Kenji's budget for transportation"
+        ],
+        "Transitional Schedule": [
+          "departure window"
+        ]
+      },
+      "sensitive_values": [
+        "guesthouse contact",
+        "Kenji's budget for transportation",
+        "departure window"
+      ],
+      "conversation_block": {
+        "timestamp": "11/18/2020-I06",
+        "event_text": "Kenji hesitated to try new modes of transportation on a trip in Cambodia, favoring more conventional options.",
+        "start_index": 71,
+        "lines": [
+          "Side_Note: [Kenji hesitated to try new modes of transportation on a trip in Cambodia, favoring more conventional options.] 11/18/2020-I06",
+          "User: I need safe, conventional transportation options in Cambodia that fit my itinerary and comfort needs. Please coordinate with my guesthouse contact, stay within Kenji's transportation budget, and match my departure window. I prefer private cars or highly rated taxis with air conditioning and extra space—can you recommend specific operators, give approximate costs, and show how to arrange pickups through the guesthouse?",
+          "Assistant: I can recommend reputable private-transfer companies and well-reviewed taxi services with AC and larger vehicles, provide estimated fares, and draft a pickup message your guesthouse can use. To tailor recommendations to your schedule and budget, please tell me your exact departure window, pickup and drop-off locations, and the budget range you'd like me to work within."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "11/02/2024-I02",
+            "event_id": "I_WEEK_002",
+            "source_event_id": "E_WEEK_007",
+            "matched_values": [
+              "departure window"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "02/01/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "departure window"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "12/17/2026-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_009",
+            "matched_values": [
+              "departure window"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/19/2028-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_004",
+            "matched_values": [
+              "departure window"
+            ]
+          }
+        ],
+        "reused_context_can_add": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "02/01/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_context_keys": [
+              "Budget Constraints"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "12/17/2026-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_009",
+            "matched_context_keys": [
+              "Budget Constraints"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/19/2028-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_004",
+            "matched_context_keys": [
+              "Budget Constraints"
+            ]
+          }
+        ],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 7,
+      "needs_revision": true
+    }
+  ],
+  "rejected_turns": []
+}

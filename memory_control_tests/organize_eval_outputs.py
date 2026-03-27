@@ -29,8 +29,8 @@ def copy_exact_baseline(source_dir: Path, dest_dir: Path, suffix: str) -> int:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Organize baseline vs test-world eval outputs into separate data directories.")
     parser.add_argument("--source_dir", default="data/baseline/travelPlanning")
-    parser.add_argument("--baseline_dest", default="data/eval/baseline/travelPlanning")
-    parser.add_argument("--test_dest", default="data/eval/test_worlds/travelPlanning")
+    parser.add_argument("--baseline_dest", default="eval_results/travelPlanning/baseline")
+    parser.add_argument("--test_dest", default="eval_results/travelPlanning")
     args = parser.parse_args()
 
     source_dir = Path(args.source_dir)
@@ -40,15 +40,19 @@ def main() -> None:
     baseline_dest.mkdir(parents=True, exist_ok=True)
     test_dest.mkdir(parents=True, exist_ok=True)
 
-    copy_exact_baseline(source_dir, baseline_dest / "plain", ".recall_eval_gpt-5.4-mini.json")
-    copy_exact_baseline(source_dir, baseline_dest / "mem0_retrieval", ".mem0_retrieval_eval_gpt-5.4-mini.json")
+    copy_exact_baseline(source_dir, baseline_dest / "gpt-5.4-mini", ".recall_eval_gpt-5.4-mini.json")
+    copy_exact_baseline(source_dir, baseline_dest / "gpt-5.4-mini+mem0", ".mem0_retrieval_eval_gpt-5.4-mini.json")
 
     for world in ["no_store", "forget", "no_use"]:
-        copy_matching(f"conversation_*.{world}.recall_eval_gpt-5.4-mini.json", source_dir, test_dest / world / "plain")
+        copy_matching(
+            f"conversation_*.{world}.recall_eval_gpt-5.4-mini.json",
+            source_dir,
+            test_dest / world / "gpt-5.4-mini",
+        )
         copy_matching(
             f"conversation_*.{world}.mem0_retrieval_eval_gpt-5.4-mini.json",
             source_dir,
-            test_dest / world / "mem0_retrieval",
+            test_dest / world / "gpt-5.4-mini+mem0",
         )
 
 
