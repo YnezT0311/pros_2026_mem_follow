@@ -327,6 +327,7 @@ def prompts_for_expanding_conversation_section(topic, data):
         topic_name, user, agent = 'therapy', 'Patient', 'Therapist'
     else:
         topic_name, user, agent = topic, 'User', 'Assistant'
+    agent_lower = agent.lower()
 
     prompt = "Please refine these sentences to sound natural and conversational. I do NOT want new user preferences, new events, or changes to the story logic. " \
              "Rewrite each line to be specific while preserving meaning. " \
