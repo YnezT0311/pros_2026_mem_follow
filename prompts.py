@@ -331,6 +331,8 @@ def prompts_for_expanding_conversation_section(topic, data):
     prompt = "Please refine these sentences to sound natural and conversational. I do NOT want new user preferences, new events, or changes to the story logic. " \
              "Rewrite each line to be specific while preserving meaning. " \
              "Avoid repetition, avoid generic filler, and avoid introducing unrelated topics. " \
+             "If an " + agent + " line ends with a question before offering any real help, rewrite it so the " + agent_lower + " first gives a concrete answer, suggestion, or next step. " \
+             "A brief follow-up question is still allowed when genuinely useful, but it should come only after substantive help rather than replacing it. " \
              "If the last line is a Side_Note for the next event, the previous utterance should transition smoothly. " \
              "Here is the section you should refine. Do NOT modify Side_Note lines.\n\n" + '\n'.join(data['section']) + "\n\n" \
              "Please remove or rephrase any MM/DD/YYYY timestamp mentioned by the " + user + " and " + agent + " in normal utterances. The conversation time is " + data['last_timestamp'] + ". " \

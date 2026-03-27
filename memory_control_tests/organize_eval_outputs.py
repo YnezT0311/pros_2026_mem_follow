@@ -42,6 +42,7 @@ def main() -> None:
 
     copy_exact_baseline(source_dir, baseline_dest / "gpt-5.4-mini", ".recall_eval_gpt-5.4-mini.json")
     copy_exact_baseline(source_dir, baseline_dest / "gpt-5.4-mini+mem0", ".mem0_retrieval_eval_gpt-5.4-mini.json")
+    copy_exact_baseline(source_dir, baseline_dest / "gpt-5.4-mini+A-Mem", ".a_mem_retrieval_eval_gpt-5.4-mini.json")
 
     for world in ["no_store", "forget", "no_use"]:
         copy_matching(
@@ -53,6 +54,11 @@ def main() -> None:
             f"conversation_*.{world}.mem0_retrieval_eval_gpt-5.4-mini.json",
             source_dir,
             test_dest / world / "gpt-5.4-mini+mem0",
+        )
+        copy_matching(
+            f"conversation_*.{world}.a_mem_retrieval_eval_gpt-5.4-mini.json",
+            source_dir,
+            test_dest / world / "gpt-5.4-mini+A-Mem",
         )
 
 

@@ -340,6 +340,7 @@ Within each evaluation world, the current comparison is organized under two back
 
 - `gpt-5.4-mini`
 - `gpt-5.4-mini+mem0`
+- `gpt-5.4-mini+A-Mem`
 
 ## Mem0 Evaluation
 
@@ -382,6 +383,49 @@ conda run -n mem0 python -m memory_control_tests.evaluate_mem0_recall_mcqs \
 ```
 
 The output summary uses the same rate-based reporting as the standard evaluator:
+
+- `remember_correct_rate`
+- `not_remember_rate`
+- `distractor_irrelevant_rate`
+- `other_rate`
+
+## A-Mem Evaluation
+
+The repo now also includes an A-Mem-backed recall evaluator:
+
+- `evaluate_amem_recall_mcqs.py`
+
+This path mirrors the Mem0 retrieval evaluation, but uses the A-Mem memory stack instead of Mem0. The intended setup is to run it from a dedicated `amem` conda environment so the A-Mem dependencies do not interfere with the existing `agent` or `mem0` environments.
+
+The current evaluator:
+
+1. loads the earlier conversation up to the requested `ask_period`
+2. applies the requested world transform (`baseline`, `no_store`, `forget`, or `no_use`)
+3. preloads the resulting context into A-Mem as conversation notes
+4. retrieves relevant notes with `search_agentic(...)` at question time
+5. asks `gpt-5.4-mini` to answer the MCQ using those retrieved memories
+
+To keep benchmark preloading cheap, the current implementation disables A-Mem's evolution-time LLM processing during preload and uses A-Mem only as a retrieval layer for these recall evaluations.
+
+Because A-Mem depends on a local sentence-transformer embedding model, the first setup should cache the embedding model once inside the `amem` environment. In practice, the evaluator is most reliable when run with:
+
+- `HF_HOME=/home/yao/.cache/huggingface`
+- `TRANSFORMERS_OFFLINE=1`
+- `HF_HUB_OFFLINE=1`
+
+after the embedding snapshot has already been downloaded.
+
+The intended command shape is:
+
+```bash
+HF_HOME=/home/yao/.cache/huggingface TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
+conda run -n amem python -m memory_control_tests.evaluate_amem_recall_mcqs \
+  --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
+  --model gpt-5.4-mini \
+  --world baseline
+```
+
+The A-Mem evaluator writes the same summary fields as the standard and Mem0 evaluators:
 
 - `remember_correct_rate`
 - `not_remember_rate`
