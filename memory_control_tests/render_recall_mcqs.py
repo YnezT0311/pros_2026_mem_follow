@@ -1,4 +1,5 @@
 import argparse
+import ast
 import json
 import os
 import random
@@ -71,12 +72,56 @@ def _request_text(client: OpenAI, model: str, prompt: str) -> str:
     return completion.choices[0].message.content.strip()
 
 
-def _parse_json_text(text: str) -> Dict[str, Any]:
+def _extract_json_candidate(text: str) -> str:
     text = text.strip()
     match = re.search(r"```(?:json)?\s*(\{.*\}|\[.*\])\s*```", text, re.DOTALL)
     if match:
-        text = match.group(1).strip()
-    return json.loads(text)
+        return match.group(1).strip()
+
+    object_match = re.search(r"(\{.*\}|\[.*\])", text, re.DOTALL)
+    if object_match:
+        return object_match.group(1).strip()
+    return text
+
+
+def _parse_json_text(text: str) -> Dict[str, Any]:
+    text = _extract_json_candidate(text)
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    repaired = text
+    repaired = re.sub(r",\s*([}\]])", r"\1", repaired)
+    repaired = re.sub(r"(?<!\\)'", '"', repaired)
+    repaired = re.sub(r'(\{|,)\s*([A-Za-z_][A-Za-z0-9_]*)\s*:', r'\1 "\2":', repaired)
+    try:
+        return json.loads(repaired)
+    except json.JSONDecodeError:
+        pass
+
+    try:
+        parsed = ast.literal_eval(text)
+        if isinstance(parsed, (dict, list)):
+            return parsed
+    except Exception:
+        pass
+
+    raise
+
+
+def _request_json(client: OpenAI, model: str, prompt: str) -> Dict[str, Any]:
+    raw = _request_text(client, model, prompt)
+    try:
+        return _parse_json_text(raw)
+    except Exception:
+        repair_prompt = (
+            "Rewrite the following content as valid JSON only. Do not change its meaning. "
+            "Do not add markdown fences or commentary.\n\n"
+            f"{raw}"
+        )
+        repaired = _request_text(client, model, repair_prompt)
+        return _parse_json_text(repaired)
 
 
 WHOLE_SLOT_LEAK_RE = re.compile(
@@ -222,29 +267,23 @@ def _render_one_turn(
     turn: Dict[str, Any],
     pool: List[Dict[str, Any]],
 ) -> Dict[str, Any]:
-    raw_whole = _parse_json_text(
-        _request_text(client, model, turn["whole_recall"]["render_prompt"])
-    )
+    raw_whole = _request_json(client, model, turn["whole_recall"]["render_prompt"])
     if _whole_recall_needs_repair(raw_whole):
-        raw_whole = _parse_json_text(
-            _request_text(client, model, _build_whole_recall_repair_prompt(turn, raw_whole))
-        )
+        raw_whole = _request_json(client, model, _build_whole_recall_repair_prompt(turn, raw_whole))
     rendered_whole = _finalize_whole_render(raw_whole, seed=f"{turn['timestamp']}:whole")
 
     identifier_label = rendered_whole["identifier_label"]
     disambig_prompt = build_disambiguation_check_prompt(turn, pool, identifier_label)
-    disambig = _parse_json_text(_request_text(client, model, disambig_prompt))
+    disambig = _request_json(client, model, disambig_prompt)
 
-    raw_slot = _parse_json_text(
-        _request_text(
-            client,
-            model,
-            _build_slot_recall_render_prompt(
-                turn,
-                identifier_label=identifier_label,
-                distractor_seeds=turn["slot_recall"]["distractor_seeds"],
-            ),
-        )
+    raw_slot = _request_json(
+        client,
+        model,
+        _build_slot_recall_render_prompt(
+            turn,
+            identifier_label=identifier_label,
+            distractor_seeds=turn["slot_recall"]["distractor_seeds"],
+        ),
     )
     rendered_slot = _finalize_slot_render(raw_slot, seed_prefix=f"{turn['timestamp']}:slot")
     for item in rendered_slot.get("items", []):
@@ -274,7 +313,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Render recall-only MCQs from baseline MCQ specs.")
     parser.add_argument(
         "--sidecar",
-        default="data/baseline/travelPlanning/conversation_travelPlanning_persona0_sample0.memory_control.json",
+        default="data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.memory_control.json",
     )
     parser.add_argument("--model", default="gpt-5-mini")
     parser.add_argument("--output", default="")

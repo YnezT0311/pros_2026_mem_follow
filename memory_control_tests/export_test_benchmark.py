@@ -20,7 +20,10 @@ def iter_rendered_files(source_dir: Path) -> List[Path]:
 def export_one(rendered_path: Path, source_root: Path, dest_root: Path) -> None:
     rendered = load_json(rendered_path)
     relative_dir = rendered_path.parent.relative_to(source_root)
+    if relative_dir.name == "specs":
+        relative_dir = relative_dir.parent
     stem = rendered_path.name.replace(".recall_rendered.json", "")
+    qa_stem = stem.replace("conversation_", "")
 
     whole_items = rendered.get("whole_recall_set", [])
     slot_items = rendered.get("slot_recall_set", [])
@@ -46,9 +49,9 @@ def export_one(rendered_path: Path, source_root: Path, dest_root: Path) -> None:
         "items": [],
     }
 
-    dump_json(dest_root / relative_dir / "whole_recall" / f"{stem}.json", whole_payload)
-    dump_json(dest_root / relative_dir / "slot_recall" / f"{stem}.json", slot_payload)
-    dump_json(dest_root / relative_dir / "application" / f"{stem}.json", application_payload)
+    dump_json(dest_root / relative_dir / "whole_recall" / f"whole_recall_qa_{qa_stem}.json", whole_payload)
+    dump_json(dest_root / relative_dir / "slot_recall" / f"slot_recall_qa_{qa_stem}.json", slot_payload)
+    dump_json(dest_root / relative_dir / "application" / f"application_qa_{qa_stem}.json", application_payload)
 
 
 def build_aggregate_files(dest_root: Path) -> None:
@@ -69,7 +72,7 @@ def build_aggregate_files(dest_root: Path) -> None:
             status = ""
             note = ""
 
-            for path in sorted(family_dir.glob("conversation_*.json")):
+            for path in sorted(family_dir.glob("*_qa_*.json")):
                 payload = load_json(path)
                 aggregate_items.extend(payload.get("items", []))
                 source_files.append(str(path))
@@ -109,7 +112,7 @@ def build_aggregate_files(dest_root: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Export rendered recall benchmarks into a separate test/ directory.")
-    parser.add_argument("--source_dir", default="data/baseline")
+    parser.add_argument("--source_dir", default="data/test")
     parser.add_argument("--dest_dir", default="data/test")
     args = parser.parse_args()
 
