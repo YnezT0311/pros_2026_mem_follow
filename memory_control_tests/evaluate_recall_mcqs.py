@@ -68,23 +68,29 @@ def _request_text(client: OpenAI, model: str, messages: List[Dict[str, str]]) ->
 
 
 def _build_eval_prompt(question: str, choices: Dict[str, str]) -> str:
-    available_labels = [label for label in ["A", "B", "C"] if label in choices]
-    if not available_labels:
-        available_labels = list(choices.keys())
-    lines = [
-        "Answer the following multiple-choice question based only on the earlier conversation.",
-        "Choose the single best answer and reply with only A, B, or C.",
-        f"Question: {question}",
-    ]
+    available_labels = list(choices.keys())
+    rendered_options = []
     for label in available_labels:
-        lines.append(f"{label}. {choices[label]}")
-    return "\n".join(lines)
+        lower = label.lower()
+        rendered_options.append(f"({lower}) {choices[label]}")
+    instructions = (
+        "Find the most appropriate model response and give your final answer "
+        f"{', '.join(f'({label.lower()})' for label in available_labels)} after the special token <final_answer>."
+    )
+    return f"Question: {question}\n\n{instructions}\n\n{rendered_options}"
 
 
 def _extract_choice(text: str) -> str:
     text = text.strip().upper()
     match = re.search(r"\b([ABC])\b", text)
     return match.group(1) if match else ""
+
+
+def _build_persona_system_message(conversation: Dict[str, Any]) -> List[Dict[str, str]]:
+    persona = conversation.get("Expanded Persona")
+    if not isinstance(persona, str) or not persona.strip():
+        return []
+    return [{"role": "system", "content": f"Current user persona: {persona.strip()}"}]
 
 
 def _score_item(
@@ -185,7 +191,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate rendered recall MCQs against a baseline conversation.")
     parser.add_argument(
         "--rendered",
-        default="data/baseline/travelPlanning/conversation_travelPlanning_persona0_sample0.recall_rendered.json",
+        default="data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json",
     )
     parser.add_argument("--model", default="gpt-5.4-mini")
     parser.add_argument("--ask_period", default="Conversation Late Stage")
@@ -199,7 +205,9 @@ def main() -> None:
     conversation = json.loads(Path(conversation_path).read_text(encoding="utf-8"))
     sidecar = _load_sidecar(rendered, args.sidecar)
     transformed_conversation = _apply_world_transform(conversation, sidecar, args.world)
-    context_messages = build_context_messages(transformed_conversation, args.ask_period)
+    context_messages = _build_persona_system_message(transformed_conversation) + build_context_messages(
+        transformed_conversation, args.ask_period
+    )
     client = _load_client()
 
     results = {

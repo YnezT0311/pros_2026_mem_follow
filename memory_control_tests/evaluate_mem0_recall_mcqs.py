@@ -69,14 +69,12 @@ def _request_text(client: OpenAI, model: str, messages: List[Dict[str, str]]) ->
 
 def _build_eval_prompt(question: str, choices: Dict[str, str]) -> str:
     labels = list(choices.keys())
-    lines = [
-        "Answer the following multiple-choice question using the retrieved persistent memories when relevant.",
-        f"Choose the single best answer and reply with only one of: {', '.join(labels)}.",
-        f"Question: {question}",
-    ]
-    for label in labels:
-        lines.append(f"{label}. {choices[label]}")
-    return "\n".join(lines)
+    rendered_options = [f"({label.lower()}) {choices[label]}" for label in labels]
+    instructions = (
+        "Find the most appropriate model response and give your final answer "
+        f"{', '.join(f'({label.lower()})' for label in labels)} after the special token <final_answer>."
+    )
+    return f"Question: {question}\n\n{instructions}\n\n{rendered_options}"
 
 
 def _extract_choice(text: str, labels: List[str]) -> str:
@@ -87,6 +85,13 @@ def _extract_choice(text: str, labels: List[str]) -> str:
         if match:
             return match.group(1)
     return ""
+
+
+def _build_persona_system_message(conversation: Dict[str, Any]) -> List[Dict[str, str]]:
+    persona = conversation.get("Expanded Persona")
+    if not isinstance(persona, str) or not persona.strip():
+        return []
+    return [{"role": "system", "content": f"Current user persona: {persona.strip()}"}]
 
 
 def _rate_summary(items: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -187,12 +192,21 @@ def _format_memories(search_result: Dict[str, Any]) -> str:
 
 
 class Mem0RetrievalAgent:
-    def __init__(self, memory: Any, client: OpenAI, model: str, user_id: str, memory_limit: int) -> None:
+    def __init__(
+        self,
+        memory: Any,
+        client: OpenAI,
+        model: str,
+        user_id: str,
+        memory_limit: int,
+        persona_messages: List[Dict[str, str]],
+    ) -> None:
         self.memory = memory
         self.client = client
         self.model = model
         self.user_id = user_id
         self.memory_limit = memory_limit
+        self.persona_messages = persona_messages
 
     def preload(self, context_messages: List[Dict[str, str]]) -> None:
         self.memory.delete_all(user_id=self.user_id)
@@ -200,7 +214,6 @@ class Mem0RetrievalAgent:
             self.memory.add(context_messages, user_id=self.user_id)
 
     def answer_mcq(self, question: str, choices: Dict[str, str]) -> Dict[str, Any]:
-        labels = list(choices.keys())
         search_result = self.memory.search(
             query=question,
             user_id=self.user_id,
@@ -208,15 +221,7 @@ class Mem0RetrievalAgent:
         )
         prompt = _build_eval_prompt(question, choices)
         memories_text = _format_memories(search_result)
-        messages = [
-            {
-                "role": "system",
-                "content": (
-                    "You are a helpful assistant using retrieved long-term memories. "
-                    "Use the retrieved memories when they are relevant, then answer the multiple-choice question. "
-                    f"Reply with only one choice label from: {', '.join(labels)}."
-                ),
-            },
+        messages = self.persona_messages + [
             {
                 "role": "user",
                 "content": f"Retrieved memories:\n{memories_text}\n\n{prompt}",
@@ -230,11 +235,19 @@ class Mem0RetrievalAgent:
 
 
 class Mem0OpenAIAgentsAgent:
-    def __init__(self, memory: Any, model: str, user_id: str, memory_limit: int) -> None:
+    def __init__(
+        self,
+        memory: Any,
+        model: str,
+        user_id: str,
+        memory_limit: int,
+        persona_messages: List[Dict[str, str]],
+    ) -> None:
         self.memory = memory
         self.model = model
         self.user_id = user_id
         self.memory_limit = memory_limit
+        self.persona_messages = persona_messages
 
         try:
             from agents import Agent, Runner, function_tool
@@ -258,9 +271,9 @@ class Mem0OpenAIAgentsAgent:
         self._agent = Agent(
             name="Mem0 Recall Evaluator",
             instructions=(
-                "You are a helpful assistant answering multiple-choice memory questions. "
-                "Use the search_memory tool when it helps. "
-                "After reasoning, reply with only a single choice label."
+                ((self.persona_messages[0]["content"] + "\n\n") if self.persona_messages else "")
+                + "Use the search_memory tool when it helps. "
+                "Answer the multiple-choice question and reply with only a single choice label."
             ),
             tools=[search_memory],
             model=self.model,
@@ -287,10 +300,24 @@ def _build_agent(
     model: str,
     user_id: str,
     memory_limit: int,
+    persona_messages: List[Dict[str, str]],
 ):
     if backend == "openai_agents":
-        return Mem0OpenAIAgentsAgent(memory, model=model, user_id=user_id, memory_limit=memory_limit)
-    return Mem0RetrievalAgent(memory, client=client, model=model, user_id=user_id, memory_limit=memory_limit)
+        return Mem0OpenAIAgentsAgent(
+            memory,
+            model=model,
+            user_id=user_id,
+            memory_limit=memory_limit,
+            persona_messages=persona_messages,
+        )
+    return Mem0RetrievalAgent(
+        memory,
+        client=client,
+        model=model,
+        user_id=user_id,
+        memory_limit=memory_limit,
+        persona_messages=persona_messages,
+    )
 
 
 def _score_item(
@@ -317,7 +344,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate recall MCQs with a mem0-backed agent.")
     parser.add_argument(
         "--rendered",
-        default="data/baseline/travelPlanning/conversation_travelPlanning_persona0_sample0.recall_rendered.json",
+        default="data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json",
     )
     parser.add_argument("--model", default="gpt-5.4-mini")
     parser.add_argument("--backend", choices=["retrieval", "openai_agents"], default="retrieval")
@@ -333,7 +360,8 @@ def main() -> None:
     conversation = json.loads(Path(conversation_path).read_text(encoding="utf-8"))
     sidecar = _load_sidecar(rendered, args.sidecar)
     transformed_conversation = _apply_world_transform(conversation, sidecar, args.world)
-    context_messages = build_context_messages(transformed_conversation, args.ask_period)
+    persona_messages = _build_persona_system_message(transformed_conversation)
+    context_messages = persona_messages + build_context_messages(transformed_conversation, args.ask_period)
 
     client = _load_openai_client()
     runtime_root = Path(".mem0_runtime") / Path(args.rendered).stem
@@ -346,6 +374,7 @@ def main() -> None:
         model=args.model,
         user_id=user_id,
         memory_limit=args.memory_limit,
+        persona_messages=persona_messages,
     )
     agent.preload(context_messages)
 

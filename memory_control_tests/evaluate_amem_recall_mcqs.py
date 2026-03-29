@@ -73,14 +73,12 @@ def _request_text(client: OpenAI, model: str, messages: List[Dict[str, str]]) ->
 
 def _build_eval_prompt(question: str, choices: Dict[str, str]) -> str:
     labels = list(choices.keys())
-    lines = [
-        "Answer the following multiple-choice question using the retrieved persistent memories when relevant.",
-        f"Choose the single best answer and reply with only one of: {', '.join(labels)}.",
-        f"Question: {question}",
-    ]
-    for label in labels:
-        lines.append(f"{label}. {choices[label]}")
-    return "\n".join(lines)
+    rendered_options = [f"({label.lower()}) {choices[label]}" for label in labels]
+    instructions = (
+        "Find the most appropriate model response and give your final answer "
+        f"{', '.join(f'({label.lower()})' for label in labels)} after the special token <final_answer>."
+    )
+    return f"Question: {question}\n\n{instructions}\n\n{rendered_options}"
 
 
 def _extract_choice(text: str, labels: List[str]) -> str:
@@ -91,6 +89,13 @@ def _extract_choice(text: str, labels: List[str]) -> str:
         if match:
             return match.group(1)
     return ""
+
+
+def _build_persona_system_message(conversation: Dict[str, Any]) -> List[Dict[str, str]]:
+    persona = conversation.get("Expanded Persona")
+    if not isinstance(persona, str) or not persona.strip():
+        return []
+    return [{"role": "system", "content": f"Current user persona: {persona.strip()}"}]
 
 
 def _rate_summary(items: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -198,11 +203,19 @@ def _load_amem_system(model: str, embedding_model: str, api_key_file: str = "ope
 
 
 class AMemRetrievalAgent:
-    def __init__(self, memory_system: Any, client: OpenAI, model: str, memory_limit: int) -> None:
+    def __init__(
+        self,
+        memory_system: Any,
+        client: OpenAI,
+        model: str,
+        memory_limit: int,
+        persona_messages: List[Dict[str, str]],
+    ) -> None:
         self.memory_system = memory_system
         self.client = client
         self.model = model
         self.memory_limit = memory_limit
+        self.persona_messages = persona_messages
 
     def preload(self, context_messages: List[Dict[str, str]]) -> None:
         self.memory_system.memories = {}
@@ -229,19 +242,10 @@ class AMemRetrievalAgent:
             )
 
     def answer_mcq(self, question: str, choices: Dict[str, str]) -> Dict[str, Any]:
-        labels = list(choices.keys())
         retrieved = self.memory_system.search_agentic(question, k=self.memory_limit)
         prompt = _build_eval_prompt(question, choices)
         memories_text = _format_amem_memories(retrieved)
-        messages = [
-            {
-                "role": "system",
-                "content": (
-                    "You are a helpful assistant using retrieved persistent memories. "
-                    "Use the retrieved memories when they are relevant, then answer the multiple-choice question. "
-                    f"Reply with only one choice label from: {', '.join(labels)}."
-                ),
-            },
+        messages = self.persona_messages + [
             {
                 "role": "user",
                 "content": f"Retrieved memories:\n{memories_text}\n\n{prompt}",
@@ -278,7 +282,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate recall MCQs with an A-Mem-backed agent.")
     parser.add_argument(
         "--rendered",
-        default="data/baseline/travelPlanning/conversation_travelPlanning_persona0_sample0.recall_rendered.json",
+        default="data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json",
     )
     parser.add_argument("--model", default="gpt-5.4-mini")
     parser.add_argument("--ask_period", default="Conversation Late Stage")
@@ -294,11 +298,18 @@ def main() -> None:
     conversation = json.loads(Path(conversation_path).read_text(encoding="utf-8"))
     sidecar = _load_sidecar(rendered, args.sidecar)
     transformed_conversation = _apply_world_transform(conversation, sidecar, args.world)
-    context_messages = build_context_messages(transformed_conversation, args.ask_period)
+    persona_messages = _build_persona_system_message(transformed_conversation)
+    context_messages = persona_messages + build_context_messages(transformed_conversation, args.ask_period)
 
     client = _load_openai_client()
     memory_system = _load_amem_system(args.model, args.embedding_model)
-    agent = AMemRetrievalAgent(memory_system, client=client, model=args.model, memory_limit=args.memory_limit)
+    agent = AMemRetrievalAgent(
+        memory_system,
+        client=client,
+        model=args.model,
+        memory_limit=args.memory_limit,
+        persona_messages=persona_messages,
+    )
     agent.preload(context_messages)
 
     results = {
