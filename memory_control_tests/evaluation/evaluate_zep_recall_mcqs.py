@@ -8,7 +8,8 @@ from uuid import uuid4
 
 from openai import OpenAI
 
-from ..transforms import apply_forget, apply_no_store, apply_no_use, build_context_messages
+from ..common import build_recall_summary, build_transformed_history_path, period_tag, rewrite_key_references
+from ..transforms import apply_no_store, apply_staged_forget, apply_no_use, build_context_messages
 
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
@@ -166,40 +167,21 @@ def _build_persona_system_message(conversation: Dict[str, Any]) -> List[Dict[str
 
 
 def _ask_period_tag(ask_period: str) -> str:
-    tag = (ask_period or "").replace("Conversation ", "").replace(" Stage", "")
-    return tag.strip().lower().replace(" ", "_") or "late"
+    return period_tag(ask_period)
+
+
+def _build_label_map(rendered: Dict[str, Any]) -> Dict[str, str]:
+    label_map: Dict[str, str] = {}
+    for item in rendered.get("whole_recall_set", []):
+        timestamp = str(item.get("timestamp", "")).strip()
+        label = str(item.get("identifier_label", "")).strip()
+        if timestamp and label:
+            label_map[timestamp] = label
+    return label_map
 
 
 def _is_valid_mcq(choices: Dict[str, str], choice_to_answer_type: Dict[str, str]) -> bool:
     return bool(choices) and bool(choice_to_answer_type)
-
-
-def _rate_summary(items: List[Dict[str, Any]]) -> Dict[str, Any]:
-    total = len(items)
-    if total == 0:
-        return {
-            "num_questions": 0,
-            "remember_correct_rate": 0.0,
-            "not_remember_rate": 0.0,
-            "distractor_irrelevant_rate": 0.0,
-            "other_rate": 0.0,
-        }
-
-    def _rate(answer_type: str) -> float:
-        return sum(1 for item in items if item.get("predicted_answer_type") == answer_type) / total
-
-    other_rate = sum(
-        1
-        for item in items
-        if item.get("predicted_answer_type") not in {"remember_correct", "not_remember", "distractor_irrelevant"}
-    ) / total
-    return {
-        "num_questions": total,
-        "remember_correct_rate": _rate("remember_correct"),
-        "not_remember_rate": _rate("not_remember"),
-        "distractor_irrelevant_rate": _rate("distractor_irrelevant"),
-        "other_rate": other_rate,
-    }
 
 
 def _load_sidecar(rendered: Dict[str, Any], explicit_sidecar: str) -> Dict[str, Any]:
@@ -212,7 +194,14 @@ def _load_sidecar(rendered: Dict[str, Any], explicit_sidecar: str) -> Dict[str, 
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _apply_world_transform(conversation: Dict[str, Any], sidecar: Dict[str, Any], world: str) -> Dict[str, Any]:
+def _apply_world_transform(
+    conversation: Dict[str, Any],
+    sidecar: Dict[str, Any],
+    world: str,
+    target_references: List[str],
+    no_use_restrict_period: str,
+    no_use_release_period: str,
+) -> Dict[str, Any]:
     if world == "baseline":
         return conversation
 
@@ -230,13 +219,16 @@ def _apply_world_transform(conversation: Dict[str, Any], sidecar: Dict[str, Any]
         return transformed
 
     if world == "forget":
-        return apply_forget(transformed, instruction_period="Conversation Early Stage")
+        return apply_staged_forget(
+            transformed,
+            target_references=target_references,
+        )
 
     if world == "no_use":
         return apply_no_use(
             transformed,
-            restrict_period="Conversation Early Stage",
-            release_period=None,
+            restrict_period=no_use_restrict_period,
+            release_period=(no_use_release_period or None),
         )
 
     raise ValueError(f"Unsupported world: {world}")
@@ -384,13 +376,40 @@ def main() -> None:
     parser.add_argument("--api_key_file", default="openrouter_key.txt")
     parser.add_argument("--zep_api_key_file", default="zep_api_key.txt")
     parser.add_argument("--zep_api_url_file", default="zep_api_url.txt")
+    parser.add_argument("--no_use_restrict_period", default="Conversation Early Stage")
+    parser.add_argument("--no_use_release_period", default="")
     args = parser.parse_args()
 
     rendered = json.loads(Path(args.rendered).read_text(encoding="utf-8"))
     conversation_path = rendered["source_conversation"]
     conversation = json.loads(Path(conversation_path).read_text(encoding="utf-8"))
     sidecar = _load_sidecar(rendered, args.sidecar)
-    transformed_conversation = _apply_world_transform(conversation, sidecar, args.world)
+    label_map = _build_label_map(rendered)
+    rewrite_client = _load_openai_client(args.api_key_file)
+    transformed_history_path = build_transformed_history_path(
+        args.rendered,
+        args.world,
+        release_period=args.no_use_release_period or None,
+        restrict_period=args.no_use_restrict_period,
+    )
+    if transformed_history_path.exists():
+        transformed_conversation = json.loads(transformed_history_path.read_text(encoding="utf-8"))
+    else:
+        target_references = rewrite_key_references(
+            lambda model, prompt: _request_text(rewrite_client, model, [{"role": "user", "content": prompt}]),
+            args.model,
+            sidecar.get("key_turns", [])[:3],
+            label_map=label_map,
+        )
+        transformed_conversation = _apply_world_transform(
+            conversation,
+            sidecar,
+            args.world,
+            target_references,
+            args.no_use_restrict_period,
+            args.no_use_release_period,
+        )
+        transformed_history_path.write_text(json.dumps(transformed_conversation, ensure_ascii=False, indent=2), encoding="utf-8")
     persona_messages = _build_persona_system_message(transformed_conversation)
     context_messages = build_context_messages(transformed_conversation, args.ask_period)
 
@@ -414,6 +433,8 @@ def main() -> None:
         "backend": "zep_retrieval",
         "world": args.world,
         "ask_period": args.ask_period,
+        "no_use_restrict_period": args.no_use_restrict_period,
+        "no_use_release_period": args.no_use_release_period,
         "whole_recall_results": [],
         "slot_recall_results": [],
     }
@@ -470,25 +491,25 @@ def main() -> None:
     finally:
         agent.close()
 
-    results["summary"] = {
-        "whole_recall": _rate_summary(results["whole_recall_results"]),
-        "slot_recall": _rate_summary(results["slot_recall_results"]),
-        "key_turns": _rate_summary(
-            [item for item in results["whole_recall_results"] if item.get("turn_role") == "key"]
-            + [item for item in results["slot_recall_results"] if item.get("turn_role") == "key"]
-        ),
-        "probe_turns": _rate_summary(
-            [item for item in results["whole_recall_results"] if item.get("turn_role") == "probe"]
-            + [item for item in results["slot_recall_results"] if item.get("turn_role") == "probe"]
-        ),
-    }
+    results["summary"] = build_recall_summary(
+        args.world,
+        results["whole_recall_results"],
+        results["slot_recall_results"],
+    )
 
-    suffix = f".{args.world}.zep_retrieval_eval_{args.model}.json"
-    if args.ask_period != "Conversation Late Stage":
-        suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.zep_retrieval_eval_{args.model}.json"
+    if args.world == "no_use":
+        suffix = f".{args.world}.restrict_{_ask_period_tag(args.no_use_restrict_period)}"
+        if args.no_use_release_period:
+            suffix += f".release_{_ask_period_tag(args.no_use_release_period)}"
+        suffix += f".test_{_ask_period_tag(args.ask_period)}.zep_retrieval_eval_{args.model}.json"
+    else:
+        suffix = f".{args.world}.zep_retrieval_eval_{args.model}.json"
+        if args.ask_period != "Conversation Late Stage":
+            suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.zep_retrieval_eval_{args.model}.json"
     output_path = args.output or args.rendered.replace(".recall_rendered.json", suffix)
     output_file = Path(output_path)
     output_file.parent.mkdir(parents=True, exist_ok=True)
+    results["transformed_history_path"] = str(transformed_history_path)
     output_file.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     print(output_path)
 

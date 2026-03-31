@@ -1,10 +1,18 @@
 import copy
 import json
 import random
+import re
 from pathlib import Path
 from typing import Dict, List, Optional
 
 from .common import PERIODS, parse_side_note
+
+
+TARGET_INSTRUCTION_PERIODS = [
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage",
+]
 
 
 TEMPLATES = json.loads(
@@ -49,6 +57,71 @@ def _pick(pool: List[str], template_index: Optional[int]) -> str:
     if template_index is None:
         return random.choice(pool)
     return pool[template_index % len(pool)]
+
+
+def _fill_template(text: str, *, target_reference: str) -> str:
+    return text.format(target_reference=target_reference).strip()
+
+
+def _condense_task_goal(task_goal: str) -> str:
+    goal = " ".join(str(task_goal or "").strip().split())
+    if not goal:
+        return "that earlier request"
+    goal = goal.rstrip(".")
+    patterns = [
+        r"^Kenji seeks assistance in\s+",
+        r"^Kenji wants assistance in\s+",
+        r"^Kenji wants help with\s+",
+        r"^Kenji asks for help with\s+",
+        r"^Kenji needs help with\s+",
+        r"^Kenji is looking for help with\s+",
+        r"^Kenji requests help with\s+",
+    ]
+    for pattern in patterns:
+        goal = re.sub(pattern, "", goal, flags=re.IGNORECASE)
+    goal = re.sub(r"^Kenji\s+", "", goal, flags=re.IGNORECASE).strip()
+    if not goal:
+        return "that earlier request"
+    goal = goal[0].lower() + goal[1:] if len(goal) > 1 else goal.lower()
+    return goal
+
+
+def _join_references(refs: List[str]) -> str:
+    refs = [ref for ref in refs if ref]
+    if not refs:
+        return "that earlier request"
+    if len(refs) == 1:
+        return refs[0]
+    if len(refs) == 2:
+        return f"{refs[0]} and {refs[1]}"
+    return f"{', '.join(refs[:-1])}, and {refs[-1]}"
+
+
+def _rephrase_label_reference(label: str) -> str:
+    label = " ".join(str(label or "").strip().split())
+    if not label:
+        return ""
+    label = label[0].lower() + label[1:] if len(label) > 1 else label.lower()
+    return f"my earlier request about {label}"
+
+
+def build_key_reference(turns: List[Dict], label_map: Optional[Dict[str, str]] = None) -> str:
+    condensed = []
+    for turn in turns or []:
+        timestamp = str(turn.get("timestamp", "")).strip()
+        phrase = ""
+        if label_map and timestamp:
+            phrase = _rephrase_label_reference(str(label_map.get(timestamp, "")).strip())
+        if not phrase:
+            phrase = _condense_task_goal(turn.get("task_goal", ""))
+        if phrase and phrase not in condensed:
+            condensed.append(phrase)
+    if not condensed:
+        return "that earlier request"
+    if len(condensed) == 1:
+        return condensed[0]
+    sample = condensed[:3]
+    return _join_references(sample)
 
 def apply_no_store(
     data: Dict,
@@ -104,11 +177,14 @@ def append_instruction_turn(
 def apply_forget(
     data: Dict,
     instruction_period: str = "Conversation Early Stage",
+    target_reference: str = "that earlier request",
     template_index: Optional[int] = None,
 ) -> Dict:
     group = TEMPLATES.get("forget", {})
-    user_line = _pick(group.get("user", []), template_index)
-    assistant_line = _pick(group.get("assistant", []), template_index)
+    user_line = _fill_template(_pick(group.get("user", []), template_index), target_reference=target_reference)
+    assistant_line = _fill_template(
+        _pick(group.get("assistant", []), template_index), target_reference=target_reference
+    )
     return append_instruction_turn(data, instruction_period, user_line, assistant_line)
 
 
@@ -131,6 +207,41 @@ def apply_no_use(
             release_period,
             _pick(group.get("release_user", []), template_index),
             _pick(group.get("release_assistant", []), template_index),
+        )
+    return out
+
+
+def apply_staged_forget(
+    data: Dict,
+    target_references: List[str],
+    instruction_periods: Optional[List[str]] = None,
+    template_index: Optional[int] = None,
+) -> Dict:
+    periods = instruction_periods or TARGET_INSTRUCTION_PERIODS
+    out = copy.deepcopy(data)
+    for period, target_reference in zip(periods, target_references):
+        out = apply_forget(
+            out,
+            instruction_period=period,
+            target_reference=target_reference,
+            template_index=template_index,
+        )
+    return out
+
+
+def apply_staged_no_use(
+    data: Dict,
+    restrict_periods: Optional[List[str]] = None,
+    template_index: Optional[int] = None,
+) -> Dict:
+    periods = restrict_periods or TARGET_INSTRUCTION_PERIODS
+    out = copy.deepcopy(data)
+    for period in periods:
+        out = apply_no_use(
+            out,
+            restrict_period=period,
+            release_period=None,
+            template_index=template_index,
         )
     return out
 
