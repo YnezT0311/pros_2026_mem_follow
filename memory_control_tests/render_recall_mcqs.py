@@ -149,13 +149,14 @@ WHOLE_SLOT_LEAK_RE = re.compile(
     r"\b(budget|date|dates|email|contact|nightly|schedule|arrival|departure|price|cost)\b",
     re.IGNORECASE,
 )
+REQUIRED_ANSWER_TYPES = {"remember_correct", "distractor_irrelevant", "not_remember"}
 
 
 def _whole_recall_needs_repair(rendered_whole: Dict[str, Any]) -> bool:
     question = str(rendered_whole.get("question", ""))
     normalized_answers = _normalize_answer_list(rendered_whole.get("answers", []))
     answer_types = {answer.get("answer_type", "") for answer in normalized_answers}
-    missing_core_types = {"remember_correct", "distractor_irrelevant", "not_remember"} - answer_types
+    missing_core_types = REQUIRED_ANSWER_TYPES - answer_types
     return bool(WHOLE_SLOT_LEAK_RE.search(question)) or len(normalized_answers) < 3 or bool(missing_core_types)
 
 
@@ -250,10 +251,20 @@ def _normalize_answer_list(answers: Any) -> List[Dict[str, str]]:
     return normalized
 
 
+def _validate_answer_bank(normalized_answers: List[Dict[str, str]], *, qa_family: str) -> None:
+    if len(normalized_answers) != 3:
+        raise ValueError(f"{qa_family} item must contain exactly three answer candidates.")
+    answer_types = [answer.get("answer_type", "") for answer in normalized_answers]
+    missing = REQUIRED_ANSWER_TYPES - set(answer_types)
+    if missing:
+        raise ValueError(f"{qa_family} item is missing required answer types: {sorted(missing)}")
+    if len(set(answer_types)) != 3:
+        raise ValueError(f"{qa_family} item contains duplicated answer types: {answer_types}")
+
+
 def _finalize_whole_render(rendered_whole: Dict[str, Any], seed: str) -> Dict[str, Any]:
     normalized_answers = _normalize_answer_list(rendered_whole.get("answers", []))
-    if len(normalized_answers) < 3:
-        raise ValueError("Whole-recall item is missing one or more answer candidates.")
+    _validate_answer_bank(normalized_answers, qa_family="whole_recall")
     shuffled = _shuffle_answer_bank(normalized_answers, seed)
     return {
         "identifier_label": rendered_whole["identifier_label"],
@@ -296,6 +307,7 @@ def _finalize_slot_render(rendered_slot: Dict[str, Any], seed_prefix: str) -> Di
     finalized_items = []
     for idx, item in enumerate(rendered_slot.get("items", [])):
         normalized_answers = _normalize_answer_list(item.get("answers", []))
+        _validate_answer_bank(normalized_answers, qa_family="slot_recall")
         shuffled = _shuffle_answer_bank(normalized_answers, f"{seed_prefix}:{idx}")
         finalized_items.append(
             {
@@ -315,6 +327,26 @@ def _finalize_slot_render(rendered_slot: Dict[str, Any], seed_prefix: str) -> Di
             }
         )
     return {"items": finalized_items}
+
+
+def _validate_rendered_output(rendered: Dict[str, Any]) -> None:
+    for item in rendered.get("whole_recall_set", []):
+        payload = item.get("rendered", {})
+        if not payload.get("choices") or not payload.get("choice_to_answer_type") or not payload.get("remember_correct_choice"):
+            raise ValueError(f"Invalid whole-recall MCQ for timestamp {item.get('timestamp')}")
+        if set(payload.get("choice_to_answer_type", {}).values()) != REQUIRED_ANSWER_TYPES:
+            raise ValueError(f"Incomplete whole-recall answer typing for timestamp {item.get('timestamp')}")
+
+    for item in rendered.get("slot_recall_set", []):
+        for slot_item in item.get("rendered", {}).get("items", []):
+            if not slot_item.get("choices") or not slot_item.get("choice_to_answer_type") or not slot_item.get("remember_correct_choice"):
+                raise ValueError(
+                    f"Invalid slot-recall MCQ for timestamp {item.get('timestamp')} key {slot_item.get('sensitive_key')}"
+                )
+            if set(slot_item.get("choice_to_answer_type", {}).values()) != REQUIRED_ANSWER_TYPES:
+                raise ValueError(
+                    f"Incomplete slot-recall answer typing for timestamp {item.get('timestamp')} key {slot_item.get('sensitive_key')}"
+                )
 
 
 def _render_one_turn(
@@ -414,6 +446,7 @@ def main() -> None:
                 }
             )
 
+    _validate_rendered_output(rendered)
     Path(output_path).write_text(json.dumps(rendered, ensure_ascii=False, indent=2), encoding="utf-8")
     print(output_path)
 

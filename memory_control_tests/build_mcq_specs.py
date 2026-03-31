@@ -23,8 +23,8 @@ def build_one(sidecar_path: Path, source_root: Path, dest_root: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build MCQ spec bundles from baseline memory-control sidecars.")
-    parser.add_argument("--source_dir", default="data/baseline")
-    parser.add_argument("--dest_dir", default="data/baseline")
+    parser.add_argument("--source_dir", default="data/test")
+    parser.add_argument("--dest_dir", default="data/test")
     args = parser.parse_args()
 
     source_root = Path(args.source_dir)
