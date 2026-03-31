@@ -162,6 +162,7 @@ Please review the question and its three answer choices for the following issues
 5. The answer choices are mismatched in length, sentence form, or specificity.
 
 6. Some choices are raw values or field fragments rather than natural assistant responses.
+   This is especially a problem when dates, budgets, emails, phone numbers, or other short values appear as bare strings while the not-remember option is a full sentence.
 
 7. The correct answer is too obviously right even without context because the distractors are too weak.
 
@@ -179,6 +180,7 @@ If possible, provide a fully revised version of:
 The revised answers should:
 - all be natural responses
 - all be similar in length and sentence form
+- avoid bare values or field fragments even for dates, budgets, emails, phone numbers, or other short slot values
 - keep the distractor in the same topical neighborhood as the correct answer
 - make it harder to distinguish the correct answer without the conversation context
 
