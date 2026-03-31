@@ -3,7 +3,7 @@ import json
 import os
 import re
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 from openai import OpenAI
 
@@ -22,7 +22,7 @@ def _resolve_model_name(model: str) -> str:
     return MODEL_ALIASES.get(model, model)
 
 
-def _load_api_key(api_key_file: str = "openrouter_key.txt") -> str:
+def _load_openai_credentials(api_key_file: str = "openrouter_key.txt") -> tuple[str, str]:
     api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
@@ -34,26 +34,23 @@ def _load_api_key(api_key_file: str = "openrouter_key.txt") -> str:
         api_key = legacy_key
     if not api_key:
         raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
-    return api_key
-
-
-def _load_base_url() -> str:
-    return os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
-
-
-def _ensure_openrouter_env(api_key_file: str = "openrouter_key.txt") -> None:
-    os.environ["OPENAI_API_KEY"] = _load_api_key(api_key_file)
-    os.environ["OPENAI_BASE_URL"] = _load_base_url()
+    base_url = os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
+    return api_key, base_url
 
 
 def _load_openai_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
-    api_key = _load_api_key(api_key_file)
-    base_url = _load_base_url()
+    api_key, base_url = _load_openai_credentials(api_key_file)
     return OpenAI(
         api_key=api_key,
         base_url=base_url,
         default_headers={"X-OpenRouter-Title": OPENROUTER_TITLE},
     )
+
+
+def _ensure_openai_env(api_key_file: str = "openrouter_key.txt") -> None:
+    api_key, base_url = _load_openai_credentials(api_key_file)
+    os.environ["OPENAI_API_KEY"] = api_key
+    os.environ["OPENAI_BASE_URL"] = base_url
 
 
 def _extract_text(resp: Any) -> str:
@@ -205,109 +202,110 @@ def _apply_world_transform(conversation: Dict[str, Any], sidecar: Dict[str, Any]
     raise ValueError(f"Unsupported world: {world}")
 
 
-def _format_amem_memories(results: List[Dict[str, Any]]) -> str:
-    if not results:
+def _load_langmem_modules():
+    _ensure_openai_env()
+    try:
+        from langmem import create_manage_memory_tool, create_memory_searcher, create_search_memory_tool
+        from langgraph.store.memory import InMemoryStore
+    except ImportError as exc:
+        raise ImportError(
+            "LangMem is not installed in the current environment. Use the langmem311 environment to run this evaluator."
+        ) from exc
+    return create_manage_memory_tool, create_memory_searcher, create_search_memory_tool, InMemoryStore
+
+
+def _format_langmem_hits(hits: List[Any]) -> str:
+    if not hits:
         return "No relevant memories were retrieved."
-    lines = []
-    for idx, item in enumerate(results, start=1):
-        content = item.get("content", "")
-        context = item.get("context", "")
-        tags = item.get("tags", [])
-        score = item.get("score")
-        score_str = f" (score={score:.4f})" if isinstance(score, (int, float)) else ""
-        lines.append(f"{idx}. {content}{score_str} | context={context} | tags={tags}")
+
+    lines: List[str] = []
+    for idx, item in enumerate(hits, start=1):
+        value = getattr(item, "value", {}) or {}
+        content = value.get("content", "") if isinstance(value, dict) else str(value)
+        score = getattr(item, "score", None)
+        key = getattr(item, "key", "")
+        if isinstance(score, (float, int)):
+            lines.append(f"{idx}. {content} (score={score:.4f}, key={key})")
+        else:
+            lines.append(f"{idx}. {content} (key={key})")
     return "\n".join(lines)
 
 
-def _load_amem_system(model: str, embedding_model: str, api_key_file: str = "openrouter_key.txt"):
-    try:
-        from agentic_memory.memory_system import AgenticMemorySystem
-        from agentic_memory.llm_controller import OpenAIController
-    except ImportError as exc:
-        raise ImportError(
-            "A-Mem is not installed in the current environment. Install the agiresearch/A-mem package first."
-        ) from exc
-
-    _patch_amem_openai_controller(OpenAIController)
-    _ensure_openrouter_env(api_key_file)
-    api_key = _load_api_key(api_key_file)
-    memory_system = AgenticMemorySystem(
-        model_name=embedding_model,
-        llm_backend="openai",
-        llm_model=_resolve_model_name(model),
-        api_key=api_key,
-    )
-    return memory_system
+def _dump_langmem_item(item: Any) -> Dict[str, Any]:
+    if hasattr(item, "model_dump"):
+        return item.model_dump()
+    if hasattr(item, "dict"):
+        return item.dict()
+    data = getattr(item, "__dict__", {})
+    return data if isinstance(data, dict) else {"value": str(item)}
 
 
-def _patch_amem_openai_controller(controller_cls: Any) -> None:
-    if getattr(controller_cls, "_gpt54mini_patch_applied", False):
-        return
-
-    def _patched_get_completion(self, prompt: str, response_format: dict, temperature: float = 0.7) -> str:
-        request_kwargs = {
-            "model": self.model,
-            "messages": [
-                {"role": "system", "content": "You must respond with a JSON object."},
-                {"role": "user", "content": prompt},
-            ],
-            "response_format": response_format,
-            "temperature": temperature,
-        }
-        if "gpt-5" in str(self.model):
-            request_kwargs["max_completion_tokens"] = 1000
-        else:
-            request_kwargs["max_tokens"] = 1000
-        response = self.client.chat.completions.create(**request_kwargs)
-        return response.choices[0].message.content
-
-    controller_cls.get_completion = _patched_get_completion
-    controller_cls._gpt54mini_patch_applied = True
+def _safe_namespace_token(value: str) -> str:
+    sanitized = re.sub(r"[^A-Za-z0-9_-]+", "_", value).strip("_")
+    return sanitized or "user"
 
 
-class AMemRetrievalAgent:
+class LangMemRetrievalAgent:
     def __init__(
         self,
-        memory_system: Any,
         client: OpenAI,
         model: str,
+        user_id: str,
         memory_limit: int,
         persona_messages: List[Dict[str, str]],
+        embedding_model: str,
     ) -> None:
-        self.memory_system = memory_system
+        create_manage_memory_tool, create_memory_searcher, create_search_memory_tool, InMemoryStore = _load_langmem_modules()
         self.client = client
         self.model = model
+        self.user_id = user_id
         self.memory_limit = memory_limit
         self.persona_messages = persona_messages
+        self.namespace: Tuple[str, ...] = ("memories", _safe_namespace_token(user_id))
+        self.store = InMemoryStore(
+            index={
+                "dims": 1536,
+                "embed": f"openai:{embedding_model}",
+                "fields": ["content"],
+            }
+        )
+        self.search_tool = create_search_memory_tool(
+            namespace=self.namespace,
+            store=self.store,
+            response_format="content",
+        )
+        self.manage_tool = create_manage_memory_tool(
+            namespace=self.namespace,
+            store=self.store,
+        )
+        self.searcher = create_memory_searcher(
+            f"openai:{_resolve_model_name(model)}",
+            namespace=self.namespace,
+        )
 
     def preload(self, context_messages: List[Dict[str, str]]) -> None:
-        self.memory_system.memories = {}
-        try:
-            self.memory_system.retriever.client.reset()
-            self.memory_system.retriever = type(self.memory_system.retriever)(
-                collection_name="memories",
-                model_name=self.memory_system.model_name,
-            )
-        except Exception:
-            pass
-
         for idx, msg in enumerate(context_messages):
             role = msg.get("role", "user")
             content = msg.get("content", "").strip()
             if not content:
                 continue
-            note_content = f"{role}: {content}"
-            self.memory_system.add_note(
-                content=note_content,
-                category="conversation",
-                tags=[role],
-                time=f"2025010100{idx:02d}",
+            self.manage_tool.invoke(
+                {
+                    "content": f"{role}: {content}",
+                    "action": "create",
+                }
             )
 
     def answer_mcq(self, question: str, choices: Dict[str, str]) -> Dict[str, Any]:
-        retrieved = self.memory_system.search_agentic(question, k=self.memory_limit)
         prompt = _build_eval_prompt(question, choices)
-        memories_text = _format_amem_memories(retrieved)
+        tool_text = self.search_tool.invoke({"query": question, "limit": self.memory_limit})
+        try:
+            hits = self.searcher.invoke(
+                {"messages": [{"role": "user", "content": question}]}
+            )
+        except Exception:
+            hits = self.store.search(self.namespace, query=question, limit=self.memory_limit)
+        memories_text = tool_text if isinstance(tool_text, str) and tool_text.strip() else _format_langmem_hits(hits)
         messages = self.persona_messages + [
             {
                 "role": "user",
@@ -317,12 +315,12 @@ class AMemRetrievalAgent:
         response = _request_text(self.client, self.model, messages)
         return {
             "model_response": response,
-            "retrieved_memories": retrieved,
+            "retrieved_memories": [_dump_langmem_item(item) for item in hits],
         }
 
 
 def _score_item(
-    agent: Any,
+    agent: LangMemRetrievalAgent,
     question: str,
     choices: Dict[str, str],
     choice_to_answer_type: Dict[str, str],
@@ -342,7 +340,7 @@ def _score_item(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Evaluate recall MCQs with an A-Mem-backed agent.")
+    parser = argparse.ArgumentParser(description="Evaluate recall MCQs with a LangMem-backed retrieval agent.")
     parser.add_argument(
         "--rendered",
         default="data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json",
@@ -352,7 +350,7 @@ def main() -> None:
     parser.add_argument("--world", choices=["baseline", "no_store", "forget", "no_use"], default="baseline")
     parser.add_argument("--sidecar", default="")
     parser.add_argument("--memory_limit", type=int, default=5)
-    parser.add_argument("--embedding_model", default="all-MiniLM-L6-v2")
+    parser.add_argument("--embedding_model", default="text-embedding-3-small")
     parser.add_argument("--output", default="")
     args = parser.parse_args()
 
@@ -365,13 +363,14 @@ def main() -> None:
     context_messages = persona_messages + build_context_messages(transformed_conversation, args.ask_period)
 
     client = _load_openai_client()
-    memory_system = _load_amem_system(args.model, args.embedding_model)
-    agent = AMemRetrievalAgent(
-        memory_system,
+    user_id = Path(args.rendered).stem
+    agent = LangMemRetrievalAgent(
         client=client,
         model=args.model,
+        user_id=user_id,
         memory_limit=args.memory_limit,
         persona_messages=persona_messages,
+        embedding_model=args.embedding_model,
     )
     agent.preload(context_messages)
 
@@ -380,10 +379,11 @@ def main() -> None:
         "source_conversation": conversation_path,
         "source_sidecar": rendered.get("source_sidecar", args.sidecar),
         "model": args.model,
-        "backend": "a_mem_retrieval",
+        "backend": "langmem_retrieval",
         "world": args.world,
         "ask_period": args.ask_period,
         "memory_limit": args.memory_limit,
+        "embedding_model": args.embedding_model,
         "whole_recall_results": [],
         "slot_recall_results": [],
     }
@@ -448,9 +448,9 @@ def main() -> None:
         ),
     }
 
-    suffix = f".{args.world}.a_mem_retrieval_eval_{args.model}.json"
+    suffix = f".{args.world}.langmem_retrieval_eval_{args.model}.json"
     if args.ask_period != "Conversation Late Stage":
-        suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.a_mem_retrieval_eval_{args.model}.json"
+        suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.langmem_retrieval_eval_{args.model}.json"
     output_path = args.output or args.rendered.replace(".recall_rendered.json", suffix)
     output_file = Path(output_path)
     output_file.parent.mkdir(parents=True, exist_ok=True)

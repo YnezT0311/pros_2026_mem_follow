@@ -16,16 +16,36 @@ from .mcq_specs import (
 )
 
 
-def _load_client(api_key_file: str = "openai_key.txt") -> OpenAI:
-    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_TITLE = "MemoryCtrl"
+MODEL_ALIASES = {
+    "gpt-5.4-mini": "openai/gpt-5.4-mini",
+    "gpt-5-mini": "openai/gpt-5-mini",
+}
+
+
+def _resolve_model_name(model: str) -> str:
+    return MODEL_ALIASES.get(model, model)
+
+
+def _load_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
+    api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
     if not api_key:
-        raise FileNotFoundError("No API key found. Set OPENAI_API_KEY or provide openai_key.txt.")
-    base_url = os.getenv("OPENAI_BASE_URL", "").strip()
-    if base_url:
-        return OpenAI(api_key=api_key, base_url=base_url)
-    return OpenAI(api_key=api_key)
+        legacy_key = os.getenv("OPENAI_API_KEY", "").strip()
+        legacy_path = Path("openai_key.txt")
+        if not legacy_key and legacy_path.exists():
+            legacy_key = legacy_path.read_text(encoding="utf-8").strip()
+        api_key = legacy_key
+    if not api_key:
+        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
+    base_url = os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
+    return OpenAI(
+        api_key=api_key,
+        base_url=base_url,
+        default_headers={"X-OpenRouter-Title": OPENROUTER_TITLE},
+    )
 
 
 def _extract_text(resp: Any) -> str:
@@ -57,6 +77,7 @@ def _extract_text(resp: Any) -> str:
 
 
 def _request_text(client: OpenAI, model: str, prompt: str) -> str:
+    model = _resolve_model_name(model)
     try:
         resp = client.responses.create(model=model, input=prompt)
         text = _extract_text(resp)
@@ -132,12 +153,17 @@ WHOLE_SLOT_LEAK_RE = re.compile(
 
 def _whole_recall_needs_repair(rendered_whole: Dict[str, Any]) -> bool:
     question = str(rendered_whole.get("question", ""))
-    return bool(WHOLE_SLOT_LEAK_RE.search(question))
+    normalized_answers = _normalize_answer_list(rendered_whole.get("answers", []))
+    answer_types = {answer.get("answer_type", "") for answer in normalized_answers}
+    missing_core_types = {"remember_correct", "distractor_irrelevant", "not_remember"} - answer_types
+    return bool(WHOLE_SLOT_LEAK_RE.search(question)) or len(normalized_answers) < 3 or bool(missing_core_types)
 
 
 def _build_whole_recall_repair_prompt(
     turn: Dict[str, Any],
     rendered_whole: Dict[str, Any],
+    *,
+    require_complete_answers: bool = False,
 ) -> str:
     user_turn = turn["user_turn"]
     task_goal = turn["task_goal"]
@@ -150,10 +176,16 @@ def _build_whole_recall_repair_prompt(
         "Please rewrite this whole-recall question so that it asks only about the overall purpose of the earlier request. "
         "Do not ask about specific slot-level details such as dates, budgets, email addresses, schedules, contact information, or other sensitive details. "
         "The remember_correct answer should also stay at the level of the overall request rather than listing slot-level facts unless a brief mention is absolutely necessary for clarity. "
+        "Make sure the output includes exactly three answers with the answer types remember_correct, distractor_irrelevant, and not_remember. "
         "Keep the same JSON format with identifier_label, question, and answers. "
         "Keep the same three answer types: remember_correct, distractor_irrelevant, and not_remember. "
         "\"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. "
-        "Return valid JSON only and no other words."
+        + (
+            "The previous draft was invalid because one or more answer candidates were missing, so all three answer types must be present this time. "
+            if require_complete_answers
+            else ""
+        )
+        + "Return valid JSON only and no other words."
     )
 
 
@@ -220,6 +252,8 @@ def _normalize_answer_list(answers: Any) -> List[Dict[str, str]]:
 
 def _finalize_whole_render(rendered_whole: Dict[str, Any], seed: str) -> Dict[str, Any]:
     normalized_answers = _normalize_answer_list(rendered_whole.get("answers", []))
+    if len(normalized_answers) < 3:
+        raise ValueError("Whole-recall item is missing one or more answer candidates.")
     shuffled = _shuffle_answer_bank(normalized_answers, seed)
     return {
         "identifier_label": rendered_whole["identifier_label"],
@@ -234,6 +268,28 @@ def _finalize_whole_render(rendered_whole: Dict[str, Any], seed: str) -> Dict[st
         "answers_unshuffled": normalized_answers,
         "answers_shuffled": shuffled["shuffled_answers"],
     }
+
+
+def _repair_whole_recall_until_valid(
+    client: OpenAI,
+    model: str,
+    turn: Dict[str, Any],
+    raw_whole: Dict[str, Any],
+) -> Dict[str, Any]:
+    candidate = raw_whole
+    for attempt in range(3):
+        if not _whole_recall_needs_repair(candidate):
+            return candidate
+        candidate = _request_json(
+            client,
+            model,
+            _build_whole_recall_repair_prompt(
+                turn,
+                candidate,
+                require_complete_answers=(attempt > 0),
+            ),
+        )
+    return candidate
 
 
 def _finalize_slot_render(rendered_slot: Dict[str, Any], seed_prefix: str) -> Dict[str, Any]:
@@ -268,8 +324,7 @@ def _render_one_turn(
     pool: List[Dict[str, Any]],
 ) -> Dict[str, Any]:
     raw_whole = _request_json(client, model, turn["whole_recall"]["render_prompt"])
-    if _whole_recall_needs_repair(raw_whole):
-        raw_whole = _request_json(client, model, _build_whole_recall_repair_prompt(turn, raw_whole))
+    raw_whole = _repair_whole_recall_until_valid(client, model, turn, raw_whole)
     rendered_whole = _finalize_whole_render(raw_whole, seed=f"{turn['timestamp']}:whole")
 
     identifier_label = rendered_whole["identifier_label"]

@@ -2,8 +2,10 @@ import argparse
 import json
 import os
 import re
+import threading
 from pathlib import Path
 from typing import Any, Dict, List
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from openai import OpenAI
 
@@ -11,16 +13,56 @@ from .transforms import build_context_messages
 from .transforms import apply_forget, apply_no_store, apply_no_use
 
 
-def _load_client(api_key_file: str = "openai_key.txt") -> OpenAI:
-    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+_THREAD_LOCAL = threading.local()
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_TITLE = "MemoryCtrl"
+MODEL_ALIASES = {
+    "gpt-5.4-mini": "openai/gpt-5.4-mini",
+    "gpt-5-mini": "openai/gpt-5-mini",
+}
+
+
+def _resolve_model_name(model: str) -> str:
+    return MODEL_ALIASES.get(model, model)
+
+
+def _load_credentials(api_key_file: str = "openrouter_key.txt") -> tuple[str, str]:
+    api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
     if not api_key:
-        raise FileNotFoundError("No API key found. Set OPENAI_API_KEY or provide openai_key.txt.")
-    base_url = os.getenv("OPENAI_BASE_URL", "").strip()
-    if base_url:
-        return OpenAI(api_key=api_key, base_url=base_url)
-    return OpenAI(api_key=api_key)
+        legacy_key = os.getenv("OPENAI_API_KEY", "").strip()
+        legacy_path = Path("openai_key.txt")
+        if not legacy_key and legacy_path.exists():
+            legacy_key = legacy_path.read_text(encoding="utf-8").strip()
+        api_key = legacy_key
+    if not api_key:
+        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
+    base_url = os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
+    return api_key, base_url
+
+
+def _load_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
+    api_key, base_url = _load_credentials(api_key_file)
+    return OpenAI(
+        api_key=api_key,
+        base_url=base_url,
+        default_headers={"X-OpenRouter-Title": OPENROUTER_TITLE},
+    )
+
+
+def _get_thread_client(api_key: str, base_url: str) -> OpenAI:
+    cache_key = f"openai::{base_url}"
+    client = getattr(_THREAD_LOCAL, cache_key, None)
+    if client is not None:
+        return client
+    client = OpenAI(
+        api_key=api_key,
+        base_url=base_url,
+        default_headers={"X-OpenRouter-Title": OPENROUTER_TITLE},
+    )
+    setattr(_THREAD_LOCAL, cache_key, client)
+    return client
 
 
 def _extract_text(resp: Any) -> str:
@@ -52,6 +94,7 @@ def _extract_text(resp: Any) -> str:
 
 
 def _request_text(client: OpenAI, model: str, messages: List[Dict[str, str]]) -> str:
+    model = _resolve_model_name(model)
     try:
         resp = client.responses.create(model=model, input=messages)
         text = _extract_text(resp)
@@ -91,6 +134,18 @@ def _build_persona_system_message(conversation: Dict[str, Any]) -> List[Dict[str
     if not isinstance(persona, str) or not persona.strip():
         return []
     return [{"role": "system", "content": f"Current user persona: {persona.strip()}"}]
+
+
+def _ask_period_tag(ask_period: str) -> str:
+    tag = (ask_period or "").replace("Conversation ", "").replace(" Stage", "")
+    return tag.strip().lower().replace(" ", "_") or "late"
+
+
+def _is_valid_mcq_payload(payload: Dict[str, Any]) -> bool:
+    choices = payload.get("choices") or {}
+    choice_to_answer_type = payload.get("choice_to_answer_type") or {}
+    remember_correct_choice = str(payload.get("remember_correct_choice", "")).strip()
+    return bool(choices) and bool(choice_to_answer_type) and bool(remember_correct_choice)
 
 
 def _score_item(
@@ -198,6 +253,8 @@ def main() -> None:
     parser.add_argument("--world", choices=["baseline", "no_store", "forget", "no_use"], default="baseline")
     parser.add_argument("--sidecar", default="")
     parser.add_argument("--output", default="")
+    parser.add_argument("--api_key_file", default="openrouter_key.txt")
+    parser.add_argument("--workers", type=int, default=10)
     args = parser.parse_args()
 
     rendered = json.loads(Path(args.rendered).read_text(encoding="utf-8"))
@@ -208,7 +265,7 @@ def main() -> None:
     context_messages = _build_persona_system_message(transformed_conversation) + build_context_messages(
         transformed_conversation, args.ask_period
     )
-    client = _load_client()
+    api_key, base_url = _load_credentials(args.api_key_file)
 
     results = {
         "source_rendered": args.rendered,
@@ -221,48 +278,99 @@ def main() -> None:
         "slot_recall_results": [],
     }
 
-    for item in rendered.get("whole_recall_set", []):
+    whole_tasks = []
+    for idx, item in enumerate(rendered.get("whole_recall_set", [])):
+        payload = {
+            "timestamp": item["timestamp"],
+            "turn_role": item["turn_role"],
+            "identifier_label": item["identifier_label"],
+            "question": item["rendered"]["question"],
+            "choices": item["rendered"]["choices"],
+            "choice_to_answer_type": item["rendered"]["choice_to_answer_type"],
+            "remember_correct_choice": item["rendered"]["remember_correct_choice"],
+        }
+        if _is_valid_mcq_payload(payload):
+            whole_tasks.append((idx, payload))
+
+    slot_tasks = []
+    for idx, item in enumerate(rendered.get("slot_recall_set", [])):
+        for slot_idx, slot_item in enumerate(item["rendered"].get("items", [])):
+            payload = {
+                "timestamp": item["timestamp"],
+                "turn_role": item["turn_role"],
+                "identifier_label": item["identifier_label"],
+                "sensitive_key": slot_item["sensitive_key"],
+                "sensitive_value": slot_item["sensitive_value"],
+                "question": slot_item["question"],
+                "choices": slot_item["choices"],
+                "choice_to_answer_type": slot_item["choice_to_answer_type"],
+                "remember_correct_choice": slot_item["remember_correct_choice"],
+            }
+            if _is_valid_mcq_payload(payload):
+                slot_tasks.append(((idx, slot_idx), payload))
+
+    def run_whole_task(payload: Dict[str, Any]) -> Dict[str, Any]:
+        client = _get_thread_client(api_key, base_url)
         scored = _score_item(
             client,
             args.model,
             context_messages,
-            item["rendered"]["question"],
-            item["rendered"]["choices"],
-            item["rendered"]["choice_to_answer_type"],
-            item["rendered"]["remember_correct_choice"],
+            payload["question"],
+            payload["choices"],
+            payload["choice_to_answer_type"],
+            payload["remember_correct_choice"],
         )
-        results["whole_recall_results"].append(
-            {
-                "timestamp": item["timestamp"],
-                "turn_role": item["turn_role"],
-                "identifier_label": item["identifier_label"],
-                "question": item["rendered"]["question"],
-                **scored,
-            }
-        )
+        return {
+            "timestamp": payload["timestamp"],
+            "turn_role": payload["turn_role"],
+            "identifier_label": payload["identifier_label"],
+            "question": payload["question"],
+            **scored,
+        }
 
-    for item in rendered.get("slot_recall_set", []):
-        for idx, slot_item in enumerate(item["rendered"].get("items", [])):
-            scored = _score_item(
-                client,
-                args.model,
-                context_messages,
-                slot_item["question"],
-                slot_item["choices"],
-                slot_item["choice_to_answer_type"],
-                slot_item["remember_correct_choice"],
-            )
-            results["slot_recall_results"].append(
-                {
-                    "timestamp": item["timestamp"],
-                    "turn_role": item["turn_role"],
-                    "identifier_label": item["identifier_label"],
-                    "sensitive_key": slot_item["sensitive_key"],
-                    "sensitive_value": slot_item["sensitive_value"],
-                    "question": slot_item["question"],
-                    **scored,
-                }
-            )
+    def run_slot_task(payload: Dict[str, Any]) -> Dict[str, Any]:
+        client = _get_thread_client(api_key, base_url)
+        scored = _score_item(
+            client,
+            args.model,
+            context_messages,
+            payload["question"],
+            payload["choices"],
+            payload["choice_to_answer_type"],
+            payload["remember_correct_choice"],
+        )
+        return {
+            "timestamp": payload["timestamp"],
+            "turn_role": payload["turn_role"],
+            "identifier_label": payload["identifier_label"],
+            "sensitive_key": payload["sensitive_key"],
+            "sensitive_value": payload["sensitive_value"],
+            "question": payload["question"],
+            **scored,
+        }
+
+    whole_results_by_idx: Dict[int, Dict[str, Any]] = {}
+    slot_results_by_idx: Dict[tuple[int, int], Dict[str, Any]] = {}
+    max_workers = max(1, args.workers)
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        whole_futures = {
+            executor.submit(run_whole_task, payload): idx for idx, payload in whole_tasks
+        }
+        slot_futures = {
+            executor.submit(run_slot_task, payload): idx for idx, payload in slot_tasks
+        }
+
+        for future in as_completed(list(whole_futures.keys()) + list(slot_futures.keys())):
+            if future in whole_futures:
+                idx = whole_futures[future]
+                whole_results_by_idx[idx] = future.result()
+            else:
+                idx = slot_futures[future]
+                slot_results_by_idx[idx] = future.result()
+
+    results["whole_recall_results"] = [whole_results_by_idx[idx] for idx, _ in whole_tasks]
+    results["slot_recall_results"] = [slot_results_by_idx[idx] for idx, _ in slot_tasks]
 
     results["summary"] = {
         "whole_recall": {
@@ -281,10 +389,10 @@ def main() -> None:
         ),
     }
 
-    output_path = args.output or args.rendered.replace(
-        ".recall_rendered.json",
-        f".{args.world}.recall_eval_{args.model}.json",
-    )
+    suffix = f".{args.world}.recall_eval_{args.model}.json"
+    if args.ask_period != "Conversation Late Stage":
+        suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.recall_eval_{args.model}.json"
+    output_path = args.output or args.rendered.replace(".recall_rendered.json", suffix)
     Path(output_path).write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     print(output_path)
 

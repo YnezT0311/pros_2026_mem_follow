@@ -4,6 +4,7 @@ import os
 import re
 from pathlib import Path
 from typing import Any, Dict, List
+from uuid import uuid4
 
 from openai import OpenAI
 
@@ -22,7 +23,7 @@ def _resolve_model_name(model: str) -> str:
     return MODEL_ALIASES.get(model, model)
 
 
-def _load_api_key(api_key_file: str = "openrouter_key.txt") -> str:
+def _load_openai_credentials(api_key_file: str = "openrouter_key.txt") -> tuple[str, str]:
     api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
@@ -34,26 +35,62 @@ def _load_api_key(api_key_file: str = "openrouter_key.txt") -> str:
         api_key = legacy_key
     if not api_key:
         raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
-    return api_key
-
-
-def _load_base_url() -> str:
-    return os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
-
-
-def _ensure_openrouter_env(api_key_file: str = "openrouter_key.txt") -> None:
-    os.environ["OPENAI_API_KEY"] = _load_api_key(api_key_file)
-    os.environ["OPENAI_BASE_URL"] = _load_base_url()
+    base_url = os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
+    return api_key, base_url
 
 
 def _load_openai_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
-    api_key = _load_api_key(api_key_file)
-    base_url = _load_base_url()
+    api_key, base_url = _load_openai_credentials(api_key_file)
     return OpenAI(
         api_key=api_key,
         base_url=base_url,
         default_headers={"X-OpenRouter-Title": OPENROUTER_TITLE},
     )
+
+
+def _load_optional_text_file(path: str) -> str:
+    if not path:
+        return ""
+    file_path = Path(path)
+    if not file_path.exists():
+        return ""
+    return file_path.read_text(encoding="utf-8").strip()
+
+
+def _load_first_available_file(paths: List[str]) -> str:
+    for path in paths:
+        value = _load_optional_text_file(path)
+        if value:
+            return value
+    return ""
+
+
+def _load_zep_client(
+    api_key_file: str = "zep_api_key.txt",
+    api_url_file: str = "zep_api_url.txt",
+):
+    try:
+        from zep_cloud import Zep
+    except ImportError as exc:
+        raise ImportError(
+            "Zep SDK is not installed in the current environment. Use the zep311 environment to run this evaluator."
+        ) from exc
+
+    api_key = os.getenv("ZEP_API_KEY", "").strip() or _load_first_available_file(
+        [api_key_file, "zep_api-key.txt"]
+    )
+    if not api_key:
+        raise FileNotFoundError(
+            "No ZEP_API_KEY found. Set ZEP_API_KEY or provide zep_api_key.txt to use the Zep evaluator."
+        )
+
+    api_url = os.getenv("ZEP_API_URL", "").strip() or _load_first_available_file(
+        [api_url_file, "zep_api-url.txt"]
+    )
+    kwargs: Dict[str, Any] = {"api_key": api_key}
+    if api_url:
+        kwargs["base_url"] = f"{api_url.rstrip('/')}/api/v2"
+    return Zep(**kwargs)
 
 
 def _extract_text(resp: Any) -> str:
@@ -205,124 +242,116 @@ def _apply_world_transform(conversation: Dict[str, Any], sidecar: Dict[str, Any]
     raise ValueError(f"Unsupported world: {world}")
 
 
-def _format_amem_memories(results: List[Dict[str, Any]]) -> str:
-    if not results:
+def _format_zep_context(context: str) -> str:
+    cleaned = (context or "").strip()
+    if not cleaned:
         return "No relevant memories were retrieved."
-    lines = []
-    for idx, item in enumerate(results, start=1):
-        content = item.get("content", "")
-        context = item.get("context", "")
-        tags = item.get("tags", [])
-        score = item.get("score")
-        score_str = f" (score={score:.4f})" if isinstance(score, (int, float)) else ""
-        lines.append(f"{idx}. {content}{score_str} | context={context} | tags={tags}")
-    return "\n".join(lines)
+    return cleaned
 
 
-def _load_amem_system(model: str, embedding_model: str, api_key_file: str = "openrouter_key.txt"):
-    try:
-        from agentic_memory.memory_system import AgenticMemorySystem
-        from agentic_memory.llm_controller import OpenAIController
-    except ImportError as exc:
-        raise ImportError(
-            "A-Mem is not installed in the current environment. Install the agiresearch/A-mem package first."
-        ) from exc
-
-    _patch_amem_openai_controller(OpenAIController)
-    _ensure_openrouter_env(api_key_file)
-    api_key = _load_api_key(api_key_file)
-    memory_system = AgenticMemorySystem(
-        model_name=embedding_model,
-        llm_backend="openai",
-        llm_model=_resolve_model_name(model),
-        api_key=api_key,
-    )
-    return memory_system
+def _safe_token(value: str) -> str:
+    sanitized = re.sub(r"[^A-Za-z0-9_-]+", "_", value).strip("_")
+    return sanitized or "item"
 
 
-def _patch_amem_openai_controller(controller_cls: Any) -> None:
-    if getattr(controller_cls, "_gpt54mini_patch_applied", False):
-        return
+class ZepRetrievalAgent:
+    MAX_HISTORY_MESSAGES = 29
 
-    def _patched_get_completion(self, prompt: str, response_format: dict, temperature: float = 0.7) -> str:
-        request_kwargs = {
-            "model": self.model,
-            "messages": [
-                {"role": "system", "content": "You must respond with a JSON object."},
-                {"role": "user", "content": prompt},
-            ],
-            "response_format": response_format,
-            "temperature": temperature,
-        }
-        if "gpt-5" in str(self.model):
-            request_kwargs["max_completion_tokens"] = 1000
-        else:
-            request_kwargs["max_tokens"] = 1000
-        response = self.client.chat.completions.create(**request_kwargs)
-        return response.choices[0].message.content
-
-    controller_cls.get_completion = _patched_get_completion
-    controller_cls._gpt54mini_patch_applied = True
-
-
-class AMemRetrievalAgent:
     def __init__(
         self,
-        memory_system: Any,
-        client: OpenAI,
+        zep_client: Any,
+        openai_client: OpenAI,
         model: str,
-        memory_limit: int,
+        user_id: str,
         persona_messages: List[Dict[str, str]],
+        context_messages: List[Dict[str, str]],
     ) -> None:
-        self.memory_system = memory_system
-        self.client = client
-        self.model = model
-        self.memory_limit = memory_limit
-        self.persona_messages = persona_messages
+        from zep_cloud import Message
 
-    def preload(self, context_messages: List[Dict[str, str]]) -> None:
-        self.memory_system.memories = {}
+        self.zep_client = zep_client
+        self.openai_client = openai_client
+        self.model = model
+        self.user_id = _safe_token(user_id)
+        self.persona_messages = persona_messages
+        self.context_messages = context_messages
+        self.message_cls = Message
+        self.thread_id = f"{self.user_id}_{uuid4().hex}"
+        self._prepared = False
+
+    def _ensure_user(self) -> None:
         try:
-            self.memory_system.retriever.client.reset()
-            self.memory_system.retriever = type(self.memory_system.retriever)(
-                collection_name="memories",
-                model_name=self.memory_system.model_name,
-            )
+            self.zep_client.user.get(self.user_id)
+            return
         except Exception:
             pass
+        self.zep_client.user.add(
+            user_id=self.user_id,
+            metadata={"source": "personamem_eval"},
+        )
 
-        for idx, msg in enumerate(context_messages):
+    def _thread_messages(self) -> List[Any]:
+        messages: List[Any] = []
+        for idx, msg in enumerate(self.context_messages):
             role = msg.get("role", "user")
             content = msg.get("content", "").strip()
             if not content:
                 continue
-            note_content = f"{role}: {content}"
-            self.memory_system.add_note(
-                content=note_content,
-                category="conversation",
-                tags=[role],
-                time=f"2025010100{idx:02d}",
+            messages.append(
+                self.message_cls(
+                    role=role,
+                    content=content,
+                    metadata={"position": idx},
+                )
             )
+        return messages[-self.MAX_HISTORY_MESSAGES :]
+
+    def prepare(self) -> None:
+        if self._prepared:
+            return
+        self._ensure_user()
+        self.zep_client.thread.create(thread_id=self.thread_id, user_id=self.user_id)
+        history_messages = self._thread_messages()
+        if history_messages:
+            self.zep_client.thread.add_messages(self.thread_id, messages=history_messages)
+        self._prepared = True
+
+    def close(self) -> None:
+        try:
+            self.zep_client.thread.delete(self.thread_id)
+        except Exception:
+            pass
 
     def answer_mcq(self, question: str, choices: Dict[str, str]) -> Dict[str, Any]:
-        retrieved = self.memory_system.search_agentic(question, k=self.memory_limit)
+        self.prepare()
+        context = ""
+        try:
+            question_response = self.zep_client.thread.add_messages(
+                self.thread_id,
+                messages=[self.message_cls(role="user", content=question)],
+                return_context=True,
+            )
+            context = getattr(question_response, "context", "") or ""
+            if not context:
+                context = getattr(self.zep_client.thread.get_user_context(self.thread_id), "context", "") or ""
+        except Exception:
+            raise
+
         prompt = _build_eval_prompt(question, choices)
-        memories_text = _format_amem_memories(retrieved)
         messages = self.persona_messages + [
             {
                 "role": "user",
-                "content": f"Retrieved memories:\n{memories_text}\n\n{prompt}",
+                "content": f"Retrieved memories:\n{_format_zep_context(context)}\n\n{prompt}",
             },
         ]
-        response = _request_text(self.client, self.model, messages)
+        response = _request_text(self.openai_client, self.model, messages)
         return {
             "model_response": response,
-            "retrieved_memories": retrieved,
+            "retrieved_memories": {"context": context},
         }
 
 
 def _score_item(
-    agent: Any,
+    agent: ZepRetrievalAgent,
     question: str,
     choices: Dict[str, str],
     choice_to_answer_type: Dict[str, str],
@@ -342,7 +371,7 @@ def _score_item(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Evaluate recall MCQs with an A-Mem-backed agent.")
+    parser = argparse.ArgumentParser(description="Evaluate recall MCQs with a Zep-backed retrieval agent.")
     parser.add_argument(
         "--rendered",
         default="data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json",
@@ -351,9 +380,10 @@ def main() -> None:
     parser.add_argument("--ask_period", default="Conversation Late Stage")
     parser.add_argument("--world", choices=["baseline", "no_store", "forget", "no_use"], default="baseline")
     parser.add_argument("--sidecar", default="")
-    parser.add_argument("--memory_limit", type=int, default=5)
-    parser.add_argument("--embedding_model", default="all-MiniLM-L6-v2")
     parser.add_argument("--output", default="")
+    parser.add_argument("--api_key_file", default="openrouter_key.txt")
+    parser.add_argument("--zep_api_key_file", default="zep_api_key.txt")
+    parser.add_argument("--zep_api_url_file", default="zep_api_url.txt")
     args = parser.parse_args()
 
     rendered = json.loads(Path(args.rendered).read_text(encoding="utf-8"))
@@ -362,78 +392,83 @@ def main() -> None:
     sidecar = _load_sidecar(rendered, args.sidecar)
     transformed_conversation = _apply_world_transform(conversation, sidecar, args.world)
     persona_messages = _build_persona_system_message(transformed_conversation)
-    context_messages = persona_messages + build_context_messages(transformed_conversation, args.ask_period)
+    context_messages = build_context_messages(transformed_conversation, args.ask_period)
 
-    client = _load_openai_client()
-    memory_system = _load_amem_system(args.model, args.embedding_model)
-    agent = AMemRetrievalAgent(
-        memory_system,
-        client=client,
+    openai_client = _load_openai_client(args.api_key_file)
+    zep_client = _load_zep_client(args.zep_api_key_file, args.zep_api_url_file)
+    user_id = Path(args.rendered).stem
+    agent = ZepRetrievalAgent(
+        zep_client=zep_client,
+        openai_client=openai_client,
         model=args.model,
-        memory_limit=args.memory_limit,
+        user_id=user_id,
         persona_messages=persona_messages,
+        context_messages=context_messages,
     )
-    agent.preload(context_messages)
 
     results = {
         "source_rendered": args.rendered,
         "source_conversation": conversation_path,
         "source_sidecar": rendered.get("source_sidecar", args.sidecar),
         "model": args.model,
-        "backend": "a_mem_retrieval",
+        "backend": "zep_retrieval",
         "world": args.world,
         "ask_period": args.ask_period,
-        "memory_limit": args.memory_limit,
         "whole_recall_results": [],
         "slot_recall_results": [],
     }
 
-    for item in rendered.get("whole_recall_set", []):
-        if not _is_valid_mcq(
-            item["rendered"]["choices"],
-            item["rendered"]["choice_to_answer_type"],
-        ):
-            continue
-        scored = _score_item(
-            agent,
-            item["rendered"]["question"],
-            item["rendered"]["choices"],
-            item["rendered"]["choice_to_answer_type"],
-        )
-        results["whole_recall_results"].append(
-            {
-                "timestamp": item["timestamp"],
-                "turn_role": item["turn_role"],
-                "identifier_label": item["identifier_label"],
-                "question": item["rendered"]["question"],
-                **scored,
-            }
-        )
+    try:
+        agent.prepare()
 
-    for item in rendered.get("slot_recall_set", []):
-        for slot_item in item["rendered"].get("items", []):
+        for item in rendered.get("whole_recall_set", []):
             if not _is_valid_mcq(
-                slot_item["choices"],
-                slot_item["choice_to_answer_type"],
+                item["rendered"]["choices"],
+                item["rendered"]["choice_to_answer_type"],
             ):
                 continue
             scored = _score_item(
                 agent,
-                slot_item["question"],
-                slot_item["choices"],
-                slot_item["choice_to_answer_type"],
+                item["rendered"]["question"],
+                item["rendered"]["choices"],
+                item["rendered"]["choice_to_answer_type"],
             )
-            results["slot_recall_results"].append(
+            results["whole_recall_results"].append(
                 {
                     "timestamp": item["timestamp"],
                     "turn_role": item["turn_role"],
                     "identifier_label": item["identifier_label"],
-                    "sensitive_key": slot_item["sensitive_key"],
-                    "sensitive_value": slot_item["sensitive_value"],
-                    "question": slot_item["question"],
+                    "question": item["rendered"]["question"],
                     **scored,
                 }
             )
+
+        for item in rendered.get("slot_recall_set", []):
+            for slot_item in item["rendered"].get("items", []):
+                if not _is_valid_mcq(
+                    slot_item["choices"],
+                    slot_item["choice_to_answer_type"],
+                ):
+                    continue
+                scored = _score_item(
+                    agent,
+                    slot_item["question"],
+                    slot_item["choices"],
+                    slot_item["choice_to_answer_type"],
+                )
+                results["slot_recall_results"].append(
+                    {
+                        "timestamp": item["timestamp"],
+                        "turn_role": item["turn_role"],
+                        "identifier_label": item["identifier_label"],
+                        "sensitive_key": slot_item["sensitive_key"],
+                        "sensitive_value": slot_item["sensitive_value"],
+                        "question": slot_item["question"],
+                        **scored,
+                    }
+                )
+    finally:
+        agent.close()
 
     results["summary"] = {
         "whole_recall": _rate_summary(results["whole_recall_results"]),
@@ -448,9 +483,9 @@ def main() -> None:
         ),
     }
 
-    suffix = f".{args.world}.a_mem_retrieval_eval_{args.model}.json"
+    suffix = f".{args.world}.zep_retrieval_eval_{args.model}.json"
     if args.ask_period != "Conversation Late Stage":
-        suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.a_mem_retrieval_eval_{args.model}.json"
+        suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.zep_retrieval_eval_{args.model}.json"
     output_path = args.output or args.rendered.replace(".recall_rendered.json", suffix)
     output_file = Path(output_path)
     output_file.parent.mkdir(parents=True, exist_ok=True)

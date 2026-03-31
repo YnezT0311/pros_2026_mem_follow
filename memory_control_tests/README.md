@@ -310,112 +310,154 @@ The intended execution order is:
 
 This keeps the label stable across all recall MCQs for the same turn while still allowing the final wording to be rendered by an LLM later.
 
-## Current Export Layout
+## Export Layout
 
-The current filesystem layout now separates baseline data, benchmark files, and evaluation outputs:
+The filesystem layout separates source conversations, benchmark artifacts, and evaluation outputs:
 
 - `data/baseline/<topic>/`
-  - only the clean baseline conversations such as `conversation_*.json`
+  - clean baseline conversations such as `conversation_*.json`
 - `data/test/<topic>/whole_recall/`
-  - per-persona whole-recall benchmark files plus `all_personas.json`
+  - finalized whole-recall QA files plus `all_personas.json`
 - `data/test/<topic>/slot_recall/`
-  - per-persona slot-recall benchmark files plus `all_personas.json`
+  - finalized slot-recall QA files plus `all_personas.json`
 - `data/test/<topic>/application/`
-  - current placeholder exports plus `all_personas.json`
+  - application QA placeholders plus `all_personas.json`
 - `data/test/<topic>/specs/`
-  - structured sidecars and intermediate benchmark artifacts such as:
+  - intermediate benchmark artifacts:
     - `*.memory_control.json`
     - `*.mcq_specs.json`
     - `*.recall_rendered.json`
-- `eval_results/<topic>/baseline/`
-  - baseline evaluation outputs
-- `eval_results/<topic>/no_store/`
-  - `no_store` test-world evaluation outputs
-- `eval_results/<topic>/forget/`
-  - `forget` test-world evaluation outputs
-- `eval_results/<topic>/no_use/`
-  - `no_use` test-world evaluation outputs
+- `eval_results/<topic>/<world>/<backend>/`
+  - scored evaluation outputs for a given world and backend
 
-Within each evaluation world, the current comparison is organized under two backend names:
+The backend directory names are:
 
 - `gpt-5.4-mini`
 - `gpt-5.4-mini+mem0`
 - `gpt-5.4-mini+A-Mem`
+- `gpt-5.4-mini+LangMem`
+- `gpt-5.4-mini+Zep`
+
+## API Evaluation Prompt
+
+All recall evaluators share the same outer prompt shape so the comparison isolates the memory layer rather than the answer format.
+
+All API-facing evaluation calls are routed through OpenRouter. The evaluators accept `gpt-5.4-mini` at the command line and map it to OpenRouter's `openai/gpt-5.4-mini` model slug internally. Credentials are loaded from `OPENROUTER_API_KEY` or `openrouter_key.txt`, the default base URL is `https://openrouter.ai/api/v1`, and requests include `X-OpenRouter-Title: MemoryCtrl`.
+
+For every MCQ item:
+
+1. load the baseline conversation
+2. apply the requested world transform if needed
+3. truncate the conversation at the target `ask_period`
+4. convert the truncated conversation into chat messages
+5. append one multiple-choice user prompt
+
+The final API call uses:
+
+- one `system` message:
+  - `Current user persona: [Expanded Persona]`
+- earlier `user` / `assistant` messages:
+  - the edited conversation history up to the evaluation point
+- one final `user` message:
+  - `Question: ...`
+  - `Find the most appropriate model response and give your final answer (a), (b), or (c) after the special token <final_answer>.`
+  - the `(a)/(b)/(c)` options
+
+The plain API evaluator sends only that prompt. The memory-backed evaluators preserve the same prompt shape, but prepend a retrieved-memory block inside the final user message before the MCQ prompt.
+
+## Plain API Evaluation
+
+The plain evaluator is implemented in:
+
+- `evaluate_recall_mcqs.py`
+
+It does not use an external memory system. Instead, it measures what `gpt-5.4-mini` can recover directly from the truncated conversation context that is already inside the API request.
+
+The runtime flow is:
+
+1. apply the world transform to the baseline conversation
+2. build chat messages up to the target `ask_period`
+3. send the shared prompt format described above
+4. parse the selected choice
+5. map the selected choice back to:
+   - `remember_correct`
+   - `not_remember`
+   - `distractor_irrelevant`
+
+This is the reference condition for all memory-system comparisons.
 
 ## Mem0 Evaluation
 
-In addition to the plain baseline evaluator, the repo now also includes a Mem0-backed recall evaluator:
+The Mem0 evaluator is implemented in:
 
 - `evaluate_mem0_recall_mcqs.py`
 
-This evaluator is intended for comparing standard recall evaluation against a memory-enabled setup where `gpt-5.4-mini` answers the same MCQs with Mem0 retrieval in the loop.
+### Runtime Logic
 
-The current script supports two backends:
+For each `persona × world`:
 
-- `retrieval`
-- `openai_agents`
+1. the evaluator loads the truncated conversation history up to the target `ask_period`
+2. it clears the Mem0 store for the synthetic benchmark user
+3. it writes the conversation history into Mem0 with:
+   - `memory.add(context_messages, user_id=...)`
+4. for each MCQ, it issues:
+   - `memory.search(query=question, user_id=..., limit=k)`
+5. it formats the retrieved memories into text
+6. it appends that retrieved-memory block ahead of the standard MCQ prompt
+7. `gpt-5.4-mini` answers the final multiple-choice question
 
-The `retrieval` backend is the default and is the runnable path today. It:
+### Write-Time and Retrieval Logic
 
-1. loads the earlier conversation up to the requested `ask_period`
-2. stores that context into a local Mem0 memory store
-3. uses `mem0.search(...)` at question time
-4. asks `gpt-5.4-mini` to answer the MCQ using the retrieved memories
+This implementation uses Mem0's retrieval backend, which already includes the paper's LLM-based memory extraction path on write. Mem0's default `add(..., infer=True)` behavior extracts salient facts from conversation messages and decides whether related memories should be added, updated, or deleted rather than treating every message as a raw immutable chunk. Retrieval is then performed through Mem0's memory search API over the resulting memory store.
 
-The `openai_agents` backend is implemented as an optional path that follows the Mem0 documentation pattern for the OpenAI Agents SDK. It requires the `agents` package to be installed in the `mem0` environment. When available, it creates a lightweight agent with a `search_memory` tool and evaluates the same MCQs through that agent interface.
+### Paper-Core Behavior vs Product-Level Additions
 
-The intended command shape is:
+Mem0's paper positions the system as a memory-centric architecture that extracts, consolidates, and retrieves salient information for long-horizon agents. That write-time extraction and consolidation path is the behavior used here. Mem0's product stack now also includes broader platform features such as hosted infrastructure, multi-level user/session/agent memory scopes, and agent-framework integrations, including OpenAI Agents SDK support. Those product integrations are not required for the benchmark path here; the primary evaluation path is the core `add -> search -> answer` loop.
 
-```bash
-conda run -n mem0 python -m memory_control_tests.evaluate_mem0_recall_mcqs \
-  --rendered data/baseline/travelPlanning/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
-  --model gpt-5.4-mini \
-  --backend retrieval
-```
-
-If `openai-agents` is installed in the `mem0` environment, the optional agent-style run is:
+### Command
 
 ```bash
 conda run -n mem0 python -m memory_control_tests.evaluate_mem0_recall_mcqs \
-  --rendered data/baseline/travelPlanning/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
+  --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
   --model gpt-5.4-mini \
-  --backend openai_agents
+  --backend retrieval \
+  --world baseline
 ```
 
-The output summary uses the same rate-based reporting as the standard evaluator:
-
-- `remember_correct_rate`
-- `not_remember_rate`
-- `distractor_irrelevant_rate`
-- `other_rate`
+An optional `openai_agents` backend is also implemented for integration experiments, but the benchmark path is the retrieval backend above.
 
 ## A-Mem Evaluation
 
-The repo now also includes an A-Mem-backed recall evaluator:
+The A-Mem evaluator is implemented in:
 
 - `evaluate_amem_recall_mcqs.py`
 
-This path mirrors the Mem0 retrieval evaluation, but uses the A-Mem memory stack instead of Mem0. The intended setup is to run it from a dedicated `amem` conda environment so the A-Mem dependencies do not interfere with the existing `agent` or `mem0` environments.
+### Runtime Logic
 
-The current evaluator:
+For each `persona × world`:
 
-1. loads the earlier conversation up to the requested `ask_period`
-2. applies the requested world transform (`baseline`, `no_store`, `forget`, or `no_use`)
-3. preloads the resulting context into A-Mem as conversation notes
-4. retrieves relevant notes with `search_agentic(...)` at question time
-5. asks `gpt-5.4-mini` to answer the MCQ using those retrieved memories
+1. the evaluator loads the truncated conversation history up to the target `ask_period`
+2. it resets the in-memory A-Mem state and retriever collection
+3. it writes each conversation utterance as a note with:
+   - `add_note(content="role: utterance", category="conversation", tags=[role], ...)`
+4. each note insertion runs A-Mem's normal memory processing path
+5. for each MCQ, it retrieves notes with:
+   - `search_agentic(question, k=...)`
+6. it formats the retrieved notes into text
+7. it appends that retrieved-memory block ahead of the standard MCQ prompt
+8. `gpt-5.4-mini` answers the final multiple-choice question
 
-To keep benchmark preloading cheap, the current implementation disables A-Mem's evolution-time LLM processing during preload and uses A-Mem only as a retrieval layer for these recall evaluations.
+### Write-Time and Retrieval Logic
 
-Because A-Mem depends on a local sentence-transformer embedding model, the first setup should cache the embedding model once inside the `amem` environment. In practice, the evaluator is most reliable when run with:
+This implementation uses A-Mem's full note-processing path rather than a simplified raw-note ingestion mode. During note ingestion, A-Mem performs memory evolution: it looks for semantically related historical notes, updates contextual descriptions and metadata, and creates or refreshes links across related memories. Retrieval then uses `search_agentic(...)`, which combines vector retrieval with the memory network built during note processing.
 
-- `HF_HOME=/home/yao/.cache/huggingface`
-- `TRANSFORMERS_OFFLINE=1`
-- `HF_HUB_OFFLINE=1`
+All LLM-backed operations inside the evaluator use `gpt-5.4-mini`, including the final answer model and the A-Mem memory-processing controller. A small compatibility shim is applied inside the evaluator so A-Mem's OpenAI calls use GPT-5-compatible completion parameters while preserving the package's own memory logic.
 
-after the embedding snapshot has already been downloaded.
+### Paper-Core Behavior vs Product-Level Additions
 
-The intended command shape is:
+The A-Mem paper centers on dynamic note construction, linking, and memory evolution inspired by Zettelkasten-style organization. That write-time evolution behavior is exactly the path evaluated here. The public project is closer to the paper implementation than a separate managed product stack, so the main distinction is not paper versus hosted platform, but paper-core memory evolution versus lighter retrieval-only usage. The benchmark uses the paper-core memory-evolution path.
+
+### Command
 
 ```bash
 HF_HOME=/home/yao/.cache/huggingface TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
@@ -425,12 +467,101 @@ conda run -n amem python -m memory_control_tests.evaluate_amem_recall_mcqs \
   --world baseline
 ```
 
-The A-Mem evaluator writes the same summary fields as the standard and Mem0 evaluators:
+## LangMem Evaluation
 
-- `remember_correct_rate`
-- `not_remember_rate`
-- `distractor_irrelevant_rate`
-- `other_rate`
+The LangMem evaluator is implemented in:
+
+- `evaluate_langmem_recall_mcqs.py`
+
+### Runtime Logic
+
+For each `persona × world`:
+
+1. the evaluator loads the truncated conversation history up to the target `ask_period`
+2. it creates a LangMem `InMemoryStore`
+3. it writes each utterance through LangMem's memory-management tool:
+   - `create_manage_memory_tool(...).invoke({"content": "role: utterance", "action": "create"})`
+4. for each MCQ, it retrieves candidate memories through two LangMem retrieval paths:
+   - `create_search_memory_tool(...)`
+   - `create_memory_searcher(...)`
+5. it formats the retrieved memories into text
+6. it appends that retrieved-memory block ahead of the standard MCQ prompt
+7. `gpt-5.4-mini` answers the final multiple-choice question
+
+### Write-Time and Retrieval Logic
+
+The LangMem store uses OpenAI embeddings for semantic indexing. Memory writes are performed through LangMem's own memory-management tool rather than direct raw store insertion, so the benchmark path uses the same create/update/delete interface LangMem exposes to agents. Retrieval uses both the direct search tool and the model-guided memory searcher. The model-guided path uses `gpt-5.4-mini` to generate effective search queries before reading from the store.
+
+### Paper-Core Behavior vs Product-Level Additions
+
+LangMem is primarily distributed as a library and documentation stack rather than a single paper with one canonical benchmark configuration. The implementation here is aligned with LangMem's core agent-facing memory interfaces:
+
+- `create_manage_memory_tool`
+- `create_search_memory_tool`
+- `create_memory_searcher`
+
+The broader LangMem product/library surface also includes richer store backends, profile and episodic helpers, background/deferred memory processing, and deeper LangGraph-native orchestration patterns. Those broader orchestration options are not required for this benchmark; the evaluated path is the core tool-driven memory-management and retrieval loop.
+
+### Command
+
+```bash
+conda run -n langmem311 python -m memory_control_tests.evaluate_langmem_recall_mcqs \
+  --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
+  --model gpt-5.4-mini \
+  --world baseline
+```
+
+## Zep Evaluation
+
+The Zep evaluator is implemented in:
+
+- `evaluate_zep_recall_mcqs.py`
+
+### Runtime Logic
+
+For each `persona × world`:
+
+1. the evaluator loads the truncated conversation history up to the target `ask_period`
+2. it ensures that a benchmark user exists in Zep
+3. it creates one temporary Zep thread for that `persona × world`
+4. it writes the transformed conversation history into that thread once
+5. for each MCQ, it appends the current question to the same thread with:
+   - `return_context=True`
+6. it reads the returned context block, falling back to `get_user_context(...)` when needed
+7. it appends that Zep context block ahead of the standard MCQ prompt
+8. `gpt-5.4-mini` answers the final multiple-choice question
+
+### Write-Time and Retrieval Logic
+
+Zep handles the memory-processing pipeline on the service side. The client writes raw messages and questions into Zep threads; Zep then assembles the context block returned for each question. Under the hood, Zep is powered by Graphiti's temporal knowledge graph: ingested episodes are converted into evolving entities and relationships with validity windows, and retrieval combines relationship-aware context assembly with graph-backed search over that temporal state.
+
+The evaluator reuses a single thread per `persona × world` so the benchmark pays the ingestion cost once and then reuses the same memory state across the whole MCQ set.
+
+### Paper-Core Behavior vs Product-Level Additions
+
+The paper-core path behind Zep is Graphiti, which emphasizes temporal context graphs, episode provenance, fact invalidation over time, and hybrid retrieval across semantic, keyword, and graph signals. Zep adds the managed platform layer on top of that engine:
+
+- user and thread management
+- production-ready context assembly
+- governed retrieval infrastructure
+- dashboarding and hosted operations
+
+The benchmark uses Zep's managed thread/context API, so it exercises Graphiti's graph-backed memory behavior through the current product interface rather than through a standalone self-hosted Graphiti stack.
+
+### Command
+
+```bash
+conda run -n zep311 python -m memory_control_tests.evaluate_zep_recall_mcqs \
+  --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
+  --model gpt-5.4-mini \
+  --world baseline
+```
+
+This evaluator reads credentials from environment variables or local files:
+
+- `OPENROUTER_API_KEY` or `openrouter_key.txt`
+- `ZEP_API_KEY` or `zep_api_key.txt`
+- optionally `ZEP_API_URL` or `zep_api_url.txt`
 
 ### Current Recall Prompts
 

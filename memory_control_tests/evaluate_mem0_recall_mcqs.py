@@ -11,16 +11,47 @@ from .transforms import build_context_messages
 from .transforms import apply_forget, apply_no_store, apply_no_use
 
 
-def _load_openai_client(api_key_file: str = "openai_key.txt") -> OpenAI:
-    api_key = os.getenv("OPENAI_API_KEY", "").strip()
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_TITLE = "MemoryCtrl"
+MODEL_ALIASES = {
+    "gpt-5.4-mini": "openai/gpt-5.4-mini",
+    "gpt-5-mini": "openai/gpt-5-mini",
+}
+
+
+def _resolve_model_name(model: str) -> str:
+    return MODEL_ALIASES.get(model, model)
+
+
+def _load_openai_credentials(api_key_file: str = "openrouter_key.txt") -> tuple[str, str]:
+    api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
     if not api_key:
-        raise FileNotFoundError("No API key found. Set OPENAI_API_KEY or provide openai_key.txt.")
-    base_url = os.getenv("OPENAI_BASE_URL", "").strip()
-    if base_url:
-        return OpenAI(api_key=api_key, base_url=base_url)
-    return OpenAI(api_key=api_key)
+        legacy_key = os.getenv("OPENAI_API_KEY", "").strip()
+        legacy_path = Path("openai_key.txt")
+        if not legacy_key and legacy_path.exists():
+            legacy_key = legacy_path.read_text(encoding="utf-8").strip()
+        api_key = legacy_key
+    if not api_key:
+        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
+    base_url = os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
+    return api_key, base_url
+
+
+def _load_openai_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
+    api_key, base_url = _load_openai_credentials(api_key_file)
+    return OpenAI(
+        api_key=api_key,
+        base_url=base_url,
+        default_headers={"X-OpenRouter-Title": OPENROUTER_TITLE},
+    )
+
+
+def _ensure_openrouter_env(api_key_file: str = "openrouter_key.txt") -> None:
+    api_key, base_url = _load_openai_credentials(api_key_file)
+    os.environ["OPENAI_API_KEY"] = api_key
+    os.environ["OPENAI_BASE_URL"] = base_url
 
 
 def _extract_text(resp: Any) -> str:
@@ -52,6 +83,7 @@ def _extract_text(resp: Any) -> str:
 
 
 def _request_text(client: OpenAI, model: str, messages: List[Dict[str, str]]) -> str:
+    model = _resolve_model_name(model)
     try:
         resp = client.responses.create(model=model, input=messages)
         text = _extract_text(resp)
@@ -92,6 +124,15 @@ def _build_persona_system_message(conversation: Dict[str, Any]) -> List[Dict[str
     if not isinstance(persona, str) or not persona.strip():
         return []
     return [{"role": "system", "content": f"Current user persona: {persona.strip()}"}]
+
+
+def _ask_period_tag(ask_period: str) -> str:
+    tag = (ask_period or "").replace("Conversation ", "").replace(" Stage", "")
+    return tag.strip().lower().replace(" ", "_") or "late"
+
+
+def _is_valid_mcq(choices: Dict[str, str], choice_to_answer_type: Dict[str, str]) -> bool:
+    return bool(choices) and bool(choice_to_answer_type)
 
 
 def _rate_summary(items: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -167,8 +208,9 @@ def _ensure_mem0_home(root: Path) -> None:
     os.environ["HOME"] = str(root)
 
 
-def _load_local_mem0_memory(runtime_root: Path):
+def _load_local_mem0_memory(runtime_root: Path, api_key_file: str = "openrouter_key.txt"):
     _ensure_mem0_home(runtime_root)
+    _ensure_openrouter_env(api_key_file)
 
     from mem0 import Memory
 
@@ -276,7 +318,7 @@ class Mem0OpenAIAgentsAgent:
                 "Answer the multiple-choice question and reply with only a single choice label."
             ),
             tools=[search_memory],
-            model=self.model,
+            model=_resolve_model_name(self.model),
         )
 
     def preload(self, context_messages: List[Dict[str, str]]) -> None:
@@ -365,7 +407,7 @@ def main() -> None:
 
     client = _load_openai_client()
     runtime_root = Path(".mem0_runtime") / Path(args.rendered).stem
-    memory = _load_local_mem0_memory(runtime_root)
+    memory = _load_local_mem0_memory(runtime_root, args.api_key_file)
     user_id = Path(args.rendered).stem
     agent = _build_agent(
         backend=args.backend,
@@ -392,6 +434,11 @@ def main() -> None:
     }
 
     for item in rendered.get("whole_recall_set", []):
+        if not _is_valid_mcq(
+            item["rendered"]["choices"],
+            item["rendered"]["choice_to_answer_type"],
+        ):
+            continue
         scored = _score_item(
             agent,
             item["rendered"]["question"],
@@ -410,6 +457,11 @@ def main() -> None:
 
     for item in rendered.get("slot_recall_set", []):
         for slot_item in item["rendered"].get("items", []):
+            if not _is_valid_mcq(
+                slot_item["choices"],
+                slot_item["choice_to_answer_type"],
+            ):
+                continue
             scored = _score_item(
                 agent,
                 slot_item["question"],
@@ -444,10 +496,10 @@ def main() -> None:
     if hasattr(memory, "delete_all"):
         memory.delete_all(user_id=user_id)
 
-    output_path = args.output or args.rendered.replace(
-        ".recall_rendered.json",
-        f".{args.world}.mem0_{args.backend}_eval_{args.model}.json",
-    )
+    suffix = f".{args.world}.mem0_{args.backend}_eval_{args.model}.json"
+    if args.ask_period != "Conversation Late Stage":
+        suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.mem0_{args.backend}_eval_{args.model}.json"
+    output_path = args.output or args.rendered.replace(".recall_rendered.json", suffix)
     Path(output_path).write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     print(output_path)
 
