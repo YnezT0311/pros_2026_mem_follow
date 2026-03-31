@@ -9,6 +9,7 @@ from typing import Any, Dict, List
 
 from openai import OpenAI
 
+from ..common import classify_slot_type
 from ..mcq_specs import (
     _build_slot_recall_render_prompt,
     build_disambiguation_check_prompt,
@@ -313,6 +314,11 @@ def _finalize_slot_render(rendered_slot: Dict[str, Any], seed_prefix: str) -> Di
             {
                 "sensitive_key": item["sensitive_key"],
                 "sensitive_value": item["sensitive_value"],
+                "slot_type": classify_slot_type(
+                    item["sensitive_key"],
+                    item["sensitive_value"],
+                    item.get("question", ""),
+                ),
                 "identifier_label": item["identifier_label"],
                 "question": item["question"],
                 "choices": shuffled["choices"],

@@ -189,6 +189,46 @@ def build_forget_stage_map(sidecar: Dict[str, Any]) -> Dict[str, str]:
     return mapping
 
 
+def classify_slot_type(
+    sensitive_key: str,
+    sensitive_value: str,
+    question: str = "",
+) -> str:
+    """Infer a coarse slot type for later recall analysis.
+
+    The renderer often receives generic `sensitive_key` values such as
+    `detail`, so we also inspect the question wording and value surface form.
+    The goal is not ontology-perfect typing; it is a stable analysis tag for
+    slices such as budget/date/contact/medical/travel-preference.
+    """
+    key = str(sensitive_key or "").strip().lower()
+    value = str(sensitive_value or "").strip().lower()
+    q = str(question or "").strip().lower()
+    text = " ".join(part for part in [key, value, q] if part)
+
+    if "email" in text or "@" in value:
+        return "email"
+    if any(token in text for token in ["phone", "call", "text"]) or re.search(r"\+?\d[\d\-\s\(\)]{6,}", value):
+        return "phone"
+    if any(token in text for token in ["budget", "cost", "price", "spend", "fare"]) or "$" in value:
+        return "budget"
+    if any(token in text for token in ["date", "when", "arrive", "departure", "return", "leave", "check-in", "check out"]) or re.search(r"\d{4}-\d{2}-\d{2}", value):
+        return "date_or_time"
+    if any(token in text for token in ["schedule", "timing", "time of day", "afternoon", "morning", "evening", "pickup"]):
+        return "schedule_or_timing"
+    if any(token in text for token in ["hotel", "guesthouse", "airport", "station", "neighborhood", "location", "address", "where"]):
+        return "location_or_contact_point"
+    if any(token in text for token in ["insurance", "coverage", "pre-existing condition", "asthma", "medical", "knee", "allergy", "diet", "gluten-free"]):
+        if any(token in text for token in ["diet", "gluten-free", "vegetarian", "vegan"]):
+            return "dietary_requirement"
+        return "medical_or_access_need"
+    if any(token in text for token in ["passport", "record", "reference", "confirmation", "booking code", "id", "miles", "account"]):
+        return "document_or_account_reference"
+    if any(token in text for token in ["preference", "prefer", "want", "need", "looking for", "style"]):
+        return "preference_or_requirement"
+    return "other_detail"
+
+
 def build_reference_rewrite_prompt(turns: List[Dict[str, Any]], label_map: Optional[Dict[str, str]] = None) -> str:
     items = []
     for turn in (turns or [])[:3]:

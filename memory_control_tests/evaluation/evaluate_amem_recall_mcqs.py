@@ -7,7 +7,7 @@ from typing import Any, Dict, List
 
 from openai import OpenAI
 
-from ..common import build_forget_stage_map, build_recall_summary, build_transformed_history_path, period_tag, rewrite_key_references
+from ..common import build_forget_stage_map, build_recall_summary, build_transformed_history_path, classify_slot_type, period_tag, rewrite_key_references
 from ..transforms import apply_no_store, apply_staged_forget, apply_no_use, build_context_messages
 
 
@@ -454,6 +454,10 @@ def main() -> None:
                     "forget_stage": forget_stage_map.get(item["timestamp"], ""),
                     "sensitive_key": slot_item["sensitive_key"],
                     "sensitive_value": slot_item["sensitive_value"],
+                    "slot_type": slot_item.get(
+                        "slot_type",
+                        classify_slot_type(slot_item["sensitive_key"], slot_item["sensitive_value"], slot_item["question"]),
+                    ),
                     "question": slot_item["question"],
                     **scored,
                 }

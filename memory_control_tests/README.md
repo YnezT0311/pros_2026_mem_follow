@@ -263,6 +263,12 @@ For staged `forget`, evaluated key items also carry a `forget_stage` field in th
 - `forget_stage`
 - `ask_period`
 
+For `slot_recall`, evaluated slot items also carry a coarse `slot_type` field inferred from the slot key, value surface form, and question wording. This is intended for later slices such as:
+
+- budget vs date/time
+- contact information vs document/account reference
+- medical/access needs vs general preferences
+
 At evaluation time:
 
 1. start from the baseline conversation

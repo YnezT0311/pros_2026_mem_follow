@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from openai import OpenAI
 
-from ..common import build_forget_stage_map, build_recall_summary, build_transformed_history_path, period_tag, rewrite_key_references
+from ..common import build_forget_stage_map, build_recall_summary, build_transformed_history_path, classify_slot_type, period_tag, rewrite_key_references
 from ..transforms import build_context_messages
 from ..transforms import apply_no_store, apply_staged_forget, apply_no_use
 
@@ -325,6 +325,10 @@ def main() -> None:
                 "forget_stage": forget_stage_map.get(item["timestamp"], ""),
                 "sensitive_key": slot_item["sensitive_key"],
                 "sensitive_value": slot_item["sensitive_value"],
+                "slot_type": slot_item.get(
+                    "slot_type",
+                    classify_slot_type(slot_item["sensitive_key"], slot_item["sensitive_value"], slot_item["question"]),
+                ),
                 "question": slot_item["question"],
                 "choices": slot_item["choices"],
                 "choice_to_answer_type": slot_item["choice_to_answer_type"],
@@ -371,6 +375,7 @@ def main() -> None:
             "forget_stage": payload["forget_stage"],
             "sensitive_key": payload["sensitive_key"],
             "sensitive_value": payload["sensitive_value"],
+            "slot_type": payload["slot_type"],
             "question": payload["question"],
             **scored,
         }
