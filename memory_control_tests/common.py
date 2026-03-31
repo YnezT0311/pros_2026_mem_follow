@@ -200,13 +200,40 @@ def build_reference_rewrite_prompt(turns: List[Dict[str, Any]], label_map: Optio
     )
 
 
+def _fallback_build_key_reference(turns: List[Dict[str, Any]], label_map: Optional[Dict[str, str]] = None) -> str:
+    phrases: List[str] = []
+    for turn in turns or []:
+        timestamp = str(turn.get("timestamp", "")).strip()
+        label_hint = str((label_map or {}).get(timestamp, "")).strip()
+        if label_hint:
+            phrase = f"my earlier request about {label_hint[0].lower() + label_hint[1:] if len(label_hint) > 1 else label_hint.lower()}"
+        else:
+            task_goal = " ".join(str(turn.get("task_goal", "")).strip().split()).rstrip(".")
+            if not task_goal:
+                phrase = "that earlier request"
+            else:
+                task_goal = re.sub(r"^Kenji\s+(seeks assistance in|wants assistance in|wants help with|asks for help with|needs help with|is looking for help with|requests help with)\s+", "", task_goal, flags=re.IGNORECASE)
+                task_goal = re.sub(r"^Kenji\s+", "", task_goal, flags=re.IGNORECASE).strip()
+                task_goal = task_goal[0].lower() + task_goal[1:] if len(task_goal) > 1 else task_goal.lower()
+                phrase = task_goal or "that earlier request"
+        if phrase and phrase not in phrases:
+            phrases.append(phrase)
+    if not phrases:
+        return "that earlier request"
+    if len(phrases) == 1:
+        return phrases[0]
+    if len(phrases) == 2:
+        return f"{phrases[0]} and {phrases[1]}"
+    return f"{', '.join(phrases[:-1])}, and {phrases[-1]}"
+
+
 def rewrite_key_reference(
     request_text_fn: Callable[[str, str], str],
     model: str,
     turns: List[Dict[str, Any]],
     label_map: Optional[Dict[str, str]] = None,
 ) -> str:
-    fallback = build_key_reference(turns, label_map=label_map)
+    fallback = _fallback_build_key_reference(turns, label_map=label_map)
     if not turns:
         return fallback
     prompt = build_reference_rewrite_prompt(turns, label_map=label_map)
