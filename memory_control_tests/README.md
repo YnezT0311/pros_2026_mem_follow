@@ -263,11 +263,26 @@ For staged `forget`, evaluated key items also carry a `forget_stage` field in th
 - `forget_stage`
 - `ask_period`
 
-For `slot_recall`, evaluated slot items also carry a coarse `slot_type` field inferred from the slot key, value surface form, and question wording. This is intended for later slices such as:
+If you want semantic slot-group analysis without rerunning evaluation, use:
+
+- `memory_control_tests.evaluation.annotate_slot_types_llm`
+
+This post-processing script reads an existing eval JSON and adds:
+
+- `slot_type_llm`
+- `slot_type_llm_reason`
+
+to each `slot_recall_results` item. This is intended for later slices such as:
 
 - budget vs date/time
 - contact information vs document/account reference
 - medical/access needs vs general preferences
+
+The final instruction-control summary treats this as an additional research question for `slot_recall`:
+
+- which kinds of sensitive information are easier to retain?
+- which kinds are easier to suppress or forget?
+- how much does each instruction type hurt `probe` utility for each slot category?
 
 At evaluation time:
 
@@ -311,6 +326,27 @@ This gives one clean non-ablation result before separately varying:
 - key-to-instruction gap
 - instruction-to-question gap
 - release timing for `no_use`
+
+## Summary Questions
+
+The aggregated instruction-control summary is designed to answer six questions:
+
+1. average effect of the three instruction types
+   - compare `baseline`, `no_store`, `forget`, and `no_use` by backend/model
+2. effect on `probe` utility
+   - track whether allowed facts remain retrievable
+3. `no_store` test-stage effect
+   - compare `ask_period = Early / Intermediate / Late`
+4. `forget` questions
+   - immediate effect of forgetting
+   - persistence of forgetting
+   - timing sensitivity
+5. `no_use` questions
+   - immediate suppression
+   - persistence
+   - recovery after release
+6. slot-type difficulty in `slot_recall`
+   - use `slot_type_llm` post-processing to study which kinds of sensitive information are easier to remember or forget
 
 ## `no_use` Research Questions
 
