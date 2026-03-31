@@ -102,7 +102,7 @@ def _rephrase_label_reference(label: str) -> str:
     if not label:
         return ""
     label = label[0].lower() + label[1:] if len(label) > 1 else label.lower()
-    return f"my earlier request about {label}"
+    return f"that {label}"
 
 
 def build_key_reference(turns: List[Dict], label_map: Optional[Dict[str, str]] = None) -> str:

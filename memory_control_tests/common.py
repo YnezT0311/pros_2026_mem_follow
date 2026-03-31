@@ -43,7 +43,6 @@ RECALL_ANSWER_TYPES = {
     "distractor_irrelevant",
 }
 
-
 def load_json(path: str) -> Dict:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
@@ -194,10 +193,33 @@ def build_reference_rewrite_prompt(turns: List[Dict[str, Any]], label_map: Optio
         "The phrase should refer to the whole earlier request content, not just slot values or one private detail.\n"
         "Use the side-note event text and the user turn as the main semantic anchor. Treat the label hint only as a weak helper.\n"
         "Do not copy the label hints verbatim; paraphrase or lightly expand them so the phrase sounds natural.\n"
+        "Prefer phrases like 'that Paris stay plan', 'the Portugal trip we discussed', or 'that Europe cultural tour request'.\n"
+        "Do not use awkward scaffolds such as 'my earlier request about ...', 'that earlier request about ...', or 'the request labeled ...'.\n"
         "Do not mention identifier labels, details, private details, sensitive info, memory, or quotes.\n"
         "Do not write a full sentence. Return only the reference phrase.\n\n"
         f"Targets:\n{json.dumps(items, ensure_ascii=False, indent=2)}"
     )
+
+
+def _normalize_reference_seed(text: str) -> str:
+    seed = " ".join(str(text or "").strip().split()).strip(" .")
+    if not seed:
+        return ""
+    seed = re.sub(r"^(my|our)\s+", "", seed, flags=re.IGNORECASE)
+    seed = re.sub(
+        r"^(earlier|previous|prior)\s+(request|trip|plan|conversation)\s+(about|for)\s+",
+        "",
+        seed,
+        flags=re.IGNORECASE,
+    )
+    seed = seed[0].lower() + seed[1:] if len(seed) > 1 else seed.lower()
+    generic_travelish = any(
+        token in seed.lower()
+        for token in ["trip", "stay", "tour", "plan", "packing", "reservation", "detour", "flight", "hotel"]
+    )
+    if generic_travelish:
+        return f"that {seed}"
+    return f"the {seed} plan"
 
 
 def _fallback_build_key_reference(turns: List[Dict[str, Any]], label_map: Optional[Dict[str, str]] = None) -> str:
@@ -206,7 +228,7 @@ def _fallback_build_key_reference(turns: List[Dict[str, Any]], label_map: Option
         timestamp = str(turn.get("timestamp", "")).strip()
         label_hint = str((label_map or {}).get(timestamp, "")).strip()
         if label_hint:
-            phrase = f"my earlier request about {label_hint[0].lower() + label_hint[1:] if len(label_hint) > 1 else label_hint.lower()}"
+            phrase = _normalize_reference_seed(label_hint)
         else:
             task_goal = " ".join(str(turn.get("task_goal", "")).strip().split()).rstrip(".")
             if not task_goal:
@@ -214,8 +236,7 @@ def _fallback_build_key_reference(turns: List[Dict[str, Any]], label_map: Option
             else:
                 task_goal = re.sub(r"^Kenji\s+(seeks assistance in|wants assistance in|wants help with|asks for help with|needs help with|is looking for help with|requests help with)\s+", "", task_goal, flags=re.IGNORECASE)
                 task_goal = re.sub(r"^Kenji\s+", "", task_goal, flags=re.IGNORECASE).strip()
-                task_goal = task_goal[0].lower() + task_goal[1:] if len(task_goal) > 1 else task_goal.lower()
-                phrase = task_goal or "that earlier request"
+                phrase = _normalize_reference_seed(task_goal) or "that earlier request"
         if phrase and phrase not in phrases:
             phrases.append(phrase)
     if not phrases:
@@ -248,7 +269,10 @@ def rewrite_key_reference(
         return fallback
     if len(cleaned.split()) > 18:
         return fallback
-    if any(bad in cleaned.lower() for bad in ["identifier label", "private details", "sensitive info"]):
+    lowered = cleaned.lower()
+    if any(bad in lowered for bad in ["identifier label", "private details", "sensitive info"]):
+        return fallback
+    if any(bad in lowered for bad in ["my earlier request about", "that earlier request about", "request labeled"]):
         return fallback
     return cleaned
 
