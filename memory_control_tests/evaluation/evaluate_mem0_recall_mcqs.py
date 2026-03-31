@@ -7,7 +7,7 @@ from typing import Any, Dict, List
 
 from openai import OpenAI
 
-from ..common import build_recall_summary, build_transformed_history_path, period_tag, rewrite_key_references
+from ..common import build_forget_stage_map, build_recall_summary, build_transformed_history_path, period_tag, rewrite_key_references
 from ..transforms import build_context_messages
 from ..transforms import apply_no_store, apply_staged_forget, apply_no_use
 
@@ -395,6 +395,7 @@ def main() -> None:
     conversation_path = rendered["source_conversation"]
     conversation = json.loads(Path(conversation_path).read_text(encoding="utf-8"))
     sidecar = _load_sidecar(rendered, args.sidecar)
+    forget_stage_map = build_forget_stage_map(sidecar)
     label_map = _build_label_map(rendered)
     rewrite_client = _load_openai_client(args.api_key_file)
     transformed_history_path = build_transformed_history_path(
@@ -471,6 +472,7 @@ def main() -> None:
                 "timestamp": item["timestamp"],
                 "turn_role": item["turn_role"],
                 "identifier_label": item["identifier_label"],
+                "forget_stage": forget_stage_map.get(item["timestamp"], ""),
                 "question": item["rendered"]["question"],
                 **scored,
             }
@@ -494,6 +496,7 @@ def main() -> None:
                     "timestamp": item["timestamp"],
                     "turn_role": item["turn_role"],
                     "identifier_label": item["identifier_label"],
+                    "forget_stage": forget_stage_map.get(item["timestamp"], ""),
                     "sensitive_key": slot_item["sensitive_key"],
                     "sensitive_value": slot_item["sensitive_value"],
                     "question": slot_item["question"],

@@ -12,6 +12,12 @@ PERIODS = [
     "Conversation Late Stage",
 ]
 
+TARGET_INSTRUCTION_PERIODS = [
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage",
+]
+
 INITIAL_INTERACTION_HISTORY = "Interaction History Initial Stage"
 INITIAL_CONVERSATION_HISTORY = "Conversation History Initial Stage"
 EVENT_HISTORY_SECTIONS = [
@@ -166,6 +172,23 @@ def build_recall_summary(
     }
 
 
+def build_forget_stage_map(sidecar: Dict[str, Any]) -> Dict[str, str]:
+    """Map key-turn timestamps to the staged forget period used for that key.
+
+    The staged forget setup uses one shared transformed history and assigns the
+    first three key turns to Early, Intermediate, and Late respectively. This
+    helper makes that mapping explicit so evaluation outputs can record, for
+    each key item, which forget stage applied to it.
+    """
+    mapping: Dict[str, str] = {}
+    key_turns = sidecar.get("key_turns", []) if isinstance(sidecar, dict) else []
+    for period, turn in zip(TARGET_INSTRUCTION_PERIODS, key_turns[:3]):
+        timestamp = str((turn or {}).get("timestamp", "")).strip()
+        if timestamp:
+            mapping[timestamp] = period
+    return mapping
+
+
 def build_reference_rewrite_prompt(turns: List[Dict[str, Any]], label_map: Optional[Dict[str, str]] = None) -> str:
     items = []
     for turn in (turns or [])[:3]:
@@ -193,8 +216,11 @@ def build_reference_rewrite_prompt(turns: List[Dict[str, Any]], label_map: Optio
         "The phrase should refer to the whole earlier request content, not just slot values or one private detail.\n"
         "Use the side-note event text and the user turn as the main semantic anchor. Treat the label hint only as a weak helper.\n"
         "Do not copy the label hints verbatim; paraphrase or lightly expand them so the phrase sounds natural.\n"
-        "Prefer phrases like 'that Paris stay plan', 'the Portugal trip we discussed', or 'that Europe cultural tour request'.\n"
+        "Return a bare noun phrase that points to the full request, such as 'the travel insurance for a family island getaway', "
+        "'the Portugal trip plan', or 'the Europe cultural tour'.\n"
+        "Do not include wrappers like 'anything about ...', 'what I shared about ...', or 'what I told you about ...'.\n"
         "Do not use awkward scaffolds such as 'my earlier request about ...', 'that earlier request about ...', or 'the request labeled ...'.\n"
+        "Avoid overly short label-like phrases such as 'that Paris stay plan' unless the fuller request meaning would be lost otherwise.\n"
         "Do not mention identifier labels, details, private details, sensitive info, memory, or quotes.\n"
         "Do not write a full sentence. Return only the reference phrase.\n\n"
         f"Targets:\n{json.dumps(items, ensure_ascii=False, indent=2)}"
@@ -218,8 +244,8 @@ def _normalize_reference_seed(text: str) -> str:
         for token in ["trip", "stay", "tour", "plan", "packing", "reservation", "detour", "flight", "hotel"]
     )
     if generic_travelish:
-        return f"that {seed}"
-    return f"the {seed} plan"
+        return f"the {seed}"
+    return seed
 
 
 def _fallback_build_key_reference(turns: List[Dict[str, Any]], label_map: Optional[Dict[str, str]] = None) -> str:
@@ -272,7 +298,19 @@ def rewrite_key_reference(
     lowered = cleaned.lower()
     if any(bad in lowered for bad in ["identifier label", "private details", "sensitive info"]):
         return fallback
-    if any(bad in lowered for bad in ["my earlier request about", "that earlier request about", "request labeled"]):
+    if any(
+        bad in lowered
+        for bad in [
+            "my earlier request about",
+            "that earlier request about",
+            "request labeled",
+            "anything about ",
+            "what i shared about ",
+            "what i told you about ",
+        ]
+    ):
+        return fallback
+    if lowered.startswith("that ") and len(lowered.split()) <= 5:
         return fallback
     return cleaned
 

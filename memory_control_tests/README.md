@@ -170,6 +170,50 @@ For `no_store`, templates support either:
   - `Conversation Intermediate Stage`
   - `Conversation Late Stage`
 - the target reference is rewritten with an LLM from the corresponding `Side_Note` event text, user turn, and task goal so it sounds like a natural callback rather than a copied identifier label
+- each evaluated key item stores its assigned `forget_stage`, so downstream analysis can group:
+  - `key1 -> Early`
+  - `key2 -> Intermediate`
+  - `key3 -> Late`
+
+#### `forget` Setup
+
+The staged `forget` setup uses one shared transformed history per conversation:
+
+- `key1` is forgotten at `Conversation Early Stage`
+- `key2` is forgotten at `Conversation Intermediate Stage`
+- `key3` is forgotten at `Conversation Late Stage`
+
+This means:
+
+- `key1` can be evaluated at `Early`, `Intermediate`, and `Late`
+- `key2` can be evaluated at `Intermediate` and `Late`
+- `key3` can be evaluated at `Late`
+
+#### `forget` Research Questions
+
+The current staged `forget` design supports three core questions:
+
+1. immediate effect of forgetting
+
+- does recall drop as soon as the forget instruction appears?
+- evaluate the average over:
+  - `key1 forget@E ask@E`
+  - `key2 forget@I ask@I`
+  - `key3 forget@L ask@L`
+
+2. persistence of forgetting
+
+- once a key has been forgotten, does the suppression persist at later stages?
+- the main trajectory is:
+  - `key1 forget@E: ask@E -> ask@I -> ask@L`
+
+3. timing sensitivity
+
+- is an earlier forget instruction stronger than a later one?
+- compare:
+  - `key1 forget@E ask@E`
+  - `key2 forget@I ask@I`
+  - `key3 forget@L ask@L`
 
 ### `no_use`
 
@@ -213,6 +257,11 @@ The intended evaluation unit is:
 - one world condition
 - one `ask_period`
 - one MCQ
+
+For staged `forget`, evaluated key items also carry a `forget_stage` field in the saved results so later analysis can condition on both:
+
+- `forget_stage`
+- `ask_period`
 
 At evaluation time:
 
