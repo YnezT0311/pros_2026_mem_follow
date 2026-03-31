@@ -349,58 +349,26 @@ def _validate_rendered_output(rendered: Dict[str, Any]) -> None:
                 )
 
 
-def render_file(
-    sidecar_path: str,
-    model: str = "gpt-5-mini",
-    output_path: str = "",
-    api_key_file: str = "openrouter_key.txt",
-) -> Path:
-    spec_dict = build_mcq_spec_dict(sidecar_path)
-    resolved_output_path = Path(output_path or sidecar_path.replace(".memory_control.json", ".recall_rendered.json"))
-    client = _load_client(api_key_file)
-
-    pool = spec_dict["key_turns"] + spec_dict["probe_turns"]
-    rendered = {
-        "source_sidecar": spec_dict["source_sidecar"],
-        "source_conversation": spec_dict["source_conversation"],
-        "model": model,
-        "whole_recall_set": [],
-        "slot_recall_set": [],
-    }
-
-    for section in ("key_turns", "probe_turns"):
-        for turn_stub in spec_dict.get(section, []):
-            turn = _find_turn(spec_dict, turn_stub["timestamp"])
-            rendered_turn = _render_one_turn(client, model, turn, pool)
-            rendered["whole_recall_set"].append(
-                {
-                    "timestamp": rendered_turn["timestamp"],
-                    "turn_role": rendered_turn["turn_role"],
-                    "identifier_label": rendered_turn["identifier_label"],
-                    "user_turn": rendered_turn["user_turn"],
-                    "task_goal": rendered_turn["task_goal"],
-                    "rendered": rendered_turn["whole_recall"]["rendered"],
-                    "disambiguation": rendered_turn["whole_recall"]["disambiguation"],
-                    "is_identifier_unique_to_target": rendered_turn["whole_recall"]["is_identifier_unique_to_target"],
-                }
-            )
-            rendered["slot_recall_set"].append(
-                {
-                    "timestamp": rendered_turn["timestamp"],
-                    "turn_role": rendered_turn["turn_role"],
-                    "identifier_label": rendered_turn["identifier_label"],
-                    "user_turn": rendered_turn["user_turn"],
-                    "task_goal": rendered_turn["task_goal"],
-                    "rendered": rendered_turn["slot_recall"],
-                }
-            )
-
+def _load_existing_rendered(output_path: Path) -> Dict[str, Any]:
+    if not output_path.exists():
+        raise FileNotFoundError(
+            f"{output_path} does not exist. Create a full rendered file first or run with --qa_family all."
+        )
+    rendered = json.loads(output_path.read_text(encoding="utf-8"))
     _validate_rendered_output(rendered)
-    resolved_output_path.write_text(json.dumps(rendered, ensure_ascii=False, indent=2), encoding="utf-8")
-    return resolved_output_path
+    return rendered
 
 
-def _render_one_turn(
+def _index_turns(items: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
+    indexed: Dict[str, Dict[str, Any]] = {}
+    for item in items:
+        timestamp = str(item.get("timestamp", "")).strip()
+        if timestamp:
+            indexed[timestamp] = item
+    return indexed
+
+
+def _render_whole_recall(
     client: OpenAI,
     model: str,
     turn: Dict[str, Any],
@@ -414,6 +382,25 @@ def _render_one_turn(
     disambig_prompt = build_disambiguation_check_prompt(turn, pool, identifier_label)
     disambig = _request_json(client, model, disambig_prompt)
 
+    return {
+        "timestamp": turn["timestamp"],
+        "turn_role": turn["turn_role"],
+        "identifier_label": identifier_label,
+        "user_turn": turn["user_turn"],
+        "task_goal": turn["task_goal"],
+        "rendered": rendered_whole,
+        "disambiguation": disambig,
+        "is_identifier_unique_to_target": sorted(disambig.get("matched_timestamps", []))
+        == [turn["timestamp"]],
+    }
+
+
+def _render_slot_recall(
+    client: OpenAI,
+    model: str,
+    turn: Dict[str, Any],
+    identifier_label: str,
+) -> Dict[str, Any]:
     raw_slot = _request_json(
         client,
         model,
@@ -430,21 +417,71 @@ def _render_one_turn(
     return {
         "timestamp": turn["timestamp"],
         "turn_role": turn["turn_role"],
-        "task_goal": turn["task_goal"],
-        "user_turn": turn["user_turn"],
         "identifier_label": identifier_label,
-        "whole_recall": {
-            "rendered": rendered_whole,
-            "disambiguation": disambig,
-            "is_identifier_unique_to_target": sorted(disambig.get("matched_timestamps", []))
-            == [turn["timestamp"]],
-        },
-        "slot_recall": rendered_slot,
-        "application": {
-            "status": "TODO_deferred",
-            "note": "Application / reasoning generation is intentionally deferred until recall is stable.",
-        },
+        "user_turn": turn["user_turn"],
+        "task_goal": turn["task_goal"],
+        "rendered": rendered_slot,
     }
+
+
+def render_file(
+    sidecar_path: str,
+    model: str = "gpt-5-mini",
+    output_path: str = "",
+    api_key_file: str = "openrouter_key.txt",
+    qa_family: str = "all",
+) -> Path:
+    spec_dict = build_mcq_spec_dict(sidecar_path)
+    resolved_output_path = Path(output_path or sidecar_path.replace(".memory_control.json", ".recall_rendered.json"))
+    client = _load_client(api_key_file)
+
+    pool = spec_dict["key_turns"] + spec_dict["probe_turns"]
+    if qa_family == "all":
+        rendered = {
+            "source_sidecar": spec_dict["source_sidecar"],
+            "source_conversation": spec_dict["source_conversation"],
+            "model": model,
+            "whole_recall_set": [],
+            "slot_recall_set": [],
+        }
+        existing_whole: Dict[str, Dict[str, Any]] = {}
+        existing_slot: Dict[str, Dict[str, Any]] = {}
+    else:
+        rendered = _load_existing_rendered(resolved_output_path)
+        rendered["model"] = model
+        existing_whole = _index_turns(rendered.get("whole_recall_set", []))
+        existing_slot = _index_turns(rendered.get("slot_recall_set", []))
+        rendered["whole_recall_set"] = []
+        rendered["slot_recall_set"] = []
+
+    for section in ("key_turns", "probe_turns"):
+        for turn_stub in spec_dict.get(section, []):
+            turn = _find_turn(spec_dict, turn_stub["timestamp"])
+            timestamp = turn["timestamp"]
+
+            if qa_family in {"all", "whole"}:
+                whole_item = _render_whole_recall(client, model, turn, pool)
+            else:
+                whole_item = existing_whole.get(timestamp)
+                if whole_item is None:
+                    raise ValueError(
+                        f"Missing existing whole-recall item for timestamp {timestamp}. Run with --qa_family all first."
+                    )
+            rendered["whole_recall_set"].append(whole_item)
+
+            if qa_family in {"all", "slot"}:
+                slot_item = _render_slot_recall(client, model, turn, whole_item["identifier_label"])
+            else:
+                slot_item = existing_slot.get(timestamp)
+                if slot_item is None:
+                    raise ValueError(
+                        f"Missing existing slot-recall item for timestamp {timestamp}. Run with --qa_family all first."
+                    )
+            rendered["slot_recall_set"].append(slot_item)
+
+    _validate_rendered_output(rendered)
+    resolved_output_path.write_text(json.dumps(rendered, ensure_ascii=False, indent=2), encoding="utf-8")
+    return resolved_output_path
 
 
 def main() -> None:
@@ -456,12 +493,14 @@ def main() -> None:
     parser.add_argument("--model", default="gpt-5-mini")
     parser.add_argument("--output", default="")
     parser.add_argument("--api_key_file", default="openrouter_key.txt")
+    parser.add_argument("--qa_family", choices=["all", "whole", "slot"], default="all")
     args = parser.parse_args()
     output_path = render_file(
         sidecar_path=args.sidecar,
         model=args.model,
         output_path=args.output,
         api_key_file=args.api_key_file,
+        qa_family=args.qa_family,
     )
     print(output_path)
 

@@ -21,6 +21,8 @@ Run the pipeline in this order:
    - `python -m memory_control_tests.generation.build_mcq_specs`
 3. render recall MCQs
    - `python -m memory_control_tests.generation.render_recall_mcqs --sidecar ...`
+   - rerender only slot-recall MCQs when whole-recall is already good:
+     - `python -m memory_control_tests.generation.render_recall_mcqs --sidecar ... --qa_family slot`
 4. export final QA files
    - `python -m memory_control_tests.generation.export_test_benchmark --source_dir data/test`
 5. run evaluation
@@ -263,6 +265,12 @@ The recall benchmark is built in stages rather than with one free-form prompt:
 3. reuse the stabilized label to generate `slot_recall`
 4. leave `application` deferred until recall is stable
 
+When only the slot answers need to be refreshed, rerun:
+
+- `python -m memory_control_tests.generation.render_recall_mcqs --sidecar ... --qa_family slot`
+
+This reuses the existing whole-recall render for the same file and only regenerates `slot_recall`.
+
 The builder layer is implemented in:
 
 - `generation/build_mcq_specs.py`
@@ -279,6 +287,8 @@ Rendered MCQs always use the same three semantic answer types:
 - `remember_correct`
 - `distractor_irrelevant`
 - `not_remember`
+
+For `slot_recall`, all three answers are required to be short natural assistant responses rather than bare values or field fragments. This applies even when the target detail is a date, budget, email, phone number, or other short slot value.
 
 The renderer then shuffles them into `A/B/C` and stores:
 
@@ -318,7 +328,7 @@ The structural integrity check is implemented in:
 - `generation/render_recall_mcqs.py`
 - `generation/export_test_benchmark.py`
 
-`generation/render_recall_mcqs.py` validates every whole-recall and slot-recall answer bank before writing a rendered file. `generation/export_test_benchmark.py` only verifies that rendered files are valid before exporting them into final QA tables.
+`generation/render_recall_mcqs.py` validates every whole-recall and slot-recall answer bank before writing a rendered file. It can rerender `all`, `whole`, or `slot`, and `slot` mode reuses the existing whole-recall outputs in the same `*.recall_rendered.json` file. `generation/export_test_benchmark.py` only verifies that rendered files are valid before exporting them into final QA tables.
 
 The backend directory names are:
 
