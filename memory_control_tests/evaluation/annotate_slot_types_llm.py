@@ -120,6 +120,31 @@ def _classify_item(client: OpenAI, model: str, item: Dict[str, Any]) -> Tuple[st
     return label, reason
 
 
+def classify_slot_item(client: OpenAI, model: str, item: Dict[str, Any]) -> Tuple[str, str]:
+    return _classify_item(client, model, item)
+
+
+def annotate_slot_items(
+    items: List[Dict[str, Any]],
+    model: str = "gpt-5-mini",
+    api_key_file: str = "openrouter_key.txt",
+) -> None:
+    client = _load_client(api_key_file)
+    cache: Dict[Tuple[str, str, str, str], Tuple[str, str]] = {}
+    for item in items:
+        key = (
+            str(item.get("identifier_label", "")).strip(),
+            str(item.get("question", "")).strip(),
+            str(item.get("sensitive_key", "")).strip(),
+            str(item.get("sensitive_value", "")).strip(),
+        )
+        if key not in cache:
+            cache[key] = _classify_item(client, model, item)
+        slot_type_llm, reason = cache[key]
+        item["slot_type_llm"] = slot_type_llm
+        item["slot_type_llm_reason"] = reason
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Annotate slot recall results with an LLM-derived slot type.")
     parser.add_argument("--input", required=True, help="Path to an eval JSON file.")
@@ -130,21 +155,7 @@ def main() -> None:
 
     path = Path(args.input)
     data = json.loads(path.read_text(encoding="utf-8"))
-    client = _load_client(args.api_key_file)
-
-    cache: Dict[Tuple[str, str, str, str], Tuple[str, str]] = {}
-    for item in data.get("slot_recall_results", []):
-        key = (
-            str(item.get("identifier_label", "")).strip(),
-            str(item.get("question", "")).strip(),
-            str(item.get("sensitive_key", "")).strip(),
-            str(item.get("sensitive_value", "")).strip(),
-        )
-        if key not in cache:
-            cache[key] = _classify_item(client, args.model, item)
-        slot_type_llm, reason = cache[key]
-        item["slot_type_llm"] = slot_type_llm
-        item["slot_type_llm_reason"] = reason
+    annotate_slot_items(data.get("slot_recall_results", []), model=args.model, api_key_file=args.api_key_file)
 
     output_path = Path(args.output) if args.output else path
     output_path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")

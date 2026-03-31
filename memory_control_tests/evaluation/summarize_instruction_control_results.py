@@ -5,6 +5,8 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 
+from memory_control_tests.evaluation.annotate_slot_types_llm import annotate_slot_items
+
 
 PERIOD_ORDER = {
     "Conversation Early Stage": 0,
@@ -18,35 +20,6 @@ SUMMARY_KEYS = [
     "slot_recall_key_turns",
     "slot_recall_probe_turns",
 ]
-
-
-def classify_slot_type_for_summary(sensitive_key: str, sensitive_value: str, question: str = "") -> str:
-    key = str(sensitive_key or "").strip().lower()
-    value = str(sensitive_value or "").strip().lower()
-    q = str(question or "").strip().lower()
-    text = " ".join(part for part in [key, value, q] if part)
-
-    if "email" in text or "@" in value:
-        return "email"
-    if any(token in text for token in ["phone", "call", "text"]) or re.search(r"\+?\d[\d\-\s\(\)]{6,}", value):
-        return "phone"
-    if any(token in text for token in ["budget", "cost", "price", "spend", "fare"]) or "$" in value:
-        return "budget"
-    if any(token in text for token in ["date", "when", "arrive", "departure", "return", "leave", "check-in", "check out"]) or re.search(r"\d{4}-\d{2}-\d{2}", value):
-        return "date_or_time"
-    if any(token in text for token in ["schedule", "timing", "time of day", "afternoon", "morning", "evening", "pickup"]):
-        return "schedule_or_timing"
-    if any(token in text for token in ["hotel", "guesthouse", "airport", "station", "neighborhood", "location", "address", "where"]):
-        return "location_or_contact_point"
-    if any(token in text for token in ["insurance", "coverage", "pre-existing condition", "asthma", "medical", "knee", "allergy", "diet", "gluten-free"]):
-        if any(token in text for token in ["diet", "gluten-free", "vegetarian", "vegan"]):
-            return "dietary_requirement"
-        return "medical_or_access_need"
-    if any(token in text for token in ["passport", "record", "reference", "confirmation", "booking code", "id", "miles", "account"]):
-        return "document_or_account_reference"
-    if any(token in text for token in ["preference", "prefer", "want", "need", "looking for", "style"]):
-        return "preference_or_requirement"
-    return "other_detail"
 
 
 def _backend_from_name(name: str) -> Optional[str]:
@@ -271,32 +244,57 @@ def _aggregate_no_use_subset(
     }
 
 
-def _aggregate_slot_type_effects(records: List[Dict[str, Any]], persona_limit: int) -> Dict[str, Any]:
+def _aggregate_slot_type_effects(
+    records: List[Dict[str, Any]],
+    persona_limit: int,
+    slot_type_model: str,
+    slot_type_api_key_file: str,
+) -> Dict[str, Any]:
     out: Dict[str, Any] = {}
     for world in ["baseline", "no_store", "forget", "no_use"]:
         chosen = [r for r in records if r["world"] == world and r["persona"] < persona_limit]
+        pending: List[Dict[str, Any]] = []
+        for rec in chosen:
+            pending.extend(
+                item for item in rec.get("slot_recall_results", [])
+                if not str(item.get("slot_type_llm", "")).strip()
+            )
+        if pending:
+            annotate_slot_items(pending, model=slot_type_model, api_key_file=slot_type_api_key_file)
         grouped: Dict[str, Dict[str, List[Dict[str, Any]]]] = defaultdict(lambda: {"key": [], "probe": []})
+        annotated_items = 0
         for rec in chosen:
             for item in rec.get("slot_recall_results", []):
-                slot_type = str(item.get("slot_type_llm", "")).strip() or classify_slot_type_for_summary(
-                    item.get("sensitive_key", ""),
-                    item.get("sensitive_value", ""),
-                    item.get("question", ""),
-                )
+                slot_type = str(item.get("slot_type_llm", "")).strip()
+                if not slot_type:
+                    continue
+                annotated_items += 1
                 role = item.get("turn_role", "")
                 if role in {"key", "probe"}:
                     grouped[slot_type][role].append(item)
         out[world] = {
-            slot_type: {
-                "key_turns": _slice_summary(payload["key"]),
-                "probe_turns": _slice_summary(payload["probe"]),
-            }
-            for slot_type, payload in sorted(grouped.items())
+            "annotation_coverage": {
+                "annotated_items": annotated_items,
+                "skipped_unannotated_items": 0,
+            },
+            "by_slot_type": {
+                slot_type: {
+                    "key_turns": _slice_summary(payload["key"]),
+                    "probe_turns": _slice_summary(payload["probe"]),
+                }
+                for slot_type, payload in sorted(grouped.items())
+            },
         }
     return out
 
 
-def _build_summary(records: List[Dict[str, Any]], other_personas: int, forget_personas: int) -> Dict[str, Any]:
+def _build_summary(
+    records: List[Dict[str, Any]],
+    other_personas: int,
+    forget_personas: int,
+    slot_type_model: str,
+    slot_type_api_key_file: str,
+) -> Dict[str, Any]:
     summary: Dict[str, Any] = {}
     for (backend, model), group in sorted(_group_key(records).items()):
         summary_key = f"{backend}__{model}"
@@ -350,6 +348,8 @@ def _build_summary(records: List[Dict[str, Any]], other_personas: int, forget_pe
             "slot_type_effects": _aggregate_slot_type_effects(
                 group,
                 forget_personas if backend != "plain" and any(r["world"] == "forget" for r in group) else other_personas,
+                slot_type_model,
+                slot_type_api_key_file,
             ),
         }
     return summary
@@ -370,10 +370,18 @@ def main() -> None:
     parser.add_argument("--models", nargs="+", default=["gpt-5.4-mini", "gpt-4o"])
     parser.add_argument("--other_personas", type=int, default=4)
     parser.add_argument("--forget_personas", type=int, default=10)
+    parser.add_argument("--slot_type_model", default="gpt-5-mini")
+    parser.add_argument("--slot_type_api_key_file", default="openrouter_key.txt")
     args = parser.parse_args()
 
     records = _load_records([Path(p) for p in args.input_roots], args.models)
-    summary = _build_summary(records, args.other_personas, args.forget_personas)
+    summary = _build_summary(
+        records,
+        args.other_personas,
+        args.forget_personas,
+        args.slot_type_model,
+        args.slot_type_api_key_file,
+    )
 
     out_json = Path(args.output_json)
     out_json.parent.mkdir(parents=True, exist_ok=True)

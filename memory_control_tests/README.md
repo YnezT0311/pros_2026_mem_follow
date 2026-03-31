@@ -263,7 +263,7 @@ For staged `forget`, evaluated key items also carry a `forget_stage` field in th
 - `forget_stage`
 - `ask_period`
 
-If you want semantic slot-group analysis without rerunning evaluation, use:
+If you want semantic slot-group analysis, use:
 
 - `memory_control_tests.evaluation.annotate_slot_types_llm`
 
@@ -283,6 +283,14 @@ The final instruction-control summary treats this as an additional research ques
 - which kinds of sensitive information are easier to retain?
 - which kinds are easier to suppress or forget?
 - how much does each instruction type hurt `probe` utility for each slot category?
+
+The summary script can also do this classification directly from each slot's:
+
+- `sensitive_key`
+- `sensitive_value`
+- `question`
+
+using the same LLM post-processing logic. Pre-annotating the eval files is optional rather than required.
 
 At evaluation time:
 
