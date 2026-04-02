@@ -88,6 +88,19 @@ Usage
   python evaluate_chatgpt_web.py --topic travelPlanning --world baseline \\
     --sample_id_filter travelPlanning_persona0 \\
     --output results/chatgpt_web_test.jsonl
+
+Outputs:
+  The aggregate `--output` file remains a JSONL stream of MCQ-level records.
+  In addition, each completed test session now writes its own directory under
+  `<output_parent>/<output_stem>_sessions/<topic>/<sample_id>/test_type_<world>/<session_key>/`
+  containing:
+    - `session_result.json`  : session-level summary plus MCQ records
+    - `session_trace.json`   : round-by-round user input and ChatGPT output
+    - `session_log.txt`      : the same per-session log text printed to terminal
+
+  Resume behavior uses `session_result.json` as the source of truth: if that
+  file already exists for a given `(topic, world, sample_id, session_key)`,
+  the session is skipped.
 """
 
 import argparse
@@ -338,6 +351,13 @@ class TestSession:
     """One ChatGPT conversation = one test session."""
     session_key: str          # unique id used for resume tracking
     phases: list[Phase]       # ordered list of (feed → ask) phases
+
+
+@dataclass
+class SessionRunResult:
+    records: list[dict[str, Any]]
+    trace: list[dict[str, Any]]
+    log_lines: list[str]
 
 
 # ---------------------------------------------------------------------------
@@ -808,15 +828,21 @@ async def _run_session(
     sample_id: str,
     world: str,
     conv_source: str,
-) -> list[dict[str, Any]]:
+) -> SessionRunResult:
     """
     Execute one TestSession: for each phase, feed user turns then ask MCQs.
-    Returns list of result dicts (one per MCQ item answered).
+    Returns records, a full trace, and human-readable log lines.
     """
     await _new_chat(page)
     results: list[dict[str, Any]] = []
+    trace: list[dict[str, Any]] = []
+    log_lines: list[str] = []
     last_resp_len = 0
     session_memory_events: list[dict] = []
+
+    def _log(message: str) -> None:
+        print(message, flush=True)
+        log_lines.append(message)
 
     for phase in session.phases:
         # --- Feed user turns ---
@@ -824,25 +850,54 @@ async def _run_session(
             pre  = timing.sample_typing_delay(len(turn)) if timing else 0.4
             post = (timing.sample_reading_delay(last_resp_len) * history_rate
                     if timing else turn_delay)
-            print(f"    [{phase.label}] turn {j+1}/{len(phase.user_turns)} "
-                  f"({len(turn)}ch pre={pre:.1f}s post={post:.1f}s)...",
-                  end=" ", flush=True)
-            await _send_message(page, turn, pre_send_delay=pre, post_response_delay=post)
-            resp_text = await _get_last_response(page)
-            last_resp_len = len(resp_text)
-            mem_triggered, mem_content = await _check_memory_update(page)
-            if mem_triggered:
-                event = {"phase": phase.label, "turn_index": j,
-                         "user_turn": turn[:200], "memory_content": mem_content}
-                session_memory_events.append(event)
-                print(f"ok [MEMORY: {mem_content[:60]}]")
-            else:
-                print("ok")
+            prefix = (f"    [{phase.label}] turn {j+1}/{len(phase.user_turns)} "
+                      f"({len(turn)}ch pre={pre:.1f}s post={post:.1f}s)...")
+            try:
+                await _send_message(page, turn, pre_send_delay=pre, post_response_delay=post)
+                resp_text = await _get_last_response(page)
+                last_resp_len = len(resp_text)
+                mem_triggered, mem_content = await _check_memory_update(page)
+                if mem_triggered:
+                    event = {"phase": phase.label, "turn_index": j,
+                             "user_turn": turn[:200], "memory_content": mem_content}
+                    session_memory_events.append(event)
+                    suffix = f" ok [MEMORY: {mem_content[:60]}]"
+                else:
+                    suffix = " ok"
+                _log(prefix + suffix)
+                trace.append({
+                    "event_type": "history_turn",
+                    "test_type": world,
+                    "phase_label": phase.label,
+                    "turn_index": j,
+                    "user_input": turn,
+                    "assistant_output": resp_text,
+                    "pre_send_delay_sec": pre,
+                    "post_response_delay_sec": post,
+                    "memory_triggered": mem_triggered,
+                    "memory_content": mem_content,
+                })
+            except Exception as e:
+                _log(prefix + f" ERROR: {e}")
+                trace.append({
+                    "event_type": "history_turn",
+                    "test_type": world,
+                    "phase_label": phase.label,
+                    "turn_index": j,
+                    "user_input": turn,
+                    "assistant_output": "",
+                    "pre_send_delay_sec": pre,
+                    "post_response_delay_sec": post,
+                    "memory_triggered": False,
+                    "memory_content": "",
+                    "error": str(e),
+                })
+                raise
 
         if not phase.mcq_items:
             continue
 
-        print(f"    [{phase.label}] asking {len(phase.mcq_items)} MCQs...")
+        _log(f"    [{phase.label}] asking {len(phase.mcq_items)} MCQs...")
 
         # --- Ask MCQ questions ---
         for k, item in enumerate(phase.mcq_items):
@@ -850,9 +905,9 @@ async def _run_session(
             pre  = timing.sample_typing_delay(len(prompt)) if timing else 0.4
             post = timing.sample_reading_delay(last_resp_len) if timing else turn_delay
 
-            print(f"    MCQ {k+1}/{len(phase.mcq_items)} "
-                  f"[{item.qa_family} {item.turn_role} {item.timestamp}] "
-                  f"pre={pre:.1f}s...", end=" ", flush=True)
+            prefix = (f"    MCQ {k+1}/{len(phase.mcq_items)} "
+                      f"[{item.qa_family} {item.turn_role} {item.timestamp}] "
+                      f"pre={pre:.1f}s...")
 
             rec: dict[str, Any] = {
                 "sample_id": sample_id,
@@ -886,6 +941,7 @@ async def _run_session(
 
                 predicted = _extract_choice(response_text, item.choice_order)
                 predicted_type = item.choice_to_answer_type.get(predicted, "")
+                correct_type = item.choice_to_answer_type.get(item.correct_choice, "")
                 rec["model_response"] = response_text
                 rec["predicted_choice"] = predicted
                 rec["predicted_answer_type"] = predicted_type
@@ -898,15 +954,60 @@ async def _run_session(
 
                 symbol = "✓" if predicted == item.correct_choice else "✗"
                 mem_tag = " [MEMORY]" if mem_triggered else ""
-                print(f"{symbol} pred={predicted} correct={item.correct_choice} "
-                      f"({predicted_type}){mem_tag}")
+                _log(
+                    prefix + " " +
+                    f"{symbol} pred={predicted} [pred_type={predicted_type}] "
+                    f"correct={item.correct_choice} [correct_type={correct_type}]"
+                    f"{mem_tag}"
+                )
+                trace.append({
+                    "event_type": "mcq",
+                    "test_type": world,
+                    "phase_label": phase.label,
+                    "mcq_index": k,
+                    "qa_family": item.qa_family,
+                    "turn_role": item.turn_role,
+                    "timestamp": item.timestamp,
+                    "question": item.question,
+                    "user_input": prompt,
+                    "assistant_output": response_text,
+                    "predicted_choice": predicted,
+                    "predicted_answer_type": predicted_type,
+                    "correct_choice": item.correct_choice,
+                    "correct_answer_type": correct_type,
+                    "pre_send_delay_sec": pre,
+                    "post_response_delay_sec": post,
+                    "memory_triggered": mem_triggered,
+                    "memory_content": mem_content,
+                })
             except Exception as e:
                 rec["error"] = str(e)
-                print(f"ERROR: {e}")
+                _log(prefix + f" ERROR: {e}")
+                trace.append({
+                    "event_type": "mcq",
+                    "test_type": world,
+                    "phase_label": phase.label,
+                    "mcq_index": k,
+                    "qa_family": item.qa_family,
+                    "turn_role": item.turn_role,
+                    "timestamp": item.timestamp,
+                    "question": item.question,
+                    "user_input": prompt,
+                    "assistant_output": "",
+                    "predicted_choice": "",
+                    "predicted_answer_type": "",
+                    "correct_choice": item.correct_choice,
+                    "correct_answer_type": item.choice_to_answer_type.get(item.correct_choice, ""),
+                    "pre_send_delay_sec": pre,
+                    "post_response_delay_sec": post,
+                    "memory_triggered": False,
+                    "memory_content": "",
+                    "error": str(e),
+                })
 
             results.append(rec)
 
-    return results
+    return SessionRunResult(records=results, trace=trace, log_lines=log_lines)
 
 
 # ---------------------------------------------------------------------------
@@ -921,6 +1022,64 @@ def _load_jsonl(path: str) -> list[dict]:
             if line:
                 records.append(json.loads(line))
     return records
+
+
+def _slug(text: str) -> str:
+    return re.sub(r"[^A-Za-z0-9._-]+", "_", text.strip()) or "unknown"
+
+
+def _session_output_dir(output_path: Path, topic: str, world: str, sample_id: str, session_key: str) -> Path:
+    root = output_path.parent / f"{output_path.stem}_sessions"
+    return root / _slug(topic) / _slug(sample_id) / f"test_type_{_slug(world)}" / _slug(session_key)
+
+
+def _session_artifact_paths(output_path: Path, topic: str, world: str, sample_id: str, session_key: str) -> dict[str, Path]:
+    session_dir = _session_output_dir(output_path, topic, world, sample_id, session_key)
+    return {
+        "dir": session_dir,
+        "result": session_dir / "session_result.json",
+        "trace": session_dir / "session_trace.json",
+        "log": session_dir / "session_log.txt",
+    }
+
+
+def _write_session_artifacts(
+    output_path: Path,
+    topic: str,
+    world: str,
+    sample_id: str,
+    session: TestSession,
+    conv_source: str,
+    session_result: SessionRunResult,
+    status: str,
+    error: str = "",
+) -> None:
+    artifacts = _session_artifact_paths(output_path, topic, world, sample_id, session.session_key)
+    artifacts["dir"].mkdir(parents=True, exist_ok=True)
+    answered = [r for r in session_result.records if not r.get("error") and r.get("predicted_choice")]
+    correct = sum(1 for r in answered if r.get("predicted_choice") == r.get("correct_choice"))
+    result_payload = {
+        "topic": topic,
+        "world": world,
+        "test_type": world,
+        "sample_id": sample_id,
+        "session_key": session.session_key,
+        "status": status,
+        "error": error,
+        "conv_source": conv_source,
+        "num_phases": len(session.phases),
+        "num_records": len(session_result.records),
+        "num_answered": len(answered),
+        "num_correct": correct,
+        "accuracy": (correct / len(answered)) if answered else 0.0,
+        "phase_labels": [p.label for p in session.phases],
+        "records_path": str(artifacts["trace"]),
+        "log_path": str(artifacts["log"]),
+        "records": session_result.records,
+    }
+    artifacts["result"].write_text(json.dumps(result_payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    artifacts["trace"].write_text(json.dumps(session_result.trace, ensure_ascii=False, indent=2), encoding="utf-8")
+    artifacts["log"].write_text("\n".join(session_result.log_lines) + "\n", encoding="utf-8")
 
 
 async def login_only(args: argparse.Namespace) -> None:
@@ -1043,8 +1202,10 @@ async def evaluate(args: argparse.Namespace) -> None:
 
                 for sess in sessions:
                     triple = (sample_id, args.world, sess.session_key)
-                    if triple in done:
+                    artifacts = _session_artifact_paths(output_path, args.topic, args.world, sample_id, sess.session_key)
+                    if not args.overwrite and (triple in done or artifacts["result"].exists()):
                         print(f"  [{sess.session_key}] already done, skipping")
+                        done.add(triple)
                         continue
 
                     phase_summary = " → ".join(
@@ -1055,26 +1216,49 @@ async def evaluate(args: argparse.Namespace) -> None:
                     print(f"  [{sess.session_key}] {phase_summary}")
 
                     try:
-                        results = await _run_session(
+                        session_result = await _run_session(
                             page, sess, timing, args.turn_delay,
                             args.history_rate,
                             sample_id, args.world, conv_source,
                         )
+                        session_error = ""
+                        session_status = "completed"
                     except Exception as e:
                         print(f"  SESSION ERROR: {e}")
-                        results = [{
-                            "sample_id": sample_id, "world": args.world,
-                            "session_key": sess.session_key, "error": str(e),
-                        }]
+                        session_result = SessionRunResult(
+                            records=[{
+                                "sample_id": sample_id,
+                                "world": args.world,
+                                "session_key": sess.session_key,
+                                "error": str(e),
+                            }],
+                            trace=[],
+                            log_lines=[f"SESSION ERROR: {e}"],
+                        )
+                        session_error = str(e)
+                        session_status = "error"
                         try:
                             await page.goto(CHATGPT_URL)
                             await page.wait_for_timeout(3000)
                         except Exception:
                             pass
 
-                    # Write results atomically (all at once per session)
+                    # Persist per-session artifacts before touching aggregate output.
+                    _write_session_artifacts(
+                        output_path,
+                        args.topic,
+                        args.world,
+                        sample_id,
+                        sess,
+                        conv_source,
+                        session_result,
+                        status=session_status,
+                        error=session_error,
+                    )
+
+                    # Write aggregate results atomically (all at once per session)
                     with open(str(output_path), "a", encoding="utf-8") as out_f:
-                        for rec in results:
+                        for rec in session_result.records:
                             out_f.write(json.dumps(rec, ensure_ascii=False) + "\n")
                     done.add(triple)
 
