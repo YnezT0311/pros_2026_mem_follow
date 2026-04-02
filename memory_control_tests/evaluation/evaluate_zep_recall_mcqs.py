@@ -8,7 +8,7 @@ from uuid import uuid4
 
 from openai import OpenAI
 
-from ..common import build_forget_stage_map, build_recall_summary, build_transformed_history_path, classify_slot_type, period_tag, rewrite_key_references
+from ..common import build_forget_stage_map, build_recall_summary, build_transformed_history_path, period_tag, rewrite_key_references
 from ..transforms import apply_no_store, apply_staged_forget, apply_no_use, build_context_messages
 
 
@@ -393,7 +393,7 @@ def main() -> None:
         release_period=args.no_use_release_period or None,
         restrict_period=args.no_use_restrict_period,
     )
-    if transformed_history_path.exists():
+    if transformed_history_path and transformed_history_path.exists():
         transformed_conversation = json.loads(transformed_history_path.read_text(encoding="utf-8"))
     else:
         target_references = rewrite_key_references(
@@ -410,7 +410,9 @@ def main() -> None:
             args.no_use_restrict_period,
             args.no_use_release_period,
         )
-        transformed_history_path.write_text(json.dumps(transformed_conversation, ensure_ascii=False, indent=2), encoding="utf-8")
+        if transformed_history_path:
+            transformed_history_path.parent.mkdir(parents=True, exist_ok=True)
+            transformed_history_path.write_text(json.dumps(transformed_conversation, ensure_ascii=False, indent=2), encoding="utf-8")
     persona_messages = _build_persona_system_message(transformed_conversation)
     context_messages = build_context_messages(transformed_conversation, args.ask_period)
 
@@ -487,10 +489,6 @@ def main() -> None:
                         "forget_stage": forget_stage_map.get(item["timestamp"], ""),
                         "sensitive_key": slot_item["sensitive_key"],
                         "sensitive_value": slot_item["sensitive_value"],
-                        "slot_type": slot_item.get(
-                            "slot_type",
-                            classify_slot_type(slot_item["sensitive_key"], slot_item["sensitive_value"], slot_item["question"]),
-                        ),
                         "question": slot_item["question"],
                         **scored,
                     }
@@ -516,7 +514,7 @@ def main() -> None:
     output_path = args.output or args.rendered.replace(".recall_rendered.json", suffix)
     output_file = Path(output_path)
     output_file.parent.mkdir(parents=True, exist_ok=True)
-    results["transformed_history_path"] = str(transformed_history_path)
+    results["transformed_history_path"] = str(transformed_history_path) if transformed_history_path else ""
     output_file.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     print(output_path)
 

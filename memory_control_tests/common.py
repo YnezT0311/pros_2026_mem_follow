@@ -75,17 +75,67 @@ def build_transformed_history_path(
     world: str,
     release_period: Optional[str] = None,
     restrict_period: Optional[str] = None,
-) -> Path:
+) -> Optional[Path]:
+    if world == "baseline":
+        return None
     rendered = Path(rendered_path)
     stem = rendered.name.replace(".recall_rendered.json", "")
     if world == "no_use":
         setting = build_no_use_setting_tag(restrict_period or "Conversation Early Stage", release_period)
         filename = f"{stem}.{world}.{setting}.transformed_history.json"
-    elif world == "baseline":
-        filename = f"{stem}.{world}.transformed_history.json"
     else:
         filename = f"{stem}.{world}.transformed_history.json"
+    parts = rendered.parts
+    try:
+        data_idx = parts.index("data")
+        if parts[data_idx + 1] == "test":
+            topic = parts[data_idx + 2]
+            return rendered.parents[2] / topic / world / "transformed_histories" / filename
+    except (ValueError, IndexError):
+        pass
     return rendered.parent / filename
+
+
+def build_rendered_output_path(sidecar_path: str) -> Path:
+    sidecar = Path(sidecar_path)
+    stem = sidecar.name.replace(".memory_control.json", "")
+    parts = sidecar.parts
+    try:
+        data_idx = parts.index("data")
+        if parts[data_idx + 1] == "baseline":
+            topic = parts[data_idx + 2]
+            return sidecar.parents[3] / "test" / topic / "specs" / f"{stem}.recall_rendered.json"
+    except (ValueError, IndexError):
+        pass
+    return sidecar.with_name(f"{stem}.recall_rendered.json")
+
+
+def build_plain_eval_output_path(
+    rendered_path: str,
+    world: str,
+    ask_period: str,
+    model: str,
+    release_period: Optional[str] = None,
+    restrict_period: Optional[str] = None,
+) -> Path:
+    rendered = Path(rendered_path)
+    stem = rendered.name.replace(".recall_rendered.json", "")
+    if world == "no_use":
+        setting = build_no_use_setting_tag(restrict_period or "Conversation Early Stage", release_period)
+        filename = f"{stem}.{world}.{setting}.test_{period_tag(ask_period)}.recall_eval_{model}.json"
+    else:
+        filename = f"{stem}.{world}.recall_eval_{model}.json"
+        if ask_period != "Conversation Late Stage":
+            filename = f"{stem}.{world}.{period_tag(ask_period)}.recall_eval_{model}.json"
+    parts = rendered.parts
+    try:
+        data_idx = parts.index("data")
+        if parts[data_idx + 1] == "test":
+            topic = parts[data_idx + 2]
+            return rendered.parents[3] / "eval_results" / topic / world / model / filename
+    except (ValueError, IndexError):
+        pass
+    return rendered.with_name(filename)
 
 
 def rate_answer_type_summary(items: List[Dict[str, Any]]) -> Dict[str, Any]:
@@ -189,44 +239,6 @@ def build_forget_stage_map(sidecar: Dict[str, Any]) -> Dict[str, str]:
     return mapping
 
 
-def classify_slot_type(
-    sensitive_key: str,
-    sensitive_value: str,
-    question: str = "",
-) -> str:
-    """Infer a coarse slot type for later recall analysis.
-
-    The renderer often receives generic `sensitive_key` values such as
-    `detail`, so we also inspect the question wording and value surface form.
-    The goal is not ontology-perfect typing; it is a stable analysis tag for
-    slices such as budget/date/contact/medical/travel-preference.
-    """
-    key = str(sensitive_key or "").strip().lower()
-    value = str(sensitive_value or "").strip().lower()
-    q = str(question or "").strip().lower()
-    text = " ".join(part for part in [key, value, q] if part)
-
-    if "email" in text or "@" in value:
-        return "email"
-    if any(token in text for token in ["phone", "call", "text"]) or re.search(r"\+?\d[\d\-\s\(\)]{6,}", value):
-        return "phone"
-    if any(token in text for token in ["budget", "cost", "price", "spend", "fare"]) or "$" in value:
-        return "budget"
-    if any(token in text for token in ["date", "when", "arrive", "departure", "return", "leave", "check-in", "check out"]) or re.search(r"\d{4}-\d{2}-\d{2}", value):
-        return "date_or_time"
-    if any(token in text for token in ["schedule", "timing", "time of day", "afternoon", "morning", "evening", "pickup"]):
-        return "schedule_or_timing"
-    if any(token in text for token in ["hotel", "guesthouse", "airport", "station", "neighborhood", "location", "address", "where"]):
-        return "location_or_contact_point"
-    if any(token in text for token in ["insurance", "coverage", "pre-existing condition", "asthma", "medical", "knee", "allergy", "diet", "gluten-free"]):
-        if any(token in text for token in ["diet", "gluten-free", "vegetarian", "vegan"]):
-            return "dietary_requirement"
-        return "medical_or_access_need"
-    if any(token in text for token in ["passport", "record", "reference", "confirmation", "booking code", "id", "miles", "account"]):
-        return "document_or_account_reference"
-    if any(token in text for token in ["preference", "prefer", "want", "need", "looking for", "style"]):
-        return "preference_or_requirement"
-    return "other_detail"
 
 
 def build_reference_rewrite_prompt(turns: List[Dict[str, Any]], label_map: Optional[Dict[str, str]] = None) -> str:

@@ -7,7 +7,7 @@ from typing import Any, Dict, List
 
 from openai import OpenAI
 
-from ..common import build_forget_stage_map, build_recall_summary, build_transformed_history_path, classify_slot_type, period_tag, rewrite_key_references
+from ..common import build_forget_stage_map, build_recall_summary, build_transformed_history_path, period_tag, rewrite_key_references
 from ..transforms import build_context_messages
 from ..transforms import apply_no_store, apply_staged_forget, apply_no_use
 
@@ -197,7 +197,15 @@ def _apply_world_transform(
 
 def _ensure_mem0_home(root: Path) -> None:
     root.mkdir(parents=True, exist_ok=True)
+    tmp_root = root / "tmp"
+    qdrant_root = root / "qdrant"
+    tmp_root.mkdir(parents=True, exist_ok=True)
+    qdrant_root.mkdir(parents=True, exist_ok=True)
     os.environ["HOME"] = str(root)
+    os.environ["MEM0_DIR"] = str(root)
+    os.environ["TMPDIR"] = str(tmp_root)
+    os.environ["TMP"] = str(tmp_root)
+    os.environ["TEMP"] = str(tmp_root)
 
 
 def _load_local_mem0_memory(runtime_root: Path, api_key_file: str = "openrouter_key.txt"):
@@ -206,7 +214,18 @@ def _load_local_mem0_memory(runtime_root: Path, api_key_file: str = "openrouter_
 
     from mem0 import Memory
 
-    return Memory()
+    return Memory.from_config(
+        {
+            "vector_store": {
+                "provider": "qdrant",
+                "config": {
+                    "collection_name": "mem0",
+                    "path": str((runtime_root / "qdrant").resolve()),
+                },
+            },
+            "history_db_path": str((runtime_root / "history.db").resolve()),
+        }
+    )
 
 
 def _format_memories(search_result: Dict[str, Any]) -> str:
@@ -387,6 +406,7 @@ def main() -> None:
     parser.add_argument("--sidecar", default="")
     parser.add_argument("--memory_limit", type=int, default=5)
     parser.add_argument("--output", default="")
+    parser.add_argument("--api_key_file", default="openrouter_key.txt")
     parser.add_argument("--no_use_restrict_period", default="Conversation Early Stage")
     parser.add_argument("--no_use_release_period", default="")
     args = parser.parse_args()
@@ -404,7 +424,7 @@ def main() -> None:
         release_period=args.no_use_release_period or None,
         restrict_period=args.no_use_restrict_period,
     )
-    if transformed_history_path.exists():
+    if transformed_history_path and transformed_history_path.exists():
         transformed_conversation = json.loads(transformed_history_path.read_text(encoding="utf-8"))
     else:
         target_references = rewrite_key_references(
@@ -421,12 +441,16 @@ def main() -> None:
             args.no_use_restrict_period,
             args.no_use_release_period,
         )
-        transformed_history_path.write_text(json.dumps(transformed_conversation, ensure_ascii=False, indent=2), encoding="utf-8")
+        if transformed_history_path:
+            transformed_history_path.parent.mkdir(parents=True, exist_ok=True)
+            transformed_history_path.write_text(json.dumps(transformed_conversation, ensure_ascii=False, indent=2), encoding="utf-8")
     persona_messages = _build_persona_system_message(transformed_conversation)
     context_messages = persona_messages + build_context_messages(transformed_conversation, args.ask_period)
 
     client = _load_openai_client()
-    runtime_root = Path(".mem0_runtime") / Path(args.rendered).stem
+    model_tag = re.sub(r"[^A-Za-z0-9._-]+", "_", args.model)
+    backend_tag = re.sub(r"[^A-Za-z0-9._-]+", "_", args.backend)
+    runtime_root = Path(".mem0_runtime") / model_tag / backend_tag / Path(args.rendered).stem
     memory = _load_local_mem0_memory(runtime_root, args.api_key_file)
     user_id = Path(args.rendered).stem
     agent = _build_agent(
@@ -499,10 +523,6 @@ def main() -> None:
                     "forget_stage": forget_stage_map.get(item["timestamp"], ""),
                     "sensitive_key": slot_item["sensitive_key"],
                     "sensitive_value": slot_item["sensitive_value"],
-                    "slot_type": slot_item.get(
-                        "slot_type",
-                        classify_slot_type(slot_item["sensitive_key"], slot_item["sensitive_value"], slot_item["question"]),
-                    ),
                     "question": slot_item["question"],
                     **scored,
                 }
@@ -527,8 +547,10 @@ def main() -> None:
         if args.ask_period != "Conversation Late Stage":
             suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.mem0_{args.backend}_eval_{args.model}.json"
     output_path = args.output or args.rendered.replace(".recall_rendered.json", suffix)
-    results["transformed_history_path"] = str(transformed_history_path)
-    Path(output_path).write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
+    output_file = Path(output_path)
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    results["transformed_history_path"] = str(transformed_history_path) if transformed_history_path else ""
+    output_file.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     print(output_path)
 
 

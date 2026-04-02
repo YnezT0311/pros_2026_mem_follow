@@ -9,50 +9,204 @@ rendered_for_persona() {
   echo "data/test/travelPlanning/specs/conversation_travelPlanning_persona${persona}_sample0.recall_rendered.json"
 }
 
+period_tag() {
+  case "$1" in
+    "Conversation Early Stage") echo "early" ;;
+    "Conversation Intermediate Stage") echo "intermediate" ;;
+    "Conversation Late Stage") echo "late" ;;
+    *) echo "unknown" ;;
+  esac
+}
+
+expected_plain_output() {
+  local rendered="$1" model="$2" world="$3" ask_period="$4" restrict="${5:-}" release="${6:-}"
+  local stem out_dir filename
+  stem="$(basename "$rendered" .recall_rendered.json)"
+  out_dir="eval_results/travelPlanning/${world}/${model}"
+  mkdir -p "$out_dir"
+  if [[ "$world" == "no_use" ]]; then
+    filename="${stem}.${world}.restrict_$(period_tag "$restrict")"
+    if [[ -n "$release" ]]; then
+      filename="${filename}.release_$(period_tag "$release")"
+    fi
+    filename="${filename}.test_$(period_tag "$ask_period").recall_eval_${model}.json"
+  else
+    filename="${stem}.${world}.recall_eval_${model}.json"
+    if [[ "$ask_period" != "Conversation Late Stage" ]]; then
+      filename="${stem}.${world}.$(period_tag "$ask_period").recall_eval_${model}.json"
+    fi
+  fi
+  echo "${out_dir}/${filename}"
+}
+
+expected_mem0_output() {
+  local rendered="$1" model="$2" world="$3" ask_period="$4" backend="$5" restrict="${6:-}" release="${7:-}"
+  local suffix=""
+  if [[ "$world" == "no_use" ]]; then
+    suffix=".${world}.restrict_$(period_tag "$restrict")"
+    if [[ -n "$release" ]]; then
+      suffix="${suffix}.release_$(period_tag "$release")"
+    fi
+    suffix="${suffix}.test_$(period_tag "$ask_period").mem0_${backend}_eval_${model}.json"
+  else
+    suffix=".${world}.mem0_${backend}_eval_${model}.json"
+    if [[ "$ask_period" != "Conversation Late Stage" ]]; then
+      suffix=".${world}.$(period_tag "$ask_period").mem0_${backend}_eval_${model}.json"
+    fi
+  fi
+  echo "${rendered/.recall_rendered.json/$suffix}"
+}
+
+expected_amem_output() {
+  local rendered="$1" model="$2" world="$3" ask_period="$4" restrict="${5:-}" release="${6:-}"
+  local suffix=""
+  if [[ "$world" == "no_use" ]]; then
+    suffix=".${world}.restrict_$(period_tag "$restrict")"
+    if [[ -n "$release" ]]; then
+      suffix="${suffix}.release_$(period_tag "$release")"
+    fi
+    suffix="${suffix}.test_$(period_tag "$ask_period").a_mem_retrieval_eval_${model}.json"
+  else
+    suffix=".${world}.a_mem_retrieval_eval_${model}.json"
+    if [[ "$ask_period" != "Conversation Late Stage" ]]; then
+      suffix=".${world}.$(period_tag "$ask_period").a_mem_retrieval_eval_${model}.json"
+    fi
+  fi
+  echo "${rendered/.recall_rendered.json/$suffix}"
+}
+
+expected_langmem_output() {
+  local rendered="$1" model="$2" world="$3" ask_period="$4" restrict="${5:-}" release="${6:-}"
+  local suffix=""
+  if [[ "$world" == "no_use" ]]; then
+    suffix=".${world}.restrict_$(period_tag "$restrict")"
+    if [[ -n "$release" ]]; then
+      suffix="${suffix}.release_$(period_tag "$release")"
+    fi
+    suffix="${suffix}.test_$(period_tag "$ask_period").langmem_retrieval_eval_${model}.json"
+  else
+    suffix=".${world}.langmem_retrieval_eval_${model}.json"
+    if [[ "$ask_period" != "Conversation Late Stage" ]]; then
+      suffix=".${world}.$(period_tag "$ask_period").langmem_retrieval_eval_${model}.json"
+    fi
+  fi
+  echo "${rendered/.recall_rendered.json/$suffix}"
+}
+
 run_plain() {
   local model="$1" rendered="$2" world="$3" ask_period="$4"
   shift 4
+  local extra_args=("$@")
+  local output_path
+  local restrict="" release=""
+  local i=0
+  while [[ $i -lt ${#extra_args[@]} ]]; do
+    case "${extra_args[$i]}" in
+      --no_use_restrict_period) restrict="${extra_args[$((i+1))]}"; i=$((i+2)) ;;
+      --no_use_release_period) release="${extra_args[$((i+1))]}"; i=$((i+2)) ;;
+      *) i=$((i+1)) ;;
+    esac
+  done
+  output_path="$(expected_plain_output "$rendered" "$model" "$world" "$ask_period" "$restrict" "$release")"
+  if [[ -f "$output_path" ]]; then
+    echo "SKIP plain $model $world $ask_period -> $output_path"
+    return
+  fi
+  echo "RUN plain $model $world $ask_period -> $output_path"
   conda run -n agent python -m memory_control_tests.evaluation.evaluate_recall_mcqs \
     --rendered "$rendered" \
     --model "$model" \
     --world "$world" \
     --ask_period "$ask_period" \
-    "$@"
+    "${extra_args[@]}" \
+    --output "$output_path"
 }
 
 run_mem0() {
   local model="$1" rendered="$2" world="$3" ask_period="$4"
   shift 4
+  local extra_args=("$@")
+  local output_path backend="retrieval" restrict="" release=""
+  local i=0
+  while [[ $i -lt ${#extra_args[@]} ]]; do
+    case "${extra_args[$i]}" in
+      --backend) backend="${extra_args[$((i+1))]}"; i=$((i+2)) ;;
+      --no_use_restrict_period) restrict="${extra_args[$((i+1))]}"; i=$((i+2)) ;;
+      --no_use_release_period) release="${extra_args[$((i+1))]}"; i=$((i+2)) ;;
+      *) i=$((i+1)) ;;
+    esac
+  done
+  output_path="$(expected_mem0_output "$rendered" "$model" "$world" "$ask_period" "$backend" "$restrict" "$release")"
+  if [[ -f "$output_path" ]]; then
+    echo "SKIP mem0 $model $world $ask_period -> $output_path"
+    return
+  fi
+  echo "RUN mem0 $model $world $ask_period -> $output_path"
   conda run -n mem0 python -m memory_control_tests.evaluation.evaluate_mem0_recall_mcqs \
     --rendered "$rendered" \
     --model "$model" \
     --world "$world" \
     --ask_period "$ask_period" \
     --backend retrieval \
-    "$@"
+    "${extra_args[@]}" \
+    --output "$output_path"
 }
 
 run_amem() {
   local model="$1" rendered="$2" world="$3" ask_period="$4"
   shift 4
+  local extra_args=("$@")
+  local output_path restrict="" release=""
+  local i=0
+  while [[ $i -lt ${#extra_args[@]} ]]; do
+    case "${extra_args[$i]}" in
+      --no_use_restrict_period) restrict="${extra_args[$((i+1))]}"; i=$((i+2)) ;;
+      --no_use_release_period) release="${extra_args[$((i+1))]}"; i=$((i+2)) ;;
+      *) i=$((i+1)) ;;
+    esac
+  done
+  output_path="$(expected_amem_output "$rendered" "$model" "$world" "$ask_period" "$restrict" "$release")"
+  if [[ -f "$output_path" ]]; then
+    echo "SKIP A-Mem $model $world $ask_period -> $output_path"
+    return
+  fi
+  echo "RUN A-Mem $model $world $ask_period -> $output_path"
   HF_HOME=/home/yao/.cache/huggingface TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
   conda run -n amem python -m memory_control_tests.evaluation.evaluate_amem_recall_mcqs \
     --rendered "$rendered" \
     --model "$model" \
     --world "$world" \
     --ask_period "$ask_period" \
-    "$@"
+    "${extra_args[@]}" \
+    --output "$output_path"
 }
 
 run_langmem() {
   local model="$1" rendered="$2" world="$3" ask_period="$4"
   shift 4
+  local extra_args=("$@")
+  local output_path restrict="" release=""
+  local i=0
+  while [[ $i -lt ${#extra_args[@]} ]]; do
+    case "${extra_args[$i]}" in
+      --no_use_restrict_period) restrict="${extra_args[$((i+1))]}"; i=$((i+2)) ;;
+      --no_use_release_period) release="${extra_args[$((i+1))]}"; i=$((i+2)) ;;
+      *) i=$((i+1)) ;;
+    esac
+  done
+  output_path="$(expected_langmem_output "$rendered" "$model" "$world" "$ask_period" "$restrict" "$release")"
+  if [[ -f "$output_path" ]]; then
+    echo "SKIP LangMem $model $world $ask_period -> $output_path"
+    return
+  fi
+  echo "RUN LangMem $model $world $ask_period -> $output_path"
   conda run -n langmem311 python -m memory_control_tests.evaluation.evaluate_langmem_recall_mcqs \
     --rendered "$rendered" \
     --model "$model" \
     --world "$world" \
     --ask_period "$ask_period" \
-    "$@"
+    "${extra_args[@]}" \
+    --output "$output_path"
 }
 
 annotate_slot_types() {

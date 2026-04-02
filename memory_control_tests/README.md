@@ -56,7 +56,7 @@ The main design choice is that we do **not** materialize a separate static world
 `generation/build_baseline.py` copies each conversation file from `data/output/` into `data/baseline/` and writes a sidecar spec file:
 
 - `conversation_...json`
-- `conversation_....memory_control.json`
+- `specs/conversation_....memory_control.json`
 
 The copied conversation file is the candidate baseline world. The sidecar describes whether that copied conversation is already usable as-is or whether future targeted revision would still be needed.
 
@@ -222,7 +222,7 @@ The current staged `forget` design supports three core questions:
 - append one global restriction turn that blocks use of earlier conversation memory
 - optionally append one later release turn that restores access to earlier conversation memory
 - the restriction is global rather than key-specific
-- transformed histories for concrete settings are saved under `data/test/<topic>/specs/` so the same world configuration can be reused across evaluators
+- transformed histories for concrete non-baseline settings are saved under `data/test/<topic>/<world>/transformed_histories/` so the same world configuration can be reused across evaluators
 
 The concrete instruction/reply pools live in `templates.json`.
 
@@ -474,9 +474,16 @@ The filesystem layout separates source conversations, benchmark artifacts, and e
   - application QA placeholders plus `all_personas.json`
 - `data/test/<topic>/specs/`
   - intermediate benchmark artifacts:
-    - `*.memory_control.json`
     - `*.mcq_specs.json`
     - `*.recall_rendered.json`
+- `data/baseline/<topic>/specs/`
+  - baseline-sidecar artifacts:
+    - `*.memory_control.json`
+- `data/test/<topic>/<world>/transformed_histories/`
+  - cached transformed conversations for non-baseline worlds:
+    - `no_store`
+    - `forget`
+    - `no_use`
 - `eval_results/<topic>/<world>/<backend>/`
   - scored evaluation outputs for a given world and backend
 

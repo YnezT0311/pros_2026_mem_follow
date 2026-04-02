@@ -26,7 +26,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Build baseline memory-control bundles from output conversations.")
     parser.add_argument("--source_dir", default="data/output")
     parser.add_argument("--dest_dir", default="data/baseline")
-    parser.add_argument("--spec_dest_dir", default="data/test")
+    parser.add_argument("--spec_dest_dir", default="data/baseline")
     args = parser.parse_args()
 
     source_root = Path(args.source_dir)

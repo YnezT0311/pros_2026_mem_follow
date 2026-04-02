@@ -9,7 +9,7 @@ from typing import Any, Dict, List
 
 from openai import OpenAI
 
-from ..common import classify_slot_type
+from ..common import build_rendered_output_path
 from ..mcq_specs import (
     _build_slot_recall_render_prompt,
     build_disambiguation_check_prompt,
@@ -314,11 +314,6 @@ def _finalize_slot_render(rendered_slot: Dict[str, Any], seed_prefix: str) -> Di
             {
                 "sensitive_key": item["sensitive_key"],
                 "sensitive_value": item["sensitive_value"],
-                "slot_type": classify_slot_type(
-                    item["sensitive_key"],
-                    item["sensitive_value"],
-                    item.get("question", ""),
-                ),
                 "identifier_label": item["identifier_label"],
                 "question": item["question"],
                 "choices": shuffled["choices"],
@@ -438,7 +433,7 @@ def render_file(
     qa_family: str = "all",
 ) -> Path:
     spec_dict = build_mcq_spec_dict(sidecar_path)
-    resolved_output_path = Path(output_path or sidecar_path.replace(".memory_control.json", ".recall_rendered.json"))
+    resolved_output_path = Path(output_path) if output_path else build_rendered_output_path(sidecar_path)
     client = _load_client(api_key_file)
 
     pool = spec_dict["key_turns"] + spec_dict["probe_turns"]
@@ -486,6 +481,7 @@ def render_file(
             rendered["slot_recall_set"].append(slot_item)
 
     _validate_rendered_output(rendered)
+    resolved_output_path.parent.mkdir(parents=True, exist_ok=True)
     resolved_output_path.write_text(json.dumps(rendered, ensure_ascii=False, indent=2), encoding="utf-8")
     return resolved_output_path
 
@@ -494,7 +490,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Render recall-only MCQs from baseline MCQ specs.")
     parser.add_argument(
         "--sidecar",
-        default="data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.memory_control.json",
+        default="data/baseline/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.memory_control.json",
     )
     parser.add_argument("--model", default="gpt-5-mini")
     parser.add_argument("--output", default="")

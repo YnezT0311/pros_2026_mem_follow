@@ -9,7 +9,14 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from openai import OpenAI
 
-from ..common import build_forget_stage_map, build_recall_summary, build_transformed_history_path, classify_slot_type, period_tag, rewrite_key_references
+from ..common import (
+    build_forget_stage_map,
+    build_plain_eval_output_path,
+    build_recall_summary,
+    build_transformed_history_path,
+    period_tag,
+    rewrite_key_references,
+)
 from ..transforms import build_context_messages
 from ..transforms import apply_no_store, apply_staged_forget, apply_no_use
 
@@ -261,7 +268,7 @@ def main() -> None:
         release_period=args.no_use_release_period or None,
         restrict_period=args.no_use_restrict_period,
     )
-    if transformed_history_path.exists():
+    if transformed_history_path and transformed_history_path.exists():
         transformed_conversation = json.loads(transformed_history_path.read_text(encoding="utf-8"))
     else:
         target_references = rewrite_key_references(
@@ -278,10 +285,12 @@ def main() -> None:
             args.no_use_restrict_period,
             args.no_use_release_period,
         )
-        transformed_history_path.write_text(
-            json.dumps(transformed_conversation, ensure_ascii=False, indent=2),
-            encoding="utf-8",
-        )
+        if transformed_history_path:
+            transformed_history_path.parent.mkdir(parents=True, exist_ok=True)
+            transformed_history_path.write_text(
+                json.dumps(transformed_conversation, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
     context_messages = _build_persona_system_message(transformed_conversation) + build_context_messages(
         transformed_conversation, args.ask_period
     )
@@ -325,10 +334,6 @@ def main() -> None:
                 "forget_stage": forget_stage_map.get(item["timestamp"], ""),
                 "sensitive_key": slot_item["sensitive_key"],
                 "sensitive_value": slot_item["sensitive_value"],
-                "slot_type": slot_item.get(
-                    "slot_type",
-                    classify_slot_type(slot_item["sensitive_key"], slot_item["sensitive_value"], slot_item["question"]),
-                ),
                 "question": slot_item["question"],
                 "choices": slot_item["choices"],
                 "choice_to_answer_type": slot_item["choice_to_answer_type"],
@@ -375,7 +380,6 @@ def main() -> None:
             "forget_stage": payload["forget_stage"],
             "sensitive_key": payload["sensitive_key"],
             "sensitive_value": payload["sensitive_value"],
-            "slot_type": payload["slot_type"],
             "question": payload["question"],
             **scored,
         }
@@ -411,18 +415,20 @@ def main() -> None:
         results["slot_recall_results"],
     )
 
-    if args.world == "no_use":
-        suffix = f".{args.world}.restrict_{_ask_period_tag(args.no_use_restrict_period)}"
-        if args.no_use_release_period:
-            suffix += f".release_{_ask_period_tag(args.no_use_release_period)}"
-        suffix += f".test_{_ask_period_tag(args.ask_period)}.recall_eval_{args.model}.json"
-    else:
-        suffix = f".{args.world}.recall_eval_{args.model}.json"
-        if args.ask_period != "Conversation Late Stage":
-            suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.recall_eval_{args.model}.json"
-    output_path = args.output or args.rendered.replace(".recall_rendered.json", suffix)
-    results["transformed_history_path"] = str(transformed_history_path)
-    Path(output_path).write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
+    output_path = args.output or str(
+        build_plain_eval_output_path(
+            args.rendered,
+            args.world,
+            args.ask_period,
+            args.model,
+            release_period=args.no_use_release_period or None,
+            restrict_period=args.no_use_restrict_period,
+        )
+    )
+    output_file = Path(output_path)
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    results["transformed_history_path"] = str(transformed_history_path) if transformed_history_path else ""
+    output_file.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
     print(output_path)
 
 
