@@ -90,9 +90,13 @@ Usage
     --output results/chatgpt_web_test.jsonl
 
 Outputs:
-  The aggregate `--output` file remains a JSONL stream of MCQ-level records.
-  In addition, each completed test session now writes its own directory under
-  `<output_parent>/<output_stem>_sessions/<topic>/<sample_id>/test_type_<world>/<session_key>/`
+  `--output` is treated as a root hint, not as one big aggregate file.
+  Actual outputs are written per persona under:
+  `<output_parent>/chatgpt_web_results/<topic>/<sample_id>/test_type_<world>/`
+  including:
+    - `results.jsonl`          : MCQ-level records for that persona+test_type
+  Each completed test session also writes its own directory under:
+  `<output_parent>/chatgpt_web_results/<topic>/<sample_id>/test_type_<world>/session_<session_key>/`
   containing:
     - `session_result.json`  : session-level summary plus MCQ records
     - `session_trace.json`   : round-by-round user input and ChatGPT output
@@ -1028,9 +1032,21 @@ def _slug(text: str) -> str:
     return re.sub(r"[^A-Za-z0-9._-]+", "_", text.strip()) or "unknown"
 
 
+def _results_root(output_path: Path) -> Path:
+    return output_path.parent / "chatgpt_web_results"
+
+
+def _persona_output_dir(output_path: Path, topic: str, world: str, sample_id: str) -> Path:
+    root = _results_root(output_path)
+    return root / _slug(topic) / _slug(sample_id) / f"test_type_{_slug(world)}"
+
+
+def _persona_output_path(output_path: Path, topic: str, world: str, sample_id: str) -> Path:
+    return _persona_output_dir(output_path, topic, world, sample_id) / "results.jsonl"
+
+
 def _session_output_dir(output_path: Path, topic: str, world: str, sample_id: str, session_key: str) -> Path:
-    root = output_path.parent / f"{output_path.stem}_sessions"
-    return root / _slug(topic) / _slug(sample_id) / f"test_type_{_slug(world)}" / _slug(session_key)
+    return _persona_output_dir(output_path, topic, world, sample_id) / f"session_{_slug(session_key)}"
 
 
 def _session_artifact_paths(output_path: Path, topic: str, world: str, sample_id: str, session_key: str) -> dict[str, Path]:
@@ -1112,17 +1128,12 @@ async def login_only(args: argparse.Namespace) -> None:
 
 
 async def evaluate(args: argparse.Namespace) -> None:
-    output_path = Path(args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_root = Path(args.output)
+    output_root.parent.mkdir(parents=True, exist_ok=True)
 
-    # Resume: track completed (sample_id, world, session_key)
+    # Resume: rely on per-session artifacts as the source of truth.
     done: set[tuple[str, str, str]] = set()
-    if output_path.exists() and not args.overwrite:
-        for rec in _load_jsonl(str(output_path)):
-            done.add((rec.get("sample_id", ""), rec.get("world", ""),
-                      rec.get("session_key", "")))
-        if done:
-            print(f"Resuming: {len(done)} sessions already in output.")
+    persona_output_paths: list[Path] = []
 
     all_samples = _discover_samples(args.data_dir, args.topic)
     if args.sample_id_filter:
@@ -1197,13 +1208,16 @@ async def evaluate(args: argparse.Namespace) -> None:
                     continue
 
                 sessions = _plan_sessions(sample_id, conv, args.world, mcq_items)
+                persona_output_path = _persona_output_path(output_root, args.topic, args.world, sample_id)
+                persona_output_path.parent.mkdir(parents=True, exist_ok=True)
+                persona_output_paths.append(persona_output_path)
                 print(f"  {len(sessions)} session(s) planned: "
                       f"{[s.session_key for s in sessions]}")
 
                 for sess in sessions:
                     triple = (sample_id, args.world, sess.session_key)
-                    artifacts = _session_artifact_paths(output_path, args.topic, args.world, sample_id, sess.session_key)
-                    if not args.overwrite and (triple in done or artifacts["result"].exists()):
+                    artifacts = _session_artifact_paths(output_root, args.topic, args.world, sample_id, sess.session_key)
+                    if not args.overwrite and artifacts["result"].exists():
                         print(f"  [{sess.session_key}] already done, skipping")
                         done.add(triple)
                         continue
@@ -1245,7 +1259,7 @@ async def evaluate(args: argparse.Namespace) -> None:
 
                     # Persist per-session artifacts before touching aggregate output.
                     _write_session_artifacts(
-                        output_path,
+                        output_root,
                         args.topic,
                         args.world,
                         sample_id,
@@ -1256,8 +1270,8 @@ async def evaluate(args: argparse.Namespace) -> None:
                         error=session_error,
                     )
 
-                    # Write aggregate results atomically (all at once per session)
-                    with open(str(output_path), "a", encoding="utf-8") as out_f:
+                    # Write persona-level aggregate results atomically (all at once per session)
+                    with open(str(persona_output_path), "a", encoding="utf-8") as out_f:
                         for rec in session_result.records:
                             out_f.write(json.dumps(rec, ensure_ascii=False) + "\n")
                     done.add(triple)
@@ -1276,8 +1290,17 @@ async def evaluate(args: argparse.Namespace) -> None:
         finally:
             await context.close()
 
-    print(f"\nDone. Results saved to {output_path}")
-    _print_summary(output_path)
+    unique_outputs = []
+    seen = set()
+    for path in persona_output_paths:
+        if path not in seen:
+            unique_outputs.append(path)
+            seen.add(path)
+
+    print(f"\nDone. Persona-level results saved under {_results_root(output_root)}")
+    for path in unique_outputs:
+        print(f"  {path}")
+        _print_summary(path)
 
 
 def _print_summary(output_path: Path) -> None:
@@ -1294,15 +1317,27 @@ def _print_summary(output_path: Path) -> None:
     print(f"Total: {total}  Errors: {errors}  Answered: {len(answered)}")
     if answered:
         print(f"Overall correct: {correct}/{len(answered)} ({100*correct/len(answered):.1f}%)")
-    by_family: dict[str, dict[str, int]] = {}
-    for r in answered:
+    family_totals: dict[str, int] = {}
+    family_errors: dict[str, int] = {}
+    family_answered: dict[str, dict[str, int]] = {}
+    for r in records:
         fam = r.get("qa_family", "?")
+        family_totals[fam] = family_totals.get(fam, 0) + 1
+        if r.get("error") or not r.get("predicted_choice"):
+            family_errors[fam] = family_errors.get(fam, 0) + 1
+            continue
         t = r.get("predicted_answer_type", "unknown")
-        by_family.setdefault(fam, {})
-        by_family[fam][t] = by_family[fam].get(t, 0) + 1
-    for fam, counts in sorted(by_family.items()):
-        cor = counts.get("remember_correct", 0)
-        print(f"  {fam}: {cor}/{sum(counts.values())} correct | {counts}")
+        family_answered.setdefault(fam, {})
+        family_answered[fam][t] = family_answered[fam].get(t, 0) + 1
+    for fam in sorted(family_totals):
+        counts = family_answered.get(fam, {})
+        answered_n = sum(counts.values())
+        error_n = family_errors.get(fam, 0)
+        correct_n = counts.get("remember_correct", 0)
+        print(
+            f"  {fam}: correct {correct_n}/{answered_n} | "
+            f"answered {answered_n}/{family_totals[fam]} | errors {error_n} | {counts}"
+        )
 
 
 def main() -> None:
