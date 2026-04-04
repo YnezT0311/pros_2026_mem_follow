@@ -171,6 +171,7 @@ class TimingProfile:
 CHATGPT_URL   = "https://chatgpt.com/"
 SEL_INPUT     = "#prompt-textarea"
 SEL_SEND_BTN  = 'button[data-testid="send-button"]'
+SEL_COMPOSER_SUBMIT = "#composer-submit-button"
 SEL_STOP_BTN  = 'button[aria-label="Stop streaming"]'
 SEL_NEW_CHAT  = 'a[data-testid="new-conversation-button"], nav a[href="/"]'
 SEL_ASST_MSG  = '[data-message-author-role="assistant"]'
@@ -658,7 +659,12 @@ async def _open_settings_personalization(page: Page) -> bool:
     return False
 
 
-async def _clear_chatgpt_memory(page: Page, retries: int = 3) -> bool:
+async def _clear_chatgpt_memory(
+    page: Page,
+    retries: int = 3,
+    snapshot_dir: Optional[Path] = None,
+    snapshot_label: str = "memory_before_clear",
+) -> bool:
     """
     Open ChatGPT Settings → Personalization → Manage memories → delete all.
     Falls back to deleting memories one by one if no bulk-delete button exists.
@@ -685,6 +691,7 @@ async def _clear_chatgpt_memory(page: Page, retries: int = 3) -> bool:
             dialog_candidates = page.locator('[role="dialog"]').filter(
                 has=page.locator('text="Saved memories"')
             )
+            memory_container = None
 
             async def _debug_locator(locator, label: str, limit: int = 5) -> None:
                 try:
@@ -706,6 +713,7 @@ async def _clear_chatgpt_memory(page: Page, retries: int = 3) -> bool:
             try:
                 if await modal_root.is_visible(timeout=1500):
                     print("[debug] Saved memories modal root is visible")
+                    memory_container = modal_root
                     modal_kebabs = modal_root.locator(SEL_MEMORY_KEBAB)
                     await _debug_locator(modal_kebabs, "modal More options")
                     if await modal_kebabs.count() > 0:
@@ -718,6 +726,7 @@ async def _clear_chatgpt_memory(page: Page, retries: int = 3) -> bool:
                 try:
                     await dialog_root.wait_for(state="visible", timeout=2000)
                     print("[debug] Saved memories dialog candidate is visible")
+                    memory_container = dialog_root
                     dialog_kebabs = dialog_root.locator(SEL_MEMORY_KEBAB)
                     await _debug_locator(dialog_kebabs, "dialog More options")
                     if await dialog_kebabs.count() > 0:
@@ -730,9 +739,21 @@ async def _clear_chatgpt_memory(page: Page, retries: int = 3) -> bool:
                 await _debug_locator(page_kebabs, "page More options")
                 if await page_kebabs.count() > 0:
                     kebab = page_kebabs.last
+                    memory_container = page.locator('text="Saved memories"').last
 
             if kebab is None:
                 raise RuntimeError("Saved memories opened, but no visible More options button was found")
+
+            if snapshot_dir is not None and memory_container is not None:
+                try:
+                    snapshot_paths = await _save_memory_snapshot(
+                        memory_container,
+                        snapshot_dir,
+                        snapshot_label,
+                    )
+                    print(f"[debug] saved memory snapshot: {snapshot_paths}")
+                except Exception as snapshot_exc:
+                    print(f"[debug] failed to save memory snapshot: {snapshot_exc}")
 
             try:
                 kebab_count = await page.locator(SEL_MEMORY_KEBAB).count()
@@ -822,6 +843,71 @@ async def _send_message(
     post_response_delay: float = 8.0,
 ) -> None:
     input_box = page.locator(SEL_INPUT)
+    submit_btn = page.locator(SEL_COMPOSER_SUBMIT).first
+
+    async def _submit_state() -> dict[str, Any]:
+        return await page.evaluate(
+            """(sel) => {
+                const btn = document.querySelector(sel);
+                if (!btn) {
+                    return {
+                        exists: false,
+                        visible: false,
+                        disabled: true,
+                        ariaLabel: '',
+                        dataTestid: '',
+                        text: ''
+                    };
+                }
+                const style = window.getComputedStyle(btn);
+                const visible = style.visibility !== 'hidden' &&
+                    style.display !== 'none' &&
+                    btn.getClientRects().length > 0;
+                return {
+                    exists: true,
+                    visible,
+                    disabled: !!btn.disabled || btn.getAttribute('aria-disabled') === 'true',
+                    ariaLabel: btn.getAttribute('aria-label') || '',
+                    dataTestid: btn.getAttribute('data-testid') || '',
+                    text: (btn.innerText || btn.textContent || '').trim()
+                };
+            }""",
+            SEL_COMPOSER_SUBMIT,
+        )
+
+    async def _wait_until_not_streaming(timeout_ms: int = 120_000) -> None:
+        deadline = time.time() + timeout_ms / 1000
+        while time.time() < deadline:
+            state = await _submit_state()
+            aria = state["ariaLabel"].lower()
+            testid = state["dataTestid"].lower()
+            if not (
+                (state["exists"] and (aria == "stop streaming" or testid == "stop-button")) or
+                await page.locator(SEL_STOP_BTN).count() > 0 and await page.locator(SEL_STOP_BTN).first.is_visible(timeout=200)
+            ):
+                return
+            await page.wait_for_timeout(500)
+        raise TimeoutError("ChatGPT was still streaming before send")
+
+    async def _wait_until_send_ready(timeout_ms: int = 30_000) -> None:
+        deadline = time.time() + timeout_ms / 1000
+        while time.time() < deadline:
+            state = await _submit_state()
+            aria = state["ariaLabel"].lower()
+            testid = state["dataTestid"].lower()
+            text_lower = state["text"].lower()
+            is_stop = aria == "stop streaming" or testid == "stop-button"
+            looks_send = (
+                "send" in aria or
+                testid == "send-button" or
+                "send" in text_lower
+            )
+            if state["exists"] and state["visible"] and not state["disabled"] and not is_stop and looks_send:
+                return
+            await page.wait_for_timeout(250)
+        raise TimeoutError("ChatGPT send button did not become ready")
+
+    await _wait_until_not_streaming()
     await input_box.wait_for(state="visible", timeout=20_000)
     await input_box.click()
     await page.evaluate(
@@ -841,10 +927,23 @@ async def _send_message(
         }""",
         [SEL_INPUT, text],
     )
+    entered_text = await page.evaluate(
+        """(sel) => {
+            const el = document.querySelector(sel);
+            if (!el) return '';
+            if (el.isContentEditable) return (el.innerText || '').trim();
+            return (el.value || '').trim();
+        }""",
+        SEL_INPUT,
+    )
+    if entered_text != text.strip():
+        raise RuntimeError(
+            f"Composer text verification failed before send. "
+            f"Expected {len(text.strip())} chars, got {len(entered_text)} chars."
+        )
     await page.wait_for_timeout(int(max(0.4, pre_send_delay) * 1000))
-    send_btn = page.locator(SEL_SEND_BTN)
-    await send_btn.wait_for(state="visible", timeout=10_000)
-    await send_btn.click()
+    await _wait_until_send_ready()
+    await submit_btn.click()
     await _wait_for_response(page)
     await page.wait_for_timeout(int(post_response_delay * 1000))
 
@@ -940,6 +1039,9 @@ async def _run_session(
     sample_id: str,
     world: str,
     conv_source: str,
+    live_log_path: Optional[Path] = None,
+    live_trace_jsonl_path: Optional[Path] = None,
+    attempt_index: int = 1,
 ) -> SessionRunResult:
     """
     Execute one TestSession: for each phase, feed user turns then ask MCQs.
@@ -955,6 +1057,15 @@ async def _run_session(
     def _log(message: str) -> None:
         print(message, flush=True)
         log_lines.append(message)
+        if live_log_path is not None:
+            _append_text_line(live_log_path, message)
+
+    def _record_trace(event: dict[str, Any]) -> None:
+        trace.append(event)
+        if live_trace_jsonl_path is not None:
+            event_with_attempt = dict(event)
+            event_with_attempt["attempt_index"] = attempt_index
+            _append_jsonl(live_trace_jsonl_path, event_with_attempt)
 
     for phase in session.phases:
         # --- Feed user turns ---
@@ -977,7 +1088,7 @@ async def _run_session(
                 else:
                     suffix = " ok"
                 _log(prefix + suffix)
-                trace.append({
+                _record_trace({
                     "event_type": "history_turn",
                     "test_type": world,
                     "phase_label": phase.label,
@@ -991,7 +1102,7 @@ async def _run_session(
                 })
             except Exception as e:
                 _log(prefix + f" ERROR: {e}")
-                trace.append({
+                _record_trace({
                     "event_type": "history_turn",
                     "test_type": world,
                     "phase_label": phase.label,
@@ -1072,7 +1183,7 @@ async def _run_session(
                     f"correct={item.correct_choice} [correct_type={correct_type}]"
                     f"{mem_tag}"
                 )
-                trace.append({
+                _record_trace({
                     "event_type": "mcq",
                     "test_type": world,
                     "phase_label": phase.label,
@@ -1095,7 +1206,7 @@ async def _run_session(
             except Exception as e:
                 rec["error"] = str(e)
                 _log(prefix + f" ERROR: {e}")
-                trace.append({
+                _record_trace({
                     "event_type": "mcq",
                     "test_type": world,
                     "phase_label": phase.label,
@@ -1163,8 +1274,95 @@ def _session_artifact_paths(output_path: Path, topic: str, world: str, sample_id
         "dir": session_dir,
         "result": session_dir / "session_result.json",
         "trace": session_dir / "session_trace.json",
+        "trace_jsonl": session_dir / "session_trace.jsonl",
         "log": session_dir / "session_log.txt",
+        "debug_dir": session_dir / "debug",
     }
+
+
+def _append_text_line(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as f:
+        f.write(text + "\n")
+
+
+def _append_jsonl(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(payload, ensure_ascii=False) + "\n")
+
+
+async def _capture_debug_artifacts(
+    page: Page,
+    debug_dir: Path,
+    attempt_index: int,
+    label: str,
+) -> dict[str, str]:
+    debug_dir.mkdir(parents=True, exist_ok=True)
+    stem = f"attempt_{attempt_index}_{_slug(label)}"
+    screenshot_path = debug_dir / f"{stem}.png"
+    html_path = debug_dir / f"{stem}.html"
+    meta_path = debug_dir / f"{stem}.json"
+
+    meta: dict[str, Any] = {
+        "attempt_index": attempt_index,
+        "label": label,
+        "timestamp_unix": time.time(),
+    }
+
+    try:
+        await page.screenshot(path=str(screenshot_path), full_page=True)
+        meta["screenshot_path"] = str(screenshot_path)
+    except Exception as e:
+        meta["screenshot_error"] = str(e)
+
+    try:
+        html = await page.content()
+        html_path.write_text(html, encoding="utf-8")
+        meta["html_path"] = str(html_path)
+    except Exception as e:
+        meta["html_error"] = str(e)
+
+    try:
+        meta["page_url"] = page.url
+    except Exception:
+        pass
+
+    meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    return {k: v for k, v in meta.items() if isinstance(v, str)}
+
+
+def _snapshot_path(snapshot_dir: Path, label: str, suffix: str) -> Path:
+    stamp = time.strftime("%Y%m%d_%H%M%S")
+    return snapshot_dir / f"{stamp}_{_slug(label)}.{suffix}"
+
+
+async def _save_memory_snapshot(
+    container_locator,
+    snapshot_dir: Path,
+    label: str,
+) -> dict[str, str]:
+    snapshot_dir.mkdir(parents=True, exist_ok=True)
+    txt_path = _snapshot_path(snapshot_dir, label, "txt")
+    json_path = _snapshot_path(snapshot_dir, label, "json")
+
+    payload: dict[str, Any] = {
+        "label": label,
+        "timestamp_unix": time.time(),
+    }
+
+    try:
+        raw_text = (await container_locator.inner_text()).strip()
+    except Exception as e:
+        raw_text = ""
+        payload["capture_error"] = str(e)
+
+    payload["raw_text"] = raw_text
+    txt_path.write_text(raw_text + ("\n" if raw_text else ""), encoding="utf-8")
+    payload["text_path"] = str(txt_path)
+    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    payload["json_path"] = str(json_path)
+    return {k: v for k, v in payload.items() if isinstance(v, str)}
 
 
 def _session_is_completed(result_path: Path) -> bool:
@@ -1208,6 +1406,7 @@ def _write_session_artifacts(
         "accuracy": (correct / len(answered)) if answered else 0.0,
         "phase_labels": [p.label for p in session.phases],
         "records_path": str(artifacts["trace"]),
+        "trace_jsonl_path": str(artifacts["trace_jsonl"]),
         "log_path": str(artifacts["log"]),
         "records": session_result.records,
     }
@@ -1263,6 +1462,8 @@ async def _prompt_manual_cleanup(page: Page, label: str) -> None:
 async def evaluate(args: argparse.Namespace) -> None:
     output_root = Path(args.output)
     output_root.parent.mkdir(parents=True, exist_ok=True)
+    run_debug_dir = _results_root(output_root) / "_run_debug"
+    run_debug_dir.mkdir(parents=True, exist_ok=True)
 
     # Resume: rely on per-session artifacts as the source of truth.
     done: set[tuple[str, str, str]] = set()
@@ -1322,7 +1523,11 @@ async def evaluate(args: argparse.Namespace) -> None:
                 await _prompt_manual_cleanup(page, "Pre-run cleanup")
             else:
                 print("Pre-run cleanup: clearing memory and deleting any existing chat...")
-                await _clear_chatgpt_memory(page)
+                await _clear_chatgpt_memory(
+                    page,
+                    snapshot_dir=run_debug_dir,
+                    snapshot_label="pre_run_cleanup_memory",
+                )
                 await _delete_current_chat(page)
         else:
             print("Skipping pre-run cleanup (not logged in).")
@@ -1363,34 +1568,140 @@ async def evaluate(args: argparse.Namespace) -> None:
                         for p in sess.phases
                     )
                     print(f"  [{sess.session_key}] {phase_summary}")
+                    artifacts["dir"].mkdir(parents=True, exist_ok=True)
+                    artifacts["debug_dir"].mkdir(parents=True, exist_ok=True)
+                    artifacts["log"].write_text("", encoding="utf-8")
+                    artifacts["trace_jsonl"].write_text("", encoding="utf-8")
 
-                    try:
-                        session_result = await _run_session(
-                            page, sess, timing, args.turn_delay,
-                            args.history_rate,
-                            sample_id, args.world, conv_source,
+                    max_attempts = max(1, args.session_retries + 1)
+                    session_result = None
+                    session_error = ""
+                    session_status = "error"
+
+                    for attempt_idx in range(1, max_attempts + 1):
+                        _append_text_line(
+                            artifacts["log"],
+                            f"=== Attempt {attempt_idx}/{max_attempts} for session {sess.session_key} ===",
                         )
-                        session_error = ""
-                        session_status = "completed"
-                    except Exception as e:
-                        print(f"  SESSION ERROR: {e}")
-                        session_result = SessionRunResult(
-                            records=[{
+                        _append_jsonl(
+                            artifacts["trace_jsonl"],
+                            {
+                                "event_type": "attempt_start",
+                                "attempt_index": attempt_idx,
                                 "sample_id": sample_id,
                                 "world": args.world,
                                 "session_key": sess.session_key,
-                                "error": str(e),
-                            }],
-                            trace=[],
-                            log_lines=[f"SESSION ERROR: {e}"],
+                                "phase_summary": phase_summary,
+                                "timestamp_unix": time.time(),
+                            },
                         )
-                        session_error = str(e)
-                        session_status = "error"
+                        if attempt_idx > 1:
+                            print(
+                                f"  [{sess.session_key}] retry {attempt_idx - 1}/{args.session_retries}...",
+                                flush=True,
+                            )
                         try:
-                            await page.goto(CHATGPT_URL)
+                            session_result = await _run_session(
+                                page, sess, timing, args.turn_delay,
+                                args.history_rate,
+                                sample_id, args.world, conv_source,
+                                live_log_path=artifacts["log"],
+                                live_trace_jsonl_path=artifacts["trace_jsonl"],
+                                attempt_index=attempt_idx,
+                            )
+                            session_error = ""
+                            session_status = "completed"
+                            _append_jsonl(
+                                artifacts["trace_jsonl"],
+                                {
+                                    "event_type": "attempt_end",
+                                    "attempt_index": attempt_idx,
+                                    "status": "completed",
+                                    "sample_id": sample_id,
+                                    "world": args.world,
+                                    "session_key": sess.session_key,
+                                    "timestamp_unix": time.time(),
+                                },
+                            )
+                            break
+                        except Exception as e:
+                            session_error = str(e)
+                            print(
+                                f"  SESSION ERROR (attempt {attempt_idx}/{max_attempts}): {e}",
+                                flush=True,
+                            )
+                            debug_paths = await _capture_debug_artifacts(
+                                page,
+                                artifacts["debug_dir"],
+                                attempt_idx,
+                                "session_error",
+                            )
+                            _append_text_line(
+                                artifacts["log"],
+                                f"SESSION ERROR (attempt {attempt_idx}/{max_attempts}): {session_error}",
+                            )
+                            if debug_paths.get("screenshot_path"):
+                                _append_text_line(
+                                    artifacts["log"],
+                                    f"DEBUG SCREENSHOT: {debug_paths['screenshot_path']}",
+                                )
+                            if debug_paths.get("html_path"):
+                                _append_text_line(
+                                    artifacts["log"],
+                                    f"DEBUG HTML: {debug_paths['html_path']}",
+                                )
+                            _append_jsonl(
+                                artifacts["trace_jsonl"],
+                                {
+                                    "event_type": "attempt_end",
+                                    "attempt_index": attempt_idx,
+                                    "status": "error",
+                                    "error": session_error,
+                                    "debug_paths": debug_paths,
+                                    "sample_id": sample_id,
+                                    "world": args.world,
+                                    "session_key": sess.session_key,
+                                    "timestamp_unix": time.time(),
+                                },
+                            )
+                            try:
+                                await page.goto(CHATGPT_URL)
+                                await page.wait_for_timeout(3000)
+                            except Exception:
+                                pass
+
+                            if attempt_idx >= max_attempts:
+                                session_result = SessionRunResult(
+                                    records=[{
+                                        "sample_id": sample_id,
+                                        "world": args.world,
+                                        "session_key": sess.session_key,
+                                        "error": session_error,
+                                    }],
+                                    trace=[],
+                                    log_lines=[
+                                        f"SESSION ERROR after {max_attempts} attempt(s): {session_error}"
+                                    ],
+                                )
+                                break
+
+                            if args.manual_cleanup:
+                                await _prompt_manual_cleanup(
+                                    page,
+                                    f"  [{sess.session_key}] manual cleanup before retry",
+                                )
+                            else:
+                                print("  Clearing ChatGPT memory before retry...", end=" ", flush=True)
+                                ok = await _clear_chatgpt_memory(
+                                    page,
+                                    snapshot_dir=artifacts["debug_dir"],
+                                    snapshot_label=f"before_retry_attempt_{attempt_idx}",
+                                )
+                                print("ok" if ok else "FAILED — please clear manually", flush=True)
+                                print("  Deleting chat before retry...", end=" ", flush=True)
+                                ok2 = await _delete_current_chat(page)
+                                print("ok" if ok2 else "FAILED — please delete manually", flush=True)
                             await page.wait_for_timeout(3000)
-                        except Exception:
-                            pass
 
                     # Persist per-session artifacts before touching aggregate output.
                     _write_session_artifacts(
@@ -1416,7 +1727,11 @@ async def evaluate(args: argparse.Namespace) -> None:
                         await _prompt_manual_cleanup(page, f"  [{sess.session_key}] manual cleanup")
                     else:
                         print("  Clearing ChatGPT memory...", end=" ", flush=True)
-                        ok = await _clear_chatgpt_memory(page)
+                        ok = await _clear_chatgpt_memory(
+                            page,
+                            snapshot_dir=artifacts["debug_dir"],
+                            snapshot_label="post_session_cleanup_memory",
+                        )
                         print("ok" if ok else "FAILED — please clear manually before next session")
                         print("  Deleting chat...", end=" ", flush=True)
                         ok2 = await _delete_current_chat(page)
@@ -1511,6 +1826,8 @@ def main() -> None:
     parser.add_argument("--ready_grace_sec", type=float, default=5.0,
                         help="After ChatGPT input becomes visible, wait this many seconds before cleanup/evaluation starts.")
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument("--session_retries", type=int, default=1,
+                        help="Retry a failed session this many times before marking it as error.")
     args = parser.parse_args()
     if args.login:
         asyncio.run(login_only(args))
