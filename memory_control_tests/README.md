@@ -309,6 +309,114 @@ This setup makes it easy to vary:
 
 without storing a large number of static world files.
 
+## ChatGPT Web Evaluation
+
+The repository also includes a browser-based evaluator:
+
+- [evaluate_chatgpt_web.py](/mnt/yao_data/proj_2026_agent/PersonaMem-main/evaluate_chatgpt_web.py)
+
+This script replays the conversation inside ChatGPT Web and asks the rendered
+MCQs in the same browser session.
+
+### Supported Worlds
+
+The current ChatGPT Web runner supports:
+
+- `baseline`
+- `forget`
+- `no_store`
+
+`no_use` is still handled by the API-based evaluators only.
+
+### Run Pattern
+
+The intended workflow is:
+
+1. login once and save the browser session
+   - `python evaluate_chatgpt_web.py --login --session_dir ./chatgpt_session`
+2. run evaluation with the saved session
+   - `python evaluate_chatgpt_web.py --topic travelPlanning --world baseline ...`
+
+There is also a small wrapper script:
+
+- [run_chatgpt_eval.sh](/mnt/yao_data/proj_2026_agent/PersonaMem-main/run_chatgpt_eval.sh)
+
+It:
+
+- runs the login step first
+- then runs the selected worlds in sequence
+
+By default it uses `--manual_cleanup`, so memory deletion and chat deletion can
+be done manually in the browser between sessions.
+
+### Readiness and Cleanup
+
+For normal evaluation runs:
+
+- the script waits for the ChatGPT input box to appear
+- then waits an additional grace period before starting
+- the grace period is controlled by:
+  - `--ready_grace_sec`
+
+Only the login-only mode requires manual confirmation with Enter.
+
+Cleanup can run in two modes:
+
+- automatic cleanup
+  - clear memory through Settings → Personalization
+  - delete the current chat through Settings → Data controls
+- manual cleanup
+  - enabled with `--manual_cleanup`
+  - the script pauses before cleanup and lets the user delete memory and chat manually
+
+### Result Layout
+
+`--output` is only a root hint. The actual results are written per persona:
+
+- `results/chatgpt_web_results/<topic>/<sample_id>/test_type_<world>/results.jsonl`
+
+Each completed test session also writes its own directory:
+
+- `results/chatgpt_web_results/<topic>/<sample_id>/test_type_<world>/session_<session_key>/`
+
+with:
+
+- `session_result.json`
+- `session_trace.json`
+- `session_log.txt`
+
+This means the smallest resumable unit is:
+
+- `topic + sample_id + world + session_key`
+
+### Resume Rule
+
+Resume does not simply check whether a session result file exists.
+
+A session is skipped only if:
+
+- `session_result.json` exists
+- and `status == "completed"`
+
+If a previous run wrote:
+
+- `status == "error"`
+
+that session is treated as incomplete and will be rerun automatically.
+
+### Click Recording
+
+For selector debugging, use the standalone click recorder:
+
+- [record_chatgpt_web_clicks.py](/mnt/yao_data/proj_2026_agent/PersonaMem-main/record_chatgpt_web_clicks.py)
+
+Example:
+
+- `python record_chatgpt_web_clicks.py --session_dir ./chatgpt_session --output results/chatgpt_clicks.json`
+
+It records the manual browser clicks to JSON so selector changes can be debugged
+without complicating the main evaluator.
+
 ### Canonical Non-Ablation Setting
 
 Before running gap ablations, the current plan is to report one canonical headline setting for each world.

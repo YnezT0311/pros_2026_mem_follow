@@ -105,6 +105,12 @@ Outputs:
   Resume behavior uses `session_result.json` as the source of truth: if that
   file already exists for a given `(topic, world, sample_id, session_key)`,
   the session is skipped.
+
+Manual cleanup:
+  Pass `--manual_cleanup` to pause before pre-run cleanup and before each
+  session cleanup. In that mode, you manually delete memory and delete the
+  current chat in the browser, then return to the main chat page and press
+  Enter to continue.
 """
 
 import argparse
@@ -173,17 +179,18 @@ SEL_LOGGED_IN = 'nav, [data-testid="profile-button"], #sidebar-desktop-content'
 # Settings UI selectors (verified from DevTools)
 SEL_PROFILE_BTN       = '[data-testid="accounts-profile-button"]'
 SEL_SETTINGS_LNK      = '[data-testid="settings-menu-item"]'
-SEL_PERSONAL_TAB      = '[data-testid="personalization-tab"]'
+SEL_PERSONAL_TAB      = 'button:has-text("Personalization"), [role="tab"]:has-text("Personalization"), div[role="menuitem"]:has-text("Personalization")'
 SEL_MEMORY_MANAGE_BTN = 'button[aria-label="Manage memories"]'
 # ⋯ button in Saved memories dialog: aria-label="More options"
 SEL_MEMORY_KEBAB      = 'button[aria-label="More options"]'
+SEL_MEMORY_MENU       = '[role="menu"][data-state="open"], [role="menu"][data-state="open"] *'
 # "Delete all memories" menuitem (red text)
-SEL_MEMORY_DELETE_ALL = '[role="menuitem"]:has-text("Delete all memories")'
+SEL_MEMORY_DELETE_ALL = 'div[role="menuitem"]:has-text("Delete all memories"), [role="menuitem"]:has-text("Delete all memories")'
 # Confirmation buttons (specific per dialog)
 SEL_CONFIRM_DELETE_CHATS   = '[data-testid="confirm-delete-all-chats-button"]'
-SEL_CONFIRM_DELETE_MEMORIES = 'button.btn-danger:has-text("Delete all")'
+SEL_CONFIRM_DELETE_MEMORIES = 'button.btn-danger:has-text("Delete all"), button:has-text("Delete all")'
 # Data controls tab and delete-all button
-SEL_DATA_CONTROLS_TAB = '[data-testid="data-controls-tab"]'
+SEL_DATA_CONTROLS_TAB = '[data-testid="data-controls-tab"], button:has-text("Data controls"), [role="tab"]:has-text("Data controls")'
 SEL_DELETE_ALL_CHATS  = 'button[aria-label*="Delete all chats"]'
 
 # ---------------------------------------------------------------------------
@@ -639,14 +646,15 @@ async def _open_settings_personalization(page: Page) -> bool:
     """
     if not await _open_settings_dialog(page):
         return False
-    try:
-        personal_btn = page.locator('button:has-text("Personalization")').first
-        if await personal_btn.is_visible(timeout=2000):
-            await personal_btn.click()
-            await page.wait_for_timeout(700)
-            return True
-    except Exception:
-        pass
+    for sel in [SEL_PERSONAL_TAB, 'text="Personalization"']:
+        try:
+            personal_btn = page.locator(sel).first
+            if await personal_btn.is_visible(timeout=2000):
+                await personal_btn.click()
+                await page.wait_for_timeout(700)
+                return True
+        except Exception:
+            pass
     return False
 
 
@@ -667,59 +675,129 @@ async def _clear_chatgpt_memory(page: Page, retries: int = 3) -> bool:
             await manage_btn.click(timeout=5000)
             await page.wait_for_timeout(800)
 
-            # Wait for the "Saved memories" dialog to appear
-            await page.wait_for_selector(
-                'h2:has-text("Saved memories"), [aria-label*="Saved memories" i]',
-                timeout=5000,
-            )
+            # Wait for the Saved memories popover to appear. The exact heading
+            # tag is not stable, so avoid hard-coding `h2`.
+            await page.wait_for_selector('text="Saved memories"', timeout=5000)
             await page.wait_for_timeout(400)
 
-            # ⋯ button is to the right of the Search memories input, inside the dialog.
-            # Scope to the dialog element for precision.
-            dialog_root = page.locator(
-                'dialog, [role="dialog"], '
-                'div:has(> h2:has-text("Saved memories"))'
-            ).last
-            # ⋯ button is a Radix UI dropdown trigger with aria-haspopup="menu"
-            kebab = dialog_root.locator(SEL_MEMORY_KEBAB).last
-            if await kebab.is_visible(timeout=2000):
-                await kebab.click()
-                await page.wait_for_timeout(500)
+            # Prefer the concrete Saved memories overlay when present.
+            modal_root = page.locator("#modal-golden-hour-memories")
+            dialog_candidates = page.locator('[role="dialog"]').filter(
+                has=page.locator('text="Saved memories"')
+            )
 
-            # "Delete all memories" option from the kebab menu (or directly visible)
-            bulk_btn = page.locator(SEL_MEMORY_DELETE_ALL).first
-            if await bulk_btn.is_visible(timeout=2000):
-                await bulk_btn.click()
-                await page.wait_for_timeout(600)
+            async def _debug_locator(locator, label: str, limit: int = 5) -> None:
                 try:
-                    confirm = page.locator(SEL_CONFIRM_DELETE_MEMORIES).first
-                    if await confirm.is_visible(timeout=2000):
-                        await confirm.click()
-                        await page.wait_for_timeout(600)
+                    count = await locator.count()
+                    rows = []
+                    for idx in range(min(count, limit)):
+                        el = locator.nth(idx)
+                        rows.append({
+                            "text": (await el.inner_text()).strip()[:120] if await el.count() else "",
+                            "aria": await el.get_attribute("aria-label") or "",
+                            "testid": await el.get_attribute("data-testid") or "",
+                            "role": await el.get_attribute("role") or "",
+                        })
+                    print(f"[debug] {label}: count={count} sample={rows}")
+                except Exception as exc:
+                    print(f"[debug] {label}: <error collecting debug: {exc}>")
+
+            kebab = None
+            try:
+                if await modal_root.is_visible(timeout=1500):
+                    print("[debug] Saved memories modal root is visible")
+                    modal_kebabs = modal_root.locator(SEL_MEMORY_KEBAB)
+                    await _debug_locator(modal_kebabs, "modal More options")
+                    if await modal_kebabs.count() > 0:
+                        kebab = modal_kebabs.first
+            except Exception:
+                pass
+
+            if kebab is None:
+                dialog_root = dialog_candidates.last
+                try:
+                    await dialog_root.wait_for(state="visible", timeout=2000)
+                    print("[debug] Saved memories dialog candidate is visible")
+                    dialog_kebabs = dialog_root.locator(SEL_MEMORY_KEBAB)
+                    await _debug_locator(dialog_kebabs, "dialog More options")
+                    if await dialog_kebabs.count() > 0:
+                        kebab = dialog_kebabs.first
                 except Exception:
                     pass
-            else:
-                # Fallback: delete individual memory items one by one
-                for _ in range(50):
-                    del_btn = page.locator(
-                        'button[aria-label*="delete" i], button[aria-label*="remove" i]'
-                    ).first
-                    if not await del_btn.is_visible(timeout=800):
-                        break
-                    await del_btn.click()
-                    await page.wait_for_timeout(400)
-                    try:
-                        confirm = page.locator(SEL_CONFIRM_DELETE_MEMORIES).first
-                        if await confirm.is_visible(timeout=1000):
-                            await confirm.click()
-                            await page.wait_for_timeout(400)
-                    except Exception:
-                        pass
 
-            await page.keyboard.press("Escape")
-            await page.wait_for_timeout(500)
-            await page.keyboard.press("Escape")
-            await page.wait_for_timeout(500)
+            if kebab is None:
+                page_kebabs = page.locator(SEL_MEMORY_KEBAB)
+                await _debug_locator(page_kebabs, "page More options")
+                if await page_kebabs.count() > 0:
+                    kebab = page_kebabs.last
+
+            if kebab is None:
+                raise RuntimeError("Saved memories opened, but no visible More options button was found")
+
+            try:
+                kebab_count = await page.locator(SEL_MEMORY_KEBAB).count()
+                print(f"[debug] visible-ish More options candidates: {kebab_count}")
+            except Exception:
+                pass
+
+            print("[debug] clicking Saved memories More options...")
+            await kebab.wait_for(state="attached", timeout=2000)
+            await kebab.click(force=True)
+            await page.wait_for_selector('[role="menu"][data-state="open"]', timeout=3000)
+            await page.wait_for_timeout(300)
+            await _debug_locator(page.locator('[role="menu"][data-state="open"]'), "open menus")
+            await _debug_locator(page.locator('[role="menu"][data-state="open"] [role="menuitem"]'), "open menu items")
+
+            named_bulk = page.get_by_role("menuitem", name="Delete all memories")
+            selector_bulk = page.locator(SEL_MEMORY_DELETE_ALL)
+            await _debug_locator(named_bulk, "named delete-all memory menuitems")
+            await _debug_locator(selector_bulk, "selector delete-all memory menuitems")
+
+            bulk_btn = None
+            if await named_bulk.count() > 0:
+                bulk_btn = named_bulk.first
+                print("[debug] using named Delete all memories menuitem")
+            elif await selector_bulk.count() > 0:
+                bulk_btn = selector_bulk.first
+                print("[debug] using selector Delete all memories menuitem")
+
+            if bulk_btn is not None:
+                print("[debug] clicking Delete all memories...")
+                await bulk_btn.wait_for(state="attached", timeout=2000)
+                await bulk_btn.click(force=True)
+                await page.wait_for_timeout(500)
+                confirm = page.locator(SEL_CONFIRM_DELETE_MEMORIES).first
+                await _debug_locator(page.locator(SEL_CONFIRM_DELETE_MEMORIES), "delete-all memory confirm buttons")
+                if not await confirm.is_visible(timeout=3000):
+                    raise RuntimeError("Delete-all-memories confirm button did not appear")
+                print("[debug] confirming Delete all memories...")
+                await confirm.click(force=True)
+                await page.wait_for_timeout(800)
+            else:
+                try:
+                    visible_menu_items = await page.evaluate(
+                        """
+                        () => [...document.querySelectorAll('[role="menuitem"]')]
+                          .map(el => (el.innerText || el.textContent || '').trim())
+                          .filter(Boolean)
+                        """
+                    )
+                    print(f"[debug] visible menu items: {visible_menu_items}")
+                except Exception:
+                    pass
+                raise RuntimeError("Saved memories menu opened, but 'Delete all memories' was not found")
+
+            # Close nested overlays and return to the main chat UI.
+            for _ in range(4):
+                try:
+                    await page.keyboard.press("Escape")
+                    await page.wait_for_timeout(300)
+                except Exception:
+                    pass
+            try:
+                await page.wait_for_selector(f"{SEL_INPUT}, {SEL_PROFILE_BTN}", timeout=5000)
+            except Exception:
+                pass
             return True
 
         except Exception as e:
@@ -771,18 +849,48 @@ async def _send_message(
     await page.wait_for_timeout(int(post_response_delay * 1000))
 
 
-async def _wait_for_response(page: Page, timeout: int = 120_000) -> None:
+async def _wait_for_response(page: Page, timeout: int = 240_000) -> None:
     deadline = time.time() + timeout / 1000
+    last_text = ""
+    last_change_at = time.time()
+    saw_assistant_message = False
     try:
         await page.wait_for_selector(SEL_STOP_BTN, timeout=15_000)
     except PWTimeout:
         pass
     while time.time() < deadline:
+        current_text = ""
         try:
-            if not await page.locator(SEL_STOP_BTN).is_visible(timeout=500):
-                return
+            msgs = page.locator(SEL_ASST_MSG)
+            count = await msgs.count()
+            if count > 0:
+                saw_assistant_message = True
+                current_text = (await msgs.nth(count - 1).inner_text()).strip()
         except Exception:
+            current_text = ""
+
+        now = time.time()
+        if current_text != last_text:
+            last_text = current_text
+            last_change_at = now
+
+        try:
+            stop_visible = await page.locator(SEL_STOP_BTN).is_visible(timeout=500)
+        except Exception:
+            stop_visible = False
+
+        # Preferred completion signal: streaming button disappears.
+        if not stop_visible:
+            # If an assistant message already appeared and then stopped changing,
+            # treat the response as complete even if the streaming button state is flaky.
+            if not saw_assistant_message or (now - last_change_at) >= 2.0:
+                return
+
+        # Fallback: if the last assistant message has appeared and stayed stable
+        # for a while, accept it as complete even if the stop button never clears.
+        if saw_assistant_message and (now - last_change_at) >= 5.0:
             return
+
         await page.wait_for_timeout(1000)
     raise TimeoutError("ChatGPT response timed out")
 
@@ -1059,6 +1167,16 @@ def _session_artifact_paths(output_path: Path, topic: str, world: str, sample_id
     }
 
 
+def _session_is_completed(result_path: Path) -> bool:
+    if not result_path.exists():
+        return False
+    try:
+        payload = json.loads(result_path.read_text(encoding="utf-8"))
+    except Exception:
+        return False
+    return payload.get("status") == "completed"
+
+
 def _write_session_artifacts(
     output_path: Path,
     topic: str,
@@ -1127,6 +1245,21 @@ async def login_only(args: argparse.Namespace) -> None:
         await context.close()
 
 
+async def _prompt_manual_cleanup(page: Page, label: str) -> None:
+    loop = asyncio.get_event_loop()
+    print(
+        f"{label}: manually delete memory and delete the current chat in the browser, "
+        "return to the main chat page, then press Enter to continue..."
+    )
+    await loop.run_in_executor(None, input, "")
+    try:
+        await page.goto(CHATGPT_URL)
+        await page.wait_for_selector(SEL_INPUT, timeout=60_000)
+        await page.wait_for_timeout(1500)
+    except Exception:
+        print("WARNING: chat input did not reappear after manual cleanup. Check the browser state.")
+
+
 async def evaluate(args: argparse.Namespace) -> None:
     output_root = Path(args.output)
     output_root.parent.mkdir(parents=True, exist_ok=True)
@@ -1180,15 +1313,17 @@ async def evaluate(args: argparse.Namespace) -> None:
         except PWTimeout:
             print("WARNING: ChatGPT did not load — check the browser window.")
 
-        # Wait for explicit user confirmation before cleanup
-        loop = asyncio.get_event_loop()
-        await loop.run_in_executor(None, input, "Press Enter when ChatGPT is fully ready to start cleanup... ")
-
-        # Pre-run cleanup: only if we confirmed login
+        # After the input appears, give the page a short grace period to settle.
         if logged_in:
-            print("Pre-run cleanup: clearing memory and deleting any existing chat...")
-            await _clear_chatgpt_memory(page)
-            await _delete_current_chat(page)
+            print(f"Waiting {args.ready_grace_sec:.1f}s before starting cleanup...")
+            await page.wait_for_timeout(int(max(0.0, args.ready_grace_sec) * 1000))
+            if args.manual_cleanup:
+                print("Pre-run cleanup: manual mode")
+                await _prompt_manual_cleanup(page, "Pre-run cleanup")
+            else:
+                print("Pre-run cleanup: clearing memory and deleting any existing chat...")
+                await _clear_chatgpt_memory(page)
+                await _delete_current_chat(page)
         else:
             print("Skipping pre-run cleanup (not logged in).")
 
@@ -1217,7 +1352,7 @@ async def evaluate(args: argparse.Namespace) -> None:
                 for sess in sessions:
                     triple = (sample_id, args.world, sess.session_key)
                     artifacts = _session_artifact_paths(output_root, args.topic, args.world, sample_id, sess.session_key)
-                    if not args.overwrite and artifacts["result"].exists():
+                    if not args.overwrite and _session_is_completed(artifacts["result"]):
                         print(f"  [{sess.session_key}] already done, skipping")
                         done.add(triple)
                         continue
@@ -1276,13 +1411,16 @@ async def evaluate(args: argparse.Namespace) -> None:
                             out_f.write(json.dumps(rec, ensure_ascii=False) + "\n")
                     done.add(triple)
 
-                    # Clear memory, then delete the conversation
-                    print("  Clearing ChatGPT memory...", end=" ", flush=True)
-                    ok = await _clear_chatgpt_memory(page)
-                    print("ok" if ok else "FAILED — please clear manually before next session")
-                    print("  Deleting chat...", end=" ", flush=True)
-                    ok2 = await _delete_current_chat(page)
-                    print("ok" if ok2 else "FAILED — please delete manually before next session")
+                    # Cleanup before the next session.
+                    if args.manual_cleanup:
+                        await _prompt_manual_cleanup(page, f"  [{sess.session_key}] manual cleanup")
+                    else:
+                        print("  Clearing ChatGPT memory...", end=" ", flush=True)
+                        ok = await _clear_chatgpt_memory(page)
+                        print("ok" if ok else "FAILED — please clear manually before next session")
+                        print("  Deleting chat...", end=" ", flush=True)
+                        ok2 = await _delete_current_chat(page)
+                        print("ok" if ok2 else "FAILED — please delete manually before next session")
 
                     delay = timing.sample_reading_delay(200) if timing else args.sample_delay
                     await page.wait_for_timeout(int(delay * 1000))
@@ -1363,10 +1501,15 @@ def main() -> None:
     parser.add_argument("--login", action="store_true",
                         help="Login-only mode: open browser, wait for manual login, then exit. "
                              "Run this once before the main evaluation to save the session.")
+    parser.add_argument("--manual_cleanup", action="store_true",
+                        help="Before pre-run cleanup and before each session cleanup, pause and let "
+                             "the user manually delete memory and delete the current chat.")
     parser.add_argument("--limit", type=int, default=0,
                         help="Process at most N personas (0 = all)")
     parser.add_argument("--sample_id_filter", default="",
                         help="Only process sample_ids with this prefix")
+    parser.add_argument("--ready_grace_sec", type=float, default=5.0,
+                        help="After ChatGPT input becomes visible, wait this many seconds before cleanup/evaluation starts.")
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
     if args.login:
