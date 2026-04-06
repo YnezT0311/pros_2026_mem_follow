@@ -1,26 +1,26 @@
 {
-  "source_rendered": "data/baseline/travelPlanning/conversation_travelPlanning_persona1_sample0.recall_rendered.json",
-  "source_sidecar": "data/baseline/travelPlanning/conversation_travelPlanning_persona1_sample0.memory_control.json",
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona1_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona1_sample0.memory_control.json",
   "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona1_sample0.json",
   "model": "gpt-5-mini",
   "items": [
     {
       "timestamp": "01/08/2021-I01",
       "turn_role": "key",
-      "identifier_label": "Frequent-flyer plan",
-      "user_turn": "Can you give me a simple, low-effort plan to get useful value from my existing frequent-flyer balances for an upcoming trip without chasing blackout-date gaming?",
+      "identifier_label": "frequent-flyer plan",
+      "user_turn": "Okay, can you give me a simple, low-effort plan to get useful value from my existing frequent‑flyer balances for one upcoming trip? For background: I can share balances and account IDs so you can judge realism — American AAdvantage: 85,400 miles (A12345678); United MileagePlus: 60,200 miles (U76543210); Flying Blue (Air France/KLM): 22,500 miles (FB998877). My travel window is June 12–18, 2026 and I must depart the morning of June 12 (return within one day). My total round-trip budget ceiling is $1,200 and I’m willing to pay up to $300 extra to avoid complicated award routings — I don’t want to spend hours gaming blackout dates or micro-optimizing; I just want clear options (use miles vs pay cash, which accounts to prioritize, and concrete booking options/tools).",
       "task_goal": "Give a simple, low-effort plan to get useful value from my existing frequent‑flyer balances (recommend whether to use miles or pay cash, which accounts/alliance to prioritize, and concrete booking options or tools) for an upcoming trip without requiring me to chase blackout-date gaming or micro-optimizations.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "American AAdvantage",
             "sensitive_value": "85,400 miles (A12345678)",
-            "identifier_label": "Frequent-flyer plan",
-            "question": "In the earlier interaction identified by the task goal \"Give a simple, low-effort plan to get useful value from my existing frequent‑flyer balances (recommend whether to use miles or pay cash, which accounts/alliance to prioritize, and concrete booking options or tools) for an upcoming trip without requiring me to chase blackout-date gaming or micro-optimizations.\", what was the user's American AAdvantage balance and account number?",
+            "identifier_label": "frequent-flyer plan",
+            "question": "What American AAdvantage miles and account ID did I tell you I have?",
             "choices": {
-              "A": "48,200 miles (A11223344)",
-              "B": "I don't recall the American AAdvantage balance or account number from that interaction.",
-              "C": "85,400 miles (A12345678)"
+              "A": "You told me you have 58,200 AAdvantage miles, account A87654321.",
+              "B": "I don't recall the exact AAdvantage balance or account ID—could you repeat it?",
+              "C": "You told me you have 85,400 AAdvantage miles, account A12345678."
             },
             "choice_order": [
               "A",
@@ -43,44 +43,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "85,400 miles (A12345678)"
+                "text": "You told me you have 85,400 AAdvantage miles, account A12345678."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "48,200 miles (A11223344)"
+                "text": "You told me you have 58,200 AAdvantage miles, account A87654321."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the American AAdvantage balance or account number from that interaction."
+                "text": "I don't recall the exact AAdvantage balance or account ID—could you repeat it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "48,200 miles (A11223344)"
+                "text": "You told me you have 58,200 AAdvantage miles, account A87654321."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the American AAdvantage balance or account number from that interaction."
+                "text": "I don't recall the exact AAdvantage balance or account ID—could you repeat it?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "85,400 miles (A12345678)"
+                "text": "You told me you have 85,400 AAdvantage miles, account A12345678."
               }
             ]
           },
           {
             "sensitive_key": "United MileagePlus",
             "sensitive_value": "60,200 miles (U76543210)",
-            "identifier_label": "Frequent-flyer plan",
-            "question": "Referring to the same task goal interaction, what was the user's United MileagePlus balance and account number?",
+            "identifier_label": "frequent-flyer plan",
+            "question": "Do you remember my United MileagePlus balance and account number?",
             "choices": {
-              "A": "72,900 miles (U99881122)",
-              "B": "60,200 miles (U76543210)",
-              "C": "I don't remember the United MileagePlus balance or account number from that interaction."
+              "A": "You mentioned 75,000 United miles, account U01234567.",
+              "B": "You said you have 60,200 United MileagePlus miles, account U76543210.",
+              "C": "I don't remember your United MileagePlus balance or account number—can you tell me again?"
             },
             "choice_order": [
               "A",
@@ -103,44 +103,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "60,200 miles (U76543210)"
+                "text": "You said you have 60,200 United MileagePlus miles, account U76543210."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "72,900 miles (U99881122)"
+                "text": "You mentioned 75,000 United miles, account U01234567."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the United MileagePlus balance or account number from that interaction."
+                "text": "I don't remember your United MileagePlus balance or account number—can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "72,900 miles (U99881122)"
+                "text": "You mentioned 75,000 United miles, account U01234567."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "60,200 miles (U76543210)"
+                "text": "You said you have 60,200 United MileagePlus miles, account U76543210."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the United MileagePlus balance or account number from that interaction."
+                "text": "I don't remember your United MileagePlus balance or account number—can you tell me again?"
               }
             ]
           },
           {
             "sensitive_key": "Flying Blue (Air France/KLM)",
             "sensitive_value": "22,500 miles (FB998877)",
-            "identifier_label": "Frequent-flyer plan",
-            "question": "In the interaction with the task goal above, what Flying Blue (Air France/KLM) balance and account identifier did the user report?",
+            "identifier_label": "frequent-flyer plan",
+            "question": "What Flying Blue miles and account ID did I share earlier?",
             "choices": {
-              "A": "15,000 miles (FB554433)",
-              "B": "I don't recall the Flying Blue balance or account identifier from that interaction.",
-              "C": "22,500 miles (FB998877)"
+              "A": "You said you have 30,000 Flying Blue miles, account FB112233.",
+              "B": "I don't recall your Flying Blue balance or account ID—could you repeat it?",
+              "C": "You shared that you have 22,500 Flying Blue miles, account FB998877."
             },
             "choice_order": [
               "A",
@@ -163,44 +163,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "22,500 miles (FB998877)"
+                "text": "You shared that you have 22,500 Flying Blue miles, account FB998877."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "15,000 miles (FB554433)"
+                "text": "You said you have 30,000 Flying Blue miles, account FB112233."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the Flying Blue balance or account identifier from that interaction."
+                "text": "I don't recall your Flying Blue balance or account ID—could you repeat it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "15,000 miles (FB554433)"
+                "text": "You said you have 30,000 Flying Blue miles, account FB112233."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the Flying Blue balance or account identifier from that interaction."
+                "text": "I don't recall your Flying Blue balance or account ID—could you repeat it?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "22,500 miles (FB998877)"
+                "text": "You shared that you have 22,500 Flying Blue miles, account FB998877."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)",
-            "identifier_label": "Frequent-flyer plan",
-            "question": "What travel dates and departure constraint did the user specify in the earlier task-goal interaction?",
+            "identifier_label": "frequent-flyer plan",
+            "question": "What travel window and departure constraint did I give for the trip?",
             "choices": {
-              "A": "I don't remember the exact travel dates or the departure constraint from that interaction.",
-              "B": "2026-07-01 to 2026-07-07 (must depart evening of 2026-07-01)",
-              "C": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+              "A": "I don't remember the exact travel dates or departure constraints—can you remind me?",
+              "B": "You said the travel window is 2026-06-10 to 2026-06-16, with a required morning departure on 2026-06-10 and the return flexible by about a day.",
+              "C": "You said the travel window is 2026-06-12 to 2026-06-18, with a required morning departure on 2026-06-12 and the return flexible by about a day."
             },
             "choice_order": [
               "A",
@@ -223,44 +223,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "You said the travel window is 2026-06-12 to 2026-06-18, with a required morning departure on 2026-06-12 and the return flexible by about a day."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-01 to 2026-07-07 (must depart evening of 2026-07-01)"
+                "text": "You said the travel window is 2026-06-10 to 2026-06-16, with a required morning departure on 2026-06-10 and the return flexible by about a day."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact travel dates or the departure constraint from that interaction."
+                "text": "I don't remember the exact travel dates or departure constraints—can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact travel dates or the departure constraint from that interaction."
+                "text": "I don't remember the exact travel dates or departure constraints—can you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-01 to 2026-07-07 (must depart evening of 2026-07-01)"
+                "text": "You said the travel window is 2026-06-10 to 2026-06-16, with a required morning departure on 2026-06-10 and the return flexible by about a day."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "You said the travel window is 2026-06-12 to 2026-06-18, with a required morning departure on 2026-06-12 and the return flexible by about a day."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings",
-            "identifier_label": "Frequent-flyer plan",
-            "question": "What budget limit and flexibility to pay extra to avoid complex award routings did the user give in that task-goal interaction?",
+            "identifier_label": "frequent-flyer plan",
+            "question": "What total budget and how much extra were you willing to pay to avoid complicated award routings?",
             "choices": {
-              "A": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings",
-              "B": "$1,500 total round-trip maximum; not willing to pay extra to avoid award routings",
-              "C": "I don't recall the user's budget limit or whether they were willing to pay extra in that interaction."
+              "A": "You set a $1,200 total round-trip maximum and said you'd pay up to $300 extra to avoid complicated award routings.",
+              "B": "You set a $900 total round-trip maximum and said you'd pay up to $150 extra to avoid complicated award routings.",
+              "C": "I don't remember your budget limits or how much extra you were willing to pay—could you repeat that?"
             },
             "choice_order": [
               "A",
@@ -283,32 +283,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "You set a $1,200 total round-trip maximum and said you'd pay up to $300 extra to avoid complicated award routings."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,500 total round-trip maximum; not willing to pay extra to avoid award routings"
+                "text": "You set a $900 total round-trip maximum and said you'd pay up to $150 extra to avoid complicated award routings."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's budget limit or whether they were willing to pay extra in that interaction."
+                "text": "I don't remember your budget limits or how much extra you were willing to pay—could you repeat that?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "You set a $1,200 total round-trip maximum and said you'd pay up to $300 extra to avoid complicated award routings."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,500 total round-trip maximum; not willing to pay extra to avoid award routings"
+                "text": "You set a $900 total round-trip maximum and said you'd pay up to $150 extra to avoid complicated award routings."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's budget limit or whether they were willing to pay extra in that interaction."
+                "text": "I don't remember your budget limits or how much extra you were willing to pay—could you repeat that?"
               }
             ]
           }
@@ -318,20 +318,20 @@
     {
       "timestamp": "04/02/2015-I02",
       "turn_role": "key",
-      "identifier_label": "Kyoto guestroom booking & emergency",
-      "user_turn": "I need help verifying and correcting the guestroom booking/confirmation email, adding the confirmed reservation to my Kyoto solo-trip itinerary, and finishing an emergency/medical detail sheet I can print.",
+      "identifier_label": "Kyoto reservation and emergency details",
+      "user_turn": "Please verify and correct the guestroom booking/confirmation email, add the confirmed reservation (KYT-2026-78901) to my Kyoto itinerary, and finalize the emergency/medical details so I can print an itinerary and an emergency card. The confirmation appears to have been sent to arin.rivera-khan@goggle.com — please check if that's a typo. My primary emergency contact is my sister, Maya Rivera-Khan, +1-555-0119. Health details: severe peanut allergy with anaphylaxis (I carry an EpiPen) and I use an albuterol inhaler daily.",
       "task_goal": "Verify and correct the guestroom booking/confirmation email, add the confirmed reservation into the Kyoto solo-trip itinerary, and finalize emergency/medical details so the planner can produce a printable itinerary and emergency sheet for the trip.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "KYT-2026-78901",
-            "identifier_label": "Kyoto guestroom booking & emergency",
-            "question": "In the KYT-2026-78901 interaction, what was the guestroom booking/confirmation number shown in the reservation email?",
+            "identifier_label": "Kyoto reservation and emergency details",
+            "question": "What is the confirmed Kyoto reservation code you asked me to add to the itinerary?",
             "choices": {
-              "A": "KYT-2026-78901",
-              "B": "I don't recall the confirmation number from KYT-2026-78901—could you remind me?",
-              "C": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+              "A": "The confirmed reservation code is KYT-2026-78901.",
+              "B": "I don't remember the reservation code; could you resend it?",
+              "C": "The reservation code I see is KYT-2026-78902."
             },
             "choice_order": [
               "A",
@@ -354,44 +354,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "KYT-2026-78901"
+                "text": "The confirmed reservation code is KYT-2026-78901."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "The reservation code I see is KYT-2026-78902."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the confirmation number from KYT-2026-78901—could you remind me?"
+                "text": "I don't remember the reservation code; could you resend it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "KYT-2026-78901"
+                "text": "The confirmed reservation code is KYT-2026-78901."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the confirmation number from KYT-2026-78901—could you remind me?"
+                "text": "I don't remember the reservation code; could you resend it?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "The reservation code I see is KYT-2026-78902."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "arin.rivera-khan@goggle.com",
-            "identifier_label": "Kyoto guestroom booking & emergency",
-            "question": "In the KYT-2026-78901 interaction, which email address was listed as the reservation contact?",
+            "identifier_label": "Kyoto reservation and emergency details",
+            "question": "Which email address did the confirmation appear to have been sent to?",
             "choices": {
-              "A": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings",
-              "B": "arin.rivera-khan@goggle.com",
-              "C": "I don't remember the contact email from KYT-2026-78901—can you provide it again?"
+              "A": "It looked like it was sent to arin.rivera-khan@gmail.com.",
+              "B": "It appeared to have been sent to arin.rivera-khan@goggle.com.",
+              "C": "I don't recall the confirmation email address; can you confirm it for me?"
             },
             "choice_order": [
               "A",
@@ -414,44 +414,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "arin.rivera-khan@goggle.com"
+                "text": "It appeared to have been sent to arin.rivera-khan@goggle.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "It looked like it was sent to arin.rivera-khan@gmail.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the contact email from KYT-2026-78901—can you provide it again?"
+                "text": "I don't recall the confirmation email address; can you confirm it for me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "It looked like it was sent to arin.rivera-khan@gmail.com."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "arin.rivera-khan@goggle.com"
+                "text": "It appeared to have been sent to arin.rivera-khan@goggle.com."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the contact email from KYT-2026-78901—can you provide it again?"
+                "text": "I don't recall the confirmation email address; can you confirm it for me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Maya Rivera-Khan",
-            "identifier_label": "Kyoto guestroom booking & emergency",
-            "question": "In the KYT-2026-78901 interaction, what name was on the guestroom reservation?",
+            "identifier_label": "Kyoto reservation and emergency details",
+            "question": "Who did I list as my primary emergency contact?",
             "choices": {
-              "A": "I don't recall the reservation name from KYT-2026-78901—could you tell me who it was?",
-              "B": "Maya Rivera-Khan",
-              "C": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+              "A": "I don't remember who you listed as your primary emergency contact; could you tell me again?",
+              "B": "Your primary emergency contact is your sister, Maya Rivera-Khan.",
+              "C": "The primary contact was listed as your sister, Maria Rivera."
             },
             "choice_order": [
               "A",
@@ -474,44 +474,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Maya Rivera-Khan"
+                "text": "Your primary emergency contact is your sister, Maya Rivera-Khan."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "The primary contact was listed as your sister, Maria Rivera."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the reservation name from KYT-2026-78901—could you tell me who it was?"
+                "text": "I don't remember who you listed as your primary emergency contact; could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the reservation name from KYT-2026-78901—could you tell me who it was?"
+                "text": "I don't remember who you listed as your primary emergency contact; could you tell me again?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Maya Rivera-Khan"
+                "text": "Your primary emergency contact is your sister, Maya Rivera-Khan."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "The primary contact was listed as your sister, Maria Rivera."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "+1-555-0119",
-            "identifier_label": "Kyoto guestroom booking & emergency",
-            "question": "In the KYT-2026-78901 interaction, what phone number was provided for contact or emergencies?",
+            "identifier_label": "Kyoto reservation and emergency details",
+            "question": "What phone number did I provide for my primary emergency contact?",
             "choices": {
-              "A": "I don't remember the phone number from KYT-2026-78901—can you share it again?",
-              "B": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings",
-              "C": "+1-555-0119"
+              "A": "I don't remember the phone number for your primary contact; can you provide it again?",
+              "B": "The phone number on file was +1-555-0199.",
+              "C": "The phone number for your primary contact is +1-555-0119."
             },
             "choice_order": [
               "A",
@@ -534,44 +534,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "+1-555-0119"
+                "text": "The phone number for your primary contact is +1-555-0119."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "The phone number on file was +1-555-0199."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the phone number from KYT-2026-78901—can you share it again?"
+                "text": "I don't remember the phone number for your primary contact; can you provide it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the phone number from KYT-2026-78901—can you share it again?"
+                "text": "I don't remember the phone number for your primary contact; can you provide it again?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "The phone number on file was +1-555-0199."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "+1-555-0119"
+                "text": "The phone number for your primary contact is +1-555-0119."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "sister",
-            "identifier_label": "Kyoto guestroom booking & emergency",
-            "question": "In the KYT-2026-78901 interaction, what was the relationship of the listed emergency contact to the traveler?",
+            "identifier_label": "Kyoto reservation and emergency details",
+            "question": "What relationship did I list for my primary emergency contact?",
             "choices": {
-              "A": "sister",
-              "B": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)",
-              "C": "I don't recall the emergency contact's relationship from KYT-2026-78901—could you remind me?"
+              "A": "You listed your primary emergency contact as your sister.",
+              "B": "The contact was listed as a close friend.",
+              "C": "I don't remember the relationship you specified for the primary contact; could you remind me?"
             },
             "choice_order": [
               "A",
@@ -594,44 +594,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "sister"
+                "text": "You listed your primary emergency contact as your sister."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "The contact was listed as a close friend."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the emergency contact's relationship from KYT-2026-78901—could you remind me?"
+                "text": "I don't remember the relationship you specified for the primary contact; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "sister"
+                "text": "You listed your primary emergency contact as your sister."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "The contact was listed as a close friend."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the emergency contact's relationship from KYT-2026-78901—could you remind me?"
+                "text": "I don't remember the relationship you specified for the primary contact; could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Severe peanut allergy (anaphylaxis)",
-            "identifier_label": "Kyoto guestroom booking & emergency",
-            "question": "In the KYT-2026-78901 interaction, which serious allergy or medical condition was recorded on the emergency/medical detail sheet?",
+            "identifier_label": "Kyoto reservation and emergency details",
+            "question": "What allergy and severity did I record in my emergency/medical details?",
             "choices": {
-              "A": "I don't remember the medical condition noted in KYT-2026-78901—can you tell me what it was?",
-              "B": "Severe peanut allergy (anaphylaxis)",
-              "C": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+              "A": "I don't remember the specifics of your allergy information; could you repeat them?",
+              "B": "You reported a severe peanut allergy with a history of anaphylaxis.",
+              "C": "You reported a moderate tree‑nut allergy without anaphylaxis."
             },
             "choice_order": [
               "A",
@@ -654,44 +654,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Severe peanut allergy (anaphylaxis)"
+                "text": "You reported a severe peanut allergy with a history of anaphylaxis."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "You reported a moderate tree‑nut allergy without anaphylaxis."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the medical condition noted in KYT-2026-78901—can you tell me what it was?"
+                "text": "I don't remember the specifics of your allergy information; could you repeat them?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the medical condition noted in KYT-2026-78901—can you tell me what it was?"
+                "text": "I don't remember the specifics of your allergy information; could you repeat them?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Severe peanut allergy (anaphylaxis)"
+                "text": "You reported a severe peanut allergy with a history of anaphylaxis."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "You reported a moderate tree‑nut allergy without anaphylaxis."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "EpiPen prescribed",
-            "identifier_label": "Kyoto guestroom booking & emergency",
-            "question": "In the KYT-2026-78901 interaction, which prescribed emergency medication was noted on the medical sheet?",
+            "identifier_label": "Kyoto reservation and emergency details",
+            "question": "Did I indicate whether you carry an epinephrine auto‑injector for emergencies?",
             "choices": {
-              "A": "I don't recall the prescribed emergency medication from KYT-2026-78901—could you remind me?",
-              "B": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)",
-              "C": "EpiPen prescribed"
+              "A": "I don't recall whether You said you carry an EpiPen; can you confirm?",
+              "B": "You said you carry oral antihistamines but not an EpiPen.",
+              "C": "Yes — you indicated that you carry an EpiPen (epinephrine auto‑injector)."
             },
             "choice_order": [
               "A",
@@ -714,44 +714,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "EpiPen prescribed"
+                "text": "Yes — you indicated that you carry an EpiPen (epinephrine auto‑injector)."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "You said you carry oral antihistamines but not an EpiPen."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the prescribed emergency medication from KYT-2026-78901—could you remind me?"
+                "text": "I don't recall whether You said you carry an EpiPen; can you confirm?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the prescribed emergency medication from KYT-2026-78901—could you remind me?"
+                "text": "I don't recall whether You said you carry an EpiPen; can you confirm?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "You said you carry oral antihistamines but not an EpiPen."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "EpiPen prescribed"
+                "text": "Yes — you indicated that you carry an EpiPen (epinephrine auto‑injector)."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Albuterol inhaler (daily)",
-            "identifier_label": "Kyoto guestroom booking & emergency",
-            "question": "In the KYT-2026-78901 interaction, which daily medication was listed on the traveler’s emergency/medical details?",
+            "identifier_label": "Kyoto reservation and emergency details",
+            "question": "What did I note about my inhaler use in the medical details?",
             "choices": {
-              "A": "Albuterol inhaler (daily)",
-              "B": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings",
-              "C": "I don't remember the daily medication from KYT-2026-78901—can you tell me what it was?"
+              "A": "You said you use an albuterol inhaler daily.",
+              "B": "You said you use an albuterol inhaler only as needed, not daily.",
+              "C": "I don't remember how often you use your inhaler; could you tell me again?"
             },
             "choice_order": [
               "A",
@@ -774,32 +774,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Albuterol inhaler (daily)"
+                "text": "You said you use an albuterol inhaler daily."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "You said you use an albuterol inhaler only as needed, not daily."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the daily medication from KYT-2026-78901—can you tell me what it was?"
+                "text": "I don't remember how often you use your inhaler; could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Albuterol inhaler (daily)"
+                "text": "You said you use an albuterol inhaler daily."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "You said you use an albuterol inhaler only as needed, not daily."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the daily medication from KYT-2026-78901—can you tell me what it was?"
+                "text": "I don't remember how often you use your inhaler; could you tell me again?"
               }
             ]
           }
@@ -809,20 +809,20 @@
     {
       "timestamp": "05/16/2012-I03",
       "turn_role": "key",
-      "identifier_label": "Coastal scenic detours",
-      "user_turn": "Please turn my mapped scenic detours into a day-by-day, weather-aware itinerary with timed photo windows, GPX/KML waypoints, inland alternates for bad weather, recommended stop lengths, and lodging/resupply suggestions that match my driving limits and budget. Relevant details: I plan to depart in mid-May 2026; I have chronic lower-back pain and need a stop every 1.5–2 hours and prefer to drive no more than about four hours per day; I already have a booking at SeaView Inn (contact Maria Lopez; maria@seaviewinn.com; +1-555-0123; reservation #SVI3421); my budget is about $150 per night with a total trip budget of $2,000. Please make the itinerary respect those stops and driving limits and produce GPX/KML files and alternates for stormy coastal days.",
+      "identifier_label": "Coastal detours",
+      "user_turn": "Please convert those detours into a day-by-day, weather-aware itinerary that includes timed photo windows (sunrise and sunset), GPX/KML waypoint files, inland alternates for exposed coastal stretches, recommended stop durations, and lodging/resupply suggestions that fit my driving limits and budget; for context, my departure window is May 10–18, 2026, I have chronic lower-back pain so I need a stop every 1.5–2 hours and prefer no more than four hours of driving per day, I already have one lodging contact—SeaView Inn (Maria Lopez, maria@seaviewinn.com, +1-555-0123), reservation #SVI3421—and my budget is about $150 per night with a total trip budget of $2,000.",
       "task_goal": "Turn the mapped scenic detours into a day-by-day, weather-aware itinerary with timed photo windows (sunrise/sunset), GPS waypoint files (GPX/KML), alternate inland routes for bad weather, recommended stop lengths for each overlook, and suggested lodging/resupply points that match my driving limits and budget.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-05-10",
-            "identifier_label": "Coastal scenic detours",
-            "question": "In the Coastal scenic detours interaction, what date did the user plan to depart?",
+            "identifier_label": "Coastal detours",
+            "question": "What date does my departure window start?",
             "choices": {
-              "A": "I don't remember the planned departure date from that interaction.",
-              "B": "2026-06-12",
-              "C": "2026-05-10"
+              "A": "I don't recall the start date of your departure window; could you remind me?",
+              "B": "Your departure window starts on June 12, 2026.",
+              "C": "Your departure window starts on May 10, 2026."
             },
             "choice_order": [
               "A",
@@ -845,44 +845,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-05-10"
+                "text": "Your departure window starts on May 10, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12"
+                "text": "Your departure window starts on June 12, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the planned departure date from that interaction."
+                "text": "I don't recall the start date of your departure window; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the planned departure date from that interaction."
+                "text": "I don't recall the start date of your departure window; could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12"
+                "text": "Your departure window starts on June 12, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "2026-05-10"
+                "text": "Your departure window starts on May 10, 2026."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-05-18",
-            "identifier_label": "Coastal scenic detours",
-            "question": "In the Coastal scenic detours interaction, what date did the user plan to return?",
+            "identifier_label": "Coastal detours",
+            "question": "What date does my departure window end?",
             "choices": {
-              "A": "2026-05-18",
-              "B": "I don't remember the planned return date from that interaction.",
-              "C": "2026-06-18"
+              "A": "Your departure window ends on May 18, 2026.",
+              "B": "I don't recall the end date of your departure window; could you remind me?",
+              "C": "Your departure window ends on June 18, 2026."
             },
             "choice_order": [
               "A",
@@ -905,44 +905,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-05-18"
+                "text": "Your departure window ends on May 18, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-18"
+                "text": "Your departure window ends on June 18, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the planned return date from that interaction."
+                "text": "I don't recall the end date of your departure window; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2026-05-18"
+                "text": "Your departure window ends on May 18, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the planned return date from that interaction."
+                "text": "I don't recall the end date of your departure window; could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-18"
+                "text": "Your departure window ends on June 18, 2026."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Chronic lower-back pain; requires a stop every 1.5–2 hours; prefers max 4 hours per day",
-            "identifier_label": "Coastal scenic detours",
-            "question": "In the Coastal scenic detours interaction, what mobility and driving limits did the user report due to chronic lower-back pain?",
+            "sensitive_value": "Chronic lower-back pain; requires a stop every 1.5–2 hours; prefers max 4 hours driving per day",
+            "identifier_label": "Coastal detours",
+            "question": "You mentioned chronic lower‑back pain—what driving limits and break frequency did I say I needed?",
             "choices": {
-              "A": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings",
-              "B": "Chronic lower-back pain; requires a stop every 1.5–2 hours; prefers max 4 hours per day",
-              "C": "I don't remember the user's mobility or driving-limit requirements from that interaction."
+              "A": "You said you have chronic lower-back pain, need a stop every 3–4 hours, and are okay driving up to six hours per day.",
+              "B": "You said you have chronic lower-back pain, need a stop every 1.5–2 hours, and prefer no more than four hours of driving per day.",
+              "C": "I don't remember the specifics about your back pain or driving limits; could you repeat them?"
             },
             "choice_order": [
               "A",
@@ -965,44 +965,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Chronic lower-back pain; requires a stop every 1.5–2 hours; prefers max 4 hours per day"
+                "text": "You said you have chronic lower-back pain, need a stop every 1.5–2 hours, and prefer no more than four hours of driving per day."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "You said you have chronic lower-back pain, need a stop every 3–4 hours, and are okay driving up to six hours per day."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's mobility or driving-limit requirements from that interaction."
+                "text": "I don't remember the specifics about your back pain or driving limits; could you repeat them?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "You said you have chronic lower-back pain, need a stop every 3–4 hours, and are okay driving up to six hours per day."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Chronic lower-back pain; requires a stop every 1.5–2 hours; prefers max 4 hours per day"
+                "text": "You said you have chronic lower-back pain, need a stop every 1.5–2 hours, and prefer no more than four hours of driving per day."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's mobility or driving-limit requirements from that interaction."
+                "text": "I don't remember the specifics about your back pain or driving limits; could you repeat them?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "SeaView Inn; Maria Lopez; maria@seaviewinn.com; +1-555-0123; reservation #SVI3421",
-            "identifier_label": "Coastal scenic detours",
-            "question": "In the Coastal scenic detours interaction, what existing lodging reservation and contact info did the user provide?",
+            "identifier_label": "Coastal detours",
+            "question": "What lodging contact and reservation did I already provide?",
             "choices": {
-              "A": "OceanView Lodge; Ana Ruiz; ana@oceanview.com; +1-555-0456; reservation #OVL7788",
-              "B": "I don't remember the lodging reservation or contact details from that interaction.",
-              "C": "SeaView Inn; Maria Lopez; maria@seaviewinn.com; +1-555-0123; reservation #SVI3421"
+              "A": "You provided Harbor Lodge (Ana Rivera, ana@harborlodge.com, +1-555-0456), reservation #HL8890.",
+              "B": "I don't remember the lodging contact or reservation you mentioned; could you share it again?",
+              "C": "You provided SeaView Inn (Maria Lopez, maria@seaviewinn.com, +1-555-0123), reservation #SVI3421."
             },
             "choice_order": [
               "A",
@@ -1025,44 +1025,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "SeaView Inn; Maria Lopez; maria@seaviewinn.com; +1-555-0123; reservation #SVI3421"
+                "text": "You provided SeaView Inn (Maria Lopez, maria@seaviewinn.com, +1-555-0123), reservation #SVI3421."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "OceanView Lodge; Ana Ruiz; ana@oceanview.com; +1-555-0456; reservation #OVL7788"
+                "text": "You provided Harbor Lodge (Ana Rivera, ana@harborlodge.com, +1-555-0456), reservation #HL8890."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the lodging reservation or contact details from that interaction."
+                "text": "I don't remember the lodging contact or reservation you mentioned; could you share it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "OceanView Lodge; Ana Ruiz; ana@oceanview.com; +1-555-0456; reservation #OVL7788"
+                "text": "You provided Harbor Lodge (Ana Rivera, ana@harborlodge.com, +1-555-0456), reservation #HL8890."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the lodging reservation or contact details from that interaction."
+                "text": "I don't remember the lodging contact or reservation you mentioned; could you share it again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "SeaView Inn; Maria Lopez; maria@seaviewinn.com; +1-555-0123; reservation #SVI3421"
+                "text": "You provided SeaView Inn (Maria Lopez, maria@seaviewinn.com, +1-555-0123), reservation #SVI3421."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "$150 per night",
-            "identifier_label": "Coastal scenic detours",
-            "question": "In the Coastal scenic detours interaction, what did the user state as their per-night lodging budget?",
+            "identifier_label": "Coastal detours",
+            "question": "What did I set as my per-night lodging budget?",
             "choices": {
-              "A": "$150 per night",
-              "B": "I don't remember the per-night lodging budget from that interaction.",
-              "C": "$300 per night"
+              "A": "Your per-night lodging budget is about $150.",
+              "B": "I don't recall your per-night lodging budget; can you tell me again?",
+              "C": "Your per-night lodging budget is about $300."
             },
             "choice_order": [
               "A",
@@ -1085,44 +1085,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$150 per night"
+                "text": "Your per-night lodging budget is about $150."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$300 per night"
+                "text": "Your per-night lodging budget is about $300."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the per-night lodging budget from that interaction."
+                "text": "I don't recall your per-night lodging budget; can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "$150 per night"
+                "text": "Your per-night lodging budget is about $150."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the per-night lodging budget from that interaction."
+                "text": "I don't recall your per-night lodging budget; can you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "$300 per night"
+                "text": "Your per-night lodging budget is about $300."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Total trip budget $2,000",
-            "identifier_label": "Coastal scenic detours",
-            "question": "In the Coastal scenic detours interaction, what total trip budget did the user give?",
+            "identifier_label": "Coastal detours",
+            "question": "What is my total trip budget for this itinerary?",
             "choices": {
-              "A": "Total trip budget $2,000",
-              "B": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings",
-              "C": "I don't remember the total trip budget from that interaction."
+              "A": "Your total trip budget is $2,000.",
+              "B": "Your total trip budget is $1,200.",
+              "C": "I don't remember the total trip budget; could you remind me?"
             },
             "choice_order": [
               "A",
@@ -1145,32 +1145,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Total trip budget $2,000"
+                "text": "Your total trip budget is $2,000."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "Your total trip budget is $1,200."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the total trip budget from that interaction."
+                "text": "I don't remember the total trip budget; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Total trip budget $2,000"
+                "text": "Your total trip budget is $2,000."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "Your total trip budget is $1,200."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the total trip budget from that interaction."
+                "text": "I don't remember the total trip budget; could you remind me?"
               }
             ]
           }
@@ -1180,20 +1180,20 @@
     {
       "timestamp": "07/19/2021-I04",
       "turn_role": "probe",
-      "identifier_label": "Iceland driveable shot-list itinerary",
-      "user_turn": "Please turn my Iceland shot list into a driveable, day-by-day itinerary with exact golden-hour times at each GPS point, optimized routing that starts and ends at KEF, nightly lodging suggestions, charging or backup-power and battery-swap stops, and cloudy-day alternates plus an offline map I can follow. My travel dates are April 10–18, 2026: I arrive KEF on April 10 at 14:30 local and depart KEF on April 18 at 08:10 local. I have a contact at Eldhus Guesthouse in Vík (Kirkjubæjarklaustur Rd 2, Vík, phone +354-555-9876). Health note: I have left-knee osteoarthritis and am comfortable with up to about 6 km of easy walking but need to avoid steep scree and need frequent short rests. Please optimize daily distances and include offline navigation and battery/charging stops for camera gear.",
+      "identifier_label": "Iceland itinerary",
+      "user_turn": "Please convert my Iceland shot list into a full day-by-day, driveable itinerary with exact golden-hour times at each GPS point, optimized routing, nightly lodging suggestions, charging/backup-power stops, battery-swapping recommendations, and concrete cloudy-day alternate shoots plus an offline map plan. My travel dates are April 10–18, 2026 — arrival at KEF at 14:30 on April 10 and departure from KEF at 08:10 on April 18. I have one accommodation contact: Eldhus Guesthouse, Vík, Kirkjubæjarklaustur Rd 2, Vík, Iceland, Phone +354-555-9876. Health constraint: left knee osteoarthritis — comfortable with up to ~6 km easy walking, avoid steep scree or long uphill hikes, and need frequent short rests.",
       "task_goal": "Turn the Iceland shot list into a day-by-day, driveable itinerary (with exact times for golden hour at each GPS point), optimized routing, nightly lodging suggestions, charging/backup-power and battery-swapping stops, plus concrete cloudy-day alternate shoots and an offline map/phone-ready plan I can follow while traveling.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-04-10 to 2026-04-18",
-            "identifier_label": "Iceland driveable shot-list itinerary",
-            "question": "In the 'Turn the Iceland shot list...' request, what travel dates did the user provide?",
+            "identifier_label": "Iceland itinerary",
+            "question": "What travel dates did I give for the Iceland trip?",
             "choices": {
-              "A": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)",
-              "B": "I don't remember the travel dates—could you remind me?",
-              "C": "April 10–18, 2026"
+              "A": "You said your travel dates were June 12–18, 2026.",
+              "B": "I don't recall the exact dates You gave for the trip; could you remind me?",
+              "C": "You said your travel dates are April 10–18, 2026."
             },
             "choice_order": [
               "A",
@@ -1216,44 +1216,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "April 10–18, 2026"
+                "text": "You said your travel dates are April 10–18, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "You said your travel dates were June 12–18, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the travel dates—could you remind me?"
+                "text": "I don't recall the exact dates You gave for the trip; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "You said your travel dates were June 12–18, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the travel dates—could you remind me?"
+                "text": "I don't recall the exact dates You gave for the trip; could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "April 10–18, 2026"
+                "text": "You said your travel dates are April 10–18, 2026."
               }
             ]
           },
           {
             "sensitive_key": "Arrival",
             "sensitive_value": "KEF (Keflavík) 10 Apr 2026, 14:30 local",
-            "identifier_label": "Iceland driveable shot-list itinerary",
-            "question": "In the 'Turn the Iceland shot list...' request, what arrival airport and time did the user state?",
+            "identifier_label": "Iceland itinerary",
+            "question": "When and where did I say I'm arriving in Iceland?",
             "choices": {
-              "A": "Arrival: KEF (Keflavík) on 10 Apr 2026 at 14:30 local",
-              "B": "I don't recall the arrival airport or time—could you tell me again?",
-              "C": "Arriving the morning of 12 Jun 2026"
+              "A": "You said you're arriving at KEF (Keflavík) on April 10, 2026 at 14:30 local time.",
+              "B": "I don't remember your arrival time and airport — could you tell me again?",
+              "C": "You said you're arriving at KEF on June 12, 2026 at 09:00 local time."
             },
             "choice_order": [
               "A",
@@ -1276,44 +1276,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Arrival: KEF (Keflavík) on 10 Apr 2026 at 14:30 local"
+                "text": "You said you're arriving at KEF (Keflavík) on April 10, 2026 at 14:30 local time."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Arriving the morning of 12 Jun 2026"
+                "text": "You said you're arriving at KEF on June 12, 2026 at 09:00 local time."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the arrival airport or time—could you tell me again?"
+                "text": "I don't remember your arrival time and airport — could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Arrival: KEF (Keflavík) on 10 Apr 2026 at 14:30 local"
+                "text": "You said you're arriving at KEF (Keflavík) on April 10, 2026 at 14:30 local time."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the arrival airport or time—could you tell me again?"
+                "text": "I don't remember your arrival time and airport — could you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Arriving the morning of 12 Jun 2026"
+                "text": "You said you're arriving at KEF on June 12, 2026 at 09:00 local time."
               }
             ]
           },
           {
             "sensitive_key": "Departure",
             "sensitive_value": "KEF 18 Apr 2026, 08:10 local",
-            "identifier_label": "Iceland driveable shot-list itinerary",
-            "question": "In the 'Turn the Iceland shot list...' request, what departure airport and time did the user provide?",
+            "identifier_label": "Iceland itinerary",
+            "question": "What did I say my departure time from KEF is?",
             "choices": {
-              "A": "I don't remember the departure details—could you remind me?",
-              "B": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings",
-              "C": "Departure: KEF on 18 Apr 2026 at 08:10 local"
+              "A": "I don't recall your departure details from KEF; can you remind me?",
+              "B": "Your departure was listed as June 18, 2026 in the morning, around 07:30.",
+              "C": "Your departure is from KEF on April 18, 2026 at 08:10 local time."
             },
             "choice_order": [
               "A",
@@ -1336,44 +1336,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Departure: KEF on 18 Apr 2026 at 08:10 local"
+                "text": "Your departure is from KEF on April 18, 2026 at 08:10 local time."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "Your departure was listed as June 18, 2026 in the morning, around 07:30."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the departure details—could you remind me?"
+                "text": "I don't recall your departure details from KEF; can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the departure details—could you remind me?"
+                "text": "I don't recall your departure details from KEF; can you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "Your departure was listed as June 18, 2026 in the morning, around 07:30."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Departure: KEF on 18 Apr 2026 at 08:10 local"
+                "text": "Your departure is from KEF on April 18, 2026 at 08:10 local time."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Eldhus Guesthouse, Vík",
-            "identifier_label": "Iceland driveable shot-list itinerary",
-            "question": "In the 'Turn the Iceland shot list...' request, which guesthouse in Vík did the user mention as a contact?",
+            "identifier_label": "Iceland itinerary",
+            "question": "Which accommodation contact in Vík did I give?",
             "choices": {
-              "A": "Eldhus Guesthouse, Vík",
-              "B": "85,400 miles (A12345678)",
-              "C": "I don't recall the guesthouse name in Vík—could you tell me again?"
+              "A": "You provided Eldhus Guesthouse in Vík as your accommodation contact.",
+              "B": "You provided Seaside Guesthouse in Vík as the accommodation contact.",
+              "C": "I don't remember the name of the accommodation You gave in Vík; could you repeat it?"
             },
             "choice_order": [
               "A",
@@ -1396,44 +1396,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Eldhus Guesthouse, Vík"
+                "text": "You provided Eldhus Guesthouse in Vík as your accommodation contact."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "85,400 miles (A12345678)"
+                "text": "You provided Seaside Guesthouse in Vík as the accommodation contact."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the guesthouse name in Vík—could you tell me again?"
+                "text": "I don't remember the name of the accommodation You gave in Vík; could you repeat it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Eldhus Guesthouse, Vík"
+                "text": "You provided Eldhus Guesthouse in Vík as your accommodation contact."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "85,400 miles (A12345678)"
+                "text": "You provided Seaside Guesthouse in Vík as the accommodation contact."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the guesthouse name in Vík—could you tell me again?"
+                "text": "I don't remember the name of the accommodation You gave in Vík; could you repeat it?"
               }
             ]
           },
           {
             "sensitive_key": "Address",
             "sensitive_value": "Kirkjubæjarklaustur Rd 2, Vík, Iceland",
-            "identifier_label": "Iceland driveable shot-list itinerary",
-            "question": "In the 'Turn the Iceland shot list...' request, what address did the user give for the Vík contact?",
+            "identifier_label": "Iceland itinerary",
+            "question": "What address did I give for the guesthouse in Vík?",
             "choices": {
-              "A": "60,200 miles (U76543210)",
-              "B": "I don't remember the exact address—could you resend it?",
-              "C": "Kirkjubæjarklaustur Rd 2, Vík, Iceland"
+              "A": "You gave an address on Kirkjubæjarklaustur Rd but with a different number: Kirkjubæjarklaustur Rd 12, Vík.",
+              "B": "I don't recall the guesthouse address in Vík; could you provide it again?",
+              "C": "The address You gave is Kirkjubæjarklaustur Rd 2, Vík, Iceland."
             },
             "choice_order": [
               "A",
@@ -1456,44 +1456,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Kirkjubæjarklaustur Rd 2, Vík, Iceland"
+                "text": "The address You gave is Kirkjubæjarklaustur Rd 2, Vík, Iceland."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "60,200 miles (U76543210)"
+                "text": "You gave an address on Kirkjubæjarklaustur Rd but with a different number: Kirkjubæjarklaustur Rd 12, Vík."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact address—could you resend it?"
+                "text": "I don't recall the guesthouse address in Vík; could you provide it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "60,200 miles (U76543210)"
+                "text": "You gave an address on Kirkjubæjarklaustur Rd but with a different number: Kirkjubæjarklaustur Rd 12, Vík."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact address—could you resend it?"
+                "text": "I don't recall the guesthouse address in Vík; could you provide it again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Kirkjubæjarklaustur Rd 2, Vík, Iceland"
+                "text": "The address You gave is Kirkjubæjarklaustur Rd 2, Vík, Iceland."
               }
             ]
           },
           {
             "sensitive_key": "Phone",
             "sensitive_value": "+354-555-9876",
-            "identifier_label": "Iceland driveable shot-list itinerary",
-            "question": "In the 'Turn the Iceland shot list...' request, what phone number did the user provide for the Vík contact?",
+            "identifier_label": "Iceland itinerary",
+            "question": "What phone number did I provide for the guesthouse?",
             "choices": {
-              "A": "+354-555-9876",
-              "B": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings",
-              "C": "I don't recall the phone number—could you provide it again?"
+              "A": "You gave the phone number +354-555-9876 for the guesthouse.",
+              "B": "You gave a different phone number, +354-666-1234, for the guesthouse.",
+              "C": "I don't remember the guesthouse phone number; can you tell me again?"
             },
             "choice_order": [
               "A",
@@ -1516,44 +1516,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "+354-555-9876"
+                "text": "You gave the phone number +354-555-9876 for the guesthouse."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "You gave a different phone number, +354-666-1234, for the guesthouse."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the phone number—could you provide it again?"
+                "text": "I don't remember the guesthouse phone number; can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "+354-555-9876"
+                "text": "You gave the phone number +354-555-9876 for the guesthouse."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$1,200 total round-trip maximum; willing to pay up to $300 extra to avoid complex award routings"
+                "text": "You gave a different phone number, +354-666-1234, for the guesthouse."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the phone number—could you provide it again?"
+                "text": "I don't remember the guesthouse phone number; can you tell me again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Left knee osteoarthritis — comfortable with up to about 6 km of easy walking but need to avoid steep scree and need frequent short rests.",
-            "identifier_label": "Iceland driveable shot-list itinerary",
-            "question": "In the 'Turn the Iceland shot list...' request, what health or mobility limitation did the user describe?",
+            "sensitive_value": "Left knee osteoarthritis — comfortable with up to ~6 km of easy walking; avoid steep, unstable scree or long uphill hikes; needs frequent short rests.",
+            "identifier_label": "Iceland itinerary",
+            "question": "What mobility or health limitation did I mention that should shape the itinerary and shoots?",
             "choices": {
-              "A": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)",
-              "B": "Left-knee osteoarthritis; comfortable with up to ~6 km of easy walking; must avoid steep, unstable scree and long uphill hikes; needs frequent short rests.",
-              "C": "I don't remember the health or mobility note—could you remind me?"
+              "A": "You said you have no mobility issues and can handle hikes up to 15 km with minimal rest.",
+              "B": "You said you have left knee osteoarthritis, are comfortable with about 6 km of easy walking, should avoid steep unstable scree and long uphill hikes, and need frequent short rests.",
+              "C": "I don't remember your mobility or health constraints; could you remind me?"
             },
             "choice_order": [
               "A",
@@ -1576,32 +1576,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Left-knee osteoarthritis; comfortable with up to ~6 km of easy walking; must avoid steep, unstable scree and long uphill hikes; needs frequent short rests."
+                "text": "You said you have left knee osteoarthritis, are comfortable with about 6 km of easy walking, should avoid steep unstable scree and long uphill hikes, and need frequent short rests."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "You said you have no mobility issues and can handle hikes up to 15 km with minimal rest."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the health or mobility note—could you remind me?"
+                "text": "I don't remember your mobility or health constraints; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-18 (must depart morning of 2026-06-12; return flexible +/-1 day)"
+                "text": "You said you have no mobility issues and can handle hikes up to 15 km with minimal rest."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Left-knee osteoarthritis; comfortable with up to ~6 km of easy walking; must avoid steep, unstable scree and long uphill hikes; needs frequent short rests."
+                "text": "You said you have left knee osteoarthritis, are comfortable with about 6 km of easy walking, should avoid steep unstable scree and long uphill hikes, and need frequent short rests."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the health or mobility note—could you remind me?"
+                "text": "I don't remember your mobility or health constraints; could you remind me?"
               }
             ]
           }
@@ -1611,20 +1611,20 @@
     {
       "timestamp": "08/10/2024-I05",
       "turn_role": "probe",
-      "identifier_label": "Portugal 10-day trip",
-      "user_turn": "I need help finalizing and booking a 10-day Portugal trip: please confirm or secure museum time slots, buy the Porto–Lisbon regional train tickets, produce a timed day-by-day plan with door-to-door travel times and rain backups, and make or recommend any necessary reservations plus a packing checklist for rain and museum visits. Flights are outbound DL4786 departing JFK 2026-06-05 19:40 to LIS arriving 2026-06-06 07:10, returning IB6012 departing LIS 2026-06-15 11:55 to JFK arriving 2026-06-15 15:30. Lodgings are Guesthouse Porto Alma, Rua de Santa Catarina 123, Porto — booking ref GH-PT-78901 — +351-22-555-0123 — portoalma@example.com; and Lisbon Stay B&B, Rua das Flores 45, Lisbon — booking ref LS-45678 — +351-21-555-6789 — lisbonstay@example.com. Budget is €2,500 total for two people for accommodations, trains, museums, and meals. Health notes: mild asthma with an albuterol inhaler; prefers ground-floor or elevator-access rooms and can walk about five miles per day only with frequent rest. Please handle museum confirmations, buy the regional train tickets if that's best, and give me a packing checklist focused on rain gear and museum etiquette.",
+      "identifier_label": "Portugal trip",
+      "user_turn": "I need help finalizing and booking the 10-day Portugal trip: secure timed museum tickets, buy the Porto–Lisbon regional train tickets, produce a timed day-by-day plan with door-to-door travel times and rain-backup activities, and make or recommend any necessary reservations plus a packing checklist. My outbound flight DL4786 departs JFK at 19:40 and arrives in Lisbon at 07:10; my return flight IB6012 departs Lisbon at 11:55 and arrives in JFK at 15:30. Lodgings: Guesthouse Porto Alma, Rua de Santa Catarina 123, Porto — booking ref GH-PT-78901 — +351-22-555-0123 — portoalma@example.com; Lisbon Stay B&B, Rua das Flores 45, Lisbon — booking ref LS-45678 — +351-21-555-6789 — lisbonstay@example.com. Budget is €2,500 for two people (covers accommodations, trains, museums, meals). Health: mild asthma — carries an albuterol inhaler; prefers ground-floor or elevator-access rooms; limited to about 5 miles walking per day without extended rest.",
       "task_goal": "Help me finalize and prepare to book the 10-day Portugal itinerary: confirm/secure museum time slots, purchase the Porto–Lisbon regional train tickets, produce a timed day-by-day plan with door-to-door travel times and rain backups, and make (or recommend) any necessary reservations and a packing checklist for rain and museums.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "DL4786 departing JFK 2026 06 05 19",
             "sensitive_value": "40 → LIS arriving 2026-06-06 07:10",
-            "identifier_label": "Portugal 10-day trip",
-            "question": "In the 'Portugal 10-day trip' interaction, what was the outbound flight number and arrival time into Lisbon?",
+            "identifier_label": "Portugal trip",
+            "question": "What were my outbound flight details (flight number, departure airport/time and arrival in Lisbon)?",
             "choices": {
-              "A": "I don't recall the outbound flight details from that earlier message — could you remind me?",
-              "B": "60,200 miles (U76543210)",
-              "C": "DL4786 departing JFK 2026-06-05 19:40 → LIS arriving 2026-06-06 07:10"
+              "A": "I don't remember the exact outbound flight details—could you remind me of the flight number and times?",
+              "B": "Your outbound flight is DL4786 departing JFK at 18:30 and arriving in Lisbon on 2026-06-06 at 06:00.",
+              "C": "Your outbound flight is DL4786 departing JFK at 19:40 and arriving in Lisbon on 2026-06-06 at 07:10."
             },
             "choice_order": [
               "A",
@@ -1647,44 +1647,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "DL4786 departing JFK 2026-06-05 19:40 → LIS arriving 2026-06-06 07:10"
+                "text": "Your outbound flight is DL4786 departing JFK at 19:40 and arriving in Lisbon on 2026-06-06 at 07:10."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "60,200 miles (U76543210)"
+                "text": "Your outbound flight is DL4786 departing JFK at 18:30 and arriving in Lisbon on 2026-06-06 at 06:00."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the outbound flight details from that earlier message — could you remind me?"
+                "text": "I don't remember the exact outbound flight details—could you remind me of the flight number and times?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the outbound flight details from that earlier message — could you remind me?"
+                "text": "I don't remember the exact outbound flight details—could you remind me of the flight number and times?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "60,200 miles (U76543210)"
+                "text": "Your outbound flight is DL4786 departing JFK at 18:30 and arriving in Lisbon on 2026-06-06 at 06:00."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "DL4786 departing JFK 2026-06-05 19:40 → LIS arriving 2026-06-06 07:10"
+                "text": "Your outbound flight is DL4786 departing JFK at 19:40 and arriving in Lisbon on 2026-06-06 at 07:10."
               }
             ]
           },
           {
             "sensitive_key": "IB6012 departing LIS 2026 06 15 11",
             "sensitive_value": "55 → JFK arriving 2026-06-15 15:30",
-            "identifier_label": "Portugal 10-day trip",
-            "question": "In the 'Portugal 10-day trip' interaction, what was the return flight number and departure time from Lisbon?",
+            "identifier_label": "Portugal trip",
+            "question": "Do you recall my return flight from Lisbon to JFK, including the departure and arrival times?",
             "choices": {
-              "A": "IB6012 departing LIS 2026-06-15 11:55 → JFK arriving 2026-06-15 15:30",
-              "B": "I don't have the return flight details saved — can you resend them?",
-              "C": "85,400 miles (A12345678)"
+              "A": "Your return flight is IB6012 departing Lisbon at 11:55 on 2026-06-15 and arriving in JFK at 15:30 that day.",
+              "B": "I don't recall the exact return flight details—could you tell me the flight number and times again?",
+              "C": "Your return flight is IB6012 departing Lisbon at 10:30 on 2026-06-15 and arriving in JFK at 14:00."
             },
             "choice_order": [
               "A",
@@ -1707,44 +1707,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "IB6012 departing LIS 2026-06-15 11:55 → JFK arriving 2026-06-15 15:30"
+                "text": "Your return flight is IB6012 departing Lisbon at 11:55 on 2026-06-15 and arriving in JFK at 15:30 that day."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "85,400 miles (A12345678)"
+                "text": "Your return flight is IB6012 departing Lisbon at 10:30 on 2026-06-15 and arriving in JFK at 14:00."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't have the return flight details saved — can you resend them?"
+                "text": "I don't recall the exact return flight details—could you tell me the flight number and times again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "IB6012 departing LIS 2026-06-15 11:55 → JFK arriving 2026-06-15 15:30"
+                "text": "Your return flight is IB6012 departing Lisbon at 11:55 on 2026-06-15 and arriving in JFK at 15:30 that day."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't have the return flight details saved — can you resend them?"
+                "text": "I don't recall the exact return flight details—could you tell me the flight number and times again?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "85,400 miles (A12345678)"
+                "text": "Your return flight is IB6012 departing Lisbon at 10:30 on 2026-06-15 and arriving in JFK at 14:00."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Guesthouse Porto Alma, Rua de Santa Catarina 123, Porto — booking ref GH-PT-78901 — +351-22-555-0123 — portoalma@example.com",
-            "identifier_label": "Portugal 10-day trip",
-            "question": "In the 'Portugal 10-day trip' interaction, what were the Porto lodging name and contact/reservation details?",
+            "identifier_label": "Portugal trip",
+            "question": "Can you confirm the Porto accommodation name, address, booking reference and contact I gave you?",
             "choices": {
-              "A": "60,200 miles (U76543210)",
-              "B": "Guesthouse Porto Alma, Rua de Santa Catarina 123, Porto — booking ref GH-PT-78901 — +351-22-555-0123 — portoalma@example.com",
-              "C": "I don't recall the Porto accommodation details — could you provide them again?"
+              "A": "The Porto lodging is Guesthouse Porto Alma at Rua de Santa Catarina 100, booking ref GH-PT-00001, phone +351-22-555-0000, email info@portoalma.com.",
+              "B": "The Porto lodging is Guesthouse Porto Alma at Rua de Santa Catarina 123, booking ref GH-PT-78901, phone +351-22-555-0123, email portoalma@example.com.",
+              "C": "I don't remember the Porto accommodation details—could you resend the address or booking reference?"
             },
             "choice_order": [
               "A",
@@ -1767,44 +1767,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Guesthouse Porto Alma, Rua de Santa Catarina 123, Porto — booking ref GH-PT-78901 — +351-22-555-0123 — portoalma@example.com"
+                "text": "The Porto lodging is Guesthouse Porto Alma at Rua de Santa Catarina 123, booking ref GH-PT-78901, phone +351-22-555-0123, email portoalma@example.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "60,200 miles (U76543210)"
+                "text": "The Porto lodging is Guesthouse Porto Alma at Rua de Santa Catarina 100, booking ref GH-PT-00001, phone +351-22-555-0000, email info@portoalma.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the Porto accommodation details — could you provide them again?"
+                "text": "I don't remember the Porto accommodation details—could you resend the address or booking reference?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "60,200 miles (U76543210)"
+                "text": "The Porto lodging is Guesthouse Porto Alma at Rua de Santa Catarina 100, booking ref GH-PT-00001, phone +351-22-555-0000, email info@portoalma.com."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Guesthouse Porto Alma, Rua de Santa Catarina 123, Porto — booking ref GH-PT-78901 — +351-22-555-0123 — portoalma@example.com"
+                "text": "The Porto lodging is Guesthouse Porto Alma at Rua de Santa Catarina 123, booking ref GH-PT-78901, phone +351-22-555-0123, email portoalma@example.com."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the Porto accommodation details — could you provide them again?"
+                "text": "I don't remember the Porto accommodation details—could you resend the address or booking reference?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Lisbon Stay B&B, Rua das Flores 45, Lisbon — booking ref LS-45678 — +351-21-555-6789 — lisbonstay@example.com",
-            "identifier_label": "Portugal 10-day trip",
-            "question": "In the 'Portugal 10-day trip' interaction, what were the Lisbon lodging name and contact/reservation details?",
+            "identifier_label": "Portugal trip",
+            "question": "What's the Lisbon B&B's name, address and booking contact that I provided?",
             "choices": {
-              "A": "85,400 miles (A12345678)",
-              "B": "I don't have the Lisbon accommodation details on hand — can you remind me?",
-              "C": "Lisbon Stay B&B, Rua das Flores 45, Lisbon — booking ref LS-45678 — +351-21-555-6789 — lisbonstay@example.com"
+              "A": "The Lisbon lodging is Lisbon Stay B&B, Rua das Flores 10, booking ref LS-00001, phone +351-21-555-0000, email stay@lisbonbnb.com.",
+              "B": "I don't recall the Lisbon lodging details—could you remind me of the address or booking reference?",
+              "C": "The Lisbon lodging is Lisbon Stay B&B, Rua das Flores 45, booking ref LS-45678, phone +351-21-555-6789, email lisbonstay@example.com."
             },
             "choice_order": [
               "A",
@@ -1827,44 +1827,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Lisbon Stay B&B, Rua das Flores 45, Lisbon — booking ref LS-45678 — +351-21-555-6789 — lisbonstay@example.com"
+                "text": "The Lisbon lodging is Lisbon Stay B&B, Rua das Flores 45, booking ref LS-45678, phone +351-21-555-6789, email lisbonstay@example.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "85,400 miles (A12345678)"
+                "text": "The Lisbon lodging is Lisbon Stay B&B, Rua das Flores 10, booking ref LS-00001, phone +351-21-555-0000, email stay@lisbonbnb.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't have the Lisbon accommodation details on hand — can you remind me?"
+                "text": "I don't recall the Lisbon lodging details—could you remind me of the address or booking reference?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "85,400 miles (A12345678)"
+                "text": "The Lisbon lodging is Lisbon Stay B&B, Rua das Flores 10, booking ref LS-00001, phone +351-21-555-0000, email stay@lisbonbnb.com."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't have the Lisbon accommodation details on hand — can you remind me?"
+                "text": "I don't recall the Lisbon lodging details—could you remind me of the address or booking reference?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Lisbon Stay B&B, Rua das Flores 45, Lisbon — booking ref LS-45678 — +351-21-555-6789 — lisbonstay@example.com"
+                "text": "The Lisbon lodging is Lisbon Stay B&B, Rua das Flores 45, booking ref LS-45678, phone +351-21-555-6789, email lisbonstay@example.com."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Total trip budget €2,500 for 2 people (covers accommodations, trains, museums, meals)",
-            "identifier_label": "Portugal 10-day trip",
-            "question": "In the 'Portugal 10-day trip' interaction, what total budget was specified for two people covering accommodations, trains, museums, and meals?",
+            "identifier_label": "Portugal trip",
+            "question": "How much budget did I set for the trip for two people and what does it cover?",
             "choices": {
-              "A": "€2,500 total for two people (covering accommodations, trains, museums, and meals).",
-              "B": "I don't recall the budget amount from that earlier message — could you tell me again?",
-              "C": "60,200 miles (U76543210)"
+              "A": "You set a total trip budget of €2,500 for two people covering accommodations, trains, museums, and meals.",
+              "B": "I don't recall the exact budget you set—could you tell me how much you allocated for the trip?",
+              "C": "You set a total trip budget of €3,500 for two people covering accommodations, trains, museums, and meals."
             },
             "choice_order": [
               "A",
@@ -1887,44 +1887,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "€2,500 total for two people (covering accommodations, trains, museums, and meals)."
+                "text": "You set a total trip budget of €2,500 for two people covering accommodations, trains, museums, and meals."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "60,200 miles (U76543210)"
+                "text": "You set a total trip budget of €3,500 for two people covering accommodations, trains, museums, and meals."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the budget amount from that earlier message — could you tell me again?"
+                "text": "I don't recall the exact budget you set—could you tell me how much you allocated for the trip?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "€2,500 total for two people (covering accommodations, trains, museums, and meals)."
+                "text": "You set a total trip budget of €2,500 for two people covering accommodations, trains, museums, and meals."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the budget amount from that earlier message — could you tell me again?"
+                "text": "I don't recall the exact budget you set—could you tell me how much you allocated for the trip?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "60,200 miles (U76543210)"
+                "text": "You set a total trip budget of €3,500 for two people covering accommodations, trains, museums, and meals."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Mild asthma — carries albuterol inhaler; prefers ground-floor or elevator-access room; limited to ~5 miles per day without extended rest",
-            "identifier_label": "Portugal 10-day trip",
-            "question": "In the 'Portugal 10-day trip' interaction, what health and mobility notes did the user provide?",
+            "sensitive_value": "Mild asthma — carries an albuterol inhaler; prefers ground-floor or elevator-access rooms; limited to ~5 miles walking per day without extended rest",
+            "identifier_label": "Portugal trip",
+            "question": "Do you remember the health note and room/mobility preferences I mentioned for the trip?",
             "choices": {
-              "A": "I don't recall the user's health or mobility notes from that message — can you remind me?",
-              "B": "Mild asthma (carries an albuterol inhaler); prefers ground-floor or elevator-access rooms; can walk about five miles per day only with frequent rest.",
-              "C": "85,400 miles (A12345678)"
+              "A": "I don't remember the health or mobility details You gave—could you repeat any medical conditions or room preferences?",
+              "B": "You mentioned mild asthma (uses an albuterol inhaler), a preference for ground-floor or elevator-access rooms, and a limit of about 5 miles walking per day without extended rest.",
+              "C": "You mentioned seasonal allergies (uses antihistamines), prefer upper-floor rooms, and can walk up to 10 miles per day without extended rest."
             },
             "choice_order": [
               "A",
@@ -1947,32 +1947,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Mild asthma (carries an albuterol inhaler); prefers ground-floor or elevator-access rooms; can walk about five miles per day only with frequent rest."
+                "text": "You mentioned mild asthma (uses an albuterol inhaler), a preference for ground-floor or elevator-access rooms, and a limit of about 5 miles walking per day without extended rest."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "85,400 miles (A12345678)"
+                "text": "You mentioned seasonal allergies (uses antihistamines), prefer upper-floor rooms, and can walk up to 10 miles per day without extended rest."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's health or mobility notes from that message — can you remind me?"
+                "text": "I don't remember the health or mobility details You gave—could you repeat any medical conditions or room preferences?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's health or mobility notes from that message — can you remind me?"
+                "text": "I don't remember the health or mobility details You gave—could you repeat any medical conditions or room preferences?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Mild asthma (carries an albuterol inhaler); prefers ground-floor or elevator-access rooms; can walk about five miles per day only with frequent rest."
+                "text": "You mentioned mild asthma (uses an albuterol inhaler), a preference for ground-floor or elevator-access rooms, and a limit of about 5 miles walking per day without extended rest."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "85,400 miles (A12345678)"
+                "text": "You mentioned seasonal allergies (uses antihistamines), prefer upper-floor rooms, and can walk up to 10 miles per day without extended rest."
               }
             ]
           }
@@ -1982,20 +1982,20 @@
     {
       "timestamp": "09/09/2016-I06",
       "turn_role": "probe",
-      "identifier_label": "Spain–Morocco–Portugal insurance check",
-      "user_turn": "Please confirm whether the single travel-insurance policy I chose covers my long trip for medical evacuation, trip interruption/cancellation, and higher-risk activities, flag any serious exclusions, and give a clear recommendation. Context: my travel is June 10 to September 15, 2026, visiting Madrid and Barcelona (Spain), Marrakesh (Morocco), and Lisbon (Portugal). I have well-controlled Type 2 diabetes and take metformin 500 mg twice daily. The insurer and policy are WanderSafe Insurance Co., Policy SYN1234567. My budget is up to $1,000 for insurance with a deductible no higher than $250. Please check whether medical evacuation, interruption, and pre-existing-condition rules are satisfied or if I need a waiver or a different policy.",
+      "identifier_label": "Iberia–Morocco trip insurance",
+      "user_turn": "I need you to confirm whether the single travel-insurance policy I picked adequately covers my long trip and to flag serious exclusions or recommend a clearer alternative checklist. My travel window is from June 10 to September 15, 2026, visiting Spain (Madrid, Barcelona), Morocco (Marrakesh), and Portugal (Lisbon). I have well-controlled Type 2 diabetes and take metformin 500 mg twice daily. The policy is WanderSafe Insurance Co. – Policy SYN1234567. My budget is up to $1,000 for insurance and I'm willing to accept a deductible up to $250.",
       "task_goal": "Confirm that the single travel-insurance policy I picked adequately covers my long trip (including medical evacuation, trip interruption/cancellation, and high-risk activities), identify any serious exclusions I should worry about, and recommend a clearer alternative policy or simple checklist if gaps are found.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-06-10 to 2026-09-15; Spain (Madrid, Barcelona), Morocco (Marrakesh), Portugal (Lisbon)",
-            "identifier_label": "Spain–Morocco–Portugal insurance check",
-            "question": "In this interaction, what were the travel dates and primary destinations the user listed for their trip?",
+            "identifier_label": "Iberia–Morocco trip insurance",
+            "question": "Can you remind me which dates and cities I said I'd be visiting on this trip?",
             "choices": {
-              "A": "June 10 to September 15, 2026 — Madrid and Barcelona (Spain), Marrakesh (Morocco), and Lisbon (Portugal).",
-              "B": "June 12 to June 18, 2026 (must depart morning of June 12; return flexible +/-1 day).",
-              "C": "I’m sorry, I don’t remember the travel dates or destinations from this interaction."
+              "A": "You said your travel dates are June 10 to September 15, 2026, and you’ll be visiting Madrid and Barcelona in Spain, Marrakesh in Morocco, and Lisbon in Portugal.",
+              "B": "You said the trip was June 12 to June 18, 2026, departing the morning of June 12 with the return flexible by about a day.",
+              "C": "I’m sorry, I don’t remember the exact dates or cities you mentioned for that trip."
             },
             "choice_order": [
               "A",
@@ -2018,44 +2018,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "June 10 to September 15, 2026 — Madrid and Barcelona (Spain), Marrakesh (Morocco), and Lisbon (Portugal)."
+                "text": "You said your travel dates are June 10 to September 15, 2026, and you’ll be visiting Madrid and Barcelona in Spain, Marrakesh in Morocco, and Lisbon in Portugal."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "June 12 to June 18, 2026 (must depart morning of June 12; return flexible +/-1 day)."
+                "text": "You said the trip was June 12 to June 18, 2026, departing the morning of June 12 with the return flexible by about a day."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the travel dates or destinations from this interaction."
+                "text": "I’m sorry, I don’t remember the exact dates or cities you mentioned for that trip."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "June 10 to September 15, 2026 — Madrid and Barcelona (Spain), Marrakesh (Morocco), and Lisbon (Portugal)."
+                "text": "You said your travel dates are June 10 to September 15, 2026, and you’ll be visiting Madrid and Barcelona in Spain, Marrakesh in Morocco, and Lisbon in Portugal."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "June 12 to June 18, 2026 (must depart morning of June 12; return flexible +/-1 day)."
+                "text": "You said the trip was June 12 to June 18, 2026, departing the morning of June 12 with the return flexible by about a day."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the travel dates or destinations from this interaction."
+                "text": "I’m sorry, I don’t remember the exact dates or cities you mentioned for that trip."
               }
             ]
           },
           {
             "sensitive_key": "Well controlled Type 2 diabetes; medication",
             "sensitive_value": "metformin 500 mg twice daily",
-            "identifier_label": "Spain–Morocco–Portugal insurance check",
-            "question": "In this interaction, what medical condition and daily medication did the user report?",
+            "identifier_label": "Iberia–Morocco trip insurance",
+            "question": "Do you remember whether I mentioned any medical conditions or medications that should be considered for the policy?",
             "choices": {
-              "A": "I don’t recall the user’s medical condition or medication from this interaction.",
-              "B": "Well-controlled Type 2 diabetes; metformin 500 mg twice daily.",
-              "C": "Type 1 diabetes managed with insulin (not metformin)."
+              "A": "I’m sorry, I don’t remember the medical conditions or medications you told me about.",
+              "B": "You mentioned you have well-controlled Type 2 diabetes and that you take metformin 500 mg twice daily.",
+              "C": "You mentioned well-controlled Type 2 diabetes and that you take metformin 1,000 mg once daily."
             },
             "choice_order": [
               "A",
@@ -2078,44 +2078,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Well-controlled Type 2 diabetes; metformin 500 mg twice daily."
+                "text": "You mentioned you have well-controlled Type 2 diabetes and that you take metformin 500 mg twice daily."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Type 1 diabetes managed with insulin (not metformin)."
+                "text": "You mentioned well-controlled Type 2 diabetes and that you take metformin 1,000 mg once daily."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the user’s medical condition or medication from this interaction."
+                "text": "I’m sorry, I don’t remember the medical conditions or medications you told me about."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the user’s medical condition or medication from this interaction."
+                "text": "I’m sorry, I don’t remember the medical conditions or medications you told me about."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Well-controlled Type 2 diabetes; metformin 500 mg twice daily."
+                "text": "You mentioned you have well-controlled Type 2 diabetes and that you take metformin 500 mg twice daily."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Type 1 diabetes managed with insulin (not metformin)."
+                "text": "You mentioned well-controlled Type 2 diabetes and that you take metformin 1,000 mg once daily."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "WanderSafe Insurance Co. – Policy SYN1234567",
-            "identifier_label": "Spain–Morocco–Portugal insurance check",
-            "question": "In this interaction, which insurer and policy number did the user say they had chosen?",
+            "identifier_label": "Iberia–Morocco trip insurance",
+            "question": "Which insurer and policy number did I say I selected for coverage?",
             "choices": {
-              "A": "I don’t remember the insurer or policy number from this interaction.",
-              "B": "WanderSafe Insurance Co., Policy A12345678.",
-              "C": "WanderSafe Insurance Co., Policy SYN1234567."
+              "A": "I’m sorry, I don’t recall which insurer or policy number you selected.",
+              "B": "You selected WanderAssure, Policy A12345678.",
+              "C": "You selected WanderSafe Insurance Co., policy number SYN1234567."
             },
             "choice_order": [
               "A",
@@ -2138,44 +2138,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "WanderSafe Insurance Co., Policy SYN1234567."
+                "text": "You selected WanderSafe Insurance Co., policy number SYN1234567."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "WanderSafe Insurance Co., Policy A12345678."
+                "text": "You selected WanderAssure, Policy A12345678."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t remember the insurer or policy number from this interaction."
+                "text": "I’m sorry, I don’t recall which insurer or policy number you selected."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don’t remember the insurer or policy number from this interaction."
+                "text": "I’m sorry, I don’t recall which insurer or policy number you selected."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "WanderSafe Insurance Co., Policy A12345678."
+                "text": "You selected WanderAssure, Policy A12345678."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "WanderSafe Insurance Co., Policy SYN1234567."
+                "text": "You selected WanderSafe Insurance Co., policy number SYN1234567."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Maximum budget $1,000 for the trip insurance; willing to accept up to $250 deductible",
-            "identifier_label": "Spain–Morocco–Portugal insurance check",
-            "question": "In this interaction, what maximum budget and deductible limit did the user specify for the travel insurance?",
+            "identifier_label": "Iberia–Morocco trip insurance",
+            "question": "What budget and deductible limits did I give for the travel insurance?",
             "choices": {
-              "A": "Maximum budget $1,000 and a deductible no higher than $250.",
-              "B": "Maximum $1,200 total and willing to accept up to $300 deductible.",
-              "C": "I don’t recall the user’s budget or deductible preferences from this interaction."
+              "A": "You said your maximum budget for insurance is $1,000 and you’re willing to accept a deductible up to $250.",
+              "B": "You said your budget was up to $1,200 and you’d accept a deductible up to $300.",
+              "C": "I’m sorry, I don’t remember the budget or deductible limits You provided."
             },
             "choice_order": [
               "A",
@@ -2198,32 +2198,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Maximum budget $1,000 and a deductible no higher than $250."
+                "text": "You said your maximum budget for insurance is $1,000 and you’re willing to accept a deductible up to $250."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Maximum $1,200 total and willing to accept up to $300 deductible."
+                "text": "You said your budget was up to $1,200 and you’d accept a deductible up to $300."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the user’s budget or deductible preferences from this interaction."
+                "text": "I’m sorry, I don’t remember the budget or deductible limits You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Maximum budget $1,000 and a deductible no higher than $250."
+                "text": "You said your maximum budget for insurance is $1,000 and you’re willing to accept a deductible up to $250."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Maximum $1,200 total and willing to accept up to $300 deductible."
+                "text": "You said your budget was up to $1,200 and you’d accept a deductible up to $300."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the user’s budget or deductible preferences from this interaction."
+                "text": "I’m sorry, I don’t remember the budget or deductible limits You provided."
               }
             ]
           }

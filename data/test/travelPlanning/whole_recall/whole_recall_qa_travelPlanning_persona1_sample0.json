@@ -1,0 +1,440 @@
+{
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona1_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona1_sample0.memory_control.json",
+  "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona1_sample0.json",
+  "model": "gpt-5-mini",
+  "items": [
+    {
+      "timestamp": "01/08/2021-I01",
+      "turn_role": "key",
+      "identifier_label": "frequent-flyer plan",
+      "user_turn": "Okay, can you give me a simple, low-effort plan to get useful value from my existing frequent‑flyer balances for one upcoming trip? For background: I can share balances and account IDs so you can judge realism — American AAdvantage: 85,400 miles (A12345678); United MileagePlus: 60,200 miles (U76543210); Flying Blue (Air France/KLM): 22,500 miles (FB998877). My travel window is June 12–18, 2026 and I must depart the morning of June 12 (return within one day). My total round-trip budget ceiling is $1,200 and I’m willing to pay up to $300 extra to avoid complicated award routings — I don’t want to spend hours gaming blackout dates or micro-optimizing; I just want clear options (use miles vs pay cash, which accounts to prioritize, and concrete booking options/tools).",
+      "task_goal": "Give a simple, low-effort plan to get useful value from my existing frequent‑flyer balances (recommend whether to use miles or pay cash, which accounts/alliance to prioritize, and concrete booking options or tools) for an upcoming trip without requiring me to chase blackout-date gaming or micro-optimizations.",
+      "rendered": {
+        "identifier_label": "frequent-flyer plan",
+        "question": "What was the main purpose of my earlier request?",
+        "choices": {
+          "A": "To have you coordinate transfers between all my loyalty accounts, optimize a multi-city award itinerary with stopovers, and exploit transfer bonuses to squeeze maximum cents‑per‑mile value.",
+          "B": "To get a simple, low-effort plan that recommends whether to use miles or pay cash, which accounts/alliances to prioritize, and concrete booking options/tools for one upcoming trip—without requiring time‑consuming award gaming or micro‑optimizations.",
+          "C": "I’m sorry, I don’t remember the earlier request. Could you remind me of the overall goal you had in mind?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "To get a simple, low-effort plan that recommends whether to use miles or pay cash, which accounts/alliances to prioritize, and concrete booking options/tools for one upcoming trip—without requiring time‑consuming award gaming or micro‑optimizations."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "To have you coordinate transfers between all my loyalty accounts, optimize a multi-city award itinerary with stopovers, and exploit transfer bonuses to squeeze maximum cents‑per‑mile value."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t remember the earlier request. Could you remind me of the overall goal you had in mind?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "To have you coordinate transfers between all my loyalty accounts, optimize a multi-city award itinerary with stopovers, and exploit transfer bonuses to squeeze maximum cents‑per‑mile value."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "To get a simple, low-effort plan that recommends whether to use miles or pay cash, which accounts/alliances to prioritize, and concrete booking options/tools for one upcoming trip—without requiring time‑consuming award gaming or micro‑optimizations."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t remember the earlier request. Could you remind me of the overall goal you had in mind?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "01/08/2021-I01"
+        ],
+        "rationale": "The label 'frequent-flyer plan' directly matches the task_goal and user_turn in 01/08/2021-I01, which asks for a low-effort plan using existing frequent-flyer balances (AAdvantage, United, Flying Blue), advising use of miles vs cash, account prioritization, and concrete booking options for travel June 12–18, 2026. None of the other candidate turns concern frequent-flyer balances or that planning task."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "04/02/2015-I02",
+      "turn_role": "key",
+      "identifier_label": "Kyoto reservation and emergency details",
+      "user_turn": "Please verify and correct the guestroom booking/confirmation email, add the confirmed reservation (KYT-2026-78901) to my Kyoto itinerary, and finalize the emergency/medical details so I can print an itinerary and an emergency card. The confirmation appears to have been sent to arin.rivera-khan@goggle.com — please check if that's a typo. My primary emergency contact is my sister, Maya Rivera-Khan, +1-555-0119. Health details: severe peanut allergy with anaphylaxis (I carry an EpiPen) and I use an albuterol inhaler daily.",
+      "task_goal": "Verify and correct the guestroom booking/confirmation email, add the confirmed reservation into the Kyoto solo-trip itinerary, and finalize emergency/medical details so the planner can produce a printable itinerary and emergency sheet for the trip.",
+      "rendered": {
+        "identifier_label": "Kyoto reservation and emergency details",
+        "question": "Did I want me to proceed with the overall task you previously requested: verify and correct the guestroom booking confirmation, add the confirmed reservation to my Kyoto itinerary, and finalize emergency/medical details so a printable itinerary and an emergency card can be produced?",
+        "choices": {
+          "A": "I’m sorry, I don’t recall the earlier request. Could you briefly restate the overall goal you want me to complete for the trip?",
+          "B": "Yes — verify and correct the booking confirmation, add the confirmed reservation to my Kyoto itinerary, and finalize the emergency/medical details so you can produce a printable itinerary and an emergency card.",
+          "C": "No — instead of handling the booking and emergency details, focus only on researching restaurants and activities for the trip."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — verify and correct the booking confirmation, add the confirmed reservation to my Kyoto itinerary, and finalize the emergency/medical details so you can produce a printable itinerary and an emergency card."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "No — instead of handling the booking and emergency details, focus only on researching restaurants and activities for the trip."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t recall the earlier request. Could you briefly restate the overall goal you want me to complete for the trip?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t recall the earlier request. Could you briefly restate the overall goal you want me to complete for the trip?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes — verify and correct the booking confirmation, add the confirmed reservation to my Kyoto itinerary, and finalize the emergency/medical details so you can produce a printable itinerary and an emergency card."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "No — instead of handling the booking and emergency details, focus only on researching restaurants and activities for the trip."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "04/02/2015-I02"
+        ],
+        "rationale": "The label directly matches the task_goal and user_turn of 04/02/2015-I02, which mentions a Kyoto reservation (KYT-2026-78901) and requests verifying the booking email and finalizing emergency/medical details for a printable itinerary and emergency card. No other candidate addresses Kyoto reservations or emergency details."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "05/16/2012-I03",
+      "turn_role": "key",
+      "identifier_label": "Coastal detours",
+      "user_turn": "Please convert those detours into a day-by-day, weather-aware itinerary that includes timed photo windows (sunrise and sunset), GPX/KML waypoint files, inland alternates for exposed coastal stretches, recommended stop durations, and lodging/resupply suggestions that fit my driving limits and budget; for context, my departure window is May 10–18, 2026, I have chronic lower-back pain so I need a stop every 1.5–2 hours and prefer no more than four hours of driving per day, I already have one lodging contact—SeaView Inn (Maria Lopez, maria@seaviewinn.com, +1-555-0123), reservation #SVI3421—and my budget is about $150 per night with a total trip budget of $2,000.",
+      "task_goal": "Turn the mapped scenic detours into a day-by-day, weather-aware itinerary with timed photo windows (sunrise/sunset), GPS waypoint files (GPX/KML), alternate inland routes for bad weather, recommended stop lengths for each overlook, and suggested lodging/resupply points that match my driving limits and budget.",
+      "rendered": {
+        "identifier_label": "Coastal detours",
+        "question": "Do you remember the overall purpose of my earlier request about the mapped 'Coastal detours'?",
+        "choices": {
+          "A": "I don't remember the earlier request. Please remind me of its overall purpose and I can proceed.",
+          "B": "Yes — to convert the mapped scenic detours into a weather-aware, day-by-day driving itinerary with timed photo windows, GPS waypoint files, inland alternate routes, recommended stop durations, and lodging/resupply suggestions tailored to your driving limits and preferences.",
+          "C": "No — that earlier message was asking me to draft a press release about a new coastal conservation project."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — to convert the mapped scenic detours into a weather-aware, day-by-day driving itinerary with timed photo windows, GPS waypoint files, inland alternate routes, recommended stop durations, and lodging/resupply suggestions tailored to your driving limits and preferences."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "No — that earlier message was asking me to draft a press release about a new coastal conservation project."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't remember the earlier request. Please remind me of its overall purpose and I can proceed."
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don't remember the earlier request. Please remind me of its overall purpose and I can proceed."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes — to convert the mapped scenic detours into a weather-aware, day-by-day driving itinerary with timed photo windows, GPS waypoint files, inland alternate routes, recommended stop durations, and lodging/resupply suggestions tailored to your driving limits and preferences."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "No — that earlier message was asking me to draft a press release about a new coastal conservation project."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "05/16/2012-I03"
+        ],
+        "rationale": "The label 'Coastal detours' directly matches the user request in 05/16/2012-I03, which asks to convert mapped scenic detours into a day-by-day, weather-aware itinerary and explicitly mentions inland alternates for exposed coastal stretches. None of the other candidate turns reference coastal detours or alternates for coastal routes."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "07/19/2021-I04",
+      "turn_role": "probe",
+      "identifier_label": "Iceland itinerary",
+      "user_turn": "Please convert my Iceland shot list into a full day-by-day, driveable itinerary with exact golden-hour times at each GPS point, optimized routing, nightly lodging suggestions, charging/backup-power stops, battery-swapping recommendations, and concrete cloudy-day alternate shoots plus an offline map plan. My travel dates are April 10–18, 2026 — arrival at KEF at 14:30 on April 10 and departure from KEF at 08:10 on April 18. I have one accommodation contact: Eldhus Guesthouse, Vík, Kirkjubæjarklaustur Rd 2, Vík, Iceland, Phone +354-555-9876. Health constraint: left knee osteoarthritis — comfortable with up to ~6 km easy walking, avoid steep scree or long uphill hikes, and need frequent short rests.",
+      "task_goal": "Turn the Iceland shot list into a day-by-day, driveable itinerary (with exact times for golden hour at each GPS point), optimized routing, nightly lodging suggestions, charging/backup-power and battery-swapping stops, plus concrete cloudy-day alternate shoots and an offline map/phone-ready plan I can follow while traveling.",
+      "rendered": {
+        "identifier_label": "Iceland itinerary",
+        "question": "Do you remember my request to turn my Iceland shot list into a full day-by-day, driveable itinerary with golden-hour times, optimized routing, lodging, charging/backup-power and battery-swap stops, cloudy-day alternate shoots, and an offline map I can use on my phone?",
+        "choices": {
+          "A": "I don’t have that earlier request available right now. Could you resend the shot list and trip details so I can recreate the day-by-day itinerary?",
+          "B": "I recall a travel-related request, but it was focused on optimizing frequent‑flyer balances and booking strategy — advising whether to use miles or pay cash, which accounts/alliances to prioritize, and concrete booking options and tools — rather than producing a driveable shot-list itinerary.",
+          "C": "Yes — you asked me to convert your Iceland shot list into a detailed, day-by-day driveable itinerary that includes exact golden-hour times at each GPS point, optimized routing, nightly lodging suggestions, EV charging/backup-power and battery-swapping recommendations, concrete cloudy-day alternate shoots, and an offline, phone-ready map/plan that takes your mobility limitation into account."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "distractor_irrelevant": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "distractor_irrelevant",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to convert your Iceland shot list into a detailed, day-by-day driveable itinerary that includes exact golden-hour times at each GPS point, optimized routing, nightly lodging suggestions, EV charging/backup-power and battery-swapping recommendations, concrete cloudy-day alternate shoots, and an offline, phone-ready map/plan that takes your mobility limitation into account."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "I recall a travel-related request, but it was focused on optimizing frequent‑flyer balances and booking strategy — advising whether to use miles or pay cash, which accounts/alliances to prioritize, and concrete booking options and tools — rather than producing a driveable shot-list itinerary."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request available right now. Could you resend the shot list and trip details so I can recreate the day-by-day itinerary?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request available right now. Could you resend the shot list and trip details so I can recreate the day-by-day itinerary?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "I recall a travel-related request, but it was focused on optimizing frequent‑flyer balances and booking strategy — advising whether to use miles or pay cash, which accounts/alliances to prioritize, and concrete booking options and tools — rather than producing a driveable shot-list itinerary."
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to convert your Iceland shot list into a detailed, day-by-day driveable itinerary that includes exact golden-hour times at each GPS point, optimized routing, nightly lodging suggestions, EV charging/backup-power and battery-swapping recommendations, concrete cloudy-day alternate shoots, and an offline, phone-ready map/plan that takes your mobility limitation into account."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "07/19/2021-I04"
+        ],
+        "rationale": "The label 'Iceland itinerary' directly matches the user request in timestamp 07/19/2021-I04, which explicitly asks to convert an Iceland shot list into a day-by-day, driveable itinerary with golden-hour times, routing, lodging, charging/battery details, cloudy-day alternates, offline map plan, travel dates (April 10–18, 2026), KEF arrival/departure times, Eldhus Guesthouse contact, and the knee osteoarthritis constraint."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "08/10/2024-I05",
+      "turn_role": "probe",
+      "identifier_label": "Portugal trip",
+      "user_turn": "I need help finalizing and booking the 10-day Portugal trip: secure timed museum tickets, buy the Porto–Lisbon regional train tickets, produce a timed day-by-day plan with door-to-door travel times and rain-backup activities, and make or recommend any necessary reservations plus a packing checklist. My outbound flight DL4786 departs JFK at 19:40 and arrives in Lisbon at 07:10; my return flight IB6012 departs Lisbon at 11:55 and arrives in JFK at 15:30. Lodgings: Guesthouse Porto Alma, Rua de Santa Catarina 123, Porto — booking ref GH-PT-78901 — +351-22-555-0123 — portoalma@example.com; Lisbon Stay B&B, Rua das Flores 45, Lisbon — booking ref LS-45678 — +351-21-555-6789 — lisbonstay@example.com. Budget is €2,500 for two people (covers accommodations, trains, museums, meals). Health: mild asthma — carries an albuterol inhaler; prefers ground-floor or elevator-access rooms; limited to about 5 miles walking per day without extended rest.",
+      "task_goal": "Help me finalize and prepare to book the 10-day Portugal itinerary: confirm/secure museum time slots, purchase the Porto–Lisbon regional train tickets, produce a timed day-by-day plan with door-to-door travel times and rain backups, and make (or recommend) any necessary reservations and a packing checklist for rain and museums.",
+      "rendered": {
+        "identifier_label": "Portugal trip",
+        "question": "Do you remember my request to finalize and prepare the 10-day Portugal trip, including securing timed museum tickets, buying the Porto–Lisbon regional train tickets, producing a timed day-by-day plan with door-to-door travel times and rain-backup activities, and making any needed reservations plus a packing checklist?",
+        "choices": {
+          "A": "I’m sorry, I don’t have that trip detail available right now. Could you share the request again or paste the itinerary details so I can proceed?",
+          "B": "Yes — you asked me to help finalize and prepare your 10-day Portugal itinerary by securing timed museum slots, purchasing the Porto–Lisbon regional train tickets, producing a detailed timed day-by-day plan with door-to-door travel times and rain-backup activities, making or recommending any necessary reservations, and providing a packing checklist (I also noted your flights, accommodations, budget, and health/preferences to inform planning).",
+          "C": "I recall you wanted travel help, but the focus you asked for was optimizing and using frequent-flyer balances for upcoming flights — recommending whether to use miles or pay cash, which accounts or alliances to prioritize, and concrete booking options or tools to maximize value."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to help finalize and prepare your 10-day Portugal itinerary by securing timed museum slots, purchasing the Porto–Lisbon regional train tickets, producing a detailed timed day-by-day plan with door-to-door travel times and rain-backup activities, making or recommending any necessary reservations, and providing a packing checklist (I also noted your flights, accommodations, budget, and health/preferences to inform planning)."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "I recall you wanted travel help, but the focus you asked for was optimizing and using frequent-flyer balances for upcoming flights — recommending whether to use miles or pay cash, which accounts or alliances to prioritize, and concrete booking options or tools to maximize value."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t have that trip detail available right now. Could you share the request again or paste the itinerary details so I can proceed?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t have that trip detail available right now. Could you share the request again or paste the itinerary details so I can proceed?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to help finalize and prepare your 10-day Portugal itinerary by securing timed museum slots, purchasing the Porto–Lisbon regional train tickets, producing a detailed timed day-by-day plan with door-to-door travel times and rain-backup activities, making or recommending any necessary reservations, and providing a packing checklist (I also noted your flights, accommodations, budget, and health/preferences to inform planning)."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "I recall you wanted travel help, but the focus you asked for was optimizing and using frequent-flyer balances for upcoming flights — recommending whether to use miles or pay cash, which accounts or alliances to prioritize, and concrete booking options or tools to maximize value."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "08/10/2024-I05"
+        ],
+        "rationale": "The label 'Portugal trip' directly matches the user request in 08/10/2024-I05, which explicitly asks for finalizing and booking a 10-day Portugal itinerary (timed museum tickets, Porto–Lisbon train, day-by-day plan, reservations, packing checklist, flights, and lodging). Other turns mention Portugal only peripherally (e.g., travel insurance covering multiple countries) and are not focused on a Portugal trip."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "09/09/2016-I06",
+      "turn_role": "probe",
+      "identifier_label": "Iberia–Morocco trip insurance",
+      "user_turn": "I need you to confirm whether the single travel-insurance policy I picked adequately covers my long trip and to flag serious exclusions or recommend a clearer alternative checklist. My travel window is from June 10 to September 15, 2026, visiting Spain (Madrid, Barcelona), Morocco (Marrakesh), and Portugal (Lisbon). I have well-controlled Type 2 diabetes and take metformin 500 mg twice daily. The policy is WanderSafe Insurance Co. – Policy SYN1234567. My budget is up to $1,000 for insurance and I'm willing to accept a deductible up to $250.",
+      "task_goal": "Confirm that the single travel-insurance policy I picked adequately covers my long trip (including medical evacuation, trip interruption/cancellation, and high-risk activities), identify any serious exclusions I should worry about, and recommend a clearer alternative policy or simple checklist if gaps are found.",
+      "rendered": {
+        "identifier_label": "Iberia–Morocco trip insurance",
+        "question": "Do you remember my Iberia–Morocco trip insurance request to confirm whether the single policy I picked adequately covers the long trip (medical evacuation, trip interruption/cancellation, and higher‑risk activities), flag any serious exclusions, and recommend an alternative policy or simple checklist if there are gaps?",
+        "choices": {
+          "A": "Yes — I remember. You wanted a practical plan to optimize your frequent‑flyer balances for the trip: whether to use miles or pay cash, which alliances/accounts to prioritize, and concrete booking options or tools to get the best value without chasing blackout‑date tricks.",
+          "B": "I don’t have that earlier request available anymore. Could you please resend the policy and trip details and any medical/coverage preferences so I can evaluate the policy again?",
+          "C": "Yes — I remember. You asked me to evaluate the single travel‑insurance policy you selected to confirm coverage for medical evacuation, trip interruption/cancellation, and higher‑risk activities, to identify any serious exclusions (including concerns around pre‑existing conditions and regular medication), and to recommend clearer alternative policies or a simple checklist if gaps are found."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "not_remember": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "not_remember",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — I remember. You asked me to evaluate the single travel‑insurance policy you selected to confirm coverage for medical evacuation, trip interruption/cancellation, and higher‑risk activities, to identify any serious exclusions (including concerns around pre‑existing conditions and regular medication), and to recommend clearer alternative policies or a simple checklist if gaps are found."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "Yes — I remember. You wanted a practical plan to optimize your frequent‑flyer balances for the trip: whether to use miles or pay cash, which alliances/accounts to prioritize, and concrete booking options or tools to get the best value without chasing blackout‑date tricks."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request available anymore. Could you please resend the policy and trip details and any medical/coverage preferences so I can evaluate the policy again?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "Yes — I remember. You wanted a practical plan to optimize your frequent‑flyer balances for the trip: whether to use miles or pay cash, which alliances/accounts to prioritize, and concrete booking options or tools to get the best value without chasing blackout‑date tricks."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request available anymore. Could you please resend the policy and trip details and any medical/coverage preferences so I can evaluate the policy again?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "Yes — I remember. You asked me to evaluate the single travel‑insurance policy you selected to confirm coverage for medical evacuation, trip interruption/cancellation, and higher‑risk activities, to identify any serious exclusions (including concerns around pre‑existing conditions and regular medication), and to recommend clearer alternative policies or a simple checklist if gaps are found."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "09/09/2016-I06"
+        ],
+        "rationale": "The label references insurance for an Iberian (Spain/Portugal) and Morocco trip; timestamp 09/09/2016-I06 is the only candidate that explicitly requests confirmation of a single travel-insurance policy for travel to Spain (Madrid, Barcelona), Morocco (Marrakesh), and Portugal (Lisbon) with policy details and medical info."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

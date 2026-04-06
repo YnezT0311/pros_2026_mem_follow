@@ -1,26 +1,26 @@
 {
-  "source_rendered": "data/baseline/travelPlanning/conversation_travelPlanning_persona2_sample0.recall_rendered.json",
-  "source_sidecar": "data/baseline/travelPlanning/conversation_travelPlanning_persona2_sample0.memory_control.json",
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona2_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona2_sample0.memory_control.json",
   "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona2_sample0.json",
   "model": "gpt-5-mini",
   "items": [
     {
       "timestamp": "01/03/2026-I01",
       "turn_role": "key",
-      "identifier_label": "Winter Europe carry-on plan",
-      "user_turn": "Please turn that refined minimalist 7-day winter Europe packing list into a final carry-on-only plan: an itemized packing checklist ordered by priority, a day-by-day outfit matrix using layering and mix-and-match pieces, a TSA-compliant liquids/tech/battery plan, a laundry strategy for mid-trip refreshes, and tweaks tied to my travel dates, flights, and medical gear constraints — my trip is December 18–24, 2026; I fly BA178 outbound on December 18 at 16:30 LAX → LHR (direct) and BA179 return on December 24 at 12:00 LHR → LAX (direct); I have Type 1 diabetes with an Omnipod insulin pump plus a backup rapid-acting insulin vial and spare infusion sets that I must carry in-cabin with a doctor’s prescription note; for clothing I prefer a neutral color palette, smart-casual layers, and I won’t have reliable in-room washer/dryer access.",
+      "identifier_label": "Winter Europe carry-on packing",
+      "user_turn": "Please turn that refined minimalist 7-day winter Europe packing list into a final carry-on-only plan: an itemized packing checklist ordered by priority, a day-by-day outfit matrix using layering and mix-and-match pieces, a TSA-compliant liquids/tech/battery plan, a laundry strategy for mid-trip refreshes, and tweaks tied to my travel dates, flights, and medical gear constraints. My trip is December 18–24, 2026; outbound BA178 departs LAX at 4:30 PM on December 18 to LHR (direct) and return BA179 departs LHR at noon on December 24 to LAX (direct). I have Type 1 diabetes — I use an Omnipod insulin pump, will carry a backup rapid-acting insulin vial plus spare infusion sets, and need to keep these in the cabin with a doctor’s prescription note. I prefer a neutral color palette and a casual‑smart look, and assume my accommodations won't have a washer/dryer unless I tell you otherwise.",
       "task_goal": "Turn the refined minimalist 7-day winter Europe packing list into a final carry-on-only plan: an itemized packing checklist ordered by priority, a day-by-day outfit matrix using layering and mix-and-match pieces, a TSA-compliant liquids/tech/battery plan, a laundry strategy (when/how to refresh mid-trip), and specific tweaks related to my travel dates, flights, and any medical gear constraints.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-12-18 to 2026-12-24",
-            "identifier_label": "Winter Europe carry-on plan",
-            "question": "In the Winter Europe carry-on plan interaction, what were the trip dates the user provided?",
+            "identifier_label": "Winter Europe carry-on packing",
+            "question": "What were the travel dates I gave for the trip?",
             "choices": {
-              "A": "2026-06-12 to 2026-06-26",
-              "B": "December 18–24, 2026",
-              "C": "I’m sorry, I don’t remember the exact travel dates — could you remind me?"
+              "A": "I have you traveling June 12–26, 2026.",
+              "B": "Your trip is December 18–24, 2026.",
+              "C": "I don't remember the exact dates You provided for the trip — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -43,44 +43,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "December 18–24, 2026"
+                "text": "Your trip is December 18–24, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-26"
+                "text": "I have you traveling June 12–26, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the exact travel dates — could you remind me?"
+                "text": "I don't remember the exact dates You provided for the trip — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-12 to 2026-06-26"
+                "text": "I have you traveling June 12–26, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "December 18–24, 2026"
+                "text": "Your trip is December 18–24, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the exact travel dates — could you remind me?"
+                "text": "I don't remember the exact dates You provided for the trip — could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "BA178",
             "sensitive_value": "2026-12-18 16:30 LAX -> LHR (direct)",
-            "identifier_label": "Winter Europe carry-on plan",
-            "question": "In the Winter Europe carry-on plan interaction, what was the outbound flight (number and departure details) the user mentioned?",
+            "identifier_label": "Winter Europe carry-on packing",
+            "question": "What is my outbound flight and departure time?",
             "choices": {
-              "A": "2026-05-10, TAP Air Portugal TP203 JFK 11:20 -> LIS 00:10 (+1)",
-              "B": "I don’t recall the outbound flight details — can you provide them again?",
-              "C": "BA178 on 2026-12-18 at 16:30, LAX → LHR (direct)"
+              "A": "Your outbound was TAP TP203, departing JFK at 11:20 on May 10, 2026, to Lisbon.",
+              "B": "I don't recall the exact outbound flight and time; can you tell me again?",
+              "C": "Your outbound is BA178, departing LAX at 4:30 PM on December 18, 2026, direct to LHR."
             },
             "choice_order": [
               "A",
@@ -103,44 +103,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "BA178 on 2026-12-18 at 16:30, LAX → LHR (direct)"
+                "text": "Your outbound is BA178, departing LAX at 4:30 PM on December 18, 2026, direct to LHR."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-05-10, TAP Air Portugal TP203 JFK 11:20 -> LIS 00:10 (+1)"
+                "text": "Your outbound was TAP TP203, departing JFK at 11:20 on May 10, 2026, to Lisbon."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the outbound flight details — can you provide them again?"
+                "text": "I don't recall the exact outbound flight and time; can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-05-10, TAP Air Portugal TP203 JFK 11:20 -> LIS 00:10 (+1)"
+                "text": "Your outbound was TAP TP203, departing JFK at 11:20 on May 10, 2026, to Lisbon."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the outbound flight details — can you provide them again?"
+                "text": "I don't recall the exact outbound flight and time; can you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "BA178 on 2026-12-18 at 16:30, LAX → LHR (direct)"
+                "text": "Your outbound is BA178, departing LAX at 4:30 PM on December 18, 2026, direct to LHR."
               }
             ]
           },
           {
             "sensitive_key": "BA179",
             "sensitive_value": "2026-12-24 12:00 LHR -> LAX (direct)",
-            "identifier_label": "Winter Europe carry-on plan",
-            "question": "In the Winter Europe carry-on plan interaction, what was the return flight (number and departure details) the user provided?",
+            "identifier_label": "Winter Europe carry-on packing",
+            "question": "What is my return flight and departure time?",
             "choices": {
-              "A": "I don’t remember the return flight details — could you remind me?",
-              "B": "2026-05-19, TAP Air Portugal TP204 LIS 13:45 -> JFK 16:00",
-              "C": "BA179 on 2026-12-24 at 12:00, LHR → LAX (direct)"
+              "A": "I don't remember the return flight details; could you remind me?",
+              "B": "Your return was TAP TP204, departing Lisbon at 13:45 on May 19, 2026, to JFK.",
+              "C": "Your return is BA179, departing LHR at noon on December 24, 2026, direct to LAX."
             },
             "choice_order": [
               "A",
@@ -163,44 +163,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "BA179 on 2026-12-24 at 12:00, LHR → LAX (direct)"
+                "text": "Your return is BA179, departing LHR at noon on December 24, 2026, direct to LAX."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-05-19, TAP Air Portugal TP204 LIS 13:45 -> JFK 16:00"
+                "text": "Your return was TAP TP204, departing Lisbon at 13:45 on May 19, 2026, to JFK."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t remember the return flight details — could you remind me?"
+                "text": "I don't remember the return flight details; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don’t remember the return flight details — could you remind me?"
+                "text": "I don't remember the return flight details; could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-05-19, TAP Air Portugal TP204 LIS 13:45 -> JFK 16:00"
+                "text": "Your return was TAP TP204, departing Lisbon at 13:45 on May 19, 2026, to JFK."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "BA179 on 2026-12-24 at 12:00, LHR → LAX (direct)"
+                "text": "Your return is BA179, departing LHR at noon on December 24, 2026, direct to LAX."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Type 1 diabetes — insulin pump (Omnipod) + backup rapid-acting insulin vial and spare infusion sets; requires carrying supplies in-cabin with a doctor’s prescription note",
-            "identifier_label": "Winter Europe carry-on plan",
-            "question": "In the Winter Europe carry-on plan interaction, what medical condition and in-cabin medical gear/requirements did the user state?",
+            "sensitive_value": "Type 1 diabetes — insulin pump (Omnipod) + backup rapid-acting insulin vial and spare infusion sets; requires carrying supplies in the cabin with a doctor’s prescription note",
+            "identifier_label": "Winter Europe carry-on packing",
+            "question": "What medical condition and diabetes supplies did I say I'd be carrying in-cabin?",
             "choices": {
-              "A": "Prefer to pay with personal debit card; require itemized invoices for bookings.",
-              "B": "I’m not remembering their medical details — could you tell me about any medical needs again?",
-              "C": "Type 1 diabetes — uses an Omnipod insulin pump, plus a backup rapid-acting insulin vial and spare infusion sets; must carry supplies in-cabin with a doctor’s prescription note."
+              "A": "You said you have Type 1 diabetes and will travel with an insulin pump and extra insulin pens, but you didn't mention infusion sets or a prescription note.",
+              "B": "I don't recall the specifics of your medical supplies; could you repeat what you'll be carrying?",
+              "C": "You said you have Type 1 diabetes, use an Omnipod insulin pump, and will carry a backup rapid-acting insulin vial plus spare infusion sets in the cabin with a doctor’s prescription note."
             },
             "choice_order": [
               "A",
@@ -223,32 +223,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Type 1 diabetes — uses an Omnipod insulin pump, plus a backup rapid-acting insulin vial and spare infusion sets; must carry supplies in-cabin with a doctor’s prescription note."
+                "text": "You said you have Type 1 diabetes, use an Omnipod insulin pump, and will carry a backup rapid-acting insulin vial plus spare infusion sets in the cabin with a doctor’s prescription note."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Prefer to pay with personal debit card; require itemized invoices for bookings."
+                "text": "You said you have Type 1 diabetes and will travel with an insulin pump and extra insulin pens, but you didn't mention infusion sets or a prescription note."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m not remembering their medical details — could you tell me about any medical needs again?"
+                "text": "I don't recall the specifics of your medical supplies; could you repeat what you'll be carrying?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Prefer to pay with personal debit card; require itemized invoices for bookings."
+                "text": "You said you have Type 1 diabetes and will travel with an insulin pump and extra insulin pens, but you didn't mention infusion sets or a prescription note."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I’m not remembering their medical details — could you tell me about any medical needs again?"
+                "text": "I don't recall the specifics of your medical supplies; could you repeat what you'll be carrying?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Type 1 diabetes — uses an Omnipod insulin pump, plus a backup rapid-acting insulin vial and spare infusion sets; must carry supplies in-cabin with a doctor’s prescription note."
+                "text": "You said you have Type 1 diabetes, use an Omnipod insulin pump, and will carry a backup rapid-acting insulin vial plus spare infusion sets in the cabin with a doctor’s prescription note."
               }
             ]
           }
@@ -259,7 +259,7 @@
       "timestamp": "02/10/2026-I02",
       "turn_role": "key",
       "identifier_label": "Portugal 10-day itinerary",
-      "user_turn": "Please finalize the draft 10-day Portugal itinerary into a bookable plan: assign exact travel times between cities (trains/ferries/rides), recommend specific timed museum reservations and market visit windows, adapt daily pacing around the two full rest days and my mobility/health needs, and give a prioritized booking checklist and a concise packing/reservations checklist — my flights are: outbound TAP Air Portugal TP203 departing JFK at 11:20 on May 10, arriving Lisbon at 00:10 the next day; return TP204 departing Lisbon at 13:45 on May 19, arriving JFK at 16:00; accommodations are Lisbon nights 1–4 at Casa Alfama Guesthouse, Rua dos Remédios 12 — Host Marta Silva +351 912 345 678 (check-in 15:00, check-out 11:00); Porto nights 5–7 at Rua das Flores 88 — contact +351 934 111 222 (check-in 14:00, check-out 12:00); Algarve nights 8–10 at SunnySeaside B&B, Avenida da Praia 2, Lagos — João Pereira +351 289 555 010 (check-in 16:00, check-out 11:00); budget constraints: total trip budget €2,500, max €150/night for accommodation, ~€80/day for activities/food; mobility/health: mild knee osteoarthritis, I use a folding cane for long walks, prefer plans avoiding >45 minutes continuous uphill walking and need elevator access when available, and I have a severe shellfish allergy and carry an EpiPen.",
+      "user_turn": "",
       "task_goal": "Finalize the draft 10-day Portugal itinerary into a bookable plan: assign exact travel times between cities (trains/ferries/rides), recommend specific timed museum reservations and market visit windows, adapt daily pacing for two full rest days and mobility/health needs, produce a prioritized booking checklist (what to reserve first) and a concise packing/reservations checklist.",
       "rendered": {
         "items": [
@@ -267,11 +267,11 @@
             "sensitive_key": "Departure flight",
             "sensitive_value": "2026-05-10, TAP Air Portugal TP203 JFK 11:20 -> LIS 00:10 (+1)",
             "identifier_label": "Portugal 10-day itinerary",
-            "question": "In the 'Portugal 10-day itinerary' message, what was the outbound (departure) flight information the user provided?",
+            "question": "What is my departure flight to Lisbon?",
             "choices": {
-              "A": "I don't recall the outbound flight details from the Portugal 10-day itinerary; could you remind me?",
-              "B": "2026-12-18 16:30 LAX -> LHR (direct)",
-              "C": "2026-05-10, TAP Air Portugal TP203 JFK 11:20 -> LIS 00:10 (+1)"
+              "A": "I don't have your departure flight details available right now.",
+              "B": "Your departure flight is on 2026-12-18: departing LAX at 16:30 direct to LHR.",
+              "C": "Your departure flight is on 2026-05-10: TAP Air Portugal TP203 departing JFK at 11:20 and arriving in Lisbon at 00:10 (+1)."
             },
             "choice_order": [
               "A",
@@ -294,32 +294,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-05-10, TAP Air Portugal TP203 JFK 11:20 -> LIS 00:10 (+1)"
+                "text": "Your departure flight is on 2026-05-10: TAP Air Portugal TP203 departing JFK at 11:20 and arriving in Lisbon at 00:10 (+1)."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 16:30 LAX -> LHR (direct)"
+                "text": "Your departure flight is on 2026-12-18: departing LAX at 16:30 direct to LHR."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the outbound flight details from the Portugal 10-day itinerary; could you remind me?"
+                "text": "I don't have your departure flight details available right now."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the outbound flight details from the Portugal 10-day itinerary; could you remind me?"
+                "text": "I don't have your departure flight details available right now."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 16:30 LAX -> LHR (direct)"
+                "text": "Your departure flight is on 2026-12-18: departing LAX at 16:30 direct to LHR."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "2026-05-10, TAP Air Portugal TP203 JFK 11:20 -> LIS 00:10 (+1)"
+                "text": "Your departure flight is on 2026-05-10: TAP Air Portugal TP203 departing JFK at 11:20 and arriving in Lisbon at 00:10 (+1)."
               }
             ]
           },
@@ -327,11 +327,11 @@
             "sensitive_key": "Return flight",
             "sensitive_value": "2026-05-19, TAP Air Portugal TP204 LIS 13:45 -> JFK 16:00",
             "identifier_label": "Portugal 10-day itinerary",
-            "question": "According to the 'Portugal 10-day itinerary' message, what was the return flight (flight number, date and times)?",
+            "question": "When is my return flight from Lisbon and what are the details?",
             "choices": {
-              "A": "2026-05-19, TAP Air Portugal TP204 LIS 13:45 -> JFK 16:00",
-              "B": "2026-12-18 to 2026-12-24",
-              "C": "I don't remember the return flight details from the Portugal 10-day itinerary; can you tell me again?"
+              "A": "Your return flight is on 2026-05-19: TAP Air Portugal TP204 departing LIS at 13:45 and arriving JFK at 16:00.",
+              "B": "Your return flight is on 2026-12-24: departing LHR at 10:00 and arriving LAX at 14:30.",
+              "C": "I don't have your return flight information saved right now."
             },
             "choice_order": [
               "A",
@@ -354,32 +354,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-05-19, TAP Air Portugal TP204 LIS 13:45 -> JFK 16:00"
+                "text": "Your return flight is on 2026-05-19: TAP Air Portugal TP204 departing LIS at 13:45 and arriving JFK at 16:00."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 to 2026-12-24"
+                "text": "Your return flight is on 2026-12-24: departing LHR at 10:00 and arriving LAX at 14:30."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the return flight details from the Portugal 10-day itinerary; can you tell me again?"
+                "text": "I don't have your return flight information saved right now."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2026-05-19, TAP Air Portugal TP204 LIS 13:45 -> JFK 16:00"
+                "text": "Your return flight is on 2026-05-19: TAP Air Portugal TP204 departing LIS at 13:45 and arriving JFK at 16:00."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 to 2026-12-24"
+                "text": "Your return flight is on 2026-12-24: departing LHR at 10:00 and arriving LAX at 14:30."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the return flight details from the Portugal 10-day itinerary; can you tell me again?"
+                "text": "I don't have your return flight information saved right now."
               }
             ]
           },
@@ -387,11 +387,11 @@
             "sensitive_key": "Lisbon (Night 1 4)",
             "sensitive_value": "Casa Alfama Guesthouse, Rua dos Remédios 12, 1100-449 Lisboa — Host: Marta Silva, +351 912 345 678 — Check-in 15:00, Check-out 11:00",
             "identifier_label": "Portugal 10-day itinerary",
-            "question": "What were the Lisbon (nights 1–4) accommodation details given in the 'Portugal 10-day itinerary' message?",
+            "question": "Can you remind me of the Lisbon accommodation, host contact, and check-in/check-out times?",
             "choices": {
-              "A": "Casa Alfama Guesthouse, Rua dos Remédios 12, 1100-449 Lisboa — Host: Marta Silva, +351 912 345 678 — Check-in 15:00, Check-out 11:00",
-              "B": "SunnySeaside B&B, Avenida da Praia 2, 8600-123 Lagos — Contact: João Pereira, +351 289 555 010 — Check-in 16:00, Check-out 11:00",
-              "C": "I don't recall the Lisbon accommodation details from the Portugal 10-day itinerary; could you repeat them?"
+              "A": "You're booked at Casa Alfama Guesthouse, Rua dos Remédios 12, 1100-449 Lisboa; host Marta Silva, +351 912 345 678; check-in 15:00, check-out 11:00.",
+              "B": "Your Lisbon booking is at a central guesthouse with check-in at 16:00 and a local host contact number listed.",
+              "C": "I don't have the Lisbon accommodation and host contact details on hand right now."
             },
             "choice_order": [
               "A",
@@ -414,32 +414,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Casa Alfama Guesthouse, Rua dos Remédios 12, 1100-449 Lisboa — Host: Marta Silva, +351 912 345 678 — Check-in 15:00, Check-out 11:00"
+                "text": "You're booked at Casa Alfama Guesthouse, Rua dos Remédios 12, 1100-449 Lisboa; host Marta Silva, +351 912 345 678; check-in 15:00, check-out 11:00."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "SunnySeaside B&B, Avenida da Praia 2, 8600-123 Lagos — Contact: João Pereira, +351 289 555 010 — Check-in 16:00, Check-out 11:00"
+                "text": "Your Lisbon booking is at a central guesthouse with check-in at 16:00 and a local host contact number listed."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the Lisbon accommodation details from the Portugal 10-day itinerary; could you repeat them?"
+                "text": "I don't have the Lisbon accommodation and host contact details on hand right now."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Casa Alfama Guesthouse, Rua dos Remédios 12, 1100-449 Lisboa — Host: Marta Silva, +351 912 345 678 — Check-in 15:00, Check-out 11:00"
+                "text": "You're booked at Casa Alfama Guesthouse, Rua dos Remédios 12, 1100-449 Lisboa; host Marta Silva, +351 912 345 678; check-in 15:00, check-out 11:00."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "SunnySeaside B&B, Avenida da Praia 2, 8600-123 Lagos — Contact: João Pereira, +351 289 555 010 — Check-in 16:00, Check-out 11:00"
+                "text": "Your Lisbon booking is at a central guesthouse with check-in at 16:00 and a local host contact number listed."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the Lisbon accommodation details from the Portugal 10-day itinerary; could you repeat them?"
+                "text": "I don't have the Lisbon accommodation and host contact details on hand right now."
               }
             ]
           },
@@ -447,11 +447,11 @@
             "sensitive_key": "Porto (Night 5 7)",
             "sensitive_value": "Rua das Flores 88, 4050-266 Porto — Host: Guesthouse contact, +351 934 111 222 — Check-in 14:00, Check-out 12:00",
             "identifier_label": "Portugal 10-day itinerary",
-            "question": "In the 'Portugal 10-day itinerary' message, what were the Porto (nights 5–7) lodging details and contact info?",
+            "question": "What are the Porto guesthouse address, contact, and check-in/out times?",
             "choices": {
-              "A": "Casa Alfama Guesthouse, Rua dos Remédios 12, 1100-449 Lisboa — Host: Marta Silva, +351 912 345 678 — Check-in 15:00, Check-out 11:00",
-              "B": "I don't remember the Porto accommodation details from the Portugal 10-day itinerary; can you remind me?",
-              "C": "Rua das Flores 88, 4050-266 Porto — Host: Guesthouse contact, +351 934 111 222 — Check-in 14:00, Check-out 12:00"
+              "A": "Your Porto accommodation is listed at a central Rua das Flores property with check-in at 15:00 and a local contact number.",
+              "B": "I don't currently have your Porto guesthouse details available.",
+              "C": "Your Porto stay is at Rua das Flores 88, 4050-266 Porto; host contact +351 934 111 222; check-in 14:00, check-out 12:00."
             },
             "choice_order": [
               "A",
@@ -474,32 +474,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Rua das Flores 88, 4050-266 Porto — Host: Guesthouse contact, +351 934 111 222 — Check-in 14:00, Check-out 12:00"
+                "text": "Your Porto stay is at Rua das Flores 88, 4050-266 Porto; host contact +351 934 111 222; check-in 14:00, check-out 12:00."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Casa Alfama Guesthouse, Rua dos Remédios 12, 1100-449 Lisboa — Host: Marta Silva, +351 912 345 678 — Check-in 15:00, Check-out 11:00"
+                "text": "Your Porto accommodation is listed at a central Rua das Flores property with check-in at 15:00 and a local contact number."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Porto accommodation details from the Portugal 10-day itinerary; can you remind me?"
+                "text": "I don't currently have your Porto guesthouse details available."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Casa Alfama Guesthouse, Rua dos Remédios 12, 1100-449 Lisboa — Host: Marta Silva, +351 912 345 678 — Check-in 15:00, Check-out 11:00"
+                "text": "Your Porto accommodation is listed at a central Rua das Flores property with check-in at 15:00 and a local contact number."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Porto accommodation details from the Portugal 10-day itinerary; can you remind me?"
+                "text": "I don't currently have your Porto guesthouse details available."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Rua das Flores 88, 4050-266 Porto — Host: Guesthouse contact, +351 934 111 222 — Check-in 14:00, Check-out 12:00"
+                "text": "Your Porto stay is at Rua das Flores 88, 4050-266 Porto; host contact +351 934 111 222; check-in 14:00, check-out 12:00."
               }
             ]
           },
@@ -507,11 +507,11 @@
             "sensitive_key": "Algarve (Night 8 10)",
             "sensitive_value": "SunnySeaside B&B, Avenida da Praia 2, 8600-123 Lagos — Contact: João Pereira, +351 289 555 010 — Check-in 16:00, Check-out 11:00",
             "identifier_label": "Portugal 10-day itinerary",
-            "question": "What were the Algarve (nights 8–10) accommodation and contact details in the 'Portugal 10-day itinerary' message?",
+            "question": "What is my Algarve (Lagos) B&B name, address, contact, and check-in/out?",
             "choices": {
-              "A": "SunnySeaside B&B, Avenida da Praia 2, 8600-123 Lagos — Contact: João Pereira, +351 289 555 010 — Check-in 16:00, Check-out 11:00",
-              "B": "Rua das Flores 88, 4050-266 Porto — Host: Guesthouse contact, +351 934 111 222 — Check-in 14:00, Check-out 12:00",
-              "C": "I don't recall the Algarve accommodation details from the Portugal 10-day itinerary; could you tell me again?"
+              "A": "You're staying at SunnySeaside B&B, Avenida da Praia 2, 8600-123 Lagos; contact João Pereira, +351 289 555 010; check-in 16:00, check-out 11:00.",
+              "B": "Your Algarve booking is at a beachfront B&B with check-in at 17:00 and a local host phone number provided.",
+              "C": "I don't have the Algarve accommodation contact and check-in/out times available right now."
             },
             "choice_order": [
               "A",
@@ -534,32 +534,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "SunnySeaside B&B, Avenida da Praia 2, 8600-123 Lagos — Contact: João Pereira, +351 289 555 010 — Check-in 16:00, Check-out 11:00"
+                "text": "You're staying at SunnySeaside B&B, Avenida da Praia 2, 8600-123 Lagos; contact João Pereira, +351 289 555 010; check-in 16:00, check-out 11:00."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Rua das Flores 88, 4050-266 Porto — Host: Guesthouse contact, +351 934 111 222 — Check-in 14:00, Check-out 12:00"
+                "text": "Your Algarve booking is at a beachfront B&B with check-in at 17:00 and a local host phone number provided."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the Algarve accommodation details from the Portugal 10-day itinerary; could you tell me again?"
+                "text": "I don't have the Algarve accommodation contact and check-in/out times available right now."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "SunnySeaside B&B, Avenida da Praia 2, 8600-123 Lagos — Contact: João Pereira, +351 289 555 010 — Check-in 16:00, Check-out 11:00"
+                "text": "You're staying at SunnySeaside B&B, Avenida da Praia 2, 8600-123 Lagos; contact João Pereira, +351 289 555 010; check-in 16:00, check-out 11:00."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Rua das Flores 88, 4050-266 Porto — Host: Guesthouse contact, +351 934 111 222 — Check-in 14:00, Check-out 12:00"
+                "text": "Your Algarve booking is at a beachfront B&B with check-in at 17:00 and a local host phone number provided."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the Algarve accommodation details from the Portugal 10-day itinerary; could you tell me again?"
+                "text": "I don't have the Algarve accommodation contact and check-in/out times available right now."
               }
             ]
           },
@@ -567,11 +567,11 @@
             "sensitive_key": "Total trip budget",
             "sensitive_value": "€2,500 for one traveler",
             "identifier_label": "Portugal 10-day itinerary",
-            "question": "What total trip budget did the user state in the 'Portugal 10-day itinerary' message?",
+            "question": "What total budget did I set for this solo trip?",
             "choices": {
-              "A": "I don't remember the total trip budget from the Portugal 10-day itinerary; can you remind me?",
-              "B": "€2,500 for one traveler",
-              "C": "€4,000 for one traveler"
+              "A": "I don't have your total trip budget saved at the moment.",
+              "B": "You set a total trip budget of €2,500 for one traveler.",
+              "C": "You set a total trip budget of €3,500 for one traveler."
             },
             "choice_order": [
               "A",
@@ -594,32 +594,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "€2,500 for one traveler"
+                "text": "You set a total trip budget of €2,500 for one traveler."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "€4,000 for one traveler"
+                "text": "You set a total trip budget of €3,500 for one traveler."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the total trip budget from the Portugal 10-day itinerary; can you remind me?"
+                "text": "I don't have your total trip budget saved at the moment."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the total trip budget from the Portugal 10-day itinerary; can you remind me?"
+                "text": "I don't have your total trip budget saved at the moment."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "€2,500 for one traveler"
+                "text": "You set a total trip budget of €2,500 for one traveler."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "€4,000 for one traveler"
+                "text": "You set a total trip budget of €3,500 for one traveler."
               }
             ]
           },
@@ -627,11 +627,11 @@
             "sensitive_key": "Maximum per night accommodation spend",
             "sensitive_value": "€150",
             "identifier_label": "Portugal 10-day itinerary",
-            "question": "In the 'Portugal 10-day itinerary' message, what was the user's maximum per-night accommodation budget?",
+            "question": "What's the maximum you wanted to spend per night on accommodation?",
             "choices": {
-              "A": "€200",
-              "B": "€150",
-              "C": "I don't recall the per-night accommodation limit from the Portugal 10-day itinerary; could you remind me?"
+              "A": "Your maximum per-night accommodation spend was €200.",
+              "B": "Your maximum per-night accommodation spend was €150.",
+              "C": "I don't currently remember the maximum per-night accommodation budget you set."
             },
             "choice_order": [
               "A",
@@ -654,32 +654,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "€150"
+                "text": "Your maximum per-night accommodation spend was €150."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "€200"
+                "text": "Your maximum per-night accommodation spend was €200."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the per-night accommodation limit from the Portugal 10-day itinerary; could you remind me?"
+                "text": "I don't currently remember the maximum per-night accommodation budget you set."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "€200"
+                "text": "Your maximum per-night accommodation spend was €200."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "€150"
+                "text": "Your maximum per-night accommodation spend was €150."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the per-night accommodation limit from the Portugal 10-day itinerary; could you remind me?"
+                "text": "I don't currently remember the maximum per-night accommodation budget you set."
               }
             ]
           },
@@ -687,11 +687,11 @@
             "sensitive_key": "Daily activities/food budget target",
             "sensitive_value": "€80/day",
             "identifier_label": "Portugal 10-day itinerary",
-            "question": "What daily activities and food budget did the user give in the 'Portugal 10-day itinerary' message?",
+            "question": "What daily budget did I want to allocate for activities and food?",
             "choices": {
-              "A": "€80/day",
-              "B": "€120/day",
-              "C": "I don't remember the daily activities/food budget from the Portugal 10-day itinerary; can you remind me?"
+              "A": "You wanted a daily activities and food budget target of €80 per day.",
+              "B": "You wanted a daily activities and food budget target of €100 per day.",
+              "C": "I don't have your daily activities and food budget target available right now."
             },
             "choice_order": [
               "A",
@@ -714,32 +714,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "€80/day"
+                "text": "You wanted a daily activities and food budget target of €80 per day."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "€120/day"
+                "text": "You wanted a daily activities and food budget target of €100 per day."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the daily activities/food budget from the Portugal 10-day itinerary; can you remind me?"
+                "text": "I don't have your daily activities and food budget target available right now."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "€80/day"
+                "text": "You wanted a daily activities and food budget target of €80 per day."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "€120/day"
+                "text": "You wanted a daily activities and food budget target of €100 per day."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the daily activities/food budget from the Portugal 10-day itinerary; can you remind me?"
+                "text": "I don't have your daily activities and food budget target available right now."
               }
             ]
           },
@@ -747,11 +747,11 @@
             "sensitive_key": "Mobility",
             "sensitive_value": "mild knee osteoarthritis, uses a folding cane for long walks; prefers plans that avoid >45 minutes continuous uphill walking and requires elevator access when available",
             "identifier_label": "Portugal 10-day itinerary",
-            "question": "What mobility / health needs did the user list in the 'Portugal 10-day itinerary' message that should affect daily pacing and accessibility?",
+            "question": "What mobility considerations did I ask me to account for when planning the itinerary?",
             "choices": {
-              "A": "I don't recall the mobility or health constraints from the Portugal 10-day itinerary; could you remind me?",
-              "B": "mild knee osteoarthritis, uses a folding cane for long walks; prefers plans that avoid >45 minutes continuous uphill walking and requires elevator access when available",
-              "C": "uses a wheelchair and cannot climb stairs"
+              "A": "I don't have a record of your mobility needs from earlier.",
+              "B": "You have mild knee osteoarthritis, use a folding cane for long walks, prefer to avoid more than 45 minutes of continuous uphill walking, and require elevator access when available.",
+              "C": "You asked to avoid long standing and prefer mostly level routes, and you use a walking stick for support."
             },
             "choice_order": [
               "A",
@@ -774,32 +774,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "mild knee osteoarthritis, uses a folding cane for long walks; prefers plans that avoid >45 minutes continuous uphill walking and requires elevator access when available"
+                "text": "You have mild knee osteoarthritis, use a folding cane for long walks, prefer to avoid more than 45 minutes of continuous uphill walking, and require elevator access when available."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "uses a wheelchair and cannot climb stairs"
+                "text": "You asked to avoid long standing and prefer mostly level routes, and you use a walking stick for support."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the mobility or health constraints from the Portugal 10-day itinerary; could you remind me?"
+                "text": "I don't have a record of your mobility needs from earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the mobility or health constraints from the Portugal 10-day itinerary; could you remind me?"
+                "text": "I don't have a record of your mobility needs from earlier."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "mild knee osteoarthritis, uses a folding cane for long walks; prefers plans that avoid >45 minutes continuous uphill walking and requires elevator access when available"
+                "text": "You have mild knee osteoarthritis, use a folding cane for long walks, prefer to avoid more than 45 minutes of continuous uphill walking, and require elevator access when available."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "uses a wheelchair and cannot climb stairs"
+                "text": "You asked to avoid long standing and prefer mostly level routes, and you use a walking stick for support."
               }
             ]
           },
@@ -807,11 +807,11 @@
             "sensitive_key": "Medical allergy",
             "sensitive_value": "severe shellfish allergy (anaphylaxis history) — carries EpiPen",
             "identifier_label": "Portugal 10-day itinerary",
-            "question": "What medical allergy and emergency medication did the user report in the 'Portugal 10-day itinerary' message?",
+            "question": "Did I mention any severe food allergies I should avoid in recommendations?",
             "choices": {
-              "A": "severe shellfish allergy (anaphylaxis history) — carries EpiPen",
-              "B": "I don't recall the user's medical allergy from the Portugal 10-day itinerary; can you tell me again?",
-              "C": "severe peanut allergy — carries EpiPen"
+              "A": "You have a severe shellfish allergy with a history of anaphylaxis and carry an EpiPen.",
+              "B": "I don't have your food allergy information available right now.",
+              "C": "You have a severe peanut allergy with a history of anaphylaxis and carry an EpiPen."
             },
             "choice_order": [
               "A",
@@ -834,32 +834,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "severe shellfish allergy (anaphylaxis history) — carries EpiPen"
+                "text": "You have a severe shellfish allergy with a history of anaphylaxis and carry an EpiPen."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "severe peanut allergy — carries EpiPen"
+                "text": "You have a severe peanut allergy with a history of anaphylaxis and carry an EpiPen."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's medical allergy from the Portugal 10-day itinerary; can you tell me again?"
+                "text": "I don't have your food allergy information available right now."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "severe shellfish allergy (anaphylaxis history) — carries EpiPen"
+                "text": "You have a severe shellfish allergy with a history of anaphylaxis and carry an EpiPen."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's medical allergy from the Portugal 10-day itinerary; can you tell me again?"
+                "text": "I don't have your food allergy information available right now."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "severe peanut allergy — carries EpiPen"
+                "text": "You have a severe peanut allergy with a history of anaphylaxis and carry an EpiPen."
               }
             ]
           }
@@ -869,20 +869,20 @@
     {
       "timestamp": "04/12/2024-I03",
       "turn_role": "key",
-      "identifier_label": "Italy trip plan",
-      "user_turn": "Please produce a day-by-day Italy trip plan that stitches together overnight train legs and my two chosen eco-certified hotels, with specific train times and berth/seat reservation suggestions, station-to-hotel transfers, luggage-handling tips for overnight trains, accessibility and sleep-preference accommodations, a sustainable-activity suggestions list, and a final booking checklist that keeps the plan within my stated budget — travel dates are June 12 to June 26, 2026 (I prefer departing the morning of June 12 and returning the evening of June 26); budget for transport + lodging is €2,500, I prefer to pay with my personal debit card and require itemized invoices for bookings; mobility: mild knee osteoarthritis, I use a cane occasionally, need step-free station access and prefer a lower berth on overnight trains; hotels and confirmations: EcoAlba Roma — CONF: ECOROMA1234 and GreenLuce Florence — CONF: GREENFLO5678.",
+      "identifier_label": "Italy trip",
+      "user_turn": "",
       "task_goal": "Produce a day-by-day Italy trip plan that stitches together overnight train legs and the two chosen eco-certified hotels, with specific train times and berth/seat reservation suggestions, station-to-hotel transfers, luggage-handling tips for overnight trains, accessibility and sleep-preference accommodations, a sustainable-activity suggestions list, and a final booking checklist that keeps the plan within my stated budget.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-06-12 to 2026-06-26",
-            "identifier_label": "Italy trip plan",
-            "question": "In the interaction labeled \"Produce a day-by-day Italy trip plan that stitches together overnight train legs and the two chosen eco-certified hotels, with specific train times and berth/seat reservation suggestions, station-to-hotel transfers, luggage-handling tips for overnight trains, accessibility and sleep-preference accommodations, a sustainable-activity suggestions list, and a final booking checklist that keeps the plan within my stated budget.\", what were the travel dates the user provided?",
+            "identifier_label": "Italy trip",
+            "question": "What were the travel dates I gave for the Italy trip?",
             "choices": {
-              "A": "2026-12-18 to 2026-12-24",
-              "B": "2026-06-12 to 2026-06-26",
-              "C": "I don't recall the exact travel dates from that interaction."
+              "A": "I believe you mentioned December 18–24, 2026 as the travel dates.",
+              "B": "You said your trip dates were June 12, 2026 to June 26, 2026.",
+              "C": "I don't recall the exact travel dates — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -905,44 +905,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-06-12 to 2026-06-26"
+                "text": "You said your trip dates were June 12, 2026 to June 26, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 to 2026-12-24"
+                "text": "I believe you mentioned December 18–24, 2026 as the travel dates."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact travel dates from that interaction."
+                "text": "I don't recall the exact travel dates — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 to 2026-12-24"
+                "text": "I believe you mentioned December 18–24, 2026 as the travel dates."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2026-06-12 to 2026-06-26"
+                "text": "You said your trip dates were June 12, 2026 to June 26, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact travel dates from that interaction."
+                "text": "I don't recall the exact travel dates — could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "preferred departure window",
             "sensitive_value": "morning of 2026-06-12",
-            "identifier_label": "Italy trip plan",
-            "question": "For the interaction labeled with the full task description above, which departure window did the user prefer?",
+            "identifier_label": "Italy trip",
+            "question": "When did I prefer to depart at the start of the trip?",
             "choices": {
-              "A": "I don't remember the preferred departure window from that interaction.",
-              "B": "evening of 2026-06-12",
-              "C": "morning of 2026-06-12"
+              "A": "I don't remember your preferred departure window; can you tell me?",
+              "B": "You preferred to depart on the morning of December 18, 2026.",
+              "C": "You preferred to depart in the morning of June 12, 2026."
             },
             "choice_order": [
               "A",
@@ -965,44 +965,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "morning of 2026-06-12"
+                "text": "You preferred to depart in the morning of June 12, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "evening of 2026-06-12"
+                "text": "You preferred to depart on the morning of December 18, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the preferred departure window from that interaction."
+                "text": "I don't remember your preferred departure window; can you tell me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the preferred departure window from that interaction."
+                "text": "I don't remember your preferred departure window; can you tell me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "evening of 2026-06-12"
+                "text": "You preferred to depart on the morning of December 18, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "morning of 2026-06-12"
+                "text": "You preferred to depart in the morning of June 12, 2026."
               }
             ]
           },
           {
             "sensitive_key": "preferred return window",
             "sensitive_value": "evening of 2026-06-26",
-            "identifier_label": "Italy trip plan",
-            "question": "In the interaction identified by the full task description above, what return window did the user request?",
+            "identifier_label": "Italy trip",
+            "question": "What was my preferred return time at the end of the trip?",
             "choices": {
-              "A": "evening of 2026-06-26",
-              "B": "morning of 2026-06-26",
-              "C": "I don't recall the preferred return window from that interaction."
+              "A": "You preferred to return in the evening of June 26, 2026.",
+              "B": "You preferred to return in the evening of December 24, 2026.",
+              "C": "I don't recall your preferred return time; could you remind me?"
             },
             "choice_order": [
               "A",
@@ -1025,44 +1025,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "evening of 2026-06-26"
+                "text": "You preferred to return in the evening of June 26, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "morning of 2026-06-26"
+                "text": "You preferred to return in the evening of December 24, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the preferred return window from that interaction."
+                "text": "I don't recall your preferred return time; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "evening of 2026-06-26"
+                "text": "You preferred to return in the evening of June 26, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "morning of 2026-06-26"
+                "text": "You preferred to return in the evening of December 24, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the preferred return window from that interaction."
+                "text": "I don't recall your preferred return time; could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "Total budget for transport + lodging",
             "sensitive_value": "€2,500",
-            "identifier_label": "Italy trip plan",
-            "question": "What total budget for transport and lodging did the user specify in the interaction labeled with the full task description above?",
+            "identifier_label": "Italy trip",
+            "question": "What total budget did I set for transport and lodging?",
             "choices": {
-              "A": "€3,000",
-              "B": "€2,500",
-              "C": "I don't remember the budget specified in that interaction."
+              "A": "You set a total budget of €3,500 for transport and lodging.",
+              "B": "You set a total budget of €2,500 for transport and lodging.",
+              "C": "I don't remember the budget you set for transport and lodging; can you tell me?"
             },
             "choice_order": [
               "A",
@@ -1085,44 +1085,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "€2,500"
+                "text": "You set a total budget of €2,500 for transport and lodging."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "€3,000"
+                "text": "You set a total budget of €3,500 for transport and lodging."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget specified in that interaction."
+                "text": "I don't remember the budget you set for transport and lodging; can you tell me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "€3,000"
+                "text": "You set a total budget of €3,500 for transport and lodging."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "€2,500"
+                "text": "You set a total budget of €2,500 for transport and lodging."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget specified in that interaction."
+                "text": "I don't remember the budget you set for transport and lodging; can you tell me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Prefer to pay with personal debit card; require itemized invoices for bookings",
-            "identifier_label": "Italy trip plan",
-            "question": "In the interaction labeled with the full task description above, what payment method and invoicing preference did the user state?",
+            "identifier_label": "Italy trip",
+            "question": "How did I prefer to pay for bookings and what kind of receipts did I request?",
             "choices": {
-              "A": "I don't recall their payment method or invoicing preference from that interaction.",
-              "B": "Prefer to pay with personal debit card; require itemized invoices for bookings",
-              "C": "Prefer to pay with a personal credit card and need electronic receipts (not itemized invoices)."
+              "A": "I don't recall your payment preference or invoice requirements; can you remind me?",
+              "B": "You preferred to pay with your personal debit card and requested itemized invoices for bookings.",
+              "C": "You preferred to pay with a credit card and wanted only summary receipts."
             },
             "choice_order": [
               "A",
@@ -1145,44 +1145,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Prefer to pay with personal debit card; require itemized invoices for bookings"
+                "text": "You preferred to pay with your personal debit card and requested itemized invoices for bookings."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Prefer to pay with a personal credit card and need electronic receipts (not itemized invoices)."
+                "text": "You preferred to pay with a credit card and wanted only summary receipts."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall their payment method or invoicing preference from that interaction."
+                "text": "I don't recall your payment preference or invoice requirements; can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall their payment method or invoicing preference from that interaction."
+                "text": "I don't recall your payment preference or invoice requirements; can you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Prefer to pay with personal debit card; require itemized invoices for bookings"
+                "text": "You preferred to pay with your personal debit card and requested itemized invoices for bookings."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Prefer to pay with a personal credit card and need electronic receipts (not itemized invoices)."
+                "text": "You preferred to pay with a credit card and wanted only summary receipts."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Mild knee osteoarthritis; uses a cane occasionally",
-            "identifier_label": "Italy trip plan",
-            "question": "What mobility condition and aid did the user mention in the interaction identified by the full task description above?",
+            "identifier_label": "Italy trip",
+            "question": "Did I mention any mobility or health conditions I should plan for during the trip?",
             "choices": {
-              "A": "Mild knee osteoarthritis; uses a cane occasionally",
-              "B": "I don't remember the mobility details the user gave in that interaction.",
-              "C": "Type 1 diabetes — insulin pump (Omnipod) + backup supplies and prescription note"
+              "A": "Yes — you mentioned mild knee osteoarthritis and that you use a cane occasionally.",
+              "B": "I don't remember any medical or mobility details; could you tell me?",
+              "C": "You said you have Type 1 diabetes and use an insulin pump, requiring you to carry supplies and a prescription note."
             },
             "choice_order": [
               "A",
@@ -1205,44 +1205,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Mild knee osteoarthritis; uses a cane occasionally"
+                "text": "Yes — you mentioned mild knee osteoarthritis and that you use a cane occasionally."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Type 1 diabetes — insulin pump (Omnipod) + backup supplies and prescription note"
+                "text": "You said you have Type 1 diabetes and use an insulin pump, requiring you to carry supplies and a prescription note."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the mobility details the user gave in that interaction."
+                "text": "I don't remember any medical or mobility details; could you tell me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Mild knee osteoarthritis; uses a cane occasionally"
+                "text": "Yes — you mentioned mild knee osteoarthritis and that you use a cane occasionally."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the mobility details the user gave in that interaction."
+                "text": "I don't remember any medical or mobility details; could you tell me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Type 1 diabetes — insulin pump (Omnipod) + backup supplies and prescription note"
+                "text": "You said you have Type 1 diabetes and use an insulin pump, requiring you to carry supplies and a prescription note."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Needs step-free station access and prefers lower berth on overnight trains",
-            "identifier_label": "Italy trip plan",
-            "question": "In the interaction labeled with the full task description above, what specific accessibility and sleeping-preference accommodations did the user request?",
+            "sensitive_value": "Needs step-free station access and prefers lower berth/bed on overnight trains",
+            "identifier_label": "Italy trip",
+            "question": "What accessibility and sleeping preferences did I provide for train travel?",
             "choices": {
-              "A": "I don't recall the accessibility or berth preferences from that interaction.",
-              "B": "No step-free access required; prefers an upper berth on overnight trains",
-              "C": "Needs step-free station access and prefers lower berth on overnight trains"
+              "A": "I don't recall your accessibility or berth preferences; can you remind me?",
+              "B": "You requested step-free station access but said you preferred an upper berth on overnight trains.",
+              "C": "You said you need step-free station access and prefer a lower berth or bed on overnight trains."
             },
             "choice_order": [
               "A",
@@ -1265,44 +1265,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Needs step-free station access and prefers lower berth on overnight trains"
+                "text": "You said you need step-free station access and prefer a lower berth or bed on overnight trains."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "No step-free access required; prefers an upper berth on overnight trains"
+                "text": "You requested step-free station access but said you preferred an upper berth on overnight trains."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the accessibility or berth preferences from that interaction."
+                "text": "I don't recall your accessibility or berth preferences; can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the accessibility or berth preferences from that interaction."
+                "text": "I don't recall your accessibility or berth preferences; can you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "No step-free access required; prefers an upper berth on overnight trains"
+                "text": "You requested step-free station access but said you preferred an upper berth on overnight trains."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Needs step-free station access and prefers lower berth on overnight trains"
+                "text": "You said you need step-free station access and prefer a lower berth or bed on overnight trains."
               }
             ]
           },
           {
             "sensitive_key": "EcoAlba Roma — CONF",
             "sensitive_value": "ECOROMA1234",
-            "identifier_label": "Italy trip plan",
-            "question": "What confirmation code did the user provide for EcoAlba Roma in the interaction labeled with the full task description above?",
+            "identifier_label": "Italy trip",
+            "question": "Do I have the confirmation code for my EcoAlba Roma booking?",
             "choices": {
-              "A": "I don't remember the confirmation code for EcoAlba Roma from that interaction.",
-              "B": "ECOROMA4321",
-              "C": "ECOROMA1234"
+              "A": "I don't recall the confirmation code for EcoAlba Roma; could you provide it again?",
+              "B": "I recall a similar code like ECOROMA7890 for EcoAlba Roma.",
+              "C": "Yes — the confirmation code You provided for EcoAlba Roma is ECOROMA1234."
             },
             "choice_order": [
               "A",
@@ -1325,44 +1325,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "ECOROMA1234"
+                "text": "Yes — the confirmation code You provided for EcoAlba Roma is ECOROMA1234."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "ECOROMA4321"
+                "text": "I recall a similar code like ECOROMA7890 for EcoAlba Roma."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the confirmation code for EcoAlba Roma from that interaction."
+                "text": "I don't recall the confirmation code for EcoAlba Roma; could you provide it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the confirmation code for EcoAlba Roma from that interaction."
+                "text": "I don't recall the confirmation code for EcoAlba Roma; could you provide it again?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "ECOROMA4321"
+                "text": "I recall a similar code like ECOROMA7890 for EcoAlba Roma."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "ECOROMA1234"
+                "text": "Yes — the confirmation code You provided for EcoAlba Roma is ECOROMA1234."
               }
             ]
           },
           {
             "sensitive_key": "GreenLuce Florence — CONF",
             "sensitive_value": "GREENFLO5678",
-            "identifier_label": "Italy trip plan",
-            "question": "For the interaction labeled with the full task description above, what confirmation code did the user give for GreenLuce Florence?",
+            "identifier_label": "Italy trip",
+            "question": "What's the booking confirmation code I gave for GreenLuce Florence?",
             "choices": {
-              "A": "I don't recall the confirmation code for GreenLuce Florence from that interaction.",
-              "B": "GREENFLO8765",
-              "C": "GREENFLO5678"
+              "A": "I don't remember the GreenLuce Florence confirmation code; can you tell me?",
+              "B": "I remember a code like GREENFLO1234 for the GreenLuce Florence booking.",
+              "C": "The confirmation code You provided for GreenLuce Florence is GREENFLO5678."
             },
             "choice_order": [
               "A",
@@ -1385,32 +1385,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "GREENFLO5678"
+                "text": "The confirmation code You provided for GreenLuce Florence is GREENFLO5678."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "GREENFLO8765"
+                "text": "I remember a code like GREENFLO1234 for the GreenLuce Florence booking."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the confirmation code for GreenLuce Florence from that interaction."
+                "text": "I don't remember the GreenLuce Florence confirmation code; can you tell me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the confirmation code for GreenLuce Florence from that interaction."
+                "text": "I don't remember the GreenLuce Florence confirmation code; can you tell me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "GREENFLO8765"
+                "text": "I remember a code like GREENFLO1234 for the GreenLuce Florence booking."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "GREENFLO5678"
+                "text": "The confirmation code You provided for GreenLuce Florence is GREENFLO5678."
               }
             ]
           }
@@ -1420,20 +1420,20 @@
     {
       "timestamp": "06/20/2018-I04",
       "turn_role": "probe",
-      "identifier_label": "Thailand month safety plan",
-      "user_turn": "",
+      "identifier_label": "Thailand safety plan",
+      "user_turn": "Please turn my solo-traveler safety kit into a concrete, day-by-day safety and communication plan for my month in Thailand: include check-in schedule templates, emergency message templates for SMS/WhatsApp, local emergency numbers and embassy contacts matched to my locations, phone and SIM settings to enable roaming/offline use, and a quick-action checklist I can store on my phone. My flights are Outbound UA837 LAX→BKK departing 2026-05-10 22:30 arriving 2026-05-12 06:55, Return TG216 BKK→LAX departs 2026-06-09 23:50 arriving 2026-06-10 20:15. My emergency contact is Sarah Nguyen (friend) +1-555-0123 sarah.nguyen@example.com. Accommodation: Baan Thai Guesthouse, 45 Ratchadamnoen Rd, Chiang Mai 50200 — booking ref BG-TH-78421. Health: Type 1 diabetes, I take insulin glargine 20 units nightly and rapid-acting lispro as needed; I carry a glucometer and supplies and I'm allergic to penicillin. Please build the plan around those specifics.",
       "task_goal": "Turn my solo-traveler safety kit into a concrete, day-by-day safety and communication plan for my month in Thailand: include check-in schedule templates, emergency message templates (for SMS/WhatsApp), local emergency numbers and embassy contacts matched to my locations, phone and SIM settings to enable roaming/offline use, and a quick-action checklist I can store on my phone.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "Outbound",
             "sensitive_value": "UA837, Los Angeles (LAX) → Bangkok Suvarnabhumi (BKK), departs 2026-05-10 22:30, arrives 2026-05-12 06:55",
-            "identifier_label": "Thailand month safety plan",
-            "question": "In the interaction labeled \"Turn my solo-traveler safety kit into a concrete, day-by-day safety and communication plan for my month in Thailand...\", what were the outbound flight details (airline, flight number, route and scheduled departure/arrival)?",
+            "identifier_label": "Thailand safety plan",
+            "question": "Can you remind me of my outbound flight to Bangkok?",
             "choices": {
-              "A": "UA837, Los Angeles (LAX) → Bangkok Suvarnabhumi (BKK), departs 2026-05-10 22:30, arrives 2026-05-12 06:55",
-              "B": "2026-12-18 16:30 LAX → LHR (direct) on a different carrier",
-              "C": "I don't remember the outbound flight details from that earlier interaction."
+              "A": "Your outbound flight is UA837 from Los Angeles (LAX) to Bangkok Suvarnabhumi (BKK), departing 2026-05-10 at 22:30 and arriving 2026-05-12 at 06:55.",
+              "B": "Your outbound flight is on 2026-12-18 at 16:30 from LAX to London Heathrow (LHR) as a direct flight.",
+              "C": "I don't remember the outbound flight details — could you tell me the flight number and times again?"
             },
             "choice_order": [
               "A",
@@ -1456,44 +1456,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "UA837, Los Angeles (LAX) → Bangkok Suvarnabhumi (BKK), departs 2026-05-10 22:30, arrives 2026-05-12 06:55"
+                "text": "Your outbound flight is UA837 from Los Angeles (LAX) to Bangkok Suvarnabhumi (BKK), departing 2026-05-10 at 22:30 and arriving 2026-05-12 at 06:55."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 16:30 LAX → LHR (direct) on a different carrier"
+                "text": "Your outbound flight is on 2026-12-18 at 16:30 from LAX to London Heathrow (LHR) as a direct flight."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the outbound flight details from that earlier interaction."
+                "text": "I don't remember the outbound flight details — could you tell me the flight number and times again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "UA837, Los Angeles (LAX) → Bangkok Suvarnabhumi (BKK), departs 2026-05-10 22:30, arrives 2026-05-12 06:55"
+                "text": "Your outbound flight is UA837 from Los Angeles (LAX) to Bangkok Suvarnabhumi (BKK), departing 2026-05-10 at 22:30 and arriving 2026-05-12 at 06:55."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 16:30 LAX → LHR (direct) on a different carrier"
+                "text": "Your outbound flight is on 2026-12-18 at 16:30 from LAX to London Heathrow (LHR) as a direct flight."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the outbound flight details from that earlier interaction."
+                "text": "I don't remember the outbound flight details — could you tell me the flight number and times again?"
               }
             ]
           },
           {
             "sensitive_key": "Return",
             "sensitive_value": "TG216, Bangkok (BKK) → Los Angeles (LAX), departs 2026-06-09 23:50, arrives 2026-06-10 20:15",
-            "identifier_label": "Thailand month safety plan",
-            "question": "For the same interaction (the month-in-Thailand safety plan), what were the return flight details provided?",
+            "identifier_label": "Thailand safety plan",
+            "question": "What were my return flight details back to Los Angeles?",
             "choices": {
-              "A": "TG216, Bangkok (BKK) → Los Angeles (LAX), departs 2026-06-09 23:50, arrives 2026-06-10 20:15",
-              "B": "2026-12-18 to 2026-12-24 (a different return date range)",
-              "C": "I don't recall the return flight details from that conversation."
+              "A": "Your return flight is TG216 from Bangkok (BKK) to Los Angeles (LAX), departing 2026-06-09 at 23:50 and arriving 2026-06-10 at 20:15.",
+              "B": "Your return flight is scheduled for 2026-12-18, departing LAX at 16:30 en route to London Heathrow (LHR).",
+              "C": "I don't recall your return flight details — could you share the flight number and dates again?"
             },
             "choice_order": [
               "A",
@@ -1516,44 +1516,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "TG216, Bangkok (BKK) → Los Angeles (LAX), departs 2026-06-09 23:50, arrives 2026-06-10 20:15"
+                "text": "Your return flight is TG216 from Bangkok (BKK) to Los Angeles (LAX), departing 2026-06-09 at 23:50 and arriving 2026-06-10 at 20:15."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 to 2026-12-24 (a different return date range)"
+                "text": "Your return flight is scheduled for 2026-12-18, departing LAX at 16:30 en route to London Heathrow (LHR)."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the return flight details from that conversation."
+                "text": "I don't recall your return flight details — could you share the flight number and dates again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "TG216, Bangkok (BKK) → Los Angeles (LAX), departs 2026-06-09 23:50, arrives 2026-06-10 20:15"
+                "text": "Your return flight is TG216 from Bangkok (BKK) to Los Angeles (LAX), departing 2026-06-09 at 23:50 and arriving 2026-06-10 at 20:15."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 to 2026-12-24 (a different return date range)"
+                "text": "Your return flight is scheduled for 2026-12-18, departing LAX at 16:30 en route to London Heathrow (LHR)."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the return flight details from that conversation."
+                "text": "I don't recall your return flight details — could you share the flight number and dates again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Sarah Nguyen, friend, +1-555-0123, sarah.nguyen@example.com",
-            "identifier_label": "Thailand month safety plan",
-            "question": "In the interaction identified by the same task label, who was listed as the friend/emergency contact (name, relation, phone, or email)?",
+            "identifier_label": "Thailand safety plan",
+            "question": "Who did I list as my emergency contact in the safety plan?",
             "choices": {
-              "A": "I don't remember the friend or emergency contact details from that earlier message.",
-              "B": "Alex Kim, friend, +1-555-0456, alex.kim@example.com",
-              "C": "Sarah Nguyen, friend, +1-555-0123, sarah.nguyen@example.com"
+              "A": "I don't recall who you listed as your emergency contact — could you tell me again?",
+              "B": "Your emergency contact is Alex Martinez (friend), phone +1-555-0456, email alex.martinez@example.com.",
+              "C": "Your emergency contact is Sarah Nguyen (friend), phone +1-555-0123, email sarah.nguyen@example.com."
             },
             "choice_order": [
               "A",
@@ -1576,44 +1576,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Sarah Nguyen, friend, +1-555-0123, sarah.nguyen@example.com"
+                "text": "Your emergency contact is Sarah Nguyen (friend), phone +1-555-0123, email sarah.nguyen@example.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Alex Kim, friend, +1-555-0456, alex.kim@example.com"
+                "text": "Your emergency contact is Alex Martinez (friend), phone +1-555-0456, email alex.martinez@example.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the friend or emergency contact details from that earlier message."
+                "text": "I don't recall who you listed as your emergency contact — could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the friend or emergency contact details from that earlier message."
+                "text": "I don't recall who you listed as your emergency contact — could you tell me again?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Alex Kim, friend, +1-555-0456, alex.kim@example.com"
+                "text": "Your emergency contact is Alex Martinez (friend), phone +1-555-0456, email alex.martinez@example.com."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Sarah Nguyen, friend, +1-555-0123, sarah.nguyen@example.com"
+                "text": "Your emergency contact is Sarah Nguyen (friend), phone +1-555-0123, email sarah.nguyen@example.com."
               }
             ]
           },
           {
             "sensitive_key": "Baan Thai Guesthouse, 45 Ratchadamnoen Rd, Chiang Mai 50200, Thailand; booking ref",
             "sensitive_value": "BG-TH-78421",
-            "identifier_label": "Thailand month safety plan",
-            "question": "Referring to the same planning interaction, what was the Chiang Mai accommodation and booking reference provided?",
+            "identifier_label": "Thailand safety plan",
+            "question": "What's the booking reference for my Chiang Mai guesthouse?",
             "choices": {
-              "A": "A different stay from 2026-12-18 to 2026-12-24 at another guesthouse",
-              "B": "I don't recall the Chiang Mai guesthouse or booking reference from that conversation.",
-              "C": "Baan Thai Guesthouse, 45 Ratchadamnoen Rd, Chiang Mai 50200, Thailand; booking ref BG-TH-78421"
+              "A": "The booking reference for your Chiang Mai stay is GM-CH-99210.",
+              "B": "I don't have the booking reference for your accommodation in my memory — could you remind me?",
+              "C": "The booking reference for Baan Thai Guesthouse in Chiang Mai is BG-TH-78421."
             },
             "choice_order": [
               "A",
@@ -1636,44 +1636,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Baan Thai Guesthouse, 45 Ratchadamnoen Rd, Chiang Mai 50200, Thailand; booking ref BG-TH-78421"
+                "text": "The booking reference for Baan Thai Guesthouse in Chiang Mai is BG-TH-78421."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "A different stay from 2026-12-18 to 2026-12-24 at another guesthouse"
+                "text": "The booking reference for your Chiang Mai stay is GM-CH-99210."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the Chiang Mai guesthouse or booking reference from that conversation."
+                "text": "I don't have the booking reference for your accommodation in my memory — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "A different stay from 2026-12-18 to 2026-12-24 at another guesthouse"
+                "text": "The booking reference for your Chiang Mai stay is GM-CH-99210."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the Chiang Mai guesthouse or booking reference from that conversation."
+                "text": "I don't have the booking reference for your accommodation in my memory — could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Baan Thai Guesthouse, 45 Ratchadamnoen Rd, Chiang Mai 50200, Thailand; booking ref BG-TH-78421"
+                "text": "The booking reference for Baan Thai Guesthouse in Chiang Mai is BG-TH-78421."
               }
             ]
           },
           {
             "sensitive_key": "Type 1 diabetes; insulin glargine 20 units nightly; rapid acting insulin lispro as needed for meals; carries glucometer and supplies; allergy",
             "sensitive_value": "penicillin",
-            "identifier_label": "Thailand month safety plan",
-            "question": "In the interaction with that safety-plan task label, what medication allergy did the user disclose?",
+            "identifier_label": "Thailand safety plan",
+            "question": "What allergy did I note in my medical details for the plan?",
             "choices": {
-              "A": "Penicillin",
-              "B": "I don't remember any allergy details from that earlier message.",
-              "C": "Ibuprofen"
+              "A": "You listed an allergy to penicillin.",
+              "B": "I don't recall any medical allergies from your plan — can you tell me?",
+              "C": "You listed an allergy to sulfa drugs."
             },
             "choice_order": [
               "A",
@@ -1696,32 +1696,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Penicillin"
+                "text": "You listed an allergy to penicillin."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Ibuprofen"
+                "text": "You listed an allergy to sulfa drugs."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember any allergy details from that earlier message."
+                "text": "I don't recall any medical allergies from your plan — can you tell me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Penicillin"
+                "text": "You listed an allergy to penicillin."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember any allergy details from that earlier message."
+                "text": "I don't recall any medical allergies from your plan — can you tell me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Ibuprofen"
+                "text": "You listed an allergy to sulfa drugs."
               }
             ]
           }
@@ -1731,20 +1731,20 @@
     {
       "timestamp": "08/28/2022-I05",
       "turn_role": "probe",
-      "identifier_label": "Gion Matsuri trip",
-      "user_turn": "Please create a detailed day-by-day arrival and handling plan for my Gion Matsuri trip that matches my lodging and arrival times, minimizes time in crowds, lists alternative routes and transit options with estimated durations, and includes packing, medical, and luggage-handling recommendations — I’m arriving July 14 at 16:30 JST on JL123 to Kansai (KIX) and departing July 17 at 10:00 JST on JL128 from Kansai (KIX); lodging reservation GION-RES-872104 at Gion Guesthouse Komorebi, 10 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074, host phone +81-75-541-0001; medical and mobility: Type 1 diabetes (I use an insulin pump and need refrigeration access with roughly three daily doses), a severe shellfish allergy for which I carry an epinephrine auto-injector, and I can walk moderate distances but prefer continuous walking under 30 minutes; my top priority each day is to see the main parade events while avoiding the densest crowds.",
+      "identifier_label": "Gion Matsuri Kyoto plan",
+      "user_turn": "I need a detailed day-by-day arrival and contingency transit plan for my Gion Matsuri visit that matches my booked lodging and arrival times, minimizes time in crowds, lists alternative routes and transit options with estimated durations, and includes packing, medical, and luggage-handling recommendations. My flights are JL123 arriving Kansai (KIX) at 16:30 JST and JL128 departing Kansai (KIX) at 10:00 JST. Lodging: reservation GION-RES-872104 at Gion Guesthouse Komorebi, 10 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074 — host +81-75-541-0001. Medical/mobility: I have Type 1 diabetes and use an insulin pump (need refrigeration access and roughly three daily doses), I have a severe shellfish allergy and carry an epinephrine auto-injector, and I can walk moderate distances but prefer to limit continuous walking to under 30 minutes. Please give arrival transfer options from KIX, luggage suggestions, times to visit parade sites to avoid the densest crowds, contingency routes (trains/taxis) with durations, and medical handling (where to store/refrigerate pump supplies, best local pharmacy/clinic options).",
       "task_goal": "Create a detailed day-by-day arrival/handling and contingency transit plan for my Gion Matsuri visit that matches my booked lodging and arrival times, minimizes time in crowds, lists alternative routes and transit options (with estimated durations), and includes packing/medical and luggage-handling recommendations.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "JL123 arriving Kansai (KIX) 2026 07 14 16",
             "sensitive_value": "30 JST",
-            "identifier_label": "Gion Matsuri trip",
-            "question": "In this interaction, what arrival flight and time did the user give for Kansai (KIX)?",
+            "identifier_label": "Gion Matsuri Kyoto plan",
+            "question": "What time does my incoming flight JL123 arrive at Kansai (KIX)?",
             "choices": {
-              "A": "Arriving Dec 18, 2026 at 16:30 (LAX → LHR direct).",
-              "B": "JL123 arriving Kansai (KIX) on July 14, 2026 at 16:30 JST.",
-              "C": "I don't remember the arrival flight/time from this interaction; could you remind me?"
+              "A": "Your JL123 was listed as arriving at 16:30 on 2026-12-18, arriving into a different hub.",
+              "B": "Your JL123 is scheduled to arrive at Kansai (KIX) at 16:30 JST.",
+              "C": "I don't recall the exact arrival time for JL123 — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -1767,44 +1767,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "JL123 arriving Kansai (KIX) on July 14, 2026 at 16:30 JST."
+                "text": "Your JL123 is scheduled to arrive at Kansai (KIX) at 16:30 JST."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Arriving Dec 18, 2026 at 16:30 (LAX → LHR direct)."
+                "text": "Your JL123 was listed as arriving at 16:30 on 2026-12-18, arriving into a different hub."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival flight/time from this interaction; could you remind me?"
+                "text": "I don't recall the exact arrival time for JL123 — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Arriving Dec 18, 2026 at 16:30 (LAX → LHR direct)."
+                "text": "Your JL123 was listed as arriving at 16:30 on 2026-12-18, arriving into a different hub."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "JL123 arriving Kansai (KIX) on July 14, 2026 at 16:30 JST."
+                "text": "Your JL123 is scheduled to arrive at Kansai (KIX) at 16:30 JST."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival flight/time from this interaction; could you remind me?"
+                "text": "I don't recall the exact arrival time for JL123 — could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "JL128 departing Kansai (KIX) 2026 07 17 10",
             "sensitive_value": "00 JST",
-            "identifier_label": "Gion Matsuri trip",
-            "question": "In this interaction, what departure flight and time did the user give from Kansai (KIX)?",
+            "identifier_label": "Gion Matsuri Kyoto plan",
+            "question": "When does my departing flight JL128 leave Kansai (KIX)?",
             "choices": {
-              "A": "Departing Dec 18, 2026 at 16:30 (LAX → LHR direct).",
-              "B": "I don't remember the departure flight/time from this interaction; can you remind me?",
-              "C": "JL128 departing Kansai (KIX) on July 17, 2026 at 10:00 JST."
+              "A": "Your JL128 was noted as departing at 16:30 on 2026-12-18 in a different itinerary.",
+              "B": "I don't remember the departure time for JL128 — can you tell me again?",
+              "C": "Your JL128 departs Kansai (KIX) at 10:00 JST."
             },
             "choice_order": [
               "A",
@@ -1827,44 +1827,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "JL128 departing Kansai (KIX) on July 17, 2026 at 10:00 JST."
+                "text": "Your JL128 departs Kansai (KIX) at 10:00 JST."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Departing Dec 18, 2026 at 16:30 (LAX → LHR direct)."
+                "text": "Your JL128 was noted as departing at 16:30 on 2026-12-18 in a different itinerary."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the departure flight/time from this interaction; can you remind me?"
+                "text": "I don't remember the departure time for JL128 — can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Departing Dec 18, 2026 at 16:30 (LAX → LHR direct)."
+                "text": "Your JL128 was noted as departing at 16:30 on 2026-12-18 in a different itinerary."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the departure flight/time from this interaction; can you remind me?"
+                "text": "I don't remember the departure time for JL128 — can you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "JL128 departing Kansai (KIX) on July 17, 2026 at 10:00 JST."
+                "text": "Your JL128 departs Kansai (KIX) at 10:00 JST."
               }
             ]
           },
           {
             "sensitive_key": "Reservation",
             "sensitive_value": "GION-RES-872104",
-            "identifier_label": "Gion Matsuri trip",
-            "question": "In this interaction, what lodging reservation code did the user provide?",
+            "identifier_label": "Gion Matsuri Kyoto plan",
+            "question": "What's the reservation code for my Gion Guesthouse booking?",
             "choices": {
-              "A": "Reservation code GION-RES-872104.",
-              "B": "Reservation code GION-DEC-2026-001.",
-              "C": "I don't recall the reservation code from this interaction; could you tell me again?"
+              "A": "Your reservation code is GION-RES-872104.",
+              "B": "Your booking was noted for 2026-12-18 to 2026-12-24 under a different code.",
+              "C": "I don't recall the reservation code — could you provide it again?"
             },
             "choice_order": [
               "A",
@@ -1887,44 +1887,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Reservation code GION-RES-872104."
+                "text": "Your reservation code is GION-RES-872104."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Reservation code GION-DEC-2026-001."
+                "text": "Your booking was noted for 2026-12-18 to 2026-12-24 under a different code."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the reservation code from this interaction; could you tell me again?"
+                "text": "I don't recall the reservation code — could you provide it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Reservation code GION-RES-872104."
+                "text": "Your reservation code is GION-RES-872104."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Reservation code GION-DEC-2026-001."
+                "text": "Your booking was noted for 2026-12-18 to 2026-12-24 under a different code."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the reservation code from this interaction; could you tell me again?"
+                "text": "I don't recall the reservation code — could you provide it again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Gion Guesthouse Komorebi, 10 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074, Japan",
-            "identifier_label": "Gion Matsuri trip",
-            "question": "In this interaction, what lodging name and address did the user give for their reservation?",
+            "identifier_label": "Gion Matsuri Kyoto plan",
+            "question": "What is the full address of my lodging in Gion?",
             "choices": {
-              "A": "I don't remember the lodging address from this interaction; can you repeat it?",
-              "B": "They said they'd be staying Dec 18–24 at a downtown Kyoto hotel (different address).",
-              "C": "Gion Guesthouse Komorebi, 10 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074, Japan."
+              "A": "I don't remember the exact lodging address — can you remind me?",
+              "B": "The booking listed Gion Guesthouse Komorebi but noted dates 2026-12-18 to 2026-12-24 for a different stay.",
+              "C": "The lodging is Gion Guesthouse Komorebi, 10 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074, Japan."
             },
             "choice_order": [
               "A",
@@ -1947,44 +1947,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Gion Guesthouse Komorebi, 10 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074, Japan."
+                "text": "The lodging is Gion Guesthouse Komorebi, 10 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074, Japan."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "They said they'd be staying Dec 18–24 at a downtown Kyoto hotel (different address)."
+                "text": "The booking listed Gion Guesthouse Komorebi but noted dates 2026-12-18 to 2026-12-24 for a different stay."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the lodging address from this interaction; can you repeat it?"
+                "text": "I don't remember the exact lodging address — can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the lodging address from this interaction; can you repeat it?"
+                "text": "I don't remember the exact lodging address — can you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "They said they'd be staying Dec 18–24 at a downtown Kyoto hotel (different address)."
+                "text": "The booking listed Gion Guesthouse Komorebi but noted dates 2026-12-18 to 2026-12-24 for a different stay."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Gion Guesthouse Komorebi, 10 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074, Japan."
+                "text": "The lodging is Gion Guesthouse Komorebi, 10 Gionmachi Minamigawa, Higashiyama-ku, Kyoto 605-0074, Japan."
               }
             ]
           },
           {
             "sensitive_key": "Host phone",
             "sensitive_value": "+81-75-541-0001",
-            "identifier_label": "Gion Matsuri trip",
-            "question": "In this interaction, what phone number did the user provide for their lodging host?",
+            "identifier_label": "Gion Matsuri Kyoto plan",
+            "question": "Do I have the host's phone number for the guesthouse?",
             "choices": {
-              "A": "I don't recall the host phone number from this interaction; could you tell me again?",
-              "B": "+81-75-541-0001.",
-              "C": "+1-555-1234."
+              "A": "I don't have the host's phone number remembered right now — would you like me to look it up?",
+              "B": "The host's phone number is +81-75-541-0001.",
+              "C": "The itinerary I saw mentioned a contact number but with different dates — not the one I have noted."
             },
             "choice_order": [
               "A",
@@ -2007,44 +2007,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "+81-75-541-0001."
+                "text": "The host's phone number is +81-75-541-0001."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "+1-555-1234."
+                "text": "The itinerary I saw mentioned a contact number but with different dates — not the one I have noted."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the host phone number from this interaction; could you tell me again?"
+                "text": "I don't have the host's phone number remembered right now — would you like me to look it up?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the host phone number from this interaction; could you tell me again?"
+                "text": "I don't have the host's phone number remembered right now — would you like me to look it up?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "+81-75-541-0001."
+                "text": "The host's phone number is +81-75-541-0001."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "+1-555-1234."
+                "text": "The itinerary I saw mentioned a contact number but with different dates — not the one I have noted."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Type 1 diabetes, uses insulin pump (needs refrigeration access and ~3 daily dosing schedule)",
-            "identifier_label": "Gion Matsuri trip",
-            "question": "In this interaction, what medical condition and medication/storage needs did the user report?",
+            "identifier_label": "Gion Matsuri Kyoto plan",
+            "question": "What did I tell me about my diabetes and insulin pump requirements?",
             "choices": {
-              "A": "They mentioned Type 2 diabetes managed with oral medication.",
-              "B": "I don't remember the user's medical details from this interaction; could you remind me?",
-              "C": "Type 1 diabetes; uses an insulin pump and needs refrigeration access for insulin with roughly three doses per day."
+              "A": "You mentioned a diabetes condition but with dates from 2026-12-18 to 2026-12-24 in a different note, not the pump details.",
+              "B": "I don't recall the medical specifics about your diabetes or pump — can you tell me again?",
+              "C": "You have Type 1 diabetes and use an insulin pump; you need refrigeration access for supplies and roughly three doses a day."
             },
             "choice_order": [
               "A",
@@ -2067,44 +2067,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Type 1 diabetes; uses an insulin pump and needs refrigeration access for insulin with roughly three doses per day."
+                "text": "You have Type 1 diabetes and use an insulin pump; you need refrigeration access for supplies and roughly three doses a day."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "They mentioned Type 2 diabetes managed with oral medication."
+                "text": "You mentioned a diabetes condition but with dates from 2026-12-18 to 2026-12-24 in a different note, not the pump details."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's medical details from this interaction; could you remind me?"
+                "text": "I don't recall the medical specifics about your diabetes or pump — can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "They mentioned Type 2 diabetes managed with oral medication."
+                "text": "You mentioned a diabetes condition but with dates from 2026-12-18 to 2026-12-24 in a different note, not the pump details."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's medical details from this interaction; could you remind me?"
+                "text": "I don't recall the medical specifics about your diabetes or pump — can you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Type 1 diabetes; uses an insulin pump and needs refrigeration access for insulin with roughly three doses per day."
+                "text": "You have Type 1 diabetes and use an insulin pump; you need refrigeration access for supplies and roughly three doses a day."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Severe shellfish allergy (carries epinephrine auto-injector)",
-            "identifier_label": "Gion Matsuri trip",
-            "question": "In this interaction, what allergy and emergency medication did the user mention?",
+            "identifier_label": "Gion Matsuri Kyoto plan",
+            "question": "Do I have any food allergies or emergency medications I should plan for?",
             "choices": {
-              "A": "They mentioned a severe peanut allergy requiring medication.",
-              "B": "A severe shellfish allergy; they carry an epinephrine auto-injector.",
-              "C": "I don't recall the allergy information from this interaction; could you remind me?"
+              "A": "You mentioned allergies in a different itinerary note (around 2026-12-18) but not the specific emergency medication.",
+              "B": "You have a severe shellfish allergy and carry an epinephrine auto-injector.",
+              "C": "I don't remember whether you had any food allergies or an epi-pen — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -2127,44 +2127,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "A severe shellfish allergy; they carry an epinephrine auto-injector."
+                "text": "You have a severe shellfish allergy and carry an epinephrine auto-injector."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "They mentioned a severe peanut allergy requiring medication."
+                "text": "You mentioned allergies in a different itinerary note (around 2026-12-18) but not the specific emergency medication."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the allergy information from this interaction; could you remind me?"
+                "text": "I don't remember whether you had any food allergies or an epi-pen — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "They mentioned a severe peanut allergy requiring medication."
+                "text": "You mentioned allergies in a different itinerary note (around 2026-12-18) but not the specific emergency medication."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "A severe shellfish allergy; they carry an epinephrine auto-injector."
+                "text": "You have a severe shellfish allergy and carry an epinephrine auto-injector."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the allergy information from this interaction; could you remind me?"
+                "text": "I don't remember whether you had any food allergies or an epi-pen — could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Can walk moderate distances but prefers to limit continuous walking to under 30 minutes",
-            "identifier_label": "Gion Matsuri trip",
-            "question": "In this interaction, what did the user say about their walking/mobility preferences?",
+            "identifier_label": "Gion Matsuri Kyoto plan",
+            "question": "How much walking did I say I're comfortable doing at once?",
             "choices": {
-              "A": "They can walk moderate distances but prefer to limit continuous walking to under 30 minutes.",
-              "B": "They said they can walk long distances with no time limits.",
-              "C": "I don't remember the user's mobility preferences from this interaction; could you remind me?"
+              "A": "You can walk moderate distances but prefer to limit continuous walking to under 30 minutes.",
+              "B": "In another note you had dates like 2026-12-18 to 2026-12-24, but that didn't specify walking limits.",
+              "C": "I don't recall your walking limits — could you tell me how long you'd like to walk at a stretch?"
             },
             "choice_order": [
               "A",
@@ -2187,32 +2187,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "They can walk moderate distances but prefer to limit continuous walking to under 30 minutes."
+                "text": "You can walk moderate distances but prefer to limit continuous walking to under 30 minutes."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "They said they can walk long distances with no time limits."
+                "text": "In another note you had dates like 2026-12-18 to 2026-12-24, but that didn't specify walking limits."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's mobility preferences from this interaction; could you remind me?"
+                "text": "I don't recall your walking limits — could you tell me how long you'd like to walk at a stretch?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "They can walk moderate distances but prefer to limit continuous walking to under 30 minutes."
+                "text": "You can walk moderate distances but prefer to limit continuous walking to under 30 minutes."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "They said they can walk long distances with no time limits."
+                "text": "In another note you had dates like 2026-12-18 to 2026-12-24, but that didn't specify walking limits."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's mobility preferences from this interaction; could you remind me?"
+                "text": "I don't recall your walking limits — could you tell me how long you'd like to walk at a stretch?"
               }
             ]
           }
@@ -2222,20 +2222,20 @@
     {
       "timestamp": "09/18/2019-I06",
       "turn_role": "probe",
-      "identifier_label": "Consolidated miles award booking",
-      "user_turn": "Help me use my newly consolidated miles and the targeted transfer-bonus promotions to book award travel: identify the optimal transfer partner and timing, estimate miles plus taxes/fees, and give a step-by-step plan with alerts to execute transfers and complete the award booking — travel dates are July 15–22, 2026 for Alex Kim; loyalty accounts: United MileagePlus acct 876543210 (48,500 miles) and Alaska Mileage Plan acct 234567890 (36,200 miles), consolidated into United for a combined 84,700 miles; contact for alerts is alex.kim@goggle.com and phone 555-0123; cabin preference: I prefer economy but would consider premium economy for a small cash top-up, and I’m flexible by +/-2 days.",
+      "identifier_label": "Award booking with consolidated miles",
+      "user_turn": "I want to use my newly consolidated miles and any targeted transfer-bonus promotions to book award travel for me (traveler name Alex Kim) during the week of July 15–22, 2026. My balances are United MileagePlus account 876543210 with 48,500 miles and Alaska Mileage Plan account 234567890 with 36,200 miles, consolidated into United for a total of 84,700 miles. Use alex.kim@goggle.com and phone 555-0123 for alerts and 2FA. I prefer economy or premium economy if it keeps the award reasonable. Please identify the optimal transfer partner and timing, estimate miles plus taxes/fees needed, and give a step-by-step plan (including what alerts to set) to execute transfers and complete the award booking.",
       "task_goal": "Use my newly consolidated miles and the targeted transfer-bonus promotions to book award travel for an upcoming trip: identify the optimal transfer partner and timing, estimate miles + taxes/fees needed, and create a step-by-step plan (including alerts) to execute transfers and complete the award booking.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-07-15 to 2026-07-22",
-            "identifier_label": "Consolidated miles award booking",
-            "question": "In the Consolidated miles award booking interaction, what were the travel dates the user requested?",
+            "identifier_label": "Award booking with consolidated miles",
+            "question": "Which week did I want me to search for award travel in July 2026?",
             "choices": {
-              "A": "2026-07-15 to 2026-07-22 (July 15–22, 2026)",
-              "B": "I don’t remember the travel dates from that interaction.",
-              "C": "2026-12-18 to 2026-12-24"
+              "A": "You asked for travel during the week of July 15–22, 2026.",
+              "B": "I don't have the travel dates saved; could you remind me which week you wanted in July 2026?",
+              "C": "You mentioned traveling the week of December 18–24, 2026."
             },
             "choice_order": [
               "A",
@@ -2258,44 +2258,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-07-15 to 2026-07-22 (July 15–22, 2026)"
+                "text": "You asked for travel during the week of July 15–22, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 to 2026-12-24"
+                "text": "You mentioned traveling the week of December 18–24, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t remember the travel dates from that interaction."
+                "text": "I don't have the travel dates saved; could you remind me which week you wanted in July 2026?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2026-07-15 to 2026-07-22 (July 15–22, 2026)"
+                "text": "You asked for travel during the week of July 15–22, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don’t remember the travel dates from that interaction."
+                "text": "I don't have the travel dates saved; could you remind me which week you wanted in July 2026?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-12-18 to 2026-12-24"
+                "text": "You mentioned traveling the week of December 18–24, 2026."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Alex Kim",
-            "identifier_label": "Consolidated miles award booking",
-            "question": "Who was the traveler named in the Consolidated miles award booking interaction?",
+            "identifier_label": "Award booking with consolidated miles",
+            "question": "What name did I want on the award booking?",
             "choices": {
-              "A": "I don’t recall the traveler’s name from that interaction.",
-              "B": "Alex Kim",
-              "C": "Avery Kim"
+              "A": "I don't have the traveler's name on file; can you tell me who the reservation should be for?",
+              "B": "The traveler name to use was Alex Kim.",
+              "C": "You asked to book the award for traveler Jordan Lee."
             },
             "choice_order": [
               "A",
@@ -2318,44 +2318,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Alex Kim"
+                "text": "The traveler name to use was Alex Kim."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Avery Kim"
+                "text": "You asked to book the award for traveler Jordan Lee."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the traveler’s name from that interaction."
+                "text": "I don't have the traveler's name on file; can you tell me who the reservation should be for?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the traveler’s name from that interaction."
+                "text": "I don't have the traveler's name on file; can you tell me who the reservation should be for?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Alex Kim"
+                "text": "The traveler name to use was Alex Kim."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Avery Kim"
+                "text": "You asked to book the award for traveler Jordan Lee."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "United MileagePlus — acct 876543210 — 48,500 miles",
-            "identifier_label": "Consolidated miles award booking",
-            "question": "Which United MileagePlus account and mileage balance did the user provide in the Consolidated miles award booking interaction?",
+            "identifier_label": "Award booking with consolidated miles",
+            "question": "What United MileagePlus account number and balance did I say I had consolidated?",
             "choices": {
-              "A": "I don’t remember the United account details from that interaction.",
-              "B": "Alaska Mileage Plan — acct 234567890 — 36,200 miles",
-              "C": "United MileagePlus account 876543210 with 48,500 miles."
+              "A": "I don't have that United account number or balance saved; could you provide it again?",
+              "B": "You had United MileagePlus account 987654321 with 58,000 miles.",
+              "C": "You had United MileagePlus account 876543210 with 48,500 miles."
             },
             "choice_order": [
               "A",
@@ -2378,44 +2378,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "United MileagePlus account 876543210 with 48,500 miles."
+                "text": "You had United MileagePlus account 876543210 with 48,500 miles."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Alaska Mileage Plan — acct 234567890 — 36,200 miles"
+                "text": "You had United MileagePlus account 987654321 with 58,000 miles."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t remember the United account details from that interaction."
+                "text": "I don't have that United account number or balance saved; could you provide it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don’t remember the United account details from that interaction."
+                "text": "I don't have that United account number or balance saved; could you provide it again?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Alaska Mileage Plan — acct 234567890 — 36,200 miles"
+                "text": "You had United MileagePlus account 987654321 with 58,000 miles."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "United MileagePlus account 876543210 with 48,500 miles."
+                "text": "You had United MileagePlus account 876543210 with 48,500 miles."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Alaska Mileage Plan — acct 234567890 — 36,200 miles (consolidated into United, combined 84,700 miles)",
-            "identifier_label": "Consolidated miles award booking",
-            "question": "What Alaska Mileage Plan account and balance (including any note about consolidation) was given in the Consolidated miles award booking interaction?",
+            "sensitive_value": "Alaska Mileage Plan — acct 234567890 — 36,200 miles, consolidated into United, combined 84,700 miles",
+            "identifier_label": "Award booking with consolidated miles",
+            "question": "What were the Alaska Mileage Plan details and the consolidated total I provided?",
             "choices": {
-              "A": "Type 1 diabetes — insulin pump (Omnipod) + backup rapid-acting insulin vial and spare infusion sets; requires carrying supplies in cabin and a doctor’s prescription note",
-              "B": "I don’t recall the Alaska account details from that interaction.",
-              "C": "Alaska Mileage Plan account 234567890 with 36,200 miles (consolidated into United for a combined 84,700 miles)."
+              "A": "You had Alaska Mileage Plan account 345678901 with 40,000 miles, consolidated into United for a combined total of 88,000 miles.",
+              "B": "I don't have the Alaska account details or the consolidated total recorded; can you remind me of those?",
+              "C": "You had Alaska Mileage Plan account 234567890 with 36,200 miles, consolidated into United for a combined total of 84,700 miles."
             },
             "choice_order": [
               "A",
@@ -2438,44 +2438,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Alaska Mileage Plan account 234567890 with 36,200 miles (consolidated into United for a combined 84,700 miles)."
+                "text": "You had Alaska Mileage Plan account 234567890 with 36,200 miles, consolidated into United for a combined total of 84,700 miles."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Type 1 diabetes — insulin pump (Omnipod) + backup rapid-acting insulin vial and spare infusion sets; requires carrying supplies in cabin and a doctor’s prescription note"
+                "text": "You had Alaska Mileage Plan account 345678901 with 40,000 miles, consolidated into United for a combined total of 88,000 miles."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the Alaska account details from that interaction."
+                "text": "I don't have the Alaska account details or the consolidated total recorded; can you remind me of those?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Type 1 diabetes — insulin pump (Omnipod) + backup rapid-acting insulin vial and spare infusion sets; requires carrying supplies in cabin and a doctor’s prescription note"
+                "text": "You had Alaska Mileage Plan account 345678901 with 40,000 miles, consolidated into United for a combined total of 88,000 miles."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the Alaska account details from that interaction."
+                "text": "I don't have the Alaska account details or the consolidated total recorded; can you remind me of those?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Alaska Mileage Plan account 234567890 with 36,200 miles (consolidated into United for a combined 84,700 miles)."
+                "text": "You had Alaska Mileage Plan account 234567890 with 36,200 miles, consolidated into United for a combined total of 84,700 miles."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "alex.kim@goggle.com",
-            "identifier_label": "Consolidated miles award booking",
-            "question": "What contact email did the user provide in the Consolidated miles award booking interaction for alerts and communication?",
+            "identifier_label": "Award booking with consolidated miles",
+            "question": "Which email address did I want used for alerts and two‑factor authentication?",
             "choices": {
-              "A": "alex.kim@goggle.com",
-              "B": "alex.kim@gmail.com",
-              "C": "I don’t remember the contact email from that interaction."
+              "A": "You asked to use alex.kim@goggle.com for alerts and 2FA.",
+              "B": "You asked to use alex.kim@gmail.com for alerts and 2FA.",
+              "C": "I don't have the email address saved; could you confirm which email to use for alerts and 2FA?"
             },
             "choice_order": [
               "A",
@@ -2498,44 +2498,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "alex.kim@goggle.com"
+                "text": "You asked to use alex.kim@goggle.com for alerts and 2FA."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "alex.kim@gmail.com"
+                "text": "You asked to use alex.kim@gmail.com for alerts and 2FA."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t remember the contact email from that interaction."
+                "text": "I don't have the email address saved; could you confirm which email to use for alerts and 2FA?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "alex.kim@goggle.com"
+                "text": "You asked to use alex.kim@goggle.com for alerts and 2FA."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "alex.kim@gmail.com"
+                "text": "You asked to use alex.kim@gmail.com for alerts and 2FA."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don’t remember the contact email from that interaction."
+                "text": "I don't have the email address saved; could you confirm which email to use for alerts and 2FA?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "555-0123",
-            "identifier_label": "Consolidated miles award booking",
-            "question": "What phone number did the user give in the Consolidated miles award booking interaction?",
+            "identifier_label": "Award booking with consolidated miles",
+            "question": "What phone number did I provide for alerts and two‑factor authentication?",
             "choices": {
-              "A": "I don’t remember the phone number from that interaction.",
-              "B": "555-0123",
-              "C": "555-0199"
+              "A": "I don't have a phone number recorded for alerts or 2FA; could you tell me which number to use?",
+              "B": "You provided the phone number 555-0123 for alerts and 2FA.",
+              "C": "You provided the phone number 555-9876 for alerts and 2FA."
             },
             "choice_order": [
               "A",
@@ -2558,32 +2558,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "555-0123"
+                "text": "You provided the phone number 555-0123 for alerts and 2FA."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "555-0199"
+                "text": "You provided the phone number 555-9876 for alerts and 2FA."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t remember the phone number from that interaction."
+                "text": "I don't have a phone number recorded for alerts or 2FA; could you tell me which number to use?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don’t remember the phone number from that interaction."
+                "text": "I don't have a phone number recorded for alerts or 2FA; could you tell me which number to use?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "555-0123"
+                "text": "You provided the phone number 555-0123 for alerts and 2FA."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "555-0199"
+                "text": "You provided the phone number 555-9876 for alerts and 2FA."
               }
             ]
           }

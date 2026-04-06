@@ -1,0 +1,440 @@
+{
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona7_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona7_sample0.memory_control.json",
+  "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona7_sample0.json",
+  "model": "gpt-5-mini",
+  "items": [
+    {
+      "timestamp": "01/04/2025-I01",
+      "turn_role": "key",
+      "identifier_label": "Orlando family trip",
+      "user_turn": "I want you to build the day-by-day Orlando plan now. Flights and schedule are: Delta DL123 departing morning 8:30 AM (LAX→MCO) and Delta DL456 returning evening 6:45 PM (MCO→LAX); kids are Ethan (age 3 — peanut allergy, needs epinephrine auto-injector, naps ~12:30–2:30pm), Mia (age 6 — seasonal asthma, uses albuterol as needed, naps ~1:00–2:00pm), and Noah (age 12 — no naps); total trip budget $5,000 with a target ~$200/day discretionary; hotel is Lakeview Resort Orlando — confirmation LR-987654 — 101 Lakeshore Way, Orlando, FL 32819 — phone +1-407-555-0199. Make a day-by-day plan that assigns which park on which trip day, specific ticket assignments, midday rest windows, consolidated dining reservations so the five of us eat together, timed blocks (arrival, morning rides, lunch, rest, afternoon rides, dinner, backups), and a checklist of reservations/contacts to confirm.",
+      "task_goal": "Build a day-by-day Orlando plan for the five-person family that assigns park days and specific ticket dates, schedules midday rest windows for the younger children, and consolidates dining reservations so everyone eats together—produce timed blocks (arrival, rides, rest, meals, backups) and a checklist of reservations/contacts to confirm.",
+      "rendered": {
+        "identifier_label": "Orlando family trip",
+        "question": "Was the earlier request asking you to create an overall day-by-day Orlando trip plan for the family that assigns park days and ticket assignments, schedules midday rest windows for the younger children, coordinates group dining so everyone eats together, provides timed daily blocks (arrival, rides, rest, meals, backups), and includes a checklist of reservations/contacts to confirm?",
+        "choices": {
+          "A": "No — it asked you to develop detailed recipes and a grocery shopping list for in-hotel cooking during the trip.",
+          "B": "I don't recall the earlier request details — could you remind me whether you wanted a full day-by-day trip plan or something else?",
+          "C": "Yes — it asked for an overall day-by-day Orlando trip plan for the family that assigns parks and tickets, schedules midday rest for the younger children, coordinates shared dining so everyone eats together, lays out timed daily blocks (arrival, rides, rest, meals, backups), and provides a checklist of reservations/contacts to confirm."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "not_remember": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "not_remember",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — it asked for an overall day-by-day Orlando trip plan for the family that assigns parks and tickets, schedules midday rest for the younger children, coordinates shared dining so everyone eats together, lays out timed daily blocks (arrival, rides, rest, meals, backups), and provides a checklist of reservations/contacts to confirm."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "No — it asked you to develop detailed recipes and a grocery shopping list for in-hotel cooking during the trip."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't recall the earlier request details — could you remind me whether you wanted a full day-by-day trip plan or something else?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "No — it asked you to develop detailed recipes and a grocery shopping list for in-hotel cooking during the trip."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don't recall the earlier request details — could you remind me whether you wanted a full day-by-day trip plan or something else?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "Yes — it asked for an overall day-by-day Orlando trip plan for the family that assigns parks and tickets, schedules midday rest for the younger children, coordinates shared dining so everyone eats together, lays out timed daily blocks (arrival, rides, rest, meals, backups), and provides a checklist of reservations/contacts to confirm."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "01/04/2025-I01"
+        ],
+        "rationale": "The label 'Orlando family trip' directly matches the user request in 01/04/2025-I01, which asks for a day-by-day Orlando plan for a five-person family with specific flights (Delta DL123/DL456), children (Ethan, Mia, Noah) and hotel Lakeview Resort Orlando. No other candidate mentions Orlando or the same family-trip details."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "06/15/2020-I04",
+      "turn_role": "key",
+      "identifier_label": "Accessible travel plan",
+      "user_turn": "I need a low-risk accessible plan and message templates for my friend's travel window July 15–21, 2026 (preferred departure the morning of July 15; return the evening of July 21; flexible by two days). Mobility profile: powered wheelchair, 31 in (79 cm) wide and 42 in (107 cm) long. Preferred contacts and existing booking: Marta Ruiz, marta.ruiz@example.com, +1-555-246-8970; Sunset Guesthouse reservations, reservations@sunsetguesthouse.com, +1-555-400-1122; booking ref RG-778321. Task: produce (1) a prioritized checklist of exact confirmations to request from transit and attraction providers, (2) sample emails/phone scripts and escalation templates I can send to Marta, Sunset Guesthouse, and carriers, (3) contingency/fallback options if a provider cannot confirm, and (4) a timeline for when to follow up and when to cancel DIY arrangements without written confirmation.",
+      "task_goal": "Create a practical, low-risk plan and message templates to secure verified accessible transit and attraction access for my friend: (1) a prioritized checklist of exact confirmations to request from transit/attraction providers, (2) sample emails/phone scripts and escalation templates to use when responses are slow or inconsistent, (3) contingency/fallback options if a provider cannot confirm, and (4) a timeline for when to follow up and when to cancel DIY arrangements without written confirmation.",
+      "rendered": {
+        "identifier_label": "Accessible travel plan",
+        "question": "About the Accessible travel plan — do you remember that I asked you to create a practical, low‑risk plan and message templates to secure verified accessible transit and attraction access for my friend, including a prioritized checklist of confirmations, sample messages and escalation templates, contingency options if providers can't confirm, and a follow‑up/cancellation timeline?",
+        "choices": {
+          "A": "I remember you asked for a detailed day‑by‑day itinerary for a small group that assigns park days and specific ticket dates, schedules midday rest windows, consolidates dining reservations so everyone eats together, and produces timed blocks (arrival, rides, rest, meals, backups) plus a checklist of reservations and contacts to confirm — along with a packing/wardrobe plan and per‑day budget.",
+          "B": "Yes. You asked me to produce a practical, low‑risk plan and message templates to secure verified accessible transit and attraction access for your friend, specifically: (1) a prioritized checklist of exact confirmations to request from transit and attraction providers, (2) sample emails/phone scripts and escalation templates to use when responses are slow or inconsistent, (3) contingency/fallback options if a provider cannot confirm, and (4) a timeline for when to follow up and when to cancel DIY arrangements without written confirmation. You also provided background details (mobility profile, travel window, and preferred contacts) to tailor those materials.",
+          "C": "I don't have that detail available anymore. Could you share the request again or confirm which pieces you want me to focus on (checklist, message templates/escalation, contingencies, or the follow‑up/cancellation timeline)?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes. You asked me to produce a practical, low‑risk plan and message templates to secure verified accessible transit and attraction access for your friend, specifically: (1) a prioritized checklist of exact confirmations to request from transit and attraction providers, (2) sample emails/phone scripts and escalation templates to use when responses are slow or inconsistent, (3) contingency/fallback options if a provider cannot confirm, and (4) a timeline for when to follow up and when to cancel DIY arrangements without written confirmation. You also provided background details (mobility profile, travel window, and preferred contacts) to tailor those materials."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "I remember you asked for a detailed day‑by‑day itinerary for a small group that assigns park days and specific ticket dates, schedules midday rest windows, consolidates dining reservations so everyone eats together, and produces timed blocks (arrival, rides, rest, meals, backups) plus a checklist of reservations and contacts to confirm — along with a packing/wardrobe plan and per‑day budget."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that detail available anymore. Could you share the request again or confirm which pieces you want me to focus on (checklist, message templates/escalation, contingencies, or the follow‑up/cancellation timeline)?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "I remember you asked for a detailed day‑by‑day itinerary for a small group that assigns park days and specific ticket dates, schedules midday rest windows, consolidates dining reservations so everyone eats together, and produces timed blocks (arrival, rides, rest, meals, backups) plus a checklist of reservations and contacts to confirm — along with a packing/wardrobe plan and per‑day budget."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes. You asked me to produce a practical, low‑risk plan and message templates to secure verified accessible transit and attraction access for your friend, specifically: (1) a prioritized checklist of exact confirmations to request from transit and attraction providers, (2) sample emails/phone scripts and escalation templates to use when responses are slow or inconsistent, (3) contingency/fallback options if a provider cannot confirm, and (4) a timeline for when to follow up and when to cancel DIY arrangements without written confirmation. You also provided background details (mobility profile, travel window, and preferred contacts) to tailor those materials."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "I don't have that detail available anymore. Could you share the request again or confirm which pieces you want me to focus on (checklist, message templates/escalation, contingencies, or the follow‑up/cancellation timeline)?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "06/15/2020-I04"
+        ],
+        "rationale": "The label 'Accessible travel plan' directly matches the 06/15/2020-I04 turn, which requests a low-risk accessible plan and message templates to secure verified accessible transit and attraction access (includes mobility profile, checklist of confirmations, sample emails/phone scripts/escalations, contingencies, and timeline). No other candidate turn focuses on accessibility or powered-wheelchair specifics."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "11/20/2025-I05",
+      "turn_role": "key",
+      "identifier_label": "Portland rainy-week capsule",
+      "user_turn": "Please refine my seven-item rainy-week Portland capsule. Flight info and schedule: SFO->PDX, Alaska Airlines AS321 departs 07:30 PDT; return PDX->SFO, Alaska Airlines AS454 returns 22:45 PDT. Accommodation: 456 NW Couch St, Portland, OR 97209 — Host Mara Chen, phone 503-555-0147. Airline and baggage: Alaska Airlines — Main Cabin Saver (no free checked bag); max willing to pay for a checked bag $50. Health: plantar fasciitis; I use custom orthotics and need supportive shoes. Task: give outfit rotation suggestions, a laundry/refresh plan, any small additions (layers/gear) for colder/wetter days and activities, and a revised packing checklist that keeps everything in a carry-on if possible.",
+      "task_goal": "Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.",
+      "rendered": {
+        "identifier_label": "Portland rainy-week capsule",
+        "question": "Do you remember my Portland rainy-week capsule request — refining a seven-item capsule wardrobe and carry-on packing plan with outfit rotation suggestions, a laundry/refresh strategy, added layers/gear for colder/wetter days and activities, and a revised checklist to keep everything in a carry-on?",
+        "choices": {
+          "A": "I don’t have that earlier request available right now. Could you share the details again (the seven-item capsule goal, laundry/refresh needs, layers/gear for wet/cold days, and that you want a carry-on-only checklist) and I’ll pick up from there?",
+          "B": "Yes — you asked me to refine a seven-item rainy-week Portland capsule: provide outfit rotation suggestions and a laundry/refresh plan, recommend small additional layers/gear for colder or wetter days and specific activities, and produce a revised packing checklist that keeps everything in a carry-on while accounting for your airline/baggage constraints and trip background details.",
+          "C": "I remember a Portland trip request, but my earlier reply focused on building a day-by-day itinerary with timed blocks for activities, scheduled rest windows for your foot issue, consolidated dining reservations and a checklist of reservations/contacts to confirm — rather than narrowing a seven-item capsule wardrobe and a carry-on-only packing checklist."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to refine a seven-item rainy-week Portland capsule: provide outfit rotation suggestions and a laundry/refresh plan, recommend small additional layers/gear for colder or wetter days and specific activities, and produce a revised packing checklist that keeps everything in a carry-on while accounting for your airline/baggage constraints and trip background details."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "I remember a Portland trip request, but my earlier reply focused on building a day-by-day itinerary with timed blocks for activities, scheduled rest windows for your foot issue, consolidated dining reservations and a checklist of reservations/contacts to confirm — rather than narrowing a seven-item capsule wardrobe and a carry-on-only packing checklist."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request available right now. Could you share the details again (the seven-item capsule goal, laundry/refresh needs, layers/gear for wet/cold days, and that you want a carry-on-only checklist) and I’ll pick up from there?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request available right now. Could you share the details again (the seven-item capsule goal, laundry/refresh needs, layers/gear for wet/cold days, and that you want a carry-on-only checklist) and I’ll pick up from there?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to refine a seven-item rainy-week Portland capsule: provide outfit rotation suggestions and a laundry/refresh plan, recommend small additional layers/gear for colder or wetter days and specific activities, and produce a revised packing checklist that keeps everything in a carry-on while accounting for your airline/baggage constraints and trip background details."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "I remember a Portland trip request, but my earlier reply focused on building a day-by-day itinerary with timed blocks for activities, scheduled rest windows for your foot issue, consolidated dining reservations and a checklist of reservations/contacts to confirm — rather than narrowing a seven-item capsule wardrobe and a carry-on-only packing checklist."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "11/20/2025-I05"
+        ],
+        "rationale": "The timestamp 11/20/2025-I05 explicitly requests refinement of a seven-item rainy-week Portland capsule (outfit rotation, laundry/refresh plan, layers/gear, carry-on packing checklist) and matches the label exactly; none of the other candidate turns mention Portland or a capsule wardrobe."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "12/05/2025-I06",
+      "turn_role": "probe",
+      "identifier_label": "Lisbon food-tour",
+      "user_turn": "I want you to turn the Lisbon food-map into a finalized 7-day food-tour plan. Group size and budget: traveling with 3 adults, per-person food budget about $75–100/day. Flight schedule: TAP Air Portugal TP1723 arriving Lisbon on May 10 at 09:25 and TP1724 departing Lisbon on May 17 at 14:40. Medical/dietary: severe shellfish allergy (anaphylaxis) — carries an EpiPen — and celiac disease (strict gluten-free). Accommodation/contact: Guesthouse contact Maria Silva +351 912 345 678, address Rua da Bica 12, 1200-023 Lisboa. Task: assign markets and stalls to days and times, prioritize and make reservations (or recommend reservation windows), map transit between stops from the guesthouse base, flag allergy-safe alternatives and the language to use with vendors, and produce a printable daily itinerary with a booking checklist and timing buffers.",
+      "task_goal": "Turn the scouted Lisbon food-map into a finalized, day-by-day 7‑day food-tour plan: assign markets/stalls to specific days and times, make or prioritize reservations, map transit between stops, flag allergy-safe alternatives, and produce a printable daily itinerary with booking checklist and timing buffers.",
+      "rendered": {
+        "identifier_label": "Lisbon food-tour",
+        "question": "Do you still have the request to turn the Lisbon food-map into a finalized 7-day food-tour plan that assigns specific markets/stalls to days and times, prioritizes reservations, maps transit between stops from our guesthouse, flags allergy-safe alternatives, and produces a printable daily itinerary with a booking checklist and timing buffers?",
+        "choices": {
+          "A": "I don’t have that earlier request available right now. Could you remind me of the details or paste the original brief so I can pick up where we left off?",
+          "B": "Yes — you asked me to finalize the Lisbon 7‑day food‑tour based on your scouted food‑map: assign markets and stalls to particular days/times, prioritize or recommend reservation windows, map transit between stops from your accommodation, flag allergy‑safe (gluten‑free and shellfish‑safe) alternatives and vendor language, and deliver a printable daily itinerary with a booking checklist and timing buffers.",
+          "C": "You asked for a practical, contingency‑focused plan to secure verified accessible transit and attraction access: a prioritized checklist of exact confirmations to request, sample emails/phone scripts and escalation templates, fallback options if providers can’t confirm, and a timeline for follow‑ups and cancellations — tailored to mobility/access needs rather than a day‑by‑day food tour."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to finalize the Lisbon 7‑day food‑tour based on your scouted food‑map: assign markets and stalls to particular days/times, prioritize or recommend reservation windows, map transit between stops from your accommodation, flag allergy‑safe (gluten‑free and shellfish‑safe) alternatives and vendor language, and deliver a printable daily itinerary with a booking checklist and timing buffers."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You asked for a practical, contingency‑focused plan to secure verified accessible transit and attraction access: a prioritized checklist of exact confirmations to request, sample emails/phone scripts and escalation templates, fallback options if providers can’t confirm, and a timeline for follow‑ups and cancellations — tailored to mobility/access needs rather than a day‑by‑day food tour."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request available right now. Could you remind me of the details or paste the original brief so I can pick up where we left off?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request available right now. Could you remind me of the details or paste the original brief so I can pick up where we left off?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to finalize the Lisbon 7‑day food‑tour based on your scouted food‑map: assign markets and stalls to particular days/times, prioritize or recommend reservation windows, map transit between stops from your accommodation, flag allergy‑safe (gluten‑free and shellfish‑safe) alternatives and vendor language, and deliver a printable daily itinerary with a booking checklist and timing buffers."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "You asked for a practical, contingency‑focused plan to secure verified accessible transit and attraction access: a prioritized checklist of exact confirmations to request, sample emails/phone scripts and escalation templates, fallback options if providers can’t confirm, and a timeline for follow‑ups and cancellations — tailored to mobility/access needs rather than a day‑by‑day food tour."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "12/05/2025-I06"
+        ],
+        "rationale": "The label 'Lisbon food-tour' directly matches the task_goal and user_turn at 12/05/2025-I06, which asks to turn the scouted Lisbon food-map into a finalized 7-day food-tour plan (assign markets/stalls, reservations, transit from the guesthouse, allergy-safe alternatives, and a printable itinerary). No other candidate concerns Lisbon or a food-tour."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "02/10/2026-I02",
+      "turn_role": "probe",
+      "identifier_label": "Spain trip",
+      "user_turn": "Please book the timed-entry tickets and reservations for my Spain trip. Arrival flight IB345 arrives MAD at 08:35 on May 10, 2026; passport X1234567. Use contact/payment info lamar.jenkins@goggle.com, 555-0123, card ending 5678. Hotel bookings are: Madrid - Plaza Mayor Hotel, Calle Mayor 1, 28013 Madrid - ref HBK-789012; Seville - Casa de Sevilla, Calle Sierpes 14, 41004 Seville - ref SVN-345678; Barcelona - Rambla Suites, La Rambla 90, 08002 Barcelona - ref BCL-901234. I can walk about 6 km/day but have mild osteoarthritis in my right knee (I use a compression sleeve and occasional ibuprofen), so please prioritize low-walking transfers and elevator access. Task: book timed-entry Prado, Reina Sofía, Alcázar, and Sagrada Família; reserve intercity train seats or short flights; confirm hotel check-ins; and send a finalized day-by-day plan with transit windows, reservation refs, estimated costs, and a packing list that accounts for one rest day per week and my mobility constraints.",
+      "task_goal": "Book timed-entry tickets for key museums (Prado, Reina Sofía, Alcázar, Sagrada Família), reserve intercity train seats and any short-haul flights, confirm accommodation check-ins, and produce a finalized day-by-day plan (with transit windows, reservation references, estimated costs, and a packing list optimized for one rest day/week and mobility constraints).",
+      "rendered": {
+        "identifier_label": "Spain trip",
+        "question": "Do you still have the Spain trip request to book timed-entry museum tickets, arrange intercity transport and short flights, confirm hotel check-ins, and produce a finalized day-by-day plan with transit windows, reservation references, estimated costs, and a packing list that accounts for weekly rest days and mobility constraints?",
+        "choices": {
+          "A": "The request I have on file is to create an accessibility-focused, low-risk plan for a friend: a prioritized checklist of exact confirmations to request from transit and attraction providers, sample emails and phone scripts for booking and escalation, contingency/fallback options if providers can’t confirm, and a timeline for follow-ups and cancellations.",
+          "B": "I’m sorry, I don’t have that trip request saved right now. Could you resend or summarize the main actions you want me to take (which museums to book, what transport to reserve, which hotels to confirm, and any packing/itinerary requirements)?",
+          "C": "Yes — you asked me to book timed-entry tickets for the Prado, Reina Sofía, the Alcázar, and the Sagrada Família; reserve intercity train seats and any short-haul flights; confirm hotel check-ins; and deliver a finalized day-by-day itinerary with transit windows, reservation references, estimated costs, and a packing list that includes one rest day per week and accommodates your mobility needs."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "not_remember": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "not_remember",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to book timed-entry tickets for the Prado, Reina Sofía, the Alcázar, and the Sagrada Família; reserve intercity train seats and any short-haul flights; confirm hotel check-ins; and deliver a finalized day-by-day itinerary with transit windows, reservation references, estimated costs, and a packing list that includes one rest day per week and accommodates your mobility needs."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "The request I have on file is to create an accessibility-focused, low-risk plan for a friend: a prioritized checklist of exact confirmations to request from transit and attraction providers, sample emails and phone scripts for booking and escalation, contingency/fallback options if providers can’t confirm, and a timeline for follow-ups and cancellations."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t have that trip request saved right now. Could you resend or summarize the main actions you want me to take (which museums to book, what transport to reserve, which hotels to confirm, and any packing/itinerary requirements)?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "The request I have on file is to create an accessibility-focused, low-risk plan for a friend: a prioritized checklist of exact confirmations to request from transit and attraction providers, sample emails and phone scripts for booking and escalation, contingency/fallback options if providers can’t confirm, and a timeline for follow-ups and cancellations."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t have that trip request saved right now. Could you resend or summarize the main actions you want me to take (which museums to book, what transport to reserve, which hotels to confirm, and any packing/itinerary requirements)?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to book timed-entry tickets for the Prado, Reina Sofía, the Alcázar, and the Sagrada Família; reserve intercity train seats and any short-haul flights; confirm hotel check-ins; and deliver a finalized day-by-day itinerary with transit windows, reservation references, estimated costs, and a packing list that includes one rest day per week and accommodates your mobility needs."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "02/10/2026-I02"
+        ],
+        "rationale": "The label 'Spain trip' uniquely matches the 02/10/2026-I02 turn, which explicitly describes a Spain itinerary (Madrid, Seville, Barcelona), asks to book Prado, Reina Sofía, Alcázar, Sagrada Família, reserve intercity travel, confirm hotel check-ins, and produce a day-by-day plan with the provided booking/contact details and mobility constraints. None of the other candidate turns concern a Spain itinerary."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "03/01/2025-I03",
+      "turn_role": "probe",
+      "identifier_label": "Swiss scenic rail trip",
+      "user_turn": "Okay — please finalize and book the 3-day Swiss scenic rail trip. I arrive on UA237 at Zurich (ZRH) at 09:35 CEST on June 15. Contact info for bookings: lamar.jenkins@goggle.com and 555-0123. My firm budget for this 3-day trip is $1,200 and I prefer to stick to that while keeping a panoramic car/window seat reserved. Health notes: peanut allergy and mild knee arthritis — I prefer minimal stairs and short walks. Task: confirm train times and reserve panoramic/window seats, arrange accommodations and last-mile transfers, and produce a detailed day-by-day plan with realistic connection buffers and contingencies that fits these dates, budget, and health needs.",
+      "task_goal": "Finalize and book the 3-day Swiss scenic rail itinerary: confirm train times, reserve panoramic-car/window seats, arrange accommodations and last-mile transfers, and produce a detailed day-by-day plan (including realistic connection buffers and contingencies) that fits my travel dates, budget, and any health or mobility needs.",
+      "rendered": {
+        "identifier_label": "Swiss scenic rail trip",
+        "question": "Was the earlier request's overall purpose to finalize and book a Swiss scenic rail itinerary, including making necessary travel and seat reservations, arranging accommodations and last‑mile transfers, and providing a detailed day‑by‑day plan with realistic buffers and contingencies?",
+        "choices": {
+          "A": "No — it was to request general sightseeing suggestions and restaurant recommendations only.",
+          "B": "I don't remember the exact overall purpose of the earlier request; please remind me what you needed.",
+          "C": "Yes — the overall purpose was to finalize and book a Swiss scenic rail itinerary, covering reservations (trains and seats), accommodations and transfers, and a detailed day‑by‑day plan with realistic connection buffers and contingencies."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "not_remember": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "not_remember",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — the overall purpose was to finalize and book a Swiss scenic rail itinerary, covering reservations (trains and seats), accommodations and transfers, and a detailed day‑by‑day plan with realistic connection buffers and contingencies."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "No — it was to request general sightseeing suggestions and restaurant recommendations only."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't remember the exact overall purpose of the earlier request; please remind me what you needed."
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "No — it was to request general sightseeing suggestions and restaurant recommendations only."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don't remember the exact overall purpose of the earlier request; please remind me what you needed."
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "Yes — the overall purpose was to finalize and book a Swiss scenic rail itinerary, covering reservations (trains and seats), accommodations and transfers, and a detailed day‑by‑day plan with realistic connection buffers and contingencies."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "03/01/2025-I03"
+        ],
+        "rationale": "The label exactly matches the user_turn and task_goal in timestamp 03/01/2025-I03, which explicitly requests finalizing/booking a 3-day Swiss scenic rail trip with the same arrival flight, budget, seat preference, health notes, and tasks."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

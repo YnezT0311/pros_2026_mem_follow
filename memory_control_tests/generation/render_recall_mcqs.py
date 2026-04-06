@@ -152,6 +152,17 @@ WHOLE_SLOT_LEAK_RE = re.compile(
 )
 REQUIRED_ANSWER_TYPES = {"remember_correct", "distractor_irrelevant", "not_remember"}
 
+GENERIC_FIRST_PERSON_REWRITES = [
+    (re.compile(r"\byou said\b", re.IGNORECASE), "I said"),
+    (re.compile(r"\byou provided\b", re.IGNORECASE), "I provided"),
+    (re.compile(r"\byou gave\b", re.IGNORECASE), "I gave"),
+]
+GENERIC_ANSWER_SECOND_PERSON_REWRITES = [
+    (re.compile(r"\bI said\b", re.IGNORECASE), "You said"),
+    (re.compile(r"\bI provided\b", re.IGNORECASE), "You provided"),
+    (re.compile(r"\bI gave\b", re.IGNORECASE), "You gave"),
+]
+
 
 def _whole_recall_needs_repair(rendered_whole: Dict[str, Any]) -> bool:
     question = str(rendered_whole.get("question", ""))
@@ -159,6 +170,78 @@ def _whole_recall_needs_repair(rendered_whole: Dict[str, Any]) -> bool:
     answer_types = {answer.get("answer_type", "") for answer in normalized_answers}
     missing_core_types = REQUIRED_ANSWER_TYPES - answer_types
     return bool(WHOLE_SLOT_LEAK_RE.search(question)) or len(normalized_answers) < 3 or bool(missing_core_types)
+
+
+def _preserve_case(replacement: str, source: str) -> str:
+    if source.isupper():
+        return replacement.upper()
+    if source[:1].isupper():
+        return replacement[:1].upper() + replacement[1:]
+    return replacement
+
+
+def _normalize_first_person_text(text: str) -> str:
+    normalized = str(text)
+    for pattern, replacement in GENERIC_FIRST_PERSON_REWRITES:
+        normalized = pattern.sub(lambda m: _preserve_case(replacement, m.group(0)), normalized)
+    return normalized
+
+
+def _normalize_answer_text(text: str) -> str:
+    normalized = str(text)
+    for pattern, replacement in GENERIC_ANSWER_SECOND_PERSON_REWRITES:
+        normalized = pattern.sub(lambda m: _preserve_case(replacement, m.group(0)), normalized)
+    return normalized
+
+
+def _normalize_first_person_question(question: str) -> str:
+    normalized = _normalize_first_person_text(question)
+    normalized = re.sub(r"\byour\b", lambda m: _preserve_case("my", m.group(0)), normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bdid you\b", lambda m: _preserve_case("did I", m.group(0)), normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bdo you have\b", lambda m: _preserve_case("do I have", m.group(0)), normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bdo you want\b", lambda m: _preserve_case("did I want", m.group(0)), normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bdo you need\b", lambda m: _preserve_case("do I need", m.group(0)), normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bdid you mention\b", lambda m: _preserve_case("did I mention", m.group(0)), normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bdid you note\b", lambda m: _preserve_case("did I note", m.group(0)), normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bdid you report\b", lambda m: _preserve_case("did I report", m.group(0)), normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"\bare you\b", lambda m: _preserve_case("am I", m.group(0)), normalized, flags=re.IGNORECASE)
+    normalized = re.sub(
+        r"\bdid you say you\b",
+        lambda m: _preserve_case("did I say I", m.group(0)),
+        normalized,
+        flags=re.IGNORECASE,
+    )
+    normalized = re.sub(
+        r"\bdid you provide you\b",
+        lambda m: _preserve_case("did I provide I", m.group(0)),
+        normalized,
+        flags=re.IGNORECASE,
+    )
+    normalized = re.sub(
+        r"\bdid you give you\b",
+        lambda m: _preserve_case("did I give I", m.group(0)),
+        normalized,
+        flags=re.IGNORECASE,
+    )
+    normalized = re.sub(
+        r"\bwhat (.+?) did you say\b",
+        lambda m: _preserve_case(f"What {m.group(1)} did I say", m.group(0)),
+        normalized,
+        flags=re.IGNORECASE,
+    )
+    normalized = re.sub(
+        r"\bwhat (.+?) did you provide\b",
+        lambda m: _preserve_case(f"What {m.group(1)} did I provide", m.group(0)),
+        normalized,
+        flags=re.IGNORECASE,
+    )
+    normalized = re.sub(
+        r"\bwhat (.+?) did you give\b",
+        lambda m: _preserve_case(f"What {m.group(1)} did I give", m.group(0)),
+        normalized,
+        flags=re.IGNORECASE,
+    )
+    return normalized
 
 
 def _build_whole_recall_repair_prompt(
@@ -177,6 +260,7 @@ def _build_whole_recall_repair_prompt(
         f"The current question is: \"{rendered_whole['question']}\". "
         "Please rewrite this whole-recall question so that it asks only about the overall purpose of the earlier request. "
         "Do not ask about specific slot-level details such as dates, budgets, email addresses, schedules, contact information, or other sensitive details. "
+        "When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. "
         "The remember_correct answer should also stay at the level of the overall request rather than listing slot-level facts unless a brief mention is absolutely necessary for clarity. "
         "Make sure the output includes exactly three answers with the answer types remember_correct, distractor_irrelevant, and not_remember. "
         "Keep the same JSON format with identifier_label, question, and answers. "
@@ -265,11 +349,18 @@ def _validate_answer_bank(normalized_answers: List[Dict[str, str]], *, qa_family
 
 def _finalize_whole_render(rendered_whole: Dict[str, Any], seed: str) -> Dict[str, Any]:
     normalized_answers = _normalize_answer_list(rendered_whole.get("answers", []))
+    normalized_answers = [
+        {
+            "answer_type": answer["answer_type"],
+            "text": _normalize_answer_text(answer["text"]),
+        }
+        for answer in normalized_answers
+    ]
     _validate_answer_bank(normalized_answers, qa_family="whole_recall")
     shuffled = _shuffle_answer_bank(normalized_answers, seed)
     return {
         "identifier_label": rendered_whole["identifier_label"],
-        "question": rendered_whole["question"],
+        "question": _normalize_first_person_question(rendered_whole["question"]),
         "choices": shuffled["choices"],
         "choice_order": shuffled["choice_order"],
         "answer_type_to_choice": shuffled["answer_type_to_choice"],
@@ -308,6 +399,13 @@ def _finalize_slot_render(rendered_slot: Dict[str, Any], seed_prefix: str) -> Di
     finalized_items = []
     for idx, item in enumerate(rendered_slot.get("items", [])):
         normalized_answers = _normalize_answer_list(item.get("answers", []))
+        normalized_answers = [
+            {
+                "answer_type": answer["answer_type"],
+                "text": _normalize_answer_text(answer["text"]),
+            }
+            for answer in normalized_answers
+        ]
         _validate_answer_bank(normalized_answers, qa_family="slot_recall")
         shuffled = _shuffle_answer_bank(normalized_answers, f"{seed_prefix}:{idx}")
         finalized_items.append(
@@ -315,7 +413,7 @@ def _finalize_slot_render(rendered_slot: Dict[str, Any], seed_prefix: str) -> Di
                 "sensitive_key": item["sensitive_key"],
                 "sensitive_value": item["sensitive_value"],
                 "identifier_label": item["identifier_label"],
-                "question": item["question"],
+                "question": _normalize_first_person_question(item["question"]),
                 "choices": shuffled["choices"],
                 "choice_order": shuffled["choice_order"],
                 "answer_type_to_choice": shuffled["answer_type_to_choice"],

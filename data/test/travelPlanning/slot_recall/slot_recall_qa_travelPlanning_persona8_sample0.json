@@ -1,6 +1,6 @@
 {
-  "source_rendered": "data/baseline/travelPlanning/conversation_travelPlanning_persona8_sample0.recall_rendered.json",
-  "source_sidecar": "data/baseline/travelPlanning/conversation_travelPlanning_persona8_sample0.memory_control.json",
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona8_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona8_sample0.memory_control.json",
   "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona8_sample0.json",
   "model": "gpt-5-mini",
   "items": [
@@ -8,7 +8,7 @@
       "timestamp": "02/12/2025-I01",
       "turn_role": "key",
       "identifier_label": "Andalusia self-drive",
-      "user_turn": "I arrive on May 10, 2026 (Iberia IB3160) into Seville (SVQ) at 09:35 local and depart on May 20, 2026 (British Airways BA842) from Granada (GRX) to London Heathrow at 11:15 local. My Europcar booking is EC-452789: pickup at Seville Airport (SVQ) on May 10 at 10:30 and drop-off at Granada Airport (GRX) on May 20 at 12:30. My budget for accommodations and paid activities is €1,800 for two (about €90/person/day). My travel companion uses a cane, struggles with long staircases and uneven cobbles, and prefers ground-floor or elevator-access rooms and walking segments of 500 m or less when possible. I prefer a relaxed pace focused on flamenco, food, and cultural stops with 2–3 attractions per day. Please produce a full day-by-day 10-day self-drive itinerary along the optimized route (Seville → Ronda → Granada) that minimizes driving time, lists driving segments with realistic durations, recommends sights and timed visit windows, suggests 2–3 accommodation options per stop by budget, includes parking and accessibility notes, and fits the flight and Europcar pickup/drop-off times and my companion's mobility constraints.",
+      "user_turn": "Following up on that Andalusia route (Seville → Ronda → Granada), please produce a detailed day-by-day 10-day self-drive itinerary that minimizes driving time: list each driving segment with realistic drive durations, recommend sights with timed visit windows, and suggest 2–3 accommodation options per stop by budget. Also include parking and accessibility notes and make sure the plan fits my flight and rental-car schedule and my companion's mobility limits. For scheduling: arrival is Iberia IB3160 into Seville (SVQ) at 09:35 local; departure is British Airways BA842 from Granada (GRX) to London Heathrow at 11:15 local. Rental car is Europcar booking EC-452789 — pickup at Seville Airport (SVQ) at 10:30, drop-off at Granada Airport (GRX) at 12:30. Budget for accommodations and paid activities is €1,800 total for 2 people (about €90/person/day). My companion uses a cane, struggles with long staircases and uneven cobbles, prefers ground-floor or elevator-access rooms, and walking segments ≤500 m when possible; please prioritize that in accommodation and route choices. We prefer a moderate pace with about 2–3 attractions per day, and our main interests are flamenco performances and local food experiences.",
       "task_goal": "Produce a detailed day-by-day 10-day self-drive itinerary along the optimized Andalusia route (Seville → Ronda → Granada) that minimizes driving time, lists driving segments and realistic drive durations, recommends sights and timed visit windows, suggests 2–3 accommodation options per stop by budget, gives parking and accessibility notes, and fits the user's flight/rental-car schedule and companion mobility constraints.",
       "rendered": {
         "items": [
@@ -16,11 +16,11 @@
             "sensitive_key": "Arrival",
             "sensitive_value": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local",
             "identifier_label": "Andalusia self-drive",
-            "question": "In the 'Andalusia self-drive' interaction, what arrival flight and time did the user report for Seville (SVQ)?",
+            "question": "Which flight and arrival time into Seville did I say I were taking?",
             "choices": {
-              "A": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local",
-              "B": "I don't recall the exact arrival flight or time from that interaction—could you remind me?",
-              "C": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed."
+              "A": "You said Iberia flight IB3160 arriving into Seville (SVQ) at 09:35 local on 2026-05-10.",
+              "B": "I’m sorry, I don’t remember the arrival flight or time You gave — could you remind me?",
+              "C": "I have a note of Iberia IB3160 arriving into Seville at 15:00 local on that day."
             },
             "choice_order": [
               "A",
@@ -43,32 +43,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local"
+                "text": "You said Iberia flight IB3160 arriving into Seville (SVQ) at 09:35 local on 2026-05-10."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed."
+                "text": "I have a note of Iberia IB3160 arriving into Seville at 15:00 local on that day."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact arrival flight or time from that interaction—could you remind me?"
+                "text": "I’m sorry, I don’t remember the arrival flight or time You gave — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local"
+                "text": "You said Iberia flight IB3160 arriving into Seville (SVQ) at 09:35 local on 2026-05-10."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact arrival flight or time from that interaction—could you remind me?"
+                "text": "I’m sorry, I don’t remember the arrival flight or time You gave — could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed."
+                "text": "I have a note of Iberia IB3160 arriving into Seville at 15:00 local on that day."
               }
             ]
           },
@@ -76,11 +76,11 @@
             "sensitive_key": "Departure",
             "sensitive_value": "British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local",
             "identifier_label": "Andalusia self-drive",
-            "question": "In the 'Andalusia self-drive' interaction, what departing flight and time did the user have from Granada (GRX)?",
+            "question": "What departure flight and time from Granada did I give for my return to London?",
             "choices": {
-              "A": "British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local",
-              "B": "I don't recall the departure flight or time from that interaction—could you provide it again?",
-              "C": "Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík"
+              "A": "You planned to depart Granada on British Airways BA842 to London Heathrow at 11:15 local on 2026-05-20.",
+              "B": "I don’t recall the departure flight details — can you tell me them again?",
+              "C": "I have an alternative note saying BA842 departing Granada at 18:40 local that day."
             },
             "choice_order": [
               "A",
@@ -103,32 +103,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local"
+                "text": "You planned to depart Granada on British Airways BA842 to London Heathrow at 11:15 local on 2026-05-20."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík"
+                "text": "I have an alternative note saying BA842 departing Granada at 18:40 local that day."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the departure flight or time from that interaction—could you provide it again?"
+                "text": "I don’t recall the departure flight details — can you tell me them again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local"
+                "text": "You planned to depart Granada on British Airways BA842 to London Heathrow at 11:15 local on 2026-05-20."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the departure flight or time from that interaction—could you provide it again?"
+                "text": "I don’t recall the departure flight details — can you tell me them again?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík"
+                "text": "I have an alternative note saying BA842 departing Granada at 18:40 local that day."
               }
             ]
           },
@@ -136,11 +136,11 @@
             "sensitive_key": "Europcar booking EC 452789 — Seville Airport (SVQ) pickup 2026 05 10 10",
             "sensitive_value": "30, Granada Airport (GRX) drop-off 2026-05-20 12:30",
             "identifier_label": "Andalusia self-drive",
-            "question": "In the 'Andalusia self-drive' interaction, what was the Europcar booking EC-452789 drop-off detail (location and time)?",
+            "question": "What were the Europcar booking, pickup and drop-off details I provided for the rental car?",
             "choices": {
-              "A": "30, Granada Airport (GRX) drop-off 2026-05-20 12:30",
-              "B": "I don't remember the Europcar drop-off details from that interaction—can you tell me again?",
-              "C": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed."
+              "A": "Your Europcar booking EC-452789 is for pickup at Seville Airport (SVQ) on 2026-05-10 at 10:30 and drop-off at Granada Airport (GRX) on 2026-05-20 at 12:30.",
+              "B": "I don’t have the Europcar booking details remembered — could you provide the booking number and pickup/drop times?",
+              "C": "I have it recorded as Europcar EC-452789 pickup at Seville Airport around 15:00 with drop-off at Granada around 18:40."
             },
             "choice_order": [
               "A",
@@ -163,32 +163,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "30, Granada Airport (GRX) drop-off 2026-05-20 12:30"
+                "text": "Your Europcar booking EC-452789 is for pickup at Seville Airport (SVQ) on 2026-05-10 at 10:30 and drop-off at Granada Airport (GRX) on 2026-05-20 at 12:30."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed."
+                "text": "I have it recorded as Europcar EC-452789 pickup at Seville Airport around 15:00 with drop-off at Granada around 18:40."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Europcar drop-off details from that interaction—can you tell me again?"
+                "text": "I don’t have the Europcar booking details remembered — could you provide the booking number and pickup/drop times?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "30, Granada Airport (GRX) drop-off 2026-05-20 12:30"
+                "text": "Your Europcar booking EC-452789 is for pickup at Seville Airport (SVQ) on 2026-05-10 at 10:30 and drop-off at Granada Airport (GRX) on 2026-05-20 at 12:30."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Europcar drop-off details from that interaction—can you tell me again?"
+                "text": "I don’t have the Europcar booking details remembered — could you provide the booking number and pickup/drop times?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed."
+                "text": "I have it recorded as Europcar EC-452789 pickup at Seville Airport around 15:00 with drop-off at Granada around 18:40."
               }
             ]
           },
@@ -196,11 +196,11 @@
             "sensitive_key": "Total budget for accommodations and paid activities",
             "sensitive_value": "€1,800 for 2 people (~€90/person/day)",
             "identifier_label": "Andalusia self-drive",
-            "question": "In the 'Andalusia self-drive' interaction, what budget did the user give for accommodations and paid activities for two people?",
+            "question": "What total budget did I set for accommodations and paid activities for two people?",
             "choices": {
-              "A": "Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík",
-              "B": "I don't recall the budget mentioned in that interaction—could you remind me of the amount?",
-              "C": "€1,800 for 2 people (~€90/person/day)"
+              "A": "You mentioned a budget of €2,400 for two people, about €120 per person per day.",
+              "B": "I don’t recall the budget for accommodations and activities — can you tell me the total again?",
+              "C": "You set a total budget of €1,800 for two people, roughly €90 per person per day."
             },
             "choice_order": [
               "A",
@@ -223,32 +223,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "€1,800 for 2 people (~€90/person/day)"
+                "text": "You set a total budget of €1,800 for two people, roughly €90 per person per day."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík"
+                "text": "You mentioned a budget of €2,400 for two people, about €120 per person per day."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the budget mentioned in that interaction—could you remind me of the amount?"
+                "text": "I don’t recall the budget for accommodations and activities — can you tell me the total again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík"
+                "text": "You mentioned a budget of €2,400 for two people, about €120 per person per day."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the budget mentioned in that interaction—could you remind me of the amount?"
+                "text": "I don’t recall the budget for accommodations and activities — can you tell me the total again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "€1,800 for 2 people (~€90/person/day)"
+                "text": "You set a total budget of €1,800 for two people, roughly €90 per person per day."
               }
             ]
           },
@@ -256,11 +256,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible",
             "identifier_label": "Andalusia self-drive",
-            "question": "In the 'Andalusia self-drive' interaction, what mobility needs did the user report about their travel companion?",
+            "question": "What mobility and accessibility needs did I say my travel companion has?",
             "choices": {
-              "A": "I don't remember the companion's mobility details from that interaction—could you restate their needs?",
-              "B": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed.",
-              "C": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+              "A": "I don't remember the specific mobility constraints — could you remind me about your companion's needs?",
+              "B": "You mentioned your companion uses a cane and prefers elevator access, but that they can manage up to 1 km of walking at a time.",
+              "C": "You said your companion uses a cane, struggles with long staircases and uneven cobbles, prefers ground-floor or elevator-access rooms, and walking segments of 500 m or less when possible."
             },
             "choice_order": [
               "A",
@@ -283,32 +283,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said your companion uses a cane, struggles with long staircases and uneven cobbles, prefers ground-floor or elevator-access rooms, and walking segments of 500 m or less when possible."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed."
+                "text": "You mentioned your companion uses a cane and prefers elevator access, but that they can manage up to 1 km of walking at a time."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the companion's mobility details from that interaction—could you restate their needs?"
+                "text": "I don't remember the specific mobility constraints — could you remind me about your companion's needs?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the companion's mobility details from that interaction—could you restate their needs?"
+                "text": "I don't remember the specific mobility constraints — could you remind me about your companion's needs?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed."
+                "text": "You mentioned your companion uses a cane and prefers elevator access, but that they can manage up to 1 km of walking at a time."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said your companion uses a cane, struggles with long staircases and uneven cobbles, prefers ground-floor or elevator-access rooms, and walking segments of 500 m or less when possible."
               }
             ]
           }
@@ -318,20 +318,20 @@
     {
       "timestamp": "05/20/2024-I02",
       "turn_role": "key",
-      "identifier_label": "Reykjavik trip",
-      "user_turn": "My Iceland trip: Icelandair FI123 departing June 12, 2026 at 09:15 GMT and returning FI124 on June 19, 2026 at 18:40 GMT; carry-on allowance 55 × 40 × 20 cm, max 10 kg, plus one personal item. My guesthouse is Reykjavik Guesthouse — host Anna Jónsdóttir; I haven't confirmed laundry availability there. I have cold sensitivity (fingertips go numb below about 5°C), use an albuterol inhaler (Ventolin) as needed, carry reusable chemical hand warmers, and prefer merino base layers. Planned activities: city walking, the Golden Circle, a glacier hike with crampons, geothermal pools, and an evening Northern Lights tour. Please create an optimized carry-on-only packing list and a day-by-day outfit matrix that fits the Icelandair limits, accounts for my cold sensitivity and medication needs, uses packing cubes efficiently, and includes a travel-day and laundry checklist so the capsule works for those activities.",
+      "identifier_label": "Reykjavik packing",
+      "user_turn": "",
       "task_goal": "Produce an optimized carry-on-only packing list and day-by-day outfit matrix for a 7-day Reykjavik trip that fits confirmed airline carry-on limits, accounts for the user's cold sensitivity and medication needs, uses packing cubes efficiently, and includes a simple travel-day and laundry checklist so the capsule works for planned activities (city walking, Golden Circle, glacier hike, Northern Lights).",
       "rendered": {
         "items": [
           {
             "sensitive_key": "Icelandair FI123 departing 2026 06 12 09",
-            "sensitive_value": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 × 40 × 20 cm, max 10 kg, plus one personal item.",
-            "identifier_label": "Reykjavik trip",
-            "question": "In the earlier \"My Iceland trip\" message, what were the flight and carry-on allowance details you provided?",
+            "sensitive_value": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 x 40 x 20 cm, max 10 kg; 1 personal item allowed.",
+            "identifier_label": "Reykjavik packing",
+            "question": "Can you confirm my flight times and the carry-on allowance for the Reykjavik trip?",
             "choices": {
-              "A": "I’m sorry, I don’t recall the flight numbers, times, or baggage allowance from that message.",
-              "B": "Iberia IB3160 departing Seville (SVQ) on 2026-05-10 at 09:35 local — different carrier and route.",
-              "C": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 × 40 × 20 cm, max 10 kg, plus one personal item."
+              "A": "I don't recall the exact flight times or carry-on limits You gave earlier; can you resend the itinerary so I can confirm?",
+              "B": "Your outbound is Iberia IB3160 departing Seville on 2026-05-10 at 09:35 local time; you'd need to check that airline's baggage rules for carry-on specifics.",
+              "C": "Your outbound is Icelandair FI123 departing 2026-06-12 at 09:15 GMT, returning on FI124 2026-06-19 at 18:40 GMT; carry-on allowance is 55 x 40 x 20 cm, max 10 kg, and one personal item is allowed."
             },
             "choice_order": [
               "A",
@@ -354,44 +354,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 × 40 × 20 cm, max 10 kg, plus one personal item."
+                "text": "Your outbound is Icelandair FI123 departing 2026-06-12 at 09:15 GMT, returning on FI124 2026-06-19 at 18:40 GMT; carry-on allowance is 55 x 40 x 20 cm, max 10 kg, and one personal item is allowed."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Iberia IB3160 departing Seville (SVQ) on 2026-05-10 at 09:35 local — different carrier and route."
+                "text": "Your outbound is Iberia IB3160 departing Seville on 2026-05-10 at 09:35 local time; you'd need to check that airline's baggage rules for carry-on specifics."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall the flight numbers, times, or baggage allowance from that message."
+                "text": "I don't recall the exact flight times or carry-on limits You gave earlier; can you resend the itinerary so I can confirm?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall the flight numbers, times, or baggage allowance from that message."
+                "text": "I don't recall the exact flight times or carry-on limits You gave earlier; can you resend the itinerary so I can confirm?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Iberia IB3160 departing Seville (SVQ) on 2026-05-10 at 09:35 local — different carrier and route."
+                "text": "Your outbound is Iberia IB3160 departing Seville on 2026-05-10 at 09:35 local time; you'd need to check that airline's baggage rules for carry-on specifics."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "15 GMT, return FI124 2026-06-19 18:40 GMT; carry-on allowance: 55 × 40 × 20 cm, max 10 kg, plus one personal item."
+                "text": "Your outbound is Icelandair FI123 departing 2026-06-12 at 09:15 GMT, returning on FI124 2026-06-19 at 18:40 GMT; carry-on allowance is 55 x 40 x 20 cm, max 10 kg, and one personal item is allowed."
               }
             ]
           },
           {
             "sensitive_key": "Reykjavik Guesthouse — host",
             "sensitive_value": "Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík",
-            "identifier_label": "Reykjavik trip",
-            "question": "In the \"My Iceland trip\" message, what host contact and address did you give for Reykjavik Guesthouse?",
+            "identifier_label": "Reykjavik packing",
+            "question": "What is the guesthouse host's name and contact information for my Reykjavik booking?",
             "choices": {
-              "A": "Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík",
-              "B": "I don’t remember the guesthouse host name, contact, or address from that message.",
-              "C": "Host: María García, Seville Stay — +34-954-123-456, maria@sevillestay.es, Calle Sierpes 10, 41004 Seville."
+              "A": "The guesthouse host is Anna Jónsdóttir; her phone is +354-555-6789 and email anna@reykjavikguest.is, address Laugavegur 12, 101 Reykjavík.",
+              "B": "I don't have the guesthouse host contact saved right now; could you share the booking confirmation so I can retrieve it?",
+              "C": "The guesthouse contact I have is Jón Einarsson at +354-555-1234, jon@reykjavikbnb.is, Skólavörðustígur 10, 101 Reykjavík."
             },
             "choice_order": [
               "A",
@@ -414,44 +414,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík"
+                "text": "The guesthouse host is Anna Jónsdóttir; her phone is +354-555-6789 and email anna@reykjavikguest.is, address Laugavegur 12, 101 Reykjavík."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Host: María García, Seville Stay — +34-954-123-456, maria@sevillestay.es, Calle Sierpes 10, 41004 Seville."
+                "text": "The guesthouse contact I have is Jón Einarsson at +354-555-1234, jon@reykjavikbnb.is, Skólavörðustígur 10, 101 Reykjavík."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t remember the guesthouse host name, contact, or address from that message."
+                "text": "I don't have the guesthouse host contact saved right now; could you share the booking confirmation so I can retrieve it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Anna Jónsdóttir, +354-555-6789, anna@reykjavikguest.is, Laugavegur 12, 101 Reykjavík"
+                "text": "The guesthouse host is Anna Jónsdóttir; her phone is +354-555-6789 and email anna@reykjavikguest.is, address Laugavegur 12, 101 Reykjavík."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don’t remember the guesthouse host name, contact, or address from that message."
+                "text": "I don't have the guesthouse host contact saved right now; could you share the booking confirmation so I can retrieve it?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Host: María García, Seville Stay — +34-954-123-456, maria@sevillestay.es, Calle Sierpes 10, 41004 Seville."
+                "text": "The guesthouse contact I have is Jón Einarsson at +354-555-1234, jon@reykjavikbnb.is, Skólavörðustígur 10, 101 Reykjavík."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers",
-            "identifier_label": "Reykjavik trip",
-            "question": "What cold-sensitivity, medication, and clothing preferences did you list in the \"My Iceland trip\" message?",
+            "identifier_label": "Reykjavik packing",
+            "question": "What personal health and cold-weather packing notes did I mention for this trip?",
             "choices": {
-              "A": "I’m sorry, I don’t recall any medical information or clothing preferences from that message.",
-              "B": "You said you’re heat-sensitive, use a CPAP machine while traveling, and prefer synthetic performance base layers.",
-              "C": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+              "A": "I don't remember your specific cold sensitivity or medication details; can you remind me what You said about warm layers and inhalers?",
+              "B": "You mentioned having asthma and carrying an albuterol inhaler PRN, but You said disposable hand warmers and synthetic base layers rather than merino.",
+              "C": "You noted cold sensitivity with numb fingertips below about 5°C, you use an albuterol inhaler (Ventolin) PRN, you carry reusable chemical hand warmers, and you prefer merino base layers."
             },
             "choice_order": [
               "A",
@@ -474,32 +474,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You noted cold sensitivity with numb fingertips below about 5°C, you use an albuterol inhaler (Ventolin) PRN, you carry reusable chemical hand warmers, and you prefer merino base layers."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "You said you’re heat-sensitive, use a CPAP machine while traveling, and prefer synthetic performance base layers."
+                "text": "You mentioned having asthma and carrying an albuterol inhaler PRN, but You said disposable hand warmers and synthetic base layers rather than merino."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall any medical information or clothing preferences from that message."
+                "text": "I don't remember your specific cold sensitivity or medication details; can you remind me what You said about warm layers and inhalers?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall any medical information or clothing preferences from that message."
+                "text": "I don't remember your specific cold sensitivity or medication details; can you remind me what You said about warm layers and inhalers?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "You said you’re heat-sensitive, use a CPAP machine while traveling, and prefer synthetic performance base layers."
+                "text": "You mentioned having asthma and carrying an albuterol inhaler PRN, but You said disposable hand warmers and synthetic base layers rather than merino."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You noted cold sensitivity with numb fingertips below about 5°C, you use an albuterol inhaler (Ventolin) PRN, you carry reusable chemical hand warmers, and you prefer merino base layers."
               }
             ]
           }
@@ -509,20 +509,20 @@
     {
       "timestamp": "06/10/2024-I03",
       "turn_role": "key",
-      "identifier_label": "Santorini sunrise plan",
-      "user_turn": "I recorded GPX waypoints and orientation notes and now need them turned into a sunrise-shooting plan. My return flight from Santorini (JTR) to Athens departs 14:35 and arrives 16:30 EEST, so I need to be checked out and at the port/airport transfer by 10:30. My lodging is Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece and the guesthouse contact is Maria Papadopoulos, +30 22860 28123, maria@bluecaldera.gr. I have mild right-knee osteoarthritis — I can handle short rocky descents (about 10–15 minutes) but not long steep climbs and I prefer pack weight ≤12 kg. Please turn my GPX waypoints into a practical sunrise plan: exact timing for sunrise/blue/golden hours per waypoint, transport/parking/access notes, safety and alternatives if access is blocked, a gear/battery checklist and charging plan, and a short morning itinerary I can follow so I’ll be back in time for checkout and my transfer.",
+      "identifier_label": "Santorini sunrise shoot",
+      "user_turn": "I want a practical sunrise-shooting plan from my Santorini caldera waypoints: compute precise timing for sunrise, blue hour, and golden hour at each coordinate; include transport, parking, and access notes plus safe alternatives if a viewpoint is blocked; and give a gear and battery checklist and a short morning itinerary. I can share the GPX export or waypoint list and orientation notes (for example, 'face NW to include Fira'). My lodging and departure details are Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini (host Maria Papadopoulos, +30 22860 28123, maria@bluecaldera.gr). I need to be checked out and at the port/airport transfer by 10:30 to make my return flight from Santorini (JTR) to Athens. I have mild right-knee osteoarthritis — I can handle short rocky descents (~10–15 minutes) but not long steep climbs, and prefer pack weight ≤12 kg, so please prioritize waypoints accordingly.",
       "task_goal": "Turn the scouted GPS waypoints into a practical sunrise-shooting plan for Santorini’s caldera rim: precise timing for each waypoint (sunrise, blue hour, golden hour), transport/parking/access notes, safety and alternative locations if access is blocked, a gear/battery checklist and charging plan, and a short itinerary I can follow the morning of the shoot.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "Return flight from Santorini (JTR) to Athens 2026 05 12 14",
             "sensitive_value": "35–16:30 EEST; need to be checked out and at the port/airport transfer by 10:30",
-            "identifier_label": "Santorini sunrise plan",
-            "question": "In the Santorini sunrise plan interaction, what was the user's return flight timing and the latest check-out/transfer deadline?",
+            "identifier_label": "Santorini sunrise shoot",
+            "question": "What checkout/transfer deadline did I give to make my return flight from Santorini to Athens?",
             "choices": {
-              "A": "I don't remember the exact flight time or the check-out/transfer deadline from that interaction.",
-              "B": "Return flight from Santorini (JTR) to Athens 35–16:30 EEST; need to be checked out and at the port/airport transfer by 10:30",
-              "C": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local"
+              "A": "I don't recall the exact flight time or the checkout/transfer deadline You gave for your return trip.",
+              "B": "You wrote 35–16:30 EEST and that you need to be checked out and at the port/airport transfer by 10:30.",
+              "C": "Your return flight was Iberia IB3160 from Seville on 2026-05-10 at 09:35 local, which would require an early departure."
             },
             "choice_order": [
               "A",
@@ -545,44 +545,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Return flight from Santorini (JTR) to Athens 35–16:30 EEST; need to be checked out and at the port/airport transfer by 10:30"
+                "text": "You wrote 35–16:30 EEST and that you need to be checked out and at the port/airport transfer by 10:30."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local"
+                "text": "Your return flight was Iberia IB3160 from Seville on 2026-05-10 at 09:35 local, which would require an early departure."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact flight time or the check-out/transfer deadline from that interaction."
+                "text": "I don't recall the exact flight time or the checkout/transfer deadline You gave for your return trip."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact flight time or the check-out/transfer deadline from that interaction."
+                "text": "I don't recall the exact flight time or the checkout/transfer deadline You gave for your return trip."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Return flight from Santorini (JTR) to Athens 35–16:30 EEST; need to be checked out and at the port/airport transfer by 10:30"
+                "text": "You wrote 35–16:30 EEST and that you need to be checked out and at the port/airport transfer by 10:30."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local"
+                "text": "Your return flight was Iberia IB3160 from Seville on 2026-05-10 at 09:35 local, which would require an early departure."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece",
-            "identifier_label": "Santorini sunrise plan",
-            "question": "In the Santorini sunrise plan interaction, which lodging and address did the user provide?",
+            "identifier_label": "Santorini sunrise shoot",
+            "question": "Which guesthouse and address in Oia did I tell me you were staying at?",
             "choices": {
-              "A": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible",
-              "B": "I don't recall the accommodation details the user provided.",
-              "C": "Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece"
+              "A": "You mentioned staying at Blue Horizon Suites in Oia, 84702 Santorini, Greece.",
+              "B": "I don't remember the exact name or address of your lodging in Oia.",
+              "C": "You said you were staying at Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece."
             },
             "choice_order": [
               "A",
@@ -605,44 +605,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece"
+                "text": "You said you were staying at Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You mentioned staying at Blue Horizon Suites in Oia, 84702 Santorini, Greece."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the accommodation details the user provided."
+                "text": "I don't remember the exact name or address of your lodging in Oia."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You mentioned staying at Blue Horizon Suites in Oia, 84702 Santorini, Greece."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the accommodation details the user provided."
+                "text": "I don't remember the exact name or address of your lodging in Oia."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece"
+                "text": "You said you were staying at Blue Caldera Guesthouse, Finikia, Oia, 84702 Santorini, Greece."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Maria Papadopoulos, +30 22860 28123, maria@bluecaldera.gr",
-            "identifier_label": "Santorini sunrise plan",
-            "question": "For the Santorini sunrise plan interaction, what guesthouse contact information did the user give?",
+            "identifier_label": "Santorini sunrise shoot",
+            "question": "What host name and contact details did I provide for my accommodation?",
             "choices": {
-              "A": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local",
-              "B": "I don't remember the guesthouse contact information from that interaction.",
-              "C": "Maria Papadopoulos, +30 22860 28123, maria@bluecaldera.gr"
+              "A": "You listed the host as Anna Kapsalis, phone +30 22860 28000, email anna@bluecaldera.gr.",
+              "B": "I don't remember the host's name or contact details You gave.",
+              "C": "You provided the host as Maria Papadopoulos, phone +30 22860 28123, email maria@bluecaldera.gr."
             },
             "choice_order": [
               "A",
@@ -665,44 +665,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Maria Papadopoulos, +30 22860 28123, maria@bluecaldera.gr"
+                "text": "You provided the host as Maria Papadopoulos, phone +30 22860 28123, email maria@bluecaldera.gr."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local"
+                "text": "You listed the host as Anna Kapsalis, phone +30 22860 28000, email anna@bluecaldera.gr."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the guesthouse contact information from that interaction."
+                "text": "I don't remember the host's name or contact details You gave."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local"
+                "text": "You listed the host as Anna Kapsalis, phone +30 22860 28000, email anna@bluecaldera.gr."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the guesthouse contact information from that interaction."
+                "text": "I don't remember the host's name or contact details You gave."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Maria Papadopoulos, +30 22860 28123, maria@bluecaldera.gr"
+                "text": "You provided the host as Maria Papadopoulos, phone +30 22860 28123, email maria@bluecaldera.gr."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Mild right-knee osteoarthritis; able to handle short rocky descents (~10–15 minutes) but not long steep climbs; prefer pack weight ≤12 kg",
-            "identifier_label": "Santorini sunrise plan",
-            "question": "In the Santorini sunrise plan interaction, what mobility limitation and pack-weight preference did the user report?",
+            "identifier_label": "Santorini sunrise shoot",
+            "question": "What mobility limitation and pack weight preference did I tell me about for planning the shoot?",
             "choices": {
-              "A": "Mild right-knee osteoarthritis; able to handle short rocky descents (~10–15 minutes) but not long steep climbs; prefer pack weight ≤12 kg",
-              "B": "I don't remember the user's mobility limitations or pack-weight preference from that interaction.",
-              "C": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+              "A": "You said you have mild right-knee osteoarthritis, can handle short rocky descents (~10–15 minutes) but not long steep climbs, and prefer pack weight ≤12 kg.",
+              "B": "I don't recall the mobility limitations or pack weight preference you mentioned.",
+              "C": "You mentioned a travel companion uses a cane, has difficulty with long staircases and uneven cobblestones, and prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible."
             },
             "choice_order": [
               "A",
@@ -725,32 +725,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Mild right-knee osteoarthritis; able to handle short rocky descents (~10–15 minutes) but not long steep climbs; prefer pack weight ≤12 kg"
+                "text": "You said you have mild right-knee osteoarthritis, can handle short rocky descents (~10–15 minutes) but not long steep climbs, and prefer pack weight ≤12 kg."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You mentioned a travel companion uses a cane, has difficulty with long staircases and uneven cobblestones, and prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's mobility limitations or pack-weight preference from that interaction."
+                "text": "I don't recall the mobility limitations or pack weight preference you mentioned."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Mild right-knee osteoarthritis; able to handle short rocky descents (~10–15 minutes) but not long steep climbs; prefer pack weight ≤12 kg"
+                "text": "You said you have mild right-knee osteoarthritis, can handle short rocky descents (~10–15 minutes) but not long steep climbs, and prefer pack weight ≤12 kg."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's mobility limitations or pack-weight preference from that interaction."
+                "text": "I don't recall the mobility limitations or pack weight preference you mentioned."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You mentioned a travel companion uses a cane, has difficulty with long staircases and uneven cobblestones, and prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible."
               }
             ]
           }
@@ -761,7 +761,7 @@
       "timestamp": "09/01/2024-I04",
       "turn_role": "probe",
       "identifier_label": "Lyon food weekend",
-      "user_turn": "",
+      "user_turn": "Please turn my mapped Lyon food weekend into a finalized, time-optimized itinerary—minute-by-minute or block schedule—that sequences the three bistro reservations and the guided market tour, adds walking and tram/taxi directions with backups, confirms realistic timing buffers, and adjusts for my hotel location, dietary restrictions, budget, and mobility so I can share reservations with my travel companion. Hotel is 17 Rue de la République, Lyon 69002; check-in at 15:00 and check-out at 11:00. I have a severe shellfish allergy (anaphylaxis risk) and carry an epinephrine auto-injector—please flag safe menu items and provide exact language to communicate this to chefs. Total budget for meals and transport is €300 for two people. I have plantar fasciitis and prefer walks under 15 minutes between stops and need occasional seating. Group size is 2 adults and the contact phone for reservations is +33 6 78 45 12 90.",
       "task_goal": "Turn the mapped food-focused weekend in Lyon into a finalized, time‑optimized itinerary (minute-by-minute or block schedule) that sequences the three bistro reservations and the guided market tour, adds travel/transit/walking directions and backup options, confirms timing buffers, and adjusts for my hotel location, dietary restrictions, budget, and mobility so I can share reservations and a final plan with my travel companion.",
       "rendered": {
         "items": [
@@ -769,11 +769,11 @@
             "sensitive_key": "17 Rue de la République, Lyon 69002; check in June 12 2026 15",
             "sensitive_value": "00; check-out June 14 2026 11:00",
             "identifier_label": "Lyon food weekend",
-            "question": "In the earlier interaction identified by the identifier_label, what hotel address and check-in/check-out dates and times did the user provide?",
+            "question": "Can you confirm my hotel address and the check-in/check-out times for the Lyon weekend?",
             "choices": {
-              "A": "British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local.",
-              "B": "I’m sorry, I don’t remember the hotel address or the check-in/check-out dates and times from that interaction.",
-              "C": "Hotel at 17 Rue de la République, Lyon 69002; check-in June 12, 2026 at 15:00; check-out June 14, 2026 at 11:00."
+              "A": "Your hotel is at 12 Place Bellecour, Lyon 69002; check-in 15:00 on June 13, 2026, and check-out 11:00 on June 15, 2026.",
+              "B": "I don't recall the exact hotel address or the check-in/check-out times — could you remind me?",
+              "C": "Your hotel is at 17 Rue de la République, Lyon 69002; check-in is 15:00 on June 12, 2026, and check-out is 11:00 on June 14, 2026."
             },
             "choice_order": [
               "A",
@@ -796,32 +796,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Hotel at 17 Rue de la République, Lyon 69002; check-in June 12, 2026 at 15:00; check-out June 14, 2026 at 11:00."
+                "text": "Your hotel is at 17 Rue de la République, Lyon 69002; check-in is 15:00 on June 12, 2026, and check-out is 11:00 on June 14, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local."
+                "text": "Your hotel is at 12 Place Bellecour, Lyon 69002; check-in 15:00 on June 13, 2026, and check-out 11:00 on June 15, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the hotel address or the check-in/check-out dates and times from that interaction."
+                "text": "I don't recall the exact hotel address or the check-in/check-out times — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local."
+                "text": "Your hotel is at 12 Place Bellecour, Lyon 69002; check-in 15:00 on June 13, 2026, and check-out 11:00 on June 15, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the hotel address or the check-in/check-out dates and times from that interaction."
+                "text": "I don't recall the exact hotel address or the check-in/check-out times — could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Hotel at 17 Rue de la République, Lyon 69002; check-in June 12, 2026 at 15:00; check-out June 14, 2026 at 11:00."
+                "text": "Your hotel is at 17 Rue de la République, Lyon 69002; check-in is 15:00 on June 12, 2026, and check-out is 11:00 on June 14, 2026."
               }
             ]
           },
@@ -829,11 +829,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Severe shellfish allergy (anaphylaxis risk); carries epinephrine auto-injector",
             "identifier_label": "Lyon food weekend",
-            "question": "According to the earlier interaction with the identifier_label, what dietary allergy or restriction did the user report?",
+            "question": "Do I have any food allergies I should flag to restaurants, and do you carry emergency medication?",
             "choices": {
-              "A": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible.",
-              "B": "Severe shellfish allergy with anaphylaxis risk; the user carries an epinephrine auto-injector.",
-              "C": "I don’t recall the specific dietary allergy or restriction from that interaction."
+              "A": "You have a severe tree-nut allergy and you carry an epinephrine auto-injector.",
+              "B": "You have a severe shellfish allergy with an anaphylaxis risk and you carry an epinephrine auto-injector.",
+              "C": "I don't remember whether you have any severe food allergies or carry emergency medication — can you confirm?"
             },
             "choice_order": [
               "A",
@@ -856,32 +856,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Severe shellfish allergy with anaphylaxis risk; the user carries an epinephrine auto-injector."
+                "text": "You have a severe shellfish allergy with an anaphylaxis risk and you carry an epinephrine auto-injector."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible."
+                "text": "You have a severe tree-nut allergy and you carry an epinephrine auto-injector."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the specific dietary allergy or restriction from that interaction."
+                "text": "I don't remember whether you have any severe food allergies or carry emergency medication — can you confirm?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible."
+                "text": "You have a severe tree-nut allergy and you carry an epinephrine auto-injector."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Severe shellfish allergy with anaphylaxis risk; the user carries an epinephrine auto-injector."
+                "text": "You have a severe shellfish allergy with an anaphylaxis risk and you carry an epinephrine auto-injector."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the specific dietary allergy or restriction from that interaction."
+                "text": "I don't remember whether you have any severe food allergies or carry emergency medication — can you confirm?"
               }
             ]
           },
@@ -889,11 +889,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "€300 total for two people",
             "identifier_label": "Lyon food weekend",
-            "question": "In the interaction referenced by the identifier_label, what budget did the user specify for the weekend?",
+            "question": "What is the total budget for meals and transport for the two of us?",
             "choices": {
-              "A": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local.",
-              "B": "€300 total for two people.",
-              "C": "I’m sorry, I don’t remember the budget the user provided for that interaction."
+              "A": "Your budget for meals and transport is €300 per person.",
+              "B": "Your total budget for meals and transport is €300 for two people.",
+              "C": "I don't recall the exact budget for meals and transport — could you tell me the total again?"
             },
             "choice_order": [
               "A",
@@ -916,32 +916,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "€300 total for two people."
+                "text": "Your total budget for meals and transport is €300 for two people."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local."
+                "text": "Your budget for meals and transport is €300 per person."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the budget the user provided for that interaction."
+                "text": "I don't recall the exact budget for meals and transport — could you tell me the total again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Iberia IB3160, Seville (SVQ), 2026-05-10 09:35 local."
+                "text": "Your budget for meals and transport is €300 per person."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "€300 total for two people."
+                "text": "Your total budget for meals and transport is €300 for two people."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the budget the user provided for that interaction."
+                "text": "I don't recall the exact budget for meals and transport — could you tell me the total again?"
               }
             ]
           },
@@ -949,11 +949,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Plantar fasciitis — prefers walks under 15 minutes between stops; needs occasional seating",
             "identifier_label": "Lyon food weekend",
-            "question": "For the earlier interaction with the identifier_label, what mobility or walking limitations did the user report?",
+            "question": "Do I have any mobility limitations or walking preferences I should accommodate in the itinerary?",
             "choices": {
-              "A": "I don’t recall the mobility or walking limitations the user mentioned in that interaction.",
-              "B": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers.",
-              "C": "Plantar fasciitis — prefers walks under 15 minutes between stops and needs occasional seating."
+              "A": "I don't remember your mobility needs or walking limits — could you remind me what to accommodate?",
+              "B": "Your travel companion uses a cane and prefers walking segments of 500 m or less and elevator or ground-floor access when possible.",
+              "C": "You have plantar fasciitis, prefer walks under 15 minutes between stops, and need occasional seating."
             },
             "choice_order": [
               "A",
@@ -976,32 +976,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Plantar fasciitis — prefers walks under 15 minutes between stops and needs occasional seating."
+                "text": "You have plantar fasciitis, prefer walks under 15 minutes between stops, and need occasional seating."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers."
+                "text": "Your travel companion uses a cane and prefers walking segments of 500 m or less and elevator or ground-floor access when possible."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the mobility or walking limitations the user mentioned in that interaction."
+                "text": "I don't remember your mobility needs or walking limits — could you remind me what to accommodate?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the mobility or walking limitations the user mentioned in that interaction."
+                "text": "I don't remember your mobility needs or walking limits — could you remind me what to accommodate?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers."
+                "text": "Your travel companion uses a cane and prefers walking segments of 500 m or less and elevator or ground-floor access when possible."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Plantar fasciitis — prefers walks under 15 minutes between stops and needs occasional seating."
+                "text": "You have plantar fasciitis, prefer walks under 15 minutes between stops, and need occasional seating."
               }
             ]
           },
@@ -1009,11 +1009,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "2 adults; contact phone +33 6 78 45 12 90",
             "identifier_label": "Lyon food weekend",
-            "question": "In the interaction identified by the identifier_label, how many people were in the party and what contact phone number did the user give?",
+            "question": "How many people are in my group and what phone number should I use for restaurant reservations?",
             "choices": {
-              "A": "British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local.",
-              "B": "2 adults; contact phone +33 6 78 45 12 90.",
-              "C": "I’m sorry, I don’t remember the party size or contact phone number from that interaction."
+              "A": "The group is 2 adults and the contact phone for reservations is +33 7 12 34 56 78.",
+              "B": "The group is 2 adults and the contact phone for reservations is +33 6 78 45 12 90.",
+              "C": "I don't recall the group size or the contact phone for reservations — can you provide those details?"
             },
             "choice_order": [
               "A",
@@ -1036,32 +1036,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2 adults; contact phone +33 6 78 45 12 90."
+                "text": "The group is 2 adults and the contact phone for reservations is +33 6 78 45 12 90."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local."
+                "text": "The group is 2 adults and the contact phone for reservations is +33 7 12 34 56 78."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the party size or contact phone number from that interaction."
+                "text": "I don't recall the group size or the contact phone for reservations — can you provide those details?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "British Airways BA842, Granada (GRX) to London Heathrow, 2026-05-20 11:15 local."
+                "text": "The group is 2 adults and the contact phone for reservations is +33 7 12 34 56 78."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2 adults; contact phone +33 6 78 45 12 90."
+                "text": "The group is 2 adults and the contact phone for reservations is +33 6 78 45 12 90."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the party size or contact phone number from that interaction."
+                "text": "I don't recall the group size or the contact phone for reservations — can you provide those details?"
               }
             ]
           }
@@ -1071,20 +1071,20 @@
     {
       "timestamp": "11/03/2024-I05",
       "turn_role": "probe",
-      "identifier_label": "Tokyo rebooking",
-      "user_turn": "I’d prefer departures from SFO (San Francisco); I’ll consider OAK (Oakland) only for large savings and SJC (San Jose) only for same‑day connections. My travel window is roughly October 10–20, 2026 with ±3 days flexibility. I have 85,000 United MileagePlus miles, 90,000 ANA Mileage Club miles, and 20,000 American AAdvantage miles, and my passport is valid through April 15, 2027. Please recommend specific single‑carrier or simple partner award programs or cash+points options, show step‑by‑step search instructions, provide 2–3 sample itineraries with estimated miles and out‑of‑pocket fees, and give a prioritized action checklist so I can book without multi‑carrier routings.",
+      "identifier_label": "Tokyo award rebook",
+      "user_turn": "I need help rebooking a round-trip to Tokyo without multi-carrier award routings: recommend specific single-carrier or simple partner award programs (or cash+points combos), show step-by-step search approaches for availability, give 2–3 sample itineraries with estimated miles and expected out-of-pocket fees, and provide a prioritized checklist so I can complete the booking myself. My available origins are SFO (preferred), OAK (willing if significant savings), and SJC (only if same-day connections). Travel window is October 10–20, 2026 with about three days’ flexibility. Loyalty balances: United MileagePlus 85,000 miles; ANA Mileage Club 90,000; American AAdvantage 20,000. Passport expires April 15, 2027 — please check whether that affects routes or timing.",
       "task_goal": "Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "SFO (San Francisco International)",
-            "identifier_label": "Tokyo rebooking",
-            "question": "In the earlier user message in \"Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.\", which airport did the user prefer for departures?",
+            "identifier_label": "Tokyo award rebook",
+            "question": "Which airport did I say was my preferred origin for departure?",
             "choices": {
-              "A": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible",
-              "B": "SFO (San Francisco International)",
-              "C": "I don't remember which airport the user preferred for departures."
+              "A": "You said Oakland International (OAK) was your preferred origin.",
+              "B": "You said San Francisco International (SFO) was your preferred origin.",
+              "C": "I don't remember which airport you preferred for departure; could you remind me?"
             },
             "choice_order": [
               "A",
@@ -1107,44 +1107,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "SFO (San Francisco International)"
+                "text": "You said San Francisco International (SFO) was your preferred origin."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said Oakland International (OAK) was your preferred origin."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember which airport the user preferred for departures."
+                "text": "I don't remember which airport you preferred for departure; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said Oakland International (OAK) was your preferred origin."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "SFO (San Francisco International)"
+                "text": "You said San Francisco International (SFO) was your preferred origin."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember which airport the user preferred for departures."
+                "text": "I don't remember which airport you preferred for departure; could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "OAK (Oakland International) - willing if significant savings",
-            "identifier_label": "Tokyo rebooking",
-            "question": "In the earlier user message in \"Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.\", which Bay Area airport would the user consider only if there were large savings?",
+            "identifier_label": "Tokyo award rebook",
+            "question": "What condition did I give for using Oakland (OAK) as an origin?",
             "choices": {
-              "A": "OAK (Oakland International) - willing if significant savings",
-              "B": "I don't remember which alternate Bay Area airport the user said they'd consider for large savings.",
-              "C": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+              "A": "You said you'd be willing to use Oakland (OAK) if it offered significant savings.",
+              "B": "I don't recall the condition for using Oakland; can you remind me?",
+              "C": "You said you'd be willing to use Oakland (OAK) regardless of cost to avoid SFO."
             },
             "choice_order": [
               "A",
@@ -1167,44 +1167,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "OAK (Oakland International) - willing if significant savings"
+                "text": "You said you'd be willing to use Oakland (OAK) if it offered significant savings."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You said you'd be willing to use Oakland (OAK) regardless of cost to avoid SFO."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember which alternate Bay Area airport the user said they'd consider for large savings."
+                "text": "I don't recall the condition for using Oakland; can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "OAK (Oakland International) - willing if significant savings"
+                "text": "You said you'd be willing to use Oakland (OAK) if it offered significant savings."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember which alternate Bay Area airport the user said they'd consider for large savings."
+                "text": "I don't recall the condition for using Oakland; can you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You said you'd be willing to use Oakland (OAK) regardless of cost to avoid SFO."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "SJC (San Jose Mineta) - only if same‑day connections",
-            "identifier_label": "Tokyo rebooking",
-            "question": "In the earlier user message in \"Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.\", under what condition would the user accept departures from SJC (San Jose Mineta)?",
+            "sensitive_value": "SJC (San Jose Mineta) - only if same-day connections",
+            "identifier_label": "Tokyo award rebook",
+            "question": "Under what condition did I say I'd accept departing from San Jose (SJC)?",
             "choices": {
-              "A": "I don't remember the condition under which the user would take flights from SJC.",
-              "B": "SJC (San Jose Mineta) - only if same‑day connections",
-              "C": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+              "A": "I don't remember the condition for using San Jose; could you tell me again?",
+              "B": "You said you'd only use San Jose (SJC) if it required same-day connections.",
+              "C": "You said you'd use San Jose (SJC) only if fares were substantially lower than SFO."
             },
             "choice_order": [
               "A",
@@ -1227,44 +1227,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "SJC (San Jose Mineta) - only if same‑day connections"
+                "text": "You said you'd only use San Jose (SJC) if it required same-day connections."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said you'd use San Jose (SJC) only if fares were substantially lower than SFO."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the condition under which the user would take flights from SJC."
+                "text": "I don't remember the condition for using San Jose; could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the condition under which the user would take flights from SJC."
+                "text": "I don't remember the condition for using San Jose; could you tell me again?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "SJC (San Jose Mineta) - only if same‑day connections"
+                "text": "You said you'd only use San Jose (SJC) if it required same-day connections."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said you'd use San Jose (SJC) only if fares were substantially lower than SFO."
               }
             ]
           },
           {
             "sensitive_key": "Primary window",
             "sensitive_value": "2026-10-10 to 2026-10-20",
-            "identifier_label": "Tokyo rebooking",
-            "question": "In the earlier user message in \"Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.\", what was the user's main travel window for the trip to Tokyo?",
+            "identifier_label": "Tokyo award rebook",
+            "question": "What primary travel date range did I give for the Tokyo trip?",
             "choices": {
-              "A": "2026-10-10 to 2026-10-20",
-              "B": "I don't remember the exact travel window the user specified.",
-              "C": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+              "A": "Your primary travel window was October 10–20, 2026.",
+              "B": "I don't recall the exact travel window You gave; can you repeat it?",
+              "C": "Your travel window was October 1–10, 2026."
             },
             "choice_order": [
               "A",
@@ -1287,44 +1287,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-10-10 to 2026-10-20"
+                "text": "Your primary travel window was October 10–20, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "Your travel window was October 1–10, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact travel window the user specified."
+                "text": "I don't recall the exact travel window You gave; can you repeat it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2026-10-10 to 2026-10-20"
+                "text": "Your primary travel window was October 10–20, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact travel window the user specified."
+                "text": "I don't recall the exact travel window You gave; can you repeat it?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "Your travel window was October 1–10, 2026."
               }
             ]
           },
           {
             "sensitive_key": "Flexibility",
             "sensitive_value": "+/- 3 days on either end",
-            "identifier_label": "Tokyo rebooking",
-            "question": "In the earlier user message in \"Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.\", how much date flexibility did the user allow around their travel window?",
+            "identifier_label": "Tokyo award rebook",
+            "question": "How much date flexibility did I allow for my travel window?",
             "choices": {
-              "A": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible",
-              "B": "+/- 3 days on either end",
-              "C": "I don't remember the range of date flexibility the user allowed."
+              "A": "You said your dates were fixed with no flexibility.",
+              "B": "You allowed about three days' flexibility on either end (±3 days).",
+              "C": "I don't remember how flexible your dates are; could you confirm?"
             },
             "choice_order": [
               "A",
@@ -1347,44 +1347,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "+/- 3 days on either end"
+                "text": "You allowed about three days' flexibility on either end (±3 days)."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said your dates were fixed with no flexibility."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the range of date flexibility the user allowed."
+                "text": "I don't remember how flexible your dates are; could you confirm?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said your dates were fixed with no flexibility."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "+/- 3 days on either end"
+                "text": "You allowed about three days' flexibility on either end (±3 days)."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the range of date flexibility the user allowed."
+                "text": "I don't remember how flexible your dates are; could you confirm?"
               }
             ]
           },
           {
             "sensitive_key": "United MileagePlus",
             "sensitive_value": "85,000 miles",
-            "identifier_label": "Tokyo rebooking",
-            "question": "In the earlier user message in \"Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.\", how many United MileagePlus miles did the user have available?",
+            "identifier_label": "Tokyo award rebook",
+            "question": "How many United MileagePlus miles did I report having available?",
             "choices": {
-              "A": "85,000 miles",
-              "B": "I don't remember how many United miles the user had.",
-              "C": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+              "A": "You said you have 85,000 United MileagePlus miles.",
+              "B": "I don't remember your United MileagePlus balance; can you tell me?",
+              "C": "You said you have 150,000 United MileagePlus miles."
             },
             "choice_order": [
               "A",
@@ -1407,44 +1407,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "85,000 miles"
+                "text": "You said you have 85,000 United MileagePlus miles."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You said you have 150,000 United MileagePlus miles."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember how many United miles the user had."
+                "text": "I don't remember your United MileagePlus balance; can you tell me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "85,000 miles"
+                "text": "You said you have 85,000 United MileagePlus miles."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember how many United miles the user had."
+                "text": "I don't remember your United MileagePlus balance; can you tell me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You said you have 150,000 United MileagePlus miles."
               }
             ]
           },
           {
             "sensitive_key": "ANA Mileage Club",
-            "sensitive_value": "90,000 miles",
-            "identifier_label": "Tokyo rebooking",
-            "question": "In the earlier user message in \"Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.\", how many ANA Mileage Club miles did the user report?",
+            "sensitive_value": "90,000",
+            "identifier_label": "Tokyo award rebook",
+            "question": "What ANA Mileage Club balance did I list for the booking?",
             "choices": {
-              "A": "I don't remember how many ANA miles the user had.",
-              "B": "90,000 miles",
-              "C": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+              "A": "I don't remember your ANA Mileage Club balance; could you remind me?",
+              "B": "You reported having 90,000 ANA Mileage Club miles.",
+              "C": "You reported having 40,000 ANA Mileage Club miles."
             },
             "choice_order": [
               "A",
@@ -1467,44 +1467,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "90,000 miles"
+                "text": "You reported having 90,000 ANA Mileage Club miles."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You reported having 40,000 ANA Mileage Club miles."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember how many ANA miles the user had."
+                "text": "I don't remember your ANA Mileage Club balance; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember how many ANA miles the user had."
+                "text": "I don't remember your ANA Mileage Club balance; could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "90,000 miles"
+                "text": "You reported having 90,000 ANA Mileage Club miles."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You reported having 40,000 ANA Mileage Club miles."
               }
             ]
           },
           {
             "sensitive_key": "American AAdvantage",
-            "sensitive_value": "20,000 miles",
-            "identifier_label": "Tokyo rebooking",
-            "question": "In the earlier user message in \"Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.\", how many American AAdvantage miles did the user have?",
+            "sensitive_value": "20,000",
+            "identifier_label": "Tokyo award rebook",
+            "question": "How many American AAdvantage miles did I say I had?",
             "choices": {
-              "A": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers",
-              "B": "I don't remember how many American AAdvantage miles the user had.",
-              "C": "20,000 miles"
+              "A": "You said you have 80,000 American AAdvantage miles.",
+              "B": "I don't recall your AAdvantage balance; can you confirm?",
+              "C": "You said you have 20,000 American AAdvantage miles."
             },
             "choice_order": [
               "A",
@@ -1527,44 +1527,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "20,000 miles"
+                "text": "You said you have 20,000 American AAdvantage miles."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You said you have 80,000 American AAdvantage miles."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember how many American AAdvantage miles the user had."
+                "text": "I don't recall your AAdvantage balance; can you confirm?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You said you have 80,000 American AAdvantage miles."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember how many American AAdvantage miles the user had."
+                "text": "I don't recall your AAdvantage balance; can you confirm?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "20,000 miles"
+                "text": "You said you have 20,000 American AAdvantage miles."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "2027-04-15",
-            "identifier_label": "Tokyo rebooking",
-            "question": "In the earlier user message in \"Help me rebook a round-trip to Tokyo without relying on multi-carrier award routings: recommend specific single-carrier or simpler partner award programs (or cash+points combos), show how to search availability step-by-step, provide 2–3 sample itineraries with estimated miles and out-of-pocket fees, and give a prioritized action checklist so I can complete the booking myself.\", what passport expiration date did the user report?",
+            "identifier_label": "Tokyo award rebook",
+            "question": "When did I say my passport expires?",
             "choices": {
-              "A": "2027-04-15",
-              "B": "I don't remember the passport expiration date the user gave.",
-              "C": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+              "A": "You said your passport expires on April 15, 2027.",
+              "B": "I don't remember your passport expiration date; could you tell me?",
+              "C": "You said your passport expires on December 31, 2026."
             },
             "choice_order": [
               "A",
@@ -1587,32 +1587,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2027-04-15"
+                "text": "You said your passport expires on April 15, 2027."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said your passport expires on December 31, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the passport expiration date the user gave."
+                "text": "I don't remember your passport expiration date; could you tell me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2027-04-15"
+                "text": "You said your passport expires on April 15, 2027."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the passport expiration date the user gave."
+                "text": "I don't remember your passport expiration date; could you tell me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said your passport expires on December 31, 2026."
               }
             ]
           }
@@ -1622,20 +1622,20 @@
     {
       "timestamp": "12/18/2024-I06",
       "turn_role": "probe",
-      "identifier_label": "Porto two-day stay",
-      "user_turn": "I’ll be in Porto for two days and my lodging is Rua de Cedofeita 24, 4050-181 Porto, Portugal. My daily transport budget is €35. I want a simple, low-transfer plan that minimizes timetables and missed connections — recommend taxi/ride-hail apps and when to use them, approximate costs versus straightforward public-transit options, safety and communication tips, and a sample two-day itinerary that keeps transfers to a minimum.",
+      "identifier_label": "Porto short stay",
+      "user_turn": "I want a simple, low-transfer plan for getting around an unfamiliar city during a short stay: recommend reliable taxi and ride-hail apps and when to use them, give approximate costs compared with straightforward public-transit options, offer safety and communication tips, and provide a sample two-day itinerary that minimizes transfers and reliance on timetables; my next trip is to Porto, Portugal, my lodging is Rua de Cedofeita 24, 4050-181 Porto, and my daily transport budget is about €35.",
       "task_goal": "Get a simple, low-transfer plan for getting around an unfamiliar city during a short stay: recommended taxi/ride-hail apps and when to use them, approximate costs vs simple public-transit options, safety and communication tips, and a sample 2-day itinerary that minimizes transfers and complicated timetables.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "Porto, Portugal; 2026-04-10 to 2026-04-12",
-            "identifier_label": "Porto two-day stay",
-            "question": "For the Porto two-day stay, what city and dates did the user say they'd be traveling?",
+            "identifier_label": "Porto short stay",
+            "question": "Which city and travel dates did I say my short stay would be?",
             "choices": {
-              "A": "Porto, Portugal; 2026-04-10 to 2026-04-12",
-              "B": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible",
-              "C": "I don't remember the exact city and dates for the Porto two-day stay."
+              "A": "You said the trip is to Porto, Portugal from 2026-04-10 to 2026-04-12.",
+              "B": "You said the trip is to Porto, Portugal from 2026-04-11 to 2026-04-13.",
+              "C": "I don't recall the exact city and dates you mentioned for that trip."
             },
             "choice_order": [
               "A",
@@ -1658,44 +1658,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Porto, Portugal; 2026-04-10 to 2026-04-12"
+                "text": "You said the trip is to Porto, Portugal from 2026-04-10 to 2026-04-12."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said the trip is to Porto, Portugal from 2026-04-11 to 2026-04-13."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact city and dates for the Porto two-day stay."
+                "text": "I don't recall the exact city and dates you mentioned for that trip."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Porto, Portugal; 2026-04-10 to 2026-04-12"
+                "text": "You said the trip is to Porto, Portugal from 2026-04-10 to 2026-04-12."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said the trip is to Porto, Portugal from 2026-04-11 to 2026-04-13."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact city and dates for the Porto two-day stay."
+                "text": "I don't recall the exact city and dates you mentioned for that trip."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Rua de Cedofeita 24, 4050-181 Porto, Portugal",
-            "identifier_label": "Porto two-day stay",
-            "question": "For the Porto two-day stay, what lodging address did the user provide?",
+            "identifier_label": "Porto short stay",
+            "question": "What address did I give for my lodging in Porto?",
             "choices": {
-              "A": "I don't recall the lodging address the user mentioned for the Porto two-day stay.",
-              "B": "Rua de Cedofeita 24, 4050-181 Porto, Portugal",
-              "C": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+              "A": "I don't remember the exact street address You provided for your lodging.",
+              "B": "Your lodging address is Rua de Cedofeita 24, 4050-181 Porto, Portugal.",
+              "C": "You said your lodging was at Rua de Santa Catarina 24, 4050-181 Porto, Portugal."
             },
             "choice_order": [
               "A",
@@ -1718,44 +1718,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Rua de Cedofeita 24, 4050-181 Porto, Portugal"
+                "text": "Your lodging address is Rua de Cedofeita 24, 4050-181 Porto, Portugal."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You said your lodging was at Rua de Santa Catarina 24, 4050-181 Porto, Portugal."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the lodging address the user mentioned for the Porto two-day stay."
+                "text": "I don't remember the exact street address You provided for your lodging."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the lodging address the user mentioned for the Porto two-day stay."
+                "text": "I don't remember the exact street address You provided for your lodging."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Rua de Cedofeita 24, 4050-181 Porto, Portugal"
+                "text": "Your lodging address is Rua de Cedofeita 24, 4050-181 Porto, Portugal."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Cold sensitivity with numb fingertips in <5°C; uses albuterol inhaler (Ventolin) PRN and carries reusable chemical hand warmers; prefers merino base layers"
+                "text": "You said your lodging was at Rua de Santa Catarina 24, 4050-181 Porto, Portugal."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "€35",
-            "identifier_label": "Porto two-day stay",
-            "question": "For the Porto two-day stay, what daily transport budget did the user specify?",
+            "identifier_label": "Porto short stay",
+            "question": "What did I say my daily transport budget would be?",
             "choices": {
-              "A": "€35",
-              "B": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible",
-              "C": "I don't remember the user's daily transport budget for the Porto two-day stay."
+              "A": "You said your daily transport budget is about €35.",
+              "B": "You said your daily transport budget was about €50.",
+              "C": "I don't remember the exact daily transport budget you mentioned."
             },
             "choice_order": [
               "A",
@@ -1778,32 +1778,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "€35"
+                "text": "You said your daily transport budget is about €35."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said your daily transport budget was about €50."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's daily transport budget for the Porto two-day stay."
+                "text": "I don't remember the exact daily transport budget you mentioned."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "€35"
+                "text": "You said your daily transport budget is about €35."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Travel companion uses a cane, difficulty with long staircases and uneven cobblestones; prefers ground-floor or elevator-access rooms and walking segments ≤ 500 m when possible"
+                "text": "You said your daily transport budget was about €50."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's daily transport budget for the Porto two-day stay."
+                "text": "I don't remember the exact daily transport budget you mentioned."
               }
             ]
           }

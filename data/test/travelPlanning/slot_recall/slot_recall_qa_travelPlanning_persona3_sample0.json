@@ -1,6 +1,6 @@
 {
-  "source_rendered": "data/baseline/travelPlanning/conversation_travelPlanning_persona3_sample0.recall_rendered.json",
-  "source_sidecar": "data/baseline/travelPlanning/conversation_travelPlanning_persona3_sample0.memory_control.json",
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona3_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona3_sample0.memory_control.json",
   "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona3_sample0.json",
   "model": "gpt-5-mini",
   "items": [
@@ -8,7 +8,7 @@
       "timestamp": "02/14/2025-I01",
       "turn_role": "key",
       "identifier_label": "Porto weekend itinerary",
-      "user_turn": "I want to turn that Porto restaurant-first day plan into a confirmed, time-optimized weekend itinerary: arrive June 11 at 14:30 (OPO) and depart June 13 at 18:00 (OPO); we're a party of three and Maria Silva is the primary contact (Maria Silva, +351-912-345-678, maria.silva@example.pt). Dietary constraints: I have a severe peanut allergy, Companion A is lactose intolerant, and Companion B is vegetarian. Budget is about €60 per person. Please book or pre-fill reservations (include preferred times and alternates), sequence walking/driving directions with exact travel times between venues, and produce a printable schedule that accounts for arrival/departure times, group size, and the dietary needs.",
+      "user_turn": "",
       "task_goal": "Turn the curated restaurant-first day plan into a confirmed, time‑optimized weekend itinerary for Porto: book or pre-fill reservations (with preferred times and alternates), sequence walking/driving directions and exact travel times between venues, and produce a printable schedule for my party that accounts for arrival/departure times, group size, and dietary needs.",
       "rendered": {
         "items": [
@@ -16,11 +16,11 @@
             "sensitive_key": "Arrive",
             "sensitive_value": "2026-06-11T14:30 (OPO)",
             "identifier_label": "Porto weekend itinerary",
-            "question": "In the user's earlier message for Turn the curated restaurant-first day plan into a confirmed, time‑optimized weekend itinerary for Porto..., what arrival time and airport did they specify?",
+            "question": "What time does my flight arrive at Porto Airport (OPO) for that weekend?",
             "choices": {
-              "A": "Arrive no later than 22:00 local",
-              "B": "2026-06-11T14:30 (OPO)",
-              "C": "I don't remember the arrival time — could you remind me?"
+              "A": "Your flight arrives at Porto Airport (OPO) on 2026-06-11 at 16:00 local time.",
+              "B": "Your flight arrives at Porto Airport (OPO) on 2026-06-11 at 14:30 local time.",
+              "C": "I don't recall the exact arrival time at OPO; could you remind me?"
             },
             "choice_order": [
               "A",
@@ -43,32 +43,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "Your flight arrives at Porto Airport (OPO) on 2026-06-11 at 14:30 local time."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive no later than 22:00 local"
+                "text": "Your flight arrives at Porto Airport (OPO) on 2026-06-11 at 16:00 local time."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival time — could you remind me?"
+                "text": "I don't recall the exact arrival time at OPO; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive no later than 22:00 local"
+                "text": "Your flight arrives at Porto Airport (OPO) on 2026-06-11 at 16:00 local time."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "Your flight arrives at Porto Airport (OPO) on 2026-06-11 at 14:30 local time."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival time — could you remind me?"
+                "text": "I don't recall the exact arrival time at OPO; could you remind me?"
               }
             ]
           },
@@ -76,11 +76,11 @@
             "sensitive_key": "Depart",
             "sensitive_value": "2026-06-13T18:00 (OPO)",
             "identifier_label": "Porto weekend itinerary",
-            "question": "In the user's earlier message for Turn the curated restaurant-first day plan into a confirmed, time‑optimized weekend itinerary for Porto..., what departure time and airport did they give?",
+            "question": "When is my return departure from Porto Airport (OPO)?",
             "choices": {
-              "A": "2026-06-13T18:00 (OPO)",
-              "B": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees",
-              "C": "I don't remember the departure time — could you remind me?"
+              "A": "Your departure from Porto Airport (OPO) is scheduled for 2026-06-13 at 18:00 local time.",
+              "B": "Your return departure is scheduled for 2026-06-13 at 20:30 local time.",
+              "C": "I don't remember the exact departure time from OPO; can you tell me the flight time?"
             },
             "choice_order": [
               "A",
@@ -103,32 +103,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "Your departure from Porto Airport (OPO) is scheduled for 2026-06-13 at 18:00 local time."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees"
+                "text": "Your return departure is scheduled for 2026-06-13 at 20:30 local time."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the departure time — could you remind me?"
+                "text": "I don't remember the exact departure time from OPO; can you tell me the flight time?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "Your departure from Porto Airport (OPO) is scheduled for 2026-06-13 at 18:00 local time."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees"
+                "text": "Your return departure is scheduled for 2026-06-13 at 20:30 local time."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the departure time — could you remind me?"
+                "text": "I don't remember the exact departure time from OPO; can you tell me the flight time?"
               }
             ]
           },
@@ -136,11 +136,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Maria Silva, +351-912-345-678, maria.silva@example.pt",
             "identifier_label": "Porto weekend itinerary",
-            "question": "In the user's earlier message for Turn the curated restaurant-first day plan into a confirmed, time‑optimized weekend itinerary for Porto..., who was listed as the primary contact and what contact details were provided?",
+            "question": "Which contact did I give for making reservations?",
             "choices": {
-              "A": "Arrive no later than 22:00 local",
-              "B": "Maria Silva, +351-912-345-678, maria.silva@example.pt",
-              "C": "I don't remember the primary contact details — could you provide them again?"
+              "A": "You gave the contact as João Pereira, phone +351-912-000-111, and email joao.pereira@example.pt.",
+              "B": "You gave the contact as Maria Silva, phone +351-912-345-678, and email maria.silva@example.pt.",
+              "C": "I don't recall the contact details You provided for reservations; could you share them again?"
             },
             "choice_order": [
               "A",
@@ -163,32 +163,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Maria Silva, +351-912-345-678, maria.silva@example.pt"
+                "text": "You gave the contact as Maria Silva, phone +351-912-345-678, and email maria.silva@example.pt."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive no later than 22:00 local"
+                "text": "You gave the contact as João Pereira, phone +351-912-000-111, and email joao.pereira@example.pt."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the primary contact details — could you provide them again?"
+                "text": "I don't recall the contact details You provided for reservations; could you share them again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive no later than 22:00 local"
+                "text": "You gave the contact as João Pereira, phone +351-912-000-111, and email joao.pereira@example.pt."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Maria Silva, +351-912-345-678, maria.silva@example.pt"
+                "text": "You gave the contact as Maria Silva, phone +351-912-345-678, and email maria.silva@example.pt."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the primary contact details — could you provide them again?"
+                "text": "I don't recall the contact details You provided for reservations; could you share them again?"
               }
             ]
           },
@@ -196,11 +196,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "3",
             "identifier_label": "Porto weekend itinerary",
-            "question": "In the user's earlier message for Turn the curated restaurant-first day plan into a confirmed, time‑optimized weekend itinerary for Porto..., how many people were in the party?",
+            "question": "How many people are in my party for the Porto weekend?",
             "choices": {
-              "A": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees",
-              "B": "I don't remember the group size — could you remind me?",
-              "C": "3"
+              "A": "Your party size is four people.",
+              "B": "I don't remember how many people are in your party; how many will be traveling?",
+              "C": "Your party size is three people."
             },
             "choice_order": [
               "A",
@@ -223,32 +223,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "3"
+                "text": "Your party size is three people."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees"
+                "text": "Your party size is four people."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the group size — could you remind me?"
+                "text": "I don't remember how many people are in your party; how many will be traveling?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees"
+                "text": "Your party size is four people."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the group size — could you remind me?"
+                "text": "I don't remember how many people are in your party; how many will be traveling?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "3"
+                "text": "Your party size is three people."
               }
             ]
           },
@@ -256,11 +256,11 @@
             "sensitive_key": "User",
             "sensitive_value": "severe peanut allergy",
             "identifier_label": "Porto weekend itinerary",
-            "question": "In the user's earlier message for Turn the curated restaurant-first day plan into a confirmed, time‑optimized weekend itinerary for Porto..., what dietary restriction did the user (primary traveler) report?",
+            "question": "Did I report any food allergies for myself?",
             "choices": {
-              "A": "I don't remember the user's dietary restriction — could you tell me again?",
-              "B": "severe peanut allergy",
-              "C": "Arrive no later than 22:00 local"
+              "A": "I don't remember your specific allergy; could you remind me what it was?",
+              "B": "Yes — you have a severe peanut allergy.",
+              "C": "You mentioned a mild tree-nut sensitivity."
             },
             "choice_order": [
               "A",
@@ -283,44 +283,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "severe peanut allergy"
+                "text": "Yes — you have a severe peanut allergy."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive no later than 22:00 local"
+                "text": "You mentioned a mild tree-nut sensitivity."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's dietary restriction — could you tell me again?"
+                "text": "I don't remember your specific allergy; could you remind me what it was?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's dietary restriction — could you tell me again?"
+                "text": "I don't remember your specific allergy; could you remind me what it was?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "severe peanut allergy"
+                "text": "Yes — you have a severe peanut allergy."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive no later than 22:00 local"
+                "text": "You mentioned a mild tree-nut sensitivity."
               }
             ]
           },
           {
             "sensitive_key": "Companion A",
-            "sensitive_value": "lactose intolerant",
+            "sensitive_value": "lactose intolerance",
             "identifier_label": "Porto weekend itinerary",
-            "question": "In the user's earlier message for Turn the curated restaurant-first day plan into a confirmed, time‑optimized weekend itinerary for Porto..., what dietary constraint did Companion A have?",
+            "question": "What dietary restriction did Companion A have?",
             "choices": {
-              "A": "lactose intolerant",
-              "B": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees",
-              "C": "I don't remember Companion A's dietary needs — could you remind me?"
+              "A": "Companion A is lactose intolerant.",
+              "B": "Companion A follows a gluten-free diet.",
+              "C": "I don't recall Companion A's dietary restriction; can you tell me?"
             },
             "choice_order": [
               "A",
@@ -343,32 +343,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "lactose intolerant"
+                "text": "Companion A is lactose intolerant."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees"
+                "text": "Companion A follows a gluten-free diet."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember Companion A's dietary needs — could you remind me?"
+                "text": "I don't recall Companion A's dietary restriction; can you tell me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "lactose intolerant"
+                "text": "Companion A is lactose intolerant."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees"
+                "text": "Companion A follows a gluten-free diet."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember Companion A's dietary needs — could you remind me?"
+                "text": "I don't recall Companion A's dietary restriction; can you tell me?"
               }
             ]
           },
@@ -376,11 +376,11 @@
             "sensitive_key": "Companion B",
             "sensitive_value": "vegetarian",
             "identifier_label": "Porto weekend itinerary",
-            "question": "In the user's earlier message for Turn the curated restaurant-first day plan into a confirmed, time‑optimized weekend itinerary for Porto..., what dietary preference did Companion B have?",
+            "question": "What is Companion B's diet preference?",
             "choices": {
-              "A": "I don't remember Companion B's dietary preference — could you remind me?",
-              "B": "Arrive no later than 22:00 local",
-              "C": "vegetarian"
+              "A": "I don't remember Companion B's dietary preference; could you remind me?",
+              "B": "Companion B prefers pescatarian meals.",
+              "C": "Companion B is vegetarian."
             },
             "choice_order": [
               "A",
@@ -403,32 +403,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "vegetarian"
+                "text": "Companion B is vegetarian."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive no later than 22:00 local"
+                "text": "Companion B prefers pescatarian meals."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember Companion B's dietary preference — could you remind me?"
+                "text": "I don't remember Companion B's dietary preference; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember Companion B's dietary preference — could you remind me?"
+                "text": "I don't remember Companion B's dietary preference; could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive no later than 22:00 local"
+                "text": "Companion B prefers pescatarian meals."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "vegetarian"
+                "text": "Companion B is vegetarian."
               }
             ]
           },
@@ -436,11 +436,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "€60",
             "identifier_label": "Porto weekend itinerary",
-            "question": "In the user's earlier message for Turn the curated restaurant-first day plan into a confirmed, time‑optimized weekend itinerary for Porto..., what was the approximate budget per person?",
+            "question": "What budget did I set for dining per person?",
             "choices": {
-              "A": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees",
-              "B": "I don't remember the per-person budget — could you tell me again?",
-              "C": "€60"
+              "A": "You set a dining budget of €80 per person.",
+              "B": "I don't recall the per-person dining budget you chose; what amount would you like to set?",
+              "C": "You set a dining budget of €60 per person."
             },
             "choice_order": [
               "A",
@@ -463,32 +463,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "€60"
+                "text": "You set a dining budget of €60 per person."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees"
+                "text": "You set a dining budget of €80 per person."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the per-person budget — could you tell me again?"
+                "text": "I don't recall the per-person dining budget you chose; what amount would you like to set?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees"
+                "text": "You set a dining budget of €80 per person."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the per-person budget — could you tell me again?"
+                "text": "I don't recall the per-person dining budget you chose; what amount would you like to set?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "€60"
+                "text": "You set a dining budget of €60 per person."
               }
             ]
           }
@@ -498,20 +498,20 @@
     {
       "timestamp": "11/03/2023-I06",
       "turn_role": "key",
-      "identifier_label": "Multi-airline split-ticket decision",
-      "user_turn": "I need help deciding whether to buy the multi-airline split ticket now or wait. My travel window is May 10–16, 2026 (earliest departure 07:00 local, latest return arrival by 22:00). My total budget is $620 including taxes/fees, and I can pay up to $80 in change/cancellation fees. Frequent-flyer/status: American Airlines 00123456789 (Gold), United 987654321 (no elite), Delta 555888111 (Silver). Checked baggage: one free on AA and Delta, paid on United. Passport XX1234567 expires March 1, 2028; Schengen visa valid through July 1, 2026. Please optimize routing and fares, set concrete buy/hold triggers for my fare alerts, confirm baggage/seat/connection rules and refundability, and prepare backup rebooking/contingency steps if an onward flight is missed.",
+      "identifier_label": "Split-ticket purchase decision",
+      "user_turn": "",
       "task_goal": "Decide whether to purchase the multi-airline split-ticket now or wait — optimize routing and fares, set concrete buy/hold triggers for the fare alerts, confirm baggage/seat/connection rules and refundability, and prepare backup rebooking/contingency steps if an onward flight is missed.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "2026 05 10 to 2026 05 16; earliest depart 07",
             "sensitive_value": "00 local, latest return arrive by 22:00 local",
-            "identifier_label": "Multi-airline split-ticket decision",
-            "question": "In the Multi-airline split-ticket decision in a long conversation, what travel dates and time constraints did the user give for their trip?",
+            "identifier_label": "Split-ticket purchase decision",
+            "question": "What were my travel dates and the earliest/latest departure/arrival time constraints I gave?",
             "choices": {
-              "A": "I don't recall the travel dates or time constraints from that earlier interaction — could you remind me?",
-              "B": "June 11, 2026, departure 14:30 (OPO).",
-              "C": "May 10–16, 2026; earliest departure 07:00 local, latest return arrival by 22:00 local."
+              "A": "I don't recall your exact travel dates or preferred times; could you remind me of them?",
+              "B": "You planned to travel from 2026-06-11 to 2026-06-13 with departures around 14:30 local and returns by 18:00 local.",
+              "C": "You planned to travel from 2026-05-10 to 2026-05-16, with earliest departures at 07:00 local and a latest return arriving by 22:00 local."
             },
             "choice_order": [
               "A",
@@ -534,44 +534,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "May 10–16, 2026; earliest departure 07:00 local, latest return arrival by 22:00 local."
+                "text": "You planned to travel from 2026-05-10 to 2026-05-16, with earliest departures at 07:00 local and a latest return arriving by 22:00 local."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "June 11, 2026, departure 14:30 (OPO)."
+                "text": "You planned to travel from 2026-06-11 to 2026-06-13 with departures around 14:30 local and returns by 18:00 local."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the travel dates or time constraints from that earlier interaction — could you remind me?"
+                "text": "I don't recall your exact travel dates or preferred times; could you remind me of them?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the travel dates or time constraints from that earlier interaction — could you remind me?"
+                "text": "I don't recall your exact travel dates or preferred times; could you remind me of them?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "June 11, 2026, departure 14:30 (OPO)."
+                "text": "You planned to travel from 2026-06-11 to 2026-06-13 with departures around 14:30 local and returns by 18:00 local."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "May 10–16, 2026; earliest departure 07:00 local, latest return arrival by 22:00 local."
+                "text": "You planned to travel from 2026-05-10 to 2026-05-16, with earliest departures at 07:00 local and a latest return arriving by 22:00 local."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "$620 total trip budget (including taxes/fees); willing to pay up to $80 in change/cancellation fees",
-            "identifier_label": "Multi-airline split-ticket decision",
-            "question": "In the Multi-airline split-ticket decision in a long conversation, what total trip budget and maximum change/cancellation fee did the user state?",
+            "identifier_label": "Split-ticket purchase decision",
+            "question": "What total trip budget and maximum change/cancellation fee did I say I was willing to accept?",
             "choices": {
-              "A": "Total budget $1,200 with up to $150 allowed for change/cancellation fees.",
-              "B": "Total budget $620 including taxes/fees, and up to $80 available for change/cancellation fees.",
-              "C": "I don't remember the budget or allowed fees from that earlier message; could you tell me again?"
+              "A": "Your total budget was $650 including taxes and you were willing to pay up to $50 in change or cancellation fees.",
+              "B": "Your total trip budget is $620 including taxes and fees, and you're willing to pay up to $80 in change or cancellation fees.",
+              "C": "I don't remember your budget or acceptable change fees; could you restate those limits?"
             },
             "choice_order": [
               "A",
@@ -594,44 +594,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Total budget $620 including taxes/fees, and up to $80 available for change/cancellation fees."
+                "text": "Your total trip budget is $620 including taxes and fees, and you're willing to pay up to $80 in change or cancellation fees."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Total budget $1,200 with up to $150 allowed for change/cancellation fees."
+                "text": "Your total budget was $650 including taxes and you were willing to pay up to $50 in change or cancellation fees."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget or allowed fees from that earlier message; could you tell me again?"
+                "text": "I don't remember your budget or acceptable change fees; could you restate those limits?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Total budget $1,200 with up to $150 allowed for change/cancellation fees."
+                "text": "Your total budget was $650 including taxes and you were willing to pay up to $50 in change or cancellation fees."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Total budget $620 including taxes/fees, and up to $80 available for change/cancellation fees."
+                "text": "Your total trip budget is $620 including taxes and fees, and you're willing to pay up to $80 in change or cancellation fees."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget or allowed fees from that earlier message; could you tell me again?"
+                "text": "I don't remember your budget or acceptable change fees; could you restate those limits?"
               }
             ]
           },
           {
             "sensitive_key": "American Airlines",
             "sensitive_value": "00123456789 (Gold), United: 987654321 (no elite), Delta: 555888111 (Silver); checked baggage: 1 free on AA/Delta, paid on United",
-            "identifier_label": "Multi-airline split-ticket decision",
-            "question": "In the Multi-airline split-ticket decision in a long conversation, what frequent-flyer accounts/status and checked-baggage rules did the user report?",
+            "identifier_label": "Split-ticket purchase decision",
+            "question": "What frequent-flyer numbers and statuses did I give, and what did I say about checked-bag allowances for each carrier?",
             "choices": {
-              "A": "I don't recall their frequent‑flyer numbers, statuses, or baggage rules from that conversation.",
-              "B": "AA 00123456789 (Platinum); United 987654321 (Silver); Delta 555888111 (Gold); all carriers include one free checked bag.",
-              "C": "AA 00123456789 (Gold); United 987654321 (no elite); Delta 555888111 (Silver). Checked baggage: one free on American and Delta; paid on United."
+              "A": "I don't recall the frequent-flyer numbers, statuses, or baggage allowances; could you repeat them?",
+              "B": "You had AA 00987654321 (Platinum), United 123456789 (no elite), and Delta 555888222 (Silver); checked bags were free on AA only.",
+              "C": "You provided AA 00123456789 (Gold), United 987654321 (no elite), and Delta 555888111 (Silver); checked baggage is free on American and Delta, but paid on United."
             },
             "choice_order": [
               "A",
@@ -654,44 +654,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "AA 00123456789 (Gold); United 987654321 (no elite); Delta 555888111 (Silver). Checked baggage: one free on American and Delta; paid on United."
+                "text": "You provided AA 00123456789 (Gold), United 987654321 (no elite), and Delta 555888111 (Silver); checked baggage is free on American and Delta, but paid on United."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "AA 00123456789 (Platinum); United 987654321 (Silver); Delta 555888111 (Gold); all carriers include one free checked bag."
+                "text": "You had AA 00987654321 (Platinum), United 123456789 (no elite), and Delta 555888222 (Silver); checked bags were free on AA only."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall their frequent‑flyer numbers, statuses, or baggage rules from that conversation."
+                "text": "I don't recall the frequent-flyer numbers, statuses, or baggage allowances; could you repeat them?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall their frequent‑flyer numbers, statuses, or baggage rules from that conversation."
+                "text": "I don't recall the frequent-flyer numbers, statuses, or baggage allowances; could you repeat them?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "AA 00123456789 (Platinum); United 987654321 (Silver); Delta 555888111 (Gold); all carriers include one free checked bag."
+                "text": "You had AA 00987654321 (Platinum), United 123456789 (no elite), and Delta 555888222 (Silver); checked bags were free on AA only."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "AA 00123456789 (Gold); United 987654321 (no elite); Delta 555888111 (Silver). Checked baggage: one free on American and Delta; paid on United."
+                "text": "You provided AA 00123456789 (Gold), United 987654321 (no elite), and Delta 555888111 (Silver); checked baggage is free on American and Delta, but paid on United."
               }
             ]
           },
           {
             "sensitive_key": "passport no",
             "sensitive_value": "XX1234567 (expires 2028-03-01)",
-            "identifier_label": "Multi-airline split-ticket decision",
-            "question": "In the Multi-airline split-ticket decision in a long conversation, what passport number and expiry did the user provide?",
+            "identifier_label": "Split-ticket purchase decision",
+            "question": "What passport number and expiration date did I give for travel documents?",
             "choices": {
-              "A": "Passport AB9876543, expiring December 31, 2025.",
-              "B": "I don't remember the passport number or expiry date from that earlier message.",
-              "C": "Passport XX1234567, expiring March 1, 2028."
+              "A": "Your passport number is AB9876543 and it expires on 2027-12-15.",
+              "B": "I don't remember your passport number or expiration date; could you provide them again?",
+              "C": "Your passport number is XX1234567 and it expires on 2028-03-01."
             },
             "choice_order": [
               "A",
@@ -714,44 +714,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Passport XX1234567, expiring March 1, 2028."
+                "text": "Your passport number is XX1234567 and it expires on 2028-03-01."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Passport AB9876543, expiring December 31, 2025."
+                "text": "Your passport number is AB9876543 and it expires on 2027-12-15."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the passport number or expiry date from that earlier message."
+                "text": "I don't remember your passport number or expiration date; could you provide them again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Passport AB9876543, expiring December 31, 2025."
+                "text": "Your passport number is AB9876543 and it expires on 2027-12-15."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the passport number or expiry date from that earlier message."
+                "text": "I don't remember your passport number or expiration date; could you provide them again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Passport XX1234567, expiring March 1, 2028."
+                "text": "Your passport number is XX1234567 and it expires on 2028-03-01."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Schengen visa valid until 2026-07-01",
-            "identifier_label": "Multi-airline split-ticket decision",
-            "question": "In the Multi-airline split-ticket decision in a long conversation, what did the user say about their Schengen visa validity?",
+            "identifier_label": "Split-ticket purchase decision",
+            "question": "Do I have a Schengen visa and when did I say it was valid until?",
             "choices": {
-              "A": "Their Schengen visa is valid through December 31, 2026.",
-              "B": "I don't recall the Schengen visa validity date from that conversation.",
-              "C": "Their Schengen visa is valid through July 1, 2026."
+              "A": "You have a Schengen visa that is valid until 2026-09-01.",
+              "B": "I don't recall the visa validity date; could you remind me when your Schengen visa expires?",
+              "C": "You have a Schengen visa that is valid until 2026-07-01."
             },
             "choice_order": [
               "A",
@@ -774,32 +774,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Their Schengen visa is valid through July 1, 2026."
+                "text": "You have a Schengen visa that is valid until 2026-07-01."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Their Schengen visa is valid through December 31, 2026."
+                "text": "You have a Schengen visa that is valid until 2026-09-01."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the Schengen visa validity date from that conversation."
+                "text": "I don't recall the visa validity date; could you remind me when your Schengen visa expires?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Their Schengen visa is valid through December 31, 2026."
+                "text": "You have a Schengen visa that is valid until 2026-09-01."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the Schengen visa validity date from that conversation."
+                "text": "I don't recall the visa validity date; could you remind me when your Schengen visa expires?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Their Schengen visa is valid through July 1, 2026."
+                "text": "You have a Schengen visa that is valid until 2026-07-01."
               }
             ]
           }
@@ -809,20 +809,20 @@
     {
       "timestamp": "05/02/2021-I03",
       "turn_role": "key",
-      "identifier_label": "Peru-Argentina-Brazil visa timeline",
-      "user_turn": "I need an optimized, step-by-step visa and entry timeline for a multi-country trip: Peru June 10–16, 2026; Argentina June 17–24, 2026; and Brazil June 25–July 2, 2026. I’m a U.S. passport holder, passport number XX1234567, expiring September 30, 2028. Current visas: Schengen C multiple-entry valid until May 15, 2026; Brazil e-visa not yet applied; no prior refusals. Emergency/trusted contact: Sam Ortiz, +1-555-0199, sam.ortiz@example.com; Lima guesthouse contact: Carlos Ramirez, +51-987654321, carlos@lima-guest.pe. I need a list of which visas/e-visas to apply for and in what order, exact earliest/latest application and appointment deadlines based on processing windows, and a prioritized document checklist plus reminders I can import into my calendar.",
+      "identifier_label": "multi-country visa timeline",
+      "user_turn": "",
       "task_goal": "Build an optimized, step-by-step visa and entry timeline for my multi-country trip that: 1) lists which visas/e-visas to apply for and in what order, 2) schedules earliest/latest application and appointment deadlines to meet minimal lead times, and 3) produces a prioritized document checklist and reminder schedule I can import into my calendar.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "Peru",
             "sensitive_value": "2026-06-10 to 2026-06-16",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "In this interaction, what were the travel dates the user gave for Peru?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "What dates did I say I'd be in Peru on this trip?",
             "choices": {
-              "A": "June 10–16, 2026",
-              "B": "I don't remember the Peru travel dates from this interaction.",
-              "C": "2026-06-11T14:30 (OPO)"
+              "A": "You said you'll be in Peru from 2026-06-10 to 2026-06-16.",
+              "B": "I’m sorry, I don’t have your Peru travel dates from our earlier conversation.",
+              "C": "You said you'll be in Peru from 2026-06-11 to 2026-06-16."
             },
             "choice_order": [
               "A",
@@ -845,44 +845,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "June 10–16, 2026"
+                "text": "You said you'll be in Peru from 2026-06-10 to 2026-06-16."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You said you'll be in Peru from 2026-06-11 to 2026-06-16."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Peru travel dates from this interaction."
+                "text": "I’m sorry, I don’t have your Peru travel dates from our earlier conversation."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "June 10–16, 2026"
+                "text": "You said you'll be in Peru from 2026-06-10 to 2026-06-16."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Peru travel dates from this interaction."
+                "text": "I’m sorry, I don’t have your Peru travel dates from our earlier conversation."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You said you'll be in Peru from 2026-06-11 to 2026-06-16."
               }
             ]
           },
           {
             "sensitive_key": "Argentina",
             "sensitive_value": "2026-06-17 to 2026-06-24",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "According to this interaction, what were the travel dates for Argentina?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "When did I say I'd be in Argentina?",
             "choices": {
-              "A": "June 17–24, 2026",
-              "B": "I don't remember the Argentina travel dates from this interaction.",
-              "C": "2026-06-13T18:00 (OPO)"
+              "A": "You said you'll be in Argentina from 2026-06-17 to 2026-06-24.",
+              "B": "I don’t have the Argentina travel dates saved from earlier.",
+              "C": "You said you'll be in Argentina from 2026-06-13 to 2026-06-24."
             },
             "choice_order": [
               "A",
@@ -905,44 +905,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "June 17–24, 2026"
+                "text": "You said you'll be in Argentina from 2026-06-17 to 2026-06-24."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You said you'll be in Argentina from 2026-06-13 to 2026-06-24."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Argentina travel dates from this interaction."
+                "text": "I don’t have the Argentina travel dates saved from earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "June 17–24, 2026"
+                "text": "You said you'll be in Argentina from 2026-06-17 to 2026-06-24."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Argentina travel dates from this interaction."
+                "text": "I don’t have the Argentina travel dates saved from earlier."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You said you'll be in Argentina from 2026-06-13 to 2026-06-24."
               }
             ]
           },
           {
             "sensitive_key": "Brazil",
             "sensitive_value": "2026-06-25 to 2026-07-02",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "In this interaction, what dates did the user plan to be in Brazil?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "Can you confirm the dates I gave for my Brazil stay?",
             "choices": {
-              "A": "I don't remember the Brazil travel dates from this interaction.",
-              "B": "June 25–July 2, 2026",
-              "C": "2026-06-11T14:30 (OPO)"
+              "A": "I’m sorry, I don’t recall the exact Brazil dates from our earlier message.",
+              "B": "You gave Brazil dates as 2026-06-25 to 2026-07-02.",
+              "C": "You gave Brazil dates as 2026-06-25 to 2026-07-03."
             },
             "choice_order": [
               "A",
@@ -965,44 +965,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "June 25–July 2, 2026"
+                "text": "You gave Brazil dates as 2026-06-25 to 2026-07-02."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You gave Brazil dates as 2026-06-25 to 2026-07-03."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Brazil travel dates from this interaction."
+                "text": "I’m sorry, I don’t recall the exact Brazil dates from our earlier message."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Brazil travel dates from this interaction."
+                "text": "I’m sorry, I don’t recall the exact Brazil dates from our earlier message."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "June 25–July 2, 2026"
+                "text": "You gave Brazil dates as 2026-06-25 to 2026-07-02."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You gave Brazil dates as 2026-06-25 to 2026-07-03."
               }
             ]
           },
           {
             "sensitive_key": "Nationality",
             "sensitive_value": "USA",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "What nationality did the user state in this interaction?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "Which nationality did I tell me you hold?",
             "choices": {
-              "A": "USA (U.S. passport holder)",
-              "B": "2026-06-13T18:00 (OPO)",
-              "C": "I don't remember the user's nationality from this interaction."
+              "A": "You said you're a USA passport holder.",
+              "B": "You said you're a Canadian passport holder.",
+              "C": "I don’t remember which nationality you told me earlier."
             },
             "choice_order": [
               "A",
@@ -1025,44 +1025,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "USA (U.S. passport holder)"
+                "text": "You said you're a USA passport holder."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You said you're a Canadian passport holder."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's nationality from this interaction."
+                "text": "I don’t remember which nationality you told me earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "USA (U.S. passport holder)"
+                "text": "You said you're a USA passport holder."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You said you're a Canadian passport holder."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's nationality from this interaction."
+                "text": "I don’t remember which nationality you told me earlier."
               }
             ]
           },
           {
             "sensitive_key": "Passport number",
             "sensitive_value": "XX1234567",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "What passport number did the user provide in this interaction?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "Do you remember the passport number I provided?",
             "choices": {
-              "A": "I don't remember the passport number from this interaction.",
-              "B": "XX1234567",
-              "C": "2026-06-11T14:30 (OPO)"
+              "A": "I’m sorry, I don’t have your passport number on file from the earlier conversation.",
+              "B": "You provided the passport number XX1234567.",
+              "C": "You provided the passport number XX1234568."
             },
             "choice_order": [
               "A",
@@ -1085,44 +1085,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "XX1234567"
+                "text": "You provided the passport number XX1234567."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You provided the passport number XX1234568."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the passport number from this interaction."
+                "text": "I’m sorry, I don’t have your passport number on file from the earlier conversation."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the passport number from this interaction."
+                "text": "I’m sorry, I don’t have your passport number on file from the earlier conversation."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "XX1234567"
+                "text": "You provided the passport number XX1234567."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You provided the passport number XX1234568."
               }
             ]
           },
           {
             "sensitive_key": "Passport expiry",
             "sensitive_value": "2028-09-30",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "What passport expiry date did the user give in this interaction?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "What expiry date did I give for my passport?",
             "choices": {
-              "A": "2028-09-30",
-              "B": "2026-06-13T18:00 (OPO)",
-              "C": "I don't remember the passport expiry date from this interaction."
+              "A": "You said your passport expires on 2028-09-30.",
+              "B": "You said your passport expires on 2028-10-30.",
+              "C": "I don’t recall the passport expiry date you mentioned earlier."
             },
             "choice_order": [
               "A",
@@ -1145,44 +1145,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2028-09-30"
+                "text": "You said your passport expires on 2028-09-30."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You said your passport expires on 2028-10-30."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the passport expiry date from this interaction."
+                "text": "I don’t recall the passport expiry date you mentioned earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2028-09-30"
+                "text": "You said your passport expires on 2028-09-30."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You said your passport expires on 2028-10-30."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the passport expiry date from this interaction."
+                "text": "I don’t recall the passport expiry date you mentioned earlier."
               }
             ]
           },
           {
             "sensitive_key": "Schengen C multiple entry",
             "sensitive_value": "valid until 2026-05-15",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "In this interaction, what was the validity end date for the user's Schengen C multiple-entry visa?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "When did I say my Schengen C multiple-entry visa is valid until?",
             "choices": {
-              "A": "2026-06-11T14:30 (OPO)",
-              "B": "Valid until May 15, 2026 (2026-05-15)",
-              "C": "I don't remember the Schengen visa expiry from this interaction."
+              "A": "You said the Schengen C multiple-entry visa is valid until 2026-05-13.",
+              "B": "You said the Schengen C multiple-entry visa is valid until 2026-05-15.",
+              "C": "I’m not remembering the Schengen C visa validity date from earlier."
             },
             "choice_order": [
               "A",
@@ -1205,44 +1205,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Valid until May 15, 2026 (2026-05-15)"
+                "text": "You said the Schengen C multiple-entry visa is valid until 2026-05-15."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You said the Schengen C multiple-entry visa is valid until 2026-05-13."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Schengen visa expiry from this interaction."
+                "text": "I’m not remembering the Schengen C visa validity date from earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You said the Schengen C multiple-entry visa is valid until 2026-05-13."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Valid until May 15, 2026 (2026-05-15)"
+                "text": "You said the Schengen C multiple-entry visa is valid until 2026-05-15."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Schengen visa expiry from this interaction."
+                "text": "I’m not remembering the Schengen C visa validity date from earlier."
               }
             ]
           },
           {
-            "sensitive_key": "Brazil e-visa",
+            "sensitive_key": "Brazil e visa",
             "sensitive_value": "not yet applied",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "What was the status of the Brazil e-visa in this interaction?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "Had you already applied for the Brazil e-visa when we last spoke?",
             "choices": {
-              "A": "I don't remember the Brazil e-visa status from this interaction.",
-              "B": "Not yet applied",
-              "C": "2026-06-13T18:00 (OPO)"
+              "A": "I don’t recall whether you had applied for the Brazil e-visa earlier.",
+              "B": "You had not yet applied for the Brazil e-visa.",
+              "C": "You said you had already applied for the Brazil e-visa and were waiting on approval."
             },
             "choice_order": [
               "A",
@@ -1265,44 +1265,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Not yet applied"
+                "text": "You had not yet applied for the Brazil e-visa."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You said you had already applied for the Brazil e-visa and were waiting on approval."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Brazil e-visa status from this interaction."
+                "text": "I don’t recall whether you had applied for the Brazil e-visa earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Brazil e-visa status from this interaction."
+                "text": "I don’t recall whether you had applied for the Brazil e-visa earlier."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Not yet applied"
+                "text": "You had not yet applied for the Brazil e-visa."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You said you had already applied for the Brazil e-visa and were waiting on approval."
               }
             ]
           },
           {
             "sensitive_key": "Prior visa refusals",
             "sensitive_value": "none",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "Did the user report any prior visa refusals in this interaction?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "Did I report any prior visa refusals?",
             "choices": {
-              "A": "2026-06-11T14:30 (OPO)",
-              "B": "None — no prior refusals",
-              "C": "I don't remember whether the user reported any prior visa refusals in this interaction."
+              "A": "You reported one prior visa refusal.",
+              "B": "You reported that you have had no prior visa refusals.",
+              "C": "I’m not sure whether you mentioned prior visa refusals earlier."
             },
             "choice_order": [
               "A",
@@ -1325,44 +1325,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "None — no prior refusals"
+                "text": "You reported that you have had no prior visa refusals."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You reported one prior visa refusal."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember whether the user reported any prior visa refusals in this interaction."
+                "text": "I’m not sure whether you mentioned prior visa refusals earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You reported one prior visa refusal."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "None — no prior refusals"
+                "text": "You reported that you have had no prior visa refusals."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember whether the user reported any prior visa refusals in this interaction."
+                "text": "I’m not sure whether you mentioned prior visa refusals earlier."
               }
             ]
           },
           {
             "sensitive_key": "Trusted contact",
             "sensitive_value": "Sam Ortiz, +1-555-0199, sam.ortiz@example.com",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "Who was given as the emergency/trusted contact in this interaction?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "Who was listed as my trusted contact and how can they be reached?",
             "choices": {
-              "A": "Sam Ortiz, +1-555-0199, sam.ortiz@example.com",
-              "B": "2026-06-13T18:00 (OPO)",
-              "C": "I don't remember the emergency/trusted contact from this interaction."
+              "A": "You listed Sam Ortiz as your trusted contact: +1-555-0199, sam.ortiz@example.com.",
+              "B": "You listed Sam Ortiz as your trusted contact: +1-555-0123, sam.ortiz@example.com.",
+              "C": "I don’t have the trusted contact details from our earlier conversation."
             },
             "choice_order": [
               "A",
@@ -1385,44 +1385,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Sam Ortiz, +1-555-0199, sam.ortiz@example.com"
+                "text": "You listed Sam Ortiz as your trusted contact: +1-555-0199, sam.ortiz@example.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You listed Sam Ortiz as your trusted contact: +1-555-0123, sam.ortiz@example.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the emergency/trusted contact from this interaction."
+                "text": "I don’t have the trusted contact details from our earlier conversation."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Sam Ortiz, +1-555-0199, sam.ortiz@example.com"
+                "text": "You listed Sam Ortiz as your trusted contact: +1-555-0199, sam.ortiz@example.com."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You listed Sam Ortiz as your trusted contact: +1-555-0123, sam.ortiz@example.com."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the emergency/trusted contact from this interaction."
+                "text": "I don’t have the trusted contact details from our earlier conversation."
               }
             ]
           },
           {
             "sensitive_key": "Lima guesthouse contact",
             "sensitive_value": "Carlos Ramirez, +51-987654321, carlos@lima-guest.pe",
-            "identifier_label": "Peru-Argentina-Brazil visa timeline",
-            "question": "What was the Lima guesthouse contact the user provided in this interaction?",
+            "identifier_label": "multi-country visa timeline",
+            "question": "What contact did I give for the Lima guesthouse?",
             "choices": {
-              "A": "Carlos Ramirez, +51-987654321, carlos@lima-guest.pe",
-              "B": "2026-06-11T14:30 (OPO)",
-              "C": "I don't remember the Lima guesthouse contact from this interaction."
+              "A": "You gave the Lima guesthouse contact as Carlos Ramirez: +51-987654321, carlos@lima-guest.pe.",
+              "B": "You gave the Lima guesthouse contact as Carlos Ramirez: +51-987654320, carlos@lima-guest.pe.",
+              "C": "I don’t recall the Lima guesthouse contact information from earlier."
             },
             "choice_order": [
               "A",
@@ -1445,32 +1445,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Carlos Ramirez, +51-987654321, carlos@lima-guest.pe"
+                "text": "You gave the Lima guesthouse contact as Carlos Ramirez: +51-987654321, carlos@lima-guest.pe."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You gave the Lima guesthouse contact as Carlos Ramirez: +51-987654320, carlos@lima-guest.pe."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Lima guesthouse contact from this interaction."
+                "text": "I don’t recall the Lima guesthouse contact information from earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Carlos Ramirez, +51-987654321, carlos@lima-guest.pe"
+                "text": "You gave the Lima guesthouse contact as Carlos Ramirez: +51-987654321, carlos@lima-guest.pe."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You gave the Lima guesthouse contact as Carlos Ramirez: +51-987654320, carlos@lima-guest.pe."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Lima guesthouse contact from this interaction."
+                "text": "I don’t recall the Lima guesthouse contact information from earlier."
               }
             ]
           }
@@ -1481,7 +1481,7 @@
       "timestamp": "10/30/2024-I05",
       "turn_role": "probe",
       "identifier_label": "Accessible weekend itinerary",
-      "user_turn": "I need you to confirm and book an accessible weekend itinerary for April 10–12, 2026: I’ll arrive after 6:00 PM on the 10th and depart before 5:00 PM on the 12th. I use a manual wheelchair, cannot climb steps, need a roll-in shower with grab bars, and may require one-person transfer assistance at check-in. Please secure a hotel room with step-free entry and those accessible features, confirm or arrange an accessible shuttle between the central station and the museum district (including pickup point and times), and provide a step-free walking/transit route map plus message templates I can send to the hotel and shuttle providers. Preferred booking contact: kaya.whitefeather@goggle.com, 555-0199.",
+      "user_turn": "",
       "task_goal": "Confirm and book an accessible weekend itinerary: secure a hotel room with step-free entry and required accessible features, confirm/arrange an accessible shuttle between central station and the museum district (times and pickup point), and produce a step-free walking/transit route map plus template messages to send to the hotel/shuttle providers.",
       "rendered": {
         "items": [
@@ -1489,11 +1489,11 @@
             "sensitive_key": "2026 04 10 (arrive after 18",
             "sensitive_value": "00) to 2026-04-12 (depart before 17:00)",
             "identifier_label": "Accessible weekend itinerary",
-            "question": "In the 'Accessible weekend itinerary' interaction, what were the user's arrival and departure dates and times?",
+            "question": "What arrival and departure dates and times did I plan for this weekend trip?",
             "choices": {
-              "A": "Arrive June 11, 2026 at 2:30 PM; depart June 13, 2026 at 6:00 PM (2026-06-11T14:30 / 2026-06-13T18:00).",
-              "B": "Arrive April 10, 2026 after 6:00 PM; depart April 12, 2026 before 5:00 PM.",
-              "C": "I don't recall the dates and times; could you remind me?"
+              "A": "You were scheduled to arrive on 2026-06-11 at 14:30 and depart on 2026-06-13 at 18:00.",
+              "B": "You planned to arrive on 2026-04-10 after 18:00 and depart on 2026-04-12 before 17:00.",
+              "C": "I don't have the exact arrival and departure dates and times saved; could you remind me?"
             },
             "choice_order": [
               "A",
@@ -1516,32 +1516,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Arrive April 10, 2026 after 6:00 PM; depart April 12, 2026 before 5:00 PM."
+                "text": "You planned to arrive on 2026-04-10 after 18:00 and depart on 2026-04-12 before 17:00."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive June 11, 2026 at 2:30 PM; depart June 13, 2026 at 6:00 PM (2026-06-11T14:30 / 2026-06-13T18:00)."
+                "text": "You were scheduled to arrive on 2026-06-11 at 14:30 and depart on 2026-06-13 at 18:00."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the dates and times; could you remind me?"
+                "text": "I don't have the exact arrival and departure dates and times saved; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive June 11, 2026 at 2:30 PM; depart June 13, 2026 at 6:00 PM (2026-06-11T14:30 / 2026-06-13T18:00)."
+                "text": "You were scheduled to arrive on 2026-06-11 at 14:30 and depart on 2026-06-13 at 18:00."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Arrive April 10, 2026 after 6:00 PM; depart April 12, 2026 before 5:00 PM."
+                "text": "You planned to arrive on 2026-04-10 after 18:00 and depart on 2026-04-12 before 17:00."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the dates and times; could you remind me?"
+                "text": "I don't have the exact arrival and departure dates and times saved; could you remind me?"
               }
             ]
           },
@@ -1549,11 +1549,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Uses a manual wheelchair, cannot climb any steps, requires roll-in shower and grab bars, may need one-person transfer assistance at check-in",
             "identifier_label": "Accessible weekend itinerary",
-            "question": "In the 'Accessible weekend itinerary' interaction, what mobility and bathroom accessibility needs did the user report?",
+            "question": "What mobility and accessible-room requirements did I specify for the traveler?",
             "choices": {
-              "A": "Uses a power wheelchair and only needs a bed rail, but can manage steps with assistance.",
-              "B": "Uses a manual wheelchair; cannot climb steps; needs a roll-in shower with grab bars; may require one-person transfer assistance at check-in.",
-              "C": "I don't remember those accessibility requirements; can you tell me again?"
+              "A": "You use a manual wheelchair, can manage a small step with assistance, and requested an accessible tub with grab bars instead of a roll-in shower.",
+              "B": "You use a manual wheelchair, cannot climb any steps, require a roll-in shower and grab bars, and may need one-person transfer assistance at check-in.",
+              "C": "I don't recall the specific mobility and accessibility requirements—could you repeat them?"
             },
             "choice_order": [
               "A",
@@ -1576,32 +1576,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Uses a manual wheelchair; cannot climb steps; needs a roll-in shower with grab bars; may require one-person transfer assistance at check-in."
+                "text": "You use a manual wheelchair, cannot climb any steps, require a roll-in shower and grab bars, and may need one-person transfer assistance at check-in."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Uses a power wheelchair and only needs a bed rail, but can manage steps with assistance."
+                "text": "You use a manual wheelchair, can manage a small step with assistance, and requested an accessible tub with grab bars instead of a roll-in shower."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember those accessibility requirements; can you tell me again?"
+                "text": "I don't recall the specific mobility and accessibility requirements—could you repeat them?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Uses a power wheelchair and only needs a bed rail, but can manage steps with assistance."
+                "text": "You use a manual wheelchair, can manage a small step with assistance, and requested an accessible tub with grab bars instead of a roll-in shower."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Uses a manual wheelchair; cannot climb steps; needs a roll-in shower with grab bars; may require one-person transfer assistance at check-in."
+                "text": "You use a manual wheelchair, cannot climb any steps, require a roll-in shower and grab bars, and may need one-person transfer assistance at check-in."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember those accessibility requirements; can you tell me again?"
+                "text": "I don't recall the specific mobility and accessibility requirements—could you repeat them?"
               }
             ]
           },
@@ -1609,11 +1609,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "kaya.whitefeather@goggle.com",
             "identifier_label": "Accessible weekend itinerary",
-            "question": "In the 'Accessible weekend itinerary' interaction, what email did the user give as their preferred booking contact?",
+            "question": "Which email address did I give for booking and confirmations?",
             "choices": {
-              "A": "maria.silva@example.pt",
-              "B": "I don't recall the preferred email address; could you repeat it?",
-              "C": "kaya.whitefeather@goggle.com"
+              "A": "The contact email You provided was maria.silva@example.pt.",
+              "B": "I don't have the email address on hand—could you tell me it again?",
+              "C": "The contact email You provided was kaya.whitefeather@goggle.com."
             },
             "choice_order": [
               "A",
@@ -1636,32 +1636,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "kaya.whitefeather@goggle.com"
+                "text": "The contact email You provided was kaya.whitefeather@goggle.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "maria.silva@example.pt"
+                "text": "The contact email You provided was maria.silva@example.pt."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the preferred email address; could you repeat it?"
+                "text": "I don't have the email address on hand—could you tell me it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "maria.silva@example.pt"
+                "text": "The contact email You provided was maria.silva@example.pt."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the preferred email address; could you repeat it?"
+                "text": "I don't have the email address on hand—could you tell me it again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "kaya.whitefeather@goggle.com"
+                "text": "The contact email You provided was kaya.whitefeather@goggle.com."
               }
             ]
           },
@@ -1669,11 +1669,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "555-0199",
             "identifier_label": "Accessible weekend itinerary",
-            "question": "In the 'Accessible weekend itinerary' interaction, what phone number did the user provide as their preferred booking contact?",
+            "question": "What phone number did I provide for the reservation contact?",
             "choices": {
-              "A": "+351-912-345-678",
-              "B": "I don't remember the phone number; can you provide it again?",
-              "C": "555-0199"
+              "A": "You provided the phone number +351-912-345-678 for the reservation contact.",
+              "B": "I don't recall the phone number You gave—could you remind me?",
+              "C": "You provided the phone number 555-0199 for the reservation contact."
             },
             "choice_order": [
               "A",
@@ -1696,32 +1696,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "555-0199"
+                "text": "You provided the phone number 555-0199 for the reservation contact."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "+351-912-345-678"
+                "text": "You provided the phone number +351-912-345-678 for the reservation contact."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the phone number; can you provide it again?"
+                "text": "I don't recall the phone number You gave—could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "+351-912-345-678"
+                "text": "You provided the phone number +351-912-345-678 for the reservation contact."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the phone number; can you provide it again?"
+                "text": "I don't recall the phone number You gave—could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "555-0199"
+                "text": "You provided the phone number 555-0199 for the reservation contact."
               }
             ]
           }
@@ -1731,20 +1731,20 @@
     {
       "timestamp": "03/12/2026-I02",
       "turn_role": "probe",
-      "identifier_label": "Overnight sleeper train plan",
-      "user_turn": "I need a finalized, practical overnight-sleeper checklist and plan to maximize comfort and safety for a train departing April 11 at 22:30 and arriving April 12 at 07:15 — booking ref XX1234567, lower-berth private compartment. Health: mild asthma (albuterol as needed), occasional motion sickness (meclizine 25 mg as needed), and lower-back pain so I prefer extra lumbar support and avoid strong sedatives. I’m traveling with Alex Rivera (contact 555-0199) and on arrival I need transport to 1234 Story Lane, Newsville, NY 10001. Please provide a short prioritized packing list; sleep, lighting, and noise strategies; luggage and valuables security tips; wake-up/alarm and arrival logistics; and any berth-specific adjustments and medical safety notes.",
+      "identifier_label": "Overnight sleeper train checklist",
+      "user_turn": "",
       "task_goal": "Finalize a practical: create a short, prioritized overnight-sleeper checklist and plan to maximize comfort and safety on the booked train (packing list, sleep/lighting/noise strategies, security for luggage/valuables, wake-up/alarm and arrival logistics, and any adjustments needed for health or cabin type).",
       "rendered": {
         "items": [
           {
             "sensitive_key": "2026 04 11T22",
             "sensitive_value": "30",
-            "identifier_label": "Overnight sleeper train plan",
-            "question": "In the Overnight sleeper train plan interaction, what was the scheduled departure time of the train?",
+            "identifier_label": "Overnight sleeper train checklist",
+            "question": "What time does the sleeper train depart on April 11, 2026?",
             "choices": {
-              "A": "2026-06-11T14:30 (OPO)",
-              "B": "April 11 at 22:30 (10:30 PM)",
-              "C": "I’m not recalling the departure time right now — could you remind me?"
+              "A": "It departs at 2:30 PM on June 11, 2026.",
+              "B": "It departs at 10:30 PM on April 11, 2026.",
+              "C": "I don't have the departure time saved — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -1767,44 +1767,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "April 11 at 22:30 (10:30 PM)"
+                "text": "It departs at 10:30 PM on April 11, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "It departs at 2:30 PM on June 11, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m not recalling the departure time right now — could you remind me?"
+                "text": "I don't have the departure time saved — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "It departs at 2:30 PM on June 11, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "April 11 at 22:30 (10:30 PM)"
+                "text": "It departs at 10:30 PM on April 11, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I’m not recalling the departure time right now — could you remind me?"
+                "text": "I don't have the departure time saved — could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "2026 04 12T07",
             "sensitive_value": "15",
-            "identifier_label": "Overnight sleeper train plan",
-            "question": "In the Overnight sleeper train plan interaction, what arrival time did the user report for the train?",
+            "identifier_label": "Overnight sleeper train checklist",
+            "question": "When is the scheduled arrival on April 12, 2026?",
             "choices": {
-              "A": "2026-06-13T18:00 (OPO)",
-              "B": "April 12 at 07:15 (7:15 AM)",
-              "C": "I don’t recall the arrival time — can you tell me again?"
+              "A": "The scheduled arrival is at 6:00 PM on June 13, 2026.",
+              "B": "The scheduled arrival is at 7:15 AM on April 12, 2026.",
+              "C": "I don't have the arrival time noted — can you tell me?"
             },
             "choice_order": [
               "A",
@@ -1827,44 +1827,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "April 12 at 07:15 (7:15 AM)"
+                "text": "The scheduled arrival is at 7:15 AM on April 12, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "The scheduled arrival is at 6:00 PM on June 13, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the arrival time — can you tell me again?"
+                "text": "I don't have the arrival time noted — can you tell me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "The scheduled arrival is at 6:00 PM on June 13, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "April 12 at 07:15 (7:15 AM)"
+                "text": "The scheduled arrival is at 7:15 AM on April 12, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the arrival time — can you tell me again?"
+                "text": "I don't have the arrival time noted — can you tell me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "XX1234567",
-            "identifier_label": "Overnight sleeper train plan",
-            "question": "In the Overnight sleeper train plan interaction, what booking reference did the user provide?",
+            "identifier_label": "Overnight sleeper train checklist",
+            "question": "Do you remember the booking or reference number for my sleeper reservation?",
             "choices": {
-              "A": "XX1234567",
-              "B": "I’m not remembering the booking reference at the moment.",
-              "C": "2026-06-11T14:30 (OPO)"
+              "A": "The booking/reference number is XX1234567.",
+              "B": "I don't have the booking number saved — could you provide it?",
+              "C": "The booking/reference number is XX7654321."
             },
             "choice_order": [
               "A",
@@ -1887,44 +1887,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "XX1234567"
+                "text": "The booking/reference number is XX1234567."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "The booking/reference number is XX7654321."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m not remembering the booking reference at the moment."
+                "text": "I don't have the booking number saved — could you provide it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "XX1234567"
+                "text": "The booking/reference number is XX1234567."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I’m not remembering the booking reference at the moment."
+                "text": "I don't have the booking number saved — could you provide it?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "The booking/reference number is XX7654321."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "lower-berth private compartment",
-            "identifier_label": "Overnight sleeper train plan",
-            "question": "In the Overnight sleeper train plan interaction, what type of compartment/berth was booked?",
+            "identifier_label": "Overnight sleeper train checklist",
+            "question": "Which cabin type did I book for the overnight train?",
             "choices": {
-              "A": "2026-06-13T18:00 (OPO)",
-              "B": "Lower-berth private compartment",
-              "C": "I don’t recall the berth type — could you remind me?"
+              "A": "You booked an upper-berth private compartment.",
+              "B": "You booked a lower-berth private compartment.",
+              "C": "I don't see the cabin type on file — can you remind me what you booked?"
             },
             "choice_order": [
               "A",
@@ -1947,44 +1947,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Lower-berth private compartment"
+                "text": "You booked a lower-berth private compartment."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You booked an upper-berth private compartment."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the berth type — could you remind me?"
+                "text": "I don't see the cabin type on file — can you remind me what you booked?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You booked an upper-berth private compartment."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Lower-berth private compartment"
+                "text": "You booked a lower-berth private compartment."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the berth type — could you remind me?"
+                "text": "I don't see the cabin type on file — can you remind me what you booked?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "mild asthma — uses albuterol inhaler as needed",
-            "identifier_label": "Overnight sleeper train plan",
-            "question": "In the Overnight sleeper train plan interaction, what respiratory condition and medication did the user mention?",
+            "identifier_label": "Overnight sleeper train checklist",
+            "question": "Did I note any respiratory conditions or inhaler use I should account for on the trip?",
             "choices": {
-              "A": "I’m not remembering their respiratory condition or medication right now.",
-              "B": "2026-06-11T14:30 (OPO)",
-              "C": "Mild asthma — uses an albuterol inhaler as needed."
+              "A": "I don't have any respiratory condition details saved — could you tell me?",
+              "B": "You have mild seasonal allergies and carry an antihistamine as needed.",
+              "C": "You have mild asthma and use an albuterol inhaler as needed."
             },
             "choice_order": [
               "A",
@@ -2007,44 +2007,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Mild asthma — uses an albuterol inhaler as needed."
+                "text": "You have mild asthma and use an albuterol inhaler as needed."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You have mild seasonal allergies and carry an antihistamine as needed."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m not remembering their respiratory condition or medication right now."
+                "text": "I don't have any respiratory condition details saved — could you tell me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I’m not remembering their respiratory condition or medication right now."
+                "text": "I don't have any respiratory condition details saved — could you tell me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You have mild seasonal allergies and carry an antihistamine as needed."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Mild asthma — uses an albuterol inhaler as needed."
+                "text": "You have mild asthma and use an albuterol inhaler as needed."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "occasional motion-sickness — takes meclizine 25 mg if needed",
-            "identifier_label": "Overnight sleeper train plan",
-            "question": "In the Overnight sleeper train plan interaction, what did the user say they take for motion sickness?",
+            "identifier_label": "Overnight sleeper train checklist",
+            "question": "Do you take anything for motion sickness that I should include in the plan?",
             "choices": {
-              "A": "Meclizine 25 mg as needed for occasional motion sickness.",
-              "B": "I don’t recall what they take for motion sickness.",
-              "C": "2026-06-13T18:00 (OPO)"
+              "A": "You get occasional motion sickness and take meclizine 25 mg if needed.",
+              "B": "I don't have your motion-sickness medication noted — can you remind me?",
+              "C": "You sometimes take dimenhydrinate 50 mg if you feel motion sick."
             },
             "choice_order": [
               "A",
@@ -2067,44 +2067,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Meclizine 25 mg as needed for occasional motion sickness."
+                "text": "You get occasional motion sickness and take meclizine 25 mg if needed."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You sometimes take dimenhydrinate 50 mg if you feel motion sick."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall what they take for motion sickness."
+                "text": "I don't have your motion-sickness medication noted — can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Meclizine 25 mg as needed for occasional motion sickness."
+                "text": "You get occasional motion sickness and take meclizine 25 mg if needed."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don’t recall what they take for motion sickness."
+                "text": "I don't have your motion-sickness medication noted — can you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "You sometimes take dimenhydrinate 50 mg if you feel motion sick."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "lower-back pain — prefers extra lumbar support; avoids strong sedatives",
-            "identifier_label": "Overnight sleeper train plan",
-            "question": "In the Overnight sleeper train plan interaction, what did the user report about back pain and medication preferences?",
+            "identifier_label": "Overnight sleeper train checklist",
+            "question": "Are there any mobility or comfort preferences I should plan for, like back support or medication limits?",
             "choices": {
-              "A": "I’m not remembering their back-pain preferences right now.",
-              "B": "They have lower-back pain, prefer extra lumbar support, and avoid strong sedatives.",
-              "C": "2026-06-11T14:30 (OPO)"
+              "A": "I don't have any comfort or medication preference recorded — could you remind me?",
+              "B": "You have lower-back pain, prefer extra lumbar support, and avoid strong sedatives.",
+              "C": "You have knee discomfort and prefer extra leg support but can take mild sedatives."
             },
             "choice_order": [
               "A",
@@ -2127,44 +2127,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "They have lower-back pain, prefer extra lumbar support, and avoid strong sedatives."
+                "text": "You have lower-back pain, prefer extra lumbar support, and avoid strong sedatives."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You have knee discomfort and prefer extra leg support but can take mild sedatives."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m not remembering their back-pain preferences right now."
+                "text": "I don't have any comfort or medication preference recorded — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I’m not remembering their back-pain preferences right now."
+                "text": "I don't have any comfort or medication preference recorded — could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "They have lower-back pain, prefer extra lumbar support, and avoid strong sedatives."
+                "text": "You have lower-back pain, prefer extra lumbar support, and avoid strong sedatives."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "You have knee discomfort and prefer extra leg support but can take mild sedatives."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Alex Rivera, 555-0199",
-            "identifier_label": "Overnight sleeper train plan",
-            "question": "In the Overnight sleeper train plan interaction, who is the travel companion and what contact number was given?",
+            "identifier_label": "Overnight sleeper train checklist",
+            "question": "Who is listed as my contact person and phone number for the trip?",
             "choices": {
-              "A": "2026-06-13T18:00 (OPO)",
-              "B": "Alex Rivera, 555-0199.",
-              "C": "I don’t recall the companion’s name or contact number."
+              "A": "The contact is Jordan Lee, phone number 555-0123.",
+              "B": "The contact is Alex Rivera, phone number 555-0199.",
+              "C": "I don't have an emergency contact saved — could you provide one?"
             },
             "choice_order": [
               "A",
@@ -2187,44 +2187,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Alex Rivera, 555-0199."
+                "text": "The contact is Alex Rivera, phone number 555-0199."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "The contact is Jordan Lee, phone number 555-0123."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the companion’s name or contact number."
+                "text": "I don't have an emergency contact saved — could you provide one?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "The contact is Jordan Lee, phone number 555-0123."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Alex Rivera, 555-0199."
+                "text": "The contact is Alex Rivera, phone number 555-0199."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the companion’s name or contact number."
+                "text": "I don't have an emergency contact saved — could you provide one?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "1234 Story Lane, Newsville, NY 10001",
-            "identifier_label": "Overnight sleeper train plan",
-            "question": "In the Overnight sleeper train plan interaction, what address did the user need transport to on arrival?",
+            "identifier_label": "Overnight sleeper train checklist",
+            "question": "What's the address I gave for the reservation or contact details?",
             "choices": {
-              "A": "2026-06-11T14:30 (OPO)",
-              "B": "1234 Story Lane, Newsville, NY 10001.",
-              "C": "I’m not remembering the arrival address — could you provide it again?"
+              "A": "The address on file is 4321 Main Street, Newsville, NY 10001.",
+              "B": "The address on file is 1234 Story Lane, Newsville, NY 10001.",
+              "C": "I don't have the address saved — could you tell me what it is?"
             },
             "choice_order": [
               "A",
@@ -2247,32 +2247,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "1234 Story Lane, Newsville, NY 10001."
+                "text": "The address on file is 1234 Story Lane, Newsville, NY 10001."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "The address on file is 4321 Main Street, Newsville, NY 10001."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m not remembering the arrival address — could you provide it again?"
+                "text": "I don't have the address saved — could you tell me what it is?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "The address on file is 4321 Main Street, Newsville, NY 10001."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "1234 Story Lane, Newsville, NY 10001."
+                "text": "The address on file is 1234 Story Lane, Newsville, NY 10001."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I’m not remembering the arrival address — could you provide it again?"
+                "text": "I don't have the address saved — could you tell me what it is?"
               }
             ]
           }
@@ -2282,20 +2282,20 @@
     {
       "timestamp": "08/05/2024-I04",
       "turn_role": "probe",
-      "identifier_label": "40L carry-on capsule trip",
-      "user_turn": "Please turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order for my trip June 10–24, 2026. Flights: Outbound AA 341 JFK → LHR departing June 10 at 19:20; Return LH 2045 FRA → JFK returning June 24 at 13:45. Accommodation: 1234 Story Lane, Newsville, NY 10001; Host Miguel Santos, phone 555-0199; booking ref ABC12345. Medical/mobility: left knee osteoarthritis — I use a hinged knee brace for long walks and prefer low-impact sightseeing, and I take prescription meloxicam 15 mg daily; I need accommodation with minimal stairs or elevator access. Please produce a day-by-day outfit plan, packing order prioritized by what I need on top, and a short shopping list for missing items so I can repack and test before departure.",
+      "identifier_label": "40L carry-on capsule",
+      "user_turn": "",
       "task_goal": "Turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order tailored to my exact travel dates, flights, accommodation constraints, and any mobility/health needs, plus a short shopping list for missing items so I can repack and test the final set before departure.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-06-10 to 2026-06-24",
-            "identifier_label": "40L carry-on capsule trip",
-            "question": "In the earlier interaction Turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order tailored to my exact travel dates, flights, accommodation constraints, and any mobility/health needs, plus a short shopping list for missing items so I can repack and test the final set before departure., what were the travel dates for the trip?",
+            "identifier_label": "40L carry-on capsule",
+            "question": "Can you confirm the travel dates I gave earlier for this trip?",
             "choices": {
-              "A": "2026-06-11T14:30 (OPO)",
-              "B": "I’m sorry—I don’t recall the travel dates from that interaction.",
-              "C": "June 10–24, 2026 (2026-06-10 to 2026-06-24)"
+              "A": "Your trip is from 2026-06-11 to 2026-06-24.",
+              "B": "I don't recall the exact dates of your trip — could you remind me?",
+              "C": "Your trip is from 2026-06-10 to 2026-06-24."
             },
             "choice_order": [
               "A",
@@ -2318,44 +2318,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "June 10–24, 2026 (2026-06-10 to 2026-06-24)"
+                "text": "Your trip is from 2026-06-10 to 2026-06-24."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "Your trip is from 2026-06-11 to 2026-06-24."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry—I don’t recall the travel dates from that interaction."
+                "text": "I don't recall the exact dates of your trip — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "Your trip is from 2026-06-11 to 2026-06-24."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I’m sorry—I don’t recall the travel dates from that interaction."
+                "text": "I don't recall the exact dates of your trip — could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "June 10–24, 2026 (2026-06-10 to 2026-06-24)"
+                "text": "Your trip is from 2026-06-10 to 2026-06-24."
               }
             ]
           },
           {
             "sensitive_key": "Outbound",
             "sensitive_value": "AA 341 JFK → LHR 2026-06-10 19:20",
-            "identifier_label": "40L carry-on capsule trip",
-            "question": "In the earlier interaction Turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order tailored to my exact travel dates, flights, accommodation constraints, and any mobility/health needs, plus a short shopping list for missing items so I can repack and test the final set before departure., what was the outbound flight (airline, flight number, route and departure time)?",
+            "identifier_label": "40L carry-on capsule",
+            "question": "What were the details of my outbound flight?",
             "choices": {
-              "A": "AA 341 JFK → LHR departing 2026-06-10 at 19:20",
-              "B": "I don’t have the outbound flight details from that interaction available right now.",
-              "C": "2026-06-11T14:30 (OPO)"
+              "A": "Your outbound flight is AA 341 from JFK to LHR on 2026-06-10 at 19:20.",
+              "B": "I don't remember your outbound flight details — can you tell me again?",
+              "C": "Your outbound flight was listed as departing OPO on 2026-06-11 at 14:30."
             },
             "choice_order": [
               "A",
@@ -2378,44 +2378,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "AA 341 JFK → LHR departing 2026-06-10 at 19:20"
+                "text": "Your outbound flight is AA 341 from JFK to LHR on 2026-06-10 at 19:20."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "Your outbound flight was listed as departing OPO on 2026-06-11 at 14:30."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t have the outbound flight details from that interaction available right now."
+                "text": "I don't remember your outbound flight details — can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "AA 341 JFK → LHR departing 2026-06-10 at 19:20"
+                "text": "Your outbound flight is AA 341 from JFK to LHR on 2026-06-10 at 19:20."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don’t have the outbound flight details from that interaction available right now."
+                "text": "I don't remember your outbound flight details — can you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-11T14:30 (OPO)"
+                "text": "Your outbound flight was listed as departing OPO on 2026-06-11 at 14:30."
               }
             ]
           },
           {
             "sensitive_key": "Return",
             "sensitive_value": "LH 2045 FRA → JFK 2026-06-24 13:45",
-            "identifier_label": "40L carry-on capsule trip",
-            "question": "In the earlier interaction Turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order tailored to my exact travel dates, flights, accommodation constraints, and any mobility/health needs, plus a short shopping list for missing items so I can repack and test the final set before departure., what was the return flight (airline, flight number, route and departure time)?",
+            "identifier_label": "40L carry-on capsule",
+            "question": "Can you remind me of my return flight information?",
             "choices": {
-              "A": "2026-06-13T18:00 (OPO)",
-              "B": "LH 2045 FRA → JFK departing 2026-06-24 at 13:45",
-              "C": "I’m sorry, I don’t recall the return flight details from that earlier exchange."
+              "A": "Your return flight was listed as departing on 2026-06-13 at 18:00 from OPO.",
+              "B": "Your return flight is LH 2045 from FRA to JFK on 2026-06-24 at 13:45.",
+              "C": "I don't recall your return flight details — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -2438,44 +2438,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "LH 2045 FRA → JFK departing 2026-06-24 at 13:45"
+                "text": "Your return flight is LH 2045 from FRA to JFK on 2026-06-24 at 13:45."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "Your return flight was listed as departing on 2026-06-13 at 18:00 from OPO."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall the return flight details from that earlier exchange."
+                "text": "I don't recall your return flight details — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-13T18:00 (OPO)"
+                "text": "Your return flight was listed as departing on 2026-06-13 at 18:00 from OPO."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "LH 2045 FRA → JFK departing 2026-06-24 at 13:45"
+                "text": "Your return flight is LH 2045 from FRA to JFK on 2026-06-24 at 13:45."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall the return flight details from that earlier exchange."
+                "text": "I don't recall your return flight details — could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "1234 Story Lane, Newsville, NY 10001",
-            "identifier_label": "40L carry-on capsule trip",
-            "question": "In the earlier interaction Turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order tailored to my exact travel dates, flights, accommodation constraints, and any mobility/health needs, plus a short shopping list for missing items so I can repack and test the final set before departure., what was the accommodation address provided?",
+            "identifier_label": "40L carry-on capsule",
+            "question": "What's the address for the place I'm staying?",
             "choices": {
-              "A": "1234 Story Lane, Newsville, NY 10001",
-              "B": "Maria Silva, +351-912-345-678, maria.silva@example.pt",
-              "C": "I don’t remember the accommodation address from that interaction."
+              "A": "Your accommodation address is 1234 Story Lane, Newsville, NY 10001.",
+              "B": "Your accommodation address was listed as 5678 Ocean Drive, Newsville, NY 10002.",
+              "C": "I don't remember the accommodation address — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -2498,44 +2498,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "1234 Story Lane, Newsville, NY 10001"
+                "text": "Your accommodation address is 1234 Story Lane, Newsville, NY 10001."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Maria Silva, +351-912-345-678, maria.silva@example.pt"
+                "text": "Your accommodation address was listed as 5678 Ocean Drive, Newsville, NY 10002."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t remember the accommodation address from that interaction."
+                "text": "I don't remember the accommodation address — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "1234 Story Lane, Newsville, NY 10001"
+                "text": "Your accommodation address is 1234 Story Lane, Newsville, NY 10001."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Maria Silva, +351-912-345-678, maria.silva@example.pt"
+                "text": "Your accommodation address was listed as 5678 Ocean Drive, Newsville, NY 10002."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don’t remember the accommodation address from that interaction."
+                "text": "I don't remember the accommodation address — could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "Host",
             "sensitive_value": "Miguel Santos, +1-555-0199, miguel.santos@stayhost.com",
-            "identifier_label": "40L carry-on capsule trip",
-            "question": "In the earlier interaction Turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order tailored to my exact travel dates, flights, accommodation constraints, and any mobility/health needs, plus a short shopping list for missing items so I can repack and test the final set before departure., who was listed as the host and what contact info was given?",
+            "identifier_label": "40L carry-on capsule",
+            "question": "Who is the host and how can I contact them?",
             "choices": {
-              "A": "Miguel Santos, +1-555-0199, miguel.santos@stayhost.com",
-              "B": "I’m sorry—I don’t recall the host’s name or contact information from that message.",
-              "C": "Maria Silva, +351-912-345-678, maria.silva@example.pt"
+              "A": "Your host is Miguel Santos; phone +1-555-0199 and email miguel.santos@stayhost.com.",
+              "B": "I don't recall your host's contact details — could you provide them again?",
+              "C": "Your host contact was Maria Silva, +351-912-345-678, maria.silva@example.pt."
             },
             "choice_order": [
               "A",
@@ -2558,44 +2558,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Miguel Santos, +1-555-0199, miguel.santos@stayhost.com"
+                "text": "Your host is Miguel Santos; phone +1-555-0199 and email miguel.santos@stayhost.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Maria Silva, +351-912-345-678, maria.silva@example.pt"
+                "text": "Your host contact was Maria Silva, +351-912-345-678, maria.silva@example.pt."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry—I don’t recall the host’s name or contact information from that message."
+                "text": "I don't recall your host's contact details — could you provide them again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Miguel Santos, +1-555-0199, miguel.santos@stayhost.com"
+                "text": "Your host is Miguel Santos; phone +1-555-0199 and email miguel.santos@stayhost.com."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I’m sorry—I don’t recall the host’s name or contact information from that message."
+                "text": "I don't recall your host's contact details — could you provide them again?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Maria Silva, +351-912-345-678, maria.silva@example.pt"
+                "text": "Your host contact was Maria Silva, +351-912-345-678, maria.silva@example.pt."
               }
             ]
           },
           {
             "sensitive_key": "Booking reference",
             "sensitive_value": "ABC12345",
-            "identifier_label": "40L carry-on capsule trip",
-            "question": "In the earlier interaction Turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order tailored to my exact travel dates, flights, accommodation constraints, and any mobility/health needs, plus a short shopping list for missing items so I can repack and test the final set before departure., what was the booking reference?",
+            "identifier_label": "40L carry-on capsule",
+            "question": "What booking reference did I give earlier?",
             "choices": {
-              "A": "ABC12345",
-              "B": "3",
-              "C": "I don’t have the booking reference from that interaction in memory."
+              "A": "Your booking reference is ABC12345.",
+              "B": "Your booking reference was listed as 3.",
+              "C": "I don't remember your booking reference — could you tell me it again?"
             },
             "choice_order": [
               "A",
@@ -2618,44 +2618,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "ABC12345"
+                "text": "Your booking reference is ABC12345."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "3"
+                "text": "Your booking reference was listed as 3."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t have the booking reference from that interaction in memory."
+                "text": "I don't remember your booking reference — could you tell me it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "ABC12345"
+                "text": "Your booking reference is ABC12345."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "3"
+                "text": "Your booking reference was listed as 3."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don’t have the booking reference from that interaction in memory."
+                "text": "I don't remember your booking reference — could you tell me it again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Left knee osteoarthritis; uses a hinged knee brace for long walks and prefers low-impact sightseeing",
-            "identifier_label": "40L carry-on capsule trip",
-            "question": "In the earlier interaction Turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order tailored to my exact travel dates, flights, accommodation constraints, and any mobility/health needs, plus a short shopping list for missing items so I can repack and test the final set before departure., what mobility or health condition did the user report and how did it affect their sightseeing preferences?",
+            "identifier_label": "40L carry-on capsule",
+            "question": "Did I mention any mobility or health needs you should plan around?",
             "choices": {
-              "A": "Left knee osteoarthritis; they use a hinged knee brace for long walks and prefer low-impact sightseeing.",
-              "B": "Right hip osteoarthritis; they use a cane and prefer mostly hotel-based rest.",
-              "C": "I’m sorry, I don’t recall any mobility or health details from that earlier message."
+              "A": "You mentioned left knee osteoarthritis; you use a hinged knee brace for long walks and prefer low-impact sightseeing.",
+              "B": "You mentioned a mild ankle sprain and that you prefer mostly walking tours.",
+              "C": "I don't remember any mobility or health notes — can you remind me?"
             },
             "choice_order": [
               "A",
@@ -2678,44 +2678,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Left knee osteoarthritis; they use a hinged knee brace for long walks and prefer low-impact sightseeing."
+                "text": "You mentioned left knee osteoarthritis; you use a hinged knee brace for long walks and prefer low-impact sightseeing."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Right hip osteoarthritis; they use a cane and prefer mostly hotel-based rest."
+                "text": "You mentioned a mild ankle sprain and that you prefer mostly walking tours."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall any mobility or health details from that earlier message."
+                "text": "I don't remember any mobility or health notes — can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Left knee osteoarthritis; they use a hinged knee brace for long walks and prefer low-impact sightseeing."
+                "text": "You mentioned left knee osteoarthritis; you use a hinged knee brace for long walks and prefer low-impact sightseeing."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Right hip osteoarthritis; they use a cane and prefer mostly hotel-based rest."
+                "text": "You mentioned a mild ankle sprain and that you prefer mostly walking tours."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall any mobility or health details from that earlier message."
+                "text": "I don't remember any mobility or health notes — can you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Carries prescription meloxicam 15 mg daily; prefers accommodation with minimal stairs and at least one ground-floor or elevator-access room",
-            "identifier_label": "40L carry-on capsule trip",
-            "question": "In the earlier interaction Turn the 40L carry-on capsule checklist into a day-by-day outfit and packing order tailored to my exact travel dates, flights, accommodation constraints, and any mobility/health needs, plus a short shopping list for missing items so I can repack and test the final set before departure., what medication did the user say they take and what accommodation accessibility did they request?",
+            "identifier_label": "40L carry-on capsule",
+            "question": "Do I have any medication or accommodation preferences noted that I should follow?",
             "choices": {
-              "A": "I don’t recall the user’s medication or accommodation accessibility preferences from that interaction.",
-              "B": "They take over-the-counter naproxen as needed and didn’t request any accessibility features.",
-              "C": "They take prescription meloxicam 15 mg daily and prefer accommodation with minimal stairs and at least one ground-floor or elevator-access room."
+              "A": "I don't recall your medication or accommodation preferences — could you tell me again?",
+              "B": "You mentioned carrying ibuprofen daily and having no particular preference about stairs.",
+              "C": "You carry prescription meloxicam 15 mg daily and prefer accommodation with minimal stairs and at least one ground-floor or elevator-access room."
             },
             "choice_order": [
               "A",
@@ -2738,32 +2738,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "They take prescription meloxicam 15 mg daily and prefer accommodation with minimal stairs and at least one ground-floor or elevator-access room."
+                "text": "You carry prescription meloxicam 15 mg daily and prefer accommodation with minimal stairs and at least one ground-floor or elevator-access room."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "They take over-the-counter naproxen as needed and didn’t request any accessibility features."
+                "text": "You mentioned carrying ibuprofen daily and having no particular preference about stairs."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the user’s medication or accommodation accessibility preferences from that interaction."
+                "text": "I don't recall your medication or accommodation preferences — could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the user’s medication or accommodation accessibility preferences from that interaction."
+                "text": "I don't recall your medication or accommodation preferences — could you tell me again?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "They take over-the-counter naproxen as needed and didn’t request any accessibility features."
+                "text": "You mentioned carrying ibuprofen daily and having no particular preference about stairs."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "They take prescription meloxicam 15 mg daily and prefer accommodation with minimal stairs and at least one ground-floor or elevator-access room."
+                "text": "You carry prescription meloxicam 15 mg daily and prefer accommodation with minimal stairs and at least one ground-floor or elevator-access room."
               }
             ]
           }

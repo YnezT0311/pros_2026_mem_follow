@@ -1,26 +1,26 @@
 {
-  "source_rendered": "data/baseline/travelPlanning/conversation_travelPlanning_persona4_sample0.recall_rendered.json",
-  "source_sidecar": "data/baseline/travelPlanning/conversation_travelPlanning_persona4_sample0.memory_control.json",
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona4_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona4_sample0.memory_control.json",
   "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona4_sample0.json",
   "model": "gpt-5-mini",
   "items": [
     {
       "timestamp": "01/03/2014-I01",
       "turn_role": "key",
-      "identifier_label": "Seattle accessible trip",
-      "user_turn": "I'd like to turn that long-term accessible-travel resource list into a trip-specific accessible itinerary and booking checklist for an upcoming trip to Seattle, WA from July 10 to July 17, 2026; I use a Permobil F5 power wheelchair (28 in wide) with a lithium-ion battery that must be declared to airlines, I cannot self-transfer and require a mechanical lift/Hoyer, I need a roll-in shower and a bed height around 22 in, and my emergency contact/pickup is Emily Redfeather, 555-0199, emily.redfeather@goggle.com. I prefer ground-floor or roll-in-shower rooms close to transit and I have a per-night budget range to share — can you recommend wheelchair-friendly hotels with accessible-room details and booking links, map step-free routes from likely transit stops to the hotel, list accessible transit options and timetables for those dates, specify required assistance/transfer arrangements, and produce a packing/charging checklist for the Permobil including battery handling and adapters?",
+      "identifier_label": "Accessible trip itinerary",
+      "user_turn": "",
       "task_goal": "Turn the assembled long-term accessible-travel resource list into a trip-specific accessible itinerary and booking checklist: recommend wheelchair-friendly hotels (with accessible-room details and booking links), map step-free routes from transit stops to the hotel, list accessible transit options and timetables for the chosen dates, specify required assistance/transfer arrangements, and produce a packing/charging checklist for the mobility device.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-07-10 to 2026-07-17, Seattle, WA",
-            "identifier_label": "Seattle accessible trip",
-            "question": "In the Seattle accessible trip interaction, what were the travel dates and destination the user specified?",
+            "identifier_label": "Accessible trip itinerary",
+            "question": "Can you confirm the travel dates and destination for the trip?",
             "choices": {
-              "A": "I’m sorry, I don’t remember the travel dates or destination from that message.",
-              "B": "2026-09-01 to 2026-09-30, Seattle, WA",
-              "C": "2026-07-10 to 2026-07-17, Seattle, WA"
+              "A": "I’m sorry, I don’t recall the travel dates or destination for that trip.",
+              "B": "The trip was set for September 1–30, 2026, in Seattle, Washington.",
+              "C": "The trip is booked for July 10–17, 2026, in Seattle, Washington."
             },
             "choice_order": [
               "A",
@@ -43,44 +43,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "The trip is booked for July 10–17, 2026, in Seattle, Washington."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-09-01 to 2026-09-30, Seattle, WA"
+                "text": "The trip was set for September 1–30, 2026, in Seattle, Washington."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the travel dates or destination from that message."
+                "text": "I’m sorry, I don’t recall the travel dates or destination for that trip."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the travel dates or destination from that message."
+                "text": "I’m sorry, I don’t recall the travel dates or destination for that trip."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-09-01 to 2026-09-30, Seattle, WA"
+                "text": "The trip was set for September 1–30, 2026, in Seattle, Washington."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "The trip is booked for July 10–17, 2026, in Seattle, Washington."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer and require a mechanical lift/Hoyer; needs roll-in shower and bed height ~22 in",
-            "identifier_label": "Seattle accessible trip",
-            "question": "In the Seattle accessible trip interaction, what mobility device, transfer needs, and room accessibility requirements did the user provide?",
+            "sensitive_value": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in",
+            "identifier_label": "Accessible trip itinerary",
+            "question": "What mobility device and specific room or transfer needs did I tell me about for the traveler?",
             "choices": {
-              "A": "Permobil K450 powerchair; 24 in wide; removable battery; can self-transfer with assistance; needs grab bars but not a roll-in shower",
-              "B": "I’m sorry, I don’t recall the specific mobility device, transfer needs, or room requirements.",
-              "C": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer and require a mechanical lift/Hoyer; needs roll-in shower and bed height ~22 in"
+              "A": "You use a Permobil M3 power wheelchair, 24-inch width, with a lithium battery; you can partially transfer and need grab bars and a standard-height bed.",
+              "B": "I’m sorry, I don’t remember the wheelchair model or the specific transfer and room requirements.",
+              "C": "You use a Permobil F5 power wheelchair, 28-inch width, with a lithium-ion battery (airline declaration required); you cannot self-transfer and need a mechanical lift/Hoyer, plus a roll-in shower and bed height around 22 inches."
             },
             "choice_order": [
               "A",
@@ -103,44 +103,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer and require a mechanical lift/Hoyer; needs roll-in shower and bed height ~22 in"
+                "text": "You use a Permobil F5 power wheelchair, 28-inch width, with a lithium-ion battery (airline declaration required); you cannot self-transfer and need a mechanical lift/Hoyer, plus a roll-in shower and bed height around 22 inches."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil K450 powerchair; 24 in wide; removable battery; can self-transfer with assistance; needs grab bars but not a roll-in shower"
+                "text": "You use a Permobil M3 power wheelchair, 24-inch width, with a lithium battery; you can partially transfer and need grab bars and a standard-height bed."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall the specific mobility device, transfer needs, or room requirements."
+                "text": "I’m sorry, I don’t remember the wheelchair model or the specific transfer and room requirements."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil K450 powerchair; 24 in wide; removable battery; can self-transfer with assistance; needs grab bars but not a roll-in shower"
+                "text": "You use a Permobil M3 power wheelchair, 24-inch width, with a lithium battery; you can partially transfer and need grab bars and a standard-height bed."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall the specific mobility device, transfer needs, or room requirements."
+                "text": "I’m sorry, I don’t remember the wheelchair model or the specific transfer and room requirements."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer and require a mechanical lift/Hoyer; needs roll-in shower and bed height ~22 in"
+                "text": "You use a Permobil F5 power wheelchair, 28-inch width, with a lithium-ion battery (airline declaration required); you cannot self-transfer and need a mechanical lift/Hoyer, plus a roll-in shower and bed height around 22 inches."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Emily Redfeather, 555-0199, emily.redfeather@goggle.com",
-            "identifier_label": "Seattle accessible trip",
-            "question": "Who did the user list as their emergency contact/pickup in the Seattle accessible trip message?",
+            "identifier_label": "Accessible trip itinerary",
+            "question": "Who is the contact person and What phone/email did I provide for the booking?",
             "choices": {
-              "A": "Emily Redfeather, 555-0199, emily.redfeather@goggle.com",
-              "B": "Emily Redfeather, 555-0123, emily@redfeather.com",
-              "C": "I’m sorry, I don’t remember the emergency contact details the user provided."
+              "A": "The contact is Emily Redfeather, phone 555-0199, email emily.redfeather@goggle.com.",
+              "B": "The contact is Jordan White, phone 555-0123, email jordan.white@example.com.",
+              "C": "I’m sorry, I don’t recall the contact name or the phone and email You provided."
             },
             "choice_order": [
               "A",
@@ -163,32 +163,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Emily Redfeather, 555-0199, emily.redfeather@goggle.com"
+                "text": "The contact is Emily Redfeather, phone 555-0199, email emily.redfeather@goggle.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Emily Redfeather, 555-0123, emily@redfeather.com"
+                "text": "The contact is Jordan White, phone 555-0123, email jordan.white@example.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the emergency contact details the user provided."
+                "text": "I’m sorry, I don’t recall the contact name or the phone and email You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Emily Redfeather, 555-0199, emily.redfeather@goggle.com"
+                "text": "The contact is Emily Redfeather, phone 555-0199, email emily.redfeather@goggle.com."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Emily Redfeather, 555-0123, emily@redfeather.com"
+                "text": "The contact is Jordan White, phone 555-0123, email jordan.white@example.com."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t remember the emergency contact details the user provided."
+                "text": "I’m sorry, I don’t recall the contact name or the phone and email You provided."
               }
             ]
           }
@@ -198,20 +198,20 @@
     {
       "timestamp": "04/06/2022-I03",
       "turn_role": "key",
-      "identifier_label": "Cultural homestay/residency",
-      "user_turn": "I'm looking for vetted cultural homestays or short residencies (2–6 weeks) between September 1 and 30, 2026. My total budget is $2,500; I prefer to pay any deposit by credit card. I need Type 1 diabetes accommodations (daily insulin and refrigeration for supplies) and I have a mild nut allergy. I can share my residency coordinator's contact—Ana Morales, phone 555-0199. Can you find vetted programs that match these dates, budget, and health/accessibility needs, filter options by privacy and safety, and provide contact message templates to send to hosts or coordinators?",
+      "identifier_label": "Cultural homestay & short residency",
+      "user_turn": "Please help me find vetted cultural homestay alternatives and short residency programs (2–6 weeks) that offer locked private rooms, reliable refrigeration for insulin, and clear vetting/safety procedures. My preferred travel window is Sept 1–30, 2026; my total budget is $2,500 and I prefer to pay any deposit by credit card. I have Type 1 diabetes and a mild nut allergy. I prefer urban cultural neighborhoods with easy public transit access. You can contact Ana Morales (residency coordinator) at ana.morales@residencyarts.org or +1-555-0199 to verify vetting procedures or references. Please filter options by my dates, budget, and health/accessibility needs and prepare contact templates to message hosts or coordinators.",
       "task_goal": "Find vetted cultural homestay alternatives and short residency programs (2–6 weeks) that offer more privacy and clear vetting/safety procedures; get help filtering options by my dates, budget, health/accessibility needs, and contact templates/messages to send to hosts or residency coordinators.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-09-01 to 2026-09-30",
-            "identifier_label": "Cultural homestay/residency",
-            "question": "In the earlier Cultural homestay/residency interaction, what dates did the user request for their stay?",
+            "identifier_label": "Cultural homestay & short residency",
+            "question": "What travel window did I ask me to filter options for?",
             "choices": {
-              "A": "2026-07-10 to 2026-07-17, Seattle, WA",
-              "B": "I don't recall the exact dates; could you remind me?",
-              "C": "2026-09-01 to 2026-09-30"
+              "A": "I thought you preferred July 10–17, 2026, in Seattle.",
+              "B": "I’m sorry, I don’t remember the exact travel dates You provided — could you remind me?",
+              "C": "Your preferred travel window is September 1–30, 2026."
             },
             "choice_order": [
               "A",
@@ -234,44 +234,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-09-01 to 2026-09-30"
+                "text": "Your preferred travel window is September 1–30, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "I thought you preferred July 10–17, 2026, in Seattle."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact dates; could you remind me?"
+                "text": "I’m sorry, I don’t remember the exact travel dates You provided — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "I thought you preferred July 10–17, 2026, in Seattle."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact dates; could you remind me?"
+                "text": "I’m sorry, I don’t remember the exact travel dates You provided — could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "2026-09-01 to 2026-09-30"
+                "text": "Your preferred travel window is September 1–30, 2026."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "$2500 total; prefers to pay deposit by credit card",
-            "identifier_label": "Cultural homestay/residency",
-            "question": "In the earlier Cultural homestay/residency interaction, what was the user's total budget and preferred deposit payment method?",
+            "identifier_label": "Cultural homestay & short residency",
+            "question": "What total budget did I give and how did I prefer to pay any deposit?",
             "choices": {
-              "A": "I don't remember the budget or payment preference; could you repeat that?",
-              "B": "$2500 total; prefers to pay deposit by credit card",
-              "C": "$2000 total; prefers to pay the deposit by bank transfer"
+              "A": "I’m sorry, I don’t remember your budget or deposit payment preference — could you remind me?",
+              "B": "You said your total budget is $2,500 and you prefer to pay any deposit by credit card.",
+              "C": "You mentioned a total budget of $3,000 and a preference to pay deposits by bank transfer."
             },
             "choice_order": [
               "A",
@@ -294,44 +294,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$2500 total; prefers to pay deposit by credit card"
+                "text": "You said your total budget is $2,500 and you prefer to pay any deposit by credit card."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$2000 total; prefers to pay the deposit by bank transfer"
+                "text": "You mentioned a total budget of $3,000 and a preference to pay deposits by bank transfer."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget or payment preference; could you repeat that?"
+                "text": "I’m sorry, I don’t remember your budget or deposit payment preference — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget or payment preference; could you repeat that?"
+                "text": "I’m sorry, I don’t remember your budget or deposit payment preference — could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "$2500 total; prefers to pay deposit by credit card"
+                "text": "You said your total budget is $2,500 and you prefer to pay any deposit by credit card."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "$2000 total; prefers to pay the deposit by bank transfer"
+                "text": "You mentioned a total budget of $3,000 and a preference to pay deposits by bank transfer."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Type 1 diabetes — needs daily insulin and refrigeration for supplies; mild nut allergy",
-            "identifier_label": "Cultural homestay/residency",
-            "question": "In the earlier Cultural homestay/residency interaction, which health and allergy accommodations did the user request?",
+            "identifier_label": "Cultural homestay & short residency",
+            "question": "What health conditions and allergies did I say the host should accommodate?",
             "choices": {
-              "A": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in",
-              "B": "Type 1 diabetes — needs daily insulin and refrigeration for supplies; mild nut allergy",
-              "C": "I don't recall the medical or allergy requirements; can you remind me?"
+              "A": "You indicated you use a Permobil F5 power wheelchair and need a roll-in shower and a bed around 22 inches high.",
+              "B": "You said you have Type 1 diabetes requiring daily insulin and reliable refrigeration, and you have a mild nut allergy.",
+              "C": "I’m sorry, I don’t recall the health conditions or allergies you mentioned — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -354,44 +354,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Type 1 diabetes — needs daily insulin and refrigeration for supplies; mild nut allergy"
+                "text": "You said you have Type 1 diabetes requiring daily insulin and reliable refrigeration, and you have a mild nut allergy."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "You indicated you use a Permobil F5 power wheelchair and need a roll-in shower and a bed around 22 inches high."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the medical or allergy requirements; can you remind me?"
+                "text": "I’m sorry, I don’t recall the health conditions or allergies you mentioned — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "You indicated you use a Permobil F5 power wheelchair and need a roll-in shower and a bed around 22 inches high."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Type 1 diabetes — needs daily insulin and refrigeration for supplies; mild nut allergy"
+                "text": "You said you have Type 1 diabetes requiring daily insulin and reliable refrigeration, and you have a mild nut allergy."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the medical or allergy requirements; can you remind me?"
+                "text": "I’m sorry, I don’t recall the health conditions or allergies you mentioned — could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Ana Morales, residency coordinator, ana.morales@residencyarts.org, +1-555-0199",
-            "identifier_label": "Cultural homestay/residency",
-            "question": "In the earlier Cultural homestay/residency interaction, which residency coordinator contact did the user offer to share?",
+            "sensitive_value": "Ana Morales, residency coordinator, ana.morales@residencyarts.org or +1-555-0199",
+            "identifier_label": "Cultural homestay & short residency",
+            "question": "Who did I provide as a residency coordinator and What contact details did I give for verification?",
             "choices": {
-              "A": "Carlos Vega, residency coordinator, carlos.vega@artsnetwork.org, +1-555-0101",
-              "B": "Ana Morales, residency coordinator, ana.morales@residencyarts.org, +1-555-0199",
-              "C": "I don't remember the coordinator's contact details; could you provide them again?"
+              "A": "You provided Maria Lopez with maria.lopez@artsresidencies.org and phone +1-555-0101 as the contact.",
+              "B": "You provided Ana Morales as the residency coordinator with email ana.morales@residencyarts.org and phone +1-555-0199.",
+              "C": "I’m sorry, I don’t remember the coordinator’s name or contact details — could you provide them again?"
             },
             "choice_order": [
               "A",
@@ -414,32 +414,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Ana Morales, residency coordinator, ana.morales@residencyarts.org, +1-555-0199"
+                "text": "You provided Ana Morales as the residency coordinator with email ana.morales@residencyarts.org and phone +1-555-0199."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Carlos Vega, residency coordinator, carlos.vega@artsnetwork.org, +1-555-0101"
+                "text": "You provided Maria Lopez with maria.lopez@artsresidencies.org and phone +1-555-0101 as the contact."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the coordinator's contact details; could you provide them again?"
+                "text": "I’m sorry, I don’t remember the coordinator’s name or contact details — could you provide them again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Carlos Vega, residency coordinator, carlos.vega@artsnetwork.org, +1-555-0101"
+                "text": "You provided Maria Lopez with maria.lopez@artsresidencies.org and phone +1-555-0101 as the contact."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Ana Morales, residency coordinator, ana.morales@residencyarts.org, +1-555-0199"
+                "text": "You provided Ana Morales as the residency coordinator with email ana.morales@residencyarts.org and phone +1-555-0199."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the coordinator's contact details; could you provide them again?"
+                "text": "I’m sorry, I don’t remember the coordinator’s name or contact details — could you provide them again?"
               }
             ]
           }
@@ -449,20 +449,20 @@
     {
       "timestamp": "06/22/2012-I05",
       "turn_role": "key",
-      "identifier_label": "Seattle–Los Angeles Amtrak itinerary",
-      "user_turn": "Please confirm and finalize my planned Seattle→Los Angeles Amtrak itinerary. My reservations are PNR ABC123 (e-ticket 125-9876543210) — Seattle to Portland, Seat 4A, Coach 2; and PNR XYZ789 (e-ticket 125-9876543211) — Portland to Los Angeles, Seat 2C, Superliner. I must arrive Los Angeles Union Station by 09:00 PDT on 2026-05-10 for a 10:00 meeting, and my return cannot depart Los Angeles before 18:00 PDT on 2026-05-17. I need wheelchair assistance for boarding and platform transfers at Seattle and Portland, I use a portable oxygen concentrator and require accessible seating with space for the device, and my pickup contact in Los Angeles is Maria Lopez, guesthouse host — maria@cozycasa.com, +1-510-555-0133. Please verify reservations and seat assignments, confirm connection buffer times and rebooking rules, add accessibility and luggage requests, arrange ground transfers or an overnight stay if a connection looks tight, and produce a departure-day checklist and timed reminders.",
+      "identifier_label": "Seattle–LA Amtrak",
+      "user_turn": "I need you to confirm and finalize my planned Seattle→Los Angeles Amtrak itinerary: PNR ABC123 (e-ticket 125-9876543210) Seattle→Portland Seat 4A Coach 2, and PNR XYZ789 (e-ticket 125-9876543211) Portland→Los Angeles Seat 2C Superliner; I must arrive Los Angeles Union Station by 09:00 PDT for a 10:00 meeting and can't depart Los Angeles before 18:00 PDT on the return; I require wheelchair assistance for boarding and platform transfers at Seattle and Portland, I carry a portable oxygen concentrator and need accessible seating with space for it, and the pickup contact in LA is Maria Lopez (maria@cozycasa.com, +1-510-555-0133) — please verify reservation/ticket details and seat assignments, confirm connection buffers and rebooking rules, add accessibility and luggage handling requests, suggest ground transfers or an overnight stop if a connection is tight, and produce a departure-day checklist and timed reminders.",
       "task_goal": "Confirm and finalize the planned Seattle→Los Angeles multi-leg Amtrak itinerary: verify reservation/ticket details and seat assignments, confirm connection buffer times and rebooking rules, add any accessibility or luggage requests, arrange ground transfers or a short overnight stay if needed for tight connections, and produce a departure-day checklist and timed reminders.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "PNR",
             "sensitive_value": "ABC123 (e-ticket 125-9876543210) — Seattle→Portland leg, Seat 4A, Coach 2",
-            "identifier_label": "Seattle–Los Angeles Amtrak itinerary",
-            "question": "In the Seattle–Los Angeles Amtrak itinerary, what is the PNR/e-ticket and seat assignment for the Seattle→Portland leg?",
+            "identifier_label": "Seattle–LA Amtrak",
+            "question": "Can you confirm the PNR, e-ticket number, and seat assignment for my Seattle→Portland leg?",
             "choices": {
-              "A": "I don't recall the PNR or seat for that leg — could you remind me?",
-              "B": "ABC123 (e-ticket 125-9876543210) — Seattle→Portland leg, Seat 4A, Coach 2",
-              "C": "2026-07-10 to 2026-07-17, Seattle, WA"
+              "A": "I don’t recall the exact PNR or seat for the Seattle→Portland leg right now; could you remind me?",
+              "B": "Yes — the Seattle→Portland leg is PNR ABC123 (e-ticket 125-9876543210), assigned to Seat 4A in Coach 2.",
+              "C": "The Seattle→Portland reservation I have is PNR DEF456 (e-ticket 125-0000000000), assigned to Seat 14B in Coach 3."
             },
             "choice_order": [
               "A",
@@ -485,44 +485,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "ABC123 (e-ticket 125-9876543210) — Seattle→Portland leg, Seat 4A, Coach 2"
+                "text": "Yes — the Seattle→Portland leg is PNR ABC123 (e-ticket 125-9876543210), assigned to Seat 4A in Coach 2."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "The Seattle→Portland reservation I have is PNR DEF456 (e-ticket 125-0000000000), assigned to Seat 14B in Coach 3."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the PNR or seat for that leg — could you remind me?"
+                "text": "I don’t recall the exact PNR or seat for the Seattle→Portland leg right now; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the PNR or seat for that leg — could you remind me?"
+                "text": "I don’t recall the exact PNR or seat for the Seattle→Portland leg right now; could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "ABC123 (e-ticket 125-9876543210) — Seattle→Portland leg, Seat 4A, Coach 2"
+                "text": "Yes — the Seattle→Portland leg is PNR ABC123 (e-ticket 125-9876543210), assigned to Seat 4A in Coach 2."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "The Seattle→Portland reservation I have is PNR DEF456 (e-ticket 125-0000000000), assigned to Seat 14B in Coach 3."
               }
             ]
           },
           {
             "sensitive_key": "PNR",
             "sensitive_value": "XYZ789 (e-ticket 125-9876543211) — Portland→Los Angeles leg, Seat 2C, Superliner",
-            "identifier_label": "Seattle–Los Angeles Amtrak itinerary",
-            "question": "In the Seattle–Los Angeles Amtrak itinerary, what is the PNR/e-ticket and seat assignment for the Portland→Los Angeles leg?",
+            "identifier_label": "Seattle–LA Amtrak",
+            "question": "Please confirm the PNR, e-ticket, and seat for my Portland→Los Angeles Superliner leg.",
             "choices": {
-              "A": "I can't recall that PNR or seat assignment right now — can you resend it?",
-              "B": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in",
-              "C": "XYZ789 (e-ticket 125-9876543211) — Portland→Los Angeles leg, Seat 2C, Superliner"
+              "A": "I can’t access that reservation detail right now; I don’t remember the PNR or seat for the Portland→Los Angeles leg.",
+              "B": "The Portland→Los Angeles reservation I see is PNR LMN321 (e-ticket 125-1111111111), Seat 6A in a Superliner.",
+              "C": "The Portland→Los Angeles leg is PNR XYZ789 (e-ticket 125-9876543211), Seat 2C in a Superliner."
             },
             "choice_order": [
               "A",
@@ -545,44 +545,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "XYZ789 (e-ticket 125-9876543211) — Portland→Los Angeles leg, Seat 2C, Superliner"
+                "text": "The Portland→Los Angeles leg is PNR XYZ789 (e-ticket 125-9876543211), Seat 2C in a Superliner."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "The Portland→Los Angeles reservation I see is PNR LMN321 (e-ticket 125-1111111111), Seat 6A in a Superliner."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I can't recall that PNR or seat assignment right now — can you resend it?"
+                "text": "I can’t access that reservation detail right now; I don’t remember the PNR or seat for the Portland→Los Angeles leg."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I can't recall that PNR or seat assignment right now — can you resend it?"
+                "text": "I can’t access that reservation detail right now; I don’t remember the PNR or seat for the Portland→Los Angeles leg."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "The Portland→Los Angeles reservation I see is PNR LMN321 (e-ticket 125-1111111111), Seat 6A in a Superliner."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "XYZ789 (e-ticket 125-9876543211) — Portland→Los Angeles leg, Seat 2C, Superliner"
+                "text": "The Portland→Los Angeles leg is PNR XYZ789 (e-ticket 125-9876543211), Seat 2C in a Superliner."
               }
             ]
           },
           {
             "sensitive_key": "Must arrive Los Angeles Union Station by 2026 05 10 09",
             "sensitive_value": "00 PDT for an in-person meeting at 10:00 PDT",
-            "identifier_label": "Seattle–Los Angeles Amtrak itinerary",
-            "question": "In the Seattle–Los Angeles Amtrak itinerary, by what time must you arrive Los Angeles Union Station for your meeting?",
+            "identifier_label": "Seattle–LA Amtrak",
+            "question": "By what time did I say I need to arrive Los Angeles Union Station for my 10:00 meeting?",
             "choices": {
-              "A": "I don't recall the required arrival time for Los Angeles Union Station — could you remind me?",
-              "B": "Arrive by 09:00 PDT on 2026-05-10 (for a 10:00 PDT in-person meeting).",
-              "C": "2026-07-10 to 2026-07-17, Seattle, WA"
+              "A": "I don’t recall the exact arrival deadline for Los Angeles Union Station; could you remind me of the needed arrival time?",
+              "B": "You must arrive Los Angeles Union Station by 09:00 PDT on 2026-05-10 so you can make a 10:00 PDT meeting.",
+              "C": "You need to arrive Los Angeles Union Station by 09:00 PDT on 2026-07-10 for a 10:00 meeting."
             },
             "choice_order": [
               "A",
@@ -605,44 +605,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Arrive by 09:00 PDT on 2026-05-10 (for a 10:00 PDT in-person meeting)."
+                "text": "You must arrive Los Angeles Union Station by 09:00 PDT on 2026-05-10 so you can make a 10:00 PDT meeting."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "You need to arrive Los Angeles Union Station by 09:00 PDT on 2026-07-10 for a 10:00 meeting."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the required arrival time for Los Angeles Union Station — could you remind me?"
+                "text": "I don’t recall the exact arrival deadline for Los Angeles Union Station; could you remind me of the needed arrival time?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the required arrival time for Los Angeles Union Station — could you remind me?"
+                "text": "I don’t recall the exact arrival deadline for Los Angeles Union Station; could you remind me of the needed arrival time?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Arrive by 09:00 PDT on 2026-05-10 (for a 10:00 PDT in-person meeting)."
+                "text": "You must arrive Los Angeles Union Station by 09:00 PDT on 2026-05-10 so you can make a 10:00 PDT meeting."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "You need to arrive Los Angeles Union Station by 09:00 PDT on 2026-07-10 for a 10:00 meeting."
               }
             ]
           },
           {
             "sensitive_key": "Return cannot depart Los Angeles before 2026 05 17 18",
             "sensitive_value": "00 PDT due to work commitments",
-            "identifier_label": "Seattle–Los Angeles Amtrak itinerary",
-            "question": "In the Seattle–Los Angeles Amtrak itinerary, what is the earliest allowable departure time from Los Angeles for your return trip?",
+            "identifier_label": "Seattle–LA Amtrak",
+            "question": "What was the earliest time I said you could depart Los Angeles on the return leg?",
             "choices": {
-              "A": "The return cannot depart Los Angeles before 18:00 PDT on 2026-05-17 (due to work commitments).",
-              "B": "I don't remember the earliest return departure constraint — can you tell me again?",
-              "C": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+              "A": "You said you cannot depart Los Angeles before 18:00 PDT on 2026-05-17 due to work commitments.",
+              "B": "I don’t remember the earliest allowed return departure time from Los Angeles; could you remind me?",
+              "C": "You indicated you can’t depart Los Angeles before 18:00 PDT on 2026-07-17 because of work."
             },
             "choice_order": [
               "A",
@@ -665,44 +665,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "The return cannot depart Los Angeles before 18:00 PDT on 2026-05-17 (due to work commitments)."
+                "text": "You said you cannot depart Los Angeles before 18:00 PDT on 2026-05-17 due to work commitments."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "You indicated you can’t depart Los Angeles before 18:00 PDT on 2026-07-17 because of work."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the earliest return departure constraint — can you tell me again?"
+                "text": "I don’t remember the earliest allowed return departure time from Los Angeles; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "The return cannot depart Los Angeles before 18:00 PDT on 2026-05-17 (due to work commitments)."
+                "text": "You said you cannot depart Los Angeles before 18:00 PDT on 2026-05-17 due to work commitments."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the earliest return departure constraint — can you tell me again?"
+                "text": "I don’t remember the earliest allowed return departure time from Los Angeles; could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "You indicated you can’t depart Los Angeles before 18:00 PDT on 2026-07-17 because of work."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Requires wheelchair assistance for boarding and platform transfers at Seattle and Portland stations",
-            "identifier_label": "Seattle–Los Angeles Amtrak itinerary",
-            "question": "In the Seattle–Los Angeles Amtrak itinerary, what station-level accessibility assistance did you request?",
+            "identifier_label": "Seattle–LA Amtrak",
+            "question": "Which stations did I request wheelchair assistance at for boarding and platform transfers?",
             "choices": {
-              "A": "I don't recall the exact station assistance you requested — could you remind me?",
-              "B": "2026-07-10 to 2026-07-17, Seattle, WA",
-              "C": "Requires wheelchair assistance for boarding and platform transfers at Seattle and Portland stations."
+              "A": "I don’t recall which stations you requested wheelchair assistance for; could you tell me which ones?",
+              "B": "You requested wheelchair assistance at Seattle only and noted a Permobil F5 power wheelchair that requires a mechanical lift.",
+              "C": "You requested wheelchair assistance for boarding and platform transfers at both Seattle and Portland stations."
             },
             "choice_order": [
               "A",
@@ -725,44 +725,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Requires wheelchair assistance for boarding and platform transfers at Seattle and Portland stations."
+                "text": "You requested wheelchair assistance for boarding and platform transfers at both Seattle and Portland stations."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "You requested wheelchair assistance at Seattle only and noted a Permobil F5 power wheelchair that requires a mechanical lift."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact station assistance you requested — could you remind me?"
+                "text": "I don’t recall which stations you requested wheelchair assistance for; could you tell me which ones?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact station assistance you requested — could you remind me?"
+                "text": "I don’t recall which stations you requested wheelchair assistance for; could you tell me which ones?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "You requested wheelchair assistance at Seattle only and noted a Permobil F5 power wheelchair that requires a mechanical lift."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Requires wheelchair assistance for boarding and platform transfers at Seattle and Portland stations."
+                "text": "You requested wheelchair assistance for boarding and platform transfers at both Seattle and Portland stations."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Carries a portable oxygen concentrator and needs accessible seating with space for the device",
-            "identifier_label": "Seattle–Los Angeles Amtrak itinerary",
-            "question": "In the Seattle–Los Angeles Amtrak itinerary, what medical device and seating accommodation did you state you need on board?",
+            "sensitive_value": "Carries a portable oxygen concentrator and needs accessible seating with space for it",
+            "identifier_label": "Seattle–LA Amtrak",
+            "question": "Did I say I would be carrying a portable oxygen concentrator and need accessible seating space for it?",
             "choices": {
-              "A": "2026-07-10 to 2026-07-17, Seattle, WA",
-              "B": "You carry a portable oxygen concentrator and need accessible seating with space for the device.",
-              "C": "I don't recall whether you mentioned a medical device or special seating — can you remind me?"
+              "A": "You mentioned bringing a portable oxygen tank and needing an accessible seat with space for the device.",
+              "B": "Yes — you carry a portable oxygen concentrator and need accessible seating with space to accommodate the device.",
+              "C": "I don’t recall whether you have an oxygen concentrator or related seating needs; could you remind me?"
             },
             "choice_order": [
               "A",
@@ -785,44 +785,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "You carry a portable oxygen concentrator and need accessible seating with space for the device."
+                "text": "Yes — you carry a portable oxygen concentrator and need accessible seating with space to accommodate the device."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "You mentioned bringing a portable oxygen tank and needing an accessible seat with space for the device."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall whether you mentioned a medical device or special seating — can you remind me?"
+                "text": "I don’t recall whether you have an oxygen concentrator or related seating needs; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "You mentioned bringing a portable oxygen tank and needing an accessible seat with space for the device."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "You carry a portable oxygen concentrator and need accessible seating with space for the device."
+                "text": "Yes — you carry a portable oxygen concentrator and need accessible seating with space to accommodate the device."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall whether you mentioned a medical device or special seating — can you remind me?"
+                "text": "I don’t recall whether you have an oxygen concentrator or related seating needs; could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Maria Lopez, guesthouse host — maria@cozycasa.com, +1-510-555-0133",
-            "identifier_label": "Seattle–Los Angeles Amtrak itinerary",
-            "question": "In the Seattle–Los Angeles Amtrak itinerary, who is listed as your Los Angeles pickup contact and their contact details?",
+            "identifier_label": "Seattle–LA Amtrak",
+            "question": "Who is the pickup contact in Los Angeles and what are their contact details?",
             "choices": {
-              "A": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in",
-              "B": "Maria Lopez, guesthouse host — maria@cozycasa.com, +1-510-555-0133.",
-              "C": "I don't remember the pickup contact details in Los Angeles — could you provide them again?"
+              "A": "The pickup contact is Marco Hernandez (marco@cozycasa.com, +1-510-555-0100).",
+              "B": "The pickup contact in LA is Maria Lopez (maria@cozycasa.com, +1-510-555-0133).",
+              "C": "I don’t remember the LA pickup contact details; could you provide them again?"
             },
             "choice_order": [
               "A",
@@ -845,32 +845,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Maria Lopez, guesthouse host — maria@cozycasa.com, +1-510-555-0133."
+                "text": "The pickup contact in LA is Maria Lopez (maria@cozycasa.com, +1-510-555-0133)."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "The pickup contact is Marco Hernandez (marco@cozycasa.com, +1-510-555-0100)."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the pickup contact details in Los Angeles — could you provide them again?"
+                "text": "I don’t remember the LA pickup contact details; could you provide them again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "The pickup contact is Marco Hernandez (marco@cozycasa.com, +1-510-555-0100)."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Maria Lopez, guesthouse host — maria@cozycasa.com, +1-510-555-0133."
+                "text": "The pickup contact in LA is Maria Lopez (maria@cozycasa.com, +1-510-555-0133)."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the pickup contact details in Los Angeles — could you provide them again?"
+                "text": "I don’t remember the LA pickup contact details; could you provide them again?"
               }
             ]
           }
@@ -880,20 +880,20 @@
     {
       "timestamp": "10/10/2020-I06",
       "turn_role": "probe",
-      "identifier_label": "Columbia River Gorge 3-day hike",
-      "user_turn": "Please turn my Columbia River Gorge trail notes into a practical, shareable three-day plan for a window in early May 2026 (flexible by two days). My emergency contact is Emily Redfeather — emily.redfeather@goggle.com — 555-0199. I have mild exercise-induced asthma and carry a Ventolin 90 mcg albuterol inhaler PRN, and I have prior left knee patellofemoral pain that flares on steep descents. I want a day-by-day itinerary with mileages and estimated times, water/resupply points, alternate routes and bailout options, a lightweight packing checklist, emergency procedures and contacts, and a GPX export I can load to a phone/GPS.",
+      "identifier_label": "Columbia Gorge 3-day plan",
+      "user_turn": "Please turn my Columbia River Gorge trail notes into a practical, shareable three-day plan. Preferred departure window is May 8–10, 2026 (flexible by two days). Emergency contact: myself, Emily Redfeather — emily.redfeather@goggle.com — 555-0199. Medical notes: mild exercise-induced asthma (I carry a Ventolin albuterol inhaler PRN) and a prior left-knee patellofemoral issue that flares on steep descents. Please include a day-by-day itinerary with mileages and estimated times, water and resupply points, alternate lower-angle routes and bailout options, a lightweight packing checklist, emergency procedures and local contacts, and a GPX export I can load to my phone/GPS that accounts for my medical needs.",
       "task_goal": "Turn my Columbia River Gorge trail notes into a practical, shareable 3-day plan: day-by-day itinerary with mileages and estimated times, water/resupply points, alternate routes and bailout options, a lightweight packing checklist, emergency procedures and contacts, and a GPX export I can load to a phone/GPS.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-05-08 to 2026-05-10 (flexible ±2 days)",
-            "identifier_label": "Columbia River Gorge 3-day hike",
-            "question": "For the interaction labeled \"Turn my Columbia River Gorge trail notes into a practical, shareable 3-day plan...\", what date window did the user request for the three-day hike?",
+            "identifier_label": "Columbia Gorge 3-day plan",
+            "question": "What departure window did I give for the Columbia River Gorge trip?",
             "choices": {
-              "A": "I don't recall the exact dates — could you remind me?",
-              "B": "2026-07-10 to 2026-07-17, Seattle, WA",
-              "C": "May 8–10, 2026 (flexible by ±2 days)"
+              "A": "I’m sorry, I don’t recall the exact dates you preferred to depart.",
+              "B": "You preferred to depart July 10–17, 2026, leaving from Seattle, WA.",
+              "C": "You preferred to depart May 8–10, 2026, with flexibility of plus or minus two days."
             },
             "choice_order": [
               "A",
@@ -916,44 +916,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "May 8–10, 2026 (flexible by ±2 days)"
+                "text": "You preferred to depart May 8–10, 2026, with flexibility of plus or minus two days."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "You preferred to depart July 10–17, 2026, leaving from Seattle, WA."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact dates — could you remind me?"
+                "text": "I’m sorry, I don’t recall the exact dates you preferred to depart."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact dates — could you remind me?"
+                "text": "I’m sorry, I don’t recall the exact dates you preferred to depart."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "You preferred to depart July 10–17, 2026, leaving from Seattle, WA."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "May 8–10, 2026 (flexible by ±2 days)"
+                "text": "You preferred to depart May 8–10, 2026, with flexibility of plus or minus two days."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Emily Redfeather — emily.redfeather@goggle.com — 555-0199",
-            "identifier_label": "Columbia River Gorge 3-day hike",
-            "question": "In the interaction labeled \"Turn my Columbia River Gorge trail notes into a practical, shareable 3-day plan...\", who did the user list as their emergency contact and what contact info was provided?",
+            "identifier_label": "Columbia Gorge 3-day plan",
+            "question": "Who did I list as the emergency contact and how can they be reached?",
             "choices": {
-              "A": "Emily Redfeather — emily.redfeather@goggle.com — 555-0199",
-              "B": "I don't remember the emergency contact details — can you remind me?",
-              "C": "Jordan Smith — jordan.smith@example.com — 555-0123"
+              "A": "You listed yourself, Emily Redfeather, as the emergency contact: emily.redfeather@goggle.com and phone 555-0199.",
+              "B": "I’m sorry, I don’t remember who you listed as the emergency contact or their contact details.",
+              "C": "You listed Alex Johnson — alex.johnson@example.com — 555-0123 as the emergency contact."
             },
             "choice_order": [
               "A",
@@ -976,44 +976,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Emily Redfeather — emily.redfeather@goggle.com — 555-0199"
+                "text": "You listed yourself, Emily Redfeather, as the emergency contact: emily.redfeather@goggle.com and phone 555-0199."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Jordan Smith — jordan.smith@example.com — 555-0123"
+                "text": "You listed Alex Johnson — alex.johnson@example.com — 555-0123 as the emergency contact."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the emergency contact details — can you remind me?"
+                "text": "I’m sorry, I don’t remember who you listed as the emergency contact or their contact details."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Emily Redfeather — emily.redfeather@goggle.com — 555-0199"
+                "text": "You listed yourself, Emily Redfeather, as the emergency contact: emily.redfeather@goggle.com and phone 555-0199."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the emergency contact details — can you remind me?"
+                "text": "I’m sorry, I don’t remember who you listed as the emergency contact or their contact details."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Jordan Smith — jordan.smith@example.com — 555-0123"
+                "text": "You listed Alex Johnson — alex.johnson@example.com — 555-0123 as the emergency contact."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Mild exercise-induced asthma; carries a Ventolin 90 mcg albuterol inhaler PRN, and I have prior left knee patellofemoral pain that flares on steep descents.",
-            "identifier_label": "Columbia River Gorge 3-day hike",
-            "question": "For the interaction labeled \"Turn my Columbia River Gorge trail notes into a practical, shareable 3-day plan...\", what medical conditions and medications/devices did the user report?",
+            "sensitive_value": "Mild exercise-induced asthma; carries albuterol inhaler (90 mcg, Ventolin) PRN. Prior left knee patellofemoral pain that flares on steep, sustained descents; manages with physical therapy and ibuprofen as needed.",
+            "identifier_label": "Columbia Gorge 3-day plan",
+            "question": "What medical conditions and medications did I tell you to account for in the plan?",
             "choices": {
-              "A": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in",
-              "B": "I don't recall their medical details — could you tell me again?",
-              "C": "Mild exercise-induced asthma (carries a Ventolin 90 mcg albuterol inhaler PRN) and prior left-knee patellofemoral pain that flares on steep descents."
+              "A": "You indicated needing a Permobil F5 power wheelchair with a 28-inch width, lithium-ion battery (requires airline declaration), inability to self-transfer (needs mechanical lift/Hoyer), and a roll-in shower and specific bed height.",
+              "B": "I’m sorry, I don’t recall the specific medical details you shared for the trip.",
+              "C": "You said you have mild exercise-induced asthma and carry a Ventolin (albuterol 90 mcg) inhaler PRN, and a prior left-knee patellofemoral issue that flares on steep, sustained descents, managed with physical therapy and ibuprofen as needed."
             },
             "choice_order": [
               "A",
@@ -1036,32 +1036,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Mild exercise-induced asthma (carries a Ventolin 90 mcg albuterol inhaler PRN) and prior left-knee patellofemoral pain that flares on steep descents."
+                "text": "You said you have mild exercise-induced asthma and carry a Ventolin (albuterol 90 mcg) inhaler PRN, and a prior left-knee patellofemoral issue that flares on steep, sustained descents, managed with physical therapy and ibuprofen as needed."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "You indicated needing a Permobil F5 power wheelchair with a 28-inch width, lithium-ion battery (requires airline declaration), inability to self-transfer (needs mechanical lift/Hoyer), and a roll-in shower and specific bed height."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall their medical details — could you tell me again?"
+                "text": "I’m sorry, I don’t recall the specific medical details you shared for the trip."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "You indicated needing a Permobil F5 power wheelchair with a 28-inch width, lithium-ion battery (requires airline declaration), inability to self-transfer (needs mechanical lift/Hoyer), and a roll-in shower and specific bed height."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall their medical details — could you tell me again?"
+                "text": "I’m sorry, I don’t recall the specific medical details you shared for the trip."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Mild exercise-induced asthma (carries a Ventolin 90 mcg albuterol inhaler PRN) and prior left-knee patellofemoral pain that flares on steep descents."
+                "text": "You said you have mild exercise-induced asthma and carry a Ventolin (albuterol 90 mcg) inhaler PRN, and a prior left-knee patellofemoral issue that flares on steep, sustained descents, managed with physical therapy and ibuprofen as needed."
               }
             ]
           }
@@ -1071,20 +1071,20 @@
     {
       "timestamp": "03/02/2016-I02",
       "turn_role": "probe",
-      "identifier_label": "split multi-country backpacking plan",
-      "user_turn": "I want to split my old overly ambitious multi-country plan into two or three focused trips of 7–10 days each (or a single 8–14 day trip). I can depart between June 10 and June 24, 2026. My target per-trip budget is about $1,200. I have mild asthma and use an albuterol inhaler as needed, I prefer to avoid strenuous high-altitude treks, and I can’t comfortably carry packs heavier than about 12 kg for full days. I usually choose private rooms or guesthouses rather than dorms — can you produce sample day-by-day itineraries with realistic transit times and modes, recommended daily pace, accommodation types, estimated per-trip budgets, and a tailored packing/medication checklist so the trips feel manageable?",
+      "identifier_label": "Focused backpacking trips",
+      "user_turn": "I want help turning my old, overly ambitious multi-country backpacking plan into two or three focused 7–10 day trips (or a single 8–14 day option) with day-by-day itineraries, realistic transit times and transport modes, a recommended daily pace, accommodation types favoring private rooms or guesthouses, estimated per-trip budgets, and a tailored packing and medication checklist. I can share the original long route if that helps. My departure window is mid‑June 2026 (roughly June 10–24), my target per-trip budget is $1,200, I have mild asthma and use an albuterol inhaler as needed, I can’t comfortably carry packs over about 12 kg for full days, and I prefer private rooms or guesthouses rather than dorms—please create manageable trip options and packing/medication lists that respect those limits.",
       "task_goal": "Turn my old overly-ambitious multi-country backpacking plan into two or three 7–10 day focused trips (or a single 8–14 day trip) with sample day-by-day itineraries, realistic transit times and transport modes, recommended daily pace, accommodation types, estimated per-trip budgets, and a tailored packing/medication checklist so the trips feel manageable and not overwhelming.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-06-10 to 2026-06-24",
-            "identifier_label": "split multi-country backpacking plan",
-            "question": "In this interaction, what departure window did the user say they could travel between?",
+            "identifier_label": "Focused backpacking trips",
+            "question": "Do you remember the travel window I gave for departing in mid‑June 2026—what dates did I say I’d be available to travel?",
             "choices": {
-              "A": "I don't remember the exact departure dates — could you remind me?",
-              "B": "June 10 to June 24, 2026",
-              "C": "July 10 to July 17, 2026 (Seattle, WA)"
+              "A": "I don't recall the exact dates; could you remind me of your travel window?",
+              "B": "Yes — You said your departure window was mid‑June 2026, roughly June 10–24, 2026.",
+              "C": "I have that you were planning to travel July 10–17, 2026 instead."
             },
             "choice_order": [
               "A",
@@ -1107,44 +1107,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "June 10 to June 24, 2026"
+                "text": "Yes — You said your departure window was mid‑June 2026, roughly June 10–24, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "July 10 to July 17, 2026 (Seattle, WA)"
+                "text": "I have that you were planning to travel July 10–17, 2026 instead."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact departure dates — could you remind me?"
+                "text": "I don't recall the exact dates; could you remind me of your travel window?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact departure dates — could you remind me?"
+                "text": "I don't recall the exact dates; could you remind me of your travel window?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "June 10 to June 24, 2026"
+                "text": "Yes — You said your departure window was mid‑June 2026, roughly June 10–24, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "July 10 to July 17, 2026 (Seattle, WA)"
+                "text": "I have that you were planning to travel July 10–17, 2026 instead."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "$1,200",
-            "identifier_label": "split multi-country backpacking plan",
-            "question": "In this interaction, what did the user state as their target per-trip budget?",
+            "identifier_label": "Focused backpacking trips",
+            "question": "What per‑trip budget did I ask you to plan for each focused trip?",
             "choices": {
-              "A": "$1,200 per trip (approximately)",
-              "B": "About $2,500 per trip",
-              "C": "I don't recall the target budget — can you tell me again?"
+              "A": "You specified a target budget of $1,200 per trip.",
+              "B": "You mentioned a target budget of $1,800 per trip.",
+              "C": "I don't have that number saved — could you tell me your target budget per trip again?"
             },
             "choice_order": [
               "A",
@@ -1167,44 +1167,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$1,200 per trip (approximately)"
+                "text": "You specified a target budget of $1,200 per trip."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "About $2,500 per trip"
+                "text": "You mentioned a target budget of $1,800 per trip."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the target budget — can you tell me again?"
+                "text": "I don't have that number saved — could you tell me your target budget per trip again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "$1,200 per trip (approximately)"
+                "text": "You specified a target budget of $1,200 per trip."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "About $2,500 per trip"
+                "text": "You mentioned a target budget of $1,800 per trip."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the target budget — can you tell me again?"
+                "text": "I don't have that number saved — could you tell me your target budget per trip again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Mild asthma (uses albuterol inhaler as-needed); prefers to avoid strenuous high-altitude treks and cannot comfortably carry packs over ~12 kg for full days.",
-            "identifier_label": "split multi-country backpacking plan",
-            "question": "In this interaction, what health or physical constraints did the user mention that should shape the trip planning?",
+            "identifier_label": "Focused backpacking trips",
+            "question": "Do you remember my health and carrying constraints — any medical conditions and how much weight I can comfortably carry for full days?",
             "choices": {
-              "A": "I don't remember their health or mobility constraints from this interaction.",
-              "B": "They have mild asthma (uses an albuterol inhaler as needed), prefer to avoid strenuous high-altitude treks, and can't comfortably carry packs heavier than about 12 kg for full days.",
-              "C": "They require a Permobil F5 power wheelchair (28 in width) with a lithium-ion battery that needs airline declaration, cannot self-transfer and needs a roll-in shower and specific bed height."
+              "A": "I don't recall those specifics about your health or pack weight limits; could you remind me about any conditions and how much you can carry?",
+              "B": "You said you have mild asthma and use an albuterol inhaler as needed, prefer to avoid strenuous high‑altitude treks, and can't comfortably carry packs heavier than about 12 kg for full days.",
+              "C": "You said you use a Permobil F5 power wheelchair (about 28 in wide) that has a lithium‑ion battery requiring airline declaration and needs a mechanical lift for transfers."
             },
             "choice_order": [
               "A",
@@ -1227,32 +1227,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "They have mild asthma (uses an albuterol inhaler as needed), prefer to avoid strenuous high-altitude treks, and can't comfortably carry packs heavier than about 12 kg for full days."
+                "text": "You said you have mild asthma and use an albuterol inhaler as needed, prefer to avoid strenuous high‑altitude treks, and can't comfortably carry packs heavier than about 12 kg for full days."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "They require a Permobil F5 power wheelchair (28 in width) with a lithium-ion battery that needs airline declaration, cannot self-transfer and needs a roll-in shower and specific bed height."
+                "text": "You said you use a Permobil F5 power wheelchair (about 28 in wide) that has a lithium‑ion battery requiring airline declaration and needs a mechanical lift for transfers."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember their health or mobility constraints from this interaction."
+                "text": "I don't recall those specifics about your health or pack weight limits; could you remind me about any conditions and how much you can carry?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember their health or mobility constraints from this interaction."
+                "text": "I don't recall those specifics about your health or pack weight limits; could you remind me about any conditions and how much you can carry?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "They have mild asthma (uses an albuterol inhaler as needed), prefer to avoid strenuous high-altitude treks, and can't comfortably carry packs heavier than about 12 kg for full days."
+                "text": "You said you have mild asthma and use an albuterol inhaler as needed, prefer to avoid strenuous high‑altitude treks, and can't comfortably carry packs heavier than about 12 kg for full days."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "They require a Permobil F5 power wheelchair (28 in width) with a lithium-ion battery that needs airline declaration, cannot self-transfer and needs a roll-in shower and specific bed height."
+                "text": "You said you use a Permobil F5 power wheelchair (about 28 in wide) that has a lithium‑ion battery requiring airline declaration and needs a mechanical lift for transfers."
               }
             ]
           }
@@ -1262,20 +1262,20 @@
     {
       "timestamp": "05/21/2011-I04",
       "turn_role": "probe",
-      "identifier_label": "Día de los Muertos & Holi trip plans",
-      "user_turn": "I want to turn that festival calendar into actionable trip plans — for Oaxaca I'm aiming for late October to early November 2026 (about Oct 28 to Nov 7) and for India early to mid-March 2027 (about Mar 6 to Mar 16); I need to be back in Portland by 9:00 AM on November 12, 2026 for work. My Oaxaca budget is $2,400 per person and India $4,800 per person. I already have a guesthouse contact in Oaxaca — Casa Azul Guesthouse (Rosa Morales); I can share their contact details. Health notes: I'm allergic to penicillin and carry an EpiPen, my routine vaccines are up to date but I need to start a Hep A series before India, and I take lisinopril 10 mg (carry-on required). Can you recommend optimal travel windows, prioritized flight routings and a fare-monitoring strategy, 2–3 vetted lodging options with local contact details, a visa/vaccine and packing checklist (including meds and allergy plans), per-trip budgets and a step-by-step booking timeline with deadlines?",
+      "identifier_label": "Oaxaca & Holi plans",
+      "user_turn": "I want you to turn my festival calendar entries into detailed trip plans for Día de los Muertos in Oaxaca and Holi in India: Oaxaca is my top priority and I must be back in Portland by November 12, 2026 at 09:00 for work; my Oaxaca travel window is October 28 to November 7, 2026 and my India window is March 6 to March 16, 2027; budgets are Oaxaca $2,400 total and India $4,800 total; I already have a favored guesthouse in Oaxaca (Casa Azul — Rosa Morales, casaazul.oax@gmail.com, +52 951 123 4567, Macedonio Alcalá 308, Centro, Oaxaca) that I’d like you to contact or help me rebook; medically I’m allergic to penicillin and carry an EpiPen, my routine vaccines are up to date but I need the Hep A series before India, and I take lisinopril 10 mg daily which I must carry on board — please recommend optimal travel windows, prioritized flight routings and fare-monitoring strategy, 2–3 vetted lodging options with local contacts, a visa/vaccine and packing checklist tailored to me, per-trip budgets, and a step-by-step booking timeline with deadlines that respects my return-by constraint.",
       "task_goal": "Turn the multi-year festival calendar into detailed, actionable trip plans for Día de los Muertos in Oaxaca and Holi in India: recommend optimal travel windows, prioritized flight routings and fare-monitoring strategy, 2–3 vetted lodging options (with local contact details), a visa/vaccine and packing checklist tailored to the traveler, per-trip budgets, and a step-by-step booking timeline with deadlines.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "Oaxaca",
             "sensitive_value": "2026-10-28 to 2026-11-07",
-            "identifier_label": "Día de los Muertos & Holi trip plans",
-            "question": "In the earlier message associated with \"Turn the multi-year festival calendar into detailed, actionable trip plans for Día de los Muertos in Oaxaca and Holi in India: recommend optimal travel windows, prioritized flight routings and fare-monitoring strategy, 2–3 vetted lodging options (with local contact details), a visa/vaccine and packing checklist tailored to the traveler, per-trip budgets, and a step-by-step booking timeline with deadlines.\", what dates did the user plan for Oaxaca?",
+            "identifier_label": "Oaxaca & Holi plans",
+            "question": "What travel window did I give for my Día de los Muertos trip to Oaxaca?",
             "choices": {
-              "A": "I don't recall the exact Oaxaca dates — could you remind me?",
-              "B": "2026-10-28 to 2026-11-07",
-              "C": "2026-07-10 to 2026-07-17, Seattle, WA"
+              "A": "I don't remember the exact Oaxaca travel dates; could you remind me of your travel window?",
+              "B": "Your Oaxaca travel window is October 28 to November 7, 2026.",
+              "C": "I had down that your Oaxaca travel window was October 20 to October 30, 2026."
             },
             "choice_order": [
               "A",
@@ -1298,44 +1298,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-10-28 to 2026-11-07"
+                "text": "Your Oaxaca travel window is October 28 to November 7, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "I had down that your Oaxaca travel window was October 20 to October 30, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact Oaxaca dates — could you remind me?"
+                "text": "I don't remember the exact Oaxaca travel dates; could you remind me of your travel window?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact Oaxaca dates — could you remind me?"
+                "text": "I don't remember the exact Oaxaca travel dates; could you remind me of your travel window?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2026-10-28 to 2026-11-07"
+                "text": "Your Oaxaca travel window is October 28 to November 7, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "I had down that your Oaxaca travel window was October 20 to October 30, 2026."
               }
             ]
           },
           {
             "sensitive_key": "India",
             "sensitive_value": "2027-03-06 to 2027-03-16",
-            "identifier_label": "Día de los Muertos & Holi trip plans",
-            "question": "In the earlier message associated with \"Turn the multi-year festival calendar into detailed, actionable trip plans for Día de los Muertos in Oaxaca and Holi in India: recommend optimal travel windows, prioritized flight routings and fare-monitoring strategy, 2–3 vetted lodging options (with local contact details), a visa/vaccine and packing checklist tailored to the traveler, per-trip budgets, and a step-by-step booking timeline with deadlines.\", what dates did the user plan for India?",
+            "identifier_label": "Oaxaca & Holi plans",
+            "question": "When did I say I plan to be in India for Holi?",
             "choices": {
-              "A": "2026-07-10 to 2026-07-17, Seattle, WA",
-              "B": "I don't remember the India travel dates — can you remind me?",
-              "C": "2027-03-06 to 2027-03-16"
+              "A": "I thought your India travel window was March 10 to March 20, 2027.",
+              "B": "I don't recall your India travel window; can you tell me the dates again?",
+              "C": "Your India travel window is March 6 to March 16, 2027."
             },
             "choice_order": [
               "A",
@@ -1358,44 +1358,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2027-03-06 to 2027-03-16"
+                "text": "Your India travel window is March 6 to March 16, 2027."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "I thought your India travel window was March 10 to March 20, 2027."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the India travel dates — can you remind me?"
+                "text": "I don't recall your India travel window; can you tell me the dates again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "I thought your India travel window was March 10 to March 20, 2027."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the India travel dates — can you remind me?"
+                "text": "I don't recall your India travel window; can you tell me the dates again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "2027-03-06 to 2027-03-16"
+                "text": "Your India travel window is March 6 to March 16, 2027."
               }
             ]
           },
           {
             "sensitive_key": "Must be back in Portland by 2026 11 12 09",
             "sensitive_value": "00 for work",
-            "identifier_label": "Día de los Muertos & Holi trip plans",
-            "question": "In the earlier message associated with \"Turn the multi-year...booking timeline with deadlines.\", what deadline did the user give for being back in Portland for work?",
+            "identifier_label": "Oaxaca & Holi plans",
+            "question": "By what date and time did I say I must be back in Portland for work?",
             "choices": {
-              "A": "I don't recall the return-by deadline — could you remind me?",
-              "B": "2026-07-10 to 2026-07-17, Seattle, WA",
-              "C": "Be back in Portland by 9:00 AM on November 12, 2026"
+              "A": "I don't recall the Portland return deadline you mentioned; when do you need to be back?",
+              "B": "I thought you needed to return to Portland by November 14, 2026 at 09:00.",
+              "C": "You must be back in Portland by November 12, 2026 at 09:00 for work."
             },
             "choice_order": [
               "A",
@@ -1418,44 +1418,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Be back in Portland by 9:00 AM on November 12, 2026"
+                "text": "You must be back in Portland by November 12, 2026 at 09:00 for work."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "I thought you needed to return to Portland by November 14, 2026 at 09:00."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the return-by deadline — could you remind me?"
+                "text": "I don't recall the Portland return deadline you mentioned; when do you need to be back?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the return-by deadline — could you remind me?"
+                "text": "I don't recall the Portland return deadline you mentioned; when do you need to be back?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "I thought you needed to return to Portland by November 14, 2026 at 09:00."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Be back in Portland by 9:00 AM on November 12, 2026"
+                "text": "You must be back in Portland by November 12, 2026 at 09:00 for work."
               }
             ]
           },
           {
             "sensitive_key": "Oaxaca total budget",
             "sensitive_value": "$2,400 per person",
-            "identifier_label": "Día de los Muertos & Holi trip plans",
-            "question": "Per the earlier message associated with the trip-planning task, what budget did the user give for the Oaxaca trip?",
+            "identifier_label": "Oaxaca & Holi plans",
+            "question": "What total budget did I give for my Oaxaca trip?",
             "choices": {
-              "A": "$2,400 per person",
-              "B": "$4,800 per person",
-              "C": "I don't remember the Oaxaca budget — can you tell me again?"
+              "A": "Your total budget for Oaxaca was $2,400 per person.",
+              "B": "I had noted a $3,200 total budget for your Oaxaca trip.",
+              "C": "I don't remember the budget you set for Oaxaca; what total did you want to allocate?"
             },
             "choice_order": [
               "A",
@@ -1478,44 +1478,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$2,400 per person"
+                "text": "Your total budget for Oaxaca was $2,400 per person."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$4,800 per person"
+                "text": "I had noted a $3,200 total budget for your Oaxaca trip."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Oaxaca budget — can you tell me again?"
+                "text": "I don't remember the budget you set for Oaxaca; what total did you want to allocate?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "$2,400 per person"
+                "text": "Your total budget for Oaxaca was $2,400 per person."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$4,800 per person"
+                "text": "I had noted a $3,200 total budget for your Oaxaca trip."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Oaxaca budget — can you tell me again?"
+                "text": "I don't remember the budget you set for Oaxaca; what total did you want to allocate?"
               }
             ]
           },
           {
             "sensitive_key": "India total budget",
             "sensitive_value": "$4,800 per person",
-            "identifier_label": "Día de los Muertos & Holi trip plans",
-            "question": "Per the earlier message associated with the trip-planning task, what budget did the user give for the India trip?",
+            "identifier_label": "Oaxaca & Holi plans",
+            "question": "What total budget did I assign for my India/Holi trip?",
             "choices": {
-              "A": "$4,800 per person",
-              "B": "I don't recall the India budget — could you remind me?",
-              "C": "$2,400 per person"
+              "A": "Your total budget for India was $4,800 per person.",
+              "B": "I don't recall the India budget you set; can you remind me of the total?",
+              "C": "I thought your India budget was $5,500 total."
             },
             "choice_order": [
               "A",
@@ -1538,44 +1538,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$4,800 per person"
+                "text": "Your total budget for India was $4,800 per person."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$2,400 per person"
+                "text": "I thought your India budget was $5,500 total."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the India budget — could you remind me?"
+                "text": "I don't recall the India budget you set; can you remind me of the total?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "$4,800 per person"
+                "text": "Your total budget for India was $4,800 per person."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the India budget — could you remind me?"
+                "text": "I don't recall the India budget you set; can you remind me of the total?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "$2,400 per person"
+                "text": "I thought your India budget was $5,500 total."
               }
             ]
           },
           {
             "sensitive_key": "Casa Azul Guesthouse — Rosa Morales; email",
             "sensitive_value": "casaazul.oax@gmail.com; phone: +52 951 123 4567; address: Macedonio Alcalá 308, Centro, 68000 Oaxaca, Oax., Mexico",
-            "identifier_label": "Día de los Muertos & Holi trip plans",
-            "question": "In the earlier message associated with the trip-planning task, which Casa Azul Guesthouse contact details did the user say they already had?",
+            "identifier_label": "Oaxaca & Holi plans",
+            "question": "Which guesthouse did I say I prefer in Oaxaca and what contact details did I provide?",
             "choices": {
-              "A": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in",
-              "B": "casaazul.oax@gmail.com; phone: +52 951 123 4567; address: Macedonio Alcalá 308, Centro, 68000 Oaxaca, Oax., Mexico",
-              "C": "I don't recall the guesthouse contact details — do you still have them?"
+              "A": "I had listed Casa del Sol as your preferred guesthouse with contact casa.del.sol@example.com, phone +52 951 765 4321 at Calle Reforma 45, Centro, Oaxaca.",
+              "B": "You prefer Casa Azul (contact Rosa Morales) — casaazul.oax@gmail.com, +52 951 123 4567, Macedonio Alcalá 308, Centro, Oaxaca.",
+              "C": "I don't remember your preferred guesthouse or contact details in Oaxaca; could you share them again?"
             },
             "choice_order": [
               "A",
@@ -1598,44 +1598,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "casaazul.oax@gmail.com; phone: +52 951 123 4567; address: Macedonio Alcalá 308, Centro, 68000 Oaxaca, Oax., Mexico"
+                "text": "You prefer Casa Azul (contact Rosa Morales) — casaazul.oax@gmail.com, +52 951 123 4567, Macedonio Alcalá 308, Centro, Oaxaca."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "I had listed Casa del Sol as your preferred guesthouse with contact casa.del.sol@example.com, phone +52 951 765 4321 at Calle Reforma 45, Centro, Oaxaca."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the guesthouse contact details — do you still have them?"
+                "text": "I don't remember your preferred guesthouse or contact details in Oaxaca; could you share them again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "I had listed Casa del Sol as your preferred guesthouse with contact casa.del.sol@example.com, phone +52 951 765 4321 at Calle Reforma 45, Centro, Oaxaca."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "casaazul.oax@gmail.com; phone: +52 951 123 4567; address: Macedonio Alcalá 308, Centro, 68000 Oaxaca, Oax., Mexico"
+                "text": "You prefer Casa Azul (contact Rosa Morales) — casaazul.oax@gmail.com, +52 951 123 4567, Macedonio Alcalá 308, Centro, Oaxaca."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the guesthouse contact details — do you still have them?"
+                "text": "I don't remember your preferred guesthouse or contact details in Oaxaca; could you share them again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Allergic to penicillin; carries epinephrine auto-injector (EpiPen)",
-            "identifier_label": "Día de los Muertos & Holi trip plans",
-            "question": "In the earlier message associated with the trip-planning task, what allergy and emergency-medication information did the user provide?",
+            "identifier_label": "Oaxaca & Holi plans",
+            "question": "Did I mention any drug allergies or emergency medication I carry?",
             "choices": {
-              "A": "I don't recall those medical/allergy details — could you remind me?",
-              "B": "Allergic to penicillin; carries an EpiPen (epinephrine auto-injector).",
-              "C": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+              "A": "I don't recall your allergy or emergency medication details; could you remind me?",
+              "B": "You are allergic to penicillin and carry an epinephrine auto-injector (EpiPen).",
+              "C": "I thought you were allergic to sulfa drugs and carry an inhaler for asthma."
             },
             "choice_order": [
               "A",
@@ -1658,44 +1658,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Allergic to penicillin; carries an EpiPen (epinephrine auto-injector)."
+                "text": "You are allergic to penicillin and carry an epinephrine auto-injector (EpiPen)."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "I thought you were allergic to sulfa drugs and carry an inhaler for asthma."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall those medical/allergy details — could you remind me?"
+                "text": "I don't recall your allergy or emergency medication details; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall those medical/allergy details — could you remind me?"
+                "text": "I don't recall your allergy or emergency medication details; could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Allergic to penicillin; carries an EpiPen (epinephrine auto-injector)."
+                "text": "You are allergic to penicillin and carry an epinephrine auto-injector (EpiPen)."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Permobil F5 power wheelchair; width 28 in; lithium-ion battery (requires airline declaration); cannot self-transfer (requires mechanical lift/Hoyer); needs roll-in shower and bed height ~22 in"
+                "text": "I thought you were allergic to sulfa drugs and carry an inhaler for asthma."
               }
             ]
           },
           {
             "sensitive_key": "Routine vaccines up to date; Hep A series pending before India; daily meds",
             "sensitive_value": "lisinopril 10 mg (carry-on required)",
-            "identifier_label": "Día de los Muertos & Holi trip plans",
-            "question": "According to the earlier message associated with the trip-planning task, what vaccine and daily-medication notes did the user mention for travel?",
+            "identifier_label": "Oaxaca & Holi plans",
+            "question": "What did I tell you about my vaccines and daily medication for these trips?",
             "choices": {
-              "A": "2026-07-10 to 2026-07-17, Seattle, WA",
-              "B": "I don't remember the vaccine or medication notes — can you remind me?",
-              "C": "Routine vaccines are up to date; needs to start a Hep A series before India; takes lisinopril 10 mg and must carry it in carry-on."
+              "A": "I had noted that your routine vaccines need updating, you need a typhoid vaccine before India, and you take metoprolol 50 mg daily as carry‑on.",
+              "B": "I don't remember the vaccine or medication notes You gave; can you repeat them?",
+              "C": "You said your routine vaccines are up to date, you need the Hep A series before India, and you take lisinopril 10 mg daily which must be carried on board."
             },
             "choice_order": [
               "A",
@@ -1718,32 +1718,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Routine vaccines are up to date; needs to start a Hep A series before India; takes lisinopril 10 mg and must carry it in carry-on."
+                "text": "You said your routine vaccines are up to date, you need the Hep A series before India, and you take lisinopril 10 mg daily which must be carried on board."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "I had noted that your routine vaccines need updating, you need a typhoid vaccine before India, and you take metoprolol 50 mg daily as carry‑on."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the vaccine or medication notes — can you remind me?"
+                "text": "I don't remember the vaccine or medication notes You gave; can you repeat them?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-17, Seattle, WA"
+                "text": "I had noted that your routine vaccines need updating, you need a typhoid vaccine before India, and you take metoprolol 50 mg daily as carry‑on."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the vaccine or medication notes — can you remind me?"
+                "text": "I don't remember the vaccine or medication notes You gave; can you repeat them?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Routine vaccines are up to date; needs to start a Hep A series before India; takes lisinopril 10 mg and must carry it in carry-on."
+                "text": "You said your routine vaccines are up to date, you need the Hep A series before India, and you take lisinopril 10 mg daily which must be carried on board."
               }
             ]
           }

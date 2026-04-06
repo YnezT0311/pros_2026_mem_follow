@@ -1,6 +1,6 @@
 {
-  "source_rendered": "data/baseline/travelPlanning/conversation_travelPlanning_persona6_sample0.recall_rendered.json",
-  "source_sidecar": "data/baseline/travelPlanning/conversation_travelPlanning_persona6_sample0.memory_control.json",
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona6_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona6_sample0.memory_control.json",
   "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona6_sample0.json",
   "model": "gpt-5-mini",
   "items": [
@@ -8,7 +8,7 @@
       "timestamp": "01/22/2019-I01",
       "turn_role": "key",
       "identifier_label": "Paris museum bookings",
-      "user_turn": "I'm planning a Paris trip from April 10–18, 2026 (flexible by a couple of days). It's two adults (34 and 33) and a 2-year-old; one adult needs wheelchair-accessible entry, so accessibility and stroller policies are important. We'll be staying at Hotel Le Petit Louvre, 12 Rue de l'Arbre Sec, 75001 Paris, phone +33 1 42 61 00 00, reservation under Alex Morgan — the hotel's central location should help prioritize nearby museums and cut down transit with a toddler. I prefer to pay no more than €25 per adult ticket and I don't have a Paris Museum Pass yet. Please produce a prioritized booking plan (which museums to reserve first), check current availability and alternative date/time strategies, and set up a monitoring/reminder plan so I can secure slots without last-minute scrambling.",
+      "user_turn": "I need concrete help locking down timed-entry museum reservations in Paris for an upcoming trip: travel dates are 2026-04-10 to 2026-04-18 (flexible by ±2 days). We're 2 adults (ages 34 and 33) and a toddler (age 2); one adult needs wheelchair-accessible entry. We're staying at Hotel Le Petit Louvre, 12 Rue de l'Arbre Sec, 75001 Paris, +33 1 42 61 00 00, reservation under Alex Morgan. Budget: prefer to spend no more than €25 per adult ticket and we don't have a Paris Museum Pass yet. Can you produce a prioritized booking plan (which museums to reserve first), check likely availability patterns and alternative time/date strategies, and set up a monitoring/reminder plan so I can secure slots without last-minute scrambling?",
       "task_goal": "Help me lock down timed-entry museum reservations in Paris for my upcoming trip by producing a prioritized booking plan (which museums to reserve first), checking current availability and alternative time/date strategies, and setting up a monitoring/reminder plan so I can secure slots without last-minute scrambling.",
       "rendered": {
         "items": [
@@ -16,11 +16,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "2026-04-10 to 2026-04-18, flexible by +/- 2 days",
             "identifier_label": "Paris museum bookings",
-            "question": "In this interaction, what were the planned Paris travel dates and the stated flexibility?",
+            "question": "Can you remind me of the trip dates and how flexible they were?",
             "choices": {
-              "A": "I’m sorry, I don’t recall the exact travel dates or flexibility — could you remind me?",
-              "B": "2026-04-10 to 2026-04-18, flexible by ±2 days (a couple of days either way).",
-              "C": "2026-07-10 to 2026-07-20 (flexible ±2 days)."
+              "A": "I don't recall the exact travel dates or the flexibility — could you remind me?",
+              "B": "Your travel dates are April 10–18, 2026, with flexibility of plus or minus 2 days.",
+              "C": "Your travel dates are July 10–20, 2026, with flexibility of plus or minus 2 days."
             },
             "choice_order": [
               "A",
@@ -43,32 +43,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-04-10 to 2026-04-18, flexible by ±2 days (a couple of days either way)."
+                "text": "Your travel dates are April 10–18, 2026, with flexibility of plus or minus 2 days."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-20 (flexible ±2 days)."
+                "text": "Your travel dates are July 10–20, 2026, with flexibility of plus or minus 2 days."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall the exact travel dates or flexibility — could you remind me?"
+                "text": "I don't recall the exact travel dates or the flexibility — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I’m sorry, I don’t recall the exact travel dates or flexibility — could you remind me?"
+                "text": "I don't recall the exact travel dates or the flexibility — could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2026-04-10 to 2026-04-18, flexible by ±2 days (a couple of days either way)."
+                "text": "Your travel dates are April 10–18, 2026, with flexibility of plus or minus 2 days."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-07-10 to 2026-07-20 (flexible ±2 days)."
+                "text": "Your travel dates are July 10–20, 2026, with flexibility of plus or minus 2 days."
               }
             ]
           },
@@ -76,11 +76,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "2 adults (ages 34 and 33) and 1 toddler (age 2); one adult requires wheelchair-accessible entry",
             "identifier_label": "Paris museum bookings",
-            "question": "In this interaction, what was the party composition and accessibility requirement you gave for the trip?",
+            "question": "Who is in my traveling party and does anyone need wheelchair access?",
             "choices": {
-              "A": "Two adults (ages 34 and 33) and a 2-year-old toddler; one adult requires wheelchair-accessible entry (accessibility and stroller policies important).",
-              "B": "Two adults (self + partner) and one elderly parent with reduced mobility who uses a cane.",
-              "C": "I don’t remember the exact party makeup or accessibility needs — could you tell me again?"
+              "A": "It's two adults (ages 34 and 33) and a 2-year-old toddler, and one adult requires wheelchair-accessible entry.",
+              "B": "It's two adults (you and your partner) and one elderly parent with reduced mobility who uses a cane.",
+              "C": "I don't remember the exact party composition or mobility needs — could you tell me again?"
             },
             "choice_order": [
               "A",
@@ -103,32 +103,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Two adults (ages 34 and 33) and a 2-year-old toddler; one adult requires wheelchair-accessible entry (accessibility and stroller policies important)."
+                "text": "It's two adults (ages 34 and 33) and a 2-year-old toddler, and one adult requires wheelchair-accessible entry."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Two adults (self + partner) and one elderly parent with reduced mobility who uses a cane."
+                "text": "It's two adults (you and your partner) and one elderly parent with reduced mobility who uses a cane."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t remember the exact party makeup or accessibility needs — could you tell me again?"
+                "text": "I don't remember the exact party composition or mobility needs — could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Two adults (ages 34 and 33) and a 2-year-old toddler; one adult requires wheelchair-accessible entry (accessibility and stroller policies important)."
+                "text": "It's two adults (ages 34 and 33) and a 2-year-old toddler, and one adult requires wheelchair-accessible entry."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Two adults (self + partner) and one elderly parent with reduced mobility who uses a cane."
+                "text": "It's two adults (you and your partner) and one elderly parent with reduced mobility who uses a cane."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don’t remember the exact party makeup or accessibility needs — could you tell me again?"
+                "text": "I don't remember the exact party composition or mobility needs — could you tell me again?"
               }
             ]
           },
@@ -136,11 +136,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Hotel Le Petit Louvre, 12 Rue de l'Arbre Sec, 75001 Paris; +33 1 42 61 00 00; reservation under Alex Morgan",
             "identifier_label": "Paris museum bookings",
-            "question": "In this interaction, which hotel and reservation details did you share for your Paris stay?",
+            "question": "What hotel and reservation details did I give for the stay in Paris?",
             "choices": {
-              "A": "Hotel Le Petit Louvre, 12 Rue de l'Arbre Sec, 75001 Paris; +33 1 42 61 00 00; reservation under Alex Morgan.",
-              "B": "Hôtel Le Meurice, 228 Rue de Rivoli, 75001 Paris; reservation under Alex Morgan.",
-              "C": "I don’t recall the hotel name or reservation details — could you provide them again?"
+              "A": "You're staying at Hotel Le Petit Louvre, 12 Rue de l'Arbre Sec, 75001 Paris, phone +33 1 42 61 00 00, reservation under Alex Morgan.",
+              "B": "You're staying at Hotel Le Petit Paris, 34 Rue de Rivoli, 75001 Paris, reservation under Alex Morgan.",
+              "C": "I don't recall the hotel name, address, or reservation name — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -163,32 +163,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Hotel Le Petit Louvre, 12 Rue de l'Arbre Sec, 75001 Paris; +33 1 42 61 00 00; reservation under Alex Morgan."
+                "text": "You're staying at Hotel Le Petit Louvre, 12 Rue de l'Arbre Sec, 75001 Paris, phone +33 1 42 61 00 00, reservation under Alex Morgan."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Hôtel Le Meurice, 228 Rue de Rivoli, 75001 Paris; reservation under Alex Morgan."
+                "text": "You're staying at Hotel Le Petit Paris, 34 Rue de Rivoli, 75001 Paris, reservation under Alex Morgan."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t recall the hotel name or reservation details — could you provide them again?"
+                "text": "I don't recall the hotel name, address, or reservation name — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Hotel Le Petit Louvre, 12 Rue de l'Arbre Sec, 75001 Paris; +33 1 42 61 00 00; reservation under Alex Morgan."
+                "text": "You're staying at Hotel Le Petit Louvre, 12 Rue de l'Arbre Sec, 75001 Paris, phone +33 1 42 61 00 00, reservation under Alex Morgan."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Hôtel Le Meurice, 228 Rue de Rivoli, 75001 Paris; reservation under Alex Morgan."
+                "text": "You're staying at Hotel Le Petit Paris, 34 Rue de Rivoli, 75001 Paris, reservation under Alex Morgan."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don’t recall the hotel name or reservation details — could you provide them again?"
+                "text": "I don't recall the hotel name, address, or reservation name — could you remind me?"
               }
             ]
           },
@@ -196,11 +196,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Prefer to spend no more than €25 per adult ticket; no Paris Museum Pass purchased yet",
             "identifier_label": "Paris museum bookings",
-            "question": "In this interaction, what ticket budget did you state per adult and did you already have a Paris Museum Pass?",
+            "question": "What was my per-adult ticket budget and had you bought a Paris Museum Pass yet?",
             "choices": {
-              "A": "You were willing to spend up to €50 per adult, and you already had a Paris Museum Pass.",
-              "B": "I don’t remember your ticket budget or whether you have a Museum Pass — could you remind me?",
-              "C": "You prefer to pay no more than €25 per adult ticket, and you do not have a Paris Museum Pass yet."
+              "A": "You prefer to spend no more than €25 per adult but you already have a Paris Museum Pass.",
+              "B": "I don't remember your budget or whether you bought a Museum Pass — can you remind me?",
+              "C": "You prefer to spend no more than €25 per adult and you haven't purchased a Paris Museum Pass yet."
             },
             "choice_order": [
               "A",
@@ -223,32 +223,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "You prefer to pay no more than €25 per adult ticket, and you do not have a Paris Museum Pass yet."
+                "text": "You prefer to spend no more than €25 per adult and you haven't purchased a Paris Museum Pass yet."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "You were willing to spend up to €50 per adult, and you already had a Paris Museum Pass."
+                "text": "You prefer to spend no more than €25 per adult but you already have a Paris Museum Pass."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don’t remember your ticket budget or whether you have a Museum Pass — could you remind me?"
+                "text": "I don't remember your budget or whether you bought a Museum Pass — can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "You were willing to spend up to €50 per adult, and you already had a Paris Museum Pass."
+                "text": "You prefer to spend no more than €25 per adult but you already have a Paris Museum Pass."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don’t remember your ticket budget or whether you have a Museum Pass — could you remind me?"
+                "text": "I don't remember your budget or whether you bought a Museum Pass — can you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "You prefer to pay no more than €25 per adult ticket, and you do not have a Paris Museum Pass yet."
+                "text": "You prefer to spend no more than €25 per adult and you haven't purchased a Paris Museum Pass yet."
               }
             ]
           }
@@ -258,20 +258,20 @@
     {
       "timestamp": "05/22/2019-I02",
       "turn_role": "key",
-      "identifier_label": "Swiss slow‑travel (Glacier & Bernina Express)",
-      "user_turn": "I want to secure seat reservations for Glacier Express and Bernina Express segments on my Swiss slow-travel itinerary: travel dates are mid‑July 2026 (around July 10–20, flexible by two days), travellers are two adults plus an elderly parent with reduced mobility who uses a cane (so we need accessible seating or assistance), my budget for rail travel is CHF 1,200 total (max CHF 600 per person), and I have an accommodation booking contact (alpine.guesthouse@swissstay.ch, +41 79 123 4567, Booking ref AG12345) so you can align arrivals with check-in windows; please identify which legs to prioritize for panoramic-carriage seats, determine exact reservation windows for those dates, coordinate timing with my accommodation and mobility needs, and recommend whether to use point-to-point tickets or a pass given the CHF 1,200 budget.",
+      "identifier_label": "Swiss slow-travel",
+      "user_turn": "I want to secure seat reservations for Glacier Express and Bernina Express segments on my Swiss slow-travel itinerary: travel dates are July 10–20, 2026 (flexible ±2 days); we're 2 adults (me and my partner) plus my elderly parent who has reduced mobility and uses a cane. Budget for rail travel is CHF 1,200 total (max CHF 600 per person). I have accommodation booking contact: alpine.guesthouse@swissstay.ch, +41 79 123 4567, Booking ref AG12345. Please identify which legs to prioritize for panoramic-carriage seats, tell me exact reservation-window expectations for my travel dates, coordinate timing with our accommodation and mobility needs, and recommend whether to use point-to-point tickets or a Swiss Pass given my budget.",
       "task_goal": "Secure seat reservations for Glacier Express and Bernina Express segments on my Swiss slow-travel itinerary: identify which legs to prioritize for panoramic-carriage seats, determine exact reservation windows for my travel dates, coordinate timing with my accommodations and mobility needs, and recommend whether to use point-to-point tickets or passes given my budget.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-07-10 to 2026-07-20 (flexible ±2 days)",
-            "identifier_label": "Swiss slow‑travel (Glacier & Bernina Express)",
-            "question": "In the interaction labeled \"Secure seat reservations for Glacier Express and Bernina Express segments on my Swiss slow-travel itinerary...\", what travel dates (including the flexibility) did the user specify for mid‑July 2026?",
+            "identifier_label": "Swiss slow-travel",
+            "question": "What travel dates did I give for the trip, including how flexible the dates are?",
             "choices": {
-              "A": "2026-04-10 to 2026-04-18, flexible by +/- 2 days",
-              "B": "2026-07-10 to 2026-07-20 (flexible ±2 days)",
-              "C": "I don't recall the exact dates — could you remind me of your travel window?"
+              "A": "You said your travel dates are April 10–18, 2026, with flexibility of plus or minus 2 days.",
+              "B": "You said your travel dates are July 10–20, 2026, with flexibility of plus or minus 2 days.",
+              "C": "I’m sorry, I don’t recall the exact travel dates or the flexibility—could you remind me?"
             },
             "choice_order": [
               "A",
@@ -294,44 +294,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-07-10 to 2026-07-20 (flexible ±2 days)"
+                "text": "You said your travel dates are July 10–20, 2026, with flexibility of plus or minus 2 days."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-10 to 2026-04-18, flexible by +/- 2 days"
+                "text": "You said your travel dates are April 10–18, 2026, with flexibility of plus or minus 2 days."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact dates — could you remind me of your travel window?"
+                "text": "I’m sorry, I don’t recall the exact travel dates or the flexibility—could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-10 to 2026-04-18, flexible by +/- 2 days"
+                "text": "You said your travel dates are April 10–18, 2026, with flexibility of plus or minus 2 days."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2026-07-10 to 2026-07-20 (flexible ±2 days)"
+                "text": "You said your travel dates are July 10–20, 2026, with flexibility of plus or minus 2 days."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact dates — could you remind me of your travel window?"
+                "text": "I’m sorry, I don’t recall the exact travel dates or the flexibility—could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "2 adults (self + partner), 1 elderly parent with reduced mobility (uses cane)",
-            "identifier_label": "Swiss slow‑travel (Glacier & Bernina Express)",
-            "question": "In the \"Secure seat reservations...\" interaction, how many travellers and what mobility needs did the user report?",
+            "identifier_label": "Swiss slow-travel",
+            "question": "Who did I say would be traveling and were there any mobility needs to consider?",
             "choices": {
-              "A": "Two adults (ages 34 and 33) and one toddler (age 2); one adult requires wheelchair-accessible entry.",
-              "B": "I don't recall the exact traveller details or mobility needs — can you tell me again?",
-              "C": "Two adults (self + partner) and one elderly parent with reduced mobility who uses a cane — accessible seating or assistance needed."
+              "A": "You said it’s two adults (ages 34 and 33) and one toddler (age 2); one adult requires wheelchair-accessible entry.",
+              "B": "I’m sorry, I don’t remember the exact composition of your group or the mobility needs—could you tell me again?",
+              "C": "You said it’s two adults (you and your partner) plus your elderly parent who has reduced mobility and uses a cane."
             },
             "choice_order": [
               "A",
@@ -354,44 +354,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Two adults (self + partner) and one elderly parent with reduced mobility who uses a cane — accessible seating or assistance needed."
+                "text": "You said it’s two adults (you and your partner) plus your elderly parent who has reduced mobility and uses a cane."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Two adults (ages 34 and 33) and one toddler (age 2); one adult requires wheelchair-accessible entry."
+                "text": "You said it’s two adults (ages 34 and 33) and one toddler (age 2); one adult requires wheelchair-accessible entry."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact traveller details or mobility needs — can you tell me again?"
+                "text": "I’m sorry, I don’t remember the exact composition of your group or the mobility needs—could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Two adults (ages 34 and 33) and one toddler (age 2); one adult requires wheelchair-accessible entry."
+                "text": "You said it’s two adults (ages 34 and 33) and one toddler (age 2); one adult requires wheelchair-accessible entry."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact traveller details or mobility needs — can you tell me again?"
+                "text": "I’m sorry, I don’t remember the exact composition of your group or the mobility needs—could you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Two adults (self + partner) and one elderly parent with reduced mobility who uses a cane — accessible seating or assistance needed."
+                "text": "You said it’s two adults (you and your partner) plus your elderly parent who has reduced mobility and uses a cane."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "CHF 1,200 total for rail travel (max CHF 600 per person)",
-            "identifier_label": "Swiss slow‑travel (Glacier & Bernina Express)",
-            "question": "For the \"Secure seat reservations...\" request, what total budget and per-person cap did the user provide for rail travel?",
+            "identifier_label": "Swiss slow-travel",
+            "question": "What budget did I give for rail travel and what was the per-person cap?",
             "choices": {
-              "A": "CHF 1,200 total for rail travel, with a maximum of CHF 600 per person.",
-              "B": "I don't remember the budget details — could you restate your total and per-person cap?",
-              "C": "CHF 800 total for rail travel (max CHF 400 per person)."
+              "A": "You specified a total rail budget of CHF 1,200, with a maximum of CHF 600 per person.",
+              "B": "I’m sorry, I don’t recall the budget details for rail travel—could you remind me of the total and the per-person cap?",
+              "C": "You specified a total rail budget of CHF 1,000, with a maximum of CHF 500 per person."
             },
             "choice_order": [
               "A",
@@ -414,44 +414,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "CHF 1,200 total for rail travel, with a maximum of CHF 600 per person."
+                "text": "You specified a total rail budget of CHF 1,200, with a maximum of CHF 600 per person."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "CHF 800 total for rail travel (max CHF 400 per person)."
+                "text": "You specified a total rail budget of CHF 1,000, with a maximum of CHF 500 per person."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget details — could you restate your total and per-person cap?"
+                "text": "I’m sorry, I don’t recall the budget details for rail travel—could you remind me of the total and the per-person cap?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "CHF 1,200 total for rail travel, with a maximum of CHF 600 per person."
+                "text": "You specified a total rail budget of CHF 1,200, with a maximum of CHF 600 per person."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget details — could you restate your total and per-person cap?"
+                "text": "I’m sorry, I don’t recall the budget details for rail travel—could you remind me of the total and the per-person cap?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "CHF 800 total for rail travel (max CHF 400 per person)."
+                "text": "You specified a total rail budget of CHF 1,000, with a maximum of CHF 500 per person."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "alpine.guesthouse@swissstay.ch",
-            "identifier_label": "Swiss slow‑travel (Glacier & Bernina Express)",
-            "question": "In the \"Secure seat reservations...\" interaction, what accommodation contact email did the user provide to align arrivals with check-in windows?",
+            "identifier_label": "Swiss slow-travel",
+            "question": "What accommodation contact email did I provide?",
             "choices": {
-              "A": "I don't have that email on hand — can you provide the accommodation contact email again?",
-              "B": "info@swissstay.ch",
-              "C": "alpine.guesthouse@swissstay.ch"
+              "A": "I’m sorry, I don’t recall the accommodation contact email—could you provide it again?",
+              "B": "You provided the accommodation contact email alpine.guesthouse@mountainstay.ch.",
+              "C": "You provided the accommodation contact email alpine.guesthouse@swissstay.ch."
             },
             "choice_order": [
               "A",
@@ -474,44 +474,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "alpine.guesthouse@swissstay.ch"
+                "text": "You provided the accommodation contact email alpine.guesthouse@swissstay.ch."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "info@swissstay.ch"
+                "text": "You provided the accommodation contact email alpine.guesthouse@mountainstay.ch."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't have that email on hand — can you provide the accommodation contact email again?"
+                "text": "I’m sorry, I don’t recall the accommodation contact email—could you provide it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't have that email on hand — can you provide the accommodation contact email again?"
+                "text": "I’m sorry, I don’t recall the accommodation contact email—could you provide it again?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "info@swissstay.ch"
+                "text": "You provided the accommodation contact email alpine.guesthouse@mountainstay.ch."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "alpine.guesthouse@swissstay.ch"
+                "text": "You provided the accommodation contact email alpine.guesthouse@swissstay.ch."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "+41 79 123 4567",
-            "identifier_label": "Swiss slow‑travel (Glacier & Bernina Express)",
-            "question": "In the \"Secure seat reservations...\" interaction, what phone number did the user give for their accommodation contact?",
+            "identifier_label": "Swiss slow-travel",
+            "question": "What phone number did I give for the accommodation?",
             "choices": {
-              "A": "+41 79 123 4567",
-              "B": "+41 78 555 1212",
-              "C": "I don't recall the phone number — could you resend the contact phone?"
+              "A": "You provided the accommodation phone number +41 79 123 4567.",
+              "B": "You provided the accommodation phone number +41 78 987 6543.",
+              "C": "I’m sorry, I don’t remember the accommodation phone number—can you tell me again?"
             },
             "choice_order": [
               "A",
@@ -534,44 +534,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "+41 79 123 4567"
+                "text": "You provided the accommodation phone number +41 79 123 4567."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "+41 78 555 1212"
+                "text": "You provided the accommodation phone number +41 78 987 6543."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the phone number — could you resend the contact phone?"
+                "text": "I’m sorry, I don’t remember the accommodation phone number—can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "+41 79 123 4567"
+                "text": "You provided the accommodation phone number +41 79 123 4567."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "+41 78 555 1212"
+                "text": "You provided the accommodation phone number +41 78 987 6543."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the phone number — could you resend the contact phone?"
+                "text": "I’m sorry, I don’t remember the accommodation phone number—can you tell me again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Booking ref AG12345",
-            "identifier_label": "Swiss slow‑travel (Glacier & Bernina Express)",
-            "question": "For the \"Secure seat reservations...\" request, what booking reference did the user provide for their accommodation?",
+            "identifier_label": "Swiss slow-travel",
+            "question": "What booking reference did I share for the accommodation?",
             "choices": {
-              "A": "Booking ref AG12345",
-              "B": "Booking ref AG54321",
-              "C": "I don't remember the booking reference — could you provide it again?"
+              "A": "The booking reference You gave was AG12345.",
+              "B": "The booking reference You gave was AG54321.",
+              "C": "I’m sorry, I don’t remember the booking reference—could you repeat it?"
             },
             "choice_order": [
               "A",
@@ -594,32 +594,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Booking ref AG12345"
+                "text": "The booking reference You gave was AG12345."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Booking ref AG54321"
+                "text": "The booking reference You gave was AG54321."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the booking reference — could you provide it again?"
+                "text": "I’m sorry, I don’t remember the booking reference—could you repeat it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Booking ref AG12345"
+                "text": "The booking reference You gave was AG12345."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Booking ref AG54321"
+                "text": "The booking reference You gave was AG54321."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the booking reference — could you provide it again?"
+                "text": "I’m sorry, I don’t remember the booking reference—could you repeat it?"
               }
             ]
           }
@@ -629,20 +629,20 @@
     {
       "timestamp": "06/02/2016-I03",
       "turn_role": "key",
-      "identifier_label": "Indian tourist visa service",
-      "user_turn": "Please help me find and hire a reliable visa service for an Indian tourist visa. Passport: Full name Samantha Lee, Passport number N12345678, Nationality United States. Travel dates: depart 2026-06-15, return 2026-07-02. Itinerary: Delhi → Agra → Jaipur. Contact and pickup: email samantha.lee@example.com, phone 555-987-6543, preferred pickup address 45 Maple St, Apt 3B, Springfield, IL 62704. My maximum budget is $180; I prefer processing within 7 business days but can pay for a 48-hour rush if necessary. I want reputable providers compared by cost and turnaround, an exact list of documents I must give them and how to provide them securely, and a simple checklist and booking steps so I can avoid embassy queues.",
+      "identifier_label": "India visa service",
+      "user_turn": "Please help me find and hire a reliable visa service to handle an Indian tourist visa for Samantha Lee (passport N12345678, U.S. citizen). Travel plans: depart June 15, 2026 and return July 2, 2026, itinerary Delhi → Agra → Jaipur. Contact: samantha.lee@example.com, 555-987-6543. Preferred pickup address: 45 Maple St, Apt 3B, Springfield, IL 62704. My maximum budget is $180; I prefer processing within seven business days but can pay for a 48-hour rush if needed. I need reputable providers, a cost and turnaround comparison, an exact list of documents to provide and how to send them securely, plus a simple checklist and booking steps so I can avoid embassy lines and paperwork headaches.",
       "task_goal": "Find and hire a reliable visa service to handle my Indian tourist visa: identify reputable providers, compare costs and turnaround times, list exactly which documents I must provide them (and how to provide them securely), and produce a simple checklist and booking steps so I can avoid embassy queues and not repeat the paperwork headache.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "Full name",
             "sensitive_value": "Samantha Lee",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, what full name did the user give for the passport?",
+            "identifier_label": "India visa service",
+            "question": "What name did I give for the visa applicant?",
             "choices": {
-              "A": "Samantha Lee",
-              "B": "Samantha Lynn",
-              "C": "I don't remember the user's full name from this interaction."
+              "A": "The applicant's full name is Samantha Lee.",
+              "B": "The applicant was listed as Rebecca Adams.",
+              "C": "I don't recall the applicant's name from earlier — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -665,44 +665,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Samantha Lee"
+                "text": "The applicant's full name is Samantha Lee."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Samantha Lynn"
+                "text": "The applicant was listed as Rebecca Adams."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's full name from this interaction."
+                "text": "I don't recall the applicant's name from earlier — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Samantha Lee"
+                "text": "The applicant's full name is Samantha Lee."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Samantha Lynn"
+                "text": "The applicant was listed as Rebecca Adams."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's full name from this interaction."
+                "text": "I don't recall the applicant's name from earlier — could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "Passport number",
             "sensitive_value": "N12345678",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, what passport number did the user provide?",
+            "identifier_label": "India visa service",
+            "question": "What passport number did I provide for the applicant?",
             "choices": {
-              "A": "I don't recall the passport number from this interaction.",
-              "B": "N87654321",
-              "C": "N12345678"
+              "A": "I don't remember the passport number You gave — can you tell me again?",
+              "B": "I have a different passport number listed, N87654321.",
+              "C": "The passport number You provided was N12345678."
             },
             "choice_order": [
               "A",
@@ -725,44 +725,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "N12345678"
+                "text": "The passport number You provided was N12345678."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "N87654321"
+                "text": "I have a different passport number listed, N87654321."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the passport number from this interaction."
+                "text": "I don't remember the passport number You gave — can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the passport number from this interaction."
+                "text": "I don't remember the passport number You gave — can you tell me again?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "N87654321"
+                "text": "I have a different passport number listed, N87654321."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "N12345678"
+                "text": "The passport number You provided was N12345678."
               }
             ]
           },
           {
             "sensitive_key": "Nationality",
             "sensitive_value": "United States",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, what nationality did the user state?",
+            "identifier_label": "India visa service",
+            "question": "Which nationality did I say the traveler holds?",
             "choices": {
-              "A": "Canada",
-              "B": "United States",
-              "C": "I don't remember the user's nationality from this interaction."
+              "A": "The traveler was noted as Canadian.",
+              "B": "The traveler is a United States citizen.",
+              "C": "I don't remember which nationality you specified — could you repeat it?"
             },
             "choice_order": [
               "A",
@@ -785,44 +785,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "United States"
+                "text": "The traveler is a United States citizen."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Canada"
+                "text": "The traveler was noted as Canadian."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's nationality from this interaction."
+                "text": "I don't remember which nationality you specified — could you repeat it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Canada"
+                "text": "The traveler was noted as Canadian."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "United States"
+                "text": "The traveler is a United States citizen."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's nationality from this interaction."
+                "text": "I don't remember which nationality you specified — could you repeat it?"
               }
             ]
           },
           {
             "sensitive_key": "Departure date",
             "sensitive_value": "2026-06-15",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, what departure date did the user plan for their trip?",
+            "identifier_label": "India visa service",
+            "question": "When did I plan to depart for India?",
             "choices": {
-              "A": "2026-04-10",
-              "B": "2026-06-15",
-              "C": "I don't recall the departure date from this interaction."
+              "A": "You had mentioned departing around April 10, 2026 (flexible by a few days).",
+              "B": "You planned to depart on June 15, 2026.",
+              "C": "I don't recall your departure date — can you remind me?"
             },
             "choice_order": [
               "A",
@@ -845,44 +845,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-06-15"
+                "text": "You planned to depart on June 15, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-10"
+                "text": "You had mentioned departing around April 10, 2026 (flexible by a few days)."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the departure date from this interaction."
+                "text": "I don't recall your departure date — can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-10"
+                "text": "You had mentioned departing around April 10, 2026 (flexible by a few days)."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2026-06-15"
+                "text": "You planned to depart on June 15, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the departure date from this interaction."
+                "text": "I don't recall your departure date — can you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "Return date",
             "sensitive_value": "2026-07-02",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, what return date did the user give?",
+            "identifier_label": "India visa service",
+            "question": "What return date did I give for the trip?",
             "choices": {
-              "A": "2026-07-02",
-              "B": "2026-04-18",
-              "C": "I don't remember the return date from this interaction."
+              "A": "Your return date was July 2, 2026.",
+              "B": "You had mentioned returning around April 18, 2026 (flexible by a couple of days).",
+              "C": "I don't remember the return date You provided — could you tell me again?"
             },
             "choice_order": [
               "A",
@@ -905,44 +905,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-07-02"
+                "text": "Your return date was July 2, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-18"
+                "text": "You had mentioned returning around April 18, 2026 (flexible by a couple of days)."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the return date from this interaction."
+                "text": "I don't remember the return date You provided — could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2026-07-02"
+                "text": "Your return date was July 2, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-18"
+                "text": "You had mentioned returning around April 18, 2026 (flexible by a couple of days)."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the return date from this interaction."
+                "text": "I don't remember the return date You provided — could you tell me again?"
               }
             ]
           },
           {
             "sensitive_key": "Main destination in India",
             "sensitive_value": "Delhi -> Agra -> Jaipur",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, what Indian itinerary did the user plan?",
+            "identifier_label": "India visa service",
+            "question": "What cities did I list on the India itinerary?",
             "choices": {
-              "A": "Delhi → Agra → Jaipur",
-              "B": "Mumbai → Goa → Kerala",
-              "C": "I don't recall the itinerary from this interaction."
+              "A": "The itinerary was Delhi → Agra → Jaipur.",
+              "B": "The trip was listed as Mumbai → Goa → Kochi.",
+              "C": "I don't remember the cities you put on the itinerary — what were they?"
             },
             "choice_order": [
               "A",
@@ -965,44 +965,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Delhi → Agra → Jaipur"
+                "text": "The itinerary was Delhi → Agra → Jaipur."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Mumbai → Goa → Kerala"
+                "text": "The trip was listed as Mumbai → Goa → Kochi."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the itinerary from this interaction."
+                "text": "I don't remember the cities you put on the itinerary — what were they?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Delhi → Agra → Jaipur"
+                "text": "The itinerary was Delhi → Agra → Jaipur."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Mumbai → Goa → Kerala"
+                "text": "The trip was listed as Mumbai → Goa → Kochi."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the itinerary from this interaction."
+                "text": "I don't remember the cities you put on the itinerary — what were they?"
               }
             ]
           },
           {
             "sensitive_key": "Email",
             "sensitive_value": "samantha.lee@example.com",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, which email address did the user provide for contact and pickup?",
+            "identifier_label": "India visa service",
+            "question": "Which email address did I give for contact?",
             "choices": {
-              "A": "samantha.lee@example.com",
-              "B": "samantha123@example.com",
-              "C": "I don't remember the email address from this interaction."
+              "A": "The contact email You provided was samantha.lee@example.com.",
+              "B": "The email on file was samantha.travel@example.com.",
+              "C": "I don't recall the contact email you shared — could you provide it again?"
             },
             "choice_order": [
               "A",
@@ -1025,44 +1025,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "samantha.lee@example.com"
+                "text": "The contact email You provided was samantha.lee@example.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "samantha123@example.com"
+                "text": "The email on file was samantha.travel@example.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the email address from this interaction."
+                "text": "I don't recall the contact email you shared — could you provide it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "samantha.lee@example.com"
+                "text": "The contact email You provided was samantha.lee@example.com."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "samantha123@example.com"
+                "text": "The email on file was samantha.travel@example.com."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the email address from this interaction."
+                "text": "I don't recall the contact email you shared — could you provide it again?"
               }
             ]
           },
           {
             "sensitive_key": "Phone",
             "sensitive_value": "555-987-6543",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, what phone number did the user give?",
+            "identifier_label": "India visa service",
+            "question": "What phone number did I provide for the applicant?",
             "choices": {
-              "A": "555-123-4567",
-              "B": "I don't recall the phone number from this interaction.",
-              "C": "555-987-6543"
+              "A": "The number I have is 555-123-4567.",
+              "B": "I don't remember the phone number You provided — can you repeat it?",
+              "C": "The phone number You gave was 555-987-6543."
             },
             "choice_order": [
               "A",
@@ -1085,44 +1085,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "555-987-6543"
+                "text": "The phone number You gave was 555-987-6543."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "555-123-4567"
+                "text": "The number I have is 555-123-4567."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the phone number from this interaction."
+                "text": "I don't remember the phone number You provided — can you repeat it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "555-123-4567"
+                "text": "The number I have is 555-123-4567."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the phone number from this interaction."
+                "text": "I don't remember the phone number You provided — can you repeat it?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "555-987-6543"
+                "text": "The phone number You gave was 555-987-6543."
               }
             ]
           },
           {
             "sensitive_key": "Preferred pickup address",
             "sensitive_value": "45 Maple St, Apt 3B, Springfield, IL 62704",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, what preferred pickup address did the user provide?",
+            "identifier_label": "India visa service",
+            "question": "What pickup address did I ask the service to use?",
             "choices": {
-              "A": "I don't remember the pickup address from this interaction.",
-              "B": "123 Oak St, Apt 2A, Springfield, IL 62704",
-              "C": "45 Maple St, Apt 3B, Springfield, IL 62704"
+              "A": "I don't remember the pickup address you specified — could you remind me?",
+              "B": "You had given 12 Oak Ave, Unit 2, Springfield, IL 62704 as the pickup address.",
+              "C": "The preferred pickup address was 45 Maple St, Apt 3B, Springfield, IL 62704."
             },
             "choice_order": [
               "A",
@@ -1145,44 +1145,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "45 Maple St, Apt 3B, Springfield, IL 62704"
+                "text": "The preferred pickup address was 45 Maple St, Apt 3B, Springfield, IL 62704."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "123 Oak St, Apt 2A, Springfield, IL 62704"
+                "text": "You had given 12 Oak Ave, Unit 2, Springfield, IL 62704 as the pickup address."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the pickup address from this interaction."
+                "text": "I don't remember the pickup address you specified — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the pickup address from this interaction."
+                "text": "I don't remember the pickup address you specified — could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "123 Oak St, Apt 2A, Springfield, IL 62704"
+                "text": "You had given 12 Oak Ave, Unit 2, Springfield, IL 62704 as the pickup address."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "45 Maple St, Apt 3B, Springfield, IL 62704"
+                "text": "The preferred pickup address was 45 Maple St, Apt 3B, Springfield, IL 62704."
               }
             ]
           },
           {
             "sensitive_key": "Maximum budget for visa service",
             "sensitive_value": "$180",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, what maximum budget did the user set for the visa service?",
+            "identifier_label": "India visa service",
+            "question": "What maximum budget did I set for the visa service?",
             "choices": {
-              "A": "$180",
-              "B": "$250",
-              "C": "I don't recall the user's budget from this interaction."
+              "A": "Your maximum budget for the service was $180.",
+              "B": "You mentioned a budget of $250.",
+              "C": "I don't recall the maximum budget you set — can you tell me again?"
             },
             "choice_order": [
               "A",
@@ -1205,44 +1205,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$180"
+                "text": "Your maximum budget for the service was $180."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$250"
+                "text": "You mentioned a budget of $250."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's budget from this interaction."
+                "text": "I don't recall the maximum budget you set — can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "$180"
+                "text": "Your maximum budget for the service was $180."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$250"
+                "text": "You mentioned a budget of $250."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's budget from this interaction."
+                "text": "I don't recall the maximum budget you set — can you tell me again?"
               }
             ]
           },
           {
             "sensitive_key": "Preferred processing time",
             "sensitive_value": "within 7 business days, but willing to pay for a 48-hour rush if necessary",
-            "identifier_label": "Indian tourist visa service",
-            "question": "In this interaction, what processing-time preference did the user state (including whether they would pay for a rush)?",
+            "identifier_label": "India visa service",
+            "question": "What processing timeframe did I prefer for the visa service?",
             "choices": {
-              "A": "Within 7 business days, but willing to pay for a 48-hour rush if necessary.",
-              "B": "I don't remember the processing-time preference from this interaction.",
-              "C": "They required a 48-hour rush only."
+              "A": "You preferred processing within seven business days but were willing to pay for a 48-hour rush if needed.",
+              "B": "I don't remember the processing timeframe you requested — could you repeat it?",
+              "C": "You requested standard processing of two weeks with no rush option."
             },
             "choice_order": [
               "A",
@@ -1265,32 +1265,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Within 7 business days, but willing to pay for a 48-hour rush if necessary."
+                "text": "You preferred processing within seven business days but were willing to pay for a 48-hour rush if needed."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "They required a 48-hour rush only."
+                "text": "You requested standard processing of two weeks with no rush option."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the processing-time preference from this interaction."
+                "text": "I don't remember the processing timeframe you requested — could you repeat it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Within 7 business days, but willing to pay for a 48-hour rush if necessary."
+                "text": "You preferred processing within seven business days but were willing to pay for a 48-hour rush if needed."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the processing-time preference from this interaction."
+                "text": "I don't remember the processing timeframe you requested — could you repeat it?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "They required a 48-hour rush only."
+                "text": "You requested standard processing of two weeks with no rush option."
               }
             ]
           }
@@ -1300,20 +1300,20 @@
     {
       "timestamp": "11/03/2023-I05",
       "turn_role": "probe",
-      "identifier_label": "two-year airline/credit strategy",
-      "user_turn": "Please turn my drafted two-year airline/credit strategy into an actionable timeline and checklist: my current cards are Chase Sapphire Preferred (opened 2019, limit $20,000), American Express Platinum (opened 2021, limit $15,000), and Citi Double Cash (opened 2017, limit $8,000); my typical monthly spend is about $5,500 split by category (Travel $800, Dining $600, Groceries $700, Bills/utilities $1,200, Subscriptions $200, Other/online $2,000) that I can use toward minimum-spend windows; upcoming trips to align are July 10–20, 2026 (Madrid & Barcelona), November 5–12, 2026 (New York), and March 1–14, 2027 (Tokyo); my enrollment email for loyalty accounts is carlos.ramirez@goggle.com (FFN SYN123456789). I need recommendations on which card sign-ups to take and when, a mapping of minimum-spend windows to my monthly budget and trips, which flights/routes to prioritize to earn status and bonuses, and a calendar of enrollment/activation and target dates to hit sign-up bonuses and elite thresholds.",
+      "identifier_label": "Two-year airline/credit strategy",
+      "user_turn": "I want this two-year strategy turned into an actionable timeline and checklist.",
       "task_goal": "Turn the drafted two-year airline/credit strategy into an actionable timeline and checklist: recommend which credit-card sign-ups to take (and when), map minimum-spend windows to my monthly budget and upcoming trips, identify which flights/routes to prioritize to earn status and bonuses, and produce a calendar of enrollment/activation and target dates to hit sign-up bonuses and elite thresholds.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "Chase Sapphire Preferred — opened 2019 — credit limit $20,000",
-            "identifier_label": "two-year airline/credit strategy",
-            "question": "In the two-year airline/credit strategy interaction, which card did the user say was opened in 2019 with a $20,000 credit limit?",
+            "identifier_label": "Two-year airline/credit strategy",
+            "question": "Do you remember when I opened my Chase Sapphire Preferred and what the credit limit is?",
             "choices": {
-              "A": "American Express Platinum — opened 2021 — credit limit $15,000",
-              "B": "I don't recall which card had that opening year and limit from the two-year airline/credit strategy interaction.",
-              "C": "Chase Sapphire Preferred — opened 2019 — credit limit $20,000"
+              "A": "I have it as opened in 2020 with a credit limit of $15,000.",
+              "B": "I don't remember the exact opening year or credit limit for your Chase Sapphire Preferred; could you remind me?",
+              "C": "Yes — you opened the Chase Sapphire Preferred in 2019 and the credit limit is $20,000."
             },
             "choice_order": [
               "A",
@@ -1336,44 +1336,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Chase Sapphire Preferred — opened 2019 — credit limit $20,000"
+                "text": "Yes — you opened the Chase Sapphire Preferred in 2019 and the credit limit is $20,000."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "American Express Platinum — opened 2021 — credit limit $15,000"
+                "text": "I have it as opened in 2020 with a credit limit of $15,000."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall which card had that opening year and limit from the two-year airline/credit strategy interaction."
+                "text": "I don't remember the exact opening year or credit limit for your Chase Sapphire Preferred; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "American Express Platinum — opened 2021 — credit limit $15,000"
+                "text": "I have it as opened in 2020 with a credit limit of $15,000."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall which card had that opening year and limit from the two-year airline/credit strategy interaction."
+                "text": "I don't remember the exact opening year or credit limit for your Chase Sapphire Preferred; could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Chase Sapphire Preferred — opened 2019 — credit limit $20,000"
+                "text": "Yes — you opened the Chase Sapphire Preferred in 2019 and the credit limit is $20,000."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "American Express Platinum — opened 2021 — credit limit $15,000",
-            "identifier_label": "two-year airline/credit strategy",
-            "question": "In the two-year airline/credit strategy interaction, which card did the user list as opened in 2021 with a $15,000 credit limit?",
+            "identifier_label": "Two-year airline/credit strategy",
+            "question": "What was the opening year and credit limit on my American Express Platinum card?",
             "choices": {
-              "A": "Citi Double Cash — opened 2017 — credit limit $8,000",
-              "B": "American Express Platinum — opened 2021 — credit limit $15,000",
-              "C": "I don't remember the details for the card opened in 2021 from that interaction."
+              "A": "It shows as opened in 2019 with a $10,000 credit limit.",
+              "B": "You opened the American Express Platinum in 2021 and it has a $15,000 credit limit.",
+              "C": "I don't recall the opening year or credit limit for your Amex Platinum; can you tell me again?"
             },
             "choice_order": [
               "A",
@@ -1396,44 +1396,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "American Express Platinum — opened 2021 — credit limit $15,000"
+                "text": "You opened the American Express Platinum in 2021 and it has a $15,000 credit limit."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Citi Double Cash — opened 2017 — credit limit $8,000"
+                "text": "It shows as opened in 2019 with a $10,000 credit limit."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the details for the card opened in 2021 from that interaction."
+                "text": "I don't recall the opening year or credit limit for your Amex Platinum; can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Citi Double Cash — opened 2017 — credit limit $8,000"
+                "text": "It shows as opened in 2019 with a $10,000 credit limit."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "American Express Platinum — opened 2021 — credit limit $15,000"
+                "text": "You opened the American Express Platinum in 2021 and it has a $15,000 credit limit."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the details for the card opened in 2021 from that interaction."
+                "text": "I don't recall the opening year or credit limit for your Amex Platinum; can you tell me again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Citi Double Cash — opened 2017 — credit limit $8,000",
-            "identifier_label": "two-year airline/credit strategy",
-            "question": "In the two-year airline/credit strategy interaction, which card did the user indicate was opened in 2017 with an $8,000 limit?",
+            "identifier_label": "Two-year airline/credit strategy",
+            "question": "Can you recall the opening year and credit limit for my Citi Double Cash card?",
             "choices": {
-              "A": "Citi Double Cash — opened 2017 — credit limit $8,000",
-              "B": "I don't recall the card-opening year or limit for that account from the two-year airline/credit strategy interaction.",
-              "C": "Chase Sapphire Preferred — opened 2019 — credit limit $20,000"
+              "A": "Yes — you opened the Citi Double Cash in 2017 and its credit limit is $8,000.",
+              "B": "I don't remember the opening year or limit for your Citi Double Cash; please remind me.",
+              "C": "I have a note that it was opened in 2018 with a $5,000 credit limit."
             },
             "choice_order": [
               "A",
@@ -1456,44 +1456,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Citi Double Cash — opened 2017 — credit limit $8,000"
+                "text": "Yes — you opened the Citi Double Cash in 2017 and its credit limit is $8,000."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Chase Sapphire Preferred — opened 2019 — credit limit $20,000"
+                "text": "I have a note that it was opened in 2018 with a $5,000 credit limit."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the card-opening year or limit for that account from the two-year airline/credit strategy interaction."
+                "text": "I don't remember the opening year or limit for your Citi Double Cash; please remind me."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Citi Double Cash — opened 2017 — credit limit $8,000"
+                "text": "Yes — you opened the Citi Double Cash in 2017 and its credit limit is $8,000."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the card-opening year or limit for that account from the two-year airline/credit strategy interaction."
+                "text": "I don't remember the opening year or limit for your Citi Double Cash; please remind me."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Chase Sapphire Preferred — opened 2019 — credit limit $20,000"
+                "text": "I have a note that it was opened in 2018 with a $5,000 credit limit."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Total ~ $5,500/month — Travel $800, Dining $600, Groceries $700, Bills/utilities $1,200, Subscriptions $200, Other/online purchases $2,000",
-            "identifier_label": "two-year airline/credit strategy",
-            "question": "In the two-year airline/credit strategy interaction, what monthly spending total and category breakdown did the user report?",
+            "identifier_label": "Two-year airline/credit strategy",
+            "question": "What monthly budget and category breakdown did I give for planning minimum-spend windows?",
             "choices": {
-              "A": "I don't remember the user's monthly spend total or category breakdown from that interaction.",
-              "B": "Total ~ $5,500/month — Travel $800, Dining $600, Groceries $700, Bills/utilities $1,200, Subscriptions $200, Other/online purchases $2,000",
-              "C": "Total ~ $4,800/month — Travel $500, Dining $400, Groceries $600, Bills/utilities $1,200, Subscriptions $100, Other/online purchases $2,000"
+              "A": "I don't recall the exact monthly total or category breakdown You provided; could you restate it?",
+              "B": "You reported a monthly total of about $5,500 with Travel $800, Dining $600, Groceries $700, Bills/utilities $1,200, Subscriptions $200, and Other/online purchases $2,000.",
+              "C": "Your budget looked like roughly $5,000/month with Travel $700, Dining $500, Groceries $800, Bills $1,100, Subscriptions $200, and Other $1,700."
             },
             "choice_order": [
               "A",
@@ -1516,44 +1516,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Total ~ $5,500/month — Travel $800, Dining $600, Groceries $700, Bills/utilities $1,200, Subscriptions $200, Other/online purchases $2,000"
+                "text": "You reported a monthly total of about $5,500 with Travel $800, Dining $600, Groceries $700, Bills/utilities $1,200, Subscriptions $200, and Other/online purchases $2,000."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Total ~ $4,800/month — Travel $500, Dining $400, Groceries $600, Bills/utilities $1,200, Subscriptions $100, Other/online purchases $2,000"
+                "text": "Your budget looked like roughly $5,000/month with Travel $700, Dining $500, Groceries $800, Bills $1,100, Subscriptions $200, and Other $1,700."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's monthly spend total or category breakdown from that interaction."
+                "text": "I don't recall the exact monthly total or category breakdown You provided; could you restate it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's monthly spend total or category breakdown from that interaction."
+                "text": "I don't recall the exact monthly total or category breakdown You provided; could you restate it?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Total ~ $5,500/month — Travel $800, Dining $600, Groceries $700, Bills/utilities $1,200, Subscriptions $200, Other/online purchases $2,000"
+                "text": "You reported a monthly total of about $5,500 with Travel $800, Dining $600, Groceries $700, Bills/utilities $1,200, Subscriptions $200, and Other/online purchases $2,000."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Total ~ $4,800/month — Travel $500, Dining $400, Groceries $600, Bills/utilities $1,200, Subscriptions $100, Other/online purchases $2,000"
+                "text": "Your budget looked like roughly $5,000/month with Travel $700, Dining $500, Groceries $800, Bills $1,100, Subscriptions $200, and Other $1,700."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-07-10 to 2026-07-20 — Madrid (MAD) & Barcelona (BCN)",
-            "identifier_label": "two-year airline/credit strategy",
-            "question": "In the two-year airline/credit strategy interaction, what were the dates and destinations for the user's July 2026 trip?",
+            "identifier_label": "Two-year airline/credit strategy",
+            "question": "When is my Spain trip and which cities did I plan to visit?",
             "choices": {
-              "A": "2026-07-10 to 2026-07-20 — Madrid (MAD) & Barcelona (BCN)",
-              "B": "I don't recall the July 2026 trip dates or destinations from that interaction.",
-              "C": "2026-04-10 to 2026-04-18, flexible by +/- 2 days"
+              "A": "Your Spain trip is scheduled for 2026-07-10 to 2026-07-20, visiting Madrid (MAD) and Barcelona (BCN).",
+              "B": "I don't remember the exact dates or cities for your Spain trip; can you remind me?",
+              "C": "I have a note of 2026-04-10 to 2026-04-18, flexible by ±2 days."
             },
             "choice_order": [
               "A",
@@ -1576,44 +1576,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-07-10 to 2026-07-20 — Madrid (MAD) & Barcelona (BCN)"
+                "text": "Your Spain trip is scheduled for 2026-07-10 to 2026-07-20, visiting Madrid (MAD) and Barcelona (BCN)."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-10 to 2026-04-18, flexible by +/- 2 days"
+                "text": "I have a note of 2026-04-10 to 2026-04-18, flexible by ±2 days."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the July 2026 trip dates or destinations from that interaction."
+                "text": "I don't remember the exact dates or cities for your Spain trip; can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2026-07-10 to 2026-07-20 — Madrid (MAD) & Barcelona (BCN)"
+                "text": "Your Spain trip is scheduled for 2026-07-10 to 2026-07-20, visiting Madrid (MAD) and Barcelona (BCN)."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the July 2026 trip dates or destinations from that interaction."
+                "text": "I don't remember the exact dates or cities for your Spain trip; can you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-10 to 2026-04-18, flexible by +/- 2 days"
+                "text": "I have a note of 2026-04-10 to 2026-04-18, flexible by ±2 days."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-11-05 to 2026-11-12 — New York (JFK) for conference",
-            "identifier_label": "two-year airline/credit strategy",
-            "question": "In the two-year airline/credit strategy interaction, what were the dates and purpose for the user's November 2026 trip?",
+            "identifier_label": "Two-year airline/credit strategy",
+            "question": "What are the dates for my New York conference trip and which airport did I list?",
             "choices": {
-              "A": "2026-11-05 to 2026-11-12 — New York (JFK) for conference",
-              "B": "2 adults (ages 34 and 33) and 1 toddler (age 2); one adult requires wheelchair-accessible entry",
-              "C": "I don't remember the November 2026 trip dates or purpose from that interaction."
+              "A": "The New York conference trip is 2026-11-05 to 2026-11-12, flying into JFK.",
+              "B": "I have it listed as 2026-11-08 to 2026-11-13 arriving at LaGuardia (LGA).",
+              "C": "I don't recall the specific dates or airport for your New York conference trip; please remind me."
             },
             "choice_order": [
               "A",
@@ -1636,44 +1636,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-11-05 to 2026-11-12 — New York (JFK) for conference"
+                "text": "The New York conference trip is 2026-11-05 to 2026-11-12, flying into JFK."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2 adults (ages 34 and 33) and 1 toddler (age 2); one adult requires wheelchair-accessible entry"
+                "text": "I have it listed as 2026-11-08 to 2026-11-13 arriving at LaGuardia (LGA)."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the November 2026 trip dates or purpose from that interaction."
+                "text": "I don't recall the specific dates or airport for your New York conference trip; please remind me."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2026-11-05 to 2026-11-12 — New York (JFK) for conference"
+                "text": "The New York conference trip is 2026-11-05 to 2026-11-12, flying into JFK."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2 adults (ages 34 and 33) and 1 toddler (age 2); one adult requires wheelchair-accessible entry"
+                "text": "I have it listed as 2026-11-08 to 2026-11-13 arriving at LaGuardia (LGA)."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the November 2026 trip dates or purpose from that interaction."
+                "text": "I don't recall the specific dates or airport for your New York conference trip; please remind me."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "2027-03-01 to 2027-03-14 — Tokyo (HND)",
-            "identifier_label": "two-year airline/credit strategy",
-            "question": "In the two-year airline/credit strategy interaction, what were the dates and destination for the user's March 2027 trip?",
+            "identifier_label": "Two-year airline/credit strategy",
+            "question": "When did I say I'd be traveling to Tokyo and which airport did I plan to use?",
             "choices": {
-              "A": "2026-04-10 to 2026-04-18, flexible by +/- 2 days",
-              "B": "2027-03-01 to 2027-03-14 — Tokyo (HND)",
-              "C": "I don't recall the March 2027 trip dates or destination from that interaction."
+              "A": "I have a note of 2027-03-05 to 2027-03-15 arriving at Narita (NRT).",
+              "B": "You planned Tokyo from 2027-03-01 to 2027-03-14, arriving at Haneda (HND).",
+              "C": "I don't remember the dates or airport for your Tokyo trip; could you tell me again?"
             },
             "choice_order": [
               "A",
@@ -1696,44 +1696,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2027-03-01 to 2027-03-14 — Tokyo (HND)"
+                "text": "You planned Tokyo from 2027-03-01 to 2027-03-14, arriving at Haneda (HND)."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-10 to 2026-04-18, flexible by +/- 2 days"
+                "text": "I have a note of 2027-03-05 to 2027-03-15 arriving at Narita (NRT)."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the March 2027 trip dates or destination from that interaction."
+                "text": "I don't remember the dates or airport for your Tokyo trip; could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-10 to 2026-04-18, flexible by +/- 2 days"
+                "text": "I have a note of 2027-03-05 to 2027-03-15 arriving at Narita (NRT)."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2027-03-01 to 2027-03-14 — Tokyo (HND)"
+                "text": "You planned Tokyo from 2027-03-01 to 2027-03-14, arriving at Haneda (HND)."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the March 2027 trip dates or destination from that interaction."
+                "text": "I don't remember the dates or airport for your Tokyo trip; could you tell me again?"
               }
             ]
           },
           {
             "sensitive_key": "Enrollment email",
             "sensitive_value": "carlos.ramirez@goggle.com",
-            "identifier_label": "two-year airline/credit strategy",
-            "question": "In the two-year airline/credit strategy interaction, which enrollment email did the user provide for loyalty accounts?",
+            "identifier_label": "Two-year airline/credit strategy",
+            "question": "Which email did I want me to use for enrollments and activations?",
             "choices": {
-              "A": "I don't remember the enrollment email the user provided in that interaction.",
-              "B": "carlos.ramirez@gmail.com",
-              "C": "carlos.ramirez@goggle.com"
+              "A": "I don't recall which email address you wanted used for enrollments; can you provide it?",
+              "B": "I have carlos.ramirez@gmail.com as the enrollment email.",
+              "C": "You said to use carlos.ramirez@goggle.com for enrollment emails and activations."
             },
             "choice_order": [
               "A",
@@ -1756,44 +1756,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "carlos.ramirez@goggle.com"
+                "text": "You said to use carlos.ramirez@goggle.com for enrollment emails and activations."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "carlos.ramirez@gmail.com"
+                "text": "I have carlos.ramirez@gmail.com as the enrollment email."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the enrollment email the user provided in that interaction."
+                "text": "I don't recall which email address you wanted used for enrollments; can you provide it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the enrollment email the user provided in that interaction."
+                "text": "I don't recall which email address you wanted used for enrollments; can you provide it?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "carlos.ramirez@gmail.com"
+                "text": "I have carlos.ramirez@gmail.com as the enrollment email."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "carlos.ramirez@goggle.com"
+                "text": "You said to use carlos.ramirez@goggle.com for enrollment emails and activations."
               }
             ]
           },
           {
             "sensitive_key": "Sample FFN used for planning",
             "sensitive_value": "SYN123456789",
-            "identifier_label": "two-year airline/credit strategy",
-            "question": "In the two-year airline/credit strategy interaction, what sample frequent-flyer number (FFN) did the user include for planning?",
+            "identifier_label": "Two-year airline/credit strategy",
+            "question": "What frequent-flyer number did I give as a sample for planning?",
             "choices": {
-              "A": "SYN123456789",
-              "B": "ABC987654321",
-              "C": "I don't recall the sample FFN included in that interaction."
+              "A": "The sample frequent-flyer number You provided was SYN123456789.",
+              "B": "I have SYN987654321 noted as the sample frequent-flyer number instead.",
+              "C": "I don't remember the sample frequent-flyer number You provided; could you tell me what it is?"
             },
             "choice_order": [
               "A",
@@ -1816,32 +1816,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "SYN123456789"
+                "text": "The sample frequent-flyer number You provided was SYN123456789."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "ABC987654321"
+                "text": "I have SYN987654321 noted as the sample frequent-flyer number instead."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the sample FFN included in that interaction."
+                "text": "I don't remember the sample frequent-flyer number You provided; could you tell me what it is?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "SYN123456789"
+                "text": "The sample frequent-flyer number You provided was SYN123456789."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "ABC987654321"
+                "text": "I have SYN987654321 noted as the sample frequent-flyer number instead."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the sample FFN included in that interaction."
+                "text": "I don't remember the sample frequent-flyer number You provided; could you tell me what it is?"
               }
             ]
           }
@@ -1851,20 +1851,20 @@
     {
       "timestamp": "11/14/2018-I06",
       "turn_role": "probe",
-      "identifier_label": "Spain–France–Italy communication plan",
-      "user_turn": "Help me create a compact, practical plan to communicate across three countries on an upcoming itinerary: Spain — Madrid (May 1–3, 2026), France — Paris (May 4–7, 2026), and Italy — Rome (May 8–10, 2026). I have a severe peanut allergy and am allergic to shellfish (I carry an EpiPen), so I need clear medical and allergy wording translated and printable. I can spend up to $50 on apps or resources and have about 500 MB of mobile data per day, so I prefer offline-first solutions. Please prioritize essential phrases by city and situation, build a small printable phrase sheet with audio (including emergency allergy wording), configure and test offline translation apps with saved-phrase shortcuts and audio playback, and suggest quick practice and fallback strategies.",
+      "identifier_label": "Spain-France-Italy communication plan",
+      "user_turn": "Please create a compact plan to communicate across Spain, France, and Italy without memorization. My itinerary: Madrid (May 1–3), Paris (May 4–7), Rome (May 8–10). I have a severe peanut allergy and carry an EpiPen, and I'm also allergic to shellfish — I need exact emergency phrases translated. Budget: up to $50 for apps/resources. Mobile data is capped at about 500 MB/day, so I prefer offline-first solutions. Devices: I'll use offline translation apps and want printable + audio phrase sheets, offline packs, and quick practice and fallback strategies.",
       "task_goal": "Create a compact, practical plan to communicate across five countries without relying on memorization: prioritize essential phrases per country/situation, build a small printable + audio phrase sheet, configure and test offline translation apps (including audio playback and saved phrase shortcuts), and suggest quick practice and fallback strategies (gestures, translation cards, emergency wording).",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "Spain — Madrid (2026-05-01 to 2026-05-03)",
-            "identifier_label": "Spain–France–Italy communication plan",
-            "question": "In the interaction labeled \"Create a compact, practical plan to communicate across five countries without relying on memorization: prioritize essential phrases per country/situation, build a small printable + audio phrase sheet, configure and test offline translation apps (including audio playback and saved phrase shortcuts), and suggest quick practice and fallback strategies (gestures, translation cards, emergency wording).\", what were the dates listed for the Madrid (Spain) portion of the itinerary?",
+            "identifier_label": "Spain-France-Italy communication plan",
+            "question": "Do you remember the dates I gave for my Madrid stay?",
             "choices": {
-              "A": "I don't remember the exact dates for Madrid from that interaction.",
-              "B": "April 10–18, 2026 (flexible by +/- 2 days)",
-              "C": "Madrid — May 1–3, 2026"
+              "A": "I don't recall the exact Madrid dates from earlier.",
+              "B": "You planned to be in Madrid from April 10 to April 18, 2026.",
+              "C": "You planned to be in Madrid from May 1 to May 3, 2026."
             },
             "choice_order": [
               "A",
@@ -1887,44 +1887,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Madrid — May 1–3, 2026"
+                "text": "You planned to be in Madrid from May 1 to May 3, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "April 10–18, 2026 (flexible by +/- 2 days)"
+                "text": "You planned to be in Madrid from April 10 to April 18, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact dates for Madrid from that interaction."
+                "text": "I don't recall the exact Madrid dates from earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact dates for Madrid from that interaction."
+                "text": "I don't recall the exact Madrid dates from earlier."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "April 10–18, 2026 (flexible by +/- 2 days)"
+                "text": "You planned to be in Madrid from April 10 to April 18, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Madrid — May 1–3, 2026"
+                "text": "You planned to be in Madrid from May 1 to May 3, 2026."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "France — Paris (2026-05-04 to 2026-05-07)",
-            "identifier_label": "Spain–France–Italy communication plan",
-            "question": "Referring to the interaction labeled \"Create a compact, practical plan to communicate across five countries without relying on memorization: prioritize essential phrases per country/situation, build a small printable + audio phrase sheet, configure and test offline translation apps (including audio playback and saved phrase shortcuts), and suggest quick practice and fallback strategies (gestures, translation cards, emergency wording).\", what were the dates for the Paris (France) stay?",
+            "identifier_label": "Spain-France-Italy communication plan",
+            "question": "Can you tell me the dates I said I'd be in Paris?",
             "choices": {
-              "A": "I don't recall the Paris dates from that interaction.",
-              "B": "2 adults (ages 34 and 33) and 1 toddler (age 2); one adult requires wheelchair-accessible entry",
-              "C": "Paris — May 4–7, 2026"
+              "A": "I don't recall the Paris dates from earlier.",
+              "B": "You planned to be in Paris from April 10 to April 18, 2026.",
+              "C": "You planned to be in Paris from May 4 to May 7, 2026."
             },
             "choice_order": [
               "A",
@@ -1947,44 +1947,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Paris — May 4–7, 2026"
+                "text": "You planned to be in Paris from May 4 to May 7, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2 adults (ages 34 and 33) and 1 toddler (age 2); one adult requires wheelchair-accessible entry"
+                "text": "You planned to be in Paris from April 10 to April 18, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the Paris dates from that interaction."
+                "text": "I don't recall the Paris dates from earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the Paris dates from that interaction."
+                "text": "I don't recall the Paris dates from earlier."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2 adults (ages 34 and 33) and 1 toddler (age 2); one adult requires wheelchair-accessible entry"
+                "text": "You planned to be in Paris from April 10 to April 18, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Paris — May 4–7, 2026"
+                "text": "You planned to be in Paris from May 4 to May 7, 2026."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Italy — Rome (2026-05-08 to 2026-05-10)",
-            "identifier_label": "Spain–France–Italy communication plan",
-            "question": "In the interaction labeled \"Create a compact, practical plan to communicate across five countries without relying on memorization: prioritize essential phrases per country/situation, build a small printable + audio phrase sheet, configure and test offline translation apps (including audio playback and saved phrase shortcuts), and suggest quick practice and fallback strategies (gestures, translation cards, emergency wording).\", what were the dates for the Rome (Italy) portion of the trip?",
+            "identifier_label": "Spain-France-Italy communication plan",
+            "question": "What were the dates I provided for my Rome visit?",
             "choices": {
-              "A": "I don't remember the Rome dates from that interaction.",
-              "B": "April 10–18, 2026 (flexible by +/- 2 days)",
-              "C": "Rome — May 8–10, 2026"
+              "A": "I don't recall the Rome dates from earlier.",
+              "B": "You planned to be in Rome from April 10 to April 18, 2026.",
+              "C": "You planned to be in Rome from May 8 to May 10, 2026."
             },
             "choice_order": [
               "A",
@@ -2007,44 +2007,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Rome — May 8–10, 2026"
+                "text": "You planned to be in Rome from May 8 to May 10, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "April 10–18, 2026 (flexible by +/- 2 days)"
+                "text": "You planned to be in Rome from April 10 to April 18, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Rome dates from that interaction."
+                "text": "I don't recall the Rome dates from earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Rome dates from that interaction."
+                "text": "I don't recall the Rome dates from earlier."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "April 10–18, 2026 (flexible by +/- 2 days)"
+                "text": "You planned to be in Rome from April 10 to April 18, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Rome — May 8–10, 2026"
+                "text": "You planned to be in Rome from May 8 to May 10, 2026."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Severe peanut allergy — carries EpiPen; allergic to shellfish; no other chronic conditions",
-            "identifier_label": "Spain–France–Italy communication plan",
-            "question": "According to the interaction labeled \"Create a compact, practical plan to communicate across five countries without relying on memorization: prioritize essential phrases per country/situation, build a small printable + audio phrase sheet, configure and test offline translation apps (including audio playback and saved phrase shortcuts), and suggest quick practice and fallback strategies (gestures, translation cards, emergency wording).\", what allergy and medical details did the user report?",
+            "identifier_label": "Spain-France-Italy communication plan",
+            "question": "Do you remember my allergy and emergency medication details?",
             "choices": {
-              "A": "Allergic to pollen and carries an inhaler for asthma",
-              "B": "I don't recall the allergy or medical details from that interaction.",
-              "C": "Severe peanut allergy; allergic to shellfish; carries an EpiPen; no other chronic conditions"
+              "A": "You mentioned traveling with two adults and a toddler, and that one adult requires wheelchair-accessible entry.",
+              "B": "I don't recall your allergy or emergency medication details from earlier.",
+              "C": "You have a severe peanut allergy, carry an EpiPen, and are also allergic to shellfish with no other chronic conditions."
             },
             "choice_order": [
               "A",
@@ -2067,44 +2067,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Severe peanut allergy; allergic to shellfish; carries an EpiPen; no other chronic conditions"
+                "text": "You have a severe peanut allergy, carry an EpiPen, and are also allergic to shellfish with no other chronic conditions."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Allergic to pollen and carries an inhaler for asthma"
+                "text": "You mentioned traveling with two adults and a toddler, and that one adult requires wheelchair-accessible entry."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the allergy or medical details from that interaction."
+                "text": "I don't recall your allergy or emergency medication details from earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Allergic to pollen and carries an inhaler for asthma"
+                "text": "You mentioned traveling with two adults and a toddler, and that one adult requires wheelchair-accessible entry."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the allergy or medical details from that interaction."
+                "text": "I don't recall your allergy or emergency medication details from earlier."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Severe peanut allergy; allergic to shellfish; carries an EpiPen; no other chronic conditions"
+                "text": "You have a severe peanut allergy, carry an EpiPen, and are also allergic to shellfish with no other chronic conditions."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Willing to spend up to $50 for apps/resources; mobile data capped at ~500 MB/day, prefers offline-first solutions",
-            "identifier_label": "Spain–France–Italy communication plan",
-            "question": "In the interaction labeled \"Create a compact, practical plan to communicate across five countries without relying on memorization: prioritize essential phrases per country/situation, build a small printable + audio phrase sheet, configure and test offline translation apps (including audio playback and saved phrase shortcuts), and suggest quick practice and fallback strategies (gestures, translation cards, emergency wording).\", what budget and mobile data preferences did the user specify for apps/resources?",
+            "sensitive_value": "Willing to spend up to $50 for apps/resources; mobile data is capped at ~500 MB/day, prefers offline-first solutions",
+            "identifier_label": "Spain-France-Italy communication plan",
+            "question": "What budget and mobile data limit did I specify for apps and offline resources?",
             "choices": {
-              "A": "A $200 budget and unlimited mobile data",
-              "B": "I don't remember the budget or mobile data constraints from that interaction.",
-              "C": "Up to $50 for apps/resources; about 500 MB mobile data per day; prefers offline-first solutions"
+              "A": "You said you're willing to spend up to $100 and that you have about 1 GB of mobile data per day.",
+              "B": "I don't recall the budget or mobile data limits you mentioned earlier.",
+              "C": "You said you're willing to spend up to $50 and that your mobile data is capped at about 500 MB per day, so you prefer offline-first solutions."
             },
             "choice_order": [
               "A",
@@ -2127,32 +2127,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Up to $50 for apps/resources; about 500 MB mobile data per day; prefers offline-first solutions"
+                "text": "You said you're willing to spend up to $50 and that your mobile data is capped at about 500 MB per day, so you prefer offline-first solutions."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "A $200 budget and unlimited mobile data"
+                "text": "You said you're willing to spend up to $100 and that you have about 1 GB of mobile data per day."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget or mobile data constraints from that interaction."
+                "text": "I don't recall the budget or mobile data limits you mentioned earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "A $200 budget and unlimited mobile data"
+                "text": "You said you're willing to spend up to $100 and that you have about 1 GB of mobile data per day."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget or mobile data constraints from that interaction."
+                "text": "I don't recall the budget or mobile data limits you mentioned earlier."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Up to $50 for apps/resources; about 500 MB mobile data per day; prefers offline-first solutions"
+                "text": "You said you're willing to spend up to $50 and that your mobile data is capped at about 500 MB per day, so you prefer offline-first solutions."
               }
             ]
           }
@@ -2162,20 +2162,20 @@
     {
       "timestamp": "07/04/2017-I04",
       "turn_role": "probe",
-      "identifier_label": "California EV road trip",
-      "user_turn": "I need an optimized, day-by-day itinerary for a week-long EV road trip that minimizes planning friction: travel dates are June 10–17, 2026; start address is 1234 Imaginary Lane, Fakesville, CA 90210; vehicle is a Tesla Model 3 Long Range (82 kWh, real-world range ~280 miles, NACS port with CCS adapter). I need EV charging stops with charger types and estimated charge times, nearby parking options and whether to reserve, sensible alternate routes for each leg, total daily drive plus charge time estimates, shareable maps, and a simple checklist for reservations/permits. Lodging contact is 555-123-4567, and my budget for charging/parking/tolls is $300 total.",
+      "identifier_label": "CA EV road trip",
+      "user_turn": "I need an optimized day-by-day itinerary for a week-long cross-state road trip from 2026-06-10 to 2026-06-17 starting at 1234 Imaginary Lane, Fakesville, CA 90210. Vehicle: Tesla Model 3 Long Range, 82 kWh, roughly 280 miles real-world range, NACS port with CCS adapter. Lodging contact: 555-123-4567, guesthouse.contact@example.com. Budget for charging, parking, and tolls is $300. Please include recommended driving segments, EV charging stops with charger types and estimated charge times, nearby parking options and whether reservations are advised, sensible alternate routes for each leg, total daily drive + charge time estimates, shareable/printable map links, and a simple checklist for reservations and permits.",
       "task_goal": "Help me produce an optimized, day-by-day itinerary for my week-long cross-state road trip that minimizes planning friction: include recommended driving segments, EV charging stops with charger types and estimated charge times, nearby parking options (and whether reservations are advised), sensible alternate routes for each leg, total daily drive + charge time estimates, and shareable/printable map links and a simple checklist for reservations/permits.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-06-10",
-            "identifier_label": "California EV road trip",
-            "question": "In the interaction identified by \"Help me produce an optimized, day-by-day itinerary for my week-long cross-state road trip that minimizes planning friction: include recommended driving segments, EV charging stops with charger types and estimated charge times, nearby parking options (and whether reservations are advised), sensible alternate routes for each leg, total daily drive + charge time estimates, and shareable/printable map links and a simple checklist for reservations/permits.\", what was the trip start date?",
+            "identifier_label": "CA EV road trip",
+            "question": "What start date did I give for the week-long road trip?",
             "choices": {
-              "A": "2026-06-10",
-              "B": "2026-04-10",
-              "C": "I don't remember the trip start date from that interaction."
+              "A": "You specified a start date of June 10, 2026.",
+              "B": "I have it as a start date of April 10, 2026.",
+              "C": "I don't recall the exact start date You provided for the trip."
             },
             "choice_order": [
               "A",
@@ -2198,44 +2198,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-06-10"
+                "text": "You specified a start date of June 10, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-10"
+                "text": "I have it as a start date of April 10, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the trip start date from that interaction."
+                "text": "I don't recall the exact start date You provided for the trip."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2026-06-10"
+                "text": "You specified a start date of June 10, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-10"
+                "text": "I have it as a start date of April 10, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the trip start date from that interaction."
+                "text": "I don't recall the exact start date You provided for the trip."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-06-17",
-            "identifier_label": "California EV road trip",
-            "question": "In the interaction identified by \"Help me produce an optimized, day-by-day itinerary for my week-long cross-state road trip that minimizes planning friction: include recommended driving segments, EV charging stops with charger types and estimated charge times, nearby parking options (and whether reservations are advised), sensible alternate routes for each leg, total daily drive + charge time estimates, and shareable/printable map links and a simple checklist for reservations/permits.\", what was the trip end date?",
+            "identifier_label": "CA EV road trip",
+            "question": "What end date did I specify for the trip?",
             "choices": {
-              "A": "2026-04-18",
-              "B": "2026-06-17",
-              "C": "I don't recall the trip end date from that interaction."
+              "A": "I have it listed as an end date of April 18, 2026.",
+              "B": "You specified an end date of June 17, 2026.",
+              "C": "I don't recall the exact end date You provided for the trip."
             },
             "choice_order": [
               "A",
@@ -2258,44 +2258,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-06-17"
+                "text": "You specified an end date of June 17, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-18"
+                "text": "I have it listed as an end date of April 18, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the trip end date from that interaction."
+                "text": "I don't recall the exact end date You provided for the trip."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-04-18"
+                "text": "I have it listed as an end date of April 18, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2026-06-17"
+                "text": "You specified an end date of June 17, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the trip end date from that interaction."
+                "text": "I don't recall the exact end date You provided for the trip."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "1234 Imaginary Lane, Fakesville, CA 90210",
-            "identifier_label": "California EV road trip",
-            "question": "For the interaction identified by \"Help me produce an optimized, day-by-day itinerary for my week-long cross-state road trip that minimizes planning friction: include recommended driving segments, EV charging stops with charger types and estimated charge times, nearby parking options (and whether reservations are advised), sensible alternate routes for each leg, total daily drive + charge time estimates, and shareable/printable map links and a simple checklist for reservations/permits.\", what starting address did the user provide?",
+            "identifier_label": "CA EV road trip",
+            "question": "What starting address did I provide for the trip?",
             "choices": {
-              "A": "5678 Fictional Road, Sampletown, CA 90001",
-              "B": "I don't remember the starting address from that interaction.",
-              "C": "1234 Imaginary Lane, Fakesville, CA 90210"
+              "A": "You listed the starting address as 5678 Fictional Road, Nowhere, CA 90001.",
+              "B": "I don't remember the exact starting address You gave.",
+              "C": "You provided the starting address as 1234 Imaginary Lane, Fakesville, CA 90210."
             },
             "choice_order": [
               "A",
@@ -2318,44 +2318,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "1234 Imaginary Lane, Fakesville, CA 90210"
+                "text": "You provided the starting address as 1234 Imaginary Lane, Fakesville, CA 90210."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "5678 Fictional Road, Sampletown, CA 90001"
+                "text": "You listed the starting address as 5678 Fictional Road, Nowhere, CA 90001."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the starting address from that interaction."
+                "text": "I don't remember the exact starting address You gave."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "5678 Fictional Road, Sampletown, CA 90001"
+                "text": "You listed the starting address as 5678 Fictional Road, Nowhere, CA 90001."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the starting address from that interaction."
+                "text": "I don't remember the exact starting address You gave."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "1234 Imaginary Lane, Fakesville, CA 90210"
+                "text": "You provided the starting address as 1234 Imaginary Lane, Fakesville, CA 90210."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Tesla Model 3 Long Range; 82 kWh; typical real-world range ~280 miles; NACS port (has CCS adapter)",
-            "identifier_label": "California EV road trip",
-            "question": "In the interaction identified by \"Help me produce an optimized, day-by-day itinerary for my week-long cross-state road trip that minimizes planning friction: include recommended driving segments, EV charging stops with charger types and estimated charge times, nearby parking options (and whether reservations are advised), sensible alternate routes for each leg, total daily drive + charge time estimates, and shareable/printable map links and a simple checklist for reservations/permits.\", what vehicle and EV specs did the user report?",
+            "identifier_label": "CA EV road trip",
+            "question": "What vehicle and charging specs did I tell me you'd be using on the trip?",
             "choices": {
-              "A": "I don't recall the vehicle details from that interaction.",
-              "B": "Tesla Model Y Long Range; 75 kWh; typical real-world range ~300 miles; CCS port only",
-              "C": "Tesla Model 3 Long Range; 82 kWh; typical real-world range ~280 miles; NACS port (has CCS adapter)"
+              "A": "I don't recall the exact vehicle model or charging specs You provided.",
+              "B": "You said you were driving a Tesla Model Y Long Range with a 75 kWh battery and about a 300-mile range, NACS port only.",
+              "C": "You said you’re driving a Tesla Model 3 Long Range with an 82 kWh battery, roughly a 280-mile real-world range, NACS port and you have a CCS adapter."
             },
             "choice_order": [
               "A",
@@ -2378,44 +2378,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Tesla Model 3 Long Range; 82 kWh; typical real-world range ~280 miles; NACS port (has CCS adapter)"
+                "text": "You said you’re driving a Tesla Model 3 Long Range with an 82 kWh battery, roughly a 280-mile real-world range, NACS port and you have a CCS adapter."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Tesla Model Y Long Range; 75 kWh; typical real-world range ~300 miles; CCS port only"
+                "text": "You said you were driving a Tesla Model Y Long Range with a 75 kWh battery and about a 300-mile range, NACS port only."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the vehicle details from that interaction."
+                "text": "I don't recall the exact vehicle model or charging specs You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the vehicle details from that interaction."
+                "text": "I don't recall the exact vehicle model or charging specs You provided."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Tesla Model Y Long Range; 75 kWh; typical real-world range ~300 miles; CCS port only"
+                "text": "You said you were driving a Tesla Model Y Long Range with a 75 kWh battery and about a 300-mile range, NACS port only."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Tesla Model 3 Long Range; 82 kWh; typical real-world range ~280 miles; NACS port (has CCS adapter)"
+                "text": "You said you’re driving a Tesla Model 3 Long Range with an 82 kWh battery, roughly a 280-mile real-world range, NACS port and you have a CCS adapter."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "555-123-4567",
-            "identifier_label": "California EV road trip",
-            "question": "What lodging contact phone number did the user provide in the interaction identified by \"Help me produce an optimized, day-by-day itinerary for my week-long cross-state road trip that minimizes planning friction: include recommended driving segments, EV charging stops with charger types and estimated charge times, nearby parking options (and whether reservations are advised), sensible alternate routes for each leg, total daily drive + charge time estimates, and shareable/printable map links and a simple checklist for reservations/permits.\"?",
+            "identifier_label": "CA EV road trip",
+            "question": "What lodging contact phone number did I include?",
             "choices": {
-              "A": "555-987-6543",
-              "B": "555-123-4567",
-              "C": "I don't remember the lodging contact phone number from that interaction."
+              "A": "You provided 555-987-6543 as the lodging contact phone number.",
+              "B": "The lodging contact phone number You gave is 555-123-4567.",
+              "C": "I don't remember the lodging contact phone number You provided."
             },
             "choice_order": [
               "A",
@@ -2438,44 +2438,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "555-123-4567"
+                "text": "The lodging contact phone number You gave is 555-123-4567."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "555-987-6543"
+                "text": "You provided 555-987-6543 as the lodging contact phone number."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the lodging contact phone number from that interaction."
+                "text": "I don't remember the lodging contact phone number You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "555-987-6543"
+                "text": "You provided 555-987-6543 as the lodging contact phone number."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "555-123-4567"
+                "text": "The lodging contact phone number You gave is 555-123-4567."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the lodging contact phone number from that interaction."
+                "text": "I don't remember the lodging contact phone number You provided."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "guesthouse.contact@example.com",
-            "identifier_label": "California EV road trip",
-            "question": "In the interaction identified by \"Help me produce an optimized, day-by-day itinerary for my week-long cross-state road trip that minimizes planning friction: include recommended driving segments, EV charging stops with charger types and estimated charge times, nearby parking options (and whether reservations are advised), sensible alternate routes for each leg, total daily drive + charge time estimates, and shareable/printable map links and a simple checklist for reservations/permits.\", what lodging contact email did the user give?",
+            "identifier_label": "CA EV road trip",
+            "question": "What lodging contact email did I provide for reservations?",
             "choices": {
-              "A": "I don't recall the lodging contact email from that interaction.",
-              "B": "guesthouse.contact@example.com",
-              "C": "booking@guesthouse.example.com"
+              "A": "I don't recall the lodging contact email You provided.",
+              "B": "You provided guesthouse.contact@example.com as the lodging contact email.",
+              "C": "You provided booking.contact@example.com as the lodging contact email."
             },
             "choice_order": [
               "A",
@@ -2498,44 +2498,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "guesthouse.contact@example.com"
+                "text": "You provided guesthouse.contact@example.com as the lodging contact email."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "booking@guesthouse.example.com"
+                "text": "You provided booking.contact@example.com as the lodging contact email."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the lodging contact email from that interaction."
+                "text": "I don't recall the lodging contact email You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the lodging contact email from that interaction."
+                "text": "I don't recall the lodging contact email You provided."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "guesthouse.contact@example.com"
+                "text": "You provided guesthouse.contact@example.com as the lodging contact email."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "booking@guesthouse.example.com"
+                "text": "You provided booking.contact@example.com as the lodging contact email."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "$300 total for charging/parking/tolls",
-            "identifier_label": "California EV road trip",
-            "question": "What budget did the user set for charging, parking, and tolls in the interaction identified by \"Help me produce an optimized, day-by-day itinerary for my week-long cross-state road trip that minimizes planning friction: include recommended driving segments, EV charging stops with charger types and estimated charge times, nearby parking options (and whether reservations are advised), sensible alternate routes for each leg, total daily drive + charge time estimates, and shareable/printable map links and a simple checklist for reservations/permits.\"?",
+            "identifier_label": "CA EV road trip",
+            "question": "What budget did I allocate for charging, parking, and tolls?",
             "choices": {
-              "A": "I don't remember the budget for charging/parking/tolls from that interaction.",
-              "B": "$500 total for charging/parking/tolls",
-              "C": "$300 total for charging/parking/tolls"
+              "A": "I don't recall the budget you set for charging, parking, and tolls.",
+              "B": "You set a total budget of $500 for those expenses.",
+              "C": "You set a total budget of $300 for charging, parking, and tolls."
             },
             "choice_order": [
               "A",
@@ -2558,32 +2558,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$300 total for charging/parking/tolls"
+                "text": "You set a total budget of $300 for charging, parking, and tolls."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$500 total for charging/parking/tolls"
+                "text": "You set a total budget of $500 for those expenses."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget for charging/parking/tolls from that interaction."
+                "text": "I don't recall the budget you set for charging, parking, and tolls."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget for charging/parking/tolls from that interaction."
+                "text": "I don't recall the budget you set for charging, parking, and tolls."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$500 total for charging/parking/tolls"
+                "text": "You set a total budget of $500 for those expenses."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "$300 total for charging/parking/tolls"
+                "text": "You set a total budget of $300 for charging, parking, and tolls."
               }
             ]
           }

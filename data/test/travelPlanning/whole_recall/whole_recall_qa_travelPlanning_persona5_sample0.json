@@ -1,0 +1,440 @@
+{
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona5_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona5_sample0.memory_control.json",
+  "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona5_sample0.json",
+  "model": "gpt-5-mini",
+  "items": [
+    {
+      "timestamp": "03/08/2014-I02",
+      "turn_role": "key",
+      "identifier_label": "Kyoto 7-day plan",
+      "user_turn": "I want this Kyoto draft turned into a reservation-ready, time-stamped plan: arrive Kansai International (KIX) at 09:35 on JL123 and depart KIX at 14:20 on JL456; accommodation is Sakura Guesthouse, 45-2 Higashiyama, Kyoto 605-0826, Japan; +81-75-123-4567; check-in 15:00, check-out 11:00. Mobility: mild knee osteoarthritis, use a cane sometimes, comfortable walking legs up to about 500 meters without a bench and needing a rest roughly every 20 minutes, and require wheelchair-accessible entrances when available. Budget: 120,000 JPY per person for seven days for sightseeing and meals; prefer to avoid high-end kaiseki unless essential. Traveling with partner Alex Kim. Please include precise transit directions and durations between stops with station names, suggested meal windows, concrete restaurant and temple reservation suggestions, luggage-storage options, accessibility adjustments, and a rough per-day cost estimate so I can book tickets and restaurants.",
+      "task_goal": "Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants.",
+      "rendered": {
+        "identifier_label": "Kyoto 7-day plan",
+        "question": "Do you remember the overall purpose of the earlier request to prepare the 7-day Kyoto itinerary?",
+        "choices": {
+          "A": "Yes — I remember you asked me to design a multi-day hiking route through the Japanese Alps with elevation profiles and campsite locations.",
+          "B": "Yes — the request was to convert a draft 7-day Kyoto itinerary into a reservation-ready, time-stamped plan that includes transit directions and durations, suggested meal windows, concrete restaurant and temple reservation suggestions, luggage-storage options, accessibility adjustments for mobility needs, and rough per-day cost estimates so you can book tickets and reservations.",
+          "C": "I don't recall the earlier request. Could you briefly restate the main goal you want me to achieve with the Kyoto itinerary?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — the request was to convert a draft 7-day Kyoto itinerary into a reservation-ready, time-stamped plan that includes transit directions and durations, suggested meal windows, concrete restaurant and temple reservation suggestions, luggage-storage options, accessibility adjustments for mobility needs, and rough per-day cost estimates so you can book tickets and reservations."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "Yes — I remember you asked me to design a multi-day hiking route through the Japanese Alps with elevation profiles and campsite locations."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't recall the earlier request. Could you briefly restate the main goal you want me to achieve with the Kyoto itinerary?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "Yes — I remember you asked me to design a multi-day hiking route through the Japanese Alps with elevation profiles and campsite locations."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes — the request was to convert a draft 7-day Kyoto itinerary into a reservation-ready, time-stamped plan that includes transit directions and durations, suggested meal windows, concrete restaurant and temple reservation suggestions, luggage-storage options, accessibility adjustments for mobility needs, and rough per-day cost estimates so you can book tickets and reservations."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "I don't recall the earlier request. Could you briefly restate the main goal you want me to achieve with the Kyoto itinerary?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "03/08/2014-I02"
+        ],
+        "rationale": "The label 'Kyoto 7-day plan' directly matches the user request in timestamp 03/08/2014-I02, which asks to turn a drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan with transit directions, meal windows, restaurant/temple suggestions, accessibility adjustments, luggage-storage options, and per-day cost estimates. No other candidate concerns a 7-day Kyoto itinerary."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "05/12/2019-I03",
+      "turn_role": "key",
+      "identifier_label": "Seaside weekend trip",
+      "user_turn": "Please turn that protocol into a concrete, shareable plan for an upcoming trip. Trip details: departing March 27, 2026 at 8:00 AM from Hometown by car to Seaside (about 2.5 hours), expected arrival around 10:30 AM, anticipated late guesthouse arrival around 10:00 PM that evening, and leaving Seaside on March 29, 2026 at 6:00 PM. Guesthouse: Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in about 10:00 PM. Emergency contact: Alex Morgan, friend, +1-555-123-4567, alex.morgan@example.com. Medical: diagnosed generalized anxiety disorder; medication escitalopram 10 mg daily; allergy to penicillin. Preferred check-ins: every 4 hours and at departures/arrivals. Please create a timed check-in schedule with escalation windows, ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in.",
+      "task_goal": "Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in.",
+      "rendered": {
+        "identifier_label": "Seaside weekend trip",
+        "question": "Do you remember the overall purpose of the earlier 'Seaside weekend trip' request?",
+        "choices": {
+          "A": "Yes — the request was to turn a solo-safety protocol into a concrete, shareable trip-safety plan, including a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification and arrival checklist, and step-by-step actions if a check-in is missed.",
+          "B": "It was a request to plan sightseeing activities, create a packing list, and book restaurant reservations for the trip.",
+          "C": "I don't recall the earlier request details — could you remind me what overall goal you wanted for the Seaside trip?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "distractor_irrelevant": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "distractor_irrelevant",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — the request was to turn a solo-safety protocol into a concrete, shareable trip-safety plan, including a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification and arrival checklist, and step-by-step actions if a check-in is missed."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "It was a request to plan sightseeing activities, create a packing list, and book restaurant reservations for the trip."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't recall the earlier request details — could you remind me what overall goal you wanted for the Seaside trip?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "Yes — the request was to turn a solo-safety protocol into a concrete, shareable trip-safety plan, including a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification and arrival checklist, and step-by-step actions if a check-in is missed."
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "It was a request to plan sightseeing activities, create a packing list, and book restaurant reservations for the trip."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "I don't recall the earlier request details — could you remind me what overall goal you wanted for the Seaside trip?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "05/12/2019-I03"
+        ],
+        "rationale": "The label 'Seaside weekend trip' directly corresponds to the candidate at 05/12/2019-I03, which contains the exact Seaside trip details (dates March 27–29, 2026), Blue Fern Guesthouse reservation, timed check-ins, escalation windows, and request for check-in schedule, emergency templates, and arrival checklist."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "06/15/2015-I04",
+      "turn_role": "key",
+      "identifier_label": "City-by-city lightweight packing plan",
+      "user_turn": "Please turn my master packing checklist and five-item toiletry approach into a finalized, city-by-city lightweight packing plan (carry-on-first). Flights: AA1243 2026-07-05 08:30 JFK->ORD carry-on only 7 kg; AA457 2026-07-07 13:50 ORD->DEN 1 checked bag allowed 23 kg; BA302 2026-07-10 19:45 ORD->LHR 1 checked bag 23 kg + 1 carry-on 8 kg. Accommodations: Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented) no on-site laundry; Lisbon guesthouse — Rua das Flores 22, 1100-123 Lisbon, Portugal; contact Rosa Martinez +1-555-123-4567 rosa.m@guesthouse.pt has coin laundry. Medical needs: Levothyroxine 100 mcg daily (carry-on required), severe peanut allergy with EpiPen, soft contact lenses + solution. I need a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight applied, recommended refillable toiletry container sizes, and a pared-down packing list for each stop.",
+      "task_goal": "Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop.",
+      "rendered": {
+        "identifier_label": "City-by-city lightweight packing plan",
+        "question": "Do you still have my earlier request to create a city-by-city, carry-on-first lightweight packing plan?",
+        "choices": {
+          "A": "No — you asked me to research local restaurants and make dining reservations for each city.",
+          "B": "Yes — you asked me to convert your master packing checklist and five-item toiletry approach into a finalized, city-by-city, carry-on-first lightweight packing plan that organizes prioritized outfit rotations, a laundry schedule, exact baggage allowances per flight, recommended refillable toiletry container sizes, and pared-down packing lists for each stop.",
+          "C": "I’m sorry, I don’t have that earlier request saved right now; could you briefly restate the main goal so I can continue?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to convert your master packing checklist and five-item toiletry approach into a finalized, city-by-city, carry-on-first lightweight packing plan that organizes prioritized outfit rotations, a laundry schedule, exact baggage allowances per flight, recommended refillable toiletry container sizes, and pared-down packing lists for each stop."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "No — you asked me to research local restaurants and make dining reservations for each city."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t have that earlier request saved right now; could you briefly restate the main goal so I can continue?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "No — you asked me to research local restaurants and make dining reservations for each city."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to convert your master packing checklist and five-item toiletry approach into a finalized, city-by-city, carry-on-first lightweight packing plan that organizes prioritized outfit rotations, a laundry schedule, exact baggage allowances per flight, recommended refillable toiletry container sizes, and pared-down packing lists for each stop."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t have that earlier request saved right now; could you briefly restate the main goal so I can continue?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "06/15/2015-I04"
+        ],
+        "rationale": "The task_goal and user_turn for 06/15/2015-I04 explicitly request a finalized, city-by-city lightweight packing plan (carry-on-first) including outfit rotation, laundry schedule, flight bag limits, toiletry container sizes, and pared-down per-stop packing lists—matching the identifier_label exactly."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "03/05/2021-I01",
+      "turn_role": "probe",
+      "identifier_label": "Family weekend itinerary",
+      "user_turn": "I need help finalizing a detailed, accessible weekend itinerary and handling time-sensitive reservations: arrival is May 14, 2026 at 15:30 and departure is May 16, 2026 at 11:00; health details — Helen Parker (78) uses a walker, has limited stair tolerance, and takes antihypertensive medication morning and evening; George Parker (76) has limited stamina, a history of angina, and carries nitroglycerin as needed; Lucas Parker (3) has a severe peanut allergy and carries an EpiPen. Budget is $2,000 total for the weekend. Accommodation/contact: emily.parker@goggle.com, 555-123-4567, 123 University Lane, Hometown, State, 12345. Please produce a day-by-day schedule with morning activity blocks and relaxed afternoons, make or prepare time-sensitive reservations and accessibility requests (tickets, restaurants, transport), assign rooms/transport seats as needed, and give a printable itinerary plus a packing/medication checklist.",
+      "task_goal": "Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist.",
+      "rendered": {
+        "identifier_label": "Family weekend itinerary",
+        "question": "Do you remember the family weekend itinerary request — a three‑generation, accessibility‑focused weekend plan with morning activity blocks and relaxed afternoons, plus making time‑sensitive reservations and accessibility requests, assigning rooms/seats, and producing a printable itinerary with a packing/medication checklist?",
+        "choices": {
+          "A": "Yes — I remember that you asked me to finalize a detailed, accessible weekend itinerary for a three‑generation family (structured mornings and relaxed afternoons), handle time‑sensitive reservations and accessibility requests (tickets, restaurants, transport), assign rooms and transport seats as needed, and produce a printable itinerary plus a packing and medication checklist.",
+          "B": "I recall a request to turn a drafted multi‑day travel plan into a reservation‑ready, time‑stamped itinerary with precise transit directions and durations (including station names), suggested meal windows, concrete restaurant/temple reservation options, luggage‑storage suggestions, accessibility adjustments, and a rough per‑day cost estimate so you could book tickets and restaurants.",
+          "C": "I don’t have that earlier request details available right now. Could you resend the instructions for the weekend itinerary and accessibility/reservation needs so I can proceed?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "distractor_irrelevant": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "distractor_irrelevant",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — I remember that you asked me to finalize a detailed, accessible weekend itinerary for a three‑generation family (structured mornings and relaxed afternoons), handle time‑sensitive reservations and accessibility requests (tickets, restaurants, transport), assign rooms and transport seats as needed, and produce a printable itinerary plus a packing and medication checklist."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "I recall a request to turn a drafted multi‑day travel plan into a reservation‑ready, time‑stamped itinerary with precise transit directions and durations (including station names), suggested meal windows, concrete restaurant/temple reservation options, luggage‑storage suggestions, accessibility adjustments, and a rough per‑day cost estimate so you could book tickets and restaurants."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request details available right now. Could you resend the instructions for the weekend itinerary and accessibility/reservation needs so I can proceed?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "Yes — I remember that you asked me to finalize a detailed, accessible weekend itinerary for a three‑generation family (structured mornings and relaxed afternoons), handle time‑sensitive reservations and accessibility requests (tickets, restaurants, transport), assign rooms and transport seats as needed, and produce a printable itinerary plus a packing and medication checklist."
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "I recall a request to turn a drafted multi‑day travel plan into a reservation‑ready, time‑stamped itinerary with precise transit directions and durations (including station names), suggested meal windows, concrete restaurant/temple reservation options, luggage‑storage suggestions, accessibility adjustments, and a rough per‑day cost estimate so you could book tickets and restaurants."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "I don’t have that earlier request details available right now. Could you resend the instructions for the weekend itinerary and accessibility/reservation needs so I can proceed?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "03/05/2021-I01"
+        ],
+        "rationale": "The label 'Family weekend itinerary' directly corresponds to the turn at 03/05/2021-I01, which requests a detailed, accessible weekend itinerary for a three-generation family (Helen, George, Lucas), time-sensitive reservations, room/seat assignments, and a printable itinerary plus packing/medication checklist. No other candidate turn describes a family weekend itinerary."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "07/14/2022-I05",
+      "turn_role": "probe",
+      "identifier_label": "Eco-lodge stay",
+      "user_turn": "I need help confirming low-impact arrival logistics and dietary/health accommodations for the eco-lodge stay. Flight/arrival: UA 476 departs JFK at 08:00 EDT and arrives SJO at 14:35 CST. Dietary/health: severe peanut allergy (anaphylaxis) — carries EpiPen, and I’m lacto-ovo vegetarian. Lodge contact: Elena Morales, elena.morales@selvaeco.cr, +506-8888-1234. Remaining transport/activity budget is USD 400. Please confirm best low-impact transfer from SJO to the lodge timed to the arrival, verify they can accommodate dietary/health needs for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.",
+      "task_goal": "Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.",
+      "rendered": {
+        "identifier_label": "Eco-lodge stay",
+        "question": "What was the overall purpose of the earlier request?",
+        "choices": {
+          "A": "To confirm low-impact arrival logistics and transfers to the eco-lodge, verify the lodge can accommodate dietary and health needs for the community-guided nature walk, and produce an eco-friendly packing checklist plus an activity/transfer budget to finalize the two-night stay.",
+          "B": "I’m sorry — I don’t remember the earlier request. Could you please remind me of its overall purpose?",
+          "C": "To book international flights, reserve city-center hotels, and arrange commercial sightseeing tours in the destination."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "not_remember": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "not_remember",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "To confirm low-impact arrival logistics and transfers to the eco-lodge, verify the lodge can accommodate dietary and health needs for the community-guided nature walk, and produce an eco-friendly packing checklist plus an activity/transfer budget to finalize the two-night stay."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "To book international flights, reserve city-center hotels, and arrange commercial sightseeing tours in the destination."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I’m sorry — I don’t remember the earlier request. Could you please remind me of its overall purpose?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "To confirm low-impact arrival logistics and transfers to the eco-lodge, verify the lodge can accommodate dietary and health needs for the community-guided nature walk, and produce an eco-friendly packing checklist plus an activity/transfer budget to finalize the two-night stay."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I’m sorry — I don’t remember the earlier request. Could you please remind me of its overall purpose?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "To book international flights, reserve city-center hotels, and arrange commercial sightseeing tours in the destination."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "07/14/2022-I05"
+        ],
+        "rationale": "The label 'Eco-lodge stay' directly matches the 07/14/2022-I05 turn, which requests confirmation of low-impact arrival logistics to an eco-lodge, verification of dietary/health accommodations (severe peanut allergy, lacto-ovo vegetarian), lodge contact Elena Morales, UA flight to SJO, a USD 400 transport/activity budget, and an eco-friendly packing checklist for a two-night stay."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "12/06/2016-I06",
+      "turn_role": "probe",
+      "identifier_label": "Regional train plan",
+      "user_turn": "I want a personalized plan for regional train trips to minimize missed connections. I have an upcoming departure window on April 10, 2026 between 08:30 and 10:00. I typically travel from home (123 University Lane, Hometown, State, 12345); mobility: mild knee osteoarthritis, I use a folding cane occasionally, and I need about 12–15 minutes to change platforms. Guesthouse contact at my destination: Brookside Guesthouse, Sarah Linton, +1 555-123-4567, sarah.linton@brookside.com. Please recommend single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist with timings, platform-change tips, and fallback options so I can book trains confidently.",
+      "task_goal": "Get a practical, personalized plan for future regional train journeys that minimizes missed connections: recommended single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking trains.",
+      "rendered": {
+        "identifier_label": "Regional train plan",
+        "question": "About the regional train trips plan I asked for earlier — did I prepare a personalized plan to minimize missed connections with recommended single-leg or buffered itineraries, minimum transfer buffers for my usual stations, and a short checklist with timings, platform-change tips, and fallback options?",
+        "choices": {
+          "A": "I’m sorry, I don’t have that plan available any more. Could you resend the key details (your typical stations, mobility constraints, and the departure window) and I’ll recreate the personalized, transfer‑minimizing plan?",
+          "B": "Yes — I prepared a personalized plan to minimize missed connections: I recommended single-leg and buffered itinerary options, suggested minimum transfer buffer times tailored to your typical stations and mobility (occasional cane/slower platform changes), and provided a short checklist with timing cues, platform-change tips, and fallback options so you can book confidently.",
+          "C": "I turned your request into a reservation-ready, time-stamped itinerary: it includes precise transit directions and durations between stops, suggested meal time windows and specific restaurant/booking suggestions, luggage-storage options, accessibility adjustments, and a rough per-day cost estimate to help with bookings."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — I prepared a personalized plan to minimize missed connections: I recommended single-leg and buffered itinerary options, suggested minimum transfer buffer times tailored to your typical stations and mobility (occasional cane/slower platform changes), and provided a short checklist with timing cues, platform-change tips, and fallback options so you can book confidently."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "I turned your request into a reservation-ready, time-stamped itinerary: it includes precise transit directions and durations between stops, suggested meal time windows and specific restaurant/booking suggestions, luggage-storage options, accessibility adjustments, and a rough per-day cost estimate to help with bookings."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t have that plan available any more. Could you resend the key details (your typical stations, mobility constraints, and the departure window) and I’ll recreate the personalized, transfer‑minimizing plan?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I’m sorry, I don’t have that plan available any more. Could you resend the key details (your typical stations, mobility constraints, and the departure window) and I’ll recreate the personalized, transfer‑minimizing plan?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes — I prepared a personalized plan to minimize missed connections: I recommended single-leg and buffered itinerary options, suggested minimum transfer buffer times tailored to your typical stations and mobility (occasional cane/slower platform changes), and provided a short checklist with timing cues, platform-change tips, and fallback options so you can book confidently."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "I turned your request into a reservation-ready, time-stamped itinerary: it includes precise transit directions and durations between stops, suggested meal time windows and specific restaurant/booking suggestions, luggage-storage options, accessibility adjustments, and a rough per-day cost estimate to help with bookings."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "12/06/2016-I06"
+        ],
+        "rationale": "The label 'Regional train plan' directly matches the user request in the 12/06/2016-I06 turn, which asks for a personalized plan for regional train trips, transfer buffer times, single-leg/buffered itineraries, and a checklist. No other candidate focuses on regional train planning."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

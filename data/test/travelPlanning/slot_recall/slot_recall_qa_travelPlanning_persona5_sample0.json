@@ -1,26 +1,26 @@
 {
-  "source_rendered": "data/baseline/travelPlanning/conversation_travelPlanning_persona5_sample0.recall_rendered.json",
-  "source_sidecar": "data/baseline/travelPlanning/conversation_travelPlanning_persona5_sample0.memory_control.json",
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona5_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona5_sample0.memory_control.json",
   "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona5_sample0.json",
   "model": "gpt-5-mini",
   "items": [
     {
       "timestamp": "03/08/2014-I02",
       "turn_role": "key",
-      "identifier_label": "Kyoto 7-day itinerary",
-      "user_turn": "Please convert my drafted seven-day Kyoto itinerary into a reservation-ready, time-stamped plan. Travel: arrive Kansai Intl (KIX) at 09:35 on April 10, 2026 (JL123) and depart Kansai Intl at 14:20 on April 17, 2026 (JL456). Accommodation: Sakura Guesthouse (Kyoto); check-in 15:00, check-out 11:00. Mobility: I have mild knee osteoarthritis, use a cane occasionally, prefer walking segments of 500 meters or less without a bench, need a rest about every 20 minutes, and require wheelchair-accessible entrances when available. Budget: 120,000 JPY per person for sightseeing and meals; I prefer to avoid high-end kaiseki unless essential. I'm traveling with my partner, Alex Kim. Please include precise transit directions and durations between stops with station names, suggested meal time windows and restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants.",
+      "identifier_label": "Kyoto 7-day plan",
+      "user_turn": "I want this Kyoto draft turned into a reservation-ready, time-stamped plan: arrive Kansai International (KIX) at 09:35 on JL123 and depart KIX at 14:20 on JL456; accommodation is Sakura Guesthouse, 45-2 Higashiyama, Kyoto 605-0826, Japan; +81-75-123-4567; check-in 15:00, check-out 11:00. Mobility: mild knee osteoarthritis, use a cane sometimes, comfortable walking legs up to about 500 meters without a bench and needing a rest roughly every 20 minutes, and require wheelchair-accessible entrances when available. Budget: 120,000 JPY per person for seven days for sightseeing and meals; prefer to avoid high-end kaiseki unless essential. Traveling with partner Alex Kim. Please include precise transit directions and durations between stops with station names, suggested meal windows, concrete restaurant and temple reservation suggestions, luggage-storage options, accessibility adjustments, and a rough per-day cost estimate so I can book tickets and restaurants.",
       "task_goal": "Turn the drafted 7-day Kyoto itinerary into a reservation-ready, time-stamped plan: add precise transit directions and durations between stops (with station names), suggested time windows for meals, concrete restaurant/temple reservation suggestions, luggage-storage options, accessibility adjustments for my mobility needs, and a rough per-day cost estimate so I can book tickets and restaurants.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "Arrive Kansai Intl (KIX) 2026 04 10 09",
             "sensitive_value": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
-            "identifier_label": "Kyoto 7-day itinerary",
-            "question": "In the interaction with identifier_label, what arrival and departure flights and times did the user provide for Kansai International Airport?",
+            "identifier_label": "Kyoto 7-day plan",
+            "question": "What were my Kansai International arrival and departure flight details?",
             "choices": {
-              "A": "Arrive Kansai Intl on April 10 in the morning on JL789; depart April 17 at 14:20 on JL456.",
-              "B": "Arrive Kansai Intl (KIX) at 09:35 on April 10, 2026 (JL123); depart Kansai Intl at 14:20 on April 17, 2026 (JL456).",
-              "C": "I don't recall those flight times or flight numbers — could you remind me of the arrival/departure details?"
+              "A": "You arrive Kansai International (KIX) at 10:30 on April 10 on JL123 and depart at 12:00 on April 18 on JL789.",
+              "B": "You arrive Kansai International (KIX) on JL123 at 09:35 on April 10 and depart KIX on JL456 at 14:20 on April 17.",
+              "C": "I don't recall the exact arrival and departure flight numbers or times; could you remind me?"
             },
             "choice_order": [
               "A",
@@ -43,44 +43,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Arrive Kansai Intl (KIX) at 09:35 on April 10, 2026 (JL123); depart Kansai Intl at 14:20 on April 17, 2026 (JL456)."
+                "text": "You arrive Kansai International (KIX) on JL123 at 09:35 on April 10 and depart KIX on JL456 at 14:20 on April 17."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive Kansai Intl on April 10 in the morning on JL789; depart April 17 at 14:20 on JL456."
+                "text": "You arrive Kansai International (KIX) at 10:30 on April 10 on JL123 and depart at 12:00 on April 18 on JL789."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall those flight times or flight numbers — could you remind me of the arrival/departure details?"
+                "text": "I don't recall the exact arrival and departure flight numbers or times; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrive Kansai Intl on April 10 in the morning on JL789; depart April 17 at 14:20 on JL456."
+                "text": "You arrive Kansai International (KIX) at 10:30 on April 10 on JL123 and depart at 12:00 on April 18 on JL789."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Arrive Kansai Intl (KIX) at 09:35 on April 10, 2026 (JL123); depart Kansai Intl at 14:20 on April 17, 2026 (JL456)."
+                "text": "You arrive Kansai International (KIX) on JL123 at 09:35 on April 10 and depart KIX on JL456 at 14:20 on April 17."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall those flight times or flight numbers — could you remind me of the arrival/departure details?"
+                "text": "I don't recall the exact arrival and departure flight numbers or times; could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "Sakura Guesthouse, 45 2 Higashiyama, Kyoto 605 0826, Japan; +81 75 123 4567; check in 15",
             "sensitive_value": "00; check-out 11:00",
-            "identifier_label": "Kyoto 7-day itinerary",
-            "question": "In the interaction with identifier_label, what were the Sakura Guesthouse address, phone number, and the check-in/check-out times the user provided?",
+            "identifier_label": "Kyoto 7-day plan",
+            "question": "Can you confirm the guesthouse name, address, phone number, and the check-in/check-out times I provided?",
             "choices": {
-              "A": "Sakura Guesthouse at the Higashiyama area; phone +81 75 000 0000; check-in 14:00; check-out 10:00.",
-              "B": "I don't remember the guesthouse address, phone, or exact check-in/check-out times — can you repeat them?",
-              "C": "Sakura Guesthouse, 45-2 Higashiyama, Kyoto 605-0826, Japan; +81 75 123 4567; check-in 15:00; check-out 11:00."
+              "A": "You're staying at Sakura Guesthouse, 12-4 Gion, Kyoto, phone +81-75-000-0000; check-in 14:00 and check-out 10:00.",
+              "B": "I don't remember the guesthouse details or check-in/check-out times; could you tell me again?",
+              "C": "You're staying at Sakura Guesthouse, 45-2 Higashiyama, Kyoto 605-0826, phone +81-75-123-4567; check-in 15:00 and check-out 11:00."
             },
             "choice_order": [
               "A",
@@ -103,44 +103,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Sakura Guesthouse, 45-2 Higashiyama, Kyoto 605-0826, Japan; +81 75 123 4567; check-in 15:00; check-out 11:00."
+                "text": "You're staying at Sakura Guesthouse, 45-2 Higashiyama, Kyoto 605-0826, phone +81-75-123-4567; check-in 15:00 and check-out 11:00."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Sakura Guesthouse at the Higashiyama area; phone +81 75 000 0000; check-in 14:00; check-out 10:00."
+                "text": "You're staying at Sakura Guesthouse, 12-4 Gion, Kyoto, phone +81-75-000-0000; check-in 14:00 and check-out 10:00."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the guesthouse address, phone, or exact check-in/check-out times — can you repeat them?"
+                "text": "I don't remember the guesthouse details or check-in/check-out times; could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Sakura Guesthouse at the Higashiyama area; phone +81 75 000 0000; check-in 14:00; check-out 10:00."
+                "text": "You're staying at Sakura Guesthouse, 12-4 Gion, Kyoto, phone +81-75-000-0000; check-in 14:00 and check-out 10:00."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the guesthouse address, phone, or exact check-in/check-out times — can you repeat them?"
+                "text": "I don't remember the guesthouse details or check-in/check-out times; could you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Sakura Guesthouse, 45-2 Higashiyama, Kyoto 605-0826, Japan; +81 75 123 4567; check-in 15:00; check-out 11:00."
+                "text": "You're staying at Sakura Guesthouse, 45-2 Higashiyama, Kyoto 605-0826, phone +81-75-123-4567; check-in 15:00 and check-out 11:00."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Mild osteoarthritis in knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench or requires a rest every 20 minutes; needs wheelchair-accessible entrances when available",
-            "identifier_label": "Kyoto 7-day itinerary",
-            "question": "In the interaction with identifier_label, what mobility and accessibility needs did the user describe for planning the itinerary?",
+            "identifier_label": "Kyoto 7-day plan",
+            "question": "What mobility limitations and accessibility needs did I tell me about for the trip?",
             "choices": {
-              "A": "They are fully ambulatory and prefer walking up to 1 kilometer without rests and do not use a cane.",
-              "B": "They have mild knee osteoarthritis, use a cane occasionally, prefer walking segments of 500 meters or less without a bench, need a rest about every 20 minutes, and prefer wheelchair-accessible entrances when available.",
-              "C": "I don't recall their mobility needs — could you remind me about any accessibility or walking limitations?"
+              "A": "You have moderate knee osteoarthritis, use a walker regularly, can walk only about 200 meters before needing a bench, and require elevator access wherever possible.",
+              "B": "You have mild knee osteoarthritis, use a cane sometimes, can comfortably walk up to about 500 meters without a bench and need a rest roughly every 20 minutes, and prefer wheelchair-accessible entrances when available.",
+              "C": "I don't recall the specifics of your mobility limitations or accessibility needs; can you remind me?"
             },
             "choice_order": [
               "A",
@@ -163,44 +163,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "They have mild knee osteoarthritis, use a cane occasionally, prefer walking segments of 500 meters or less without a bench, need a rest about every 20 minutes, and prefer wheelchair-accessible entrances when available."
+                "text": "You have mild knee osteoarthritis, use a cane sometimes, can comfortably walk up to about 500 meters without a bench and need a rest roughly every 20 minutes, and prefer wheelchair-accessible entrances when available."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "They are fully ambulatory and prefer walking up to 1 kilometer without rests and do not use a cane."
+                "text": "You have moderate knee osteoarthritis, use a walker regularly, can walk only about 200 meters before needing a bench, and require elevator access wherever possible."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall their mobility needs — could you remind me about any accessibility or walking limitations?"
+                "text": "I don't recall the specifics of your mobility limitations or accessibility needs; can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "They are fully ambulatory and prefer walking up to 1 kilometer without rests and do not use a cane."
+                "text": "You have moderate knee osteoarthritis, use a walker regularly, can walk only about 200 meters before needing a bench, and require elevator access wherever possible."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "They have mild knee osteoarthritis, use a cane occasionally, prefer walking segments of 500 meters or less without a bench, need a rest about every 20 minutes, and prefer wheelchair-accessible entrances when available."
+                "text": "You have mild knee osteoarthritis, use a cane sometimes, can comfortably walk up to about 500 meters without a bench and need a rest roughly every 20 minutes, and prefer wheelchair-accessible entrances when available."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall their mobility needs — could you remind me about any accessibility or walking limitations?"
+                "text": "I don't recall the specifics of your mobility limitations or accessibility needs; can you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "120000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki bookings unless essential",
-            "identifier_label": "Kyoto 7-day itinerary",
-            "question": "In the interaction with identifier_label, what budget and dining preference did the user specify for sightseeing and meals?",
+            "identifier_label": "Kyoto 7-day plan",
+            "question": "What budget and dining preference did I set for sightseeing and meals during the seven days?",
             "choices": {
-              "A": "I don't remember the budget or dining preferences — could you tell me again how much you'd like to spend and if you want kaiseki?",
-              "B": "Budget: 200,000 JPY per person for the trip and they are open to multiple kaiseki meals.",
-              "C": "Budget: 120,000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki unless essential."
+              "A": "I don't recall your budget or dining preferences for the trip; could you remind me?",
+              "B": "Your budget is 150,000 JPY per person for the seven days and you're open to occasional kaiseki meals.",
+              "C": "Your budget is 120,000 JPY per person for seven days for sightseeing and meals, and you prefer to avoid high-end kaiseki unless essential."
             },
             "choice_order": [
               "A",
@@ -223,44 +223,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Budget: 120,000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki unless essential."
+                "text": "Your budget is 120,000 JPY per person for seven days for sightseeing and meals, and you prefer to avoid high-end kaiseki unless essential."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Budget: 200,000 JPY per person for the trip and they are open to multiple kaiseki meals."
+                "text": "Your budget is 150,000 JPY per person for the seven days and you're open to occasional kaiseki meals."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget or dining preferences — could you tell me again how much you'd like to spend and if you want kaiseki?"
+                "text": "I don't recall your budget or dining preferences for the trip; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget or dining preferences — could you tell me again how much you'd like to spend and if you want kaiseki?"
+                "text": "I don't recall your budget or dining preferences for the trip; could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Budget: 200,000 JPY per person for the trip and they are open to multiple kaiseki meals."
+                "text": "Your budget is 150,000 JPY per person for the seven days and you're open to occasional kaiseki meals."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Budget: 120,000 JPY per person total for sightseeing and meals over 7 days; prefers to avoid high-end kaiseki unless essential."
+                "text": "Your budget is 120,000 JPY per person for seven days for sightseeing and meals, and you prefer to avoid high-end kaiseki unless essential."
               }
             ]
           },
           {
             "sensitive_key": "Traveling with partner",
             "sensitive_value": "Alex Kim; guesthouse contact: +81-75-123-4567",
-            "identifier_label": "Kyoto 7-day itinerary",
-            "question": "In the interaction with identifier_label, who did the user say they were traveling with, and what guesthouse contact was provided?",
+            "identifier_label": "Kyoto 7-day plan",
+            "question": "Who am I traveling with and which guesthouse contact did I provide?",
             "choices": {
-              "A": "They are traveling with their partner, Alex Kim; guesthouse contact: +81-75-123-4567.",
-              "B": "I don't recall the travel companion's name or the guesthouse contact number — can you remind me?",
-              "C": "They are traveling with Alex Lee; guesthouse contact: +81-75-000-0000."
+              "A": "You're traveling with your partner Alex Kim, and the guesthouse contact number You provided is +81-75-123-4567.",
+              "B": "I don't remember your travel companion's name or the guesthouse contact; could you tell me again?",
+              "C": "You're traveling with your partner Alex Kim, and the guesthouse contact is listed as +81-75-000-0000."
             },
             "choice_order": [
               "A",
@@ -283,32 +283,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "They are traveling with their partner, Alex Kim; guesthouse contact: +81-75-123-4567."
+                "text": "You're traveling with your partner Alex Kim, and the guesthouse contact number You provided is +81-75-123-4567."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "They are traveling with Alex Lee; guesthouse contact: +81-75-000-0000."
+                "text": "You're traveling with your partner Alex Kim, and the guesthouse contact is listed as +81-75-000-0000."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the travel companion's name or the guesthouse contact number — can you remind me?"
+                "text": "I don't remember your travel companion's name or the guesthouse contact; could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "They are traveling with their partner, Alex Kim; guesthouse contact: +81-75-123-4567."
+                "text": "You're traveling with your partner Alex Kim, and the guesthouse contact number You provided is +81-75-123-4567."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the travel companion's name or the guesthouse contact number — can you remind me?"
+                "text": "I don't remember your travel companion's name or the guesthouse contact; could you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "They are traveling with Alex Lee; guesthouse contact: +81-75-000-0000."
+                "text": "You're traveling with your partner Alex Kim, and the guesthouse contact is listed as +81-75-000-0000."
               }
             ]
           }
@@ -318,20 +318,20 @@
     {
       "timestamp": "05/12/2019-I03",
       "turn_role": "key",
-      "identifier_label": "Seaside weekend solo-safety plan",
-      "user_turn": "Please turn the solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: I need a timed check-in schedule with escalation windows, ready-to-send emergency message templates (SMS and email), a guesthouse verification and arrival checklist, and step-by-step actions if I miss a check-in. Trip itinerary and times: depart Hometown by car at 8:00 AM on March 27, 2026 (Hometown -> Seaside, ~2.5 hours), expected arrival about 10:30 AM; expected late guesthouse arrival around 10:00 PM on March 27; return depart Seaside at 6:00 PM on March 29, 2026. Guesthouse details: Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in ~10:00 PM on March 27. Emergency contact: Alex Morgan, friend, 555-123-4567. Medical info for emergencies: diagnosed generalized anxiety disorder, escitalopram 10 mg daily, allergic to penicillin. For check-ins I prefer an initial departure check, an ETA check, an evening arrival check, and location updates roughly every four hours while traveling. Can you build the timed schedule, pre-filled messages, guesthouse arrival checklist, and a clear escalation plan if I miss a check-in?",
+      "identifier_label": "Seaside weekend trip",
+      "user_turn": "Please turn that protocol into a concrete, shareable plan for an upcoming trip. Trip details: departing March 27, 2026 at 8:00 AM from Hometown by car to Seaside (about 2.5 hours), expected arrival around 10:30 AM, anticipated late guesthouse arrival around 10:00 PM that evening, and leaving Seaside on March 29, 2026 at 6:00 PM. Guesthouse: Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in about 10:00 PM. Emergency contact: Alex Morgan, friend, +1-555-123-4567, alex.morgan@example.com. Medical: diagnosed generalized anxiety disorder; medication escitalopram 10 mg daily; allergy to penicillin. Preferred check-ins: every 4 hours and at departures/arrivals. Please create a timed check-in schedule with escalation windows, ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in.",
       "task_goal": "Turn the tested solo-safety protocol into a concrete, shareable plan for my upcoming weekend trip: a timed check-in schedule (with escalation windows), ready-to-send emergency message templates, a guesthouse verification & arrival checklist, and step-by-step actions if I miss a check-in.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "2026 03 27 08",
             "sensitive_value": "00 depart Hometown by car (Hometown -> Seaside, ~2.5h); expected arrival 2026-03-27 10:30",
-            "identifier_label": "Seaside weekend solo-safety plan",
-            "question": "In the Seaside weekend solo-safety plan interaction, what time did the user plan to depart Hometown by car and when did they expect to arrive in Seaside?",
+            "identifier_label": "Seaside weekend trip",
+            "question": "What time and where did I plan to depart on March 27, and when did I expect to arrive in Seaside?",
             "choices": {
-              "A": "I don't remember the exact departure or arrival times for that interaction.",
-              "B": "Depart Hometown at 8:00 AM on March 27, 2026; expected arrival about 10:30 AM.",
-              "C": "Depart at 9:00 AM on March 27; expected arrival around 11:30 AM."
+              "A": "I don't remember the exact departure and arrival times for March 27; can you remind me?",
+              "B": "You planned to depart Hometown by car on March 27 at 8:00 AM, arriving in Seaside around 10:30 AM.",
+              "C": "You planned to depart Hometown on March 27 at 9:00 AM and arrive in Seaside around 11:30 AM."
             },
             "choice_order": [
               "A",
@@ -354,44 +354,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Depart Hometown at 8:00 AM on March 27, 2026; expected arrival about 10:30 AM."
+                "text": "You planned to depart Hometown by car on March 27 at 8:00 AM, arriving in Seaside around 10:30 AM."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Depart at 9:00 AM on March 27; expected arrival around 11:30 AM."
+                "text": "You planned to depart Hometown on March 27 at 9:00 AM and arrive in Seaside around 11:30 AM."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact departure or arrival times for that interaction."
+                "text": "I don't remember the exact departure and arrival times for March 27; can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact departure or arrival times for that interaction."
+                "text": "I don't remember the exact departure and arrival times for March 27; can you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Depart Hometown at 8:00 AM on March 27, 2026; expected arrival about 10:30 AM."
+                "text": "You planned to depart Hometown by car on March 27 at 8:00 AM, arriving in Seaside around 10:30 AM."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Depart at 9:00 AM on March 27; expected arrival around 11:30 AM."
+                "text": "You planned to depart Hometown on March 27 at 9:00 AM and arrive in Seaside around 11:30 AM."
               }
             ]
           },
           {
             "sensitive_key": "2026 03 27 expected late arrival at guesthouse ~22",
             "sensitive_value": "00",
-            "identifier_label": "Seaside weekend solo-safety plan",
-            "question": "In the Seaside weekend solo-safety plan interaction, what was the user's expected late arrival time at the guesthouse on March 27?",
+            "identifier_label": "Seaside weekend trip",
+            "question": "What time did I expect to arrive at the guesthouse on the night of March 27?",
             "choices": {
-              "A": "Expected arrival around 8:00 PM on March 27.",
-              "B": "Expected late guesthouse arrival around 10:00 PM on March 27.",
-              "C": "I don't recall the expected guesthouse arrival time for that interaction."
+              "A": "You expected to arrive at the guesthouse around 8:00 PM that night.",
+              "B": "You expected a late guesthouse arrival around 10:00 PM on March 27.",
+              "C": "I don't recall what time you expected to arrive at the guesthouse that night."
             },
             "choice_order": [
               "A",
@@ -414,44 +414,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Expected late guesthouse arrival around 10:00 PM on March 27."
+                "text": "You expected a late guesthouse arrival around 10:00 PM on March 27."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Expected arrival around 8:00 PM on March 27."
+                "text": "You expected to arrive at the guesthouse around 8:00 PM that night."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the expected guesthouse arrival time for that interaction."
+                "text": "I don't recall what time you expected to arrive at the guesthouse that night."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Expected arrival around 8:00 PM on March 27."
+                "text": "You expected to arrive at the guesthouse around 8:00 PM that night."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Expected late guesthouse arrival around 10:00 PM on March 27."
+                "text": "You expected a late guesthouse arrival around 10:00 PM on March 27."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the expected guesthouse arrival time for that interaction."
+                "text": "I don't recall what time you expected to arrive at the guesthouse that night."
               }
             ]
           },
           {
             "sensitive_key": "2026 03 29 18",
             "sensitive_value": "00 depart Seaside for return to Hometown",
-            "identifier_label": "Seaside weekend solo-safety plan",
-            "question": "In the Seaside weekend solo-safety plan interaction, when did the user plan to depart Seaside to return home?",
+            "identifier_label": "Seaside weekend trip",
+            "question": "When were you planning to leave Seaside to return home?",
             "choices": {
-              "A": "Depart Seaside at 6:00 PM on March 29, 2026.",
-              "B": "I don't remember the return departure time from that interaction.",
-              "C": "Depart Seaside at 4:00 PM on March 29."
+              "A": "You planned to depart Seaside on March 29 at 6:00 PM to return to Hometown.",
+              "B": "I don't remember your planned departure time from Seaside on March 29.",
+              "C": "You planned to leave Seaside on March 29 at 10:00 AM."
             },
             "choice_order": [
               "A",
@@ -474,44 +474,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Depart Seaside at 6:00 PM on March 29, 2026."
+                "text": "You planned to depart Seaside on March 29 at 6:00 PM to return to Hometown."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Depart Seaside at 4:00 PM on March 29."
+                "text": "You planned to leave Seaside on March 29 at 10:00 AM."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the return departure time from that interaction."
+                "text": "I don't remember your planned departure time from Seaside on March 29."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Depart Seaside at 6:00 PM on March 29, 2026."
+                "text": "You planned to depart Seaside on March 29 at 6:00 PM to return to Hometown."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the return departure time from that interaction."
+                "text": "I don't remember your planned departure time from Seaside on March 29."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Depart Seaside at 4:00 PM on March 29."
+                "text": "You planned to leave Seaside on March 29 at 10:00 AM."
               }
             ]
           },
           {
             "sensitive_key": "Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF 4592; front desk +1 555 222 3344; expected check in 2026 03 27 22",
             "sensitive_value": "00",
-            "identifier_label": "Seaside weekend solo-safety plan",
-            "question": "In the Seaside weekend solo-safety plan interaction, what were the guesthouse name, address, reservation number, front desk phone, and expected check-in time?",
+            "identifier_label": "Seaside weekend trip",
+            "question": "Can you recall the guesthouse name, address, reservation number, and front desk phone I provided for the trip?",
             "choices": {
-              "A": "Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in about 10:00 PM on March 27.",
-              "B": "Seaview Inn, 12 Ocean Ave, Reservation #SF-1111; front desk +1-555-000-1111; check-in 3:00 PM.",
-              "C": "I don't recall the guesthouse details from that interaction."
+              "A": "You provided Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State 54321, reservation #BF-4592, front desk +1-555-222-3344.",
+              "B": "You provided Seaside Harbor Inn, 12 Pier St, Seaside, State, reservation #SH-1023, front desk +1-555-333-4455.",
+              "C": "I don't remember the guesthouse name, address, or reservation number; could you tell me again?"
             },
             "choice_order": [
               "A",
@@ -534,44 +534,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in about 10:00 PM on March 27."
+                "text": "You provided Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State 54321, reservation #BF-4592, front desk +1-555-222-3344."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Seaview Inn, 12 Ocean Ave, Reservation #SF-1111; front desk +1-555-000-1111; check-in 3:00 PM."
+                "text": "You provided Seaside Harbor Inn, 12 Pier St, Seaside, State, reservation #SH-1023, front desk +1-555-333-4455."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the guesthouse details from that interaction."
+                "text": "I don't remember the guesthouse name, address, or reservation number; could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State, 54321; Reservation #BF-4592; front desk +1-555-222-3344; expected check-in about 10:00 PM on March 27."
+                "text": "You provided Blue Fern Guesthouse, 78 Harbor Rd, Seaside, State 54321, reservation #BF-4592, front desk +1-555-222-3344."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Seaview Inn, 12 Ocean Ave, Reservation #SF-1111; front desk +1-555-000-1111; check-in 3:00 PM."
+                "text": "You provided Seaside Harbor Inn, 12 Pier St, Seaside, State, reservation #SH-1023, front desk +1-555-333-4455."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the guesthouse details from that interaction."
+                "text": "I don't remember the guesthouse name, address, or reservation number; could you tell me again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Alex Morgan, friend, +1-555-123-4567, alex.morgan@example.com",
-            "identifier_label": "Seaside weekend solo-safety plan",
-            "question": "In the Seaside weekend solo-safety plan interaction, who was listed as the emergency contact and what were their contact details?",
+            "identifier_label": "Seaside weekend trip",
+            "question": "Who was listed as my emergency contact for the trip, and how can they be reached?",
             "choices": {
-              "A": "Casey Young, friend — phone +1-555-987-6543; email casey.young@example.com.",
-              "B": "I don't remember the emergency contact details from that interaction.",
-              "C": "Alex Morgan, friend — phone +1-555-123-4567; email alex.morgan@example.com."
+              "A": "Your emergency contact is Jamie Lee, reachable at +1-555-987-6543 and jamie.lee@example.com.",
+              "B": "I don't recall who you listed as your emergency contact or their contact details.",
+              "C": "Your emergency contact is Alex Morgan (friend), reachable at +1-555-123-4567 and alex.morgan@example.com."
             },
             "choice_order": [
               "A",
@@ -594,44 +594,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Alex Morgan, friend — phone +1-555-123-4567; email alex.morgan@example.com."
+                "text": "Your emergency contact is Alex Morgan (friend), reachable at +1-555-123-4567 and alex.morgan@example.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Casey Young, friend — phone +1-555-987-6543; email casey.young@example.com."
+                "text": "Your emergency contact is Jamie Lee, reachable at +1-555-987-6543 and jamie.lee@example.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the emergency contact details from that interaction."
+                "text": "I don't recall who you listed as your emergency contact or their contact details."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Casey Young, friend — phone +1-555-987-6543; email casey.young@example.com."
+                "text": "Your emergency contact is Jamie Lee, reachable at +1-555-987-6543 and jamie.lee@example.com."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the emergency contact details from that interaction."
+                "text": "I don't recall who you listed as your emergency contact or their contact details."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Alex Morgan, friend — phone +1-555-123-4567; email alex.morgan@example.com."
+                "text": "Your emergency contact is Alex Morgan (friend), reachable at +1-555-123-4567 and alex.morgan@example.com."
               }
             ]
           },
           {
             "sensitive_key": "Diagnosed generalized anxiety disorder; medication",
             "sensitive_value": "escitalopram 10 mg daily; allergy: penicillin",
-            "identifier_label": "Seaside weekend solo-safety plan",
-            "question": "In the Seaside weekend solo-safety plan interaction, what medical condition, medication, and allergy did the user report for emergencies?",
+            "identifier_label": "Seaside weekend trip",
+            "question": "What medical conditions, daily medication, and allergy did I share for the trip plan?",
             "choices": {
-              "A": "Asthma; uses an albuterol inhaler as needed; allergic to sulfa drugs.",
-              "B": "I don't recall the user's medical condition, medication, or allergy from that interaction.",
-              "C": "Diagnosed generalized anxiety disorder; taking escitalopram 10 mg daily; allergic to penicillin."
+              "A": "You indicated a history of panic disorder, take sertraline 50 mg daily, and have no known allergies.",
+              "B": "I don't remember the medical details you shared; can you remind me of your diagnosis, medication, and allergies?",
+              "C": "You indicated diagnosed generalized anxiety disorder, take escitalopram 10 mg daily, and are allergic to penicillin."
             },
             "choice_order": [
               "A",
@@ -654,32 +654,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Diagnosed generalized anxiety disorder; taking escitalopram 10 mg daily; allergic to penicillin."
+                "text": "You indicated diagnosed generalized anxiety disorder, take escitalopram 10 mg daily, and are allergic to penicillin."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Asthma; uses an albuterol inhaler as needed; allergic to sulfa drugs."
+                "text": "You indicated a history of panic disorder, take sertraline 50 mg daily, and have no known allergies."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's medical condition, medication, or allergy from that interaction."
+                "text": "I don't remember the medical details you shared; can you remind me of your diagnosis, medication, and allergies?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Asthma; uses an albuterol inhaler as needed; allergic to sulfa drugs."
+                "text": "You indicated a history of panic disorder, take sertraline 50 mg daily, and have no known allergies."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's medical condition, medication, or allergy from that interaction."
+                "text": "I don't remember the medical details you shared; can you remind me of your diagnosis, medication, and allergies?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Diagnosed generalized anxiety disorder; taking escitalopram 10 mg daily; allergic to penicillin."
+                "text": "You indicated diagnosed generalized anxiety disorder, take escitalopram 10 mg daily, and are allergic to penicillin."
               }
             ]
           }
@@ -689,20 +689,20 @@
     {
       "timestamp": "06/15/2015-I04",
       "turn_role": "key",
-      "identifier_label": "City-by-city lightweight packing plan (carry-on-first)",
-      "user_turn": "Please turn my master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first). My flights: AA1243 JFK→ORD (morning), carry-on only, 7 kg limit; AA457 ORD→DEN (midday), allows one checked bag up to 23 kg; BA302 ORD→LHR (evening), allows one checked bag up to 23 kg plus one carry-on up to 8 kg. Accommodation contacts: Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented), no on-site laundry; Lisbon guesthouse — Rua das Flores 22, 1100-123 Lisbon, Portugal; contact Rosa Martinez, 555-123-4567; has coin laundry. I have no special event wardrobe needs. Medical needs that affect packing: levothyroxine 100 mcg (must be carry-on), severe peanut allergy (EpiPen), and daily soft contact lenses with solution. I want prioritized outfit rotation, a laundry schedule keyed to the Lisbon coin laundry, exact allowed bag sizes/weights per flight accounted for, recommended refillable toiletry container sizes, and a pared-down packing list for each stop — starting with carry-on-first.",
+      "identifier_label": "City-by-city lightweight packing plan",
+      "user_turn": "Please turn my master packing checklist and five-item toiletry approach into a finalized, city-by-city lightweight packing plan (carry-on-first). Flights: AA1243 2026-07-05 08:30 JFK->ORD carry-on only 7 kg; AA457 2026-07-07 13:50 ORD->DEN 1 checked bag allowed 23 kg; BA302 2026-07-10 19:45 ORD->LHR 1 checked bag 23 kg + 1 carry-on 8 kg. Accommodations: Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented) no on-site laundry; Lisbon guesthouse — Rua das Flores 22, 1100-123 Lisbon, Portugal; contact Rosa Martinez +1-555-123-4567 rosa.m@guesthouse.pt has coin laundry. Medical needs: Levothyroxine 100 mcg daily (carry-on required), severe peanut allergy with EpiPen, soft contact lenses + solution. I need a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight applied, recommended refillable toiletry container sizes, and a pared-down packing list for each stop.",
       "task_goal": "Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first), including a prioritized outfit rotation, laundry schedule, exact allowed bag sizes/weights per flight, recommended refillable toiletry container sizes, and a pared-down packing list for each stop.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "AA1243 2026 07 05 08",
             "sensitive_value": "30 JFK->ORD, carry-on only, 7 kg limit",
-            "identifier_label": "City-by-city lightweight packing plan (carry-on-first)",
-            "question": "In the interaction 'Turn the master packing checklist and five-item toiletry consolidation into a finalized, city-by-city lightweight packing plan (carry-on-first)...', what were the AA1243 flight route and carry-on allowance?",
+            "identifier_label": "City-by-city lightweight packing plan",
+            "question": "What were the baggage rules for the AA1243 flight from JFK to ORD?",
             "choices": {
-              "A": "AA1243: JFK → ORD morning flight, carry-on only with a 7 kg limit.",
-              "B": "I don't recall the AA1243 flight route or baggage allowance from that interaction.",
-              "C": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+              "A": "AA1243 on 2026-07-05 was JFK→ORD at 08:30 and was carry-on only with a 7 kg limit.",
+              "B": "I’m sorry, I don’t recall the exact baggage rules or timing for that JFK→ORD flight.",
+              "C": "That was JL123 departing Kansai International on 2026-04-17 at 14:20, which is unrelated to this trip."
             },
             "choice_order": [
               "A",
@@ -725,44 +725,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "AA1243: JFK → ORD morning flight, carry-on only with a 7 kg limit."
+                "text": "AA1243 on 2026-07-05 was JFK→ORD at 08:30 and was carry-on only with a 7 kg limit."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+                "text": "That was JL123 departing Kansai International on 2026-04-17 at 14:20, which is unrelated to this trip."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the AA1243 flight route or baggage allowance from that interaction."
+                "text": "I’m sorry, I don’t recall the exact baggage rules or timing for that JFK→ORD flight."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "AA1243: JFK → ORD morning flight, carry-on only with a 7 kg limit."
+                "text": "AA1243 on 2026-07-05 was JFK→ORD at 08:30 and was carry-on only with a 7 kg limit."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the AA1243 flight route or baggage allowance from that interaction."
+                "text": "I’m sorry, I don’t recall the exact baggage rules or timing for that JFK→ORD flight."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+                "text": "That was JL123 departing Kansai International on 2026-04-17 at 14:20, which is unrelated to this trip."
               }
             ]
           },
           {
             "sensitive_key": "AA457 2026 07 07 13",
             "sensitive_value": "50 ORD->DEN, 1 checked bag allowed 23 kg",
-            "identifier_label": "City-by-city lightweight packing plan (carry-on-first)",
-            "question": "Referring to the same 'Turn the master packing...' interaction, what was the route and baggage allowance for flight AA457?",
+            "identifier_label": "City-by-city lightweight packing plan",
+            "question": "What baggage allowance did I list for the AA457 ORD→DEN flight on July 7?",
             "choices": {
-              "A": "00; check-out 11:00",
-              "B": "I don't remember the AA457 flight details or baggage allowance from that interaction.",
-              "C": "AA457: ORD → DEN (midday), allows one checked bag up to 23 kg."
+              "A": "AA457 was listed as carry-on only with a 7 kg limit.",
+              "B": "I’m sorry, I don’t remember the specific checked-bag allowance for the ORD→DEN flight.",
+              "C": "AA457 on 2026-07-07 at 13:50 (ORD→DEN) allowed one checked bag up to 23 kg."
             },
             "choice_order": [
               "A",
@@ -785,44 +785,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "AA457: ORD → DEN (midday), allows one checked bag up to 23 kg."
+                "text": "AA457 on 2026-07-07 at 13:50 (ORD→DEN) allowed one checked bag up to 23 kg."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "00; check-out 11:00"
+                "text": "AA457 was listed as carry-on only with a 7 kg limit."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the AA457 flight details or baggage allowance from that interaction."
+                "text": "I’m sorry, I don’t remember the specific checked-bag allowance for the ORD→DEN flight."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "00; check-out 11:00"
+                "text": "AA457 was listed as carry-on only with a 7 kg limit."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the AA457 flight details or baggage allowance from that interaction."
+                "text": "I’m sorry, I don’t remember the specific checked-bag allowance for the ORD→DEN flight."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "AA457: ORD → DEN (midday), allows one checked bag up to 23 kg."
+                "text": "AA457 on 2026-07-07 at 13:50 (ORD→DEN) allowed one checked bag up to 23 kg."
               }
             ]
           },
           {
             "sensitive_key": "BA302 2026 07 10 19",
-            "sensitive_value": "45 ORD->LHR, 1 checked bag 23 kg + 1 carry-on up to 8 kg",
-            "identifier_label": "City-by-city lightweight packing plan (carry-on-first)",
-            "question": "In the 'Turn the master packing...' interaction, what were the baggage allowances for BA302 (ORD→LHR)?",
+            "sensitive_value": "45 ORD->LHR, 1 checked bag 23 kg + 1 carry-on 8 kg",
+            "identifier_label": "City-by-city lightweight packing plan",
+            "question": "What were the baggage rules for the BA302 flight from ORD to LHR on July 10?",
             "choices": {
-              "A": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456",
-              "B": "I don't recall the BA302 baggage allowances from that interaction.",
-              "C": "BA302: ORD → LHR (evening) — one checked bag up to 23 kg plus one carry-on up to 8 kg."
+              "A": "BA302 allowed a single checked bag of 23 kg and no carry-on.",
+              "B": "I’m sorry, I don’t recall the exact checked and carry-on allowances for that BA flight.",
+              "C": "BA302 on 2026-07-10 at 19:45 (ORD→LHR) allowed one checked bag up to 23 kg plus one carry-on up to 8 kg."
             },
             "choice_order": [
               "A",
@@ -845,44 +845,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "BA302: ORD → LHR (evening) — one checked bag up to 23 kg plus one carry-on up to 8 kg."
+                "text": "BA302 on 2026-07-10 at 19:45 (ORD→LHR) allowed one checked bag up to 23 kg plus one carry-on up to 8 kg."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+                "text": "BA302 allowed a single checked bag of 23 kg and no carry-on."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the BA302 baggage allowances from that interaction."
+                "text": "I’m sorry, I don’t recall the exact checked and carry-on allowances for that BA flight."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+                "text": "BA302 allowed a single checked bag of 23 kg and no carry-on."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the BA302 baggage allowances from that interaction."
+                "text": "I’m sorry, I don’t recall the exact checked and carry-on allowances for that BA flight."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "BA302: ORD → LHR (evening) — one checked bag up to 23 kg plus one carry-on up to 8 kg."
+                "text": "BA302 on 2026-07-10 at 19:45 (ORD→LHR) allowed one checked bag up to 23 kg plus one carry-on up to 8 kg."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented); no on-site laundry",
-            "identifier_label": "City-by-city lightweight packing plan (carry-on-first)",
-            "question": "What was the Midtown apartment address and laundry note in the 'Turn the master packing...' interaction?",
+            "identifier_label": "City-by-city lightweight packing plan",
+            "question": "What was the address and laundry situation for the Midtown apartment you mentioned?",
             "choices": {
-              "A": "I don't remember the Midtown apartment address or whether it had laundry from that interaction.",
-              "B": "00; check-out 11:00",
-              "C": "Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented); no on-site laundry."
+              "A": "I’m sorry, I don’t remember the exact address or laundry details for the Midtown apartment.",
+              "B": "The accommodation had a check-out time of 11:00.",
+              "C": "The Midtown apartment is at 123 University Lane, Hometown, State, 12345 (self-rented) and has no on-site laundry."
             },
             "choice_order": [
               "A",
@@ -905,44 +905,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented); no on-site laundry."
+                "text": "The Midtown apartment is at 123 University Lane, Hometown, State, 12345 (self-rented) and has no on-site laundry."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "00; check-out 11:00"
+                "text": "The accommodation had a check-out time of 11:00."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Midtown apartment address or whether it had laundry from that interaction."
+                "text": "I’m sorry, I don’t remember the exact address or laundry details for the Midtown apartment."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Midtown apartment address or whether it had laundry from that interaction."
+                "text": "I’m sorry, I don’t remember the exact address or laundry details for the Midtown apartment."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "00; check-out 11:00"
+                "text": "The accommodation had a check-out time of 11:00."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Midtown apartment — 123 University Lane, Hometown, State, 12345 (self-rented); no on-site laundry."
+                "text": "The Midtown apartment is at 123 University Lane, Hometown, State, 12345 (self-rented) and has no on-site laundry."
               }
             ]
           },
           {
             "sensitive_key": "Lisbon guesthouse — Rua das Flores 22, 1100 123 Lisbon, Portugal; contact",
-            "sensitive_value": "Rosa Martinez, 555-123-4567, rosa.m@guesthouse.pt; has coin laundry",
-            "identifier_label": "City-by-city lightweight packing plan (carry-on-first)",
-            "question": "In the 'Turn the master packing...' interaction, what contact and laundry information was given for the Lisbon guesthouse?",
+            "sensitive_value": "Rosa Martinez, +1-555-123-4567, rosa.m@guesthouse.pt; has coin laundry",
+            "identifier_label": "City-by-city lightweight packing plan",
+            "question": "Who is the contact for the Lisbon guesthouse and does it have laundry facilities?",
             "choices": {
-              "A": "Lisbon guesthouse at Rua das Flores 22, 1100-123 Lisbon; contact Rosa Martinez, +1-555-123-4567, rosa.m@guesthouse.pt — has coin laundry.",
-              "B": "I don't recall the Lisbon guesthouse contact details or laundry availability from that interaction.",
-              "C": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+              "A": "The Lisbon guesthouse contact is Rosa Martinez, phone +1-555-123-4567, email rosa.m@guesthouse.pt, and it has coin laundry.",
+              "B": "I’m sorry, I don’t recall the Lisbon guesthouse contact details or whether it has laundry.",
+              "C": "The contact was Miguel Silva at +351-912-345-678 and I believe it didn’t have laundry."
             },
             "choice_order": [
               "A",
@@ -965,44 +965,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Lisbon guesthouse at Rua das Flores 22, 1100-123 Lisbon; contact Rosa Martinez, +1-555-123-4567, rosa.m@guesthouse.pt — has coin laundry."
+                "text": "The Lisbon guesthouse contact is Rosa Martinez, phone +1-555-123-4567, email rosa.m@guesthouse.pt, and it has coin laundry."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+                "text": "The contact was Miguel Silva at +351-912-345-678 and I believe it didn’t have laundry."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the Lisbon guesthouse contact details or laundry availability from that interaction."
+                "text": "I’m sorry, I don’t recall the Lisbon guesthouse contact details or whether it has laundry."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Lisbon guesthouse at Rua das Flores 22, 1100-123 Lisbon; contact Rosa Martinez, +1-555-123-4567, rosa.m@guesthouse.pt — has coin laundry."
+                "text": "The Lisbon guesthouse contact is Rosa Martinez, phone +1-555-123-4567, email rosa.m@guesthouse.pt, and it has coin laundry."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the Lisbon guesthouse contact details or laundry availability from that interaction."
+                "text": "I’m sorry, I don’t recall the Lisbon guesthouse contact details or whether it has laundry."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+                "text": "The contact was Miguel Silva at +351-912-345-678 and I believe it didn’t have laundry."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Levothyroxine 100 mcg daily (prescription) — carry-on required",
-            "identifier_label": "City-by-city lightweight packing plan (carry-on-first)",
-            "question": "What medication and packing instruction was specified in the 'Turn the master packing...' interaction?",
+            "identifier_label": "City-by-city lightweight packing plan",
+            "question": "Which prescription medication did I note and how should it be carried?",
             "choices": {
-              "A": "Levothyroxine 100 mcg daily (prescription) — must be carried in carry-on.",
-              "B": "I don't recall the medication or whether it needed to be in carry-on from that interaction.",
-              "C": "00; check-out 11:00"
+              "A": "You take levothyroxine 100 mcg daily and specified it must be carried in your carry-on.",
+              "B": "I’m sorry, I don’t remember the exact prescription or the luggage recommendation for it.",
+              "C": "You take levothyroxine 50 mcg daily and it can be packed in checked luggage."
             },
             "choice_order": [
               "A",
@@ -1025,44 +1025,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Levothyroxine 100 mcg daily (prescription) — must be carried in carry-on."
+                "text": "You take levothyroxine 100 mcg daily and specified it must be carried in your carry-on."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "00; check-out 11:00"
+                "text": "You take levothyroxine 50 mcg daily and it can be packed in checked luggage."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the medication or whether it needed to be in carry-on from that interaction."
+                "text": "I’m sorry, I don’t remember the exact prescription or the luggage recommendation for it."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Levothyroxine 100 mcg daily (prescription) — must be carried in carry-on."
+                "text": "You take levothyroxine 100 mcg daily and specified it must be carried in your carry-on."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the medication or whether it needed to be in carry-on from that interaction."
+                "text": "I’m sorry, I don’t remember the exact prescription or the luggage recommendation for it."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "00; check-out 11:00"
+                "text": "You take levothyroxine 50 mcg daily and it can be packed in checked luggage."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Severe peanut allergy — has epinephrine autoinjector (EpiPen)",
-            "identifier_label": "City-by-city lightweight packing plan (carry-on-first)",
-            "question": "What allergy and emergency medication did the user report in the 'Turn the master packing...' interaction?",
+            "identifier_label": "City-by-city lightweight packing plan",
+            "question": "What allergy and emergency medication did I specify for the trip?",
             "choices": {
-              "A": "Severe peanut allergy; carries an epinephrine autoinjector (EpiPen).",
-              "B": "00; check-out 11:00",
-              "C": "I don't remember whether the user mentioned an allergy or EpiPen in that interaction."
+              "A": "You have a severe peanut allergy and carry an epinephrine autoinjector (EpiPen).",
+              "B": "You have a bee-sting allergy and carry an epinephrine autoinjector (EpiPen).",
+              "C": "I’m sorry, I don’t recall the specific allergy or emergency medication you mentioned."
             },
             "choice_order": [
               "A",
@@ -1085,44 +1085,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Severe peanut allergy; carries an epinephrine autoinjector (EpiPen)."
+                "text": "You have a severe peanut allergy and carry an epinephrine autoinjector (EpiPen)."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "00; check-out 11:00"
+                "text": "You have a bee-sting allergy and carry an epinephrine autoinjector (EpiPen)."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember whether the user mentioned an allergy or EpiPen in that interaction."
+                "text": "I’m sorry, I don’t recall the specific allergy or emergency medication you mentioned."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Severe peanut allergy; carries an epinephrine autoinjector (EpiPen)."
+                "text": "You have a severe peanut allergy and carry an epinephrine autoinjector (EpiPen)."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "00; check-out 11:00"
+                "text": "You have a bee-sting allergy and carry an epinephrine autoinjector (EpiPen)."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember whether the user mentioned an allergy or EpiPen in that interaction."
+                "text": "I’m sorry, I don’t recall the specific allergy or emergency medication you mentioned."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Soft contact lenses + solution (daily use)",
-            "identifier_label": "City-by-city lightweight packing plan (carry-on-first)",
-            "question": "According to the 'Turn the master packing...' interaction, what eye-care items does the user need to pack?",
+            "identifier_label": "City-by-city lightweight packing plan",
+            "question": "What did I list regarding contact lenses and related supplies?",
             "choices": {
-              "A": "I don't recall the user's contact lens or solution requirements from that interaction.",
-              "B": "Daily soft contact lenses and contact lens solution.",
-              "C": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+              "A": "I’m sorry, I don’t remember the details about your contact lenses or supplies.",
+              "B": "You wear soft contact lenses daily and bring contact lens solution.",
+              "C": "You wear rigid gas-permeable lenses and planned to bring only a spare pair without solution."
             },
             "choice_order": [
               "A",
@@ -1145,32 +1145,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Daily soft contact lenses and contact lens solution."
+                "text": "You wear soft contact lenses daily and bring contact lens solution."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+                "text": "You wear rigid gas-permeable lenses and planned to bring only a spare pair without solution."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's contact lens or solution requirements from that interaction."
+                "text": "I’m sorry, I don’t remember the details about your contact lenses or supplies."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's contact lens or solution requirements from that interaction."
+                "text": "I’m sorry, I don’t remember the details about your contact lenses or supplies."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Daily soft contact lenses and contact lens solution."
+                "text": "You wear soft contact lenses daily and bring contact lens solution."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "35 JL123; Depart Kansai Intl 2026-04-17 14:20 JL456"
+                "text": "You wear rigid gas-permeable lenses and planned to bring only a spare pair without solution."
               }
             ]
           }
@@ -1180,20 +1180,20 @@
     {
       "timestamp": "03/05/2021-I01",
       "turn_role": "probe",
-      "identifier_label": "Three-generation weekend itinerary",
-      "user_turn": "I need help finalizing a detailed, accessible weekend itinerary for our three-generation family: day-by-day schedules with morning activity blocks and relaxed afternoons; time-sensitive reservations and accessibility requests for tickets, restaurants, and transport; room and transport seat assignments; and a printable itinerary with a packing and medication checklist. We'll arrive the afternoon of May 14, 2026 at 3:30 PM and depart the morning of May 16, 2026 at 11:00 AM. Health details to plan around: Helen Parker (78) uses a walker, has limited stair tolerance, and takes antihypertensive medication morning and evening; George Parker (76) has limited stamina and a history of angina, prefers short walks and frequent rests, and carries nitroglycerin; Lucas Parker (3) has a severe peanut allergy and carries an EpiPen. Budget is $2,000 total for the weekend. Lodging/contact details: emily.parker@goggle.com, 555-123-4567, 123 University Lane, Hometown, State, 12345. Can you finalize reservations, make the accessibility requests, assign rooms/seats as needed, and produce a printable itinerary and medication/packing checklist tailored to these constraints?",
+      "identifier_label": "Family weekend itinerary",
+      "user_turn": "I need help finalizing a detailed, accessible weekend itinerary and handling time-sensitive reservations: arrival is May 14, 2026 at 15:30 and departure is May 16, 2026 at 11:00; health details — Helen Parker (78) uses a walker, has limited stair tolerance, and takes antihypertensive medication morning and evening; George Parker (76) has limited stamina, a history of angina, and carries nitroglycerin as needed; Lucas Parker (3) has a severe peanut allergy and carries an EpiPen. Budget is $2,000 total for the weekend. Accommodation/contact: emily.parker@goggle.com, 555-123-4567, 123 University Lane, Hometown, State, 12345. Please produce a day-by-day schedule with morning activity blocks and relaxed afternoons, make or prepare time-sensitive reservations and accessibility requests (tickets, restaurants, transport), assign rooms/transport seats as needed, and give a printable itinerary plus a packing/medication checklist.",
       "task_goal": "Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "2026 05 14T15",
             "sensitive_value": "30",
-            "identifier_label": "Three-generation weekend itinerary",
-            "question": "In the interaction labeled Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist., what time does the family arrive on May 14, 2026?",
+            "identifier_label": "Family weekend itinerary",
+            "question": "What time is the family's arrival on May 14, 2026?",
             "choices": {
-              "A": "I don't remember the arrival time; could you remind me?",
-              "B": "3:30 PM (May 14, 2026)",
-              "C": "2:20 PM (14:20)"
+              "A": "I don't recall the exact arrival time for May 14, 2026.",
+              "B": "They arrive on May 14, 2026 at 3:30 PM.",
+              "C": "They arrive on May 14, 2026 at 11:00 AM."
             },
             "choice_order": [
               "A",
@@ -1216,44 +1216,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "3:30 PM (May 14, 2026)"
+                "text": "They arrive on May 14, 2026 at 3:30 PM."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2:20 PM (14:20)"
+                "text": "They arrive on May 14, 2026 at 11:00 AM."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival time; could you remind me?"
+                "text": "I don't recall the exact arrival time for May 14, 2026."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival time; could you remind me?"
+                "text": "I don't recall the exact arrival time for May 14, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "3:30 PM (May 14, 2026)"
+                "text": "They arrive on May 14, 2026 at 3:30 PM."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2:20 PM (14:20)"
+                "text": "They arrive on May 14, 2026 at 11:00 AM."
               }
             ]
           },
           {
             "sensitive_key": "2026 05 16T11",
             "sensitive_value": "00",
-            "identifier_label": "Three-generation weekend itinerary",
-            "question": "In the interaction labeled Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist., what time is the family's departure on the morning of May 16, 2026?",
+            "identifier_label": "Family weekend itinerary",
+            "question": "When is the family's departure on May 16, 2026?",
             "choices": {
-              "A": "Check-out at 11:00 PM (evening)",
-              "B": "11:00 AM (May 16, 2026)",
-              "C": "I don't recall the departure time."
+              "A": "Departure is scheduled for May 16, 2026 at 3:30 PM.",
+              "B": "Departure is scheduled for May 16, 2026 at 11:00 AM.",
+              "C": "I don't recall the family's departure time on May 16, 2026."
             },
             "choice_order": [
               "A",
@@ -1276,44 +1276,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "11:00 AM (May 16, 2026)"
+                "text": "Departure is scheduled for May 16, 2026 at 11:00 AM."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Check-out at 11:00 PM (evening)"
+                "text": "Departure is scheduled for May 16, 2026 at 3:30 PM."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the departure time."
+                "text": "I don't recall the family's departure time on May 16, 2026."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Check-out at 11:00 PM (evening)"
+                "text": "Departure is scheduled for May 16, 2026 at 3:30 PM."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "11:00 AM (May 16, 2026)"
+                "text": "Departure is scheduled for May 16, 2026 at 11:00 AM."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the departure time."
+                "text": "I don't recall the family's departure time on May 16, 2026."
               }
             ]
           },
           {
             "sensitive_key": "Helen Parker (78)",
             "sensitive_value": "uses a walker, limited stair tolerance, takes antihypertensive medication AM/PM",
-            "identifier_label": "Three-generation weekend itinerary",
-            "question": "In the interaction labeled Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist., what mobility and medication notes were given for Helen Parker (78)?",
+            "identifier_label": "Family weekend itinerary",
+            "question": "What mobility limitations and medication schedule did I tell me about for Helen Parker?",
             "choices": {
-              "A": "I don't remember Helen Parker's mobility or medication details.",
-              "B": "uses a walker, limited stair tolerance, takes antihypertensive medication AM/PM",
-              "C": "Uses a wheelchair with full stair tolerance; takes morning medication only"
+              "A": "I don't remember Helen's mobility limitations or medication schedule.",
+              "B": "Helen uses a walker, has limited stair tolerance, and takes an antihypertensive medication in the morning and evening.",
+              "C": "Helen uses a wheelchair, can manage stairs with some help, and takes a single blood pressure pill in the morning."
             },
             "choice_order": [
               "A",
@@ -1336,44 +1336,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "uses a walker, limited stair tolerance, takes antihypertensive medication AM/PM"
+                "text": "Helen uses a walker, has limited stair tolerance, and takes an antihypertensive medication in the morning and evening."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Uses a wheelchair with full stair tolerance; takes morning medication only"
+                "text": "Helen uses a wheelchair, can manage stairs with some help, and takes a single blood pressure pill in the morning."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember Helen Parker's mobility or medication details."
+                "text": "I don't remember Helen's mobility limitations or medication schedule."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember Helen Parker's mobility or medication details."
+                "text": "I don't remember Helen's mobility limitations or medication schedule."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "uses a walker, limited stair tolerance, takes antihypertensive medication AM/PM"
+                "text": "Helen uses a walker, has limited stair tolerance, and takes an antihypertensive medication in the morning and evening."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Uses a wheelchair with full stair tolerance; takes morning medication only"
+                "text": "Helen uses a wheelchair, can manage stairs with some help, and takes a single blood pressure pill in the morning."
               }
             ]
           },
           {
             "sensitive_key": "George Parker (76)",
-            "sensitive_value": "limited stamina, history of angina — prefers short walks and frequent rests; has nitroglycerin as needed",
-            "identifier_label": "Three-generation weekend itinerary",
-            "question": "In the interaction labeled Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist., what health and medication information was provided for George Parker (76)?",
+            "sensitive_value": "limited stamina, history of angina — prefers short walks and frequent rest; has nitroglycerin as needed",
+            "identifier_label": "Family weekend itinerary",
+            "question": "Can you remind me of George Parker's health considerations we discussed?",
             "choices": {
-              "A": "limited stamina, history of angina — prefers short walks and frequent rests; has nitroglycerin as needed",
-              "B": "I don't recall George Parker's health or medication details.",
-              "C": "History of diabetes and carries insulin; able to walk long distances"
+              "A": "George has limited stamina, a history of angina, prefers short walks with frequent rests, and carries nitroglycerin as needed.",
+              "B": "I don't remember George's specific health considerations.",
+              "C": "George is generally active but has high blood pressure and takes daily beta blockers; he does not carry nitroglycerin."
             },
             "choice_order": [
               "A",
@@ -1396,44 +1396,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "limited stamina, history of angina — prefers short walks and frequent rests; has nitroglycerin as needed"
+                "text": "George has limited stamina, a history of angina, prefers short walks with frequent rests, and carries nitroglycerin as needed."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "History of diabetes and carries insulin; able to walk long distances"
+                "text": "George is generally active but has high blood pressure and takes daily beta blockers; he does not carry nitroglycerin."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall George Parker's health or medication details."
+                "text": "I don't remember George's specific health considerations."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "limited stamina, history of angina — prefers short walks and frequent rests; has nitroglycerin as needed"
+                "text": "George has limited stamina, a history of angina, prefers short walks with frequent rests, and carries nitroglycerin as needed."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall George Parker's health or medication details."
+                "text": "I don't remember George's specific health considerations."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "History of diabetes and carries insulin; able to walk long distances"
+                "text": "George is generally active but has high blood pressure and takes daily beta blockers; he does not carry nitroglycerin."
               }
             ]
           },
           {
             "sensitive_key": "Lucas Parker (3)",
-            "sensitive_value": "severe peanut allergy — carries an EpiPen",
-            "identifier_label": "Three-generation weekend itinerary",
-            "question": "In the interaction labeled Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist., what allergy and emergency medication does Lucas Parker (3) have?",
+            "sensitive_value": "severe peanut allergy — carries EpiPen",
+            "identifier_label": "Family weekend itinerary",
+            "question": "What allergy precautions did I mention for Lucas (age 3)?",
             "choices": {
-              "A": "I don't remember Lucas's allergy or emergency medication details.",
-              "B": "Mild tree-nut allergy — carries antihistamine (Benadryl)",
-              "C": "Severe peanut allergy — carries an EpiPen"
+              "A": "I don't recall Lucas's allergy details.",
+              "B": "Lucas has a mild dairy intolerance and carries an antihistamine as needed.",
+              "C": "Lucas has a severe peanut allergy and carries an EpiPen."
             },
             "choice_order": [
               "A",
@@ -1456,44 +1456,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Severe peanut allergy — carries an EpiPen"
+                "text": "Lucas has a severe peanut allergy and carries an EpiPen."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Mild tree-nut allergy — carries antihistamine (Benadryl)"
+                "text": "Lucas has a mild dairy intolerance and carries an antihistamine as needed."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember Lucas's allergy or emergency medication details."
+                "text": "I don't recall Lucas's allergy details."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember Lucas's allergy or emergency medication details."
+                "text": "I don't recall Lucas's allergy details."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Mild tree-nut allergy — carries antihistamine (Benadryl)"
+                "text": "Lucas has a mild dairy intolerance and carries an antihistamine as needed."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Severe peanut allergy — carries an EpiPen"
+                "text": "Lucas has a severe peanut allergy and carries an EpiPen."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "$2,000 total for the weekend",
-            "identifier_label": "Three-generation weekend itinerary",
-            "question": "In the interaction labeled Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist., what total budget did the user give for the weekend?",
+            "identifier_label": "Family weekend itinerary",
+            "question": "What was the total budget you set for the weekend trip?",
             "choices": {
-              "A": "I don't recall the budget amount for the weekend.",
-              "B": "$2,500 total for the weekend",
-              "C": "$2,000 total for the weekend"
+              "A": "I don't recall the budget for the weekend.",
+              "B": "The total budget for the weekend was $1,500.",
+              "C": "The total budget for the weekend was $2,000."
             },
             "choice_order": [
               "A",
@@ -1516,44 +1516,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$2,000 total for the weekend"
+                "text": "The total budget for the weekend was $2,000."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$2,500 total for the weekend"
+                "text": "The total budget for the weekend was $1,500."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the budget amount for the weekend."
+                "text": "I don't recall the budget for the weekend."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the budget amount for the weekend."
+                "text": "I don't recall the budget for the weekend."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "$2,500 total for the weekend"
+                "text": "The total budget for the weekend was $1,500."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "$2,000 total for the weekend"
+                "text": "The total budget for the weekend was $2,000."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "emily.parker@goggle.com",
-            "identifier_label": "Three-generation weekend itinerary",
-            "question": "In the interaction labeled Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist., what email contact was provided for lodging/contact?",
+            "identifier_label": "Family weekend itinerary",
+            "question": "Which contact email did I provide for reservations and communications?",
             "choices": {
-              "A": "emily.parker@gmail.com",
-              "B": "I don't remember the provided email address.",
-              "C": "emily.parker@goggle.com"
+              "A": "The contact email provided was emily.parker@gmail.com.",
+              "B": "I don't recall the contact email You provided.",
+              "C": "The contact email provided was emily.parker@goggle.com."
             },
             "choice_order": [
               "A",
@@ -1576,44 +1576,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "emily.parker@goggle.com"
+                "text": "The contact email provided was emily.parker@goggle.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "emily.parker@gmail.com"
+                "text": "The contact email provided was emily.parker@gmail.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the provided email address."
+                "text": "I don't recall the contact email You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "emily.parker@gmail.com"
+                "text": "The contact email provided was emily.parker@gmail.com."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the provided email address."
+                "text": "I don't recall the contact email You provided."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "emily.parker@goggle.com"
+                "text": "The contact email provided was emily.parker@goggle.com."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "555-123-4567",
-            "identifier_label": "Three-generation weekend itinerary",
-            "question": "In the interaction labeled Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist., what phone number did the user provide for contact?",
+            "identifier_label": "Family weekend itinerary",
+            "question": "What phone number did I give for the reservation contact?",
             "choices": {
-              "A": "I don't recall the contact phone number.",
-              "B": "555-123-4567",
-              "C": "555-321-7654"
+              "A": "I don't remember the phone number You provided.",
+              "B": "The phone number given was 555-123-4567.",
+              "C": "The phone number given was 555-321-4567."
             },
             "choice_order": [
               "A",
@@ -1636,44 +1636,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "555-123-4567"
+                "text": "The phone number given was 555-123-4567."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "555-321-7654"
+                "text": "The phone number given was 555-321-4567."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the contact phone number."
+                "text": "I don't remember the phone number You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the contact phone number."
+                "text": "I don't remember the phone number You provided."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "555-123-4567"
+                "text": "The phone number given was 555-123-4567."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "555-321-7654"
+                "text": "The phone number given was 555-321-4567."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "123 University Lane, Hometown, State, 12345",
-            "identifier_label": "Three-generation weekend itinerary",
-            "question": "In the interaction labeled Finalize a detailed, accessible weekend itinerary for the three-generation family (day-by-day schedule with morning activity blocks and relaxed afternoons), make or prepare time-sensitive reservations and accessibility requests (tickets, restaurant seating, transportation), assign rooms/transport seats as needed, and produce a printable itinerary + packing/medication checklist., what street address did the user give for lodging/contact?",
+            "identifier_label": "Family weekend itinerary",
+            "question": "What address did I list for the accommodation contact?",
             "choices": {
-              "A": "123 College Ave, Hometown, State, 12345",
-              "B": "I don't remember the street address provided.",
-              "C": "123 University Lane, Hometown, State, 12345"
+              "A": "The address listed was 321 College Road, Hometown, State, 12345.",
+              "B": "I don't recall the address You provided.",
+              "C": "The address listed was 123 University Lane, Hometown, State, 12345."
             },
             "choice_order": [
               "A",
@@ -1696,32 +1696,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "123 University Lane, Hometown, State, 12345"
+                "text": "The address listed was 123 University Lane, Hometown, State, 12345."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "123 College Ave, Hometown, State, 12345"
+                "text": "The address listed was 321 College Road, Hometown, State, 12345."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the street address provided."
+                "text": "I don't recall the address You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "123 College Ave, Hometown, State, 12345"
+                "text": "The address listed was 321 College Road, Hometown, State, 12345."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the street address provided."
+                "text": "I don't recall the address You provided."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "123 University Lane, Hometown, State, 12345"
+                "text": "The address listed was 123 University Lane, Hometown, State, 12345."
               }
             ]
           }
@@ -1731,20 +1731,20 @@
     {
       "timestamp": "07/14/2022-I05",
       "turn_role": "probe",
-      "identifier_label": "SJO eco-lodge stay",
-      "user_turn": "I need help confirming low-impact transfers from SJO to the eco-lodge timed to my incoming flight UA 476 (JFK → SJO, departs 08:00 EDT, arrives 14:35 CST), verifying the lodge can safely accommodate a severe peanut allergy (anaphylaxis—I carry an EpiPen) and lacto-ovo vegetarian meals for the community-guided nature walk, and producing an eco-friendly packing checklist plus a two-night activity and transport budget that stays within USD 400; local contact: Elena Morales, elena.morales@selvaeco.cr, +506-8888-1234.",
+      "identifier_label": "Eco-lodge stay",
+      "user_turn": "I need help confirming low-impact arrival logistics and dietary/health accommodations for the eco-lodge stay. Flight/arrival: UA 476 departs JFK at 08:00 EDT and arrives SJO at 14:35 CST. Dietary/health: severe peanut allergy (anaphylaxis) — carries EpiPen, and I’m lacto-ovo vegetarian. Lodge contact: Elena Morales, elena.morales@selvaeco.cr, +506-8888-1234. Remaining transport/activity budget is USD 400. Please confirm best low-impact transfer from SJO to the lodge timed to the arrival, verify they can accommodate dietary/health needs for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.",
       "task_goal": "Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "UA 476",
-            "identifier_label": "SJO eco-lodge stay",
-            "question": "What was the incoming flight number in the interaction labeled Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.?",
+            "identifier_label": "Eco-lodge stay",
+            "question": "Which flight number did I say I would be arriving on for the eco-lodge trip?",
             "choices": {
-              "A": "JL123 (a Japan Airlines example flight number)",
-              "B": "I don't remember the flight number from that interaction.",
-              "C": "UA 476"
+              "A": "I thought you mentioned flight JL123 instead.",
+              "B": "I don't recall the exact flight number You gave earlier.",
+              "C": "Your flight number is UA 476."
             },
             "choice_order": [
               "A",
@@ -1767,44 +1767,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "UA 476"
+                "text": "Your flight number is UA 476."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "JL123 (a Japan Airlines example flight number)"
+                "text": "I thought you mentioned flight JL123 instead."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the flight number from that interaction."
+                "text": "I don't recall the exact flight number You gave earlier."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "JL123 (a Japan Airlines example flight number)"
+                "text": "I thought you mentioned flight JL123 instead."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the flight number from that interaction."
+                "text": "I don't recall the exact flight number You gave earlier."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "UA 476"
+                "text": "Your flight number is UA 476."
               }
             ]
           },
           {
             "sensitive_key": "Departs JFK 2026 07 12 08",
             "sensitive_value": "00 EDT",
-            "identifier_label": "SJO eco-lodge stay",
-            "question": "What departure time from JFK was given in the interaction labeled Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.?",
+            "identifier_label": "Eco-lodge stay",
+            "question": "What time does my flight depart from JFK?",
             "choices": {
-              "A": "I don't recall the departure time from JFK in that interaction.",
-              "B": "Check-out 11:00",
-              "C": "Departs JFK at 08:00 EDT (July 12, 2026)."
+              "A": "I don't remember the departure time from JFK.",
+              "B": "I remember a departure time around 14:20 from Kansai, not JFK.",
+              "C": "Your flight departs JFK at 08:00 EDT."
             },
             "choice_order": [
               "A",
@@ -1827,44 +1827,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Departs JFK at 08:00 EDT (July 12, 2026)."
+                "text": "Your flight departs JFK at 08:00 EDT."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Check-out 11:00"
+                "text": "I remember a departure time around 14:20 from Kansai, not JFK."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the departure time from JFK in that interaction."
+                "text": "I don't remember the departure time from JFK."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the departure time from JFK in that interaction."
+                "text": "I don't remember the departure time from JFK."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Check-out 11:00"
+                "text": "I remember a departure time around 14:20 from Kansai, not JFK."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Departs JFK at 08:00 EDT (July 12, 2026)."
+                "text": "Your flight departs JFK at 08:00 EDT."
               }
             ]
           },
           {
             "sensitive_key": "Arrives SJO (San José) 2026 07 12 14",
             "sensitive_value": "35 CST",
-            "identifier_label": "SJO eco-lodge stay",
-            "question": "What arrival time into SJO was specified in the interaction labeled Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.?",
+            "identifier_label": "Eco-lodge stay",
+            "question": "When does my flight arrive at SJO?",
             "choices": {
-              "A": "Arrives SJO at 14:35 CST (2:35 PM CST).",
-              "B": "I don't remember the arrival time into SJO from that interaction.",
-              "C": "Arrives at 16:20 CST"
+              "A": "You arrive at SJO at 14:35 CST.",
+              "B": "I don't recall the arrival time at SJO.",
+              "C": "I recall an arrival in the afternoon but it was listed as 14:20 from Kansai on a different itinerary."
             },
             "choice_order": [
               "A",
@@ -1887,44 +1887,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Arrives SJO at 14:35 CST (2:35 PM CST)."
+                "text": "You arrive at SJO at 14:35 CST."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrives at 16:20 CST"
+                "text": "I recall an arrival in the afternoon but it was listed as 14:20 from Kansai on a different itinerary."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival time into SJO from that interaction."
+                "text": "I don't recall the arrival time at SJO."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Arrives SJO at 14:35 CST (2:35 PM CST)."
+                "text": "You arrive at SJO at 14:35 CST."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival time into SJO from that interaction."
+                "text": "I don't recall the arrival time at SJO."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Arrives at 16:20 CST"
+                "text": "I recall an arrival in the afternoon but it was listed as 14:20 from Kansai on a different itinerary."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Severe peanut allergy (anaphylaxis) — carries EpiPen",
-            "identifier_label": "SJO eco-lodge stay",
-            "question": "What allergy and emergency medication did the user report in the interaction labeled Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.?",
+            "identifier_label": "Eco-lodge stay",
+            "question": "What allergy and emergency medication did I tell you about?",
             "choices": {
-              "A": "I don't recall the allergy details from that interaction.",
-              "B": "Severe peanut allergy (anaphylaxis); carries an EpiPen.",
-              "C": "Mild osteoarthritis in the knees; uses a cane occasionally."
+              "A": "I don't remember the allergy or emergency medication details You provided.",
+              "B": "You have a severe peanut allergy (anaphylaxis) and carry an EpiPen.",
+              "C": "You mentioned mild osteoarthritis in your knees and sometimes using a cane."
             },
             "choice_order": [
               "A",
@@ -1947,44 +1947,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Severe peanut allergy (anaphylaxis); carries an EpiPen."
+                "text": "You have a severe peanut allergy (anaphylaxis) and carry an EpiPen."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Mild osteoarthritis in the knees; uses a cane occasionally."
+                "text": "You mentioned mild osteoarthritis in your knees and sometimes using a cane."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the allergy details from that interaction."
+                "text": "I don't remember the allergy or emergency medication details You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the allergy details from that interaction."
+                "text": "I don't remember the allergy or emergency medication details You provided."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Severe peanut allergy (anaphylaxis); carries an EpiPen."
+                "text": "You have a severe peanut allergy (anaphylaxis) and carry an EpiPen."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Mild osteoarthritis in the knees; uses a cane occasionally."
+                "text": "You mentioned mild osteoarthritis in your knees and sometimes using a cane."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Lacto-ovo vegetarian",
-            "identifier_label": "SJO eco-lodge stay",
-            "question": "What dietary preference did the user state in the interaction labeled Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.?",
+            "identifier_label": "Eco-lodge stay",
+            "question": "What dietary preference did I mention for meal planning at the lodge?",
             "choices": {
-              "A": "Vegan (no dairy or eggs).",
-              "B": "Lacto-ovo vegetarian.",
-              "C": "I don't remember the dietary preference from that interaction."
+              "A": "I thought You said you prefer pescatarian meals.",
+              "B": "You said you're lacto-ovo vegetarian.",
+              "C": "I don't recall your dietary preference."
             },
             "choice_order": [
               "A",
@@ -2007,44 +2007,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Lacto-ovo vegetarian."
+                "text": "You said you're lacto-ovo vegetarian."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Vegan (no dairy or eggs)."
+                "text": "I thought You said you prefer pescatarian meals."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the dietary preference from that interaction."
+                "text": "I don't recall your dietary preference."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Vegan (no dairy or eggs)."
+                "text": "I thought You said you prefer pescatarian meals."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Lacto-ovo vegetarian."
+                "text": "You said you're lacto-ovo vegetarian."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the dietary preference from that interaction."
+                "text": "I don't recall your dietary preference."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Elena Morales, Guesthouse Coordinator",
-            "identifier_label": "SJO eco-lodge stay",
-            "question": "Who was listed as the local contact in the interaction labeled Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.?",
+            "identifier_label": "Eco-lodge stay",
+            "question": "Who is the lodge contact person I gave you?",
             "choices": {
-              "A": "María López, Guesthouse Coordinator.",
-              "B": "Elena Morales, Guesthouse Coordinator.",
-              "C": "I don't recall the contact person's name from that interaction."
+              "A": "The contact I remember was Carlos Herrera as the lodge coordinator.",
+              "B": "The lodge contact is Elena Morales, the guesthouse coordinator.",
+              "C": "I don't remember the lodge contact's name or role."
             },
             "choice_order": [
               "A",
@@ -2067,44 +2067,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Elena Morales, Guesthouse Coordinator."
+                "text": "The lodge contact is Elena Morales, the guesthouse coordinator."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "María López, Guesthouse Coordinator."
+                "text": "The contact I remember was Carlos Herrera as the lodge coordinator."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the contact person's name from that interaction."
+                "text": "I don't remember the lodge contact's name or role."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "María López, Guesthouse Coordinator."
+                "text": "The contact I remember was Carlos Herrera as the lodge coordinator."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Elena Morales, Guesthouse Coordinator."
+                "text": "The lodge contact is Elena Morales, the guesthouse coordinator."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the contact person's name from that interaction."
+                "text": "I don't remember the lodge contact's name or role."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "elena.morales@selvaeco.cr",
-            "identifier_label": "SJO eco-lodge stay",
-            "question": "What email address for the local contact was provided in the interaction labeled Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.?",
+            "identifier_label": "Eco-lodge stay",
+            "question": "What email did I give for the lodge contact?",
             "choices": {
-              "A": "contact@selvaeco.cr",
-              "B": "I don't remember the contact email from that interaction.",
-              "C": "elena.morales@selvaeco.cr"
+              "A": "I thought the contact email was elena@selvaeco.com.",
+              "B": "I don't recall the lodge contact's email address.",
+              "C": "The lodge contact email is elena.morales@selvaeco.cr."
             },
             "choice_order": [
               "A",
@@ -2127,44 +2127,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "elena.morales@selvaeco.cr"
+                "text": "The lodge contact email is elena.morales@selvaeco.cr."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "contact@selvaeco.cr"
+                "text": "I thought the contact email was elena@selvaeco.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the contact email from that interaction."
+                "text": "I don't recall the lodge contact's email address."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "contact@selvaeco.cr"
+                "text": "I thought the contact email was elena@selvaeco.com."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the contact email from that interaction."
+                "text": "I don't recall the lodge contact's email address."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "elena.morales@selvaeco.cr"
+                "text": "The lodge contact email is elena.morales@selvaeco.cr."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "+506-8888-1234",
-            "identifier_label": "SJO eco-lodge stay",
-            "question": "What phone number for the local contact was listed in the interaction labeled Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.?",
+            "identifier_label": "Eco-lodge stay",
+            "question": "What phone number did I provide for the lodge contact?",
             "choices": {
-              "A": "I don't remember the contact phone number from that interaction.",
-              "B": "+506-8888-4321",
-              "C": "+506-8888-1234"
+              "A": "I don't remember the lodge contact's phone number.",
+              "B": "I remember a Costa Rica number but it was +506-7777-4321 in my notes.",
+              "C": "The lodge contact phone number is +506-8888-1234."
             },
             "choice_order": [
               "A",
@@ -2187,44 +2187,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "+506-8888-1234"
+                "text": "The lodge contact phone number is +506-8888-1234."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "+506-8888-4321"
+                "text": "I remember a Costa Rica number but it was +506-7777-4321 in my notes."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the contact phone number from that interaction."
+                "text": "I don't remember the lodge contact's phone number."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the contact phone number from that interaction."
+                "text": "I don't remember the lodge contact's phone number."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "+506-8888-4321"
+                "text": "I remember a Costa Rica number but it was +506-7777-4321 in my notes."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "+506-8888-1234"
+                "text": "The lodge contact phone number is +506-8888-1234."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "USD 400",
-            "identifier_label": "SJO eco-lodge stay",
-            "question": "What maximum budget for activities and transport was specified in the interaction labeled Confirm low-impact arrival logistics and transfers from the airport to the eco-lodge, verify dietary/health accommodations for the community-guided nature walk, and produce an eco-friendly packing checklist and activity budget to finalize the two-night stay.?",
+            "identifier_label": "Eco-lodge stay",
+            "question": "How much remaining transport and activity budget did I say we have for the trip?",
             "choices": {
-              "A": "USD 400",
-              "B": "120000 JPY",
-              "C": "I don't remember the budget limit from that interaction."
+              "A": "You have USD 400 remaining for transport and activities.",
+              "B": "I recall a budget of 120,000 JPY per person for sightseeing and meals over several days.",
+              "C": "I don't remember the remaining transport/activity budget amount."
             },
             "choice_order": [
               "A",
@@ -2247,32 +2247,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "USD 400"
+                "text": "You have USD 400 remaining for transport and activities."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "120000 JPY"
+                "text": "I recall a budget of 120,000 JPY per person for sightseeing and meals over several days."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget limit from that interaction."
+                "text": "I don't remember the remaining transport/activity budget amount."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "USD 400"
+                "text": "You have USD 400 remaining for transport and activities."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "120000 JPY"
+                "text": "I recall a budget of 120,000 JPY per person for sightseeing and meals over several days."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the budget limit from that interaction."
+                "text": "I don't remember the remaining transport/activity budget amount."
               }
             ]
           }
@@ -2283,7 +2283,7 @@
       "timestamp": "12/06/2016-I06",
       "turn_role": "probe",
       "identifier_label": "Regional train plan",
-      "user_turn": "I need a practical, personalized plan for future regional train journeys that minimizes missed connections: recommend single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking. My upcoming departure window is April 10 between 08:30 and 10:00. Mobility/health detail: I have mild knee osteoarthritis, use a folding cane occasionally, and typically need about 12–15 minutes to change platforms. Home address for first-leg timing: 123 University Lane, Hometown, State, 12345. Destination guesthouse contact (if relevant): Brookside Guesthouse, Sarah Linton, 555-123-4567. Please give me station-specific buffer recommendations, simple alternatives when a connection is tight, and a short checklist I can use at booking time.",
+      "user_turn": "I want a personalized plan for regional train trips to minimize missed connections. I have an upcoming departure window on April 10, 2026 between 08:30 and 10:00. I typically travel from home (123 University Lane, Hometown, State, 12345); mobility: mild knee osteoarthritis, I use a folding cane occasionally, and I need about 12–15 minutes to change platforms. Guesthouse contact at my destination: Brookside Guesthouse, Sarah Linton, +1 555-123-4567, sarah.linton@brookside.com. Please recommend single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist with timings, platform-change tips, and fallback options so I can book trains confidently.",
       "task_goal": "Get a practical, personalized plan for future regional train journeys that minimizes missed connections: recommended single-leg or buffered itineraries, minimum transfer buffer times for my typical stations, and a short checklist (timings, platform-change tips, and fallback options) I can use when booking trains.",
       "rendered": {
         "items": [
@@ -2291,11 +2291,11 @@
             "sensitive_key": "2026 04 10 08",
             "sensitive_value": "30-10:00",
             "identifier_label": "Regional train plan",
-            "question": "In the interaction labeled \"Get a practical, personalized plan for future regional train journeys that minimizes missed connections...\", what departure window on April 10 did the user specify for their upcoming journey?",
+            "question": "What departure window did I say I have on April 10, 2026 for my regional train travel?",
             "choices": {
-              "A": "I don't recall the user's departure window for April 10.",
-              "B": "Between 08:30 and 10:00 on April 10.",
-              "C": "April 10 between 09:00 and 11:00."
+              "A": "I don't recall the exact departure window You gave for April 10, 2026.",
+              "B": "You specified April 10, 2026 with a departure window between 08:30 and 10:00.",
+              "C": "You specified April 10, 2026 with a departure window between 07:00 and 08:30."
             },
             "choice_order": [
               "A",
@@ -2318,32 +2318,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Between 08:30 and 10:00 on April 10."
+                "text": "You specified April 10, 2026 with a departure window between 08:30 and 10:00."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "April 10 between 09:00 and 11:00."
+                "text": "You specified April 10, 2026 with a departure window between 07:00 and 08:30."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's departure window for April 10."
+                "text": "I don't recall the exact departure window You gave for April 10, 2026."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's departure window for April 10."
+                "text": "I don't recall the exact departure window You gave for April 10, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Between 08:30 and 10:00 on April 10."
+                "text": "You specified April 10, 2026 with a departure window between 08:30 and 10:00."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "April 10 between 09:00 and 11:00."
+                "text": "You specified April 10, 2026 with a departure window between 07:00 and 08:30."
               }
             ]
           },
@@ -2351,11 +2351,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Mild knee osteoarthritis; uses a folding cane occasionally; needs ~12-15 minutes to change platforms",
             "identifier_label": "Regional train plan",
-            "question": "In the interaction labeled \"Get a practical, personalized plan for future regional train journeys...\", what mobility or health details did the user give that affect transfer times?",
+            "question": "What mobility limitations and platform-change time did I tell me about?",
             "choices": {
-              "A": "They have mild knee osteoarthritis, use a folding cane occasionally, and typically need about 12–15 minutes to change platforms.",
-              "B": "Mild osteoarthritis in the knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench and requires a rest every 20 minutes.",
-              "C": "I don't remember the user's mobility or health details."
+              "A": "You said you have mild knee osteoarthritis, use a folding cane occasionally, and need about 12–15 minutes to change platforms.",
+              "B": "You said you have mild knee osteoarthritis, use a cane occasionally, and prefer shorter walking legs under about 500 meters with a rest every 20 minutes.",
+              "C": "I don't remember the specific mobility details or how long You said you need to change platforms."
             },
             "choice_order": [
               "A",
@@ -2378,32 +2378,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "They have mild knee osteoarthritis, use a folding cane occasionally, and typically need about 12–15 minutes to change platforms."
+                "text": "You said you have mild knee osteoarthritis, use a folding cane occasionally, and need about 12–15 minutes to change platforms."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Mild osteoarthritis in the knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench and requires a rest every 20 minutes."
+                "text": "You said you have mild knee osteoarthritis, use a cane occasionally, and prefer shorter walking legs under about 500 meters with a rest every 20 minutes."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's mobility or health details."
+                "text": "I don't remember the specific mobility details or how long You said you need to change platforms."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "They have mild knee osteoarthritis, use a folding cane occasionally, and typically need about 12–15 minutes to change platforms."
+                "text": "You said you have mild knee osteoarthritis, use a folding cane occasionally, and need about 12–15 minutes to change platforms."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Mild osteoarthritis in the knees; uses a cane occasionally; prefers walking legs ≤ 500 meters without a bench and requires a rest every 20 minutes."
+                "text": "You said you have mild knee osteoarthritis, use a cane occasionally, and prefer shorter walking legs under about 500 meters with a rest every 20 minutes."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the user's mobility or health details."
+                "text": "I don't remember the specific mobility details or how long You said you need to change platforms."
               }
             ]
           },
@@ -2411,11 +2411,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "123 University Lane, Hometown, State, 12345",
             "identifier_label": "Regional train plan",
-            "question": "For the interaction labeled \"Get a practical, personalized plan for future regional train journeys...\", what home address did the user provide for timing the first leg?",
+            "question": "What home address did I provide for planning departures?",
             "choices": {
-              "A": "123 University Lane, Hometown, State, 12345.",
-              "B": "I don't recall the home address the user provided.",
-              "C": "456 College Road, Hometown, State, 12345."
+              "A": "You gave your home address as 123 University Lane, Hometown, State, 12345.",
+              "B": "I don't recall the exact home address You provided.",
+              "C": "You gave your home address as 45 College Avenue, Hometown, State, 12345."
             },
             "choice_order": [
               "A",
@@ -2438,44 +2438,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "123 University Lane, Hometown, State, 12345."
+                "text": "You gave your home address as 123 University Lane, Hometown, State, 12345."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "456 College Road, Hometown, State, 12345."
+                "text": "You gave your home address as 45 College Avenue, Hometown, State, 12345."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the home address the user provided."
+                "text": "I don't recall the exact home address You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "123 University Lane, Hometown, State, 12345."
+                "text": "You gave your home address as 123 University Lane, Hometown, State, 12345."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the home address the user provided."
+                "text": "I don't recall the exact home address You provided."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "456 College Road, Hometown, State, 12345."
+                "text": "You gave your home address as 45 College Avenue, Hometown, State, 12345."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Brookside Guesthouse, Sarah Linton, 555-123-4567, sarah.linton@brookside.com",
+            "sensitive_value": "Brookside Guesthouse, Sarah Linton, +1 555-123-4567, sarah.linton@brookside.com",
             "identifier_label": "Regional train plan",
-            "question": "In the interaction labeled \"Get a practical, personalized plan for future regional train journeys...\", what destination guesthouse contact did the user provide (name and contact details)?",
+            "question": "What contact did I give for my guesthouse at the destination?",
             "choices": {
-              "A": "Brookside Guesthouse, Sarah Linton, 555-123-4567, sarah.linton@brookside.com.",
-              "B": "Brookside Inn, Emily Carter, 555-987-6543, emily.carter@brooksideinn.com.",
-              "C": "I don't remember the destination guesthouse contact details."
+              "A": "You provided Brookside Guesthouse, contact Sarah Linton, phone +1 555-123-4567, email sarah.linton@brookside.com.",
+              "B": "You provided Riverside Inn, contact Mark Hayes, phone +1 555-987-6543, email mark.hayes@riverside.com.",
+              "C": "I don't recall the guesthouse contact details You provided."
             },
             "choice_order": [
               "A",
@@ -2498,32 +2498,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Brookside Guesthouse, Sarah Linton, 555-123-4567, sarah.linton@brookside.com."
+                "text": "You provided Brookside Guesthouse, contact Sarah Linton, phone +1 555-123-4567, email sarah.linton@brookside.com."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Brookside Inn, Emily Carter, 555-987-6543, emily.carter@brooksideinn.com."
+                "text": "You provided Riverside Inn, contact Mark Hayes, phone +1 555-987-6543, email mark.hayes@riverside.com."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the destination guesthouse contact details."
+                "text": "I don't recall the guesthouse contact details You provided."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Brookside Guesthouse, Sarah Linton, 555-123-4567, sarah.linton@brookside.com."
+                "text": "You provided Brookside Guesthouse, contact Sarah Linton, phone +1 555-123-4567, email sarah.linton@brookside.com."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Brookside Inn, Emily Carter, 555-987-6543, emily.carter@brooksideinn.com."
+                "text": "You provided Riverside Inn, contact Mark Hayes, phone +1 555-987-6543, email mark.hayes@riverside.com."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the destination guesthouse contact details."
+                "text": "I don't recall the guesthouse contact details You provided."
               }
             ]
           }

@@ -1,26 +1,26 @@
 {
-  "source_rendered": "data/baseline/travelPlanning/conversation_travelPlanning_persona7_sample0.recall_rendered.json",
-  "source_sidecar": "data/baseline/travelPlanning/conversation_travelPlanning_persona7_sample0.memory_control.json",
+  "source_rendered": "data/test/travelPlanning/specs/conversation_travelPlanning_persona7_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/travelPlanning/specs/conversation_travelPlanning_persona7_sample0.memory_control.json",
   "source_conversation": "data/output/travelPlanning/conversation_travelPlanning_persona7_sample0.json",
   "model": "gpt-5-mini",
   "items": [
     {
       "timestamp": "01/04/2025-I01",
       "turn_role": "key",
-      "identifier_label": "Orlando family plan",
-      "user_turn": "I want a day-by-day Orlando plan for the five of us that assigns park days and specific ticket dates, schedules midday rest windows for the younger children, consolidates dining so we all eat together, and outputs timed blocks (arrival, rides, rest, meals, backups) plus a checklist of reservations and contacts to confirm; to make that accurate, here’s the travel and family info: flights are Delta DL123 departing LAX at 08:30 and Delta DL456 returning from MCO at 18:45, children are Ethan (age 3) with a peanut allergy and an epinephrine auto‑injector who naps about 12:30–2:30 pm, Mia (age 6) with seasonal asthma using an albuterol inhaler who naps about 1:00–2:00 pm, and Noah (age 12) who doesn’t nap; our total trip budget is $5,000 with a target of roughly $200/day discretionary spending; and our hotel is Lakeview Resort Orlando — confirmation LR-987654 — 101 Lakeshore Way, Orlando, FL 32819 — phone +1-407-555-0199 — please use those specifics when you place park days and rest windows.",
+      "identifier_label": "Orlando family trip",
+      "user_turn": "I want you to build the day-by-day Orlando plan now. Flights and schedule are: Delta DL123 departing morning 8:30 AM (LAX→MCO) and Delta DL456 returning evening 6:45 PM (MCO→LAX); kids are Ethan (age 3 — peanut allergy, needs epinephrine auto-injector, naps ~12:30–2:30pm), Mia (age 6 — seasonal asthma, uses albuterol as needed, naps ~1:00–2:00pm), and Noah (age 12 — no naps); total trip budget $5,000 with a target ~$200/day discretionary; hotel is Lakeview Resort Orlando — confirmation LR-987654 — 101 Lakeshore Way, Orlando, FL 32819 — phone +1-407-555-0199. Make a day-by-day plan that assigns which park on which trip day, specific ticket assignments, midday rest windows, consolidated dining reservations so the five of us eat together, timed blocks (arrival, morning rides, lunch, rest, afternoon rides, dinner, backups), and a checklist of reservations/contacts to confirm.",
       "task_goal": "Build a day-by-day Orlando plan for the five-person family that assigns park days and specific ticket dates, schedules midday rest windows for the younger children, and consolidates dining reservations so everyone eats together—produce timed blocks (arrival, rides, rest, meals, backups) and a checklist of reservations/contacts to confirm.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "Delta DL123 departing 2026 06 15 08",
             "sensitive_value": "30 (LAX→MCO); Delta DL456 returning 2026-06-20 18:45 (MCO→LAX)",
-            "identifier_label": "Orlando family plan",
-            "question": "In the 'Orlando family plan' interaction, what were the flight numbers and scheduled departure/return times for your trip?",
+            "identifier_label": "Orlando family trip",
+            "question": "What were the outbound and return flights, including dates and times, for our trip to Orlando?",
             "choices": {
-              "A": "Delta DL123 departing LAX at 08:30 (to MCO) and Delta DL456 returning from MCO at 18:45 (2026-06-20).",
-              "B": "Powered wheelchair.",
-              "C": "I don't recall the exact flight numbers or times from the 'Orlando family plan'—could you remind me?"
+              "A": "Your outbound is Delta DL123 on June 15 departing at 8:30 AM (LAX→MCO), and your return is Delta DL456 on June 20 departing at 6:45 PM (MCO→LAX).",
+              "B": "Your outbound is Delta DL123 on June 15 departing at 9:30 AM (LAX→MCO), and your return is Delta DL456 on June 20 departing at 5:45 PM (MCO→LAX).",
+              "C": "I don't recall the exact flight numbers, dates, or times—could you remind me of the flight details?"
             },
             "choice_order": [
               "A",
@@ -43,44 +43,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Delta DL123 departing LAX at 08:30 (to MCO) and Delta DL456 returning from MCO at 18:45 (2026-06-20)."
+                "text": "Your outbound is Delta DL123 on June 15 departing at 8:30 AM (LAX→MCO), and your return is Delta DL456 on June 20 departing at 6:45 PM (MCO→LAX)."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Powered wheelchair."
+                "text": "Your outbound is Delta DL123 on June 15 departing at 9:30 AM (LAX→MCO), and your return is Delta DL456 on June 20 departing at 5:45 PM (MCO→LAX)."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact flight numbers or times from the 'Orlando family plan'—could you remind me?"
+                "text": "I don't recall the exact flight numbers, dates, or times—could you remind me of the flight details?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Delta DL123 departing LAX at 08:30 (to MCO) and Delta DL456 returning from MCO at 18:45 (2026-06-20)."
+                "text": "Your outbound is Delta DL123 on June 15 departing at 8:30 AM (LAX→MCO), and your return is Delta DL456 on June 20 departing at 6:45 PM (MCO→LAX)."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Powered wheelchair."
+                "text": "Your outbound is Delta DL123 on June 15 departing at 9:30 AM (LAX→MCO), and your return is Delta DL456 on June 20 departing at 5:45 PM (MCO→LAX)."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the exact flight numbers or times from the 'Orlando family plan'—could you remind me?"
+                "text": "I don't recall the exact flight numbers, dates, or times—could you remind me of the flight details?"
               }
             ]
           },
           {
             "sensitive_key": "Ethan — age 3 — peanut allergy (requires epinephrine auto injector), naps ~12",
             "sensitive_value": "30–2:30pm",
-            "identifier_label": "Orlando family plan",
-            "question": "Referring to the 'Orlando family plan', what did you tell me about Ethan's age, allergy, and nap schedule?",
+            "identifier_label": "Orlando family trip",
+            "question": "What did I tell me about Ethan’s allergy, emergency medication, and his typical midday nap window?",
             "choices": {
-              "A": "I don't remember Ethan's allergy or nap schedule from the 'Orlando family plan'—can you repeat it?",
-              "B": "Ethan is 3, has a peanut allergy requiring an epinephrine auto-injector, and naps about 12:30–2:30 pm.",
-              "C": "31 in (79 cm)."
+              "A": "I don't remember Ethan's exact allergy or nap schedule—can you tell me those details again?",
+              "B": "Ethan is 3, has a peanut allergy requiring an epinephrine auto-injector, and usually naps about 12:30–2:30 PM.",
+              "C": "Ethan is 3, has a peanut allergy requiring an epinephrine auto-injector, and usually naps about 11:30 AM–1:30 PM."
             },
             "choice_order": [
               "A",
@@ -103,44 +103,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Ethan is 3, has a peanut allergy requiring an epinephrine auto-injector, and naps about 12:30–2:30 pm."
+                "text": "Ethan is 3, has a peanut allergy requiring an epinephrine auto-injector, and usually naps about 12:30–2:30 PM."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "31 in (79 cm)."
+                "text": "Ethan is 3, has a peanut allergy requiring an epinephrine auto-injector, and usually naps about 11:30 AM–1:30 PM."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember Ethan's allergy or nap schedule from the 'Orlando family plan'—can you repeat it?"
+                "text": "I don't remember Ethan's exact allergy or nap schedule—can you tell me those details again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember Ethan's allergy or nap schedule from the 'Orlando family plan'—can you repeat it?"
+                "text": "I don't remember Ethan's exact allergy or nap schedule—can you tell me those details again?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Ethan is 3, has a peanut allergy requiring an epinephrine auto-injector, and naps about 12:30–2:30 pm."
+                "text": "Ethan is 3, has a peanut allergy requiring an epinephrine auto-injector, and usually naps about 12:30–2:30 PM."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "31 in (79 cm)."
+                "text": "Ethan is 3, has a peanut allergy requiring an epinephrine auto-injector, and usually naps about 11:30 AM–1:30 PM."
               }
             ]
           },
           {
             "sensitive_key": "Mia — age 6 — seasonal asthma, uses albuterol inhaler as needed, naps ~1",
             "sensitive_value": "00–2:00pm",
-            "identifier_label": "Orlando family plan",
-            "question": "In the 'Orlando family plan' notes, what health needs and nap window did you list for Mia?",
+            "identifier_label": "Orlando family trip",
+            "question": "What are Mia’s health needs and when does she typically nap during the day?",
             "choices": {
-              "A": "Powered wheelchair.",
-              "B": "I don't recall Mia's asthma or nap details from the 'Orlando family plan'—could you tell me again?",
-              "C": "Mia is 6, has seasonal asthma and uses an albuterol inhaler as needed, and naps about 1:00–2:00 pm."
+              "A": "Mia is 6, has seasonal asthma and uses an albuterol inhaler as needed, and naps around 12:00–1:00 PM.",
+              "B": "I don't recall Mia's health details or nap schedule—could you remind me?",
+              "C": "Mia is 6, has seasonal asthma and uses an albuterol inhaler as needed, and naps around 1:00–2:00 PM."
             },
             "choice_order": [
               "A",
@@ -163,44 +163,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Mia is 6, has seasonal asthma and uses an albuterol inhaler as needed, and naps about 1:00–2:00 pm."
+                "text": "Mia is 6, has seasonal asthma and uses an albuterol inhaler as needed, and naps around 1:00–2:00 PM."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Powered wheelchair."
+                "text": "Mia is 6, has seasonal asthma and uses an albuterol inhaler as needed, and naps around 12:00–1:00 PM."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall Mia's asthma or nap details from the 'Orlando family plan'—could you tell me again?"
+                "text": "I don't recall Mia's health details or nap schedule—could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Powered wheelchair."
+                "text": "Mia is 6, has seasonal asthma and uses an albuterol inhaler as needed, and naps around 12:00–1:00 PM."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall Mia's asthma or nap details from the 'Orlando family plan'—could you tell me again?"
+                "text": "I don't recall Mia's health details or nap schedule—could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Mia is 6, has seasonal asthma and uses an albuterol inhaler as needed, and naps about 1:00–2:00 pm."
+                "text": "Mia is 6, has seasonal asthma and uses an albuterol inhaler as needed, and naps around 1:00–2:00 PM."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Noah — age 12 — no known allergies, no regular naps",
-            "identifier_label": "Orlando family plan",
-            "question": "Per the 'Orlando family plan', what did you say about Noah's age, allergies, and napping?",
+            "identifier_label": "Orlando family trip",
+            "question": "What did I say about Noah’s age, allergies, and whether he naps?",
             "choices": {
-              "A": "Noah is 12, has no known allergies, and does not have regular naps.",
-              "B": "31 in (79 cm).",
-              "C": "I don't remember Noah's details from the 'Orlando family plan'—can you remind me?"
+              "A": "Noah is 12, has no known allergies, and does not take regular naps.",
+              "B": "Noah is 12, has no known allergies, but usually takes a short afternoon nap.",
+              "C": "I don't remember Noah's age or whether he has allergies or naps—can you tell me again?"
             },
             "choice_order": [
               "A",
@@ -223,44 +223,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Noah is 12, has no known allergies, and does not have regular naps."
+                "text": "Noah is 12, has no known allergies, and does not take regular naps."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "31 in (79 cm)."
+                "text": "Noah is 12, has no known allergies, but usually takes a short afternoon nap."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember Noah's details from the 'Orlando family plan'—can you remind me?"
+                "text": "I don't remember Noah's age or whether he has allergies or naps—can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Noah is 12, has no known allergies, and does not have regular naps."
+                "text": "Noah is 12, has no known allergies, and does not take regular naps."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "31 in (79 cm)."
+                "text": "Noah is 12, has no known allergies, but usually takes a short afternoon nap."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember Noah's details from the 'Orlando family plan'—can you remind me?"
+                "text": "I don't remember Noah's age or whether he has allergies or naps—can you tell me again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "$5,000 total trip budget; target ~$200/day discretionary spending",
-            "identifier_label": "Orlando family plan",
-            "question": "What budget information did you provide in the 'Orlando family plan' message?",
+            "identifier_label": "Orlando family trip",
+            "question": "What total budget and daily discretionary spending target did I set for the trip?",
             "choices": {
-              "A": "Powered wheelchair.",
-              "B": "A $5,000 total trip budget with a target of roughly $200 per day for discretionary spending.",
-              "C": "I don't recall the budget details from the 'Orlando family plan'—could you restate them?"
+              "A": "You set a $6,000 total trip budget with about $300 per day for discretionary spending.",
+              "B": "You set a $5,000 total trip budget with about $200 per day for discretionary spending.",
+              "C": "I don't recall the exact total budget or daily discretionary target—could you remind me?"
             },
             "choice_order": [
               "A",
@@ -283,44 +283,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "A $5,000 total trip budget with a target of roughly $200 per day for discretionary spending."
+                "text": "You set a $5,000 total trip budget with about $200 per day for discretionary spending."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Powered wheelchair."
+                "text": "You set a $6,000 total trip budget with about $300 per day for discretionary spending."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the budget details from the 'Orlando family plan'—could you restate them?"
+                "text": "I don't recall the exact total budget or daily discretionary target—could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Powered wheelchair."
+                "text": "You set a $6,000 total trip budget with about $300 per day for discretionary spending."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "A $5,000 total trip budget with a target of roughly $200 per day for discretionary spending."
+                "text": "You set a $5,000 total trip budget with about $200 per day for discretionary spending."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the budget details from the 'Orlando family plan'—could you restate them?"
+                "text": "I don't recall the exact total budget or daily discretionary target—could you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Lakeview Resort Orlando — confirmation LR-987654 — 101 Lakeshore Way, Orlando, FL 32819 — phone +1-407-555-0199",
-            "identifier_label": "Orlando family plan",
-            "question": "In the 'Orlando family plan', what hotel and confirmation did you give, including address and phone?",
+            "identifier_label": "Orlando family trip",
+            "question": "Can you confirm the hotel name, reservation confirmation number, address, and phone number for our stay?",
             "choices": {
-              "A": "Lakeview Resort Orlando, confirmation LR-987654, 101 Lakeshore Way, Orlando, FL 32819 — phone +1-407-555-0199.",
-              "B": "31 in (79 cm).",
-              "C": "I don't remember the hotel confirmation or contact from the 'Orlando family plan'—can you share it again?"
+              "A": "You're staying at Lakeview Resort Orlando, confirmation LR-987654, 101 Lakeshore Way, Orlando, FL 32819, phone +1-407-555-0199.",
+              "B": "You're staying at Lakeside Resort Orlando, confirmation LR-123456, 101 Lakeshore Way, Orlando, FL 32819, phone +1-407-555-0199.",
+              "C": "I don't recall the hotel name, confirmation number, or phone—could you provide those details again?"
             },
             "choice_order": [
               "A",
@@ -343,32 +343,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Lakeview Resort Orlando, confirmation LR-987654, 101 Lakeshore Way, Orlando, FL 32819 — phone +1-407-555-0199."
+                "text": "You're staying at Lakeview Resort Orlando, confirmation LR-987654, 101 Lakeshore Way, Orlando, FL 32819, phone +1-407-555-0199."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "31 in (79 cm)."
+                "text": "You're staying at Lakeside Resort Orlando, confirmation LR-123456, 101 Lakeshore Way, Orlando, FL 32819, phone +1-407-555-0199."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the hotel confirmation or contact from the 'Orlando family plan'—can you share it again?"
+                "text": "I don't recall the hotel name, confirmation number, or phone—could you provide those details again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Lakeview Resort Orlando, confirmation LR-987654, 101 Lakeshore Way, Orlando, FL 32819 — phone +1-407-555-0199."
+                "text": "You're staying at Lakeview Resort Orlando, confirmation LR-987654, 101 Lakeshore Way, Orlando, FL 32819, phone +1-407-555-0199."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "31 in (79 cm)."
+                "text": "You're staying at Lakeside Resort Orlando, confirmation LR-123456, 101 Lakeshore Way, Orlando, FL 32819, phone +1-407-555-0199."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the hotel confirmation or contact from the 'Orlando family plan'—can you share it again?"
+                "text": "I don't recall the hotel name, confirmation number, or phone—could you provide those details again?"
               }
             ]
           }
@@ -378,20 +378,20 @@
     {
       "timestamp": "06/15/2020-I04",
       "turn_role": "key",
-      "identifier_label": "Accessible transit plan",
-      "user_turn": "I need a practical, low-risk plan and message templates to secure verified accessible transit and attraction access for my friend: please provide (1) a prioritized checklist of exact confirmations to request from transit and attraction providers, (2) sample emails, phone scripts, and escalation templates for slow or inconsistent responses, (3) contingency and fallback options if a provider cannot confirm, and (4) a follow-up timeline and clear rules for when to cancel DIY arrangements without written confirmation; use these specifics for accuracy—powered wheelchair 31 in (79 cm) wide by 42 in (107 cm) long; travel window July 15–21, 2026, preferred outbound in the morning of July 15 and return in the evening of July 21 with +/- two days flexibility; preferred contacts Marta Ruiz marta.ruiz@example.com +1-555-246-8970 and Sunset Guesthouse reservations reservations@sunsetguesthouse.com +1-555-400-1122 with booking ref RG-778321; make checklist items precise (door widths, lift capacities, securement types) and include exact wording for email fields.",
+      "identifier_label": "Accessible travel plan",
+      "user_turn": "I need a low-risk accessible plan and message templates for my friend's travel window July 15–21, 2026 (preferred departure the morning of July 15; return the evening of July 21; flexible by two days). Mobility profile: powered wheelchair, 31 in (79 cm) wide and 42 in (107 cm) long. Preferred contacts and existing booking: Marta Ruiz, marta.ruiz@example.com, +1-555-246-8970; Sunset Guesthouse reservations, reservations@sunsetguesthouse.com, +1-555-400-1122; booking ref RG-778321. Task: produce (1) a prioritized checklist of exact confirmations to request from transit and attraction providers, (2) sample emails/phone scripts and escalation templates I can send to Marta, Sunset Guesthouse, and carriers, (3) contingency/fallback options if a provider cannot confirm, and (4) a timeline for when to follow up and when to cancel DIY arrangements without written confirmation.",
       "task_goal": "Create a practical, low-risk plan and message templates to secure verified accessible transit and attraction access for my friend: (1) a prioritized checklist of exact confirmations to request from transit/attraction providers, (2) sample emails/phone scripts and escalation templates to use when responses are slow or inconsistent, (3) contingency/fallback options if a provider cannot confirm, and (4) a timeline for when to follow up and when to cancel DIY arrangements without written confirmation.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "Powered wheelchair",
-            "identifier_label": "Accessible transit plan",
-            "question": "In the \"Accessible transit plan\" interaction, what mobility aid did the user say their friend uses?",
+            "identifier_label": "Accessible travel plan",
+            "question": "What type of mobility device did I say my friend uses?",
             "choices": {
-              "A": "Powered wheelchair",
-              "B": "I don't recall which mobility aid was mentioned — could you remind me?",
-              "C": "Manual folding wheelchair"
+              "A": "You said your friend uses a powered wheelchair.",
+              "B": "I don't remember which type of wheelchair they use; could you remind me?",
+              "C": "You mentioned your friend uses a manual wheelchair."
             },
             "choice_order": [
               "A",
@@ -414,44 +414,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Powered wheelchair"
+                "text": "You said your friend uses a powered wheelchair."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Manual folding wheelchair"
+                "text": "You mentioned your friend uses a manual wheelchair."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall which mobility aid was mentioned — could you remind me?"
+                "text": "I don't remember which type of wheelchair they use; could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Powered wheelchair"
+                "text": "You said your friend uses a powered wheelchair."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall which mobility aid was mentioned — could you remind me?"
+                "text": "I don't remember which type of wheelchair they use; could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Manual folding wheelchair"
+                "text": "You mentioned your friend uses a manual wheelchair."
               }
             ]
           },
           {
             "sensitive_key": "Wheelchair width",
             "sensitive_value": "31 in (79 cm)",
-            "identifier_label": "Accessible transit plan",
-            "question": "In the \"Accessible transit plan\" interaction, what was the wheelchair width the user specified?",
+            "identifier_label": "Accessible travel plan",
+            "question": "What wheelchair width did I provide for the booking?",
             "choices": {
-              "A": "31 in (79 cm)",
-              "B": "I don't remember the exact width — can you tell me again?",
-              "C": "30 in (76 cm)"
+              "A": "The wheelchair is 31 inches (79 cm) wide.",
+              "B": "I don't recall the exact width; can you confirm it?",
+              "C": "The wheelchair is 30 inches (76 cm) wide."
             },
             "choice_order": [
               "A",
@@ -474,44 +474,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "31 in (79 cm)"
+                "text": "The wheelchair is 31 inches (79 cm) wide."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "30 in (76 cm)"
+                "text": "The wheelchair is 30 inches (76 cm) wide."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact width — can you tell me again?"
+                "text": "I don't recall the exact width; can you confirm it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "31 in (79 cm)"
+                "text": "The wheelchair is 31 inches (79 cm) wide."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact width — can you tell me again?"
+                "text": "I don't recall the exact width; can you confirm it?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "30 in (76 cm)"
+                "text": "The wheelchair is 30 inches (76 cm) wide."
               }
             ]
           },
           {
             "sensitive_key": "Wheelchair length",
             "sensitive_value": "42 in (107 cm)",
-            "identifier_label": "Accessible transit plan",
-            "question": "In the \"Accessible transit plan\" interaction, what was the wheelchair length given?",
+            "identifier_label": "Accessible travel plan",
+            "question": "What length did I state for the wheelchair?",
             "choices": {
-              "A": "42 in (107 cm)",
-              "B": "40 in (102 cm)",
-              "C": "I don't recall the length — please remind me of it."
+              "A": "You indicated the wheelchair is 42 inches (107 cm) long.",
+              "B": "You indicated the wheelchair is 40 inches (102 cm) long.",
+              "C": "I don't remember the wheelchair length; could you tell me again?"
             },
             "choice_order": [
               "A",
@@ -534,44 +534,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "42 in (107 cm)"
+                "text": "You indicated the wheelchair is 42 inches (107 cm) long."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "40 in (102 cm)"
+                "text": "You indicated the wheelchair is 40 inches (102 cm) long."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the length — please remind me of it."
+                "text": "I don't remember the wheelchair length; could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "42 in (107 cm)"
+                "text": "You indicated the wheelchair is 42 inches (107 cm) long."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "40 in (102 cm)"
+                "text": "You indicated the wheelchair is 40 inches (102 cm) long."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the length — please remind me of it."
+                "text": "I don't remember the wheelchair length; could you tell me again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "2026-07-15 to 2026-07-21",
-            "identifier_label": "Accessible transit plan",
-            "question": "In the \"Accessible transit plan\" interaction, what travel window (dates) did the user specify?",
+            "identifier_label": "Accessible travel plan",
+            "question": "What travel window dates did I specify?",
             "choices": {
-              "A": "I don't remember the exact travel dates — could you remind me?",
-              "B": "2026-07-15 to 2026-07-21",
-              "C": "2026-06-15 to 2026-06-21"
+              "A": "I don't remember the exact travel dates; can you remind me?",
+              "B": "The travel window You gave is July 15–21, 2026.",
+              "C": "The travel window You gave is June 15–21, 2026."
             },
             "choice_order": [
               "A",
@@ -594,44 +594,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-07-15 to 2026-07-21"
+                "text": "The travel window You gave is July 15–21, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-15 to 2026-06-21"
+                "text": "The travel window You gave is June 15–21, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact travel dates — could you remind me?"
+                "text": "I don't remember the exact travel dates; can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact travel dates — could you remind me?"
+                "text": "I don't remember the exact travel dates; can you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2026-07-15 to 2026-07-21"
+                "text": "The travel window You gave is July 15–21, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "2026-06-15 to 2026-06-21"
+                "text": "The travel window You gave is June 15–21, 2026."
               }
             ]
           },
           {
             "sensitive_key": "detail",
-            "sensitive_value": "Preferred departure morning of 2026-07-15; return evening of 2026-07-21",
-            "identifier_label": "Accessible transit plan",
-            "question": "In the \"Accessible transit plan\" interaction, what were the user's preferred outbound and return times?",
+            "sensitive_value": "Preferred departure morning of 2026-07-15; return evening 2026-07-21",
+            "identifier_label": "Accessible travel plan",
+            "question": "What were the preferred departure and return times you requested?",
             "choices": {
-              "A": "Preferred outbound in the morning of 2026-07-15 and return in the evening of 2026-07-21",
-              "B": "Preferred outbound in the afternoon of 2026-07-15 and return in the morning of 2026-07-21",
-              "C": "I don't recall the preferred times — can you repeat them?"
+              "A": "You preferred to depart the morning of July 15, 2026, and return the evening of July 21, 2026.",
+              "B": "You preferred to depart in the afternoon of July 15 and return the morning of July 21.",
+              "C": "I don't recall the preferred departure and return times; could you restate them?"
             },
             "choice_order": [
               "A",
@@ -654,44 +654,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Preferred outbound in the morning of 2026-07-15 and return in the evening of 2026-07-21"
+                "text": "You preferred to depart the morning of July 15, 2026, and return the evening of July 21, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Preferred outbound in the afternoon of 2026-07-15 and return in the morning of 2026-07-21"
+                "text": "You preferred to depart in the afternoon of July 15 and return the morning of July 21."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the preferred times — can you repeat them?"
+                "text": "I don't recall the preferred departure and return times; could you restate them?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Preferred outbound in the morning of 2026-07-15 and return in the evening of 2026-07-21"
+                "text": "You preferred to depart the morning of July 15, 2026, and return the evening of July 21, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Preferred outbound in the afternoon of 2026-07-15 and return in the morning of 2026-07-21"
+                "text": "You preferred to depart in the afternoon of July 15 and return the morning of July 21."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the preferred times — can you repeat them?"
+                "text": "I don't recall the preferred departure and return times; could you restate them?"
               }
             ]
           },
           {
             "sensitive_key": "Flexibility",
             "sensitive_value": "+/- 2 days",
-            "identifier_label": "Accessible transit plan",
-            "question": "In the \"Accessible transit plan\" interaction, what flexibility around the dates did the user allow?",
+            "identifier_label": "Accessible travel plan",
+            "question": "How much date flexibility did I allow for the trip?",
             "choices": {
-              "A": "+/- 2 days",
-              "B": "I don't remember the allowed flexibility — could you tell me?",
-              "C": "+/- 1 day"
+              "A": "You said the dates are flexible by plus or minus two days.",
+              "B": "I don't remember how much date flexibility you allowed.",
+              "C": "You said the dates are flexible by plus or minus five days."
             },
             "choice_order": [
               "A",
@@ -714,44 +714,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "+/- 2 days"
+                "text": "You said the dates are flexible by plus or minus two days."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "+/- 1 day"
+                "text": "You said the dates are flexible by plus or minus five days."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the allowed flexibility — could you tell me?"
+                "text": "I don't remember how much date flexibility you allowed."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "+/- 2 days"
+                "text": "You said the dates are flexible by plus or minus two days."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the allowed flexibility — could you tell me?"
+                "text": "I don't remember how much date flexibility you allowed."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "+/- 1 day"
+                "text": "You said the dates are flexible by plus or minus five days."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Marta Ruiz, marta.ruiz@example.com, +1-555-246-8970",
-            "identifier_label": "Accessible transit plan",
-            "question": "In the \"Accessible transit plan\" interaction, who was the preferred personal contact and what were their email and phone?",
+            "identifier_label": "Accessible travel plan",
+            "question": "Who is the preferred contact and what are their contact details?",
             "choices": {
-              "A": "Marta Ruiz — marta.ruiz@example.com — +1-555-246-8970",
-              "B": "Marta Ruiz — mruiz@example.com — +1-555-246-0000",
-              "C": "I don't recall that contact's details — could you provide them again?"
+              "A": "The preferred contact is Marta Ruiz, marta.ruiz@example.com, +1-555-246-8970.",
+              "B": "The preferred contact is Maria Ruiz, maria.ruiz@example.com, +1-555-246-8971.",
+              "C": "I don't remember the preferred contact's name or contact details; can you provide them?"
             },
             "choice_order": [
               "A",
@@ -774,44 +774,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Marta Ruiz — marta.ruiz@example.com — +1-555-246-8970"
+                "text": "The preferred contact is Marta Ruiz, marta.ruiz@example.com, +1-555-246-8970."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Marta Ruiz — mruiz@example.com — +1-555-246-0000"
+                "text": "The preferred contact is Maria Ruiz, maria.ruiz@example.com, +1-555-246-8971."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall that contact's details — could you provide them again?"
+                "text": "I don't remember the preferred contact's name or contact details; can you provide them?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Marta Ruiz — marta.ruiz@example.com — +1-555-246-8970"
+                "text": "The preferred contact is Marta Ruiz, marta.ruiz@example.com, +1-555-246-8970."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Marta Ruiz — mruiz@example.com — +1-555-246-0000"
+                "text": "The preferred contact is Maria Ruiz, maria.ruiz@example.com, +1-555-246-8971."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall that contact's details — could you provide them again?"
+                "text": "I don't remember the preferred contact's name or contact details; can you provide them?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Sunset Guesthouse reservations, reservations@sunsetguesthouse.com, +1-555-400-1122",
-            "identifier_label": "Accessible transit plan",
-            "question": "In the \"Accessible transit plan\" interaction, what was the accommodation contact (name, email, phone) the user gave?",
+            "identifier_label": "Accessible travel plan",
+            "question": "What are the Sunset Guesthouse reservations contact details?",
             "choices": {
-              "A": "Sunset Guesthouse reservations — reservations@sunsetguesthouse.com — +1-555-400-1122",
-              "B": "I don't remember the accommodation contact — can you remind me?",
-              "C": "Sunset Inn reservations — reservations@sunsetinn.com — +1-555-400-1100"
+              "A": "Sunset Guesthouse reservations can be reached at reservations@sunsetguesthouse.com, +1-555-400-1122.",
+              "B": "I don't recall the guesthouse's reservations contact; could you share it again?",
+              "C": "Sunset Guesthouse reservations can be reached at bookings@sunsetguesthouse.com, +1-555-400-1123."
             },
             "choice_order": [
               "A",
@@ -834,44 +834,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Sunset Guesthouse reservations — reservations@sunsetguesthouse.com — +1-555-400-1122"
+                "text": "Sunset Guesthouse reservations can be reached at reservations@sunsetguesthouse.com, +1-555-400-1122."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Sunset Inn reservations — reservations@sunsetinn.com — +1-555-400-1100"
+                "text": "Sunset Guesthouse reservations can be reached at bookings@sunsetguesthouse.com, +1-555-400-1123."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the accommodation contact — can you remind me?"
+                "text": "I don't recall the guesthouse's reservations contact; could you share it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Sunset Guesthouse reservations — reservations@sunsetguesthouse.com — +1-555-400-1122"
+                "text": "Sunset Guesthouse reservations can be reached at reservations@sunsetguesthouse.com, +1-555-400-1122."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the accommodation contact — can you remind me?"
+                "text": "I don't recall the guesthouse's reservations contact; could you share it again?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Sunset Inn reservations — reservations@sunsetinn.com — +1-555-400-1100"
+                "text": "Sunset Guesthouse reservations can be reached at bookings@sunsetguesthouse.com, +1-555-400-1123."
               }
             ]
           },
           {
             "sensitive_key": "Existing booking ref",
             "sensitive_value": "RG-778321",
-            "identifier_label": "Accessible transit plan",
-            "question": "In the \"Accessible transit plan\" interaction, what existing booking reference did the user provide?",
+            "identifier_label": "Accessible travel plan",
+            "question": "What was the existing booking reference number for the reservation?",
             "choices": {
-              "A": "RG-778321",
-              "B": "I don't recall the booking reference — could you tell me again?",
-              "C": "RG-778322"
+              "A": "The existing booking reference is RG-778321.",
+              "B": "I don't remember the booking reference; could you tell me the number?",
+              "C": "The existing booking reference is RG-778123."
             },
             "choice_order": [
               "A",
@@ -894,32 +894,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "RG-778321"
+                "text": "The existing booking reference is RG-778321."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "RG-778322"
+                "text": "The existing booking reference is RG-778123."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the booking reference — could you tell me again?"
+                "text": "I don't remember the booking reference; could you tell me the number?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "RG-778321"
+                "text": "The existing booking reference is RG-778321."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the booking reference — could you tell me again?"
+                "text": "I don't remember the booking reference; could you tell me the number?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "RG-778322"
+                "text": "The existing booking reference is RG-778123."
               }
             ]
           }
@@ -930,7 +930,7 @@
       "timestamp": "11/20/2025-I05",
       "turn_role": "key",
       "identifier_label": "Portland rainy-week capsule",
-      "user_turn": "Help me refine that seven-item capsule wardrobe and carry-on plan for a rainy week in Portland: give outfit rotation suggestions, a laundry/refresh strategy, small additions (layers/gear) for colder or wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on; to be precise I’ll share trip and accommodation details: flights are SFO->PDX on April 15 (Alaska Airlines AS321, departs 07:30 PDT) and return PDX->SFO on April 22 (Alaska Airlines AS454, returns 22:45 PDT), my accommodation is with host Mara Chen, the fare is Alaska Airlines — Main Cabin Saver (no free checked bag), I’m willing to pay up to $50 for a checked bag if needed, and I have plantar fasciitis and use custom orthotics so I need supportive shoes — please use all of that to keep the carry-on plan feasible.",
+      "user_turn": "Please refine my seven-item rainy-week Portland capsule. Flight info and schedule: SFO->PDX, Alaska Airlines AS321 departs 07:30 PDT; return PDX->SFO, Alaska Airlines AS454 returns 22:45 PDT. Accommodation: 456 NW Couch St, Portland, OR 97209 — Host Mara Chen, phone 503-555-0147. Airline and baggage: Alaska Airlines — Main Cabin Saver (no free checked bag); max willing to pay for a checked bag $50. Health: plantar fasciitis; I use custom orthotics and need supportive shoes. Task: give outfit rotation suggestions, a laundry/refresh plan, any small additions (layers/gear) for colder/wetter days and activities, and a revised packing checklist that keeps everything in a carry-on if possible.",
       "task_goal": "Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.",
       "rendered": {
         "items": [
@@ -938,11 +938,11 @@
             "sensitive_key": "Departure",
             "sensitive_value": "2026-04-15 SFO->PDX, Alaska Airlines AS321, dep 07:30 PDT",
             "identifier_label": "Portland rainy-week capsule",
-            "question": "In the earlier interaction 'Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.', what was the departure flight (date, route, airline and departure time)?",
+            "question": "What was my outbound flight and departure time for the Portland trip?",
             "choices": {
-              "A": "30 (LAX→MCO); Delta DL456 returning 2026-06-20 18:45 (MCO→LAX)",
-              "B": "2026-04-15 SFO->PDX, Alaska Airlines AS321, dep 07:30 PDT",
-              "C": "I don't remember the departure flight details from that interaction."
+              "A": "Your outbound flight is Delta DL456 LAX→MCO on 2026-06-20 departing at 18:45.",
+              "B": "Your outbound flight is Alaska Airlines AS321 SFO→PDX on 2026-04-15 departing at 07:30 PDT.",
+              "C": "I don't recall your outbound flight details — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -965,32 +965,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-04-15 SFO->PDX, Alaska Airlines AS321, dep 07:30 PDT"
+                "text": "Your outbound flight is Alaska Airlines AS321 SFO→PDX on 2026-04-15 departing at 07:30 PDT."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "30 (LAX→MCO); Delta DL456 returning 2026-06-20 18:45 (MCO→LAX)"
+                "text": "Your outbound flight is Delta DL456 LAX→MCO on 2026-06-20 departing at 18:45."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the departure flight details from that interaction."
+                "text": "I don't recall your outbound flight details — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "30 (LAX→MCO); Delta DL456 returning 2026-06-20 18:45 (MCO→LAX)"
+                "text": "Your outbound flight is Delta DL456 LAX→MCO on 2026-06-20 departing at 18:45."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "2026-04-15 SFO->PDX, Alaska Airlines AS321, dep 07:30 PDT"
+                "text": "Your outbound flight is Alaska Airlines AS321 SFO→PDX on 2026-04-15 departing at 07:30 PDT."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the departure flight details from that interaction."
+                "text": "I don't recall your outbound flight details — could you remind me?"
               }
             ]
           },
@@ -998,11 +998,11 @@
             "sensitive_key": "Return",
             "sensitive_value": "2026-04-22 PDX->SFO, Alaska Airlines AS454, ret 22:45 PDT",
             "identifier_label": "Portland rainy-week capsule",
-            "question": "In the earlier interaction 'Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.', what was the return flight (date, route, airline and arrival time)?",
+            "question": "Can you remind me of my return flight and time from Portland?",
             "choices": {
-              "A": "30–2:30pm",
-              "B": "I don't remember the return flight details from that interaction.",
-              "C": "2026-04-22 PDX->SFO, Alaska Airlines AS454, ret 22:45 PDT"
+              "A": "Your return flight is Delta DL456 MCO→LAX on 2026-06-20 departing at 18:45.",
+              "B": "I don't remember the return flight details — could you tell me again?",
+              "C": "Your return flight is Alaska Airlines AS454 PDX→SFO on 2026-04-22 departing at 22:45 PDT."
             },
             "choice_order": [
               "A",
@@ -1025,32 +1025,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-04-22 PDX->SFO, Alaska Airlines AS454, ret 22:45 PDT"
+                "text": "Your return flight is Alaska Airlines AS454 PDX→SFO on 2026-04-22 departing at 22:45 PDT."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "30–2:30pm"
+                "text": "Your return flight is Delta DL456 MCO→LAX on 2026-06-20 departing at 18:45."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the return flight details from that interaction."
+                "text": "I don't remember the return flight details — could you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "30–2:30pm"
+                "text": "Your return flight is Delta DL456 MCO→LAX on 2026-06-20 departing at 18:45."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the return flight details from that interaction."
+                "text": "I don't remember the return flight details — could you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "2026-04-22 PDX->SFO, Alaska Airlines AS454, ret 22:45 PDT"
+                "text": "Your return flight is Alaska Airlines AS454 PDX→SFO on 2026-04-22 departing at 22:45 PDT."
               }
             ]
           },
@@ -1058,11 +1058,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "456 NW Couch St, Portland, OR 97209",
             "identifier_label": "Portland rainy-week capsule",
-            "question": "In the earlier interaction 'Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.', what accommodation address was provided?",
+            "question": "What's the address of the place I'm staying in Portland?",
             "choices": {
-              "A": "123 SE Morrison St, Portland, OR 97214",
-              "B": "456 NW Couch St, Portland, OR 97209",
-              "C": "I don't remember the accommodation address from that interaction."
+              "A": "The accommodation address is 123 Main St, Portland, OR 97205.",
+              "B": "The accommodation address is 456 NW Couch St, Portland, OR 97209.",
+              "C": "I don't have the accommodation address on hand — can you remind me?"
             },
             "choice_order": [
               "A",
@@ -1085,32 +1085,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "456 NW Couch St, Portland, OR 97209"
+                "text": "The accommodation address is 456 NW Couch St, Portland, OR 97209."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "123 SE Morrison St, Portland, OR 97214"
+                "text": "The accommodation address is 123 Main St, Portland, OR 97205."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the accommodation address from that interaction."
+                "text": "I don't have the accommodation address on hand — can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "123 SE Morrison St, Portland, OR 97214"
+                "text": "The accommodation address is 123 Main St, Portland, OR 97205."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "456 NW Couch St, Portland, OR 97209"
+                "text": "The accommodation address is 456 NW Couch St, Portland, OR 97209."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the accommodation address from that interaction."
+                "text": "I don't have the accommodation address on hand — can you remind me?"
               }
             ]
           },
@@ -1118,11 +1118,11 @@
             "sensitive_key": "Host",
             "sensitive_value": "Mara Chen",
             "identifier_label": "Portland rainy-week capsule",
-            "question": "In the earlier interaction 'Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.', who was listed as your host?",
+            "question": "Who is the host for my Portland accommodation?",
             "choices": {
-              "A": "I don't remember who the host was in that interaction.",
-              "B": "Jordan Lee",
-              "C": "Mara Chen"
+              "A": "I don't recall the host's name — could you remind me?",
+              "B": "Your host is Alex Johnson.",
+              "C": "Your host is Mara Chen."
             },
             "choice_order": [
               "A",
@@ -1145,32 +1145,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Mara Chen"
+                "text": "Your host is Mara Chen."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Jordan Lee"
+                "text": "Your host is Alex Johnson."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember who the host was in that interaction."
+                "text": "I don't recall the host's name — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember who the host was in that interaction."
+                "text": "I don't recall the host's name — could you remind me?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Jordan Lee"
+                "text": "Your host is Alex Johnson."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Mara Chen"
+                "text": "Your host is Mara Chen."
               }
             ]
           },
@@ -1178,11 +1178,11 @@
             "sensitive_key": "Host phone",
             "sensitive_value": "503-555-0147",
             "identifier_label": "Portland rainy-week capsule",
-            "question": "In the earlier interaction 'Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.', what phone number was given for your host?",
+            "question": "Do you still have the host's phone number for the Portland stay?",
             "choices": {
-              "A": "503-555-0199",
-              "B": "503-555-0147",
-              "C": "I don't remember the host's phone number from that interaction."
+              "A": "The host's phone number is 503-555-0199.",
+              "B": "The host's phone number is 503-555-0147.",
+              "C": "I don't remember the host's phone number — can you provide it again?"
             },
             "choice_order": [
               "A",
@@ -1205,32 +1205,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "503-555-0147"
+                "text": "The host's phone number is 503-555-0147."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "503-555-0199"
+                "text": "The host's phone number is 503-555-0199."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the host's phone number from that interaction."
+                "text": "I don't remember the host's phone number — can you provide it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "503-555-0199"
+                "text": "The host's phone number is 503-555-0199."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "503-555-0147"
+                "text": "The host's phone number is 503-555-0147."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the host's phone number from that interaction."
+                "text": "I don't remember the host's phone number — can you provide it again?"
               }
             ]
           },
@@ -1238,11 +1238,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Alaska Airlines — Main Cabin Saver (no free checked bag)",
             "identifier_label": "Portland rainy-week capsule",
-            "question": "In the earlier interaction 'Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.', what fare class / baggage policy was specified for the flights?",
+            "question": "What is the airline fare class and checked-bag policy for my flights?",
             "choices": {
-              "A": "Alaska Airlines — Main Cabin Saver (no free checked bag)",
-              "B": "Alaska Airlines — Main Cabin (one free checked bag)",
-              "C": "I don't remember the fare or baggage policy from that interaction."
+              "A": "You're booked in Alaska Airlines Main Cabin Saver, which has no free checked bag.",
+              "B": "You're booked in Delta Basic Economy, which also has no free checked bag.",
+              "C": "I don't recall the fare class or baggage policy — could you remind me?"
             },
             "choice_order": [
               "A",
@@ -1265,32 +1265,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Alaska Airlines — Main Cabin Saver (no free checked bag)"
+                "text": "You're booked in Alaska Airlines Main Cabin Saver, which has no free checked bag."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Alaska Airlines — Main Cabin (one free checked bag)"
+                "text": "You're booked in Delta Basic Economy, which also has no free checked bag."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the fare or baggage policy from that interaction."
+                "text": "I don't recall the fare class or baggage policy — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Alaska Airlines — Main Cabin Saver (no free checked bag)"
+                "text": "You're booked in Alaska Airlines Main Cabin Saver, which has no free checked bag."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Alaska Airlines — Main Cabin (one free checked bag)"
+                "text": "You're booked in Delta Basic Economy, which also has no free checked bag."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the fare or baggage policy from that interaction."
+                "text": "I don't recall the fare class or baggage policy — could you remind me?"
               }
             ]
           },
@@ -1298,11 +1298,11 @@
             "sensitive_key": "Max willing to pay for checked bag",
             "sensitive_value": "$50",
             "identifier_label": "Portland rainy-week capsule",
-            "question": "In the earlier interaction 'Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.', how much were you willing to pay for a checked bag?",
+            "question": "How much were you willing to pay for a checked bag?",
             "choices": {
-              "A": "$30",
-              "B": "$50",
-              "C": "I don't remember how much you were willing to pay for a checked bag."
+              "A": "You said you're willing to pay up to $75 for a checked bag.",
+              "B": "You said you're willing to pay up to $50 for a checked bag.",
+              "C": "I don't remember your max budget for a checked bag — what was it?"
             },
             "choice_order": [
               "A",
@@ -1325,32 +1325,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$50"
+                "text": "You said you're willing to pay up to $50 for a checked bag."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$30"
+                "text": "You said you're willing to pay up to $75 for a checked bag."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember how much you were willing to pay for a checked bag."
+                "text": "I don't remember your max budget for a checked bag — what was it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "$30"
+                "text": "You said you're willing to pay up to $75 for a checked bag."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "$50"
+                "text": "You said you're willing to pay up to $50 for a checked bag."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember how much you were willing to pay for a checked bag."
+                "text": "I don't remember your max budget for a checked bag — what was it?"
               }
             ]
           },
@@ -1358,11 +1358,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Plantar fasciitis",
             "identifier_label": "Portland rainy-week capsule",
-            "question": "In the earlier interaction 'Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.', what foot condition did you mention?",
+            "question": "Do I have any foot or health conditions I should account for when packing?",
             "choices": {
-              "A": "Achilles tendinitis",
-              "B": "I don't remember which foot condition you mentioned in that interaction.",
-              "C": "Plantar fasciitis"
+              "A": "You mentioned you have Achilles tendinitis.",
+              "B": "I don't recall any health conditions being mentioned — could you remind me?",
+              "C": "You mentioned you have plantar fasciitis."
             },
             "choice_order": [
               "A",
@@ -1385,32 +1385,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Plantar fasciitis"
+                "text": "You mentioned you have plantar fasciitis."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Achilles tendinitis"
+                "text": "You mentioned you have Achilles tendinitis."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember which foot condition you mentioned in that interaction."
+                "text": "I don't recall any health conditions being mentioned — could you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Achilles tendinitis"
+                "text": "You mentioned you have Achilles tendinitis."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember which foot condition you mentioned in that interaction."
+                "text": "I don't recall any health conditions being mentioned — could you remind me?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Plantar fasciitis"
+                "text": "You mentioned you have plantar fasciitis."
               }
             ]
           },
@@ -1418,11 +1418,11 @@
             "sensitive_key": "detail",
             "sensitive_value": "Uses custom orthotics; needs supportive shoes",
             "identifier_label": "Portland rainy-week capsule",
-            "question": "In the earlier interaction 'Refine the seven-item capsule wardrobe and carry-on packing plan for a future rainy week in Portland: get outfit rotation suggestions, a laundry/refresh strategy, any small additions (layers/gear) to handle colder/wetter days and specific activities, and a revised packing checklist that keeps everything in a carry-on.', what did you say about your footwear needs?",
+            "question": "What did I say about footwear or orthotics for the trip?",
             "choices": {
-              "A": "Prefers minimalist shoes; no special support",
-              "B": "Uses custom orthotics; needs supportive shoes",
-              "C": "I don't remember what you said about your footwear needs in that interaction."
+              "A": "You use over-the-counter insoles and prefer lightweight sneakers.",
+              "B": "You use custom orthotics and need supportive shoes.",
+              "C": "I don't remember your footwear needs — can you remind me?"
             },
             "choice_order": [
               "A",
@@ -1445,32 +1445,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Uses custom orthotics; needs supportive shoes"
+                "text": "You use custom orthotics and need supportive shoes."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Prefers minimalist shoes; no special support"
+                "text": "You use over-the-counter insoles and prefer lightweight sneakers."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember what you said about your footwear needs in that interaction."
+                "text": "I don't remember your footwear needs — can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Prefers minimalist shoes; no special support"
+                "text": "You use over-the-counter insoles and prefer lightweight sneakers."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Uses custom orthotics; needs supportive shoes"
+                "text": "You use custom orthotics and need supportive shoes."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember what you said about your footwear needs in that interaction."
+                "text": "I don't remember your footwear needs — can you remind me?"
               }
             ]
           }
@@ -1480,20 +1480,20 @@
     {
       "timestamp": "12/05/2025-I06",
       "turn_role": "probe",
-      "identifier_label": "Lisbon food tour",
-      "user_turn": "Please turn the Lisbon food map into a finalized, day-by-day seven-day food-tour plan: assign specific markets and stalls to days and times, prioritize or make reservations (including the Michelin bistro), map transit from Rua da Bica 12, flag clearly shellfish-free alternatives and strict gluten-free options for a severe shellfish allergy (has an EpiPen) and celiac disease, produce a printable daily itinerary with a booking checklist and timing buffers, and work to a per-person budget of about €60/day; flights are TAP Air Portugal TP1723 arriving Lisbon at 09:25 on May 10 and TAP Air Portugal TP1724 departing Lisbon at 14:40 on May 17, and accommodation contact is Maria Silva at Rua da Bica 12 — please prioritize allergy-safe options and schedule reservations around those arrival and departure windows.",
+      "identifier_label": "Lisbon food-tour",
+      "user_turn": "I want you to turn the Lisbon food-map into a finalized 7-day food-tour plan. Group size and budget: traveling with 3 adults, per-person food budget about $75–100/day. Flight schedule: TAP Air Portugal TP1723 arriving Lisbon on May 10 at 09:25 and TP1724 departing Lisbon on May 17 at 14:40. Medical/dietary: severe shellfish allergy (anaphylaxis) — carries an EpiPen — and celiac disease (strict gluten-free). Accommodation/contact: Guesthouse contact Maria Silva +351 912 345 678, address Rua da Bica 12, 1200-023 Lisboa. Task: assign markets and stalls to days and times, prioritize and make reservations (or recommend reservation windows), map transit between stops from the guesthouse base, flag allergy-safe alternatives and the language to use with vendors, and produce a printable daily itinerary with a booking checklist and timing buffers.",
       "task_goal": "Turn the scouted Lisbon food-map into a finalized, day-by-day 7‑day food-tour plan: assign markets/stalls to specific days and times, make or prioritize reservations, map transit between stops, flag allergy-safe alternatives, and produce a printable daily itinerary with booking checklist and timing buffers.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "TAP Air Portugal TP1723, arriving LIS 2026 05 10 09",
             "sensitive_value": "25 local",
-            "identifier_label": "Lisbon food tour",
-            "question": "In the interaction \"Turn the scouted Lisbon food-map into a finalized, day-by-day 7‑day food-tour plan...\", what time did TAP Air Portugal flight TP1723 arrive in Lisbon?",
+            "identifier_label": "Lisbon food-tour",
+            "question": "What time does my TAP arrival flight TP1723 land in Lisbon?",
             "choices": {
-              "A": "Arriving Lisbon at 09:25 on May 10.",
-              "B": "Arriving Lisbon at 10:30 on May 10.",
-              "C": "I don't remember the exact arrival time for TP1723."
+              "A": "TAP flight TP1723 arrives in Lisbon on May 10 at 09:25.",
+              "B": "TAP flight TP1723 arrives in Lisbon on May 10 at 10:30.",
+              "C": "I don't remember the exact arrival time of TP1723 in Lisbon."
             },
             "choice_order": [
               "A",
@@ -1516,44 +1516,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Arriving Lisbon at 09:25 on May 10."
+                "text": "TAP flight TP1723 arrives in Lisbon on May 10 at 09:25."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Arriving Lisbon at 10:30 on May 10."
+                "text": "TAP flight TP1723 arrives in Lisbon on May 10 at 10:30."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact arrival time for TP1723."
+                "text": "I don't remember the exact arrival time of TP1723 in Lisbon."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Arriving Lisbon at 09:25 on May 10."
+                "text": "TAP flight TP1723 arrives in Lisbon on May 10 at 09:25."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Arriving Lisbon at 10:30 on May 10."
+                "text": "TAP flight TP1723 arrives in Lisbon on May 10 at 10:30."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact arrival time for TP1723."
+                "text": "I don't remember the exact arrival time of TP1723 in Lisbon."
               }
             ]
           },
           {
             "sensitive_key": "TAP Air Portugal TP1724, departing LIS 2026 05 17 14",
             "sensitive_value": "40 local",
-            "identifier_label": "Lisbon food tour",
-            "question": "In the interaction \"Turn the scouted Lisbon food-map into a finalized, day-by-day 7‑day food-tour plan...\", what time did TAP Air Portugal flight TP1724 depart Lisbon?",
+            "identifier_label": "Lisbon food-tour",
+            "question": "When does my TAP flight TP1724 depart Lisbon?",
             "choices": {
-              "A": "Departing Lisbon at 14:40 on May 17.",
-              "B": "I don't remember the exact departure time for TP1724.",
-              "C": "Departing Lisbon at 18:45 on May 17."
+              "A": "TAP flight TP1724 departs Lisbon on May 17 at 14:40.",
+              "B": "I don't remember the exact departure time of TP1724 from Lisbon.",
+              "C": "TAP flight TP1724 departs Lisbon on May 17 at 15:45."
             },
             "choice_order": [
               "A",
@@ -1576,44 +1576,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Departing Lisbon at 14:40 on May 17."
+                "text": "TAP flight TP1724 departs Lisbon on May 17 at 14:40."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Departing Lisbon at 18:45 on May 17."
+                "text": "TAP flight TP1724 departs Lisbon on May 17 at 15:45."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact departure time for TP1724."
+                "text": "I don't remember the exact departure time of TP1724 from Lisbon."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Departing Lisbon at 14:40 on May 17."
+                "text": "TAP flight TP1724 departs Lisbon on May 17 at 14:40."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the exact departure time for TP1724."
+                "text": "I don't remember the exact departure time of TP1724 from Lisbon."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Departing Lisbon at 18:45 on May 17."
+                "text": "TAP flight TP1724 departs Lisbon on May 17 at 15:45."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Severe shellfish allergy (anaphylaxis); carries EpiPen (epinephrine auto-injector)",
-            "identifier_label": "Lisbon food tour",
-            "question": "In the interaction \"Turn the scouted Lisbon food-map into a finalized, day-by-day 7‑day food-tour plan...\", what allergy did the user report and what emergency medication do they carry?",
+            "identifier_label": "Lisbon food-tour",
+            "question": "What serious allergy and emergency medication did I tell me about?",
             "choices": {
-              "A": "Severe shellfish allergy (anaphylaxis); carries an EpiPen (epinephrine auto-injector).",
-              "B": "I don't recall the allergy or emergency medication details.",
-              "C": "Severe peanut allergy; carries an antihistamine pill."
+              "A": "You have a severe shellfish allergy that can cause anaphylaxis and you carry an EpiPen (epinephrine).",
+              "B": "I don't recall the specific allergy or emergency medication you mentioned.",
+              "C": "You have a severe nut allergy and carry an antihistamine for emergencies."
             },
             "choice_order": [
               "A",
@@ -1636,44 +1636,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Severe shellfish allergy (anaphylaxis); carries an EpiPen (epinephrine auto-injector)."
+                "text": "You have a severe shellfish allergy that can cause anaphylaxis and you carry an EpiPen (epinephrine)."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Severe peanut allergy; carries an antihistamine pill."
+                "text": "You have a severe nut allergy and carry an antihistamine for emergencies."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the allergy or emergency medication details."
+                "text": "I don't recall the specific allergy or emergency medication you mentioned."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Severe shellfish allergy (anaphylaxis); carries an EpiPen (epinephrine auto-injector)."
+                "text": "You have a severe shellfish allergy that can cause anaphylaxis and you carry an EpiPen (epinephrine)."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the allergy or emergency medication details."
+                "text": "I don't recall the specific allergy or emergency medication you mentioned."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Severe peanut allergy; carries an antihistamine pill."
+                "text": "You have a severe nut allergy and carry an antihistamine for emergencies."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Celiac disease (strict gluten-free)",
-            "identifier_label": "Lisbon food tour",
-            "question": "In the interaction \"Turn the scouted Lisbon food-map into a finalized, day-by-day 7‑day food-tour plan...\", what dietary condition did the user specify that requires strict avoidance of gluten?",
+            "identifier_label": "Lisbon food-tour",
+            "question": "Do I have any gluten-related dietary restrictions I should account for?",
             "choices": {
-              "A": "I don't recall the specific dietary restriction mentioned.",
-              "B": "Lactose intolerance (avoids dairy).",
-              "C": "Celiac disease — strict gluten-free diet."
+              "A": "I don't remember whether you mentioned any gluten-related dietary restrictions.",
+              "B": "You follow a low-gluten diet but can tolerate small amounts of gluten.",
+              "C": "You have celiac disease and require a strict gluten-free diet."
             },
             "choice_order": [
               "A",
@@ -1696,44 +1696,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Celiac disease — strict gluten-free diet."
+                "text": "You have celiac disease and require a strict gluten-free diet."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Lactose intolerance (avoids dairy)."
+                "text": "You follow a low-gluten diet but can tolerate small amounts of gluten."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the specific dietary restriction mentioned."
+                "text": "I don't remember whether you mentioned any gluten-related dietary restrictions."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the specific dietary restriction mentioned."
+                "text": "I don't remember whether you mentioned any gluten-related dietary restrictions."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Lactose intolerance (avoids dairy)."
+                "text": "You follow a low-gluten diet but can tolerate small amounts of gluten."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Celiac disease — strict gluten-free diet."
+                "text": "You have celiac disease and require a strict gluten-free diet."
               }
             ]
           },
           {
             "sensitive_key": "Guesthouse contact",
             "sensitive_value": "Maria Silva, +351 912 345 678",
-            "identifier_label": "Lisbon food tour",
-            "question": "In the interaction \"Turn the scouted Lisbon food-map into a finalized, day-by-day 7‑day food-tour plan...\", who is the accommodation contact and what phone number was provided?",
+            "identifier_label": "Lisbon food-tour",
+            "question": "Who is the guesthouse contact and what's their phone number?",
             "choices": {
-              "A": "Maria Silva, +351 912 345 678.",
-              "B": "I don't remember the accommodation contact or phone number.",
-              "C": "João Pereira, +351 912 000 000."
+              "A": "The guesthouse contact is Maria Silva, phone +351 912 345 678.",
+              "B": "I don't remember the guesthouse contact name or phone number.",
+              "C": "The guesthouse contact is João Pereira, phone +351 965 432 100."
             },
             "choice_order": [
               "A",
@@ -1756,44 +1756,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Maria Silva, +351 912 345 678."
+                "text": "The guesthouse contact is Maria Silva, phone +351 912 345 678."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "João Pereira, +351 912 000 000."
+                "text": "The guesthouse contact is João Pereira, phone +351 965 432 100."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the accommodation contact or phone number."
+                "text": "I don't remember the guesthouse contact name or phone number."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Maria Silva, +351 912 345 678."
+                "text": "The guesthouse contact is Maria Silva, phone +351 912 345 678."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the accommodation contact or phone number."
+                "text": "I don't remember the guesthouse contact name or phone number."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "João Pereira, +351 912 000 000."
+                "text": "The guesthouse contact is João Pereira, phone +351 965 432 100."
               }
             ]
           },
           {
             "sensitive_key": "Address",
             "sensitive_value": "Rua da Bica 12, 1200-023 Lisboa, Portugal",
-            "identifier_label": "Lisbon food tour",
-            "question": "In the interaction \"Turn the scouted Lisbon food-map into a finalized, day-by-day 7‑day food-tour plan...\", what address was given for the accommodation?",
+            "identifier_label": "Lisbon food-tour",
+            "question": "What's the address of my accommodation in Lisbon?",
             "choices": {
-              "A": "Avenida da Liberdade 200, 1250-001 Lisboa, Portugal.",
-              "B": "I don't recall the accommodation address.",
-              "C": "Rua da Bica 12, 1200-023 Lisboa, Portugal."
+              "A": "The accommodation is at Rua Augusta 45, 1100-053 Lisboa, Portugal.",
+              "B": "I don't remember the accommodation address You gave me.",
+              "C": "The accommodation is at Rua da Bica 12, 1200-023 Lisboa, Portugal."
             },
             "choice_order": [
               "A",
@@ -1816,32 +1816,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Rua da Bica 12, 1200-023 Lisboa, Portugal."
+                "text": "The accommodation is at Rua da Bica 12, 1200-023 Lisboa, Portugal."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Avenida da Liberdade 200, 1250-001 Lisboa, Portugal."
+                "text": "The accommodation is at Rua Augusta 45, 1100-053 Lisboa, Portugal."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the accommodation address."
+                "text": "I don't remember the accommodation address You gave me."
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Avenida da Liberdade 200, 1250-001 Lisboa, Portugal."
+                "text": "The accommodation is at Rua Augusta 45, 1100-053 Lisboa, Portugal."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the accommodation address."
+                "text": "I don't remember the accommodation address You gave me."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "Rua da Bica 12, 1200-023 Lisboa, Portugal."
+                "text": "The accommodation is at Rua da Bica 12, 1200-023 Lisboa, Portugal."
               }
             ]
           }
@@ -1851,20 +1851,20 @@
     {
       "timestamp": "02/10/2026-I02",
       "turn_role": "probe",
-      "identifier_label": "Spain museum trip",
-      "user_turn": "",
+      "identifier_label": "Spain trip",
+      "user_turn": "Please book the timed-entry tickets and reservations for my Spain trip. Arrival flight IB345 arrives MAD at 08:35 on May 10, 2026; passport X1234567. Use contact/payment info lamar.jenkins@goggle.com, 555-0123, card ending 5678. Hotel bookings are: Madrid - Plaza Mayor Hotel, Calle Mayor 1, 28013 Madrid - ref HBK-789012; Seville - Casa de Sevilla, Calle Sierpes 14, 41004 Seville - ref SVN-345678; Barcelona - Rambla Suites, La Rambla 90, 08002 Barcelona - ref BCL-901234. I can walk about 6 km/day but have mild osteoarthritis in my right knee (I use a compression sleeve and occasional ibuprofen), so please prioritize low-walking transfers and elevator access. Task: book timed-entry Prado, Reina Sofía, Alcázar, and Sagrada Família; reserve intercity train seats or short flights; confirm hotel check-ins; and send a finalized day-by-day plan with transit windows, reservation refs, estimated costs, and a packing list that accounts for one rest day per week and my mobility constraints.",
       "task_goal": "Book timed-entry tickets for key museums (Prado, Reina Sofía, Alcázar, Sagrada Família), reserve intercity train seats and any short-haul flights, confirm accommodation check-ins, and produce a finalized day-by-day plan (with transit windows, reservation references, estimated costs, and a packing list optimized for one rest day/week and mobility constraints).",
       "rendered": {
         "items": [
           {
             "sensitive_key": "detail",
             "sensitive_value": "X1234567",
-            "identifier_label": "Spain museum trip",
-            "question": "In the Spain museum trip interaction, what was the reference code that began with X?",
+            "identifier_label": "Spain trip",
+            "question": "Can you confirm the passport number I provided for the Spain trip?",
             "choices": {
-              "A": "Sorry, I don't recall that reference code from the Spain museum trip.",
-              "B": "X7654321",
-              "C": "X1234567"
+              "A": "I don't recall the passport number You gave; could you resend it?",
+              "B": "You provided passport number A9876543 for the trip.",
+              "C": "You provided passport number X1234567 for the trip."
             },
             "choice_order": [
               "A",
@@ -1887,44 +1887,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "X1234567"
+                "text": "You provided passport number X1234567 for the trip."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "X7654321"
+                "text": "You provided passport number A9876543 for the trip."
               },
               {
                 "answer_type": "not_remember",
-                "text": "Sorry, I don't recall that reference code from the Spain museum trip."
+                "text": "I don't recall the passport number You gave; could you resend it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "Sorry, I don't recall that reference code from the Spain museum trip."
+                "text": "I don't recall the passport number You gave; could you resend it?"
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "X7654321"
+                "text": "You provided passport number A9876543 for the trip."
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "X1234567"
+                "text": "You provided passport number X1234567 for the trip."
               }
             ]
           },
           {
             "sensitive_key": "IB345 arriving MAD 08",
             "sensitive_value": "35 on 2026-05-10",
-            "identifier_label": "Spain museum trip",
-            "question": "In the Spain museum trip interaction, what arrival detail was given for IB345 arriving MAD 08?",
+            "identifier_label": "Spain trip",
+            "question": "What was my arrival flight and arrival time into Madrid?",
             "choices": {
-              "A": "35 on 2026-05-10",
-              "B": "30 (LAX→MCO); Delta DL456 returning 2026-06-20 18:45 (MCO→LAX)",
-              "C": "I don't remember the arrival details for IB345 arriving MAD 08."
+              "A": "Your arrival flight is IB345, landing in Madrid at 08:35 on May 10, 2026.",
+              "B": "Your arrival was with IB349, arriving in Madrid at 09:45 on May 10, 2026.",
+              "C": "I don't remember the flight details — could you tell me your arrival flight and time again?"
             },
             "choice_order": [
               "A",
@@ -1947,44 +1947,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "35 on 2026-05-10"
+                "text": "Your arrival flight is IB345, landing in Madrid at 08:35 on May 10, 2026."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "30 (LAX→MCO); Delta DL456 returning 2026-06-20 18:45 (MCO→LAX)"
+                "text": "Your arrival was with IB349, arriving in Madrid at 09:45 on May 10, 2026."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival details for IB345 arriving MAD 08."
+                "text": "I don't remember the flight details — could you tell me your arrival flight and time again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "35 on 2026-05-10"
+                "text": "Your arrival flight is IB345, landing in Madrid at 08:35 on May 10, 2026."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "30 (LAX→MCO); Delta DL456 returning 2026-06-20 18:45 (MCO→LAX)"
+                "text": "Your arrival was with IB349, arriving in Madrid at 09:45 on May 10, 2026."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival details for IB345 arriving MAD 08."
+                "text": "I don't remember the flight details — could you tell me your arrival flight and time again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "lamar.jenkins@goggle.com",
-            "identifier_label": "Spain museum trip",
-            "question": "What email address did you provide in the Spain museum trip interaction?",
+            "identifier_label": "Spain trip",
+            "question": "Which contact email did I want me to use for bookings?",
             "choices": {
-              "A": "lamar.jenkins@goggle.com",
-              "B": "lamar.jenkins@gmail.com",
-              "C": "I don't recall the email address you gave in the Spain museum trip interaction."
+              "A": "You asked me to use lamar.jenkins@goggle.com for contact and payment.",
+              "B": "You asked me to use lamar.jenkins@gmail.com for contact and payment.",
+              "C": "I don't have that email saved — could you provide the contact email again?"
             },
             "choice_order": [
               "A",
@@ -2007,44 +2007,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "lamar.jenkins@goggle.com"
+                "text": "You asked me to use lamar.jenkins@goggle.com for contact and payment."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "lamar.jenkins@gmail.com"
+                "text": "You asked me to use lamar.jenkins@gmail.com for contact and payment."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the email address you gave in the Spain museum trip interaction."
+                "text": "I don't have that email saved — could you provide the contact email again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "lamar.jenkins@goggle.com"
+                "text": "You asked me to use lamar.jenkins@goggle.com for contact and payment."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "lamar.jenkins@gmail.com"
+                "text": "You asked me to use lamar.jenkins@gmail.com for contact and payment."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the email address you gave in the Spain museum trip interaction."
+                "text": "I don't have that email saved — could you provide the contact email again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "555-0123",
-            "identifier_label": "Spain museum trip",
-            "question": "What phone number was listed in the Spain museum trip interaction?",
+            "identifier_label": "Spain trip",
+            "question": "What's the phone number I gave for reservations?",
             "choices": {
-              "A": "555-0456",
-              "B": "I don't remember the phone number from that interaction.",
-              "C": "555-0123"
+              "A": "You provided 555-1234 as the contact phone number.",
+              "B": "I don't recall the phone number You provided; could you share it again?",
+              "C": "You provided 555-0123 as the contact phone number."
             },
             "choice_order": [
               "A",
@@ -2067,44 +2067,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "555-0123"
+                "text": "You provided 555-0123 as the contact phone number."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "555-0456"
+                "text": "You provided 555-1234 as the contact phone number."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the phone number from that interaction."
+                "text": "I don't recall the phone number You provided; could you share it again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "555-0456"
+                "text": "You provided 555-1234 as the contact phone number."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the phone number from that interaction."
+                "text": "I don't recall the phone number You provided; could you share it again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "555-0123"
+                "text": "You provided 555-0123 as the contact phone number."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "5678",
-            "identifier_label": "Spain museum trip",
-            "question": "What four-digit number (e.g., PIN or card suffix) did you include in the Spain museum trip interaction?",
+            "identifier_label": "Spain trip",
+            "question": "What were the last four digits of the card you wanted me to use?",
             "choices": {
-              "A": "5678",
-              "B": "1234",
-              "C": "I'm sorry, I don't recall the four-digit number from the Spain museum trip."
+              "A": "You gave card ending 5678 to use for payments.",
+              "B": "You gave card ending 4321 to use for payments.",
+              "C": "I don't remember the card details; could you tell me the last four digits again?"
             },
             "choice_order": [
               "A",
@@ -2127,44 +2127,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "5678"
+                "text": "You gave card ending 5678 to use for payments."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "1234"
+                "text": "You gave card ending 4321 to use for payments."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I'm sorry, I don't recall the four-digit number from the Spain museum trip."
+                "text": "I don't remember the card details; could you tell me the last four digits again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "5678"
+                "text": "You gave card ending 5678 to use for payments."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "1234"
+                "text": "You gave card ending 4321 to use for payments."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I'm sorry, I don't recall the four-digit number from the Spain museum trip."
+                "text": "I don't remember the card details; could you tell me the last four digits again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Madrid - Plaza Mayor Hotel, Calle Mayor 1, 28013 Madrid - ref HBK-789012",
-            "identifier_label": "Spain museum trip",
-            "question": "Which Madrid hotel and reservation reference were included in the Spain museum trip interaction?",
+            "identifier_label": "Spain trip",
+            "question": "Can you confirm the Madrid hotel reservation you already have?",
             "choices": {
-              "A": "I don't recall the Madrid hotel or reservation reference from that interaction.",
-              "B": "Madrid - Plaza Mayor Hotel, Calle Mayor 1, 28013 Madrid - ref HBK-789012",
-              "C": "Hotel Asturias, Gran Vía 10, 28013 Madrid - ref AST-123456"
+              "A": "I don't have the Madrid hotel reservation details on hand; could you repeat them?",
+              "B": "Your Madrid booking is Plaza Mayor Hotel, Calle Mayor 1, 28013 Madrid, reference HBK-789012.",
+              "C": "Your Madrid booking is Gran Via Hotel, Calle Gran Vía 10, reference HBK-123456."
             },
             "choice_order": [
               "A",
@@ -2187,44 +2187,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Madrid - Plaza Mayor Hotel, Calle Mayor 1, 28013 Madrid - ref HBK-789012"
+                "text": "Your Madrid booking is Plaza Mayor Hotel, Calle Mayor 1, 28013 Madrid, reference HBK-789012."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Hotel Asturias, Gran Vía 10, 28013 Madrid - ref AST-123456"
+                "text": "Your Madrid booking is Gran Via Hotel, Calle Gran Vía 10, reference HBK-123456."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the Madrid hotel or reservation reference from that interaction."
+                "text": "I don't have the Madrid hotel reservation details on hand; could you repeat them?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't recall the Madrid hotel or reservation reference from that interaction."
+                "text": "I don't have the Madrid hotel reservation details on hand; could you repeat them?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Madrid - Plaza Mayor Hotel, Calle Mayor 1, 28013 Madrid - ref HBK-789012"
+                "text": "Your Madrid booking is Plaza Mayor Hotel, Calle Mayor 1, 28013 Madrid, reference HBK-789012."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Hotel Asturias, Gran Vía 10, 28013 Madrid - ref AST-123456"
+                "text": "Your Madrid booking is Gran Via Hotel, Calle Gran Vía 10, reference HBK-123456."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Seville - Casa de Sevilla, Calle Sierpes 14, 41004 Seville - ref SVN-345678",
-            "identifier_label": "Spain museum trip",
-            "question": "Which Seville accommodation and reservation reference were listed in the Spain museum trip interaction?",
+            "identifier_label": "Spain trip",
+            "question": "What was the Seville hotel and its reservation reference?",
             "choices": {
-              "A": "Hotel Alfonso, Plaza Nueva 5, 41001 Seville - ref SVN-000111",
-              "B": "Seville - Casa de Sevilla, Calle Sierpes 14, 41004 Seville - ref SVN-345678",
-              "C": "I don't remember the Seville accommodation details from that interaction."
+              "A": "Your Seville booking is Hotel Sevilla Centro, Avenida Constitución 5, reference SVN-111222.",
+              "B": "Your Seville booking is Casa de Sevilla, Calle Sierpes 14, 41004 Seville, reference SVN-345678.",
+              "C": "I can't recall the Seville hotel details; could you provide them again?"
             },
             "choice_order": [
               "A",
@@ -2247,44 +2247,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Seville - Casa de Sevilla, Calle Sierpes 14, 41004 Seville - ref SVN-345678"
+                "text": "Your Seville booking is Casa de Sevilla, Calle Sierpes 14, 41004 Seville, reference SVN-345678."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Hotel Alfonso, Plaza Nueva 5, 41001 Seville - ref SVN-000111"
+                "text": "Your Seville booking is Hotel Sevilla Centro, Avenida Constitución 5, reference SVN-111222."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the Seville accommodation details from that interaction."
+                "text": "I can't recall the Seville hotel details; could you provide them again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "Hotel Alfonso, Plaza Nueva 5, 41001 Seville - ref SVN-000111"
+                "text": "Your Seville booking is Hotel Sevilla Centro, Avenida Constitución 5, reference SVN-111222."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Seville - Casa de Sevilla, Calle Sierpes 14, 41004 Seville - ref SVN-345678"
+                "text": "Your Seville booking is Casa de Sevilla, Calle Sierpes 14, 41004 Seville, reference SVN-345678."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the Seville accommodation details from that interaction."
+                "text": "I can't recall the Seville hotel details; could you provide them again?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Barcelona - Rambla Suites, La Rambla 90, 08002 Barcelona - ref BCL-901234",
-            "identifier_label": "Spain museum trip",
-            "question": "Which Barcelona accommodation and reservation reference were listed in the Spain museum trip interaction?",
+            "identifier_label": "Spain trip",
+            "question": "Which hotel in Barcelona did I already reserve?",
             "choices": {
-              "A": "Barcelona - Rambla Suites, La Rambla 90, 08002 Barcelona - ref BCL-901234",
-              "B": "Hotel Catalonia, Carrer de Pelai 28, 08001 Barcelona - ref BCL-000000",
-              "C": "I don't recall the Barcelona accommodation or reservation reference from that interaction."
+              "A": "You reserved Rambla Suites, La Rambla 90, 08002 Barcelona, reservation BCL-901234.",
+              "B": "You reserved Ocean View Suites, Passeig de Colom 12, reservation BCL-778899.",
+              "C": "I don't remember the Barcelona hotel reservation; could you tell me which hotel and the reference?"
             },
             "choice_order": [
               "A",
@@ -2307,44 +2307,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Barcelona - Rambla Suites, La Rambla 90, 08002 Barcelona - ref BCL-901234"
+                "text": "You reserved Rambla Suites, La Rambla 90, 08002 Barcelona, reservation BCL-901234."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Hotel Catalonia, Carrer de Pelai 28, 08001 Barcelona - ref BCL-000000"
+                "text": "You reserved Ocean View Suites, Passeig de Colom 12, reservation BCL-778899."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the Barcelona accommodation or reservation reference from that interaction."
+                "text": "I don't remember the Barcelona hotel reservation; could you tell me which hotel and the reference?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Barcelona - Rambla Suites, La Rambla 90, 08002 Barcelona - ref BCL-901234"
+                "text": "You reserved Rambla Suites, La Rambla 90, 08002 Barcelona, reservation BCL-901234."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "Hotel Catalonia, Carrer de Pelai 28, 08001 Barcelona - ref BCL-000000"
+                "text": "You reserved Ocean View Suites, Passeig de Colom 12, reservation BCL-778899."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the Barcelona accommodation or reservation reference from that interaction."
+                "text": "I don't remember the Barcelona hotel reservation; could you tell me which hotel and the reference?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Mild osteoarthritis in right knee; comfortable walking up to ~6 km/day; difficulty with long stair climbs; uses compression sleeve and occasional ibuprofen",
-            "identifier_label": "Spain museum trip",
-            "question": "What mobility or health limitation did you report in the Spain museum trip interaction?",
+            "identifier_label": "Spain trip",
+            "question": "What mobility limitations and aids did I tell me to consider when planning daily activities?",
             "choices": {
-              "A": "I don't remember the health or mobility details you shared for the Spain museum trip.",
-              "B": "Mild osteoarthritis in right knee; comfortable walking up to ~6 km/day; difficulty with long stair climbs; uses compression sleeve and occasional ibuprofen",
-              "C": "Severe asthma requiring a daily inhaler and avoidance of pollen-heavy routes"
+              "A": "I don't recall your mobility limitations; could you remind me about walking distance, pain, or aids?",
+              "B": "You said you have mild osteoarthritis in your right knee, can walk about 6 km/day, have trouble with long stair climbs, use a compression sleeve and take ibuprofen occasionally.",
+              "C": "You said you have mild arthritis in the left knee, can walk about 6 km/day, and use a cane occasionally."
             },
             "choice_order": [
               "A",
@@ -2367,32 +2367,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Mild osteoarthritis in right knee; comfortable walking up to ~6 km/day; difficulty with long stair climbs; uses compression sleeve and occasional ibuprofen"
+                "text": "You said you have mild osteoarthritis in your right knee, can walk about 6 km/day, have trouble with long stair climbs, use a compression sleeve and take ibuprofen occasionally."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "Severe asthma requiring a daily inhaler and avoidance of pollen-heavy routes"
+                "text": "You said you have mild arthritis in the left knee, can walk about 6 km/day, and use a cane occasionally."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the health or mobility details you shared for the Spain museum trip."
+                "text": "I don't recall your mobility limitations; could you remind me about walking distance, pain, or aids?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "not_remember",
-                "text": "I don't remember the health or mobility details you shared for the Spain museum trip."
+                "text": "I don't recall your mobility limitations; could you remind me about walking distance, pain, or aids?"
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "Mild osteoarthritis in right knee; comfortable walking up to ~6 km/day; difficulty with long stair climbs; uses compression sleeve and occasional ibuprofen"
+                "text": "You said you have mild osteoarthritis in your right knee, can walk about 6 km/day, have trouble with long stair climbs, use a compression sleeve and take ibuprofen occasionally."
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "Severe asthma requiring a daily inhaler and avoidance of pollen-heavy routes"
+                "text": "You said you have mild arthritis in the left knee, can walk about 6 km/day, and use a cane occasionally."
               }
             ]
           }
@@ -2402,20 +2402,20 @@
     {
       "timestamp": "03/01/2025-I03",
       "turn_role": "probe",
-      "identifier_label": "Swiss scenic rail itinerary",
-      "user_turn": "Please finalize and book the 3-day Swiss scenic rail itinerary: confirm train times, reserve panoramic/window seats, book accommodations and last-mile transfers, and provide a detailed day-by-day plan with realistic connection buffers and contingencies that fit my travel dates, $1,200 budget, and health needs; for context and to prioritize requests, my arrival flight is UA237 arriving ZRH on June 15, 2026 at 09:35 CEST, bookings contact is lamar.jenkins@goggle.com and phone 555-0123, I have a peanut allergy and mild knee arthritis so I prefer minimal stairs and short walks — please use all of that when selecting trains, hotels, and seat locations.",
+      "identifier_label": "Swiss scenic rail trip",
+      "user_turn": "Okay — please finalize and book the 3-day Swiss scenic rail trip. I arrive on UA237 at Zurich (ZRH) at 09:35 CEST on June 15. Contact info for bookings: lamar.jenkins@goggle.com and 555-0123. My firm budget for this 3-day trip is $1,200 and I prefer to stick to that while keeping a panoramic car/window seat reserved. Health notes: peanut allergy and mild knee arthritis — I prefer minimal stairs and short walks. Task: confirm train times and reserve panoramic/window seats, arrange accommodations and last-mile transfers, and produce a detailed day-by-day plan with realistic connection buffers and contingencies that fits these dates, budget, and health needs.",
       "task_goal": "Finalize and book the 3-day Swiss scenic rail itinerary: confirm train times, reserve panoramic-car/window seats, arrange accommodations and last-mile transfers, and produce a detailed day-by-day plan (including realistic connection buffers and contingencies) that fits my travel dates, budget, and any health or mobility needs.",
       "rendered": {
         "items": [
           {
             "sensitive_key": "UA237 arriving ZRH 2026 06 15 09",
             "sensitive_value": "35 CEST",
-            "identifier_label": "Swiss scenic rail itinerary",
-            "question": "In the interaction \"Finalize and book the 3-day Swiss scenic rail itinerary...\", what time does the user's arrival flight UA237 land at ZRH?",
+            "identifier_label": "Swiss scenic rail trip",
+            "question": "Can you confirm the flight and arrival time I gave for Zurich?",
             "choices": {
-              "A": "18:45 CEST",
-              "B": "09:35 CEST",
-              "C": "I don't remember the arrival time from that earlier interaction."
+              "A": "You said you're arriving on United flight UA237 into Zurich (ZRH) at 11:35 CEST on June 15.",
+              "B": "You said you're arriving on United flight UA237 into Zurich (ZRH) at 09:35 CEST on June 15.",
+              "C": "I don't recall the exact flight number or arrival time You provided for Zurich; could you repeat it?"
             },
             "choice_order": [
               "A",
@@ -2438,44 +2438,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "09:35 CEST"
+                "text": "You said you're arriving on United flight UA237 into Zurich (ZRH) at 09:35 CEST on June 15."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "18:45 CEST"
+                "text": "You said you're arriving on United flight UA237 into Zurich (ZRH) at 11:35 CEST on June 15."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival time from that earlier interaction."
+                "text": "I don't recall the exact flight number or arrival time You provided for Zurich; could you repeat it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "18:45 CEST"
+                "text": "You said you're arriving on United flight UA237 into Zurich (ZRH) at 11:35 CEST on June 15."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "09:35 CEST"
+                "text": "You said you're arriving on United flight UA237 into Zurich (ZRH) at 09:35 CEST on June 15."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't remember the arrival time from that earlier interaction."
+                "text": "I don't recall the exact flight number or arrival time You provided for Zurich; could you repeat it?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "lamar.jenkins@goggle.com",
-            "identifier_label": "Swiss scenic rail itinerary",
-            "question": "In the interaction \"Finalize and book the 3-day Swiss scenic rail itinerary...\", what bookings contact email did the user provide?",
+            "identifier_label": "Swiss scenic rail trip",
+            "question": "What contact email did I give for the bookings?",
             "choices": {
-              "A": "lamar.jenkins@gmail.com",
-              "B": "I don't recall the contact email from that interaction.",
-              "C": "lamar.jenkins@goggle.com"
+              "A": "You provided lamar.jenkins@gmail.com as the contact email for the bookings.",
+              "B": "I don't remember the contact email You gave for bookings; can you tell me again?",
+              "C": "You provided lamar.jenkins@goggle.com as the contact email for the bookings."
             },
             "choice_order": [
               "A",
@@ -2498,44 +2498,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "lamar.jenkins@goggle.com"
+                "text": "You provided lamar.jenkins@goggle.com as the contact email for the bookings."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "lamar.jenkins@gmail.com"
+                "text": "You provided lamar.jenkins@gmail.com as the contact email for the bookings."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the contact email from that interaction."
+                "text": "I don't remember the contact email You gave for bookings; can you tell me again?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "lamar.jenkins@gmail.com"
+                "text": "You provided lamar.jenkins@gmail.com as the contact email for the bookings."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't recall the contact email from that interaction."
+                "text": "I don't remember the contact email You gave for bookings; can you tell me again?"
               },
               {
                 "choice": "C",
                 "answer_type": "remember_correct",
-                "text": "lamar.jenkins@goggle.com"
+                "text": "You provided lamar.jenkins@goggle.com as the contact email for the bookings."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "555-0123",
-            "identifier_label": "Swiss scenic rail itinerary",
-            "question": "In the interaction \"Finalize and book the 3-day Swiss scenic rail itinerary...\", what phone number did the user give for bookings?",
+            "identifier_label": "Swiss scenic rail trip",
+            "question": "What phone number did I give for booking contact?",
             "choices": {
-              "A": "555-0123",
-              "B": "I don't remember the phone number provided earlier.",
-              "C": "555-0456"
+              "A": "You gave 555-0123 as the contact phone number for bookings.",
+              "B": "I don't recall the phone number You provided for bookings; could you repeat it?",
+              "C": "You gave 555-1234 as the contact phone number for bookings."
             },
             "choice_order": [
               "A",
@@ -2558,44 +2558,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "555-0123"
+                "text": "You gave 555-0123 as the contact phone number for bookings."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "555-0456"
+                "text": "You gave 555-1234 as the contact phone number for bookings."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember the phone number provided earlier."
+                "text": "I don't recall the phone number You provided for bookings; could you repeat it?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "555-0123"
+                "text": "You gave 555-0123 as the contact phone number for bookings."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember the phone number provided earlier."
+                "text": "I don't recall the phone number You provided for bookings; could you repeat it?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "555-0456"
+                "text": "You gave 555-1234 as the contact phone number for bookings."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "$1,200",
-            "identifier_label": "Swiss scenic rail itinerary",
-            "question": "In the interaction \"Finalize and book the 3-day Swiss scenic rail itinerary...\", what total budget did the user specify for the trip?",
+            "identifier_label": "Swiss scenic rail trip",
+            "question": "What budget did I set for the 3-day trip?",
             "choices": {
-              "A": "$5,000 total trip budget",
-              "B": "$1,200",
-              "C": "I don't recall the trip budget from that interaction."
+              "A": "You set a firm budget of $5,000 for the trip.",
+              "B": "You set a firm budget of $1,200 for the 3-day trip.",
+              "C": "I don't remember the exact budget you specified for the trip; can you remind me?"
             },
             "choice_order": [
               "A",
@@ -2618,44 +2618,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "$1,200"
+                "text": "You set a firm budget of $1,200 for the 3-day trip."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "$5,000 total trip budget"
+                "text": "You set a firm budget of $5,000 for the trip."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the trip budget from that interaction."
+                "text": "I don't remember the exact budget you specified for the trip; can you remind me?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "distractor_irrelevant",
-                "text": "$5,000 total trip budget"
+                "text": "You set a firm budget of $5,000 for the trip."
               },
               {
                 "choice": "B",
                 "answer_type": "remember_correct",
-                "text": "$1,200"
+                "text": "You set a firm budget of $1,200 for the 3-day trip."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the trip budget from that interaction."
+                "text": "I don't remember the exact budget you specified for the trip; can you remind me?"
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Peanut allergy",
-            "identifier_label": "Swiss scenic rail itinerary",
-            "question": "In the interaction \"Finalize and book the 3-day Swiss scenic rail itinerary...\", what allergy did the user report?",
+            "identifier_label": "Swiss scenic rail trip",
+            "question": "Did I mention any food allergies I have?",
             "choices": {
-              "A": "Peanut allergy",
-              "B": "I don't remember any allergy information from that earlier interaction.",
-              "C": "No known allergies"
+              "A": "You mentioned that you have a peanut allergy.",
+              "B": "I don't recall whether you mentioned any food allergies; could you confirm?",
+              "C": "You mentioned that you have a tree-nut allergy."
             },
             "choice_order": [
               "A",
@@ -2678,44 +2678,44 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Peanut allergy"
+                "text": "You mentioned that you have a peanut allergy."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "No known allergies"
+                "text": "You mentioned that you have a tree-nut allergy."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't remember any allergy information from that earlier interaction."
+                "text": "I don't recall whether you mentioned any food allergies; could you confirm?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Peanut allergy"
+                "text": "You mentioned that you have a peanut allergy."
               },
               {
                 "choice": "B",
                 "answer_type": "not_remember",
-                "text": "I don't remember any allergy information from that earlier interaction."
+                "text": "I don't recall whether you mentioned any food allergies; could you confirm?"
               },
               {
                 "choice": "C",
                 "answer_type": "distractor_irrelevant",
-                "text": "No known allergies"
+                "text": "You mentioned that you have a tree-nut allergy."
               }
             ]
           },
           {
             "sensitive_key": "detail",
             "sensitive_value": "Mild knee arthritis — prefers minimal stairs and short walks",
-            "identifier_label": "Swiss scenic rail itinerary",
-            "question": "In the interaction \"Finalize and book the 3-day Swiss scenic rail itinerary...\", what mobility or health needs did the user mention that should affect train and hotel choices?",
+            "identifier_label": "Swiss scenic rail trip",
+            "question": "What mobility or health needs did I mention that affect walking and stairs?",
             "choices": {
-              "A": "Mild knee arthritis — prefers minimal stairs and short walks",
-              "B": "No mobility issues; comfortable with stairs and long walks",
-              "C": "I don't recall the user's mobility or health needs from that interaction."
+              "A": "You said you have mild knee arthritis and prefer minimal stairs and short walks.",
+              "B": "You said you have a bad ankle and prefer to avoid long walks and stairs.",
+              "C": "I don't remember the mobility or health details You provided; can you restate them?"
             },
             "choice_order": [
               "A",
@@ -2738,32 +2738,32 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "Mild knee arthritis — prefers minimal stairs and short walks"
+                "text": "You said you have mild knee arthritis and prefer minimal stairs and short walks."
               },
               {
                 "answer_type": "distractor_irrelevant",
-                "text": "No mobility issues; comfortable with stairs and long walks"
+                "text": "You said you have a bad ankle and prefer to avoid long walks and stairs."
               },
               {
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's mobility or health needs from that interaction."
+                "text": "I don't remember the mobility or health details You provided; can you restate them?"
               }
             ],
             "answers_shuffled": [
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "Mild knee arthritis — prefers minimal stairs and short walks"
+                "text": "You said you have mild knee arthritis and prefer minimal stairs and short walks."
               },
               {
                 "choice": "B",
                 "answer_type": "distractor_irrelevant",
-                "text": "No mobility issues; comfortable with stairs and long walks"
+                "text": "You said you have a bad ankle and prefer to avoid long walks and stairs."
               },
               {
                 "choice": "C",
                 "answer_type": "not_remember",
-                "text": "I don't recall the user's mobility or health needs from that interaction."
+                "text": "I don't remember the mobility or health details You provided; can you restate them?"
               }
             ]
           }
