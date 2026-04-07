@@ -16,6 +16,7 @@ OPENROUTER_TITLE = "MemoryCtrl"
 MODEL_ALIASES = {
     "gpt-5.4-mini": "openai/gpt-5.4-mini",
     "gpt-5-mini": "openai/gpt-5-mini",
+    "gpt-5.3-chat": "openai/gpt-5.3-chat",
 }
 
 
@@ -23,23 +24,27 @@ def _resolve_model_name(model: str) -> str:
     return MODEL_ALIASES.get(model, model)
 
 
-def _load_openai_credentials(api_key_file: str = "openrouter_key.txt") -> tuple[str, str]:
+def _model_tag(model: str) -> str:
+    return re.sub(r"[^A-Za-z0-9._-]+", "_", model)
+
+
+def _load_openai_credentials(api_key_file: str = "keys/openrouter_key.txt") -> tuple[str, str]:
     api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
     if not api_key:
         legacy_key = os.getenv("OPENAI_API_KEY", "").strip()
-        legacy_path = Path("openai_key.txt")
+        legacy_path = Path("keys/openai_key.txt")
         if not legacy_key and legacy_path.exists():
             legacy_key = legacy_path.read_text(encoding="utf-8").strip()
         api_key = legacy_key
     if not api_key:
-        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
+        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide keys/openrouter_key.txt.")
     base_url = os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
     return api_key, base_url
 
 
-def _load_openai_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
+def _load_openai_client(api_key_file: str = "keys/openrouter_key.txt") -> OpenAI:
     api_key, base_url = _load_openai_credentials(api_key_file)
     return OpenAI(
         api_key=api_key,
@@ -48,7 +53,7 @@ def _load_openai_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
     )
 
 
-def _ensure_openai_env(api_key_file: str = "openrouter_key.txt") -> None:
+def _ensure_openai_env(api_key_file: str = "keys/openrouter_key.txt") -> None:
     api_key, base_url = _load_openai_credentials(api_key_file)
     os.environ["OPENAI_API_KEY"] = api_key
     os.environ["OPENAI_BASE_URL"] = base_url
@@ -197,13 +202,13 @@ def _apply_world_transform(
 def _load_langmem_modules():
     _ensure_openai_env()
     try:
-        from langmem import create_manage_memory_tool, create_memory_searcher, create_search_memory_tool
+        from langmem import create_memory_store_manager
         from langgraph.store.memory import InMemoryStore
     except ImportError as exc:
         raise ImportError(
             "LangMem is not installed in the current environment. Use the langmem311 environment to run this evaluator."
         ) from exc
-    return create_manage_memory_tool, create_memory_searcher, create_search_memory_tool, InMemoryStore
+    return create_memory_store_manager, InMemoryStore
 
 
 def _format_langmem_hits(hits: List[Any]) -> str:
@@ -247,13 +252,25 @@ class LangMemRetrievalAgent:
         persona_messages: List[Dict[str, str]],
         embedding_model: str,
     ) -> None:
-        create_manage_memory_tool, create_memory_searcher, create_search_memory_tool, InMemoryStore = _load_langmem_modules()
+        create_memory_store_manager, InMemoryStore = _load_langmem_modules()
         self.client = client
         self.model = model
         self.user_id = user_id
         self.memory_limit = memory_limit
         self.persona_messages = persona_messages
-        self.namespace: Tuple[str, ...] = ("memories", _safe_namespace_token(user_id))
+        self.runtime_user_id = _safe_namespace_token(user_id)
+        self.namespace_template: Tuple[str, ...] = ("memories", "{langgraph_user_id}")
+        self.runtime_config: Dict[str, Any] = {
+            "configurable": {
+                "langgraph_user_id": self.runtime_user_id,
+            }
+        }
+        self.memory_ops = {
+            "enable_inserts": True,
+            # Updates are enabled inside create_memory_store_manager via create_memory_manager.
+            "enable_updates": True,
+            "enable_deletes": True,
+        }
         self.store = InMemoryStore(
             index={
                 "dims": 1536,
@@ -261,43 +278,58 @@ class LangMemRetrievalAgent:
                 "fields": ["content"],
             }
         )
-        self.search_tool = create_search_memory_tool(
-            namespace=self.namespace,
-            store=self.store,
-            response_format="content",
-        )
-        self.manage_tool = create_manage_memory_tool(
-            namespace=self.namespace,
-            store=self.store,
-        )
-        self.searcher = create_memory_searcher(
+        self.store_manager = create_memory_store_manager(
             f"openai:{_resolve_model_name(model)}",
-            namespace=self.namespace,
+            namespace=self.namespace_template,
+            store=self.store,
+            query_model=f"openai:{_resolve_model_name(model)}",
+            enable_inserts=self.memory_ops["enable_inserts"],
+            enable_deletes=self.memory_ops["enable_deletes"],
         )
+        self.preload_log: Dict[str, Any] = {
+            "input_messages": [],
+            "manager_writes": [],
+            "store_snapshot": [],
+            "reasoning_visible": False,
+            "reasoning_note": (
+                "LangMem's manager path does not expose full model reasoning/reflection text here; "
+                "this log records memory writes and store state instead."
+            ),
+        }
+
+    def _snapshot_store(self, limit: int = 200) -> List[Dict[str, Any]]:
+        items = self.store_manager.search(limit=limit, config=self.runtime_config)
+        return [_dump_langmem_item(item) for item in items]
 
     def preload(self, context_messages: List[Dict[str, str]]) -> None:
-        for idx, msg in enumerate(context_messages):
-            role = msg.get("role", "user")
+        messages = []
+        for msg in context_messages:
+            role = msg.get("role", "").strip()
             content = msg.get("content", "").strip()
-            if not content:
+            if role not in {"user", "assistant"} or not content:
                 continue
-            self.manage_tool.invoke(
-                {
-                    "content": f"{role}: {content}",
-                    "action": "create",
-                }
-            )
+            messages.append({"role": role, "content": content})
+        self.preload_log["input_messages"] = messages
+        if not messages:
+            return
+        writes = self.store_manager.invoke(
+            {"messages": messages, "max_steps": 1},
+            config=self.runtime_config,
+        )
+        self.preload_log["manager_writes"] = writes
+        self.preload_log["store_snapshot"] = self._snapshot_store()
 
     def answer_mcq(self, question: str, choices: Dict[str, str]) -> Dict[str, Any]:
         prompt = _build_eval_prompt(question, choices)
-        tool_text = self.search_tool.invoke({"query": question, "limit": self.memory_limit})
-        try:
-            hits = self.searcher.invoke(
-                {"messages": [{"role": "user", "content": question}]}
-            )
-        except Exception:
-            hits = self.store.search(self.namespace, query=question, limit=self.memory_limit)
-        memories_text = tool_text if isinstance(tool_text, str) and tool_text.strip() else _format_langmem_hits(hits)
+        retrieval_source = "manager.search"
+        retrieval_error = ""
+        hits = self.store_manager.search(
+            query=question,
+            limit=self.memory_limit,
+            config=self.runtime_config,
+        )
+        hits = hits[: self.memory_limit]
+        memories_text = _format_langmem_hits(hits)
         messages = self.persona_messages + [
             {
                 "role": "user",
@@ -308,6 +340,9 @@ class LangMemRetrievalAgent:
         return {
             "model_response": response,
             "retrieved_memories": [_dump_langmem_item(item) for item in hits],
+            "retrieval_source": retrieval_source,
+            "retrieval_error": retrieval_error,
+            "retrieved_memories_text": memories_text,
         }
 
 
@@ -328,6 +363,9 @@ def _score_item(
         "predicted_choice": predicted_choice,
         "predicted_answer_type": predicted_type,
         "retrieved_memories": result.get("retrieved_memories"),
+        "retrieval_source": result.get("retrieval_source", ""),
+        "retrieval_error": result.get("retrieval_error", ""),
+        "retrieved_memories_text": result.get("retrieved_memories_text", ""),
     }
 
 
@@ -344,7 +382,7 @@ def main() -> None:
     parser.add_argument("--memory_limit", type=int, default=5)
     parser.add_argument("--embedding_model", default="text-embedding-3-small")
     parser.add_argument("--output", default="")
-    parser.add_argument("--api_key_file", default="openrouter_key.txt")
+    parser.add_argument("--api_key_file", default="keys/openrouter_key.txt")
     parser.add_argument("--no_use_restrict_period", default="Conversation Early Stage")
     parser.add_argument("--no_use_release_period", default="")
     args = parser.parse_args()
@@ -383,7 +421,7 @@ def main() -> None:
             transformed_history_path.parent.mkdir(parents=True, exist_ok=True)
             transformed_history_path.write_text(json.dumps(transformed_conversation, ensure_ascii=False, indent=2), encoding="utf-8")
     persona_messages = _build_persona_system_message(transformed_conversation)
-    context_messages = persona_messages + build_context_messages(transformed_conversation, args.ask_period)
+    context_messages = build_context_messages(transformed_conversation, args.ask_period)
 
     client = _load_openai_client()
     user_id = Path(args.rendered).stem
@@ -409,6 +447,11 @@ def main() -> None:
         "no_use_release_period": args.no_use_release_period,
         "memory_limit": args.memory_limit,
         "embedding_model": args.embedding_model,
+        "langmem_memory_manager": "create_memory_store_manager",
+        "langmem_memory_ops": agent.memory_ops,
+        "langmem_debug": {
+            "preload": agent.preload_log,
+        },
         "whole_recall_results": [],
         "slot_recall_results": [],
     }
@@ -472,11 +515,11 @@ def main() -> None:
         suffix = f".{args.world}.restrict_{_ask_period_tag(args.no_use_restrict_period)}"
         if args.no_use_release_period:
             suffix += f".release_{_ask_period_tag(args.no_use_release_period)}"
-        suffix += f".test_{_ask_period_tag(args.ask_period)}.langmem_retrieval_eval_{args.model}.json"
+        suffix += f".test_{_ask_period_tag(args.ask_period)}.langmem_retrieval_eval_{_model_tag(args.model)}.json"
     else:
-        suffix = f".{args.world}.langmem_retrieval_eval_{args.model}.json"
+        suffix = f".{args.world}.langmem_retrieval_eval_{_model_tag(args.model)}.json"
         if args.ask_period != "Conversation Late Stage":
-            suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.langmem_retrieval_eval_{args.model}.json"
+            suffix = f".{args.world}.{_ask_period_tag(args.ask_period)}.langmem_retrieval_eval_{_model_tag(args.model)}.json"
     output_path = args.output or args.rendered.replace(".recall_rendered.json", suffix)
     output_file = Path(output_path)
     output_file.parent.mkdir(parents=True, exist_ok=True)

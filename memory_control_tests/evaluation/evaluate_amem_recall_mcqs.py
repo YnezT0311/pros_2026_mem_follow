@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import re
+import time
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -13,6 +14,19 @@ from ..transforms import apply_no_store, apply_staged_forget, apply_no_use, buil
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 OPENROUTER_TITLE = "MemoryCtrl"
+REQUEST_TIMEOUT_SEC = 90
+MAX_REQUEST_ATTEMPTS = 5
+AMEM_JSON_ATTEMPTS = 3
+RETRYABLE_ERROR_MARKERS = (
+    "connection error",
+    "timed out",
+    "timeout",
+    "rate limit",
+    "server error",
+    "502",
+    "503",
+    "504",
+)
 MODEL_ALIASES = {
     "gpt-5.4-mini": "openai/gpt-5.4-mini",
     "gpt-5-mini": "openai/gpt-5-mini",
@@ -23,18 +37,18 @@ def _resolve_model_name(model: str) -> str:
     return MODEL_ALIASES.get(model, model)
 
 
-def _load_api_key(api_key_file: str = "openrouter_key.txt") -> str:
+def _load_api_key(api_key_file: str = "keys/openrouter_key.txt") -> str:
     api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
     if not api_key:
         legacy_key = os.getenv("OPENAI_API_KEY", "").strip()
-        legacy_path = Path("openai_key.txt")
+        legacy_path = Path("keys/openai_key.txt")
         if not legacy_key and legacy_path.exists():
             legacy_key = legacy_path.read_text(encoding="utf-8").strip()
         api_key = legacy_key
     if not api_key:
-        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
+        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide keys/openrouter_key.txt.")
     return api_key
 
 
@@ -42,12 +56,12 @@ def _load_base_url() -> str:
     return os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
 
 
-def _ensure_openrouter_env(api_key_file: str = "openrouter_key.txt") -> None:
+def _ensure_openrouter_env(api_key_file: str = "keys/openrouter_key.txt") -> None:
     os.environ["OPENAI_API_KEY"] = _load_api_key(api_key_file)
     os.environ["OPENAI_BASE_URL"] = _load_base_url()
 
 
-def _load_openai_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
+def _load_openai_client(api_key_file: str = "keys/openrouter_key.txt") -> OpenAI:
     api_key = _load_api_key(api_key_file)
     base_url = _load_base_url()
     return OpenAI(
@@ -85,19 +99,76 @@ def _extract_text(resp: Any) -> str:
     return ""
 
 
+def _is_retryable_exception(exc: Exception) -> bool:
+    text = str(exc).lower()
+    return any(marker in text for marker in RETRYABLE_ERROR_MARKERS)
+
+
+def _run_with_retries(fn: Any, description: str) -> Any:
+    last_exc: Exception | None = None
+    for attempt in range(1, MAX_REQUEST_ATTEMPTS + 1):
+        try:
+            return fn()
+        except Exception as exc:
+            last_exc = exc
+            if attempt >= MAX_REQUEST_ATTEMPTS or not _is_retryable_exception(exc):
+                raise
+            sleep_s = min(30, 2 ** (attempt - 1))
+            print(
+                f"[A-Mem retry] {description} failed on attempt {attempt}/{MAX_REQUEST_ATTEMPTS}: "
+                f"{type(exc).__name__}: {exc}. Retrying in {sleep_s}s.",
+                flush=True,
+            )
+            time.sleep(sleep_s)
+    if last_exc is not None:
+        raise last_exc
+    raise RuntimeError(f"{description} failed without raising an exception")
+
+
+def _strip_code_fences(text: str) -> str:
+    stripped = text.strip()
+    if stripped.startswith("```"):
+        stripped = re.sub(r"^```[a-zA-Z0-9_-]*\n?", "", stripped)
+        if stripped.endswith("```"):
+            stripped = stripped[:-3]
+    return stripped.strip()
+
+
+def _extract_json_slice(text: str) -> str:
+    stripped = _strip_code_fences(text)
+    start = stripped.find("{")
+    end = stripped.rfind("}")
+    if start != -1 and end != -1 and end >= start:
+        return stripped[start : end + 1]
+    return stripped
+
+
+def _normalize_json_text(text: str) -> str:
+    candidate = _extract_json_slice(text)
+    json.loads(candidate)
+    return candidate
+
+
 def _request_text(client: OpenAI, model: str, messages: List[Dict[str, str]]) -> str:
     model = _resolve_model_name(model)
     try:
-        resp = client.responses.create(model=model, input=messages)
+        resp = _run_with_retries(
+            lambda: client.responses.create(model=model, input=messages, timeout=REQUEST_TIMEOUT_SEC),
+            "responses.create",
+        )
         text = _extract_text(resp)
         if text:
             return text
     except Exception:
         pass
 
-    completion = client.chat.completions.create(
-        model=model,
-        messages=messages,
+    completion = _run_with_retries(
+        lambda: client.chat.completions.create(
+            model=model,
+            messages=messages,
+            timeout=REQUEST_TIMEOUT_SEC,
+        ),
+        "chat.completions.create",
     )
     return completion.choices[0].message.content.strip()
 
@@ -211,7 +282,7 @@ def _format_amem_memories(results: List[Dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
-def _load_amem_system(model: str, embedding_model: str, api_key_file: str = "openrouter_key.txt"):
+def _load_amem_system(model: str, embedding_model: str, api_key_file: str = "keys/openrouter_key.txt"):
     try:
         from agentic_memory.memory_system import AgenticMemorySystem
         from agentic_memory.llm_controller import OpenAIController
@@ -237,21 +308,48 @@ def _patch_amem_openai_controller(controller_cls: Any) -> None:
         return
 
     def _patched_get_completion(self, prompt: str, response_format: dict, temperature: float = 0.7) -> str:
-        request_kwargs = {
+        base_request_kwargs = {
             "model": self.model,
             "messages": [
-                {"role": "system", "content": "You must respond with a JSON object."},
+                {"role": "system", "content": "You must respond with a compact JSON object and no extra prose."},
                 {"role": "user", "content": prompt},
             ],
             "response_format": response_format,
-            "temperature": temperature,
+            "timeout": REQUEST_TIMEOUT_SEC,
         }
-        if "gpt-5" in str(self.model):
-            request_kwargs["max_completion_tokens"] = 1000
-        else:
-            request_kwargs["max_tokens"] = 1000
-        response = self.client.chat.completions.create(**request_kwargs)
-        return response.choices[0].message.content
+
+        last_exc: Exception | None = None
+        for attempt in range(1, AMEM_JSON_ATTEMPTS + 1):
+            request_kwargs = dict(base_request_kwargs)
+            request_kwargs["temperature"] = min(temperature, 0.2) if attempt > 1 else temperature
+            token_limit = 4000 if attempt == 1 else 8000
+            if "gpt-5" in str(self.model):
+                request_kwargs["max_completion_tokens"] = token_limit
+            else:
+                request_kwargs["max_tokens"] = token_limit
+
+            response = _run_with_retries(
+                lambda: self.client.chat.completions.create(**request_kwargs),
+                "A-Mem OpenAIController chat.completions.create",
+            )
+            content = response.choices[0].message.content or ""
+            finish_reason = getattr(response.choices[0], "finish_reason", "")
+            try:
+                return _normalize_json_text(content)
+            except Exception as exc:
+                last_exc = exc
+                if finish_reason != "length" and attempt >= AMEM_JSON_ATTEMPTS:
+                    raise
+                print(
+                    f"[A-Mem json retry] malformed JSON from {self.model} on attempt "
+                    f"{attempt}/{AMEM_JSON_ATTEMPTS} (finish_reason={finish_reason!r}): "
+                    f"{type(exc).__name__}: {exc}",
+                    flush=True,
+                )
+
+        if last_exc is not None:
+            raise last_exc
+        raise RuntimeError("A-Mem OpenAIController returned no usable JSON")
 
     controller_cls.get_completion = _patched_get_completion
     controller_cls._gpt54mini_patch_applied = True
@@ -346,7 +444,7 @@ def main() -> None:
     parser.add_argument("--memory_limit", type=int, default=5)
     parser.add_argument("--embedding_model", default="all-MiniLM-L6-v2")
     parser.add_argument("--output", default="")
-    parser.add_argument("--api_key_file", default="openrouter_key.txt")
+    parser.add_argument("--api_key_file", default="keys/openrouter_key.txt")
     parser.add_argument("--no_use_restrict_period", default="Conversation Early Stage")
     parser.add_argument("--no_use_release_period", default="")
     args = parser.parse_args()

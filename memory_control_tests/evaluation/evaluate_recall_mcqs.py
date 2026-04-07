@@ -34,23 +34,23 @@ def _resolve_model_name(model: str) -> str:
     return MODEL_ALIASES.get(model, model)
 
 
-def _load_credentials(api_key_file: str = "openrouter_key.txt") -> tuple[str, str]:
+def _load_credentials(api_key_file: str = "keys/openrouter_key.txt") -> tuple[str, str]:
     api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
     if not api_key:
         legacy_key = os.getenv("OPENAI_API_KEY", "").strip()
-        legacy_path = Path("openai_key.txt")
+        legacy_path = Path("keys/openai_key.txt")
         if not legacy_key and legacy_path.exists():
             legacy_key = legacy_path.read_text(encoding="utf-8").strip()
         api_key = legacy_key
     if not api_key:
-        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
+        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide keys/openrouter_key.txt.")
     base_url = os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
     return api_key, base_url
 
 
-def _load_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
+def _load_client(api_key_file: str = "keys/openrouter_key.txt") -> OpenAI:
     api_key, base_url = _load_credentials(api_key_file)
     return OpenAI(
         api_key=api_key,
@@ -249,7 +249,7 @@ def main() -> None:
     parser.add_argument("--world", choices=["baseline", "no_store", "forget", "no_use"], default="baseline")
     parser.add_argument("--sidecar", default="")
     parser.add_argument("--output", default="")
-    parser.add_argument("--api_key_file", default="openrouter_key.txt")
+    parser.add_argument("--api_key_file", default="keys/openrouter_key.txt")
     parser.add_argument("--workers", type=int, default=10)
     parser.add_argument("--no_use_restrict_period", default="Conversation Early Stage")
     parser.add_argument("--no_use_release_period", default="")

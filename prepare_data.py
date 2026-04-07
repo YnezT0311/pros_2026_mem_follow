@@ -510,7 +510,7 @@ def maybe_write_conversation_log(output_file_path, args, stage_name, artifact_na
             f.write(str(payload))
 
 
-def get_output_section_snapshot(output_file_path):
+def get_output_section_snapshot(output_file_path, topic=None):
     snapshot = {"present_sections": [], "missing_sections": [], "unreadable": False}
     if not os.path.exists(output_file_path):
         snapshot["missing_sections"] = ["<output_file_missing>"]
@@ -530,6 +530,8 @@ def get_output_section_snapshot(output_file_path):
             snapshot["missing_sections"].append(key)
         else:
             snapshot["present_sections"].append(key)
+    if topic is not None:
+        snapshot["missing_sections"] = get_missing_output_sections(data, topic)
     return snapshot
 
 
@@ -1425,7 +1427,7 @@ def prepare_data(args):
                                     {
                                         "attempt": attempt + 1,
                                         "error": repr(e),
-                                        "section_snapshot": get_output_section_snapshot(output_file_path),
+                                        "section_snapshot": get_output_section_snapshot(output_file_path, curr_topic),
                                     },
                                 )
                                 sleep_seconds = retry_backoff * (2 ** attempt)
@@ -1440,7 +1442,7 @@ def prepare_data(args):
                                 {
                                     "attempt": attempt + 1,
                                     "error": repr(e),
-                                    "section_snapshot": get_output_section_snapshot(output_file_path),
+                                    "section_snapshot": get_output_section_snapshot(output_file_path, curr_topic),
                                 },
                             )
                             print(f'{utils.Colors.FAIL}Error at generating file {output_file_path}: {repr(e)}{utils.Colors.ENDC}')

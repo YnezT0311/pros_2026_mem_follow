@@ -3,6 +3,11 @@
 export LLM_TIMEOUT_SEC="${LLM_TIMEOUT_SEC:-480}"
 # export API_MODE="${API_MODE:-auto}"
 export API_MODE="${API_MODE:-responses}"
+export TMP_DIR="${TMP_DIR:-tmp}"
+export TOPICS="${TOPICS:-legalConsultation financialConsultation medicalConsultation therapy travelPlanning}"
+export WORKERS="${WORKERS:-10}"
+
+mkdir -p "${TMP_DIR}"
 
 start_ts=$(date +%s)
 
@@ -15,26 +20,21 @@ start_persona_id=0
 end_persona_id=10  # non-inclusive
 
 # Construct the command
-# command="python prepare_data.py --model gpt-5-mini \
-#          --api_mode ${API_MODE} \
-#          --topics bookRecommendation datingConsultation email familyRelations financialConsultation foodRecommendation homeDecoration \
-#                   legalConsultation medicalConsultation movieRecommendation musicRecommendation onlineShopping sportsRecommendation \
-#                   studyConsultation therapy travelPlanning writing \
-#          --n_persona ${end_persona_id} --n_samples 1 --s_persona ${start_persona_id} --s_samples 0 --workers 10 --output_dir data/output/ --skip_existing"
-
-command="python prepare_data.py --model gpt-5-mini \
-         --api_mode ${API_MODE} \
-         --topics legalConsultation financialConsultation medicalConsultation therapy travelPlanning \
-         --n_persona ${end_persona_id} --n_samples 1 --s_persona ${start_persona_id} --s_samples 0 --workers 10 --output_dir data/output/ --skip_existing"
-
-
 # Print the command for debugging/logging purposes
 echo "LLM_TIMEOUT_SEC=${LLM_TIMEOUT_SEC}"
 echo "API_MODE=${API_MODE}"
-echo "$command"
+echo "TOPICS=${TOPICS}"
+echo "WORKERS=${WORKERS}"
 
-# Execute the command
-eval "$command"
+for topic in ${TOPICS}; do
+  command="python prepare_data.py --model gpt-5-mini \
+           --api_mode ${API_MODE} \
+           --topics ${topic} \
+           --n_persona ${end_persona_id} --n_samples 1 --s_persona ${start_persona_id} --s_samples 0 \
+           --workers ${WORKERS} --output_dir data/output/ --skip_existing"
+  echo "$command"
+  eval "$command"
+done
 
 end_ts=$(date +%s)
 elapsed=$((end_ts - start_ts))

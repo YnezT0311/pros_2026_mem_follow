@@ -29,18 +29,18 @@ def _resolve_model_name(model: str) -> str:
     return MODEL_ALIASES.get(model, model)
 
 
-def _load_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
+def _load_client(api_key_file: str = "keys/openrouter_key.txt") -> OpenAI:
     api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
     if not api_key:
         legacy_key = os.getenv("OPENAI_API_KEY", "").strip()
-        legacy_path = Path("openai_key.txt")
+        legacy_path = Path("keys/openai_key.txt")
         if not legacy_key and legacy_path.exists():
             legacy_key = legacy_path.read_text(encoding="utf-8").strip()
         api_key = legacy_key
     if not api_key:
-        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
+        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide keys/openrouter_key.txt.")
     base_url = os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
     return OpenAI(
         api_key=api_key,
@@ -527,7 +527,7 @@ def render_file(
     sidecar_path: str,
     model: str = "gpt-5-mini",
     output_path: str = "",
-    api_key_file: str = "openrouter_key.txt",
+    api_key_file: str = "keys/openrouter_key.txt",
     qa_family: str = "all",
 ) -> Path:
     spec_dict = build_mcq_spec_dict(sidecar_path)
@@ -592,7 +592,7 @@ def main() -> None:
     )
     parser.add_argument("--model", default="gpt-5-mini")
     parser.add_argument("--output", default="")
-    parser.add_argument("--api_key_file", default="openrouter_key.txt")
+    parser.add_argument("--api_key_file", default="keys/openrouter_key.txt")
     parser.add_argument("--qa_family", choices=["all", "whole", "slot"], default="all")
     args = parser.parse_args()
     output_path = render_file(

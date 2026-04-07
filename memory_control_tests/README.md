@@ -265,7 +265,7 @@ For staged `forget`, evaluated key items also carry a `forget_stage` field in th
 
 If you want semantic slot-group analysis, use:
 
-- `memory_control_tests.evaluation.annotate_slot_types_llm`
+- `memory_control_tests.analysis.annotate_slot_types_llm`
 
 This post-processing script reads an existing eval JSON and adds:
 
@@ -313,7 +313,7 @@ without storing a large number of static world files.
 
 The repository also includes a browser-based evaluator:
 
-- [evaluate_chatgpt_web.py](/mnt/yao_data/proj_2026_agent/PersonaMem-main/evaluate_chatgpt_web.py)
+- [evaluate_chatgpt_web.py](/mnt/yao_data/proj_2026_agent/MemoryCtrl/memory_control_tests/evaluation/evaluate_chatgpt_web.py)
 
 This script replays the conversation inside ChatGPT Web and asks the rendered
 MCQs in the same browser session.
@@ -328,94 +328,96 @@ The current ChatGPT Web runner supports:
 
 `no_use` is still handled by the API-based evaluators only.
 
-### Run Pattern
+### What Is Sent to ChatGPT
 
-The intended workflow is:
+The browser evaluator only sends:
 
-1. login once and save the browser session
-   - `python evaluate_chatgpt_web.py --login --session_dir ./chatgpt_session`
-2. run evaluation with the saved session
-   - `python evaluate_chatgpt_web.py --topic travelPlanning --world baseline ...`
+- the `User:` turns from the selected conversation context
+- then the rendered MCQ prompt
 
-There is also a small wrapper script:
+It does not replay assistant turns from the synthetic conversation history.
+The idea is to test whether ChatGPT can answer from the user-provided history
+that was fed in the current browser conversation.
 
-- [run_chatgpt_eval.sh](/mnt/yao_data/proj_2026_agent/PersonaMem-main/run_chatgpt_eval.sh)
+The MCQ prompt is the same rendered prompt used by the API evaluator:
 
-It:
+- the question text
+- the answer options in `(a) / (b) / (c)` format
+- an instruction to answer with just the letter
 
-- runs the login step first
-- then runs the selected worlds in sequence
+### World-Specific Session Plans
 
-By default it uses `--manual_cleanup`, so memory deletion and chat deletion can
-be done manually in the browser between sessions.
+#### `baseline`
 
-### Readiness and Cleanup
+One session per persona:
 
-For normal evaluation runs:
+- send all user turns up to `Conversation Late Stage`
+- ask all whole-recall and slot-recall MCQs, shuffled together
 
-- the script waits for the ChatGPT input box to appear
-- then waits an additional grace period before starting
-- the grace period is controlled by:
-  - `--ready_grace_sec`
+#### `no_store`
 
-Only the login-only mode requires manual confirmation with Enter.
+Three sessions per persona:
 
-Cleanup can run in two modes:
+1. `no_store_early`
+   - send user turns up to `Conversation Early Stage`
+   - ask all MCQs
+2. `no_store_intermediate`
+   - send user turns up to `Conversation Intermediate Stage`
+   - ask all MCQs
+3. `no_store_late`
+   - send user turns up to `Conversation Late Stage`
+   - ask all MCQs
 
-- automatic cleanup
-  - clear memory through Settings → Personalization
-  - delete the current chat through Settings → Data controls
-- manual cleanup
-  - enabled with `--manual_cleanup`
-  - the script pauses before cleanup and lets the user delete memory and chat manually
+This is the ChatGPT-Web version of the test-stage ablation for `no_store`.
 
-### Result Layout
+#### `forget`
 
-`--output` is only a root hint. The actual results are written per persona:
+One interleaved session per persona:
 
-- `results/chatgpt_web_results/<topic>/<sample_id>/test_type_<world>/results.jsonl`
+1. send all `Conversation Initial Stage` user turns
+2. send all `Conversation Early Stage` user turns
+   - this stage contains the first forget instruction
+3. ask:
+   - all MCQs for the first key turn
+   - plus one probe group
+4. send all `Conversation Intermediate Stage` user turns
+   - this stage contains the second forget instruction
+5. ask:
+   - all MCQs for the second key turn
+   - plus one probe group
+6. send all `Conversation Late Stage` user turns
+   - this stage contains the third forget instruction
+7. ask:
+   - all MCQs for the third key turn
+   - plus one probe group
 
-Each completed test session also writes its own directory:
+So in the ChatGPT Web setup, `forget` is evaluated by interleaving:
 
-- `results/chatgpt_web_results/<topic>/<sample_id>/test_type_<world>/session_<session_key>/`
+- more history
+- then the stage-specific MCQs
 
-with:
+rather than waiting until the very end and asking everything at once.
 
-- `session_result.json`
-- `session_trace.json`
-- `session_log.txt`
+### MCQ Allocation
 
-This means the smallest resumable unit is:
+The browser evaluator reads:
 
-- `topic + sample_id + world + session_key`
+- [whole_recall](/mnt/yao_data/proj_2026_agent/PersonaMem-main/data/test/travelPlanning/whole_recall)
+- [slot_recall](/mnt/yao_data/proj_2026_agent/PersonaMem-main/data/test/travelPlanning/slot_recall)
 
-### Resume Rule
+and combines them into a single list of `McqItem`s.
 
-Resume does not simply check whether a session result file exists.
+Allocation differs by world:
 
-A session is skipped only if:
-
-- `session_result.json` exists
-- and `status == "completed"`
-
-If a previous run wrote:
-
-- `status == "error"`
-
-that session is treated as incomplete and will be rerun automatically.
-
-### Click Recording
-
-For selector debugging, use the standalone click recorder:
-
-- [record_chatgpt_web_clicks.py](/mnt/yao_data/proj_2026_agent/PersonaMem-main/record_chatgpt_web_clicks.py)
-
-Example:
-
-- `python record_chatgpt_web_clicks.py --session_dir ./chatgpt_session --output results/chatgpt_clicks.json`
-
-It records the manual browser clicks to JSON so selector changes can be debugged
-without complicating the main evaluator.
+- `baseline`
+  - all whole + slot items are asked in one final batch
+- `no_store`
+  - all whole + slot items are asked in each of the three stage-specific sessions
+- `forget`
+  - items are grouped by timestamp
+  - key MCQs are matched to the stage where that key is forgotten
+  - probe MCQs are assigned one probe group per forget stage
+  - key and probe items within each stage batch are shuffled together
 
 ### Canonical Non-Ablation Setting
 
@@ -614,7 +616,7 @@ The backend directory names are:
 
 All recall evaluators share the same outer prompt shape so the comparison isolates the memory layer rather than the answer format.
 
-All API-facing evaluation calls are routed through OpenRouter. The evaluators accept `gpt-5.4-mini` at the command line and map it to OpenRouter's `openai/gpt-5.4-mini` model slug internally. Credentials are loaded from `OPENROUTER_API_KEY` or `openrouter_key.txt`, the default base URL is `https://openrouter.ai/api/v1`, and requests include `X-OpenRouter-Title: MemoryCtrl`.
+All API-facing evaluation calls are routed through OpenRouter. The evaluators accept `gpt-5.4-mini` at the command line and map it to OpenRouter's `openai/gpt-5.4-mini` model slug internally. Credentials are loaded from `OPENROUTER_API_KEY` or `keys/openrouter_key.txt`, the default base URL is `https://openrouter.ai/api/v1`, and requests include `X-OpenRouter-Title: MemoryCtrl`.
 
 For every MCQ item:
 
@@ -870,9 +872,9 @@ conda run -n zep311 python -m memory_control_tests.evaluation.evaluate_zep_recal
 
 This evaluator reads credentials from environment variables or local files:
 
-- `OPENROUTER_API_KEY` or `openrouter_key.txt`
-- `ZEP_API_KEY` or `zep_api_key.txt`
-- optionally `ZEP_API_URL` or `zep_api_url.txt`
+- `OPENROUTER_API_KEY` or `keys/openrouter_key.txt`
+- `ZEP_API_KEY` or `keys/zep_api_key.txt`
+- optionally `ZEP_API_URL` or `keys/zep_api_url.txt`
 
 ### Recall Rendering Rule
 

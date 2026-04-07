@@ -24,23 +24,23 @@ def _resolve_model_name(model: str) -> str:
     return MODEL_ALIASES.get(model, model)
 
 
-def _load_openai_credentials(api_key_file: str = "openrouter_key.txt") -> tuple[str, str]:
+def _load_openai_credentials(api_key_file: str = "keys/openrouter_key.txt") -> tuple[str, str]:
     api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
     if not api_key:
         legacy_key = os.getenv("OPENAI_API_KEY", "").strip()
-        legacy_path = Path("openai_key.txt")
+        legacy_path = Path("keys/openai_key.txt")
         if not legacy_key and legacy_path.exists():
             legacy_key = legacy_path.read_text(encoding="utf-8").strip()
         api_key = legacy_key
     if not api_key:
-        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
+        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide keys/openrouter_key.txt.")
     base_url = os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
     return api_key, base_url
 
 
-def _load_openai_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
+def _load_openai_client(api_key_file: str = "keys/openrouter_key.txt") -> OpenAI:
     api_key, base_url = _load_openai_credentials(api_key_file)
     return OpenAI(
         api_key=api_key,
@@ -49,7 +49,7 @@ def _load_openai_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
     )
 
 
-def _ensure_openrouter_env(api_key_file: str = "openrouter_key.txt") -> None:
+def _ensure_openrouter_env(api_key_file: str = "keys/openrouter_key.txt") -> None:
     api_key, base_url = _load_openai_credentials(api_key_file)
     os.environ["OPENAI_API_KEY"] = api_key
     os.environ["OPENAI_BASE_URL"] = base_url
@@ -208,7 +208,7 @@ def _ensure_mem0_home(root: Path) -> None:
     os.environ["TEMP"] = str(tmp_root)
 
 
-def _load_local_mem0_memory(runtime_root: Path, api_key_file: str = "openrouter_key.txt"):
+def _load_local_mem0_memory(runtime_root: Path, api_key_file: str = "keys/openrouter_key.txt"):
     _ensure_mem0_home(runtime_root)
     _ensure_openrouter_env(api_key_file)
 
@@ -260,11 +260,31 @@ class Mem0RetrievalAgent:
         self.user_id = user_id
         self.memory_limit = memory_limit
         self.persona_messages = persona_messages
+        self.preload_log: Dict[str, Any] = {
+            "input_messages": [],
+            "infer": True,
+            "add_result": None,
+            "post_add_snapshot": None,
+        }
 
     def preload(self, context_messages: List[Dict[str, str]]) -> None:
         self.memory.delete_all(user_id=self.user_id)
-        if context_messages:
-            self.memory.add(context_messages, user_id=self.user_id)
+        clean_messages = []
+        for msg in context_messages:
+            role = msg.get("role", "").strip()
+            content = msg.get("content", "").strip()
+            if role not in {"user", "assistant"} or not content:
+                continue
+            clean_messages.append({"role": role, "content": content})
+        self.preload_log["input_messages"] = clean_messages
+        if clean_messages:
+            add_result = self.memory.add(clean_messages, user_id=self.user_id)
+            self.preload_log["add_result"] = add_result
+            self.preload_log["post_add_snapshot"] = self.memory.search(
+                query="",
+                user_id=self.user_id,
+                limit=50,
+            )
 
     def answer_mcq(self, question: str, choices: Dict[str, str]) -> Dict[str, Any]:
         search_result = self.memory.search(
@@ -301,6 +321,12 @@ class Mem0OpenAIAgentsAgent:
         self.user_id = user_id
         self.memory_limit = memory_limit
         self.persona_messages = persona_messages
+        self.preload_log: Dict[str, Any] = {
+            "input_messages": [],
+            "infer": True,
+            "add_result": None,
+            "post_add_snapshot": None,
+        }
 
         try:
             from agents import Agent, Runner, function_tool
@@ -334,8 +360,22 @@ class Mem0OpenAIAgentsAgent:
 
     def preload(self, context_messages: List[Dict[str, str]]) -> None:
         self.memory.delete_all(user_id=self.user_id)
-        if context_messages:
-            self.memory.add(context_messages, user_id=self.user_id)
+        clean_messages = []
+        for msg in context_messages:
+            role = msg.get("role", "").strip()
+            content = msg.get("content", "").strip()
+            if role not in {"user", "assistant"} or not content:
+                continue
+            clean_messages.append({"role": role, "content": content})
+        self.preload_log["input_messages"] = clean_messages
+        if clean_messages:
+            add_result = self.memory.add(clean_messages, user_id=self.user_id)
+            self.preload_log["add_result"] = add_result
+            self.preload_log["post_add_snapshot"] = self.memory.search(
+                query="",
+                user_id=self.user_id,
+                limit=50,
+            )
 
     def answer_mcq(self, question: str, choices: Dict[str, str]) -> Dict[str, Any]:
         prompt = _build_eval_prompt(question, choices)
@@ -406,7 +446,7 @@ def main() -> None:
     parser.add_argument("--sidecar", default="")
     parser.add_argument("--memory_limit", type=int, default=5)
     parser.add_argument("--output", default="")
-    parser.add_argument("--api_key_file", default="openrouter_key.txt")
+    parser.add_argument("--api_key_file", default="keys/openrouter_key.txt")
     parser.add_argument("--no_use_restrict_period", default="Conversation Early Stage")
     parser.add_argument("--no_use_release_period", default="")
     args = parser.parse_args()
@@ -445,7 +485,7 @@ def main() -> None:
             transformed_history_path.parent.mkdir(parents=True, exist_ok=True)
             transformed_history_path.write_text(json.dumps(transformed_conversation, ensure_ascii=False, indent=2), encoding="utf-8")
     persona_messages = _build_persona_system_message(transformed_conversation)
-    context_messages = persona_messages + build_context_messages(transformed_conversation, args.ask_period)
+    context_messages = build_context_messages(transformed_conversation, args.ask_period)
 
     client = _load_openai_client()
     model_tag = re.sub(r"[^A-Za-z0-9._-]+", "_", args.model)
@@ -475,6 +515,10 @@ def main() -> None:
         "no_use_restrict_period": args.no_use_restrict_period,
         "no_use_release_period": args.no_use_release_period,
         "memory_limit": args.memory_limit,
+        "mem0_infer": True,
+        "mem0_debug": {
+            "preload": agent.preload_log if hasattr(agent, "preload_log") else {},
+        },
         "whole_recall_results": [],
         "slot_recall_results": [],
     }

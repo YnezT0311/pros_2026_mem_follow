@@ -24,23 +24,23 @@ def _resolve_model_name(model: str) -> str:
     return MODEL_ALIASES.get(model, model)
 
 
-def _load_openai_credentials(api_key_file: str = "openrouter_key.txt") -> tuple[str, str]:
+def _load_openai_credentials(api_key_file: str = "keys/openrouter_key.txt") -> tuple[str, str]:
     api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
     if not api_key and Path(api_key_file).exists():
         api_key = Path(api_key_file).read_text(encoding="utf-8").strip()
     if not api_key:
         legacy_key = os.getenv("OPENAI_API_KEY", "").strip()
-        legacy_path = Path("openai_key.txt")
+        legacy_path = Path("keys/openai_key.txt")
         if not legacy_key and legacy_path.exists():
             legacy_key = legacy_path.read_text(encoding="utf-8").strip()
         api_key = legacy_key
     if not api_key:
-        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide openrouter_key.txt.")
+        raise FileNotFoundError("No API key found. Set OPENROUTER_API_KEY or provide keys/openrouter_key.txt.")
     base_url = os.getenv("OPENROUTER_BASE_URL", "").strip() or OPENROUTER_BASE_URL
     return api_key, base_url
 
 
-def _load_openai_client(api_key_file: str = "openrouter_key.txt") -> OpenAI:
+def _load_openai_client(api_key_file: str = "keys/openrouter_key.txt") -> OpenAI:
     api_key, base_url = _load_openai_credentials(api_key_file)
     return OpenAI(
         api_key=api_key,
@@ -67,8 +67,8 @@ def _load_first_available_file(paths: List[str]) -> str:
 
 
 def _load_zep_client(
-    api_key_file: str = "zep_api_key.txt",
-    api_url_file: str = "zep_api_url.txt",
+    api_key_file: str = "keys/zep_api_key.txt",
+    api_url_file: str = "keys/zep_api_url.txt",
 ):
     try:
         from zep_cloud import Zep
@@ -82,7 +82,7 @@ def _load_zep_client(
     )
     if not api_key:
         raise FileNotFoundError(
-            "No ZEP_API_KEY found. Set ZEP_API_KEY or provide zep_api_key.txt to use the Zep evaluator."
+            "No ZEP_API_KEY found. Set ZEP_API_KEY or provide keys/zep_api_key.txt to use the Zep evaluator."
         )
 
     api_url = os.getenv("ZEP_API_URL", "").strip() or _load_first_available_file(
@@ -373,9 +373,9 @@ def main() -> None:
     parser.add_argument("--world", choices=["baseline", "no_store", "forget", "no_use"], default="baseline")
     parser.add_argument("--sidecar", default="")
     parser.add_argument("--output", default="")
-    parser.add_argument("--api_key_file", default="openrouter_key.txt")
-    parser.add_argument("--zep_api_key_file", default="zep_api_key.txt")
-    parser.add_argument("--zep_api_url_file", default="zep_api_url.txt")
+    parser.add_argument("--api_key_file", default="keys/openrouter_key.txt")
+    parser.add_argument("--zep_api_key_file", default="keys/zep_api_key.txt")
+    parser.add_argument("--zep_api_url_file", default="keys/zep_api_url.txt")
     parser.add_argument("--no_use_restrict_period", default="Conversation Early Stage")
     parser.add_argument("--no_use_release_period", default="")
     args = parser.parse_args()

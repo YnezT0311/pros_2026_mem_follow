@@ -15,26 +15,40 @@ import prompts
 import utils
 
 LLM_TIMEOUT_SEC = int(os.getenv("LLM_TIMEOUT_SEC", "180"))
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_TITLE = "MemoryCtrl"
 
 
 class QueryLLM:
     def __init__(self, args):
         self.args = args
-        # Load key/base_url from env first, then fallback to file for backward compatibility.
-        self.api_key = os.getenv("OPENAI_API_KEY", "").strip()
-        api_key_file = self.args.get("models", {}).get("api_key_file", "openai_key.txt")
+        # Prefer OpenRouter for generation, with OpenAI kept as a backward-compatible fallback.
+        self.api_key = os.getenv("OPENROUTER_API_KEY", "").strip()
+        api_key_file = self.args.get("models", {}).get("api_key_file", "keys/openrouter_key.txt")
         if not self.api_key and os.path.exists(api_key_file):
             with open(api_key_file, "r") as key_file:
                 self.api_key = key_file.read().strip()
         if not self.api_key:
+            self.api_key = os.getenv("OPENAI_API_KEY", "").strip()
+        if not self.api_key and api_key_file != "keys/openai_key.txt" and os.path.exists("keys/openai_key.txt"):
+            with open("keys/openai_key.txt", "r") as key_file:
+                self.api_key = key_file.read().strip()
+        if not self.api_key:
             raise FileNotFoundError(
-                f"No API key found. Set OPENAI_API_KEY or provide key file at '{api_key_file}'."
+                f"No API key found. Set OPENROUTER_API_KEY / OPENAI_API_KEY or provide key file at '{api_key_file}'."
             )
 
-        self.api_base_url = os.getenv("OPENAI_BASE_URL", "").strip() or self.args.get("models", {}).get("api_base_url", "")
+        self.api_base_url = (
+            os.getenv("OPENROUTER_BASE_URL", "").strip()
+            or os.getenv("OPENAI_BASE_URL", "").strip()
+            or self.args.get("models", {}).get("api_base_url", "")
+            or OPENROUTER_BASE_URL
+        )
         client_kwargs = {"api_key": self.api_key}
         if self.api_base_url:
             client_kwargs["base_url"] = self.api_base_url
+        if "openrouter.ai" in (self.api_base_url or "").lower():
+            client_kwargs["default_headers"] = {"X-OpenRouter-Title": OPENROUTER_TITLE}
         self.client = OpenAI(**client_kwargs)
         self.is_deepseek = "deepseek" in (self.api_base_url or "").lower() or "deepseek" in self.args['models']['llm_model'].lower()
         self.use_responses_api = hasattr(self.client, "responses")

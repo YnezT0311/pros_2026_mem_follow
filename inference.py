@@ -577,7 +577,7 @@ if __name__ == "__main__":
                                                                     'claude-3-7-sonnet-20250219, DeepSeek-R1, DeepSeek-v3,'
                                                                     'gemini-2.0-flash, gemini-1.5-flash, gemini-2.0-flash-lite')
     parser.add_argument('--step', type=str, default='prepare', help='Step to run: prepare or evaluate')
-    parser.add_argument('--token_path', type=str, default='api_tokens', help='Path to the API tokens')
+    parser.add_argument('--token_path', type=str, default='keys', help='Path to the API tokens')
     parser.add_argument('--clean', dest='clean', action='store_true', help='Remove existing csv and json files and start clean')
     parser.add_argument('--verbose', dest='verbose', action='store_true', help='Set verbose to True')
 
