@@ -224,6 +224,8 @@ These are repo-level collaboration rules for Codex work in `MemoryCtrl`.
 
 - Use the `conda` environment `agent` for project commands unless the user explicitly asks for a different environment.
 - When validating runtime behavior, prefer running in `agent` so results match the normal project setup.
+- Networked generation and API-backed data creation may fail inside the Codex execution environment due to DNS or outbound-network restrictions even when the machine itself is healthy.
+- If a generation step raises `APIConnectionError`, `Connection error`, or DNS-resolution failures, verify it in the user's own terminal under `conda activate agent` before changing generation logic.
 
 ### Generated Results
 
