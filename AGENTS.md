@@ -203,3 +203,30 @@ Recommended migration order:
 5. rename scripts, docs, and output paths
 
 Do not assume that script renaming alone fixes conceptual misalignment.
+
+## Working Conventions
+
+These are repo-level collaboration rules for Codex work in `MemoryCtrl`.
+
+### Commit Discipline
+
+- Make a git commit after each confirmed code-change batch.
+- Prefer small checkpoint commits so changes are easy to roll back.
+- Do not bundle unrelated generated data, logs, caches, or temporary outputs into those commits unless explicitly requested.
+
+### Temporary Files
+
+- Put logs, pid files, ad hoc debug outputs, one-off test artifacts, and other unrelated runtime byproducts under [`tmp/`](/mnt/yao_data/proj_2026_agent/MemoryCtrl/tmp).
+- Do not scatter temporary files across code, results, or data directories.
+- If a test or probe script is only needed briefly, prefer placing it in `tmp/` or running it inline instead of leaving it in the main code tree.
+
+### Environment
+
+- Use the `conda` environment `agent` for project commands unless the user explicitly asks for a different environment.
+- When validating runtime behavior, prefer running in `agent` so results match the normal project setup.
+
+### Generated Results
+
+- Keep durable benchmark outputs in their intended result folders, such as `eval_results/` or task-specific data directories.
+- Keep temporary orchestration helpers under `scripts/evaluation/tmp/`.
+- When in doubt, treat anything needed only for short-term inspection or debugging as temporary and place it under `tmp/`.
