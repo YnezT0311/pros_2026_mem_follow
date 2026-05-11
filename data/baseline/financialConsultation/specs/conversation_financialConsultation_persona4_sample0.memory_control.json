@@ -1,0 +1,36 @@
+{
+  "source_file": "data/output/financialConsultation/conversation_financialConsultation_persona4_sample0.json",
+  "periods": [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage"
+  ],
+  "initial_interaction_count": 0,
+  "selection_policy": {
+    "key_target_count": 0,
+    "probe_target_count": 0,
+    "prefer_last_exact_sensitive_occurrence": true,
+    "future_conflict_detection": [
+      "exact reuse of later [Sensitive Info] values",
+      "exact reuse of later [Context Can Add] keys",
+      "later event or interaction belonging to the source event's descendant chain",
+      "boolean high-similarity check over later [Task Goal] text"
+    ],
+    "key_selection_priority": [
+      "lower future conflict count",
+      "prefer the last exact sensitive-value occurrence",
+      "earlier history index as a stable tiebreaker"
+    ]
+  },
+  "baseline_resolution": {
+    "selected_key_timestamps": [],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "key_turns": [],
+  "protected_probe_turns": [],
+  "rejected_turns": []
+}

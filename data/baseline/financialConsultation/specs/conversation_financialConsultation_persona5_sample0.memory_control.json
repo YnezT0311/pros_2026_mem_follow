@@ -1,0 +1,444 @@
+{
+  "source_file": "data/output/financialConsultation/conversation_financialConsultation_persona5_sample0.json",
+  "periods": [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage"
+  ],
+  "initial_interaction_count": 6,
+  "selection_policy": {
+    "key_target_count": 3,
+    "probe_target_count": 3,
+    "prefer_last_exact_sensitive_occurrence": true,
+    "future_conflict_detection": [
+      "exact reuse of later [Sensitive Info] values",
+      "exact reuse of later [Context Can Add] keys",
+      "later event or interaction belonging to the source event's descendant chain",
+      "boolean high-similarity check over later [Task Goal] text"
+    ],
+    "key_selection_priority": [
+      "lower future conflict count",
+      "prefer the last exact sensitive-value occurrence",
+      "earlier history index as a stable tiebreaker"
+    ]
+  },
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "01/30/2019-I01",
+      "06/02/2021-I03",
+      "10/25/2021-I05"
+    ],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "key_turns": [
+    {
+      "rank": 0,
+      "timestamp": "01/30/2019-I01",
+      "history_index": 2,
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_002",
+      "source_event_date": "01/30/2019",
+      "task_goal": "Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook.",
+      "prev_event": "Built a detailed cashflow modeling spreadsheet to project household budgets over a five-year period including irregular income streams.",
+      "context_can_add": {
+        "spreadsheet_file": "User can upload or share a snapshot of the cashflow workbook (file name, key tabs, and a few example rows). This is relevant so you can validate formulas, map line-items to budget buckets, and supply exact formula code or sheet-level changes targeted to the current file. Sharing the file will reveal transaction-level details and category names.",
+        "monthly_income_history": "User can provide the last 12 months of net (take-home) income amounts and the dates they hit the account. This matters because irregular income timing and magnitude drive the contour of worst-case months and the size/timing of the buffer; with exact monthly numbers you can build realistic low-income scenarios and suggest withdrawal/prioritization rules. This will include sensitive numeric income details.",
+        "account_balances_and_debts": "User can list current account balances (checking, savings), outstanding debts and balances (credit card, student loan, mortgage), and minimum monthly payments. That helps prioritize which debts to accelerate, how large a safe operating balance is, and whether to route spare cash to buffer vs. debt. This is sensitive financial information and will guide recommended thresholds and payment strategies.",
+        "upcoming_one_time_expenses": "User can describe any planned large expenses inside the five-year window (e.g., roof repair, tuition, medical procedure) with approximate amounts and target dates. Including these constraints lets the plan create sinking funds and adjust contribution timing so shortfalls are visible and solvable in the model. These entries may include private scheduling and cost figures."
+      },
+      "sensitive_info": {
+        "spreadsheet_file": [
+          "cashflow_model_E_INIT_002.xlsx"
+        ],
+        "monthly_income_history": [
+          "Apr 2025: $4,200",
+          "May 2025: $1,800",
+          "Jun 2025: $5,600"
+        ],
+        "account_balances_and_debts": [
+          "checking: $2,400",
+          "savings: $6,200",
+          "credit_card_balance: $9,500 (min payment $240/mo)"
+        ],
+        "upcoming_one_time_expenses": [
+          "Roof repair: $6,500 due 2026-08-15"
+        ]
+      },
+      "sensitive_values": [
+        "cashflow_model_E_INIT_002.xlsx",
+        "Apr 2025: $4,200",
+        "May 2025: $1,800",
+        "Jun 2025: $5,600",
+        "checking: $2,400",
+        "savings: $6,200",
+        "credit_card_balance: $9,500 (min payment $240/mo)",
+        "Roof repair: $6,500 due 2026-08-15"
+      ],
+      "conversation_block": {
+        "timestamp": "01/30/2019-I01",
+        "event_text": "Built a detailed cashflow modeling spreadsheet to project household budgets over a five-year period including irregular income streams.",
+        "start_index": 8,
+        "lines": [
+          "Side_Note: [Built a detailed cashflow modeling spreadsheet to project household budgets over a five-year period including irregular income streams.] 01/30/2019-I01",
+          "User: Please convert the five-year cashflow model into a month-by-month working budget that (a) creates automated scenario sheets for low‑income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and when to prioritize debt versus savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. I can upload cashflow_model_E_INIT_002.xlsx. For context, my recent net income was April 2025: $4,200; May 2025: $1,800; June 2025: $5,600. Current balances are checking $2,400, savings $6,200, and a credit card balance of $9,500 (minimum $240/month). I also have a roof repair for $6,500 due in mid‑August 2026—please tailor the scenarios and formulas to these details.",
+          "Assistant: I will create a month-by-month workbook you can paste into cashflow_model_E_INIT_002.xlsx that includes automated low-income scenario sheets using your April–June 2025 income pattern; specific monthly transfer rules and targets to build a 6–12 month emergency buffer; a decision matrix showing when to prioritize extra credit-card payments versus buffer contributions using your checking/savings/credit card numbers; exact, copy‑paste spreadsheet formulas and sheet templates; and a sinking-fund line for the $6,500 roof repair that shows its impact on your buffer timing."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 2,
+      "timestamp": "06/02/2021-I03",
+      "history_index": 11,
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_009",
+      "source_event_date": "06/02/2021",
+      "task_goal": "Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers.",
+      "prev_event": "Reviewed a debt consolidation planning pitch that emphasized high upfront fees and minimal long-term savings; after calculations, the person rejected consolidation offers and noted the approach as undesirable.",
+      "context_can_add": {
+        "debt_balances_and_rates": "User would like to share a detailed breakdown of current debts (type, outstanding balance, interest rate, and minimum payment). This is essential to calculate payoff timelines, compare snowball vs avalanche approaches, and determine whether refinancing or balance-transfer offers would actually reduce total cost. The user might provide exact sensitive figures like per-account balances and APRs.",
+        "monthly_income_and_fixed_expenses": "User could add net monthly income and recurring fixed expenses (rent/mortgage, utilities, insurance, childcare, transportation). These budget figures are needed to set realistic extra payment targets and identify discretionary savings. This naturally involves sensitive financial details such as monthly take-home pay and recurring bill amounts.",
+        "credit_score_and_recent_inquiries": "User may report their latest credit score and any recent hard inquiries or derogatory marks. Credit profile details determine eligibility for low-rate loans or 0% balance-transfer cards and should guide recommendations. This requires sharing sensitive credit-report details (score number and timing of inquiries).",
+        "consolidation_offer_document": "User can upload or summarize the consolidation pitch/quote they reviewed (fee schedule, interest rate, loan term, sample amortization) so we can run the same calculations and point out problematic line items. This may include a document reference or filename rather than private personal identifiers, and helps produce a side-by-side comparison."
+      },
+      "sensitive_info": {
+        "debt_balances_and_rates": [
+          "Credit Card A: $8,200 at 19.9% APR, minimum $180/mo",
+          "Credit Card B: $3,400 at 24.5% APR, minimum $95/mo",
+          "Student Loan (federal): $22,500 at 4.5% fixed, minimum $225/mo"
+        ],
+        "monthly_income_and_fixed_expenses": [
+          "Net monthly income: $4,200",
+          "Rent: $1,200",
+          "Car payment: $320"
+        ],
+        "credit_score_and_recent_inquiries": [
+          "FICO-like score: 640",
+          "Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)"
+        ]
+      },
+      "sensitive_values": [
+        "Credit Card A: $8,200 at 19.9% APR, minimum $180/mo",
+        "Credit Card B: $3,400 at 24.5% APR, minimum $95/mo",
+        "Student Loan (federal): $22,500 at 4.5% fixed, minimum $225/mo",
+        "Net monthly income: $4,200",
+        "Rent: $1,200",
+        "Car payment: $320",
+        "FICO-like score: 640",
+        "Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)"
+      ],
+      "conversation_block": {
+        "timestamp": "06/02/2021-I03",
+        "event_text": "Reviewed a debt consolidation planning pitch that emphasized high upfront fees and minimal long-term savings; after calculations, the person rejected consolidation offers and noted the approach as undesirable.",
+        "start_index": 35,
+        "lines": [
+          "Side_Note: [Reviewed a debt consolidation planning pitch that emphasized high upfront fees and minimal long-term savings; after calculations, the person rejected consolidation offers and noted the approach as undesirable.] 06/02/2021-I03",
+          "User: Build a practical alternative to third‑party consolidation: a personalized repayment plan (which prioritization method to use, target extra monthly payments, and timeline); identify lower‑cost refinance or balance‑transfer options I might qualify for; provide negotiation scripts to request lower rates; and give a checklist to compare any future consolidation offers. For context: Credit Card A — $8,200 at 19.9% (min $180/month); Credit Card B — $3,400 at 24.5% (min $95/month); federal student loan — $22,500 at 4.5% (min $225/month). My net monthly income is $4,200, rent $1,200, car payment $320, and my FICO‑like score is 640 with two hard inquiries in the past six months (one from a credit‑card application and one from a car‑loan quote). Use these numbers to set realistic extra‑payment targets and to confirm balance‑transfer/refinance eligibility.",
+          "Assistant: I will deliver: (1) a prioritized repayment plan recommending the avalanche method with an optional cash‑flow‑sensitive hybrid, (2) target extra monthly payment amounts and a payoff timeline based on your $4,200 net income and listed expenses, (3) likely balance‑transfer and refinance options given a 640 score and two recent hard inquiries, including typical fees and APR ranges, (4) editable creditor negotiation scripts to ask for lower rates or hardship adjustments, and (5) a checklist that quantifies upfront fees versus long‑term savings so you can compare consolidation offers side‑by‑side. I’ll start by calculating your disposable income and proposed extra payment, then show timelines for both the strict avalanche and the hybrid approach."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 4,
+      "timestamp": "10/25/2021-I05",
+      "history_index": 19,
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_015",
+      "source_event_date": "10/25/2021",
+      "task_goal": "Compare the three identified lenders' 30-year fixed offers side-by-side, calculate estimated monthly payments and total interest for my likely loan amount, identify out‑of‑pocket closing costs and points, and recommend which lender(s) to pursue plus the next communications/documents to prepare.",
+      "prev_event": "Surveyed and compared current mortgage rate analysis tools and produced a short report identifying three lenders with competitive fixed-rate offers for 30-year loans.",
+      "context_can_add": {
+        "loan_amount_and_down_payment": "User would like to share the intended purchase price, planned down payment, or existing mortgage balance so the assistant can calculate exact monthly payments, loan-to-value (LTV), and how points or fees change effective rate. This will involve sensitive budget figures such as purchase price (e.g., $420,000), down payment amount (e.g., $84,000), or current mortgage payoff.",
+        "credit_score_and_report": "User could provide their credit score and recent credit-report notes so the assistant can judge which published rates are realistic and offer negotiation strategies; sensitive detail would be a numeric credit score (e.g., 745) and any recent derogatory items or inquiries that affect rate or approval.",
+        "lender_rate_quotes": "User may paste the three lenders' quoted terms (rate, APR, points, lender fees, and any required escrow/BMI) so the assistant can do a direct apples-to-apples comparison and adjust for offered points/credits. These are sensitive personal offers and may include lender contact names or reference numbers.",
+        "desired_closing_timeline_and_constraints": "User could add timing constraints (target closing date, need for rate lock window, or must-close-by events) so recommendations prioritize lenders who can meet timing. This is less sensitive but affects which offer to choose and whether to lock rates now or wait."
+      },
+      "sensitive_info": {
+        "loan_amount_and_down_payment": [
+          "purchase_price: $420,000",
+          "down_payment: $84,000",
+          "expected_loan_amount: $336,000"
+        ],
+        "credit_score_and_report": [
+          "credit_score: 745",
+          "recent_derogatory: none",
+          "major_inquiries_last_12mo: 1"
+        ],
+        "lender_rate_quotes": [
+          "Maple Bank — 30yr fixed 3.75% (APR 3.92%), 0.5 points, lender fees $1,200",
+          "Pioneer Mortgage — 30yr fixed 3.625% (APR 3.85%), 1.0 point, lender fees $1,050",
+          "Summit Home Loans — 30yr fixed 3.9% (APR 4.05%), 0 points, lender fees $850"
+        ]
+      },
+      "sensitive_values": [
+        "purchase_price: $420,000",
+        "down_payment: $84,000",
+        "expected_loan_amount: $336,000",
+        "credit_score: 745",
+        "recent_derogatory: none",
+        "major_inquiries_last_12mo: 1",
+        "Maple Bank — 30yr fixed 3.75% (APR 3.92%), 0.5 points, lender fees $1,200",
+        "Pioneer Mortgage — 30yr fixed 3.625% (APR 3.85%), 1.0 point, lender fees $1,050",
+        "Summit Home Loans — 30yr fixed 3.9% (APR 4.05%), 0 points, lender fees $850"
+      ],
+      "conversation_block": {
+        "timestamp": "10/25/2021-I05",
+        "event_text": "Surveyed and compared current mortgage rate analysis tools and produced a short report identifying three lenders with competitive fixed-rate offers for 30-year loans.",
+        "start_index": 59,
+        "lines": [
+          "Side_Note: [Surveyed and compared current mortgage rate analysis tools and produced a short report identifying three lenders with competitive fixed-rate offers for 30-year loans.] 10/25/2021-I05",
+          "User: Please compare the three lender quotes side‑by‑side for my expected loan amount and tell me which to pursue. My purchase price is $420,000 with an $84,000 down payment (expected loan $336,000). My credit score is 745 with no derogatory items and one major inquiry in the last 12 months. The quotes are: Maple Bank — 3.75% (APR 3.92%), 0.5 points, lender fees $1,200; Pioneer Mortgage — 3.625% (APR 3.85%), 1.0 point, lender fees $1,050; Summit Home Loans — 3.9% (APR 4.05%), 0 points, lender fees $850. Please calculate estimated monthly payments, total interest over 30 years, out‑of‑pocket closing costs and point tradeoffs, then recommend the best lender(s) and the documents/communications I should prepare next.",
+          "Assistant: I will calculate the monthly payment and total interest over 30 years for a $336,000 loan at each quoted rate, show the break‑even analysis for the points versus lower rate, and estimate out‑of‑pocket closing costs (including point costs and lender fees). Then I will recommend which lender(s) make the most sense given your 745 score and likely timeline, and give a concise checklist of documents (W‑2s, recent pay stubs, last two years of tax returns if requested, recent bank statements/proof of funds for the down payment, government ID, signed purchase contract, and homeowners insurance info) plus suggested communications and a short script/email to lock a rate or negotiate points."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    }
+  ],
+  "protected_probe_turns": [
+    {
+      "rank": 5,
+      "timestamp": "11/03/2016-I06",
+      "history_index": 21,
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_016",
+      "source_event_date": "11/03/2016",
+      "task_goal": "Turn the simulation results into an actionable, tax-aware rebalancing plan for my live portfolio: recommend optimal rebalancing frequency/thresholds, identify specific trades and lots to sell for tax efficiency (including tax-loss harvesting opportunities), estimate annual tax drag and after‑tax expected return under the recommended plan, and produce a step‑by‑step trading schedule that accounts for account types, turnover limits, and transaction costs.",
+      "prev_event": "Ran an in-depth portfolio rebalancing simulation using historical data from 2000–2015 to evaluate tax drag and rebalancing frequency impacts.",
+      "context_can_add": {
+        "current_portfolio_holdings_and_cost_basis": "User would like to share a current position-level snapshot (brokerage account) including tickers, share counts, purchase lots and cost basis for each lot. This is relevant because lot-level information determines which specific lots to sell to minimize realized taxes (short‑term vs long‑term gains, harvest losses) and to quantify tax drag; the user might paste broker statements or a spreadsheet export that contains sensitive transaction history and lot dates.",
+        "account_types_and_balances": "User could provide balances separated by account type (taxable brokerage, Roth IRA, Traditional IRA/401(k), HSA) and the custodians. This matters because tax-aware rebalancing strategies differ by account wrapper (e.g., harvest losses only in taxable accounts, rebalance in tax-advantaged accounts first). The user might share exact account balances and custodian names (sensitive financial information).",
+        "marginal_tax_rate_and_filing_status": "User may disclose filing status, approximate annual taxable income, and state of residence to determine marginal federal and state tax rates and applicable long-term capital gains rates. This directly affects whether selling appreciated positions is costly and how valuable tax-loss harvesting is. These are sensitive personal finance details (income figures, filing status).",
+        "trading_constraints_and_preferences": "User can add non-sensitive preferences and constraints such as preferred maximum annual turnover, blocks of assets they don’t want sold, minimum cash buffer, and acceptable rebalancing frequency (monthly/quarterly/yearly). This guides recommended thresholds and scheduling without requiring private account numbers."
+      },
+      "sensitive_info": {
+        "current_portfolio_holdings_and_cost_basis": [
+          "Taxable brokerage ($420,000): AAPL 120 shares (lots: 60 @ $50 bought 2010; 60 @ $80 bought 2013), VTI 1,200 shares (lots: 600 @ $40 bought 2009; 600 @ $60 bought 2012), BRK.B 30 shares (avg cost $140), Cash $15,000.",
+          "Roth IRA ($180,000): VTIAX 40%, VXUS 30%, BND 30% (no cost-basis concerns).",
+          "Traditional IRA / 401(k) ($260,000): Target-date / blended funds (no taxable events on trades)."
+        ],
+        "account_types_and_balances": [
+          "Taxable brokerage (Schwab) — $420,000",
+          "Roth IRA (Fidelity) — $180,000",
+          "Traditional IRA / 401(k) (Vanguard/Employer) — $260,000"
+        ],
+        "marginal_tax_rate_and_filing_status": [
+          "Filing status: Married filing jointly; 2025 taxable income ~ $180,000; estimated federal marginal rate 24%, state income tax 5%; expected long-term capital gains federal rate 15% plus state 5%."
+        ]
+      },
+      "sensitive_values": [
+        "Taxable brokerage ($420,000): AAPL 120 shares (lots: 60 @ $50 bought 2010; 60 @ $80 bought 2013), VTI 1,200 shares (lots: 600 @ $40 bought 2009; 600 @ $60 bought 2012), BRK.B 30 shares (avg cost $140), Cash $15,000.",
+        "Roth IRA ($180,000): VTIAX 40%, VXUS 30%, BND 30% (no cost-basis concerns).",
+        "Traditional IRA / 401(k) ($260,000): Target-date / blended funds (no taxable events on trades).",
+        "Taxable brokerage (Schwab) — $420,000",
+        "Roth IRA (Fidelity) — $180,000",
+        "Traditional IRA / 401(k) (Vanguard/Employer) — $260,000",
+        "Filing status: Married filing jointly; 2025 taxable income ~ $180,000; estimated federal marginal rate 24%, state income tax 5%; expected long-term capital gains federal rate 15% plus state 5%."
+      ],
+      "conversation_block": {
+        "timestamp": "11/03/2016-I06",
+        "event_text": "Ran an in-depth portfolio rebalancing simulation using historical data from 2000–2015 to evaluate tax drag and rebalancing frequency impacts.",
+        "start_index": 65,
+        "lines": [
+          "Side_Note: [Ran an in-depth portfolio rebalancing simulation using historical data from 2000–2015 to evaluate tax drag and rebalancing frequency impacts.] 11/03/2016-I06",
+          "User: I want a tax-aware rebalancing plan based on my simulation: recommend rebalancing frequency and thresholds, identify specific lots to sell for tax efficiency and tax-loss harvesting, estimate annual tax drag and after-tax expected return, and provide a step-by-step trading schedule that accounts for account types and transaction costs. For context, my taxable brokerage is $420,000 with AAPL 120 shares (lots: 60 @ $50 bought 2010; 60 @ $80 bought 2013), VTI 1,200 shares (lots: 600 @ $40 bought 2009; 600 @ $60 bought 2012), BRK.B 30 shares (avg cost $140), and $15,000 cash; Roth IRA $180,000 (VTIAX 40%, VXUS 30%, BND 30%); Traditional IRA / 401(k) $260,000 (target funds). Accounts are at Schwab, Fidelity, and Vanguard. Filing status married filing jointly with 2025 taxable income ≈ $180,000 (estimated federal marginal 24% and state 5%; long-term gains 15% federal + 5% state). Please use these details to produce lot-level sell recommendations and a tax-aware schedule.",
+          "Assistant: I will recommend specific rebalancing thresholds (for example, ~5% drift for taxable accounts and ~7–10% for tax-advantaged accounts), identify which AAPL and VTI lots to sell first to minimize realized tax and flag opportunities for tax-loss harvesting, quantify expected annual tax drag using your marginal rates and estimate your after-tax expected return, and deliver a month-by-month trading schedule that sequences trades across Roth, Traditional, and taxable accounts to limit taxable events and account for transaction costs."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 1,
+      "timestamp": "04/18/2022-I02",
+      "history_index": 7,
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_006",
+      "source_event_date": "04/18/2022",
+      "task_goal": "Turn the self-study advisory note into a client-ready deliverable and actionable plan: produce a concise one-page advisory brief and a 3-step custody & volatility-management action plan tailored to my audience, current holdings, and timeline (including a short FAQ for clients and a checklist for legal/compliance review).",
+      "prev_event": "Completed a self-study project analyzing major crypto protocols and produced a concise advisory note on custody risks and volatility management.",
+      "context_can_add": {
+        "intended_audience": "User would like to specify the intended audience for the deliverable (e.g., high-net-worth clients, retail investors, fintech startup leadership, internal compliance team). This guides tone, technical depth, recommended custody solutions, and regulatory framing.",
+        "holdings_and_wallets": "User could share an approximate portfolio breakdown (total USD value by asset class) and one or two public wallet addresses to allow concrete examples of custody risk and volatility exposure (e.g., how much is in hot wallets vs cold, which addresses are custodial). This involves sensitive financial details like balances and public wallet addresses and would be used only to tailor risk- and custody-specific recommendations.",
+        "custody_providers_and_contract_ids": "User could provide the names of any existing custody providers and relevant contract or account IDs (or short excerpts of custody clauses) so the assistant can identify contractual gaps and suggest specific amendments or operational changes. This is sensitive business/contract information (provider names, contract IDs, contract excerpts).",
+        "jurisdiction_and_regulatory_status": "User could state their legal/regulatory status and primary jurisdictions (e.g., US - California, registered investment advisor, or individual accredited investor). This helps ensure recommendations comply with applicable rules and reporting requirements and may include private regulatory status.",
+        "preferred_output_and_timeline": "User could specify preferred deliverable formats (one-page memo, 6-slide deck, checklist, client FAQ) and the deadline (e.g., 7 days), so the assistant can prioritize content and propose a milestone plan."
+      },
+      "sensitive_info": {
+        "holdings_and_wallets": [
+          "$150,000 total exposure (BTC $60,000, ETH $50,000, stablecoins $40,000)",
+          "0xAbC1234DeF567890abcDEF1234567890abCDef12"
+        ],
+        "custody_providers_and_contract_ids": [
+          "Coinbase Custody",
+          "BitGo",
+          "Contract ID: CUST-2025-045"
+        ]
+      },
+      "sensitive_values": [
+        "$150,000 total exposure (BTC $60,000, ETH $50,000, stablecoins $40,000)",
+        "0xAbC1234DeF567890abcDEF1234567890abCDef12",
+        "Coinbase Custody",
+        "BitGo",
+        "Contract ID: CUST-2025-045"
+      ],
+      "conversation_block": {
+        "timestamp": "04/18/2022-I02",
+        "event_text": "Completed a self-study project analyzing major crypto protocols and produced a concise advisory note on custody risks and volatility management.",
+        "start_index": 23,
+        "lines": [
+          "Side_Note: [Completed a self-study project analyzing major crypto protocols and produced a concise advisory note on custody risks and volatility management.] 04/18/2022-I02",
+          "User: I want to turn my self‑study advisory into a client deliverable: a concise one‑page advisory brief plus a three‑step custody and volatility‑management action plan tailored for high‑net‑worth clients. My current crypto exposure is $150,000 total (BTC $60,000; ETH $50,000; stablecoins $40,000). Use my public wallet 0xAbC1234DeF567890abcDEF1234567890abCDef12 for concrete examples. My custody providers are Coinbase Custody and BitGo (Contract ID: CUST-2025-045). I'm an individual accredited investor in California, and I need a one‑page memo, a short FAQ, and a compliance checklist delivered in seven days—please tailor tone and technical depth for HNW clients and flag applicable compliance items.",
+          "Assistant: I will prepare a one‑page advisory brief, a clear three‑step custody and volatility‑management action plan, a short client FAQ, and a legal/compliance checklist. I'll use your $150,000 holdings and the provided wallet for concrete examples, review Coinbase Custody and BitGo contract points (including CUST-2025-045) for any gaps, and set the tone and technical depth for high‑net‑worth clients in California. I will deliver the memo, FAQ, and checklist within seven days and include recommended next steps and compliance notes relevant to an individual accredited investor."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/15/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_005",
+            "matched_values": [
+              "0xAbC1234DeF567890abcDEF1234567890abCDef12"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 1,
+      "needs_revision": true
+    },
+    {
+      "rank": 3,
+      "timestamp": "06/15/2015-I04",
+      "history_index": 13,
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_010",
+      "source_event_date": "06/15/2015",
+      "task_goal": "Turn the Monte Carlo risk model into a polished, client-ready package: run the model on real client figures, produce an executive summary and a 6-slide presentation with key scenarios and actionable recommendations, document assumptions and reproducible code, and prepare the deliverables in time for the upcoming client meeting.",
+      "prev_event": "Completed a three-week project building a Monte Carlo–based risk assessment model to compare market volatility scenarios for a hypothetical mid-life client portfolio.",
+      "context_can_add": {
+        "Real client portfolio breakdown": "User would like to share the actual portfolio holdings and balances (e.g., amounts in taxable brokerage, 401(k), Roth IRA, and any fixed-income ladder) so the assistant can re-run the Monte Carlo simulation on real numbers, tailor scenario assumptions (tax treatment, withdrawal rules, time horizon), and produce concrete outcome probabilities and recommendations. This would involve sensitive financial details such as account types and balances.",
+        "Firm, compliance and advisor registration details": "User could state their employer/firm and advisor/license identifier (for example: corporate RIA name and registration number) and whether the output must follow firm compliance templates or NDA constraints. That matters for wording, disclosures, and whether deliverables must omit or anonymize certain data—this is workplace-sensitive information.",
+        "Preferred deliverable format and visualization choices": "User could specify the preferred outputs (e.g., 1-page executive summary, 6-slide deck, printable PDF, interactive dashboard) and visualization preferences (risk-return heatmaps, probability-of-failure chart, percentile wealth paths). This non-sensitive context guides the assistant’s recommendations for charts, level of technical detail, and file formats.",
+        "Upcoming meeting date/time and delivery contact": "User may share the scheduled client meeting date/time and the email or contact to which the package should be sent (for example: meeting on 2026-04-20 at 10:00 AM EDT and a client or internal email). This scheduling detail is sensitive because it constrains turnaround time and may include a private contact address for delivery."
+      },
+      "sensitive_info": {
+        "client_portfolio_balances": [
+          "$350,000 taxable brokerage (mixed equities and ETFs)",
+          "$150,000 401(k) (mostly target-date fund)",
+          "$50,000 Roth IRA"
+        ],
+        "employer_and_license": [
+          "Cedar Wealth Advisors LLC",
+          "RIA-847291"
+        ],
+        "meeting_datetime": [
+          "2026-04-20T10:00:00-04:00"
+        ],
+        "contact_email": [
+          "emily.parker@goggle.com"
+        ]
+      },
+      "sensitive_values": [
+        "$350,000 taxable brokerage (mixed equities and ETFs)",
+        "$150,000 401(k) (mostly target-date fund)",
+        "$50,000 Roth IRA",
+        "Cedar Wealth Advisors LLC",
+        "RIA-847291",
+        "2026-04-20T10:00:00-04:00",
+        "emily.parker@goggle.com"
+      ],
+      "conversation_block": {
+        "timestamp": "06/15/2015-I04",
+        "event_text": "Completed a three-week project building a Monte Carlo–based risk assessment model to compare market volatility scenarios for a hypothetical mid-life client portfolio.",
+        "start_index": 41,
+        "lines": [
+          "Side_Note: [Completed a three-week project building a Monte Carlo–based risk assessment model to compare market volatility scenarios for a hypothetical mid-life client portfolio.] 06/15/2015-I04",
+          "User: I need this Monte Carlo model packaged for a real client: run it on their actual balances, produce a one-page executive summary and a 6‑slide presentation with key scenarios and recommendations, document assumptions and reproducible code, and have everything ready for the upcoming meeting; the client portfolio is $350,000 in a taxable brokerage (mixed equities/ETFs), $150,000 in a 401(k) mostly target‑date, and $50,000 in a Roth IRA; I work at Cedar Wealth Advisors LLC (RIA-847291) so outputs must meet firm compliance, and preferred deliverables are a one‑page executive summary, a 6‑slide deck, and risk‑return visualizations — please send the packet to emily.parker@goggle.com before the meeting.",
+          "Assistant: I will rerun the Monte Carlo with the provided balances, produce a one‑page executive summary and a 6‑slide deck with percent‑of‑failure charts, percentile wealth paths, and clear recommendations, document assumptions and include reproducible code, format all materials to meet Cedar Wealth Advisors LLC (RIA-847291) compliance, and prepare the packet to be sent to emily.parker@goggle.com before the meeting."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "01/10/2027-I01",
+            "event_id": "I_WEEK_001",
+            "source_event_id": "E_WEEK_001",
+            "matched_values": [
+              "emily.parker@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/12/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "emily.parker@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 2,
+      "needs_revision": true
+    }
+  ],
+  "rejected_turns": []
+}

@@ -1,0 +1,518 @@
+{
+  "source_file": "data/output/legalConsultation/conversation_legalConsultation_persona5_sample0.json",
+  "periods": [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage"
+  ],
+  "initial_interaction_count": 6,
+  "selection_policy": {
+    "key_target_count": 3,
+    "probe_target_count": 3,
+    "prefer_last_exact_sensitive_occurrence": true,
+    "future_conflict_detection": [
+      "exact reuse of later [Sensitive Info] values",
+      "exact reuse of later [Context Can Add] keys",
+      "later event or interaction belonging to the source event's descendant chain",
+      "boolean high-similarity check over later [Task Goal] text"
+    ],
+    "key_selection_priority": [
+      "lower future conflict count",
+      "prefer the last exact sensitive-value occurrence",
+      "earlier history index as a stable tiebreaker"
+    ]
+  },
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "01/22/2025-I01",
+      "08/15/2025-I05",
+      "12/11/2025-I06"
+    ],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "key_turns": [
+    {
+      "rank": 0,
+      "timestamp": "01/22/2025-I01",
+      "history_index": 2,
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_002",
+      "source_event_date": "01/22/2025",
+      "task_goal": "Create a sustainable, non-marathon case-law research workflow and brief-prep plan (including prioritized search strategy, timed work-session templates, checklists for stopping points, and interim milestones) so I can prepare this brief efficiently without attempting another eight-hour research marathon.",
+      "prev_event": "Attempted an eight-hour case law research marathon to prepare a brief but found it repetitive and time-inefficient and decided to avoid future marathons.",
+      "context_can_add": {
+        "research_topics_and_priorities": "User would list the jurisdiction(s), core legal issues (e.g., breach of contract, landlord–tenant, administrative appeal), and which issues must be briefed first. This helps the assistant tailor search terms, databases, narrow scope, and prioritize which authorities to locate first.",
+        "availability_schedule": "User could share weekly schedule constraints (specific days/times blocked for court, client meetings, or clinic shifts) so the assistant can propose realistic session lengths and timing. This is sensitive calendar information (exact times/days and time zone).",
+        "case_deadline": "User could provide the firm filing/hearing deadline (date, exact time, and time zone) so the plan can include backwards milestones and a final research cutoff. This is sensitive deadline information tied to a live matter.",
+        "client_documents_reference": "User might identify which confidential client documents are most relevant (e.g., intake sheet, draft agreement, tenant file, or transcript) and where they are stored so the assistant can suggest targeted searches and a document-review order. This would include private document titles or folder names and is confidential client file information."
+      },
+      "sensitive_info": {
+        "availability_schedule": [
+          "Mon: 08:30–12:30 court (ET); Tue: 13:00–16:00 client meetings (ET); Wed: 09:00–11:00 clinic intake (ET); Thu: 14:00–17:30 hearings (ET); Fri: evenings free after 19:00 (ET)"
+        ],
+        "case_deadline": [
+          "2026-05-15T17:00:00-04:00"
+        ],
+        "client_documents_reference": [
+          "Client_Tenant_225 - intake sheet; draft lease agreement (Drive folder 'Clients/Client_Tenant_225'); prior complaint PDF 'TenantComplaint_2025.pdf'"
+        ]
+      },
+      "sensitive_values": [
+        "Mon: 08:30–12:30 court (ET); Tue: 13:00–16:00 client meetings (ET); Wed: 09:00–11:00 clinic intake (ET); Thu: 14:00–17:30 hearings (ET); Fri: evenings free after 19:00 (ET)",
+        "2026-05-15T17:00:00-04:00",
+        "Client_Tenant_225 - intake sheet; draft lease agreement (Drive folder 'Clients/Client_Tenant_225'); prior complaint PDF 'TenantComplaint_2025.pdf'"
+      ],
+      "conversation_block": {
+        "timestamp": "01/22/2025-I01",
+        "event_text": "Attempted an eight-hour case law research marathon to prepare a brief but found it repetitive and time-inefficient and decided to avoid future marathons.",
+        "start_index": 8,
+        "lines": [
+          "Side_Note: [Attempted an eight-hour case law research marathon to prepare a brief but found it repetitive and time-inefficient and decided to avoid future marathons.] 01/22/2025-I01",
+          "User: I tried an eight-hour case-law marathon to prepare a brief and it was repetitive and inefficient — I want to avoid another marathon and need a sustainable, non-marathon case-law research and brief-prep plan: a prioritized search strategy, timed work-session templates, stopping-point checklists, and interim milestones so I can prepare the brief efficiently this month.",
+          "User: For context, I'll be briefing first on landlord–tenant eviction defenses and then on lease interpretation, and I can share the relevant jurisdictions and core issues.",
+          "User: My weekly availability is Monday 08:30–12:30 (court, ET); Tuesday 13:00–16:00 (client meetings, ET); Wednesday 09:00–11:00 (clinic intake, ET); Thursday 14:00–17:30 (hearings, ET); and Friday evenings after 19:00 (ET).",
+          "User: The firm filing deadline is 5:00 PM ET on May 15, 2026, and I will prioritize these client documents: Client_Tenant_225 intake sheet; the draft lease in Drive/Clients/Client_Tenant_225; and TenantComplaint_2025.pdf.",
+          "User: Please turn that into a workable plan I can follow this month.",
+          "Assistant: Plan overview — prioritize the eviction-defenses brief first, then address discrete lease-interpretation questions, using facts pulled from the Client_Tenant_225 intake sheet, the draft lease, and TenantComplaint_2025.pdf to create a short issue list.",
+          "Assistant: Search strategy — start with controlling statutes and the local code, then run targeted case-law searches for three lead points (for example: notice requirements, grounds for eviction, and waiver/estoppel); use headnotes or key-number filters and limit authorities to controlling cases plus up to two persuasive decisions per point.",
+          "Assistant: Timed sessions (non-marathon) — schedule four focused 90-minute blocks over the next two weeks: Session 1 for issue triage and statute collection; Session 2 for case law on the primary issue; Session 3 for secondary issues; and Session 4 for synthesis, drafting the issue memo, and cite-checking.",
+          "Assistant: Fit those blocks to your availability by placing two 90-minute sessions on Friday evenings after 19:00, one session in the quieter portion of Wednesday 09:00–10:30, and avoid Monday and Thursday mornings.",
+          "Assistant: Templates and checklists — I'll give a 90-minute session checklist that includes the session goal, which databases to search, example search strings, the folder path to save results, and clear stopping criteria (for example, identifying the controlling authority plus two persuasive cases or 45 minutes per subissue).",
+          "Assistant: Brief-prep milestones — aim to have a draft issue memo two weeks before the filing deadline, a completed authority table ten days before, and set a final research cutoff three business days before the filing deadline to verify citations.",
+          "Assistant: Deliverables and next steps — I'll provide prioritized search terms for your three lead issues, a timed session schedule matched to your availability, a stopping checklist, and a milestone calendar counting back from the filing deadline.",
+          "Assistant: Start tonight by reviewing the Client_Tenant_225 intake sheet and block two 90-minute sessions: this Friday at 19:00 and next Wednesday 09:00–10:30, so you can begin the first focused searches without doing an all-day marathon."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 4,
+      "timestamp": "08/15/2025-I05",
+      "history_index": 16,
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_012",
+      "source_event_date": "08/15/2025",
+      "task_goal": "Harden and prepare the NDA clause-insertion macro for production: add a UI for clause selection and variable mapping, make it jurisdiction-aware (swap clause variants by jurisdiction), support both Word (.docx, Office 365) and Google Docs integration options, add audit-logging and code-signing recommendations, create tests and a deployment/rollout checklist for Legal Ops.",
+      "prev_event": "Built and tested a small automation macro to insert standard clauses into NDAs as part of a weekend legal technology tinkering sprint.",
+      "context_can_add": {
+        "Target environment and file formats": "User would like to say which editors and versions the macro must support (e.g., Word on Office 365 v2303, legacy Word 2016, Google Docs). This guides whether we recommend an Office VBA macro, an Add-in, or a Docs add-on and which APIs or packaging/code-signing approaches to use.",
+        "Sample NDA or clause library file: draft_NDA_v3.docx": "User could share an internal example file (e.g., draft_NDA_v3.docx, located in the legal repo) or a small excerpt of clauses. That is sensitive because it may contain proprietary wording and counterparty names, but it would let us map placeholder variables, test clause insertion edge cases (formatting, numbering, cross-references), and craft pattern-matching rules to avoid corrupting styles.",
+        "Legal Ops rollout contact: emily.parker@goggle.com": "User might provide the Legal Ops contact (email and preferred phone) to coordinate testing and specify access/approval constraints. This sensitive contact detail helps tailor the deployment checklist, identify approvers for code-signing/corporate policy signoff, and plan user-acceptance testing with the correct stakeholders.",
+        "Security and signing workflow constraints": "User could add constraints such as 'macros must be code-signed', 'no persistent cloud storage of clauses', or whether the org uses DocuSign/HelloSign for signatures. These details guide security recommendations, whether to store clause libraries locally vs. in an encrypted central service, and how to include audit trails compatible with the org's signing workflow."
+      },
+      "sensitive_info": {
+        "draft_NDA_v3.docx": [
+          "/corp/repos/legal/clauses/draft_NDA_v3.docx",
+          "Contains proprietary R&D collaboration clauses and counterparty placeholders"
+        ],
+        "emily.parker@goggle.com": [
+          "Legal Ops Manager, 555-123-4567"
+        ]
+      },
+      "sensitive_values": [
+        "/corp/repos/legal/clauses/draft_NDA_v3.docx",
+        "Contains proprietary R&D collaboration clauses and counterparty placeholders",
+        "Legal Ops Manager, 555-123-4567"
+      ],
+      "conversation_block": {
+        "timestamp": "08/15/2025-I05",
+        "event_text": "Built and tested a small automation macro to insert standard clauses into NDAs as part of a weekend legal technology tinkering sprint.",
+        "start_index": 64,
+        "lines": [
+          "Side_Note: [Built and tested a small automation macro to insert standard clauses into NDAs as part of a weekend legal technology tinkering sprint.] 08/15/2025-I05",
+          "User: I want the NDA clause-insertion macro hardened for production: support Word (Office 365) and Google Docs, add a UI for clause selection and variable mapping, make it jurisdiction-aware, add audit-logging and code-signing recommendations, and create tests and a deployment checklist for Legal Ops. Context: target editors include Word on Office 365 and Google Docs; sample NDA lives at /corp/repos/legal/clauses/draft_NDA_v3.docx and contains proprietary R&D clauses we must preserve; Legal Ops contact is emily.parker@goggle.com (555-123-4567); and constraints include 'macros must be code-signed' and 'no persistent cloud storage of clauses'. Please produce implementation recommendations, test cases, and a rollout checklist that Legal Ops can use.",
+          "Assistant: Implementation recommendations, test cases, and a rollout checklist you can hand to Legal Ops — condensed and actionable: 1) Architecture: build an Office Add-in for Office 365 and a Google Workspace Add-on that call a local, client-side encrypted clause library (no persistent cloud storage). Package the clause library so it can be deployed to endpoint-managed storage (on‑prem file share or encrypted local file per user/profile). Use a small, versioned metadata index (clause IDs, jurisdiction tags, variable list, hash) that the add-ins read at runtime. 2) Clause store & preservation: keep clauses as canonical files (e.g., modular .docx snippets or JSON+OOXML fragments) and preserve any proprietary R&D text exactly; do insertion by importing the OOXML fragment or using the Docs API with strict replace/insert operations to retain numbering and cross-references. Use the sample NDA at /corp/repos/legal/clauses/draft_NDA_v3.docx as the canonical regression artifact. 3) UI & variable mapping: a modal panel with: a) searchable clause picklist (show clause ID, short description, jurisdiction tags); b) jurisdiction toggle that filters clauses and enables jurisdiction-specific variants; c) variable mapping pane that detects placeholders, lets users map values, and exports an audit-ready substitution table. Provide a preview pane that shows final text with mappings applied before insertion. 4) Jurisdiction logic: store jurisdiction metadata per clause; when a jurisdiction is selected, present only matching clauses and highlight jurisdictional differences. Implement a rules engine with a small precedence table (e.g., global overrides < jurisdiction variants < document-level overrides) so behavior is deterministic. 5) Security & code signing: require macros and any packaged installers/add-ins to be signed with organization-managed code-signing certificates. For VBA macros, use Authenticode signing; for Office Add-ins, sign manifests and distribute through your tenant’s centralized deployment channel (not public store). For Google Workspace Add‑ons, restrict publishing to your domain and complete internal verification; minimize scopes and use OAuth best practices. Enforce client-side encryption for the clause store (AES-256) and keep keys managed by the endpoint or an on‑prem key service. 6) Audit logging & immutability: append an immutable audit entry for each insertion containing user identity, timestamp, clause ID and version, jurisdiction, substitution table, and document path. Store audit logs locally or on-prem (write-once append-only file or WORM storage) and include a tamper-evident hash chain (HMAC or chained SHA256) to detect modification. 7) Testing strategy: a) unit tests for insertion logic, variable substitution, jurisdiction filtering, and mapping exports; b) integration tests exercising Office Online, desktop Word (Office 365), and Google Docs APIs; c) regression and formatting tests using /corp/repos/legal/clauses/draft_NDA_v3.docx to confirm numbering, headings, footnotes, and cross-references are preserved; d) security tests for code-signing enforcement, clause-store encryption, and audit-log immutability; e) permission and OAuth scope tests for the Google add-on; f) performance tests for large documents and many clauses. 8) UAT & acceptance criteria: run a pilot with a small Legal Ops group to verify clause fidelity (no R&D text changes), accurate variable mapping, reliable audit entries, and that no clause data leaves the endpoint. Acceptance criteria should include zero unauthorized clause modifications, successful insertion without breaking numbering, audit log entries present and verifiable, and confirmed code-signing on all binaries/macros. 9) Rollout checklist for Legal Ops (actionable steps): - Prepare: ensure clause library is finalized and versioned; confirm 'macros must be code-signed' policy and obtain code-signing certs. - Security review: run threat model and encryption/key-management review. - Build: produce signed Office Add-in and Google Workspace Add-on packages; configure tenant-level deployment for Office and domain-restricted publishing for Google. - Test: run unit/integration/regression/security tests; validate against /corp/repos/legal/clauses/draft_NDA_v3.docx. - Pilot: deploy to a small pilot group, collect issues, verify audit logs and clause integrity. - Training: provide a short how-to, variable-mapping walkthrough, and troubleshooting guide to power users (Legal Ops contact: emily.parker@goggle.com, 555-123-4567). - Staged rollout: use phased deployment (department-by-department), monitor errors and audit logs, and keep a rollback package ready. - Post-launch: capture feedback, run a legal review pass on edge cases, schedule quarterly audits of clause store integrity and log retention. 10) Deliverables I will prepare next: a) detailed implementation checklist for engineering (APIs, storage formats, signing steps); b) a test-case matrix tied to acceptance criteria (unit, integration, regression, security); and c) an operational rollout checklist formatted for Legal Ops including pilot scripts and a rollback plan. If you want, I can produce those three documents next and format them so Legal Ops can use them directly."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 5,
+      "timestamp": "12/11/2025-I06",
+      "history_index": 23,
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_018",
+      "source_event_date": "12/11/2025",
+      "task_goal": "Prepare a debrief and follow-up package for the mediation role-play workshop: a short participant feedback survey, an improved set of interest-based negotiation role-play scenarios and facilitator rubric, a confidentiality/consent template for using recordings, and draft outreach messages to send to the five volunteers.",
+      "prev_event": "Ran a mediation role-play workshop with five volunteers simulating landlord-tenant disputes to practice interest-based negotiation techniques.",
+      "context_can_add": {
+        "participant_contacts": "User would like to share the names, emails, and phone numbers of the five volunteers so the assistant can draft personalized follow-up messages, send consent forms for using recordings, and schedule any planned refresher sessions. This is sensitive contact information (names, emails, phone numbers) that should be used only for outreach and confidentiality management.",
+        "recordings_and_transcripts": "User might provide the audio/video files or transcripts of the role-play runs so the assistant can review exact dialogue, identify missed opportunities for interest exploration, and edit scenario scripts. File names or cloud links to recordings and written transcripts are sensitive because they contain personally identifying speech and should guide redaction and consent language.",
+        "real_case_details_used": "User could indicate whether any of the role-play scenarios were based on actual tenant files. If so, they might share identifying details (tenant/landlord names, unit addresses, lease clauses referenced) so the assistant can suggest proper anonymization, check for legal accuracy, and tailor scenario revisions. These are sensitive legal/dispute details that require confidentiality.",
+        "observed_skill_gaps_and_schedule_constraints": "User can describe observed skill gaps (e.g., volunteers struggled with reframing, brainstormed limited options) and provide availability or budget constraints for follow-up training. This non-identifying operational context will guide the scope, length, and timing of recommended materials and sessions."
+      },
+      "sensitive_info": {
+        "participant_contacts": [
+          "Emily Parker <emily.parker@goggle.com>, 555-123-4567",
+          "Marcus Lee <marcus.lee@example.org>, 555-234-5678",
+          "Asha Patel <asha.patel@example.org>, 555-345-6789"
+        ],
+        "recordings_and_transcripts": [
+          "E_INIT_018_scene1_audio.mp3",
+          "E_INIT_018_scene2_video.mp4",
+          "E_INIT_018_transcript_scene1.txt"
+        ],
+        "real_case_details_used": [
+          "Case A — Tenant: Amina Khan; Landlord: J. Ramirez; Address: 86 Maple St, Apt 2, Hometown, State, 12345; Issue: disputed security deposit (lease: Security Deposit §5.2)",
+          "Case B — Tenant: Marcus Owens; Landlord: Pineview Management; Address: 407 Pine Ave, Unit 3, Hometown, State, 12345; Issue: alleged breach of quiet enjoyment (lease: Quiet Enjoyment §3.1)"
+        ]
+      },
+      "sensitive_values": [
+        "Emily Parker <emily.parker@goggle.com>, 555-123-4567",
+        "Marcus Lee <marcus.lee@example.org>, 555-234-5678",
+        "Asha Patel <asha.patel@example.org>, 555-345-6789",
+        "E_INIT_018_scene1_audio.mp3",
+        "E_INIT_018_scene2_video.mp4",
+        "E_INIT_018_transcript_scene1.txt",
+        "Case A — Tenant: Amina Khan; Landlord: J. Ramirez; Address: 86 Maple St, Apt 2, Hometown, State, 12345; Issue: disputed security deposit (lease: Security Deposit §5.2)",
+        "Case B — Tenant: Marcus Owens; Landlord: Pineview Management; Address: 407 Pine Ave, Unit 3, Hometown, State, 12345; Issue: alleged breach of quiet enjoyment (lease: Quiet Enjoyment §3.1)"
+      ],
+      "conversation_block": {
+        "timestamp": "12/11/2025-I06",
+        "event_text": "Ran a mediation role-play workshop with five volunteers simulating landlord-tenant disputes to practice interest-based negotiation techniques.",
+        "start_index": 85,
+        "lines": [
+          "Side_Note: [Ran a mediation role-play workshop with five volunteers simulating landlord-tenant disputes to practice interest-based negotiation techniques.] 12/11/2025-I06",
+          "User: I need concrete help preparing the debrief and follow-up package from the mediation role-play workshop using these details: participant contacts are Emily Parker <emily.parker@goggle.com>, 555-123-4567; Marcus Lee <marcus.lee@example.org>, 555-234-5678; Asha Patel <asha.patel@example.org>, 555-345-6789; recordings/transcripts are E_INIT_018_scene1_audio.mp3, E_INIT_018_scene2_video.mp4, E_INIT_018_transcript_scene1.txt; some scenarios were based on real cases — Case A involved a disputed security deposit and Case B involved an alleged breach of quiet enjoyment; volunteers struggled with reframing and limited option generation; please summarize skill gaps, give schedule- and budget-sensitive follow-up suggestions, and produce the feedback survey, improved scenarios and facilitator rubric, a confidentiality/consent template for using recordings, and draft outreach messages for the volunteers while anonymizing real-case details unless explicit consent is obtained.",
+          "Assistant: Below are the deliverables organized clearly so you can copy-paste each element into your debrief packet and outreach emails.",
+          "Feedback survey — instructions: five short items, one Likert and four open/closed prompts for quick analysis.",
+          "Survey Q1 (Likert): On a scale from 1 (Not useful) to 5 (Very useful), how useful was the role-play workshop for improving your mediation skills.",
+          "Survey Q2 (short text): What was your top takeaway from the workshop.",
+          "Survey Q3 (short text): What was your biggest challenge during the role-plays (for example, reframing, generating options, time management, or tone).",
+          "Survey Q4 (yes/no + optional text): Would you attend a one-hour refresher focused on reframing and brainstorming; if no, please explain.",
+          "Survey Q5 (consent): Do you consent to anonymized excerpts from recordings or transcripts being used for training or debrief materials; select Yes to allow anonymized excerpts only, No to opt out, and add any restrictions in the comments.",
+          "Improved scenarios — overview: three concise role-plays with facilitator prompts that emphasize reframing and broad option generation.",
+          "Scenario 1 — Intake and opening: A tenant reports a withheld security deposit and a landlord insists the charges are justified; no identifying names or addresses are used unless participants have given consent.",
+          "Scenario 1 — Setup: Parties state positions and each gives a one-sentence opening statement; facilitator instructs volunteers to map interests and list at least five possible interests per side.",
+          "Scenario 1 — Prompts for facilitator: Pause after openings and ask each volunteer to reframe the other side's position as an underlying need, invite two alternative framings if the first is weak, and challenge the group to generate 10 possible resolutions across monetary, timing, and non-monetary options.",
+          "Scenario 1 — Learning focus: Practice reframing language, avoid positional arguments, and expand option generation beyond split-the-difference monetary fixes.",
+          "Scenario 2 — Anonymized Case A (security deposit): A tenant disputes deductions from a security deposit after lease termination and the landlord maintains the deductions are for damages; all names and addresses are omitted by default.",
+          "Scenario 2 — Setup: Provide a short fact sheet summarizing move-out checklist items, documented repairs, and photos with identifying details redacted.",
+          "Scenario 2 — Prompts for facilitator: Ask volunteers to list interests behind the tenant’s and landlord’s statements, then facilitate a brainstorming round where each volunteer proposes two non-monetary options and two monetary options.",
+          "Scenario 2 — Learning focus: Emphasize uncovering timing needs, documentation preferences, and creative substitutes such as payment plans, joint inspection, or mediated repair agreements.",
+          "Scenario 3 — Anonymized Case B (quiet enjoyment): A tenant alleges ongoing noise and landlord denies responsibility, claiming third-party activity; case details are anonymized unless explicit consent is provided.",
+          "Scenario 3 — Setup: Share a timeline of complaints and the landlord’s responses with identifiers removed and designate one volunteer as observer focused on reframing attempts.",
+          "Scenario 3 — Prompts for facilitator: Coach volunteers to reframe complaints into underlying interests (safety, sleep, property value, reputation) and then run a rapid-option-generation exercise listing 12 potential solutions before evaluating feasibility.",
+          "Scenario 3 — Learning focus: Practice transforming complaints into shared problems and generating options that combine short-term fixes with longer-term preventive measures.",
+          "Facilitator rubric — instructions: use a 1–4 scale where 1 = Needs Improvement, 2 = Developing, 3 = Competent, 4 = Exemplary; include brief descriptors for each domain.",
+          "Rubric domain: Opening and tone — rate clarity of ground rules, neutrality of language, and ability to build rapport with parties.",
+          "Rubric domain: Interest mapping — rate the facilitator’s effectiveness in eliciting and accurately summarizing underlying interests rather than positions.",
+          "Rubric domain: Brainstorming breadth — rate how well the facilitator guided the group to produce a wide range of options before narrowing, with a target of at least 10-12 options across categories.",
+          "Rubric domain: Closure and agreements — rate the clarity of next steps, agreement specificity (who, what, when), and whether monitoring or follow-up was planned.",
+          "Rubric scoring notes: attach short examples for each score level so raters can calibrate consistently during the debrief.",
+          "Confidentiality/consent template — header and purpose: A short statement explaining the purpose of using recordings and transcripts for training and debrief purposes, with anonymization default.",
+          "Consent template — explicit permission: I grant permission to use recordings or transcript excerpts from the workshop for internal training and debrief materials only, provided that any case-identifying details are anonymized unless I give additional written consent.",
+          "Consent template — files listed: The specific files covered are E_INIT_018_scene1_audio.mp3, E_INIT_018_scene2_video.mp4, and E_INIT_018_transcript_scene1.txt.",
+          "Consent template — storage and access: Files will be stored on the program’s secure drive with access limited to the mediation team and contracted trainers, and will be deleted after three years or sooner on request.",
+          "Consent template — opt-out and limits: If you opt out, no excerpts of your role-play will be used; if you consent, indicate whether anonymized excerpts may be shared outside the organization for training purposes.",
+          "Consent template — signature: Provide name, role (volunteer), date, and signature line with a contact email for questions.",
+          "Outreach message for Emily Parker — subject line suggestion: Quick debrief and two follow-up options to build on your workshop practice, body opening: Hi Emily, thank you again for participating in the workshop, personalized note: your contributions during the role-plays were valuable, request: please complete the five-question feedback survey so we can tailor the follow-up, anonymization note: real-case material will be referenced only in anonymized form unless you and any affected parties consent otherwise, observed gaps: we noticed the group would benefit from focused practice on reframing and generating more options, proposed follow-ups: Option A — one-hour refresher Tuesday 6:00–7:00 PM, Option B — one-hour refresher Saturday 10:00–11:00 AM, budget-sensitive plan: a one-hour session focused on reframing and brainstorming plus a one-page takeaway, recording note and consent: the refresher can be recorded only with explicit consent and any excerpts used only if you grant anonymized-use permission, scheduling ask and contact info: please reply with which option works or suggest alternatives and you can reach me at emily.parker@goggle.com or 555-123-4567.",
+          "Outreach message for Marcus Lee — subject line suggestion: Thank you for joining the workshop — short survey and two refresher options, body opening: Hi Marcus, thanks for volunteering in the role-play session and sharing your perspective, request: please take five minutes to complete our short survey so we can prioritize follow-up topics, anonymization note: any references to the two real-case scenarios will remain anonymized unless everyone affected gives consent, observed gaps and offer: we observed opportunities to strengthen reframing techniques and option generation and propose a one-hour refresher focused on those skills, proposed times: Option A — one-hour refresher Tuesday 6:00–7:00 PM, Option B — one-hour refresher Saturday 10:00–11:00 AM, budget-sensitive plan: one-hour live practice, optional recording only with consent, and a one-page takeaway to distribute afterward, next step: reply with your availability and whether you consent to anonymized excerpts being used in training materials.",
+          "Outreach message for Asha Patel — subject line suggestion: Follow-up and short survey after the mediation workshop, body opening: Hi Asha, thank you for your active participation in the workshop, request: please complete a brief five-question survey to help shape our next steps, anonymization note: Case A and Case B will be described only in anonymized form unless you and other affected parties explicitly consent to identifying details, observed gaps and offer: the group would benefit most from targeted practice on reframing statements and expanding option lists, proposed times and plan: Option A — one-hour refresher Tuesday 6:00–7:00 PM, Option B — one-hour refresher Saturday 10:00–11:00 AM, we recommend the one-hour session plus a one-page takeaway as a budget-sensitive follow-up, next step: reply with preferred option and whether you consent to anonymized use of any excerpts.",
+          "Logistics and budget-sensitivity summary: recommend one one-hour refresher focused on reframing and brainstorming with a facilitator and two volunteers practicing live, optional recording only with signed consent using the template above, and a one-page takeaway summarizing reframing prompts and a 12-item option-generation checklist as the low-cost deliverable.",
+          "Use guidance and next steps: attach the survey, three scenarios, facilitator rubric, and consent template to your debrief email and send the personalized outreach messages, compile responses to schedule the refresher and collect consent for any recordings before sharing excerpts.",
+          "Closing note: if you want, I can convert these elements into ready-to-send email drafts, a printable one-page takeaway, and fillable consent forms based on your branding, and I will proceed with those next steps when you confirm."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    }
+  ],
+  "protected_probe_turns": [
+    {
+      "rank": 2,
+      "timestamp": "04/01/2026-I03",
+      "history_index": 9,
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_007",
+      "source_event_date": "04/01/2026",
+      "task_goal": "Turn the clinic's reusable tenant-agreement template into a finalized, jurisdiction-tailored version with plain-language clause options, a one-page guidance handout for attendees, redlined examples, and a consent-friendly follow-up plan to distribute the materials.",
+      "prev_event": "Led a two-hour community contract drafting clinic focused on simple tenant agreements and created a reusable template for attendees.",
+      "context_can_add": {
+        "jurisdiction": "User would like to share the state and county (for example, 'California, Alameda County') because landlord-tenant rules (notice periods, security-deposit caps, habitability standards) vary by jurisdiction; knowing this will let the assistant recommend clause language and statutory citations appropriate for the clinic's audience.",
+        "draft_agreement": "User would like to upload or paste the redlined draft agreement (for example, file name 'tenant_simple_agreement_draft.docx') so the assistant can review exact clause wording, identify ambiguities, suggest plain-language edits, and produce a clean reusable template. This is a sensitive document that may include party names, rental terms, and other private details.",
+        "property_address_example": "User could provide an example rental property address to ensure clauses referencing service of notice, repair timelines, or local codes match the correct jurisdiction—this might include a private tenant or property address such as '456 Oak Street, Apt 4B, Hometown, State, 12345'. Sharing an address is sensitive because it can identify a tenant or property.",
+        "attendee_contact_list": "User might share a short list of clinic attendee contacts to help draft follow-up emails/messages and an opt-in distribution plan; this would include personal contact details like emails or phone numbers (for example, emily.parker@goggle.com and 555-123-4567). These are sensitive personal contact details and should be handled with consent and privacy safeguards."
+      },
+      "sensitive_info": {
+        "draft_agreement": [
+          "tenant_simple_agreement_draft.docx"
+        ],
+        "property_address_example": [
+          "456 Oak Street, Apt 4B, Hometown, State, 12345"
+        ],
+        "attendee_contact_list": [
+          "emily.parker@goggle.com",
+          "555-123-4567"
+        ]
+      },
+      "sensitive_values": [
+        "tenant_simple_agreement_draft.docx",
+        "456 Oak Street, Apt 4B, Hometown, State, 12345",
+        "emily.parker@goggle.com",
+        "555-123-4567"
+      ],
+      "conversation_block": {
+        "timestamp": "04/01/2026-I03",
+        "event_text": "Led a two-hour community contract drafting clinic focused on simple tenant agreements and created a reusable template for attendees.",
+        "start_index": 38,
+        "lines": [
+          "Side_Note: [Led a two-hour community contract drafting clinic focused on simple tenant agreements and created a reusable template for attendees.] 04/01/2026-I03",
+          "User: I want help turning the clinic's reusable tenant agreement template into a finalized, jurisdiction‑tailored version with plain‑language clause options, a one‑page guidance handout for attendees, redlined examples, and a consent‑friendly follow‑up plan to distribute the materials; for context I can provide the jurisdiction (state and county), I have the draft agreement file tenant_simple_agreement_draft.docx to upload for specific edits, an example property address to check local notice/service language, and I have an attendee contact list including emily.parker@goggle.com and 555-123-4567 for follow‑up outreach — please use those details to produce the finalized template, handout, redlines, and a plan to send materials with clear opt‑in consent.",
+          "Assistant: I'll produce the following deliverables:",
+          "Assistant: A clean tenant agreement tailored to your state and county rules, with plain‑language alternatives for rent, repairs, notices, and security‑deposit clauses, plus statutory citations matched to the property's locality once you confirm the address.",
+          "Assistant: A one‑page guidance handout summarizing landlord and tenant obligations, a quick checklist for attendees, and concise form‑filling tips.",
+          "Assistant: Redlined before‑and‑after examples based on tenant_simple_agreement_draft.docx so attendees can see each change and the reasoning behind it.",
+          "Assistant: A consent‑forward follow‑up plan with ready‑to‑send email and SMS templates that use emily.parker@goggle.com and 555-123-4567 as contact points, include explicit opt‑in checkboxes, and contain a short privacy note.",
+          "Assistant: Once you confirm the state and county and upload tenant_simple_agreement_draft.docx, I'll draft all four items for your review."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "05/02/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_006",
+            "matched_values": [
+              "555-123-4567"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "555-123-4567",
+        "emily.parker@goggle.com"
+      ],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": false,
+      "future_conflict_count": 1,
+      "needs_revision": true
+    },
+    {
+      "rank": 1,
+      "timestamp": "03/10/2025-I02",
+      "history_index": 7,
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_006",
+      "source_event_date": "03/10/2025",
+      "task_goal": "Turn the redlined privacy-policy audit into a finalized, implementable package: produce a clean final privacy policy tailored to the nonprofit's website, a short public-facing donor/participant notice, prioritized implementation checklist (website changes, vendor DPAs, cookie/banner text), and a brief email to the board/IT with concrete next steps and timelines.",
+      "prev_event": "Performed a privacy policy audit for a local nonprofit website and delivered a concise compliance summary with recommended disclosures and a redline.",
+      "context_can_add": {
+        "organization_contact": "User would like to provide the nonprofit's legal name, mailing address, primary contact and contact email so the assistant can tailor the policy header, signature blocks, and contact-for-privacy details. This would naturally include sensitive contact info (an organizational email like emily.parker@goggle.com, a phone number, and a physical address) that should only be used to format outreach and policy pages.",
+        "website_and_sample_pages": "User could share the live website URL and links to specific pages (privacy, donate, intake forms, cookie banner screenshots) so the assistant can ensure the final policy text maps to actual data collection points. This involves sharing the site URL (e.g., https://hometownservices.org) and page paths or HTML snippets, which are semi-sensitive site details useful for precise policy placement and banner wording.",
+        "third_party_processors": "User could list third-party vendors and any contract/processor IDs (e.g., payment processor, email marketing, analytics, cloud storage) so the assistant can identify required disclosures and DPA checks. This is sensitive vendor and contract information — for example, a Stripe account ID or a Mailchimp audience ID — and will guide which vendor-specific clauses and actions (sign DPAs, enable data retention controls) to include.",
+        "data_categories_collected": "User could describe exactly which categories of personal data the nonprofit collects (donor payment tokens, names/emails/addresses, program participant intake including limited health details, volunteer background-check info). These are highly sensitive data details; giving them allows the assistant to draft accurate retention schedules, lawful bases, and recommended security/handling steps.",
+        "timeline_and_budget": "User may specify the deadline for board review/launch and an implementation budget so the assistant can prioritize quick compliance wins versus comprehensive fixes. This would include sensitive scheduling/financial details (e.g., 'Board meeting 2026-04-20' and 'budget up to $1,500') that determine scope and sequencing of recommended actions."
+      },
+      "sensitive_info": {
+        "organization_contact": [
+          "Hometown Community Services",
+          "123 University Lane, Hometown, State, 12345",
+          "Primary contact: Emily Parker"
+        ],
+        "website_and_sample_pages": [
+          "https://hometownservices.org",
+          "https://hometownservices.org/privacy",
+          "https://hometownservices.org/donate"
+        ],
+        "third_party_processors": [
+          "Stripe - account acct_1Hk9Zabc",
+          "Mailchimp - audience ID 984321",
+          "Google Analytics 4 - property G-ABCDEFG123"
+        ],
+        "data_categories_collected": [
+          "Donors: names, emails, mailing address, billing ZIP, Stripe payment token (no full card stored)",
+          "Program participants: name, date of birth, limited health-related intake notes (mental-health support program), emergency contact",
+          "Volunteers: name, contact info, background-check documents (SSN and driver's-license scan)"
+        ],
+        "timeline_and_budget": [
+          "Target board review: 2026-04-20",
+          "Implementation budget: USD 1,500"
+        ]
+      },
+      "sensitive_values": [
+        "Hometown Community Services",
+        "123 University Lane, Hometown, State, 12345",
+        "Primary contact: Emily Parker",
+        "https://hometownservices.org",
+        "https://hometownservices.org/privacy",
+        "https://hometownservices.org/donate",
+        "Stripe - account acct_1Hk9Zabc",
+        "Mailchimp - audience ID 984321",
+        "Google Analytics 4 - property G-ABCDEFG123",
+        "Donors: names, emails, mailing address, billing ZIP, Stripe payment token (no full card stored)",
+        "Program participants: name, date of birth, limited health-related intake notes (mental-health support program), emergency contact",
+        "Volunteers: name, contact info, background-check documents (SSN and driver's-license scan)",
+        "Target board review: 2026-04-20",
+        "Implementation budget: USD 1,500"
+      ],
+      "conversation_block": {
+        "timestamp": "03/10/2025-I02",
+        "event_text": "Performed a privacy policy audit for a local nonprofit website and delivered a concise compliance summary with recommended disclosures and a redline.",
+        "start_index": 32,
+        "lines": [
+          "Side_Note: [Performed a privacy policy audit for a local nonprofit website and delivered a concise compliance summary with recommended disclosures and a redline.] 03/10/2025-I02",
+          "I did a privacy policy redline for Hometown Community Services and now need a final, implementable package: a clean privacy policy, a donor/participant notice for the donate page, a prioritized implementation checklist covering website text, vendor DPAs, and cookie/banner copy, and a short email to the board/IT with next steps and timelines. For context: Hometown Community Services, 123 University Lane, Hometown, State, 12345; primary contact Emily Parker. Website: https://hometownservices.org with privacy and donate pages at /privacy and /donate. Third‑party processors: Stripe (acct_1Hk9Zabc), Mailchimp (audience ID 984321), Google Analytics 4 (property G-ABCDEFG123). Data collected: donors' names, emails, mailing address, billing ZIP, Stripe payment token (no full card stored); program participants' names, DOB, limited health intake notes; volunteers' name/contact and background‑check documents including SSN and driver's‑license scans. Target board review is April 20, 2026 and the implementation budget is USD 1,500. Please turn the redline into final materials and a prioritized checklist that fits that timeline and budget.",
+          "I will draft the package now using your redline as the base: (1) a plain‑language privacy policy for https://hometownservices.org that maps disclosures to /privacy and /donate and names the donor, participant, and volunteer data categories and the listed processors; (2) a short donate‑page notice explaining payment tokens and the personal data collected with contact info for Emily Parker at 123 University Lane, Hometown, State, 12345; (3) a prioritized implementation checklist with immediate wins (update /privacy and /donate text; add cookie banner copy), near‑term actions (execute DPAs with Stripe and Mailchimp; remove any PII from GA4 reports), and secure handling steps for sensitive records (limit access and encrypt background‑check documents); and (4) a concise board/IT email proposing the April 20, 2026 review, recommended timelines (policy and banner live within two weeks after board sign‑off), and a USD 1,500‑focused plan prioritizing DPAs and cookie/banner work. I will highlight the minimal changes, estimated costs for each task, and a suggested sequencing you can share with the board and IT."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "03/05/2027-I01",
+            "event_id": "I_WEEK_001",
+            "source_event_id": "E_WEEK_001",
+            "matched_values": [
+              "123 University Lane, Hometown, State, 12345"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "05/02/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_006",
+            "matched_values": [
+              "123 University Lane, Hometown, State, 12345"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "123 University Lane, Hometown, State, 12345"
+      ],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": false,
+      "future_conflict_count": 2,
+      "needs_revision": true
+    },
+    {
+      "rank": 3,
+      "timestamp": "06/20/2025-I04",
+      "history_index": 12,
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_009",
+      "source_event_date": "06/20/2025",
+      "task_goal": "Draft a concise follow-up email and a simple sign-up/triage workflow to confirm appointments and collect missing intake details for the three clients I intaked at the Saturday pro bono clinic — include scheduling options, confidentiality/privacy wording, a short checklist of documents to bring, and next-step referrals; use emily.parker@goggle.com as the clinic contact unless I specify otherwise.",
+      "prev_event": "Volunteered at a Saturday pro bono clinic, intakeed three clients and coordinated follow-up sign-ups using emily.parker@goggle.com as the contact address.",
+      "context_can_add": {
+        "preferred_reply_contact": "User would like to confirm which contact to use for replies and scheduling (the clinic contact emily.parker@goggle.com is currently listed). If the user wants to use a different clinic email, a volunteer's personal phone, or a clinic phone number, they might share that contact now; this will determine the 'reply-to' line, whether to include phone/SMS scheduling, and what privacy language to add about who will receive client data. (Sensitive detail: an email address and/or phone number.)",
+        "client_intake_summaries": "User could provide brief intake summaries for each of the three clients (e.g., client name or initials, primary legal issue such as eviction or benefits denial, and a contact phone or email). Sharing these limited client identifiers and issue types will let the assistant draft tailored follow-up messages, prioritize urgent cases, and create an appropriate referral list. (Sensitive detail: client names/initials and contact numbers/emails and case-type information.)",
+        "intake_document_references": "User might upload or refer to the clinic intake sheets or a scanned file name (for example, 'intake_sheet_2026-03-12.pdf' or an internal intake spreadsheet) so the assistant can pull exact dates, appointment preferences, or note-client consent flags. Knowing the document reference guides the exact wording of what to request from clients and what is already on file. (Sensitive detail: document file name and contents such as scanned intake data.)",
+        "clinic_schedule_and_location": "User could confirm the clinic's regular hours and the physical location/address (e.g., the community center address) and any upcoming dates for follow-up clinics; this helps draft available appointment slots and travel/remote options for clients. If the user shares the clinic address or constrained volunteer availability, the assistant will propose realistic scheduling blocks. (Sensitive detail: clinic address and volunteer availability constraints.)"
+      },
+      "sensitive_info": {
+        "volunteer_contact_email": [
+          "emily.parker@goggle.com"
+        ],
+        "volunteer_phone": [
+          "555-123-4567"
+        ],
+        "client_contacts": [
+          "Carlos Rivera, 555-987-6543, eviction",
+          "Aisha Khan, 555-222-3344, immigration"
+        ],
+        "clinic_address": [
+          "123 University Lane, Hometown, State, 12345"
+        ],
+        "intake_document": [
+          "intake_sheet_2026-03-12.pdf"
+        ]
+      },
+      "sensitive_values": [
+        "emily.parker@goggle.com",
+        "555-123-4567",
+        "Carlos Rivera, 555-987-6543, eviction",
+        "Aisha Khan, 555-222-3344, immigration",
+        "123 University Lane, Hometown, State, 12345",
+        "intake_sheet_2026-03-12.pdf"
+      ],
+      "conversation_block": {
+        "timestamp": "06/20/2025-I04",
+        "event_text": "Volunteered at a Saturday pro bono clinic, intakeed three clients and coordinated follow-up sign-ups using emily.parker@goggle.com as the contact address.",
+        "start_index": 52,
+        "lines": [
+          "Side_Note: [Volunteered at a Saturday pro bono clinic, intakeed three clients and coordinated follow-up sign-ups using emily.parker@goggle.com as the contact address.] 06/20/2025-I04",
+          "User: I volunteered at a Saturday pro bono clinic and intaked three clients using emily.parker@goggle.com as the clinic contact. Please draft a concise follow‑up email and a simple sign‑up/triage workflow to confirm appointments and collect missing intake details for those clients. Use emily.parker@goggle.com as the clinic contact unless I say otherwise. For context — my contact: emily.parker@goggle.com, 555-123-4567; clients: Carlos Rivera, 555-987-6543 (eviction) and Aisha Khan, 555-222-3344 (immigration); clinic address: 123 University Lane, Hometown, State, 12345; intake document: intake_sheet.pdf. Include scheduling options, confidentiality wording, a short checklist of documents to bring, and next‑step referrals.",
+          "Assistant: I will draft: (A) a concise follow‑up email using emily.parker@goggle.com as the reply‑to and 555-123-4567 for phone/SMS scheduling, addressed to Carlos Rivera and Aisha Khan with two scheduling options—a phone triage within 48 hours and an in‑clinic appointment at 123 University Lane. The email will include brief confidentiality language referencing intake_sheet.pdf, a short checklist (photo ID, lease/notice, related correspondence), and clear next‑step referrals. (B) a simple triage workflow with immediate phone triage within 48 hours, priority scheduling for eviction cases, and referral templates for immigration and benefits when cases exceed clinic scope. (C) a consent line to confirm permission to store and share intake details among clinic volunteers. I’ll provide the exact email text and a one‑page workflow you can copy into clinic operations."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "03/05/2027-I01",
+            "event_id": "I_WEEK_001",
+            "source_event_id": "E_WEEK_001",
+            "matched_values": [
+              "123 University Lane, Hometown, State, 12345"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "05/02/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_006",
+            "matched_values": [
+              "123 University Lane, Hometown, State, 12345",
+              "555-123-4567"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [
+        "123 University Lane, Hometown, State, 12345",
+        "555-123-4567",
+        "emily.parker@goggle.com"
+      ],
+      "prefer_as_key": true,
+      "future_conflict_count": 2,
+      "needs_revision": true
+    }
+  ],
+  "rejected_turns": []
+}

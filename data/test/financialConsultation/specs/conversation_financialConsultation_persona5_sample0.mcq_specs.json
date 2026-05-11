@@ -1,0 +1,611 @@
+{
+  "source_sidecar": "tmp/construct_world_and_mcq.VmrnK8/financialConsultation/specs/conversation_financialConsultation_persona5_sample0.memory_control.json",
+  "source_conversation": "data/output/financialConsultation/conversation_financialConsultation_persona5_sample0.json",
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "01/30/2019-I01",
+      "06/02/2021-I03",
+      "10/25/2021-I05"
+    ],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "mcq_design_version": "v2_prompt_ready",
+  "key_turns": [
+    {
+      "timestamp": "01/30/2019-I01",
+      "turn_role": "key",
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_002",
+      "task_goal": "Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook.",
+      "context_can_add": {
+        "spreadsheet_file": "User can upload or share a snapshot of the cashflow workbook (file name, key tabs, and a few example rows). This is relevant so you can validate formulas, map line-items to budget buckets, and supply exact formula code or sheet-level changes targeted to the current file. Sharing the file will reveal transaction-level details and category names.",
+        "monthly_income_history": "User can provide the last 12 months of net (take-home) income amounts and the dates they hit the account. This matters because irregular income timing and magnitude drive the contour of worst-case months and the size/timing of the buffer; with exact monthly numbers you can build realistic low-income scenarios and suggest withdrawal/prioritization rules. This will include sensitive numeric income details.",
+        "account_balances_and_debts": "User can list current account balances (checking, savings), outstanding debts and balances (credit card, student loan, mortgage), and minimum monthly payments. That helps prioritize which debts to accelerate, how large a safe operating balance is, and whether to route spare cash to buffer vs. debt. This is sensitive financial information and will guide recommended thresholds and payment strategies.",
+        "upcoming_one_time_expenses": "User can describe any planned large expenses inside the five-year window (e.g., roof repair, tuition, medical procedure) with approximate amounts and target dates. Including these constraints lets the plan create sinking funds and adjust contribution timing so shortfalls are visible and solvable in the model. These entries may include private scheduling and cost figures."
+      },
+      "sensitive_info": {
+        "spreadsheet_file": [
+          "cashflow_model_E_INIT_002.xlsx"
+        ],
+        "monthly_income_history": [
+          "Apr 2025: $4,200",
+          "May 2025: $1,800",
+          "Jun 2025: $5,600"
+        ],
+        "account_balances_and_debts": [
+          "checking: $2,400",
+          "savings: $6,200",
+          "credit_card_balance: $9,500 (min payment $240/mo)"
+        ],
+        "upcoming_one_time_expenses": [
+          "Roof repair: $6,500 due 2026-08-15"
+        ]
+      },
+      "sensitive_values": [
+        "cashflow_model_E_INIT_002.xlsx",
+        "Apr 2025: $4,200",
+        "May 2025: $1,800",
+        "Jun 2025: $5,600",
+        "checking: $2,400",
+        "savings: $6,200",
+        "credit_card_balance: $9,500 (min payment $240/mo)",
+        "Roof repair: $6,500 due 2026-08-15"
+      ],
+      "user_turn": "Please convert the five-year cashflow model into a month-by-month working budget that (a) creates automated scenario sheets for low‑income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and when to prioritize debt versus savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. I can upload cashflow_model_E_INIT_002.xlsx. For context, my recent net income was April 2025: $4,200; May 2025: $1,800; June 2025: $5,600. Current balances are checking $2,400, savings $6,200, and a credit card balance of $9,500 (minimum $240/month). I also have a roof repair for $6,500 due in mid‑August 2026—please tailor the scenarios and formulas to these details.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.",
+        "distractor_seeds": [
+          "Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries.",
+          "Compare the three identified lenders' 30-year fixed offers side-by-side, calculate estimated monthly payments and total interest for my likely loan amount, identify out‑of‑pocket closing costs and points, and recommend which lender(s) to pursue plus the next communications/documents to prepare. Background details include loan amount and down payment, credit score and report, lender rate quotes."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please convert the five-year cashflow model into a month-by-month working budget that (a) creates automated scenario sheets for low‑income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and when to prioritize debt versus savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. I can upload cashflow_model_E_INIT_002.xlsx. For context, my recent net income was April 2025: $4,200; May 2025: $1,800; June 2025: $5,600. Current balances are checking $2,400, savings $6,200, and a credit card balance of $9,500 (minimum $240/month). I also have a roof repair for $6,500 due in mid‑August 2026—please tailor the scenarios and formulas to these details.\". This turn was associated with the following task goal: \"Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries.\", \"Compare the three identified lenders' 30-year fixed offers side-by-side, calculate estimated monthly payments and total interest for my likely loan amount, identify out‑of‑pocket closing costs and points, and recommend which lender(s) to pursue plus the next communications/documents to prepare. Background details include loan amount and down payment, credit score and report, lender rate quotes.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Convert the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "cashflow_model_E_INIT_002.xlsx"
+          },
+          {
+            "slot_name": "Apr 2025",
+            "slot_value": "$4,200"
+          },
+          {
+            "slot_name": "May 2025",
+            "slot_value": "$1,800"
+          },
+          {
+            "slot_name": "Jun 2025",
+            "slot_value": "$5,600"
+          },
+          {
+            "slot_name": "checking",
+            "slot_value": "$2,400"
+          },
+          {
+            "slot_name": "savings",
+            "slot_value": "$6,200"
+          },
+          {
+            "slot_name": "credit card balance",
+            "slot_value": "$9,500 (min payment $240/mo)"
+          },
+          {
+            "slot_name": "Roof repair",
+            "slot_value": "$6,500 due 2026-08-15"
+          }
+        ],
+        "distractor_seeds": [
+          "Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)",
+          "Maple Bank — 30yr fixed 3.75% (APR 3.92%), 0.5 points, lender fees $1,200",
+          "$8,200 at 19.9% APR, minimum $180/mo",
+          "$3,400 at 24.5% APR, minimum $95/mo"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Convert the in a long conversation. The user's earlier message was: \"Please convert the five-year cashflow model into a month-by-month working budget that (a) creates automated scenario sheets for low‑income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and when to prioritize debt versus savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. I can upload cashflow_model_E_INIT_002.xlsx. For context, my recent net income was April 2025: $4,200; May 2025: $1,800; June 2025: $5,600. Current balances are checking $2,400, savings $6,200, and a credit card balance of $9,500 (minimum $240/month). I also have a roof repair for $6,500 due in mid‑August 2026—please tailor the scenarios and formulas to these details.\". This turn was associated with the following task goal: \"Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"cashflow_model_E_INIT_002.xlsx\"\n  },\n  {\n    \"slot_name\": \"Apr 2025\",\n    \"slot_value\": \"$4,200\"\n  },\n  {\n    \"slot_name\": \"May 2025\",\n    \"slot_value\": \"$1,800\"\n  },\n  {\n    \"slot_name\": \"Jun 2025\",\n    \"slot_value\": \"$5,600\"\n  },\n  {\n    \"slot_name\": \"checking\",\n    \"slot_value\": \"$2,400\"\n  },\n  {\n    \"slot_name\": \"savings\",\n    \"slot_value\": \"$6,200\"\n  },\n  {\n    \"slot_name\": \"credit card balance\",\n    \"slot_value\": \"$9,500 (min payment $240/mo)\"\n  },\n  {\n    \"slot_name\": \"Roof repair\",\n    \"slot_value\": \"$6,500 due 2026-08-15\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)\", \"Maple Bank — 30yr fixed 3.75% (APR 3.92%), 0.5 points, lender fees $1,200\", \"$8,200 at 19.9% APR, minimum $180/mo\", \"$3,400 at 24.5% APR, minimum $95/mo\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Convert the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "06/02/2021-I03",
+      "turn_role": "key",
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_009",
+      "task_goal": "Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers.",
+      "context_can_add": {
+        "debt_balances_and_rates": "User would like to share a detailed breakdown of current debts (type, outstanding balance, interest rate, and minimum payment). This is essential to calculate payoff timelines, compare snowball vs avalanche approaches, and determine whether refinancing or balance-transfer offers would actually reduce total cost. The user might provide exact sensitive figures like per-account balances and APRs.",
+        "monthly_income_and_fixed_expenses": "User could add net monthly income and recurring fixed expenses (rent/mortgage, utilities, insurance, childcare, transportation). These budget figures are needed to set realistic extra payment targets and identify discretionary savings. This naturally involves sensitive financial details such as monthly take-home pay and recurring bill amounts.",
+        "credit_score_and_recent_inquiries": "User may report their latest credit score and any recent hard inquiries or derogatory marks. Credit profile details determine eligibility for low-rate loans or 0% balance-transfer cards and should guide recommendations. This requires sharing sensitive credit-report details (score number and timing of inquiries).",
+        "consolidation_offer_document": "User can upload or summarize the consolidation pitch/quote they reviewed (fee schedule, interest rate, loan term, sample amortization) so we can run the same calculations and point out problematic line items. This may include a document reference or filename rather than private personal identifiers, and helps produce a side-by-side comparison."
+      },
+      "sensitive_info": {
+        "debt_balances_and_rates": [
+          "Credit Card A: $8,200 at 19.9% APR, minimum $180/mo",
+          "Credit Card B: $3,400 at 24.5% APR, minimum $95/mo",
+          "Student Loan (federal): $22,500 at 4.5% fixed, minimum $225/mo"
+        ],
+        "monthly_income_and_fixed_expenses": [
+          "Net monthly income: $4,200",
+          "Rent: $1,200",
+          "Car payment: $320"
+        ],
+        "credit_score_and_recent_inquiries": [
+          "FICO-like score: 640",
+          "Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)"
+        ]
+      },
+      "sensitive_values": [
+        "Credit Card A: $8,200 at 19.9% APR, minimum $180/mo",
+        "Credit Card B: $3,400 at 24.5% APR, minimum $95/mo",
+        "Student Loan (federal): $22,500 at 4.5% fixed, minimum $225/mo",
+        "Net monthly income: $4,200",
+        "Rent: $1,200",
+        "Car payment: $320",
+        "FICO-like score: 640",
+        "Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)"
+      ],
+      "user_turn": "Build a practical alternative to third‑party consolidation: a personalized repayment plan (which prioritization method to use, target extra monthly payments, and timeline); identify lower‑cost refinance or balance‑transfer options I might qualify for; provide negotiation scripts to request lower rates; and give a checklist to compare any future consolidation offers. For context: Credit Card A — $8,200 at 19.9% (min $180/month); Credit Card B — $3,400 at 24.5% (min $95/month); federal student loan — $22,500 at 4.5% (min $225/month). My net monthly income is $4,200, rent $1,200, car payment $320, and my FICO‑like score is 640 with two hard inquiries in the past six months (one from a credit‑card application and one from a car‑loan quote). Use these numbers to set realistic extra‑payment targets and to confirm balance‑transfer/refinance eligibility.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries.",
+        "distractor_seeds": [
+          "Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.",
+          "Compare the three identified lenders' 30-year fixed offers side-by-side, calculate estimated monthly payments and total interest for my likely loan amount, identify out‑of‑pocket closing costs and points, and recommend which lender(s) to pursue plus the next communications/documents to prepare. Background details include loan amount and down payment, credit score and report, lender rate quotes."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Build a practical alternative to third‑party consolidation: a personalized repayment plan (which prioritization method to use, target extra monthly payments, and timeline); identify lower‑cost refinance or balance‑transfer options I might qualify for; provide negotiation scripts to request lower rates; and give a checklist to compare any future consolidation offers. For context: Credit Card A — $8,200 at 19.9% (min $180/month); Credit Card B — $3,400 at 24.5% (min $95/month); federal student loan — $22,500 at 4.5% (min $225/month). My net monthly income is $4,200, rent $1,200, car payment $320, and my FICO‑like score is 640 with two hard inquiries in the past six months (one from a credit‑card application and one from a car‑loan quote). Use these numbers to set realistic extra‑payment targets and to confirm balance‑transfer/refinance eligibility.\". This turn was associated with the following task goal: \"Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.\", \"Compare the three identified lenders' 30-year fixed offers side-by-side, calculate estimated monthly payments and total interest for my likely loan amount, identify out‑of‑pocket closing costs and points, and recommend which lender(s) to pursue plus the next communications/documents to prepare. Background details include loan amount and down payment, credit score and report, lender rate quotes.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Build a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "Credit Card A",
+            "slot_value": "$8,200 at 19.9% APR, minimum $180/mo"
+          },
+          {
+            "slot_name": "Credit Card B",
+            "slot_value": "$3,400 at 24.5% APR, minimum $95/mo"
+          },
+          {
+            "slot_name": "Student Loan (federal)",
+            "slot_value": "$22,500 at 4.5% fixed, minimum $225/mo"
+          },
+          {
+            "slot_name": "Net monthly income",
+            "slot_value": "$4,200"
+          },
+          {
+            "slot_name": "Rent",
+            "slot_value": "$1,200"
+          },
+          {
+            "slot_name": "Car payment",
+            "slot_value": "$320"
+          },
+          {
+            "slot_name": "FICO like score",
+            "slot_value": "640"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)"
+          }
+        ],
+        "distractor_seeds": [
+          "cashflow_model_E_INIT_002.xlsx",
+          "$4,200",
+          "cashflow_model_E_INIT_002.xlsx",
+          "$4,200"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Build a in a long conversation. The user's earlier message was: \"Build a practical alternative to third‑party consolidation: a personalized repayment plan (which prioritization method to use, target extra monthly payments, and timeline); identify lower‑cost refinance or balance‑transfer options I might qualify for; provide negotiation scripts to request lower rates; and give a checklist to compare any future consolidation offers. For context: Credit Card A — $8,200 at 19.9% (min $180/month); Credit Card B — $3,400 at 24.5% (min $95/month); federal student loan — $22,500 at 4.5% (min $225/month). My net monthly income is $4,200, rent $1,200, car payment $320, and my FICO‑like score is 640 with two hard inquiries in the past six months (one from a credit‑card application and one from a car‑loan quote). Use these numbers to set realistic extra‑payment targets and to confirm balance‑transfer/refinance eligibility.\". This turn was associated with the following task goal: \"Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"Credit Card A\",\n    \"slot_value\": \"$8,200 at 19.9% APR, minimum $180/mo\"\n  },\n  {\n    \"slot_name\": \"Credit Card B\",\n    \"slot_value\": \"$3,400 at 24.5% APR, minimum $95/mo\"\n  },\n  {\n    \"slot_name\": \"Student Loan (federal)\",\n    \"slot_value\": \"$22,500 at 4.5% fixed, minimum $225/mo\"\n  },\n  {\n    \"slot_name\": \"Net monthly income\",\n    \"slot_value\": \"$4,200\"\n  },\n  {\n    \"slot_name\": \"Rent\",\n    \"slot_value\": \"$1,200\"\n  },\n  {\n    \"slot_name\": \"Car payment\",\n    \"slot_value\": \"$320\"\n  },\n  {\n    \"slot_name\": \"FICO like score\",\n    \"slot_value\": \"640\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"cashflow_model_E_INIT_002.xlsx\", \"$4,200\", \"cashflow_model_E_INIT_002.xlsx\", \"$4,200\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Build a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "10/25/2021-I05",
+      "turn_role": "key",
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_015",
+      "task_goal": "Compare the three identified lenders' 30-year fixed offers side-by-side, calculate estimated monthly payments and total interest for my likely loan amount, identify out‑of‑pocket closing costs and points, and recommend which lender(s) to pursue plus the next communications/documents to prepare.",
+      "context_can_add": {
+        "loan_amount_and_down_payment": "User would like to share the intended purchase price, planned down payment, or existing mortgage balance so the assistant can calculate exact monthly payments, loan-to-value (LTV), and how points or fees change effective rate. This will involve sensitive budget figures such as purchase price (e.g., $420,000), down payment amount (e.g., $84,000), or current mortgage payoff.",
+        "credit_score_and_report": "User could provide their credit score and recent credit-report notes so the assistant can judge which published rates are realistic and offer negotiation strategies; sensitive detail would be a numeric credit score (e.g., 745) and any recent derogatory items or inquiries that affect rate or approval.",
+        "lender_rate_quotes": "User may paste the three lenders' quoted terms (rate, APR, points, lender fees, and any required escrow/BMI) so the assistant can do a direct apples-to-apples comparison and adjust for offered points/credits. These are sensitive personal offers and may include lender contact names or reference numbers.",
+        "desired_closing_timeline_and_constraints": "User could add timing constraints (target closing date, need for rate lock window, or must-close-by events) so recommendations prioritize lenders who can meet timing. This is less sensitive but affects which offer to choose and whether to lock rates now or wait."
+      },
+      "sensitive_info": {
+        "loan_amount_and_down_payment": [
+          "purchase_price: $420,000",
+          "down_payment: $84,000",
+          "expected_loan_amount: $336,000"
+        ],
+        "credit_score_and_report": [
+          "credit_score: 745",
+          "recent_derogatory: none",
+          "major_inquiries_last_12mo: 1"
+        ],
+        "lender_rate_quotes": [
+          "Maple Bank — 30yr fixed 3.75% (APR 3.92%), 0.5 points, lender fees $1,200",
+          "Pioneer Mortgage — 30yr fixed 3.625% (APR 3.85%), 1.0 point, lender fees $1,050",
+          "Summit Home Loans — 30yr fixed 3.9% (APR 4.05%), 0 points, lender fees $850"
+        ]
+      },
+      "sensitive_values": [
+        "purchase_price: $420,000",
+        "down_payment: $84,000",
+        "expected_loan_amount: $336,000",
+        "credit_score: 745",
+        "recent_derogatory: none",
+        "major_inquiries_last_12mo: 1",
+        "Maple Bank — 30yr fixed 3.75% (APR 3.92%), 0.5 points, lender fees $1,200",
+        "Pioneer Mortgage — 30yr fixed 3.625% (APR 3.85%), 1.0 point, lender fees $1,050",
+        "Summit Home Loans — 30yr fixed 3.9% (APR 4.05%), 0 points, lender fees $850"
+      ],
+      "user_turn": "Please compare the three lender quotes side‑by‑side for my expected loan amount and tell me which to pursue. My purchase price is $420,000 with an $84,000 down payment (expected loan $336,000). My credit score is 745 with no derogatory items and one major inquiry in the last 12 months. The quotes are: Maple Bank — 3.75% (APR 3.92%), 0.5 points, lender fees $1,200; Pioneer Mortgage — 3.625% (APR 3.85%), 1.0 point, lender fees $1,050; Summit Home Loans — 3.9% (APR 4.05%), 0 points, lender fees $850. Please calculate estimated monthly payments, total interest over 30 years, out‑of‑pocket closing costs and point tradeoffs, then recommend the best lender(s) and the documents/communications I should prepare next.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Compare the three identified lenders' 30-year fixed offers side-by-side, calculate estimated monthly payments and total interest for my likely loan amount, identify out‑of‑pocket closing costs and points, and recommend which lender(s) to pursue plus the next communications/documents to prepare. Background details include loan amount and down payment, credit score and report, lender rate quotes.",
+        "distractor_seeds": [
+          "Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.",
+          "Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please compare the three lender quotes side‑by‑side for my expected loan amount and tell me which to pursue. My purchase price is $420,000 with an $84,000 down payment (expected loan $336,000). My credit score is 745 with no derogatory items and one major inquiry in the last 12 months. The quotes are: Maple Bank — 3.75% (APR 3.92%), 0.5 points, lender fees $1,200; Pioneer Mortgage — 3.625% (APR 3.85%), 1.0 point, lender fees $1,050; Summit Home Loans — 3.9% (APR 4.05%), 0 points, lender fees $850. Please calculate estimated monthly payments, total interest over 30 years, out‑of‑pocket closing costs and point tradeoffs, then recommend the best lender(s) and the documents/communications I should prepare next.\". This turn was associated with the following task goal: \"Compare the three identified lenders' 30-year fixed offers side-by-side, calculate estimated monthly payments and total interest for my likely loan amount, identify out‑of‑pocket closing costs and points, and recommend which lender(s) to pursue plus the next communications/documents to prepare.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Compare the three identified lenders' 30-year fixed offers side-by-side, calculate estimated monthly payments and total interest for my likely loan amount, identify out‑of‑pocket closing costs and points, and recommend which lender(s) to pursue plus the next communications/documents to prepare. Background details include loan amount and down payment, credit score and report, lender rate quotes.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.\", \"Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Compare the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "purchase price",
+            "slot_value": "$420,000"
+          },
+          {
+            "slot_name": "down payment",
+            "slot_value": "$84,000"
+          },
+          {
+            "slot_name": "expected loan amount",
+            "slot_value": "$336,000"
+          },
+          {
+            "slot_name": "credit score",
+            "slot_value": "745"
+          },
+          {
+            "slot_name": "recent derogatory",
+            "slot_value": "none"
+          },
+          {
+            "slot_name": "major inquiries last 12mo",
+            "slot_value": "1"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Maple Bank — 30yr fixed 3.75% (APR 3.92%), 0.5 points, lender fees $1,200"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Pioneer Mortgage — 30yr fixed 3.625% (APR 3.85%), 1.0 point, lender fees $1,050"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Summit Home Loans — 30yr fixed 3.9% (APR 4.05%), 0 points, lender fees $850"
+          }
+        ],
+        "distractor_seeds": [
+          "cashflow_model_E_INIT_002.xlsx",
+          "$4,200",
+          "cashflow_model_E_INIT_002.xlsx",
+          "$4,200"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Compare the in a long conversation. The user's earlier message was: \"Please compare the three lender quotes side‑by‑side for my expected loan amount and tell me which to pursue. My purchase price is $420,000 with an $84,000 down payment (expected loan $336,000). My credit score is 745 with no derogatory items and one major inquiry in the last 12 months. The quotes are: Maple Bank — 3.75% (APR 3.92%), 0.5 points, lender fees $1,200; Pioneer Mortgage — 3.625% (APR 3.85%), 1.0 point, lender fees $1,050; Summit Home Loans — 3.9% (APR 4.05%), 0 points, lender fees $850. Please calculate estimated monthly payments, total interest over 30 years, out‑of‑pocket closing costs and point tradeoffs, then recommend the best lender(s) and the documents/communications I should prepare next.\". This turn was associated with the following task goal: \"Compare the three identified lenders' 30-year fixed offers side-by-side, calculate estimated monthly payments and total interest for my likely loan amount, identify out‑of‑pocket closing costs and points, and recommend which lender(s) to pursue plus the next communications/documents to prepare.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"purchase price\",\n    \"slot_value\": \"$420,000\"\n  },\n  {\n    \"slot_name\": \"down payment\",\n    \"slot_value\": \"$84,000\"\n  },\n  {\n    \"slot_name\": \"expected loan amount\",\n    \"slot_value\": \"$336,000\"\n  },\n  {\n    \"slot_name\": \"credit score\",\n    \"slot_value\": \"745\"\n  },\n  {\n    \"slot_name\": \"recent derogatory\",\n    \"slot_value\": \"none\"\n  },\n  {\n    \"slot_name\": \"major inquiries last 12mo\",\n    \"slot_value\": \"1\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Maple Bank — 30yr fixed 3.75% (APR 3.92%), 0.5 points, lender fees $1,200\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Pioneer Mortgage — 30yr fixed 3.625% (APR 3.85%), 1.0 point, lender fees $1,050\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Summit Home Loans — 30yr fixed 3.9% (APR 4.05%), 0 points, lender fees $850\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"cashflow_model_E_INIT_002.xlsx\", \"$4,200\", \"cashflow_model_E_INIT_002.xlsx\", \"$4,200\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Compare the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ],
+  "probe_turns": [
+    {
+      "timestamp": "11/03/2016-I06",
+      "turn_role": "probe",
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_016",
+      "task_goal": "Turn the simulation results into an actionable, tax-aware rebalancing plan for my live portfolio: recommend optimal rebalancing frequency/thresholds, identify specific trades and lots to sell for tax efficiency (including tax-loss harvesting opportunities), estimate annual tax drag and after‑tax expected return under the recommended plan, and produce a step‑by‑step trading schedule that accounts for account types, turnover limits, and transaction costs.",
+      "context_can_add": {
+        "current_portfolio_holdings_and_cost_basis": "User would like to share a current position-level snapshot (brokerage account) including tickers, share counts, purchase lots and cost basis for each lot. This is relevant because lot-level information determines which specific lots to sell to minimize realized taxes (short‑term vs long‑term gains, harvest losses) and to quantify tax drag; the user might paste broker statements or a spreadsheet export that contains sensitive transaction history and lot dates.",
+        "account_types_and_balances": "User could provide balances separated by account type (taxable brokerage, Roth IRA, Traditional IRA/401(k), HSA) and the custodians. This matters because tax-aware rebalancing strategies differ by account wrapper (e.g., harvest losses only in taxable accounts, rebalance in tax-advantaged accounts first). The user might share exact account balances and custodian names (sensitive financial information).",
+        "marginal_tax_rate_and_filing_status": "User may disclose filing status, approximate annual taxable income, and state of residence to determine marginal federal and state tax rates and applicable long-term capital gains rates. This directly affects whether selling appreciated positions is costly and how valuable tax-loss harvesting is. These are sensitive personal finance details (income figures, filing status).",
+        "trading_constraints_and_preferences": "User can add non-sensitive preferences and constraints such as preferred maximum annual turnover, blocks of assets they don’t want sold, minimum cash buffer, and acceptable rebalancing frequency (monthly/quarterly/yearly). This guides recommended thresholds and scheduling without requiring private account numbers."
+      },
+      "sensitive_info": {
+        "current_portfolio_holdings_and_cost_basis": [
+          "Taxable brokerage ($420,000): AAPL 120 shares (lots: 60 @ $50 bought 2010; 60 @ $80 bought 2013), VTI 1,200 shares (lots: 600 @ $40 bought 2009; 600 @ $60 bought 2012), BRK.B 30 shares (avg cost $140), Cash $15,000.",
+          "Roth IRA ($180,000): VTIAX 40%, VXUS 30%, BND 30% (no cost-basis concerns).",
+          "Traditional IRA / 401(k) ($260,000): Target-date / blended funds (no taxable events on trades)."
+        ],
+        "account_types_and_balances": [
+          "Taxable brokerage (Schwab) — $420,000",
+          "Roth IRA (Fidelity) — $180,000",
+          "Traditional IRA / 401(k) (Vanguard/Employer) — $260,000"
+        ],
+        "marginal_tax_rate_and_filing_status": [
+          "Filing status: Married filing jointly; 2025 taxable income ~ $180,000; estimated federal marginal rate 24%, state income tax 5%; expected long-term capital gains federal rate 15% plus state 5%."
+        ]
+      },
+      "sensitive_values": [
+        "Taxable brokerage ($420,000): AAPL 120 shares (lots: 60 @ $50 bought 2010; 60 @ $80 bought 2013), VTI 1,200 shares (lots: 600 @ $40 bought 2009; 600 @ $60 bought 2012), BRK.B 30 shares (avg cost $140), Cash $15,000.",
+        "Roth IRA ($180,000): VTIAX 40%, VXUS 30%, BND 30% (no cost-basis concerns).",
+        "Traditional IRA / 401(k) ($260,000): Target-date / blended funds (no taxable events on trades).",
+        "Taxable brokerage (Schwab) — $420,000",
+        "Roth IRA (Fidelity) — $180,000",
+        "Traditional IRA / 401(k) (Vanguard/Employer) — $260,000",
+        "Filing status: Married filing jointly; 2025 taxable income ~ $180,000; estimated federal marginal rate 24%, state income tax 5%; expected long-term capital gains federal rate 15% plus state 5%."
+      ],
+      "user_turn": "I want a tax-aware rebalancing plan based on my simulation: recommend rebalancing frequency and thresholds, identify specific lots to sell for tax efficiency and tax-loss harvesting, estimate annual tax drag and after-tax expected return, and provide a step-by-step trading schedule that accounts for account types and transaction costs. For context, my taxable brokerage is $420,000 with AAPL 120 shares (lots: 60 @ $50 bought 2010; 60 @ $80 bought 2013), VTI 1,200 shares (lots: 600 @ $40 bought 2009; 600 @ $60 bought 2012), BRK.B 30 shares (avg cost $140), and $15,000 cash; Roth IRA $180,000 (VTIAX 40%, VXUS 30%, BND 30%); Traditional IRA / 401(k) $260,000 (target funds). Accounts are at Schwab, Fidelity, and Vanguard. Filing status married filing jointly with 2025 taxable income ≈ $180,000 (estimated federal marginal 24% and state 5%; long-term gains 15% federal + 5% state). Please use these details to produce lot-level sell recommendations and a tax-aware schedule.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the simulation results into an actionable, tax-aware rebalancing plan for my live portfolio: recommend optimal rebalancing frequency/thresholds, identify specific trades and lots to sell for tax efficiency (including tax-loss harvesting opportunities), estimate annual tax drag and after‑tax expected return under the recommended plan, and produce a step‑by‑step trading schedule that accounts for account types, turnover limits, and transaction costs. Background details include current portfolio holdings and cost basis, account types and balances, marginal tax rate and filing status.",
+        "distractor_seeds": [
+          "Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.",
+          "Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I want a tax-aware rebalancing plan based on my simulation: recommend rebalancing frequency and thresholds, identify specific lots to sell for tax efficiency and tax-loss harvesting, estimate annual tax drag and after-tax expected return, and provide a step-by-step trading schedule that accounts for account types and transaction costs. For context, my taxable brokerage is $420,000 with AAPL 120 shares (lots: 60 @ $50 bought 2010; 60 @ $80 bought 2013), VTI 1,200 shares (lots: 600 @ $40 bought 2009; 600 @ $60 bought 2012), BRK.B 30 shares (avg cost $140), and $15,000 cash; Roth IRA $180,000 (VTIAX 40%, VXUS 30%, BND 30%); Traditional IRA / 401(k) $260,000 (target funds). Accounts are at Schwab, Fidelity, and Vanguard. Filing status married filing jointly with 2025 taxable income ≈ $180,000 (estimated federal marginal 24% and state 5%; long-term gains 15% federal + 5% state). Please use these details to produce lot-level sell recommendations and a tax-aware schedule.\". This turn was associated with the following task goal: \"Turn the simulation results into an actionable, tax-aware rebalancing plan for my live portfolio: recommend optimal rebalancing frequency/thresholds, identify specific trades and lots to sell for tax efficiency (including tax-loss harvesting opportunities), estimate annual tax drag and after‑tax expected return under the recommended plan, and produce a step‑by‑step trading schedule that accounts for account types, turnover limits, and transaction costs.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the simulation results into an actionable, tax-aware rebalancing plan for my live portfolio: recommend optimal rebalancing frequency/thresholds, identify specific trades and lots to sell for tax efficiency (including tax-loss harvesting opportunities), estimate annual tax drag and after‑tax expected return under the recommended plan, and produce a step‑by‑step trading schedule that accounts for account types, turnover limits, and transaction costs. Background details include current portfolio holdings and cost basis, account types and balances, marginal tax rate and filing status.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.\", \"Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "Taxable brokerage ($420,000)",
+            "slot_value": "AAPL 120 shares (lots: 60 @ $50 bought 2010; 60 @ $80 bought 2013), VTI 1,200 shares (lots: 600 @ $40 bought 2009; 600 @ $60 bought 2012), BRK.B 30 shares (avg cost $140), Cash $15,000."
+          },
+          {
+            "slot_name": "Roth IRA ($180,000)",
+            "slot_value": "VTIAX 40%, VXUS 30%, BND 30% (no cost-basis concerns)."
+          },
+          {
+            "slot_name": "Traditional IRA / 401(k) ($260,000)",
+            "slot_value": "Target-date / blended funds (no taxable events on trades)."
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Taxable brokerage (Schwab) — $420,000"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Roth IRA (Fidelity) — $180,000"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Traditional IRA / 401(k) (Vanguard/Employer) — $260,000"
+          },
+          {
+            "slot_name": "Filing status",
+            "slot_value": "Married filing jointly; 2025 taxable income ~ $180,000; estimated federal marginal rate 24%, state income tax 5%; expected long-term capital gains federal rate 15% plus state 5%."
+          }
+        ],
+        "distractor_seeds": [
+          "cashflow_model_E_INIT_002.xlsx",
+          "$4,200",
+          "cashflow_model_E_INIT_002.xlsx",
+          "$4,200"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"I want a tax-aware rebalancing plan based on my simulation: recommend rebalancing frequency and thresholds, identify specific lots to sell for tax efficiency and tax-loss harvesting, estimate annual tax drag and after-tax expected return, and provide a step-by-step trading schedule that accounts for account types and transaction costs. For context, my taxable brokerage is $420,000 with AAPL 120 shares (lots: 60 @ $50 bought 2010; 60 @ $80 bought 2013), VTI 1,200 shares (lots: 600 @ $40 bought 2009; 600 @ $60 bought 2012), BRK.B 30 shares (avg cost $140), and $15,000 cash; Roth IRA $180,000 (VTIAX 40%, VXUS 30%, BND 30%); Traditional IRA / 401(k) $260,000 (target funds). Accounts are at Schwab, Fidelity, and Vanguard. Filing status married filing jointly with 2025 taxable income ≈ $180,000 (estimated federal marginal 24% and state 5%; long-term gains 15% federal + 5% state). Please use these details to produce lot-level sell recommendations and a tax-aware schedule.\". This turn was associated with the following task goal: \"Turn the simulation results into an actionable, tax-aware rebalancing plan for my live portfolio: recommend optimal rebalancing frequency/thresholds, identify specific trades and lots to sell for tax efficiency (including tax-loss harvesting opportunities), estimate annual tax drag and after‑tax expected return under the recommended plan, and produce a step‑by‑step trading schedule that accounts for account types, turnover limits, and transaction costs.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"Taxable brokerage ($420,000)\",\n    \"slot_value\": \"AAPL 120 shares (lots: 60 @ $50 bought 2010; 60 @ $80 bought 2013), VTI 1,200 shares (lots: 600 @ $40 bought 2009; 600 @ $60 bought 2012), BRK.B 30 shares (avg cost $140), Cash $15,000.\"\n  },\n  {\n    \"slot_name\": \"Roth IRA ($180,000)\",\n    \"slot_value\": \"VTIAX 40%, VXUS 30%, BND 30% (no cost-basis concerns).\"\n  },\n  {\n    \"slot_name\": \"Traditional IRA / 401(k) ($260,000)\",\n    \"slot_value\": \"Target-date / blended funds (no taxable events on trades).\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Taxable brokerage (Schwab) — $420,000\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Roth IRA (Fidelity) — $180,000\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Traditional IRA / 401(k) (Vanguard/Employer) — $260,000\"\n  },\n  {\n    \"slot_name\": \"Filing status\",\n    \"slot_value\": \"Married filing jointly; 2025 taxable income ~ $180,000; estimated federal marginal rate 24%, state income tax 5%; expected long-term capital gains federal rate 15% plus state 5%.\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"cashflow_model_E_INIT_002.xlsx\", \"$4,200\", \"cashflow_model_E_INIT_002.xlsx\", \"$4,200\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "04/18/2022-I02",
+      "turn_role": "probe",
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_006",
+      "task_goal": "Turn the self-study advisory note into a client-ready deliverable and actionable plan: produce a concise one-page advisory brief and a 3-step custody & volatility-management action plan tailored to my audience, current holdings, and timeline (including a short FAQ for clients and a checklist for legal/compliance review).",
+      "context_can_add": {
+        "intended_audience": "User would like to specify the intended audience for the deliverable (e.g., high-net-worth clients, retail investors, fintech startup leadership, internal compliance team). This guides tone, technical depth, recommended custody solutions, and regulatory framing.",
+        "holdings_and_wallets": "User could share an approximate portfolio breakdown (total USD value by asset class) and one or two public wallet addresses to allow concrete examples of custody risk and volatility exposure (e.g., how much is in hot wallets vs cold, which addresses are custodial). This involves sensitive financial details like balances and public wallet addresses and would be used only to tailor risk- and custody-specific recommendations.",
+        "custody_providers_and_contract_ids": "User could provide the names of any existing custody providers and relevant contract or account IDs (or short excerpts of custody clauses) so the assistant can identify contractual gaps and suggest specific amendments or operational changes. This is sensitive business/contract information (provider names, contract IDs, contract excerpts).",
+        "jurisdiction_and_regulatory_status": "User could state their legal/regulatory status and primary jurisdictions (e.g., US - California, registered investment advisor, or individual accredited investor). This helps ensure recommendations comply with applicable rules and reporting requirements and may include private regulatory status.",
+        "preferred_output_and_timeline": "User could specify preferred deliverable formats (one-page memo, 6-slide deck, checklist, client FAQ) and the deadline (e.g., 7 days), so the assistant can prioritize content and propose a milestone plan."
+      },
+      "sensitive_info": {
+        "holdings_and_wallets": [
+          "$150,000 total exposure (BTC $60,000, ETH $50,000, stablecoins $40,000)",
+          "0xAbC1234DeF567890abcDEF1234567890abCDef12"
+        ],
+        "custody_providers_and_contract_ids": [
+          "Coinbase Custody",
+          "BitGo",
+          "Contract ID: CUST-2025-045"
+        ]
+      },
+      "sensitive_values": [
+        "$150,000 total exposure (BTC $60,000, ETH $50,000, stablecoins $40,000)",
+        "0xAbC1234DeF567890abcDEF1234567890abCDef12",
+        "Coinbase Custody",
+        "BitGo",
+        "Contract ID: CUST-2025-045"
+      ],
+      "user_turn": "I want to turn my self‑study advisory into a client deliverable: a concise one‑page advisory brief plus a three‑step custody and volatility‑management action plan tailored for high‑net‑worth clients. My current crypto exposure is $150,000 total (BTC $60,000; ETH $50,000; stablecoins $40,000). Use my public wallet 0xAbC1234DeF567890abcDEF1234567890abCDef12 for concrete examples. My custody providers are Coinbase Custody and BitGo (Contract ID: CUST-2025-045). I'm an individual accredited investor in California, and I need a one‑page memo, a short FAQ, and a compliance checklist delivered in seven days—please tailor tone and technical depth for HNW clients and flag applicable compliance items.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the self-study advisory note into a client-ready deliverable and actionable plan: produce a concise one-page advisory brief and a 3-step custody & volatility-management action plan tailored to my audience, current holdings, and timeline (including a short FAQ for clients and a checklist for legal/compliance review). Background details include intended audience, holdings and wallets, custody providers and contract ids.",
+        "distractor_seeds": [
+          "Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.",
+          "Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I want to turn my self‑study advisory into a client deliverable: a concise one‑page advisory brief plus a three‑step custody and volatility‑management action plan tailored for high‑net‑worth clients. My current crypto exposure is $150,000 total (BTC $60,000; ETH $50,000; stablecoins $40,000). Use my public wallet 0xAbC1234DeF567890abcDEF1234567890abCDef12 for concrete examples. My custody providers are Coinbase Custody and BitGo (Contract ID: CUST-2025-045). I'm an individual accredited investor in California, and I need a one‑page memo, a short FAQ, and a compliance checklist delivered in seven days—please tailor tone and technical depth for HNW clients and flag applicable compliance items.\". This turn was associated with the following task goal: \"Turn the self-study advisory note into a client-ready deliverable and actionable plan: produce a concise one-page advisory brief and a 3-step custody & volatility-management action plan tailored to my audience, current holdings, and timeline (including a short FAQ for clients and a checklist for legal/compliance review).\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the self-study advisory note into a client-ready deliverable and actionable plan: produce a concise one-page advisory brief and a 3-step custody & volatility-management action plan tailored to my audience, current holdings, and timeline (including a short FAQ for clients and a checklist for legal/compliance review). Background details include intended audience, holdings and wallets, custody providers and contract ids.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.\", \"Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "$150,000 total exposure (BTC $60,000, ETH $50,000, stablecoins $40,000)"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "0xAbC1234DeF567890abcDEF1234567890abCDef12"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Coinbase Custody"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "BitGo"
+          },
+          {
+            "slot_name": "Contract ID",
+            "slot_value": "CUST-2025-045"
+          }
+        ],
+        "distractor_seeds": [
+          "cashflow_model_E_INIT_002.xlsx",
+          "Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)",
+          "cashflow_model_E_INIT_002.xlsx",
+          "Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"I want to turn my self‑study advisory into a client deliverable: a concise one‑page advisory brief plus a three‑step custody and volatility‑management action plan tailored for high‑net‑worth clients. My current crypto exposure is $150,000 total (BTC $60,000; ETH $50,000; stablecoins $40,000). Use my public wallet 0xAbC1234DeF567890abcDEF1234567890abCDef12 for concrete examples. My custody providers are Coinbase Custody and BitGo (Contract ID: CUST-2025-045). I'm an individual accredited investor in California, and I need a one‑page memo, a short FAQ, and a compliance checklist delivered in seven days—please tailor tone and technical depth for HNW clients and flag applicable compliance items.\". This turn was associated with the following task goal: \"Turn the self-study advisory note into a client-ready deliverable and actionable plan: produce a concise one-page advisory brief and a 3-step custody & volatility-management action plan tailored to my audience, current holdings, and timeline (including a short FAQ for clients and a checklist for legal/compliance review).\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$150,000 total exposure (BTC $60,000, ETH $50,000, stablecoins $40,000)\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"0xAbC1234DeF567890abcDEF1234567890abCDef12\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Coinbase Custody\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"BitGo\"\n  },\n  {\n    \"slot_name\": \"Contract ID\",\n    \"slot_value\": \"CUST-2025-045\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"cashflow_model_E_INIT_002.xlsx\", \"Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)\", \"cashflow_model_E_INIT_002.xlsx\", \"Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "06/15/2015-I04",
+      "turn_role": "probe",
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_010",
+      "task_goal": "Turn the Monte Carlo risk model into a polished, client-ready package: run the model on real client figures, produce an executive summary and a 6-slide presentation with key scenarios and actionable recommendations, document assumptions and reproducible code, and prepare the deliverables in time for the upcoming client meeting.",
+      "context_can_add": {
+        "Real client portfolio breakdown": "User would like to share the actual portfolio holdings and balances (e.g., amounts in taxable brokerage, 401(k), Roth IRA, and any fixed-income ladder) so the assistant can re-run the Monte Carlo simulation on real numbers, tailor scenario assumptions (tax treatment, withdrawal rules, time horizon), and produce concrete outcome probabilities and recommendations. This would involve sensitive financial details such as account types and balances.",
+        "Firm, compliance and advisor registration details": "User could state their employer/firm and advisor/license identifier (for example: corporate RIA name and registration number) and whether the output must follow firm compliance templates or NDA constraints. That matters for wording, disclosures, and whether deliverables must omit or anonymize certain data—this is workplace-sensitive information.",
+        "Preferred deliverable format and visualization choices": "User could specify the preferred outputs (e.g., 1-page executive summary, 6-slide deck, printable PDF, interactive dashboard) and visualization preferences (risk-return heatmaps, probability-of-failure chart, percentile wealth paths). This non-sensitive context guides the assistant’s recommendations for charts, level of technical detail, and file formats.",
+        "Upcoming meeting date/time and delivery contact": "User may share the scheduled client meeting date/time and the email or contact to which the package should be sent (for example: meeting on 2026-04-20 at 10:00 AM EDT and a client or internal email). This scheduling detail is sensitive because it constrains turnaround time and may include a private contact address for delivery."
+      },
+      "sensitive_info": {
+        "client_portfolio_balances": [
+          "$350,000 taxable brokerage (mixed equities and ETFs)",
+          "$150,000 401(k) (mostly target-date fund)",
+          "$50,000 Roth IRA"
+        ],
+        "employer_and_license": [
+          "Cedar Wealth Advisors LLC",
+          "RIA-847291"
+        ],
+        "meeting_datetime": [
+          "2026-04-20T10:00:00-04:00"
+        ],
+        "contact_email": [
+          "emily.parker@goggle.com"
+        ]
+      },
+      "sensitive_values": [
+        "$350,000 taxable brokerage (mixed equities and ETFs)",
+        "$150,000 401(k) (mostly target-date fund)",
+        "$50,000 Roth IRA",
+        "Cedar Wealth Advisors LLC",
+        "RIA-847291",
+        "2026-04-20T10:00:00-04:00",
+        "emily.parker@goggle.com"
+      ],
+      "user_turn": "I need this Monte Carlo model packaged for a real client: run it on their actual balances, produce a one-page executive summary and a 6‑slide presentation with key scenarios and recommendations, document assumptions and reproducible code, and have everything ready for the upcoming meeting; the client portfolio is $350,000 in a taxable brokerage (mixed equities/ETFs), $150,000 in a 401(k) mostly target‑date, and $50,000 in a Roth IRA; I work at Cedar Wealth Advisors LLC (RIA-847291) so outputs must meet firm compliance, and preferred deliverables are a one‑page executive summary, a 6‑slide deck, and risk‑return visualizations — please send the packet to emily.parker@goggle.com before the meeting.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the Monte Carlo risk model into a polished, client-ready package: run the model on real client figures, produce an executive summary and a 6-slide presentation with key scenarios and actionable recommendations, document assumptions and reproducible code, and prepare the deliverables in time for the upcoming client meeting. Background details include Real client portfolio breakdown, Firm, compliance and advisor registration details, Preferred deliverable format and visualization choices.",
+        "distractor_seeds": [
+          "Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.",
+          "Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I need this Monte Carlo model packaged for a real client: run it on their actual balances, produce a one-page executive summary and a 6‑slide presentation with key scenarios and recommendations, document assumptions and reproducible code, and have everything ready for the upcoming meeting; the client portfolio is $350,000 in a taxable brokerage (mixed equities/ETFs), $150,000 in a 401(k) mostly target‑date, and $50,000 in a Roth IRA; I work at Cedar Wealth Advisors LLC (RIA-847291) so outputs must meet firm compliance, and preferred deliverables are a one‑page executive summary, a 6‑slide deck, and risk‑return visualizations — please send the packet to emily.parker@goggle.com before the meeting.\". This turn was associated with the following task goal: \"Turn the Monte Carlo risk model into a polished, client-ready package: run the model on real client figures, produce an executive summary and a 6-slide presentation with key scenarios and actionable recommendations, document assumptions and reproducible code, and prepare the deliverables in time for the upcoming client meeting.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the Monte Carlo risk model into a polished, client-ready package: run the model on real client figures, produce an executive summary and a 6-slide presentation with key scenarios and actionable recommendations, document assumptions and reproducible code, and prepare the deliverables in time for the upcoming client meeting. Background details include Real client portfolio breakdown, Firm, compliance and advisor registration details, Preferred deliverable format and visualization choices.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Convert the five-year cashflow model into a practical month-by-month working budget that (a) creates automated scenario sheets for low-income months, (b) specifies concrete rules for building a 6–12 month emergency buffer and reprioritizing debt vs. savings, and (c) provides exact spreadsheet formulas and templates I can paste into my workbook. Background details include spreadsheet file, monthly income history, account balances and debts.\", \"Build a practical alternative to third-party debt consolidation: a personalized debt-repayment plan (prioritization method, target monthly payments, timeline), identify lower-cost refinancing or balance-transfer options that might qualify, provide negotiation scripts to ask creditors for lower rates, and a checklist of documents/questions to compare any future consolidation offers. Background details include debt balances and rates, monthly income and fixed expenses, credit score and recent inquiries.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "$350,000 taxable brokerage (mixed equities and ETFs)"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$150,000 401(k) (mostly target-date fund)"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$50,000 Roth IRA"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Cedar Wealth Advisors LLC"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "RIA-847291"
+          },
+          {
+            "slot_name": "2026 04 20T10",
+            "slot_value": "00:00-04:00"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "emily.parker@goggle.com"
+          }
+        ],
+        "distractor_seeds": [
+          "cashflow_model_E_INIT_002.xlsx",
+          "Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)",
+          "cashflow_model_E_INIT_002.xlsx",
+          "Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"I need this Monte Carlo model packaged for a real client: run it on their actual balances, produce a one-page executive summary and a 6‑slide presentation with key scenarios and recommendations, document assumptions and reproducible code, and have everything ready for the upcoming meeting; the client portfolio is $350,000 in a taxable brokerage (mixed equities/ETFs), $150,000 in a 401(k) mostly target‑date, and $50,000 in a Roth IRA; I work at Cedar Wealth Advisors LLC (RIA-847291) so outputs must meet firm compliance, and preferred deliverables are a one‑page executive summary, a 6‑slide deck, and risk‑return visualizations — please send the packet to emily.parker@goggle.com before the meeting.\". This turn was associated with the following task goal: \"Turn the Monte Carlo risk model into a polished, client-ready package: run the model on real client figures, produce an executive summary and a 6-slide presentation with key scenarios and actionable recommendations, document assumptions and reproducible code, and prepare the deliverables in time for the upcoming client meeting.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$350,000 taxable brokerage (mixed equities and ETFs)\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$150,000 401(k) (mostly target-date fund)\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$50,000 Roth IRA\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Cedar Wealth Advisors LLC\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"RIA-847291\"\n  },\n  {\n    \"slot_name\": \"2026 04 20T10\",\n    \"slot_value\": \"00:00-04:00\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"emily.parker@goggle.com\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"cashflow_model_E_INIT_002.xlsx\", \"Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)\", \"cashflow_model_E_INIT_002.xlsx\", \"Two hard inquiries in past 6 months (one from a credit-card application 04/2026, one from a car loan quote 01/2026)\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ]
+}

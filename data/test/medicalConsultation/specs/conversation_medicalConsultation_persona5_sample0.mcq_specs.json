@@ -1,0 +1,634 @@
+{
+  "source_sidecar": "tmp/construct_world_and_mcq.VmrnK8/medicalConsultation/specs/conversation_medicalConsultation_persona5_sample0.memory_control.json",
+  "source_conversation": "data/output/medicalConsultation/conversation_medicalConsultation_persona5_sample0.json",
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "05/18/2017-I04",
+      "01/22/2016-I01",
+      "09/10/2015-I06"
+    ],
+    "all_selected_keys_conflict_free": false,
+    "keys_requiring_revision": [
+      "01/22/2016-I01",
+      "09/10/2015-I06"
+    ],
+    "key_conflicts": {
+      "01/22/2016-I01": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/20/2027-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_006",
+            "matched_values": [
+              "emily.parker@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "11/30/2028-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_009",
+            "matched_values": [
+              "emily.parker@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/20/2026-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_003",
+            "matched_values": [
+              "emily.parker@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "09/10/2015-I06": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_WEEK_001",
+            "source_event_id": "E_WEEK_001",
+            "matched_values": [
+              "555-123-4567"
+            ]
+          },
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "08/15/2026-I03",
+            "event_id": "I_WEEK_003",
+            "source_event_id": "E_WEEK_008",
+            "matched_values": [
+              "555-123-4567"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/20/2027-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_006",
+            "matched_values": [
+              "555-123-4567",
+              "emily.parker@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "11/30/2028-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_009",
+            "matched_values": [
+              "emily.parker@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/20/2026-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_003",
+            "matched_values": [
+              "555-123-4567",
+              "emily.parker@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      }
+    },
+    "baseline_conversation_action": "manual_or_future_targeted_revision_needed"
+  },
+  "mcq_design_version": "v2_prompt_ready",
+  "key_turns": [
+    {
+      "timestamp": "05/18/2017-I04",
+      "turn_role": "key",
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_009",
+      "task_goal": "Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits.",
+      "context_can_add": {
+        "Intended deliverable format and length": "User would like to specify whether they want a printable one-page checklist, a digital EHR-embedded checklist, a 6-slide summary deck, or all three. This guides tone, level of detail, and formatting (bullet points vs. flowchart) for the outputs.",
+        "EHR integration details (sensitive)": "User could share the clinic's EHR system and the specific note template or smartphrase name/ID (e.g., Epic, template name 'HTN-Consult-Note v2', template ID CLN-HTN-042). This is sensitive because it identifies internal tooling and templates; knowing it would let the assistant produce text that fits the template fields and provide exact smartphrase or structured data suggestions.",
+        "Colleague contact for dissemination (sensitive)": "User may provide a contact to whom the final materials will be sent (name, email, phone) — for example the project coordinator or clinic lead. Sharing this contact (e.g., Emily Parker, emily.parker@goggle.com, 555-123-4567) would let the assistant draft a tailored cover email or a short implementation brief addressed to that person and include appropriate attachments and next steps.",
+        "Typical patient panel and key comorbidities (sensitive health background)": "User could describe the clinic's typical patient mix (e.g., percent older adults, prevalence of diabetes, CKD, or pregnancy in the hypertensive population). This aggregated health-detail is sensitive; it would help tailor recommendations (e.g., prioritize CKD/diabetes-related guideline sections, medication choices, monitoring frequency) and pick patient-education language appropriate to the population."
+      },
+      "sensitive_info": {
+        "EHR_template": [
+          "Epic; template name: HTN-Consult-Note v2; template ID: CLN-HTN-042"
+        ],
+        "project_contact": [
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567"
+        ],
+        "clinic_patient_profile": [
+          "Patient panel: ~60% adults with hypertension, ~30% with type 2 diabetes, ~15% with CKD stage 3"
+        ]
+      },
+      "sensitive_values": [
+        "Epic; template name: HTN-Consult-Note v2; template ID: CLN-HTN-042",
+        "Emily Parker <emily.parker@goggle.com>; 555-123-4567",
+        "Patient panel: ~60% adults with hypertension, ~30% with type 2 diabetes, ~15% with CKD stage 3"
+      ],
+      "user_turn": "I'd like the crosswalk converted into a clinician-facing consultation checklist (printable one-page and an Epic-embedded version), a six-slide departmental deck, and a one-page implementation note on integrating prioritized guideline sections into primary-care hypertension visits; our EHR is Epic (template HTN-Consult-Note v2, ID CLN-HTN-042), the project contact is Emily Parker <emily.parker@goggle.com>, and our panel is roughly 60% adults with hypertension, 30% with type 2 diabetes, and 15% with CKD stage 3—please prioritize diabetes- and CKD-relevant items.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).",
+        "distractor_seeds": [
+          "Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times.",
+          "Turn the one-page brochure into a finalized, clinic-ready package: produce an editable, plain-language print PDF plus a mobile-friendly digital version (with QR link), create a short patient comprehension/feedback form, and coordinate printing/distribution for the next clinic while ensuring branding and privacy needs are met. Background details include target audience and readability, clinic logistics contact, upcoming clinic schedule."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I'd like the crosswalk converted into a clinician-facing consultation checklist (printable one-page and an Epic-embedded version), a six-slide departmental deck, and a one-page implementation note on integrating prioritized guideline sections into primary-care hypertension visits; our EHR is Epic (template HTN-Consult-Note v2, ID CLN-HTN-042), the project contact is Emily Parker <emily.parker@goggle.com>, and our panel is roughly 60% adults with hypertension, 30% with type 2 diabetes, and 15% with CKD stage 3—please prioritize diabetes- and CKD-relevant items.\". This turn was associated with the following task goal: \"Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times.\", \"Turn the one-page brochure into a finalized, clinic-ready package: produce an editable, plain-language print PDF plus a mobile-friendly digital version (with QR link), create a short patient comprehension/feedback form, and coordinate printing/distribution for the next clinic while ensuring branding and privacy needs are met. Background details include target audience and readability, clinic logistics contact, upcoming clinic schedule.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "Epic; template name",
+            "slot_value": "HTN-Consult-Note v2; template ID: CLN-HTN-042"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Emily Parker <emily.parker@goggle.com>; 555-123-4567"
+          },
+          {
+            "slot_name": "Patient panel",
+            "slot_value": "~60% adults with hypertension, ~30% with type 2 diabetes, ~15% with CKD stage 3"
+          }
+        ],
+        "distractor_seeds": [
+          "emily.parker@goggle.com",
+          "dr.singh@cityhospital.org",
+          "emily.parker@goggle.com",
+          "dr.singh@cityhospital.org"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"I'd like the crosswalk converted into a clinician-facing consultation checklist (printable one-page and an Epic-embedded version), a six-slide departmental deck, and a one-page implementation note on integrating prioritized guideline sections into primary-care hypertension visits; our EHR is Epic (template HTN-Consult-Note v2, ID CLN-HTN-042), the project contact is Emily Parker <emily.parker@goggle.com>, and our panel is roughly 60% adults with hypertension, 30% with type 2 diabetes, and 15% with CKD stage 3—please prioritize diabetes- and CKD-relevant items.\". This turn was associated with the following task goal: \"Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"Epic; template name\",\n    \"slot_value\": \"HTN-Consult-Note v2; template ID: CLN-HTN-042\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Emily Parker <emily.parker@goggle.com>; 555-123-4567\"\n  },\n  {\n    \"slot_name\": \"Patient panel\",\n    \"slot_value\": \"~60% adults with hypertension, ~30% with type 2 diabetes, ~15% with CKD stage 3\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"emily.parker@goggle.com\", \"dr.singh@cityhospital.org\", \"emily.parker@goggle.com\", \"dr.singh@cityhospital.org\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "01/22/2016-I01",
+      "turn_role": "key",
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_001",
+      "task_goal": "Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds.",
+      "context_can_add": {
+        "handout_text": "User would like to paste the current one-page handout text or attach the document so I can tighten wording, prioritize the action items, and produce a concise single-slide summary and talking points for the follow-up email. This guides edits and preserves the exact content to be summarized.",
+        "participant_emails": "User could share the list of participant work emails (attendings, residents, nurses, social work, therapy leads) so I can draft a targeted follow-up email with appropriate salutations, role-specific callouts, and a BCC/To structure. This would include private contact details (work email addresses) that should be handled confidentially.",
+        "preferred_followup_times": "User might add calendar constraints or preferred windows (specific dates/times) for a 15–30 minute debrief meeting to finalize ownership of action items. Those are sensitive scheduling details (calendar availability) that will determine the meeting options I propose.",
+        "patient_case_reference": "User may provide a non-identifying case reference or synthetic patient ID and a brief clinical detail from the rounds (for example, a synthetic ID and the key clinical issue) so the slide and action items unambiguously reference the correct case. This is sensitive medical information (case identifier and clinical summary) and should avoid patient-identifying data."
+      },
+      "sensitive_info": {
+        "participant_emails": [
+          "emily.parker@goggle.com",
+          "dr.singh@cityhospital.org",
+          "nurse.jones@communityclinic.org"
+        ],
+        "preferred_followup_times": [
+          "2026-04-15 13:00-13:30 EDT",
+          "2026-04-16 09:00-09:30 EDT"
+        ],
+        "patient_case_reference": [
+          "EMP-1995-IMMU: immunocompromised patient with vestibular migraine pattern"
+        ]
+      },
+      "sensitive_values": [
+        "emily.parker@goggle.com",
+        "dr.singh@cityhospital.org",
+        "nurse.jones@communityclinic.org",
+        "2026-04-15 13:00-13:30 EDT",
+        "2026-04-16 09:00-09:30 EDT",
+        "EMP-1995-IMMU: immunocompromised patient with vestibular migraine pattern"
+      ],
+      "user_turn": "",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times.",
+        "distractor_seeds": [
+          "Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).",
+          "Turn the one-page brochure into a finalized, clinic-ready package: produce an editable, plain-language print PDF plus a mobile-friendly digital version (with QR link), create a short patient comprehension/feedback form, and coordinate printing/distribution for the next clinic while ensuring branding and privacy needs are met. Background details include target audience and readability, clinic logistics contact, upcoming clinic schedule."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"\". This turn was associated with the following task goal: \"Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).\", \"Turn the one-page brochure into a finalized, clinic-ready package: produce an editable, plain-language print PDF plus a mobile-friendly digital version (with QR link), create a short patient comprehension/feedback form, and coordinate printing/distribution for the next clinic while ensuring branding and privacy needs are met. Background details include target audience and readability, clinic logistics contact, upcoming clinic schedule.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "emily.parker@goggle.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "dr.singh@cityhospital.org"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "nurse.jones@communityclinic.org"
+          },
+          {
+            "slot_name": "2026 04 15 13",
+            "slot_value": "00-13:30 EDT"
+          },
+          {
+            "slot_name": "2026 04 16 09",
+            "slot_value": "00-09:30 EDT"
+          },
+          {
+            "slot_name": "EMP 1995 IMMU",
+            "slot_value": "immunocompromised patient with vestibular migraine pattern"
+          }
+        ],
+        "distractor_seeds": [
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567",
+          "555-123-4567",
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567",
+          "emily.parker@goggle.com"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"\". This turn was associated with the following task goal: \"Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"emily.parker@goggle.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"dr.singh@cityhospital.org\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"nurse.jones@communityclinic.org\"\n  },\n  {\n    \"slot_name\": \"2026 04 15 13\",\n    \"slot_value\": \"00-13:30 EDT\"\n  },\n  {\n    \"slot_name\": \"2026 04 16 09\",\n    \"slot_value\": \"00-09:30 EDT\"\n  },\n  {\n    \"slot_name\": \"EMP 1995 IMMU\",\n    \"slot_value\": \"immunocompromised patient with vestibular migraine pattern\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Emily Parker <emily.parker@goggle.com>; 555-123-4567\", \"555-123-4567\", \"Emily Parker <emily.parker@goggle.com>; 555-123-4567\", \"emily.parker@goggle.com\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "09/10/2015-I06",
+      "turn_role": "key",
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_014",
+      "task_goal": "Turn the one-page brochure into a finalized, clinic-ready package: produce an editable, plain-language print PDF plus a mobile-friendly digital version (with QR link), create a short patient comprehension/feedback form, and coordinate printing/distribution for the next clinic while ensuring branding and privacy needs are met.",
+      "context_can_add": {
+        "target_audience_and_readability": "User would like to say which patient groups the brochure should target (e.g., older adults, non-native English speakers, low-health-literacy patients) and the desired reading level (e.g., 6th grade). This guides tone, vocabulary, font size, and whether pictograms or larger type are needed.",
+        "clinic_logistics_contact": "User could share the clinic coordinator's contact details (email and/or phone) so the assistant can draft an approval/print request and coordinate file formats and branding. This would be a private contact (e.g., coordinator email and direct line) used only to prepare copy for submission and to suggest a short message to send them.",
+        "upcoming_clinic_schedule": "User might provide the date/time of the next clinic and staff availability (a schedule constraint) so printing quantities, delivery timing, and a production timeline can be planned. This is sensitive scheduling information (specific clinic date and staffing numbers) that affects deadlines and printing logistics.",
+        "recent_patient_feedback_examples": "User could share a few anonymized patient feedback items collected during the flu clinic (for example: 'confused by medical jargon', or 'reported dizziness after taking med X'). These are sensitive health-related comments (anonymized symptoms or complaints) that will help prioritize which side effects to clarify and whether to add safety warnings or referral instructions."
+      },
+      "sensitive_info": {
+        "clinic_logistics_contact": [
+          "emily.parker@goggle.com",
+          "555-123-4567"
+        ],
+        "upcoming_clinic_schedule": [
+          "2026-04-20 08:00-14:00",
+          "staff_on_site: 3"
+        ],
+        "recent_patient_feedback_examples": [
+          "Patient A (anonymous): 'I felt dizzy after the vaccine and wasn't sure if it's a side effect.'",
+          "Patient B (anonymous): 'I couldn't understand what 'GI upset' meant — thought it was serious.'"
+        ]
+      },
+      "sensitive_values": [
+        "emily.parker@goggle.com",
+        "555-123-4567",
+        "2026-04-20 08:00-14:00",
+        "staff_on_site: 3",
+        "Patient A (anonymous): 'I felt dizzy after the vaccine and wasn't sure if it's a side effect.'",
+        "Patient B (anonymous): 'I couldn't understand what 'GI upset' meant — thought it was serious.'"
+      ],
+      "user_turn": "I want that one-page brochure turned into an editable, plain-language print PDF and a mobile-friendly digital version with a QR link, a short patient comprehension/feedback form, and coordination of printing and distribution for the next clinic — target audience: older adults and non-native English speakers at about a 6th-grade reading level; clinic logistics contact is emily.parker@goggle.com, 555-123-4567; the upcoming clinic is on April 20, 08:00–14:00 with three staff on site; recent anonymized patient feedback included: 'I felt dizzy after the vaccine and wasn't sure if it's a side effect.' and 'I couldn't understand what 'GI upset' meant — thought it was serious.' Please ensure branding and privacy needs are kept in mind.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the one-page brochure into a finalized, clinic-ready package: produce an editable, plain-language print PDF plus a mobile-friendly digital version (with QR link), create a short patient comprehension/feedback form, and coordinate printing/distribution for the next clinic while ensuring branding and privacy needs are met. Background details include target audience and readability, clinic logistics contact, upcoming clinic schedule.",
+        "distractor_seeds": [
+          "Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).",
+          "Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I want that one-page brochure turned into an editable, plain-language print PDF and a mobile-friendly digital version with a QR link, a short patient comprehension/feedback form, and coordination of printing and distribution for the next clinic — target audience: older adults and non-native English speakers at about a 6th-grade reading level; clinic logistics contact is emily.parker@goggle.com, 555-123-4567; the upcoming clinic is on April 20, 08:00–14:00 with three staff on site; recent anonymized patient feedback included: 'I felt dizzy after the vaccine and wasn't sure if it's a side effect.' and 'I couldn't understand what 'GI upset' meant — thought it was serious.' Please ensure branding and privacy needs are kept in mind.\". This turn was associated with the following task goal: \"Turn the one-page brochure into a finalized, clinic-ready package: produce an editable, plain-language print PDF plus a mobile-friendly digital version (with QR link), create a short patient comprehension/feedback form, and coordinate printing/distribution for the next clinic while ensuring branding and privacy needs are met.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the one-page brochure into a finalized, clinic-ready package: produce an editable, plain-language print PDF plus a mobile-friendly digital version (with QR link), create a short patient comprehension/feedback form, and coordinate printing/distribution for the next clinic while ensuring branding and privacy needs are met. Background details include target audience and readability, clinic logistics contact, upcoming clinic schedule.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).\", \"Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "emily.parker@goggle.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "555-123-4567"
+          },
+          {
+            "slot_name": "2026 04 20 08",
+            "slot_value": "00-14:00"
+          },
+          {
+            "slot_name": "staff on site",
+            "slot_value": "3"
+          },
+          {
+            "slot_name": "Patient A (anonymous)",
+            "slot_value": "'I felt dizzy after the vaccine and wasn't sure if it's a side effect.'"
+          },
+          {
+            "slot_name": "Patient B (anonymous)",
+            "slot_value": "'I couldn't understand what 'GI upset' meant — thought it was serious.'"
+          }
+        ],
+        "distractor_seeds": [
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567",
+          "dr.singh@cityhospital.org",
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567",
+          "emily.parker@goggle.com"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"I want that one-page brochure turned into an editable, plain-language print PDF and a mobile-friendly digital version with a QR link, a short patient comprehension/feedback form, and coordination of printing and distribution for the next clinic — target audience: older adults and non-native English speakers at about a 6th-grade reading level; clinic logistics contact is emily.parker@goggle.com, 555-123-4567; the upcoming clinic is on April 20, 08:00–14:00 with three staff on site; recent anonymized patient feedback included: 'I felt dizzy after the vaccine and wasn't sure if it's a side effect.' and 'I couldn't understand what 'GI upset' meant — thought it was serious.' Please ensure branding and privacy needs are kept in mind.\". This turn was associated with the following task goal: \"Turn the one-page brochure into a finalized, clinic-ready package: produce an editable, plain-language print PDF plus a mobile-friendly digital version (with QR link), create a short patient comprehension/feedback form, and coordinate printing/distribution for the next clinic while ensuring branding and privacy needs are met.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"emily.parker@goggle.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"555-123-4567\"\n  },\n  {\n    \"slot_name\": \"2026 04 20 08\",\n    \"slot_value\": \"00-14:00\"\n  },\n  {\n    \"slot_name\": \"staff on site\",\n    \"slot_value\": \"3\"\n  },\n  {\n    \"slot_name\": \"Patient A (anonymous)\",\n    \"slot_value\": \"'I felt dizzy after the vaccine and wasn't sure if it's a side effect.'\"\n  },\n  {\n    \"slot_name\": \"Patient B (anonymous)\",\n    \"slot_value\": \"'I couldn't understand what 'GI upset' meant — thought it was serious.'\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Emily Parker <emily.parker@goggle.com>; 555-123-4567\", \"dr.singh@cityhospital.org\", \"Emily Parker <emily.parker@goggle.com>; 555-123-4567\", \"emily.parker@goggle.com\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ],
+  "probe_turns": [
+    {
+      "timestamp": "03/08/2014-I02",
+      "turn_role": "probe",
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_005",
+      "task_goal": "Draft a concise, professional follow-up to the project lead to (a) thank them for the pilot, (b) offer to stay involved as a beta tester or UX contributor (including asking about paid opportunities), (c) attach or summarize the 3-page UX report in a portfolio-friendly format, and (d) propose specific availability for future sessions while flagging any health-related accessibility needs that affected my feedback.",
+      "context_can_add": {
+        "project_lead_contact": "User would like to share the contact they used to enroll (name, email and/or phone) so the assistant can draft an email or message tailored to that recipient and reference the right project details. This is sensitive because it includes a private contact email/phone that will be used in the outgoing follow-up.",
+        "UX_report_file": "User could upload or paste the 3-page UX report filename and a short excerpt they want highlighted so the assistant can help convert it into a portfolio blurb, a one-page summary, or edit it for clarity and confidentiality. This is sensitive because it may contain project details or screenshots the user doesn’t want publicly exposed.",
+        "availability_and_schedule": "User may provide specific weekly availability (days/times and timezone) to propose concrete slots for future remote testing; this is sensitive personal scheduling information that will guide phrasing (e.g., proposing exact meeting times) and coordination details.",
+        "health_related_experience": "User might describe health-related factors that shaped their UX feedback (e.g., light sensitivity, vestibular migraine triggers, or sensory-overload issues) so the assistant can help the user anonymize and appropriately disclose accessibility needs in the follow-up. This is sensitive medical information that should be handled carefully and only included if the user wants it shared with the project team."
+      },
+      "sensitive_info": {
+        "project_lead_contact": [
+          "emily.parker@goggle.com",
+          "555-123-4567"
+        ],
+        "UX_report_file": [
+          "telemed_pilot_UX_report_v1.pdf"
+        ],
+        "availability_and_schedule": [
+          "Weekdays 09:00-13:00 (UTC-05:00), Tue/Thu evenings after 18:00; not available weekends"
+        ],
+        "health_related_experience": [
+          "Vestibular migraine pattern with light sensitivity and episodic dizziness triggered by screen flicker"
+        ]
+      },
+      "sensitive_values": [
+        "emily.parker@goggle.com",
+        "555-123-4567",
+        "telemed_pilot_UX_report_v1.pdf",
+        "Weekdays 09:00-13:00 (UTC-05:00), Tue/Thu evenings after 18:00; not available weekends",
+        "Vestibular migraine pattern with light sensitivity and episodic dizziness triggered by screen flicker"
+      ],
+      "user_turn": "I want a concise, professional follow-up to the project lead to thank them for the pilot, offer to stay involved as a beta tester or UX contributor (and ask about paid opportunities), include a portfolio-friendly blurb summarizing telemed_pilot_UX_report_v1.pdf, propose my availability—weekdays 09:00-13:00 (UTC-05:00) and Tue/Thu evenings after 18:00, not weekends—and flag health-related accessibility feedback (I have vestibular migraines with light sensitivity and dizziness triggered by screen flicker); I enrolled using emily.parker@goggle.com and 555-123-4567.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Draft a concise, professional follow-up to the project lead to (a) thank them for the pilot, (b) offer to stay involved as a beta tester or UX contributor (including asking about paid opportunities), (c) attach or summarize the 3-page UX report in a portfolio-friendly format, and (d) propose specific availability for future sessions while flagging any health-related accessibility needs that affected my feedback. Background details include project lead contact, UX report file, availability and schedule.",
+        "distractor_seeds": [
+          "Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).",
+          "Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I want a concise, professional follow-up to the project lead to thank them for the pilot, offer to stay involved as a beta tester or UX contributor (and ask about paid opportunities), include a portfolio-friendly blurb summarizing telemed_pilot_UX_report_v1.pdf, propose my availability—weekdays 09:00-13:00 (UTC-05:00) and Tue/Thu evenings after 18:00, not weekends—and flag health-related accessibility feedback (I have vestibular migraines with light sensitivity and dizziness triggered by screen flicker); I enrolled using emily.parker@goggle.com and 555-123-4567.\". This turn was associated with the following task goal: \"Draft a concise, professional follow-up to the project lead to (a) thank them for the pilot, (b) offer to stay involved as a beta tester or UX contributor (including asking about paid opportunities), (c) attach or summarize the 3-page UX report in a portfolio-friendly format, and (d) propose specific availability for future sessions while flagging any health-related accessibility needs that affected my feedback.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Draft a concise, professional follow-up to the project lead to (a) thank them for the pilot, (b) offer to stay involved as a beta tester or UX contributor (including asking about paid opportunities), (c) attach or summarize the 3-page UX report in a portfolio-friendly format, and (d) propose specific availability for future sessions while flagging any health-related accessibility needs that affected my feedback. Background details include project lead contact, UX report file, availability and schedule.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).\", \"Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Draft a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "emily.parker@goggle.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "555-123-4567"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "telemed_pilot_UX_report_v1.pdf"
+          },
+          {
+            "slot_name": "Weekdays 09",
+            "slot_value": "00-13:00 (UTC-05:00), Tue/Thu evenings after 18:00; not available weekends"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Vestibular migraine pattern with light sensitivity and episodic dizziness triggered by screen flicker"
+          }
+        ],
+        "distractor_seeds": [
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567",
+          "dr.singh@cityhospital.org",
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567",
+          "emily.parker@goggle.com"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Draft a in a long conversation. The user's earlier message was: \"I want a concise, professional follow-up to the project lead to thank them for the pilot, offer to stay involved as a beta tester or UX contributor (and ask about paid opportunities), include a portfolio-friendly blurb summarizing telemed_pilot_UX_report_v1.pdf, propose my availability—weekdays 09:00-13:00 (UTC-05:00) and Tue/Thu evenings after 18:00, not weekends—and flag health-related accessibility feedback (I have vestibular migraines with light sensitivity and dizziness triggered by screen flicker); I enrolled using emily.parker@goggle.com and 555-123-4567.\". This turn was associated with the following task goal: \"Draft a concise, professional follow-up to the project lead to (a) thank them for the pilot, (b) offer to stay involved as a beta tester or UX contributor (including asking about paid opportunities), (c) attach or summarize the 3-page UX report in a portfolio-friendly format, and (d) propose specific availability for future sessions while flagging any health-related accessibility needs that affected my feedback.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"emily.parker@goggle.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"555-123-4567\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"telemed_pilot_UX_report_v1.pdf\"\n  },\n  {\n    \"slot_name\": \"Weekdays 09\",\n    \"slot_value\": \"00-13:00 (UTC-05:00), Tue/Thu evenings after 18:00; not available weekends\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Vestibular migraine pattern with light sensitivity and episodic dizziness triggered by screen flicker\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Emily Parker <emily.parker@goggle.com>; 555-123-4567\", \"dr.singh@cityhospital.org\", \"Emily Parker <emily.parker@goggle.com>; 555-123-4567\", \"emily.parker@goggle.com\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Draft a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "04/15/2014-I03",
+      "turn_role": "probe",
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_007",
+      "task_goal": "Help me draft and rehearse a concise, empathetic script for delivering bad news to a specific patient I'll see next week — include opening lines, concrete phrasing for delivering the diagnosis, language for likely emotional responses, short answers to expected questions, and a 3‑minute role‑play checklist and feedback prompts I can use with colleagues.",
+      "context_can_add": {
+        "specific_patient_case": "User would like to share the relevant clinical details of the upcoming patient encounter (e.g., age/sex, provisional diagnosis or test result, prognosis uncertainty). This health detail will let me tailor phrasing (degree of directness, amount of technical detail, and recommended next steps) and anticipate likely patient questions and emotional reactions. If shared, the user might give concrete sensitive health information such as the suspected diagnosis, stage, and any pending tests.",
+        "appointment_timing_and_clinic": "User could provide the appointment date/time and clinic location (a schedule constraint). That helps prioritize brevity, suggest time‑boxed phrasing, and recommend logistics (whether to schedule extra time or arrange a family member). This would involve a sensitive schedule detail like date/time and room or clinic.",
+        "patient_language_and_cultural_background": "User may note the patient's preferred language, need for an interpreter, or cultural communication preferences (e.g., prefers family present, indirect phrasing). This sensitive personal/cultural background will guide tone, word choice, and whether to propose interpreter scripts or family‑inclusive language.",
+        "mentor_or_roleplay_partner_contact_info": "User might share contact details for a colleague or mentor to coordinate a short pre‑appointment role‑play (email or phone). Having that contact lets me draft a short outreach message and a role‑play plan to send to the partner. This involves sensitive contact information such as an email address and/or phone number."
+      },
+      "sensitive_info": {
+        "specific_patient_case": [
+          "58-year-old male, provisional diagnosis: suspected metastatic non-small cell lung cancer after CT and PET; PET pending confirmation biopsy; high symptom anxiety"
+        ],
+        "appointment_timing_and_clinic": [
+          "2026-04-12 09:30 AM, Oncology Clinic, Room 402 (30-minute slot)"
+        ],
+        "patient_language_and_cultural_background": [
+          "Primary language: Spanish; prefers family present for serious discussions; culturally prefers indirect phrasing about prognosis"
+        ],
+        "mentor_or_roleplay_partner_contact_info": [
+          "emily.parker@goggle.com",
+          "555-123-4567"
+        ]
+      },
+      "sensitive_values": [
+        "58-year-old male, provisional diagnosis: suspected metastatic non-small cell lung cancer after CT and PET; PET pending confirmation biopsy; high symptom anxiety",
+        "2026-04-12 09:30 AM, Oncology Clinic, Room 402 (30-minute slot)",
+        "Primary language: Spanish; prefers family present for serious discussions; culturally prefers indirect phrasing about prognosis",
+        "emily.parker@goggle.com",
+        "555-123-4567"
+      ],
+      "user_turn": "I have a difficult patient next week and need a concise, empathetic script plus a 3-minute role-play checklist: the patient is a 58-year-old man with a provisional diagnosis of suspected metastatic non-small cell lung cancer after CT (PET pending confirmation biopsy), he has high symptom anxiety, and his appointment is next week at 9:30 AM in Oncology Clinic, Room 402 (30-minute slot); his primary language is Spanish, he prefers family present for serious discussions, and he culturally prefers more indirect phrasing about prognosis — I can coordinate a short role-play with my mentor; contact is emily.parker@goggle.com and 555-123-4567. Please include opening lines, phrasing for the diagnosis, language for emotional responses, short answers to expected questions, and the 3-minute role-play checklist with feedback prompts.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Help me draft and rehearse a concise, empathetic script for delivering bad news to a specific patient I'll see next week — include opening lines, concrete phrasing for delivering the diagnosis, language for likely emotional responses, short answers to expected questions, and a 3‑minute role‑play checklist and feedback prompts I can use with colleagues. Background details include specific patient case, appointment timing and clinic, patient language and cultural background.",
+        "distractor_seeds": [
+          "Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).",
+          "Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I have a difficult patient next week and need a concise, empathetic script plus a 3-minute role-play checklist: the patient is a 58-year-old man with a provisional diagnosis of suspected metastatic non-small cell lung cancer after CT (PET pending confirmation biopsy), he has high symptom anxiety, and his appointment is next week at 9:30 AM in Oncology Clinic, Room 402 (30-minute slot); his primary language is Spanish, he prefers family present for serious discussions, and he culturally prefers more indirect phrasing about prognosis — I can coordinate a short role-play with my mentor; contact is emily.parker@goggle.com and 555-123-4567. Please include opening lines, phrasing for the diagnosis, language for emotional responses, short answers to expected questions, and the 3-minute role-play checklist with feedback prompts.\". This turn was associated with the following task goal: \"Help me draft and rehearse a concise, empathetic script for delivering bad news to a specific patient I'll see next week — include opening lines, concrete phrasing for delivering the diagnosis, language for likely emotional responses, short answers to expected questions, and a 3‑minute role‑play checklist and feedback prompts I can use with colleagues.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Help me draft and rehearse a concise, empathetic script for delivering bad news to a specific patient I'll see next week — include opening lines, concrete phrasing for delivering the diagnosis, language for likely emotional responses, short answers to expected questions, and a 3‑minute role‑play checklist and feedback prompts I can use with colleagues. Background details include specific patient case, appointment timing and clinic, patient language and cultural background.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).\", \"Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Help me"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "58 year old male, provisional diagnosis",
+            "slot_value": "suspected metastatic non-small cell lung cancer after CT and PET; PET pending confirmation biopsy; high symptom anxiety"
+          },
+          {
+            "slot_name": "2026 04 12 09",
+            "slot_value": "30 AM, Oncology Clinic, Room 402 (30-minute slot)"
+          },
+          {
+            "slot_name": "Primary language",
+            "slot_value": "Spanish; prefers family present for serious discussions; culturally prefers indirect phrasing about prognosis"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "emily.parker@goggle.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "555-123-4567"
+          }
+        ],
+        "distractor_seeds": [
+          "HTN-Consult-Note v2; template ID: CLN-HTN-042",
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567",
+          "HTN-Consult-Note v2; template ID: CLN-HTN-042",
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Help me in a long conversation. The user's earlier message was: \"I have a difficult patient next week and need a concise, empathetic script plus a 3-minute role-play checklist: the patient is a 58-year-old man with a provisional diagnosis of suspected metastatic non-small cell lung cancer after CT (PET pending confirmation biopsy), he has high symptom anxiety, and his appointment is next week at 9:30 AM in Oncology Clinic, Room 402 (30-minute slot); his primary language is Spanish, he prefers family present for serious discussions, and he culturally prefers more indirect phrasing about prognosis — I can coordinate a short role-play with my mentor; contact is emily.parker@goggle.com and 555-123-4567. Please include opening lines, phrasing for the diagnosis, language for emotional responses, short answers to expected questions, and the 3-minute role-play checklist with feedback prompts.\". This turn was associated with the following task goal: \"Help me draft and rehearse a concise, empathetic script for delivering bad news to a specific patient I'll see next week — include opening lines, concrete phrasing for delivering the diagnosis, language for likely emotional responses, short answers to expected questions, and a 3‑minute role‑play checklist and feedback prompts I can use with colleagues.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"58 year old male, provisional diagnosis\",\n    \"slot_value\": \"suspected metastatic non-small cell lung cancer after CT and PET; PET pending confirmation biopsy; high symptom anxiety\"\n  },\n  {\n    \"slot_name\": \"2026 04 12 09\",\n    \"slot_value\": \"30 AM, Oncology Clinic, Room 402 (30-minute slot)\"\n  },\n  {\n    \"slot_name\": \"Primary language\",\n    \"slot_value\": \"Spanish; prefers family present for serious discussions; culturally prefers indirect phrasing about prognosis\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"emily.parker@goggle.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"555-123-4567\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"HTN-Consult-Note v2; template ID: CLN-HTN-042\", \"Emily Parker <emily.parker@goggle.com>; 555-123-4567\", \"HTN-Consult-Note v2; template ID: CLN-HTN-042\", \"Emily Parker <emily.parker@goggle.com>; 555-123-4567\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Help me",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "06/12/2014-I05",
+      "turn_role": "probe",
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_010",
+      "task_goal": "Create a concise technical summary of the 10-day at-home wearable trial (key vitals, battery/discharge metrics, user feedback), convert those findings into prioritized firmware change requests to improve battery life, and draft a short email to the project coordinator requesting approval and next steps for a larger pilot.",
+      "context_can_add": {
+        "prototype_log_export": "User would like to attach the raw prototype log export (CSV of daily vitals, battery voltage/current traces, timestamps, and user feedback notes). This is relevant because the assistant should analyze real measurements to justify firmware changes and produce charts/tables; the user might share the filename or the file contents (sensitive document-level data).",
+        "project_coordinator_contact": "User could provide the project coordinator's contact details (email and/or phone) so the assistant can draft a targeted approval-request email. This is relevant because the assistant should address the correct person, use the right formality and include next-step requests; the user might share a private work email and phone number.",
+        "participant_health_summary": "User may share a short, de-identified participant health summary (e.g., one or two volunteers' relevant conditions or medications that affected vitals, such as vestibular migraine or beta-blocker use). This health detail is sensitive but relevant because it could explain outlier vital readings and guide whether firmware or data-processing changes are needed.",
+        "budget_and_timeline_constraints": "User could add project constraints such as remaining pilot budget and a target date for the next pilot launch. This is sensitive operational info (budget figures and internal deadlines) but necessary to prioritize firmware fixes and propose a realistic implementation schedule and resource estimate."
+      },
+      "sensitive_info": {
+        "prototype_log_export": [
+          "prototype_log_export_2026-03-15.csv"
+        ],
+        "project_coordinator_contact": [
+          "emily.parker@goggle.com",
+          "555-123-4567"
+        ],
+        "participant_health_summary": [
+          "Volunteer 1: F, 42, vestibular migraine pattern; on propranolol 40 mg daily (may blunt HR response)",
+          "Volunteer 2: M, 58, mild hypertension; on lisinopril 10 mg daily"
+        ],
+        "budget_and_timeline_constraints": [
+          "Remaining pilot budget: $12,000",
+          "Target next-pilot start date: 2026-06-01"
+        ]
+      },
+      "sensitive_values": [
+        "prototype_log_export_2026-03-15.csv",
+        "emily.parker@goggle.com",
+        "555-123-4567",
+        "Volunteer 1: F, 42, vestibular migraine pattern; on propranolol 40 mg daily (may blunt HR response)",
+        "Volunteer 2: M, 58, mild hypertension; on lisinopril 10 mg daily",
+        "Remaining pilot budget: $12,000",
+        "Target next-pilot start date: 2026-06-01"
+      ],
+      "user_turn": "Please create a concise technical summary of the 10-day at-home wearable trial covering key vitals, battery/discharge metrics, and user feedback; convert findings into prioritized firmware change requests to improve battery life; and draft a short approval-request email to the project coordinator. I can attach the prototype_log_export.csv for analysis. Coordinator: emily.parker@goggle.com, 555-123-4567. Participant notes: Volunteer 1 — F, 42, vestibular migraine on propranolol 40 mg (may blunt HR response); Volunteer 2 — M, 58, mild hypertension on lisinopril 10 mg. Remaining pilot budget: $12,000. Target next-pilot start: June 2026.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Create a concise technical summary of the 10-day at-home wearable trial (key vitals, battery/discharge metrics, user feedback), convert those findings into prioritized firmware change requests to improve battery life, and draft a short email to the project coordinator requesting approval and next steps for a larger pilot. Background details include prototype log export, project coordinator contact, participant health summary.",
+        "distractor_seeds": [
+          "Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).",
+          "Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please create a concise technical summary of the 10-day at-home wearable trial covering key vitals, battery/discharge metrics, and user feedback; convert findings into prioritized firmware change requests to improve battery life; and draft a short approval-request email to the project coordinator. I can attach the prototype_log_export.csv for analysis. Coordinator: emily.parker@goggle.com, 555-123-4567. Participant notes: Volunteer 1 — F, 42, vestibular migraine on propranolol 40 mg (may blunt HR response); Volunteer 2 — M, 58, mild hypertension on lisinopril 10 mg. Remaining pilot budget: $12,000. Target next-pilot start: June 2026.\". This turn was associated with the following task goal: \"Create a concise technical summary of the 10-day at-home wearable trial (key vitals, battery/discharge metrics, user feedback), convert those findings into prioritized firmware change requests to improve battery life, and draft a short email to the project coordinator requesting approval and next steps for a larger pilot.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Create a concise technical summary of the 10-day at-home wearable trial (key vitals, battery/discharge metrics, user feedback), convert those findings into prioritized firmware change requests to improve battery life, and draft a short email to the project coordinator requesting approval and next steps for a larger pilot. Background details include prototype log export, project coordinator contact, participant health summary.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the year-long guideline crosswalk into a concise, clinician-facing consultation checklist and a 6-slide departmental slide deck plus a one-page implementation note for integrating prioritized guideline sections into primary-care hypertension visits. Background details include Intended deliverable format and length, EHR integration details (sensitive), Colleague contact for dissemination (sensitive).\", \"Turn the one-page handout from the virtual multidisciplinary rounds into a polished 1-slide summary + a short follow-up email to participants, create a two-question feedback survey, and produce a simple action-item tracking template to assign and follow up on the items identified during rounds. Background details include handout text, participant emails, preferred followup times.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Create a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "prototype_log_export_2026-03-15.csv"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "emily.parker@goggle.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "555-123-4567"
+          },
+          {
+            "slot_name": "Volunteer 1",
+            "slot_value": "F, 42, vestibular migraine pattern; on propranolol 40 mg daily (may blunt HR response)"
+          },
+          {
+            "slot_name": "Volunteer 2",
+            "slot_value": "M, 58, mild hypertension; on lisinopril 10 mg daily"
+          },
+          {
+            "slot_name": "Remaining pilot budget",
+            "slot_value": "$12,000"
+          },
+          {
+            "slot_name": "Target next pilot start date",
+            "slot_value": "2026-06-01"
+          }
+        ],
+        "distractor_seeds": [
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567",
+          "emily.parker@goggle.com",
+          "Emily Parker <emily.parker@goggle.com>; 555-123-4567",
+          "dr.singh@cityhospital.org"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Create a in a long conversation. The user's earlier message was: \"Please create a concise technical summary of the 10-day at-home wearable trial covering key vitals, battery/discharge metrics, and user feedback; convert findings into prioritized firmware change requests to improve battery life; and draft a short approval-request email to the project coordinator. I can attach the prototype_log_export.csv for analysis. Coordinator: emily.parker@goggle.com, 555-123-4567. Participant notes: Volunteer 1 — F, 42, vestibular migraine on propranolol 40 mg (may blunt HR response); Volunteer 2 — M, 58, mild hypertension on lisinopril 10 mg. Remaining pilot budget: $12,000. Target next-pilot start: June 2026.\". This turn was associated with the following task goal: \"Create a concise technical summary of the 10-day at-home wearable trial (key vitals, battery/discharge metrics, user feedback), convert those findings into prioritized firmware change requests to improve battery life, and draft a short email to the project coordinator requesting approval and next steps for a larger pilot.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"prototype_log_export_2026-03-15.csv\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"emily.parker@goggle.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"555-123-4567\"\n  },\n  {\n    \"slot_name\": \"Volunteer 1\",\n    \"slot_value\": \"F, 42, vestibular migraine pattern; on propranolol 40 mg daily (may blunt HR response)\"\n  },\n  {\n    \"slot_name\": \"Volunteer 2\",\n    \"slot_value\": \"M, 58, mild hypertension; on lisinopril 10 mg daily\"\n  },\n  {\n    \"slot_name\": \"Remaining pilot budget\",\n    \"slot_value\": \"$12,000\"\n  },\n  {\n    \"slot_name\": \"Target next pilot start date\",\n    \"slot_value\": \"2026-06-01\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Emily Parker <emily.parker@goggle.com>; 555-123-4567\", \"emily.parker@goggle.com\", \"Emily Parker <emily.parker@goggle.com>; 555-123-4567\", \"dr.singh@cityhospital.org\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Create a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ]
+}

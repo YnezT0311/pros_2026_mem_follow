@@ -1,0 +1,576 @@
+{
+  "source_sidecar": "tmp/construct_world_and_mcq.VmrnK8/legalConsultation/specs/conversation_legalConsultation_persona9_sample0.memory_control.json",
+  "source_conversation": "data/output/legalConsultation/conversation_legalConsultation_persona9_sample0.json",
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "04/02/2016-I01",
+      "06/12/2003-I02",
+      "06/25/2023-I03"
+    ],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "mcq_design_version": "v2_prompt_ready",
+  "key_turns": [
+    {
+      "timestamp": "04/02/2016-I01",
+      "turn_role": "key",
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_007",
+      "task_goal": "Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps.",
+      "context_can_add": {
+        "pilot_usage_metrics_and_feedback": "User would like to share aggregated pilot metrics (number of templates used, average time saved per template, error/rollback rate, and qualitative feedback from users). This helps prioritize which templates to standardize first, set realistic KPIs, and tailor the training curriculum and monitoring plan.",
+        "sample_confidential_document_reference": "User might provide an example draft used during the pilot (anonymized or redacted) such as a client agreement or settlement draft to illustrate template structure and sensitive clauses. This is relevant for designing redaction rules, identifying privileged language, and testing safe-template conversion; the user may share a filename or document reference to the firm's internal repository.",
+        "procurement_budget_and_vendor_contact": "User could disclose the preliminary procurement budget they have for licensing/customization and a vendor contact used during the pilot. Budget figures guide realistic recommendations (monthly vs annual licensing, custom dev spend) and knowing the vendor contact (email/phone) lets the plan include suggested negotiation points and SLA items to request.",
+        "data_storage_and_access_location": "User may share where pilot templates and client drafts are currently stored (e.g., SharePoint path or S3 bucket) and which accounts/services have access. This is sensitive but necessary to advise on access controls, retention and deletion policies, and technical integration with the drafting tool."
+      },
+      "sensitive_info": {
+        "sample_confidential_document_reference": [
+          "draft_agreement_confidential_2025_v1.docx"
+        ],
+        "procurement_budget": [
+          "$30,000"
+        ],
+        "vendor_contact": [
+          "support@lexassist.ai",
+          "555-0178"
+        ],
+        "data_storage_location": [
+          "SharePoint:/Legal/AI-Templates",
+          "s3://lawfirm-prod/templates"
+        ]
+      },
+      "sensitive_values": [
+        "draft_agreement_confidential_2025_v1.docx",
+        "$30,000",
+        "support@lexassist.ai",
+        "555-0178",
+        "SharePoint:/Legal/AI-Templates",
+        "s3://lawfirm-prod/templates"
+      ],
+      "user_turn": "",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.",
+        "distractor_seeds": [
+          "Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size.",
+          "Apply the workshop techniques to a real document: revise my current appellate brief / long-form client advisory to improve persuasive framing, remove argumentative excess, and produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing. Background details include Current draft of the appellate brief or advisory (sensitive: contains client name and case number and factual details), Filing deadline or submission schedule (sensitive: court filing date/time and any internal review windows), Privileged factual summary or key privileged communications (sensitive: privileged email excerpts or attorney client notes)."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"\". This turn was associated with the following task goal: \"Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size.\", \"Apply the workshop techniques to a real document: revise my current appellate brief / long-form client advisory to improve persuasive framing, remove argumentative excess, and produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing. Background details include Current draft of the appellate brief or advisory (sensitive: contains client name and case number and factual details), Filing deadline or submission schedule (sensitive: court filing date/time and any internal review windows), Privileged factual summary or key privileged communications (sensitive: privileged email excerpts or attorney client notes).\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Draft a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "draft_agreement_confidential_2025_v1.docx"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$30,000"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "support@lexassist.ai"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "555-0178"
+          },
+          {
+            "slot_name": "SharePoint",
+            "slot_value": "/Legal/AI-Templates"
+          },
+          {
+            "slot_name": "s3",
+            "slot_value": "//lawfirm-prod/templates"
+          }
+        ],
+        "distractor_seeds": [
+          "California, USA",
+          "SaaS consulting",
+          "California, USA",
+          "SaaS consulting"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Draft a in a long conversation. The user's earlier message was: \"\". This turn was associated with the following task goal: \"Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"draft_agreement_confidential_2025_v1.docx\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$30,000\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"support@lexassist.ai\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"555-0178\"\n  },\n  {\n    \"slot_name\": \"SharePoint\",\n    \"slot_value\": \"/Legal/AI-Templates\"\n  },\n  {\n    \"slot_name\": \"s3\",\n    \"slot_value\": \"//lawfirm-prod/templates\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"California, USA\", \"SaaS consulting\", \"California, USA\", \"SaaS consulting\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Draft a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "06/12/2003-I02",
+      "turn_role": "key",
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_009",
+      "task_goal": "Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants.",
+      "context_can_add": {
+        "Jurisdiction and industry focus": "User would like to specify the primary jurisdiction(s) and industry sector to tailor clauses and compliance notes — e.g., 'California, USA' and 'SaaS/tech consulting'. This is sensitive because it determines mandatory statutory language, enforceability, and any industry-specific privacy or IP obligations; knowing the jurisdiction guides which boilerplate and optional protections to include.",
+        "Sample draft clause or NDA": "User could paste or attach the current draft NDA or a representative clause (file name or excerpt such as 'Draft_NDA_EINIT009_v2.docx' or a text snippet). This is sensitive because it may contain client names, specific deal terms, or other confidential language that should be preserved or redacted when refining templates; having the actual draft lets me give precise edits and produce a redlined version.",
+        "Audience skill level and typical client size": "User can describe the typical workshop attendees and their clients (e.g., solo consultants vs. boutique firms; average client annual revenue). This non-sensitive contextual detail helps tailor the language complexity, optional clauses, and negotiation tips — e.g., more plain-language templates for solo consultants or more robust indemnities for those working with larger corporate clients.",
+        "Monetization and budget targets": "User could share development budget and target pricing (e.g., 'development budget $1,500' and 'target price per template $25–$50'). These are sensitive financial details; knowing them helps me propose a scope of work, recommend which deliverables to prioritize, and suggest distribution/payment platforms."
+      },
+      "sensitive_info": {
+        "jurisdiction_and_industry": [
+          "California, USA",
+          "SaaS consulting"
+        ],
+        "draft_document": [
+          "Draft_NDA_EINIT009_v2.docx"
+        ],
+        "budget": [
+          "$1,500 development budget",
+          "target price per template $25"
+        ]
+      },
+      "sensitive_values": [
+        "California, USA",
+        "SaaS consulting",
+        "Draft_NDA_EINIT009_v2.docx",
+        "$1,500 development budget",
+        "target price per template $25"
+      ],
+      "user_turn": "I want to turn those reusable NDA and service‑agreement clause templates into polished, customizable, California‑specific templates — fillable Word and Google Docs plus a plain‑text clause library — and create a follow‑up workshop pack (slides, facilitator notes, checklist, negotiation tips). My market is California SaaS consultants; the current draft is Draft_NDA_EINIT009_v2.docx. Typical attendees are solo consultants with small clients, my development budget is $1,500, and my target price per template is $25 — please recommend what fits those constraints and tell me what to prioritize first.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size.",
+        "distractor_seeds": [
+          "Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.",
+          "Apply the workshop techniques to a real document: revise my current appellate brief / long-form client advisory to improve persuasive framing, remove argumentative excess, and produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing. Background details include Current draft of the appellate brief or advisory (sensitive: contains client name and case number and factual details), Filing deadline or submission schedule (sensitive: court filing date/time and any internal review windows), Privileged factual summary or key privileged communications (sensitive: privileged email excerpts or attorney client notes)."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I want to turn those reusable NDA and service‑agreement clause templates into polished, customizable, California‑specific templates — fillable Word and Google Docs plus a plain‑text clause library — and create a follow‑up workshop pack (slides, facilitator notes, checklist, negotiation tips). My market is California SaaS consultants; the current draft is Draft_NDA_EINIT009_v2.docx. Typical attendees are solo consultants with small clients, my development budget is $1,500, and my target price per template is $25 — please recommend what fits those constraints and tell me what to prioritize first.\". This turn was associated with the following task goal: \"Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.\", \"Apply the workshop techniques to a real document: revise my current appellate brief / long-form client advisory to improve persuasive framing, remove argumentative excess, and produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing. Background details include Current draft of the appellate brief or advisory (sensitive: contains client name and case number and factual details), Filing deadline or submission schedule (sensitive: court filing date/time and any internal review windows), Privileged factual summary or key privileged communications (sensitive: privileged email excerpts or attorney client notes).\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "California, USA"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "SaaS consulting"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Draft_NDA_EINIT009_v2.docx"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$1,500 development budget"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "target price per template $25"
+          }
+        ],
+        "distractor_seeds": [
+          "draft_agreement_confidential_2025_v1.docx",
+          "$30,000",
+          "draft_agreement_confidential_2025_v1.docx",
+          "$30,000"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"I want to turn those reusable NDA and service‑agreement clause templates into polished, customizable, California‑specific templates — fillable Word and Google Docs plus a plain‑text clause library — and create a follow‑up workshop pack (slides, facilitator notes, checklist, negotiation tips). My market is California SaaS consultants; the current draft is Draft_NDA_EINIT009_v2.docx. Typical attendees are solo consultants with small clients, my development budget is $1,500, and my target price per template is $25 — please recommend what fits those constraints and tell me what to prioritize first.\". This turn was associated with the following task goal: \"Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"California, USA\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"SaaS consulting\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Draft_NDA_EINIT009_v2.docx\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$1,500 development budget\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"target price per template $25\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"draft_agreement_confidential_2025_v1.docx\", \"$30,000\", \"draft_agreement_confidential_2025_v1.docx\", \"$30,000\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "06/25/2023-I03",
+      "turn_role": "key",
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_010",
+      "task_goal": "Apply the workshop techniques to a real document: revise my current appellate brief / long-form client advisory to improve persuasive framing, remove argumentative excess, and produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing.",
+      "context_can_add": {
+        "Current draft of the appellate brief or advisory (sensitive: contains client name and case number and factual details)": "User would attach or paste the current draft so the assistant can do line-by-line edits and show exactly where to cut or reframe. This will include client-identifying information (client name), the court case number, and factual allegations — sharing those specific details is sensitive but necessary for concrete redlines and to avoid changing privileged language improperly.",
+        "Filing deadline or submission schedule (sensitive: court filing date/time and any internal review windows)": "User would provide the filing deadline (court-imposed due date) and any internal deadlines (e.g., partner review by X date). Knowing the deadline is sensitive scheduling information that guides how aggressive the assistant should be with turnaround, how many revision passes to propose, and whether to prioritize quick trims vs. deep rewrites.",
+        "Privileged factual summary or key privileged communications (sensitive: privileged email excerpts or attorney-client notes)": "User could supply a short privileged summary or selective excerpts of privileged communications so the assistant can avoid crafting language that waives privilege or discloses strategy. This is sensitive legal-material (dates, strategy notes, or email snippets) but helps the assistant recommend what to redact or paraphrase safely.",
+        "Target persuasive theme and undesirable angles to avoid (non-sensitive)": "User would describe the desired high-level theme (e.g., 'contractual interpretation emphasizing ordinary meaning' vs. 'equitable estoppel') and any framing to avoid (e.g., aggressive factual attacks). This helps the assistant reframe paragraphs to align with that theme and flag language that pulls in undesirable angles.",
+        "Court formatting rules, word limits, and citation style (non-sensitive)": "User would list the court's word/page limits, citation format, and any local rules that affect length or citation blocks. These constraints are necessary to prioritize cuts and ensure proposed edits will comply with formal requirements."
+      },
+      "sensitive_info": {
+        "Current draft of the appellate brief or advisory (sensitive: contains client name and case number and factual details)": [
+          "Client name: Jordan Alvarez",
+          "Case No.: 2024-CV-1123",
+          "Document reference: draft_brief_v3.docx"
+        ],
+        "Filing deadline or submission schedule (sensitive: court filing date/time and any internal review windows)": [
+          "Court filing deadline: 2026-05-15 17:00 ET",
+          "Internal partner review due: 2026-05-10 12:00 ET"
+        ],
+        "Privileged factual summary or key privileged communications (sensitive: privileged email excerpts or attorney-client notes)": [
+          "Privileged summary: Allegations of breach of contract and misrepresentation by Acme Corp; settlement strategy discussed in privileged email dated 2025-11-03; key privileged note: avoid attacking witness credibility of former CFO Maria Reyes due to pending related matter."
+        ]
+      },
+      "sensitive_values": [
+        "Client name: Jordan Alvarez",
+        "Case No.: 2024-CV-1123",
+        "Document reference: draft_brief_v3.docx",
+        "Court filing deadline: 2026-05-15 17:00 ET",
+        "Internal partner review due: 2026-05-10 12:00 ET",
+        "Privileged summary: Allegations of breach of contract and misrepresentation by Acme Corp; settlement strategy discussed in privileged email dated 2025-11-03; key privileged note: avoid attacking witness credibility of former CFO Maria Reyes due to pending related matter."
+      ],
+      "user_turn": "I want you to apply those workshop techniques to my current appellate brief: produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing. For context I’m working on a brief for client Jordan Alvarez, Case No.: 2024-CV-1123 — the working file is draft_brief_v3.docx. The court filing deadline is May 15, 2026 at 5:00 PM ET and my internal partner review is due May 10, 2026 at 12:00 PM ET. Privileged background: allegations of breach of contract and misrepresentation by Acme Corp, settlement strategy discussed in a privileged email dated November 3, 2025, and a key note to avoid attacking witness credibility of former CFO Maria Reyes because of a related pending matter. My target persuasive theme is contractual interpretation emphasizing ordinary meaning and the court’s formatting rules include the usual word limits and citation style — please produce concrete edits and a checklist aligned to these constraints.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Apply the workshop techniques to a real document: revise my current appellate brief / long-form client advisory to improve persuasive framing, remove argumentative excess, and produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing. Background details include Current draft of the appellate brief or advisory (sensitive: contains client name and case number and factual details), Filing deadline or submission schedule (sensitive: court filing date/time and any internal review windows), Privileged factual summary or key privileged communications (sensitive: privileged email excerpts or attorney client notes).",
+        "distractor_seeds": [
+          "Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.",
+          "Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I want you to apply those workshop techniques to my current appellate brief: produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing. For context I’m working on a brief for client Jordan Alvarez, Case No.: 2024-CV-1123 — the working file is draft_brief_v3.docx. The court filing deadline is May 15, 2026 at 5:00 PM ET and my internal partner review is due May 10, 2026 at 12:00 PM ET. Privileged background: allegations of breach of contract and misrepresentation by Acme Corp, settlement strategy discussed in a privileged email dated November 3, 2025, and a key note to avoid attacking witness credibility of former CFO Maria Reyes because of a related pending matter. My target persuasive theme is contractual interpretation emphasizing ordinary meaning and the court’s formatting rules include the usual word limits and citation style — please produce concrete edits and a checklist aligned to these constraints.\". This turn was associated with the following task goal: \"Apply the workshop techniques to a real document: revise my current appellate brief / long-form client advisory to improve persuasive framing, remove argumentative excess, and produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Apply the workshop techniques to a real document: revise my current appellate brief / long-form client advisory to improve persuasive framing, remove argumentative excess, and produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing. Background details include Current draft of the appellate brief or advisory (sensitive: contains client name and case number and factual details), Filing deadline or submission schedule (sensitive: court filing date/time and any internal review windows), Privileged factual summary or key privileged communications (sensitive: privileged email excerpts or attorney client notes).\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.\", \"Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Apply the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "Client name",
+            "slot_value": "Jordan Alvarez"
+          },
+          {
+            "slot_name": "Case No.",
+            "slot_value": "2024-CV-1123"
+          },
+          {
+            "slot_name": "Document reference",
+            "slot_value": "draft_brief_v3.docx"
+          },
+          {
+            "slot_name": "Court filing deadline",
+            "slot_value": "2026-05-15 17:00 ET"
+          },
+          {
+            "slot_name": "Internal partner review due",
+            "slot_value": "2026-05-10 12:00 ET"
+          },
+          {
+            "slot_name": "Privileged summary",
+            "slot_value": "Allegations of breach of contract and misrepresentation by Acme Corp; settlement strategy discussed in privileged email dated 2025-11-03; key privileged note: avoid attacking witness credibility of former CFO Maria Reyes due to pending related matter."
+          }
+        ],
+        "distractor_seeds": [
+          "draft_agreement_confidential_2025_v1.docx",
+          "$30,000",
+          "draft_agreement_confidential_2025_v1.docx",
+          "$30,000"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Apply the in a long conversation. The user's earlier message was: \"I want you to apply those workshop techniques to my current appellate brief: produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing. For context I’m working on a brief for client Jordan Alvarez, Case No.: 2024-CV-1123 — the working file is draft_brief_v3.docx. The court filing deadline is May 15, 2026 at 5:00 PM ET and my internal partner review is due May 10, 2026 at 12:00 PM ET. Privileged background: allegations of breach of contract and misrepresentation by Acme Corp, settlement strategy discussed in a privileged email dated November 3, 2025, and a key note to avoid attacking witness credibility of former CFO Maria Reyes because of a related pending matter. My target persuasive theme is contractual interpretation emphasizing ordinary meaning and the court’s formatting rules include the usual word limits and citation style — please produce concrete edits and a checklist aligned to these constraints.\". This turn was associated with the following task goal: \"Apply the workshop techniques to a real document: revise my current appellate brief / long-form client advisory to improve persuasive framing, remove argumentative excess, and produce line edits, a trimmed draft, and a short checklist of do/don't edits before filing.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"Client name\",\n    \"slot_value\": \"Jordan Alvarez\"\n  },\n  {\n    \"slot_name\": \"Case No.\",\n    \"slot_value\": \"2024-CV-1123\"\n  },\n  {\n    \"slot_name\": \"Document reference\",\n    \"slot_value\": \"draft_brief_v3.docx\"\n  },\n  {\n    \"slot_name\": \"Court filing deadline\",\n    \"slot_value\": \"2026-05-15 17:00 ET\"\n  },\n  {\n    \"slot_name\": \"Internal partner review due\",\n    \"slot_value\": \"2026-05-10 12:00 ET\"\n  },\n  {\n    \"slot_name\": \"Privileged summary\",\n    \"slot_value\": \"Allegations of breach of contract and misrepresentation by Acme Corp; settlement strategy discussed in privileged email dated 2025-11-03; key privileged note: avoid attacking witness credibility of former CFO Maria Reyes due to pending related matter.\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"draft_agreement_confidential_2025_v1.docx\", \"$30,000\", \"draft_agreement_confidential_2025_v1.docx\", \"$30,000\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Apply the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ],
+  "probe_turns": [
+    {
+      "timestamp": "07/18/2012-I04",
+      "turn_role": "probe",
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_011",
+      "task_goal": "Finalize a revised client intake form and an implementation plan: produce updated question order and phrasing, draft consent language, and a 2-arm A/B test plan with success metrics and a stakeholder-ready summary to reduce intake time and confusion.",
+      "context_can_add": {
+        "Current intake form and analytics (sensitive)": "User can upload the current intake form file(s) (for example 'intake_sheet_v3.docx') plus analytics export showing average completion time, per-question drop-off, and sample anonymized transcripts. These files let me preserve required fields, measure current pain points, and propose changes tied to real metrics. Note: these attachments may contain client identifiers or sensitive answers, which should be shared only if the user is comfortable.",
+        "Client population & confidentiality constraints (sensitive)": "Describe the client population (e.g., are clients survivors of domestic violence, recent immigrants, minors, etc.) and any confidentiality or mandatory-reporting constraints. This will guide trauma-informed wording, which fields to avoid collecting (for example immigration status or exact residential addresses), and the consent/privacy language. A user might disclose that many clients are Spanish-speaking survivors who fear sharing immigration details—sensitive personal background that shapes recommendations.",
+        "Operational constraints — staff, schedule, budget (sensitive)": "Provide intake staffing, hours, and a per-intake budget (for example: intake handled by junior associate Jordan Reyes, Mon–Thu 09:00–15:00; budget ~$45 per intake). These operational details determine whether shorter forms, asynchronous self-complete options, or handoff steps are realistic. A user may share staff names, schedules, or budget figures to get feasible proposals.",
+        "Target KPIs and stakeholder preferences (non-sensitive)": "State target outcomes (e.g., reduce intake time by 30%, raise completion to 90%, reduce clarification follow-ups by 50%) and any stakeholder preferences (legal team requires explicit verbatim consent; operations wants <8 questions). This helps me design the A/B test, pick metrics, and prepare reporting language for stakeholders."
+      },
+      "sensitive_info": {
+        "intake_documents": [
+          "intake_sheet_v3.docx",
+          "intake_analytics_Q1_2026.csv"
+        ],
+        "client_population": [
+          "Clients include Spanish-speaking survivors of domestic violence and recent immigrants who often fear sharing immigration status; avoid collecting immigration status or home addresses when possible."
+        ],
+        "staff_schedule_and_budget": [
+          "Jordan Reyes (junior associate), Mon–Thu 09:00–15:00; per-intake budget: $45; contact phone: 555-0234"
+        ]
+      },
+      "sensitive_values": [
+        "intake_sheet_v3.docx",
+        "intake_analytics_Q1_2026.csv",
+        "Clients include Spanish-speaking survivors of domestic violence and recent immigrants who often fear sharing immigration status; avoid collecting immigration status or home addresses when possible.",
+        "Jordan Reyes (junior associate), Mon–Thu 09:00–15:00; per-intake budget: $45; contact phone: 555-0234"
+      ],
+      "user_turn": "I want to finalize a revised client intake form and an implementation plan: updated question order and phrasing, consent language, and a two‑arm A/B test plan with success metrics and a stakeholder summary. For context I have the current intake files intake_sheet_v3.docx and intake_analytics_Q1_2026.csv; our client population includes Spanish-speaking survivors of domestic violence and recent immigrants who often fear sharing immigration status (so avoid collecting immigration status or home addresses when possible). Intake is handled by Jordan Reyes (junior associate), Mon–Thu 09:00–15:00 with a per-intake budget of $45 and contact phone 555-0234. Target KPIs are reducing intake time by 30% and raising completion to 90% — please produce a plan that respects the confidentiality and staffing constraints.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Finalize a revised client intake form and an implementation plan: produce updated question order and phrasing, draft consent language, and a 2-arm A/B test plan with success metrics and a stakeholder-ready summary to reduce intake time and confusion. Background details include Current intake form and analytics (sensitive), Client population & confidentiality constraints (sensitive), Operational constraints — staff, schedule, budget (sensitive).",
+        "distractor_seeds": [
+          "Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.",
+          "Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I want to finalize a revised client intake form and an implementation plan: updated question order and phrasing, consent language, and a two‑arm A/B test plan with success metrics and a stakeholder summary. For context I have the current intake files intake_sheet_v3.docx and intake_analytics_Q1_2026.csv; our client population includes Spanish-speaking survivors of domestic violence and recent immigrants who often fear sharing immigration status (so avoid collecting immigration status or home addresses when possible). Intake is handled by Jordan Reyes (junior associate), Mon–Thu 09:00–15:00 with a per-intake budget of $45 and contact phone 555-0234. Target KPIs are reducing intake time by 30% and raising completion to 90% — please produce a plan that respects the confidentiality and staffing constraints.\". This turn was associated with the following task goal: \"Finalize a revised client intake form and an implementation plan: produce updated question order and phrasing, draft consent language, and a 2-arm A/B test plan with success metrics and a stakeholder-ready summary to reduce intake time and confusion.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Finalize a revised client intake form and an implementation plan: produce updated question order and phrasing, draft consent language, and a 2-arm A/B test plan with success metrics and a stakeholder-ready summary to reduce intake time and confusion. Background details include Current intake form and analytics (sensitive), Client population & confidentiality constraints (sensitive), Operational constraints — staff, schedule, budget (sensitive).\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.\", \"Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Finalize a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "intake_sheet_v3.docx"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "intake_analytics_Q1_2026.csv"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Clients include Spanish-speaking survivors of domestic violence and recent immigrants who often fear sharing immigration status; avoid collecting immigration status or home addresses when possible."
+          },
+          {
+            "slot_name": "Jordan Reyes (junior associate), Mon–Thu 09",
+            "slot_value": "00–15:00; per-intake budget: $45; contact phone: 555-0234"
+          }
+        ],
+        "distractor_seeds": [
+          "draft_agreement_confidential_2025_v1.docx",
+          "$30,000",
+          "draft_agreement_confidential_2025_v1.docx",
+          "$30,000"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Finalize a in a long conversation. The user's earlier message was: \"I want to finalize a revised client intake form and an implementation plan: updated question order and phrasing, consent language, and a two‑arm A/B test plan with success metrics and a stakeholder summary. For context I have the current intake files intake_sheet_v3.docx and intake_analytics_Q1_2026.csv; our client population includes Spanish-speaking survivors of domestic violence and recent immigrants who often fear sharing immigration status (so avoid collecting immigration status or home addresses when possible). Intake is handled by Jordan Reyes (junior associate), Mon–Thu 09:00–15:00 with a per-intake budget of $45 and contact phone 555-0234. Target KPIs are reducing intake time by 30% and raising completion to 90% — please produce a plan that respects the confidentiality and staffing constraints.\". This turn was associated with the following task goal: \"Finalize a revised client intake form and an implementation plan: produce updated question order and phrasing, draft consent language, and a 2-arm A/B test plan with success metrics and a stakeholder-ready summary to reduce intake time and confusion.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"intake_sheet_v3.docx\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"intake_analytics_Q1_2026.csv\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Clients include Spanish-speaking survivors of domestic violence and recent immigrants who often fear sharing immigration status; avoid collecting immigration status or home addresses when possible.\"\n  },\n  {\n    \"slot_name\": \"Jordan Reyes (junior associate), Mon–Thu 09\",\n    \"slot_value\": \"00–15:00; per-intake budget: $45; contact phone: 555-0234\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"draft_agreement_confidential_2025_v1.docx\", \"$30,000\", \"draft_agreement_confidential_2025_v1.docx\", \"$30,000\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Finalize a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "10/08/2021-I05",
+      "turn_role": "probe",
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_014",
+      "task_goal": "Turn the multi-week sprint outputs into finalized, production-ready internal compliance policies and supporting materials: consolidate and standardize the draft language into final policy documents and templates, create a policy change-log and version-control/sign-off workflow, and produce a practical implementation and training rollout plan and timeline that fits the startup’s budget and approver constraints.",
+      "context_can_add": {
+        "current_draft_files": "User would like to share the sprint outputs (file names or Google Drive links to draft policies, the latest tracked-change versions, and the policy change log). This lets the assistant review exact wording, suggest redlines or consolidation, and produce a final polished set of documents that preserves auditability. The private detail here would be file names or links to internal documents.",
+        "approver_and_reviewer_contacts": "User could provide the list of internal approvers/reviewers (names, roles, and emails or phone numbers) and indicate who must sign off on final policies. That information is necessary to design an approval workflow, assign reviewers, and draft sign-off language and communications. The sensitive detail would be contact emails/phone numbers and names for specific employees (e.g., legal lead, HR head, founder).",
+        "compliance_budget_and_resources": "User may state the budget and available headcount for implementation and ongoing maintenance (e.g., monthly or one-time budget for training, contractor FTEs available). This guides realistic recommendations for rollout modality (in-person vs. recorded training), frequency of updates, and whether to outsource legal review. The sensitive detail would be concrete budget figures and staffing allocations.",
+        "timeline_constraints_and_deadlines": "User could provide upcoming hard deadlines (board meeting, product launch, or regulatory reporting dates) and preferred launch window for the policies. This lets the assistant prioritize which policies to finalize first, propose a phased rollout, and create a realistic schedule. The private detail would be internal dates and event identifiers (e.g., board meeting date)."
+      },
+      "sensitive_info": {
+        "current_draft_files": [
+          "internal_compliance_policies_v3.docx",
+          "data_handling_policy_draft.pdf",
+          "policy_change_log.xlsx"
+        ],
+        "approver_and_reviewer_contacts": [
+          "kai.malosi@goggle.com",
+          "junior.associate@startupco.com",
+          "555-0234"
+        ],
+        "compliance_budget_and_resources": [
+          "$2,500/month",
+          "1.0 FTE contractor"
+        ],
+        "timeline_constraints_and_deadlines": [
+          "2026-05-15 (board meeting)",
+          "2026-06-01 (product launch)"
+        ]
+      },
+      "sensitive_values": [
+        "internal_compliance_policies_v3.docx",
+        "data_handling_policy_draft.pdf",
+        "policy_change_log.xlsx",
+        "kai.malosi@goggle.com",
+        "junior.associate@startupco.com",
+        "555-0234",
+        "$2,500/month",
+        "1.0 FTE contractor",
+        "2026-05-15 (board meeting)",
+        "2026-06-01 (product launch)"
+      ],
+      "user_turn": "I need to turn the sprint outputs into finalized, production-ready internal compliance policies and supporting materials: consolidate and standardize draft language, create a policy change log and a version-control/sign-off workflow, and produce an implementation and training rollout plan that fits the startup’s budget and approver constraints. For context I have the draft files internal_compliance_policies_v3.docx, data_handling_policy_draft.pdf, and policy_change_log.xlsx; approvers are kai.malosi@goggle.com and junior.associate@startupco.com, and an approver reachable at 555-0234. The compliance budget is $2,500 per month with 1.0 FTE contractor available, and hard deadlines are the board meeting on May 15, 2026 and the product launch on June 1, 2026 — please produce a consolidated deliverable plan that respects those resources and dates.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the multi-week sprint outputs into finalized, production-ready internal compliance policies and supporting materials: consolidate and standardize the draft language into final policy documents and templates, create a policy change-log and version-control/sign-off workflow, and produce a practical implementation and training rollout plan and timeline that fits the startup’s budget and approver constraints. Background details include current draft files, approver and reviewer contacts, compliance budget and resources.",
+        "distractor_seeds": [
+          "Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.",
+          "Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I need to turn the sprint outputs into finalized, production-ready internal compliance policies and supporting materials: consolidate and standardize draft language, create a policy change log and a version-control/sign-off workflow, and produce an implementation and training rollout plan that fits the startup’s budget and approver constraints. For context I have the draft files internal_compliance_policies_v3.docx, data_handling_policy_draft.pdf, and policy_change_log.xlsx; approvers are kai.malosi@goggle.com and junior.associate@startupco.com, and an approver reachable at 555-0234. The compliance budget is $2,500 per month with 1.0 FTE contractor available, and hard deadlines are the board meeting on May 15, 2026 and the product launch on June 1, 2026 — please produce a consolidated deliverable plan that respects those resources and dates.\". This turn was associated with the following task goal: \"Turn the multi-week sprint outputs into finalized, production-ready internal compliance policies and supporting materials: consolidate and standardize the draft language into final policy documents and templates, create a policy change-log and version-control/sign-off workflow, and produce a practical implementation and training rollout plan and timeline that fits the startup’s budget and approver constraints.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the multi-week sprint outputs into finalized, production-ready internal compliance policies and supporting materials: consolidate and standardize the draft language into final policy documents and templates, create a policy change-log and version-control/sign-off workflow, and produce a practical implementation and training rollout plan and timeline that fits the startup’s budget and approver constraints. Background details include current draft files, approver and reviewer contacts, compliance budget and resources.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.\", \"Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "internal_compliance_policies_v3.docx"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "data_handling_policy_draft.pdf"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "policy_change_log.xlsx"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "kai.malosi@goggle.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "junior.associate@startupco.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "555-0234"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$2,500/month"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "1.0 FTE contractor"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "2026-05-15 (board meeting)"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "2026-06-01 (product launch)"
+          }
+        ],
+        "distractor_seeds": [
+          "draft_agreement_confidential_2025_v1.docx",
+          "$30,000",
+          "draft_agreement_confidential_2025_v1.docx",
+          "$30,000"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"I need to turn the sprint outputs into finalized, production-ready internal compliance policies and supporting materials: consolidate and standardize draft language, create a policy change log and a version-control/sign-off workflow, and produce an implementation and training rollout plan that fits the startup’s budget and approver constraints. For context I have the draft files internal_compliance_policies_v3.docx, data_handling_policy_draft.pdf, and policy_change_log.xlsx; approvers are kai.malosi@goggle.com and junior.associate@startupco.com, and an approver reachable at 555-0234. The compliance budget is $2,500 per month with 1.0 FTE contractor available, and hard deadlines are the board meeting on May 15, 2026 and the product launch on June 1, 2026 — please produce a consolidated deliverable plan that respects those resources and dates.\". This turn was associated with the following task goal: \"Turn the multi-week sprint outputs into finalized, production-ready internal compliance policies and supporting materials: consolidate and standardize the draft language into final policy documents and templates, create a policy change-log and version-control/sign-off workflow, and produce a practical implementation and training rollout plan and timeline that fits the startup’s budget and approver constraints.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"internal_compliance_policies_v3.docx\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"data_handling_policy_draft.pdf\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"policy_change_log.xlsx\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"kai.malosi@goggle.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"junior.associate@startupco.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"555-0234\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$2,500/month\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"1.0 FTE contractor\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"2026-05-15 (board meeting)\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"2026-06-01 (product launch)\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"draft_agreement_confidential_2025_v1.docx\", \"$30,000\", \"draft_agreement_confidential_2025_v1.docx\", \"$30,000\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "10/28/2002-I06",
+      "turn_role": "probe",
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_015",
+      "task_goal": "Prepare a short, professional package I can send to the program lead: (1) a brief incident report describing what went wrong at the last pro bono clinic, (2) a proposed fixes checklist (intake form reprint/backup plan, standard triage script, volunteer training notes), and (3) a polite message to hand off/decline future coordination — plus a draft email to send to the coordinator.",
+      "context_can_add": {
+        "clinic_coordinator_contact": "User would like to share the name, email and phone of the clinic coordinator so the assistant can draft a tailored email and indicate who should receive the incident report. This is sensitive contact info (personal/professional email and phone).",
+        "clinic_address": "User could provide the exact clinic location and room details (address, room number, building contact) so proposed logistics (where to store/back up intake forms, where to post signage, nearby print options) are realistic. This is a private location detail (address).",
+        "intake_form_file": "User may attach or describe the actual intake form they used and any volunteer notes (e.g., a copy named intake_sheet_apr2026.pdf) so the assistant can suggest concrete edits and a printable backup. This is a document reference and may contain client-identifying fields, so it's sensitive.",
+        "last_clinic_budget": "User could state how much was spent or budgeted for supplies during the last clinic (printing, clipboards, refreshments) so the assistant can propose cost-effective fixes and a suggested budget line for future events. This is a financial detail (amounts spent).",
+        "volunteer_availability_and_limits": "User may describe their future availability and boundaries (days/times they could still help, maximum hours per month, or that they won't coordinate any more clinics) so the assistant can draft an appropriate handoff/decline message and recommend alternative roles. This is a scheduling/personal-commitment detail (availability constraints)."
+      },
+      "sensitive_info": {
+        "clinic_coordinator_contact": [
+          "kai.malosi@goggle.com",
+          "555-0234"
+        ],
+        "clinic_address": [
+          "123 Oceanview Lane, New York, NY 10001"
+        ],
+        "intake_form_file": [
+          "intake_sheet_apr2026.pdf"
+        ],
+        "last_clinic_budget": [
+          "$160 total (printing $120, supplies $40)"
+        ],
+        "volunteer_availability_and_limits": [
+          "Weekday evenings after 6pm; max 4 hours/week; cannot do weekends"
+        ]
+      },
+      "sensitive_values": [
+        "kai.malosi@goggle.com",
+        "555-0234",
+        "123 Oceanview Lane, New York, NY 10001",
+        "intake_sheet_apr2026.pdf",
+        "$160 total (printing $120, supplies $40)",
+        "Weekday evenings after 6pm; max 4 hours/week; cannot do weekends"
+      ],
+      "user_turn": "",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Prepare a short, professional package I can send to the program lead: (1) a brief incident report describing what went wrong at the last pro bono clinic, (2) a proposed fixes checklist (intake form reprint/backup plan, standard triage script, volunteer training notes), and (3) a polite message to hand off/decline future coordination — plus a draft email to send to the coordinator. Background details include clinic coordinator contact, clinic address, intake form file.",
+        "distractor_seeds": [
+          "Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.",
+          "Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"\". This turn was associated with the following task goal: \"Prepare a short, professional package I can send to the program lead: (1) a brief incident report describing what went wrong at the last pro bono clinic, (2) a proposed fixes checklist (intake form reprint/backup plan, standard triage script, volunteer training notes), and (3) a polite message to hand off/decline future coordination — plus a draft email to send to the coordinator.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Prepare a short, professional package I can send to the program lead: (1) a brief incident report describing what went wrong at the last pro bono clinic, (2) a proposed fixes checklist (intake form reprint/backup plan, standard triage script, volunteer training notes), and (3) a polite message to hand off/decline future coordination — plus a draft email to send to the coordinator. Background details include clinic coordinator contact, clinic address, intake form file.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Draft a concrete roll-out and governance plan to scale the AI-assisted legal drafting tool across my practice: include a compliance checklist for client-confidential and privileged data handling, template standardization and versioning rules, staff training curriculum and timeline, integration steps with matter-management/version control, monitoring metrics (accuracy, time-saved, error rates), and recommended procurement/budget next steps. Background details include pilot usage metrics and feedback, sample confidential document reference, procurement budget and vendor contact.\", \"Turn the reusable NDA and service-agreement clause templates from the workshop into polished, customizable, jurisdiction-specific templates (fillable Word/Google Docs + plain-text clause library), plus a follow-up workshop pack (slides, facilitator notes, checklist, and negotiation tips) and a simple pricing/distribution plan for offering them to independent consultants. Background details include Jurisdiction and industry focus, Sample draft clause or NDA, Audience skill level and typical client size.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Prepare a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "kai.malosi@goggle.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "555-0234"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "123 Oceanview Lane, New York, NY 10001"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "intake_sheet_apr2026.pdf"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$160 total (printing $120, supplies $40)"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Weekday evenings after 6pm; max 4 hours/week; cannot do weekends"
+          }
+        ],
+        "distractor_seeds": [
+          "draft_agreement_confidential_2025_v1.docx",
+          "$30,000",
+          "draft_agreement_confidential_2025_v1.docx",
+          "$30,000"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Prepare a in a long conversation. The user's earlier message was: \"\". This turn was associated with the following task goal: \"Prepare a short, professional package I can send to the program lead: (1) a brief incident report describing what went wrong at the last pro bono clinic, (2) a proposed fixes checklist (intake form reprint/backup plan, standard triage script, volunteer training notes), and (3) a polite message to hand off/decline future coordination — plus a draft email to send to the coordinator.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"kai.malosi@goggle.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"555-0234\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"123 Oceanview Lane, New York, NY 10001\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"intake_sheet_apr2026.pdf\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$160 total (printing $120, supplies $40)\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Weekday evenings after 6pm; max 4 hours/week; cannot do weekends\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"draft_agreement_confidential_2025_v1.docx\", \"$30,000\", \"draft_agreement_confidential_2025_v1.docx\", \"$30,000\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Prepare a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ]
+}

@@ -1,0 +1,514 @@
+{
+  "source_file": "data/output/legalConsultation/conversation_legalConsultation_persona2_sample0.json",
+  "periods": [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage"
+  ],
+  "initial_interaction_count": 6,
+  "selection_policy": {
+    "key_target_count": 3,
+    "probe_target_count": 3,
+    "prefer_last_exact_sensitive_occurrence": true,
+    "future_conflict_detection": [
+      "exact reuse of later [Sensitive Info] values",
+      "exact reuse of later [Context Can Add] keys",
+      "later event or interaction belonging to the source event's descendant chain",
+      "boolean high-similarity check over later [Task Goal] text"
+    ],
+    "key_selection_priority": [
+      "lower future conflict count",
+      "prefer the last exact sensitive-value occurrence",
+      "earlier history index as a stable tiebreaker"
+    ]
+  },
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "12/29/2025-I06",
+      "02/12/2026-I02",
+      "11/15/2025-I05"
+    ],
+    "all_selected_keys_conflict_free": false,
+    "keys_requiring_revision": [
+      "02/12/2026-I02",
+      "11/15/2025-I05"
+    ],
+    "key_conflicts": {
+      "02/12/2026-I02": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/05/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_004",
+            "matched_values": [
+              "555-0147"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "11/15/2025-I05": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/12/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_002",
+            "matched_values": [
+              "555-0123"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      }
+    },
+    "baseline_conversation_action": "manual_or_future_targeted_revision_needed"
+  },
+  "key_turns": [
+    {
+      "rank": 5,
+      "timestamp": "12/29/2025-I06",
+      "history_index": 23,
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_018",
+      "source_event_date": "12/29/2025",
+      "task_goal": "Consolidate the six client memos into a prioritized action plan and produce: (1) a one-page standardized settlement-options template to send to clients, (2) draft client follow-up emails to schedule calls, and (3) negotiation talking points and proposed settlement ranges for each case.",
+      "prev_event": "Drafted six short client memos over a week that outlined settlement options and next steps in small-business commercial disputes.",
+      "context_can_add": {
+        "case_summaries": "User would like to paste one-paragraph factual summaries and current procedural posture for each of the six matters (what stage, key facts, deadlines). This helps prioritize which disputes need immediate outreach, which require further fact-gathering, and which settlement options are realistic; these summaries are not sensitive.",
+        "client_contact_and_schedule": "User could provide each client's primary contact name, email, phone number, and preferred meeting windows (e.g., Tue/Thu mornings). This is sensitive contact and schedule information; it would let me draft personalized follow-up emails, propose specific call times, and avoid scheduling conflicts or inappropriate communication windows.",
+        "client_settlement_authority_and_budget": "User could provide each client's internal settlement authority (who can sign off) and numeric budget caps, retainer balance, or walk-away thresholds. These are sensitive financial details; knowing them will let me set realistic proposed ranges and recommend bargaining strategy for each client.",
+        "opposing_party_and_contract_references": "User could share opposing party names, opposing counsel contact info, and the specific contract clause citations or exhibit IDs that the memos rely on (e.g., 'Sales Agreement §7.1', 'Lease Exhibit B'). These are sensitive case details and document references; they allow tailoring legal arguments, assessing leverage, and drafting precise negotiation points."
+      },
+      "sensitive_info": {
+        "client_contact_and_schedule": [
+          "Maria Lopez <maria.lopez@lopezcafe.com>, 555-0123, prefers Tue/Thu mornings 9–11am",
+          "David Park <david.park@parkhandyman.com>, 555-6789, prefers afternoons after 2pm",
+          "Sanjay Patel <sanjay@patelprintco.com>, 555-4410, flexible"
+        ],
+        "client_settlement_authority_and_budget": [
+          "Lopez Café (Case A): $25,000 maximum settlement authority; retainer balance $4,200",
+          "Park Handyman (Case B): $10,000 cap without board approval; can authorize up to $7,500 immediately",
+          "Patel Print Co (Case C): target settlement $50,000; walk-away threshold $100,000"
+        ],
+        "opposing_party_and_contract_references": [
+          "Riverton Supply LLC; opposing counsel: David Chen <dchen@rslaw.com>; disputed clause: Sales Agreement §7.1 (noncompete); Exhibit A (purchase order)",
+          "Broadway Leasing Co.; opposing counsel: Ellen Morse <emorse@broadwaylaw.com>; disputed clause: Lease Agreement §12.2 (repair obligations); Exhibit B (lease amendment)"
+        ]
+      },
+      "sensitive_values": [
+        "Maria Lopez <maria.lopez@lopezcafe.com>, 555-0123, prefers Tue/Thu mornings 9–11am",
+        "David Park <david.park@parkhandyman.com>, 555-6789, prefers afternoons after 2pm",
+        "Sanjay Patel <sanjay@patelprintco.com>, 555-4410, flexible",
+        "Lopez Café (Case A): $25,000 maximum settlement authority; retainer balance $4,200",
+        "Park Handyman (Case B): $10,000 cap without board approval; can authorize up to $7,500 immediately",
+        "Patel Print Co (Case C): target settlement $50,000; walk-away threshold $100,000",
+        "Riverton Supply LLC; opposing counsel: David Chen <dchen@rslaw.com>; disputed clause: Sales Agreement §7.1 (noncompete); Exhibit A (purchase order)",
+        "Broadway Leasing Co.; opposing counsel: Ellen Morse <emorse@broadwaylaw.com>; disputed clause: Lease Agreement §12.2 (repair obligations); Exhibit B (lease amendment)"
+      ],
+      "conversation_block": {
+        "timestamp": "12/29/2025-I06",
+        "event_text": "Drafted six short client memos over a week that outlined settlement options and next steps in small-business commercial disputes.",
+        "start_index": 71,
+        "lines": [
+          "Side_Note: [Drafted six short client memos over a week that outlined settlement options and next steps in small-business commercial disputes.] 12/29/2025-I06",
+          "User: Please consolidate the six memos into a prioritized action plan: create a one-page standardized settlement-options template and draft client follow-up emails and negotiation talking points with proposed settlement ranges. Here are the client contacts and schedules: Maria Lopez <maria.lopez@lopezcafe.com>, 555-0123, prefers Tue/Thu mornings 9–11am; David Park <david.park@parkhandyman.com>, 555-6789, prefers afternoons after 2pm; Sanjay Patel <sanjay@patelprintco.com>, 555-4410, flexible. Their settlement authorities and budgets: Lopez Café (Case A): $25,000 max, retainer balance $4,200; Park Handyman (Case B): $10,000 cap without board approval, can authorize $7,500 immediately; Patel Print Co (Case C): target $50,000, walk-away threshold $100,000. Opposing party contacts and references include Riverton Supply LLC with opposing counsel David Chen <dchen@rslaw.com> (disputed Sales Agreement §7.1; Exhibit A) and Broadway Leasing Co. with opposing counsel Ellen Morse <emorse@broadwaylaw.com> (Lease Agreement §12.2; Exhibit B). Please produce the template, tailored follow-up emails to each client with proposed call windows, and negotiation talking points and ranges for each matter.",
+          "Assistant: I will produce a one-page settlement-options template that captures case posture, desired asks, prioritized fallback positions, key evidence/exhibits, proposed timelines, and explicit authorization checkboxes for client sign-off.",
+          "Assistant: I will draft three tailored follow-up emails that propose call windows aligned with each client’s preference — Maria Lopez (Tue/Thu 9–11am, phone 555-0123), David Park (afternoons after 2pm), and Sanjay Patel (flexible) — using polite scheduling language and ready-to-send copy you can paste into your email client.",
+          "Assistant: I will prepare negotiation talking points and concrete opening/target/floor ranges for each matter tied to the clients’ authority and budgets: Lopez Café — open slightly above $25,000 while being prepared to stop at $25,000 given the client’s $25,000 max and $4,200 retainer balance; Park Handyman — open near $10,000 but be ready to close at $7,500 immediately; Patel Print Co — aim for $50,000 with a clear walk-away threshold at $100,000.",
+          "Assistant: I will include suggested phrasing to use with opposing counsel — David Chen (Riverton Supply LLC: Sales Agreement §7.1; Exhibit A) and Ellen Morse (Broadway Leasing Co.: Lease Agreement §12.2; Exhibit B) — that ties each ask to the specific disputed contract provision and relevant exhibits.",
+          "Assistant: I will format the template, emails, and talking points so they are ready to copy and send; I will now draft the one-page template, the three client emails with proposed call windows, and the negotiation talking points for each case."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 1,
+      "timestamp": "02/12/2026-I02",
+      "history_index": 4,
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_003",
+      "source_event_date": "02/12/2026",
+      "task_goal": "Convert the three-day warranty-precedent research memo into a client-ready package: a one-page executive summary of the key holdings and likely outcomes, a prioritized list of recommended contract clause revisions and negotiation/litigation options, and a draft client email and Q&A checklist to prepare for the next call or mediation.",
+      "prev_event": "Completed a focused three-day legal research project summarizing recent warranty-precedent rulings and produced a concise memo for quick client reference.",
+      "context_can_add": {
+        "Client matter specifics (jurisdiction, party names, file number)": "User would add the client and opposing party names, the court or jurisdiction, and an internal file or case number so the summary cites the correct procedural posture and tailors precedent relevance to local law; this is sensitive because it identifies the actual dispute and parties.",
+        "Upcoming deadlines or scheduled events": "User would share any near-term deadlines (e.g., mediation date, filing deadline, client meeting) so the recommendations prioritize immediate steps and produce a timeline; the specific date/time of hearings or mediator sessions is sensitive scheduling information.",
+        "Budget and risk tolerance": "User would disclose the client's budget cap for legal expenses and their tolerance for settlement versus litigation to ensure recommendations match what the client can afford and prefers; this is sensitive financial information (e.g., an approved spend limit).",
+        "Relevant contract excerpt or document reference": "User could paste the exact warranty clause or provide a document reference (draft agreement clause, exhibit ID) so the memo's recommended redlines are concrete and directly applicable; the clause text or document reference is sensitive client material.",
+        "Preferred recipient and contact details for the summary": "User would provide the name and contact (email and/or phone) of the internal lead or external client contact who should receive the one-page summary and draft email so the assistant can tailor tone and produce an addressed draft; these are private contact details."
+      },
+      "sensitive_info": {
+        "client_case_reference": [
+          "Acme Manufacturing v. BrightHome LLC, Case No. 2026-CV-0142 (Alameda County Superior Court)"
+        ],
+        "upcoming_deadline": [
+          "2026-05-15 09:00 AM PST (pre-mediation submission due)"
+        ],
+        "budget_limit": [
+          "$25,000 cap for litigation-related work (willing to allocate up to $5,000 for settlement negotiation only)"
+        ],
+        "contract_excerpt": [
+          "Seller warrants that the Product will be free from defects in materials and workmanship for a period of 24 months from delivery. Remedies are limited to repair or replacement at Seller's option. Seller disclaims all other warranties, including implied warranties of merchantability and fitness."
+        ],
+        "preferred_contact": [
+          "maria.espinoza@acmelegal.com",
+          "555-0147"
+        ]
+      },
+      "sensitive_values": [
+        "Acme Manufacturing v. BrightHome LLC, Case No. 2026-CV-0142 (Alameda County Superior Court)",
+        "2026-05-15 09:00 AM PST (pre-mediation submission due)",
+        "$25,000 cap for litigation-related work (willing to allocate up to $5,000 for settlement negotiation only)",
+        "Seller warrants that the Product will be free from defects in materials and workmanship for a period of 24 months from delivery. Remedies are limited to repair or replacement at Seller's option. Seller disclaims all other warranties, including implied warranties of merchantability and fitness.",
+        "maria.espinoza@acmelegal.com",
+        "555-0147"
+      ],
+      "conversation_block": {
+        "timestamp": "02/12/2026-I02",
+        "event_text": "Completed a focused three-day legal research project summarizing recent warranty-precedent rulings and produced a concise memo for quick client reference.",
+        "start_index": 14,
+        "lines": [
+          "Side_Note: [Completed a focused three-day legal research project summarizing recent warranty-precedent rulings and produced a concise memo for quick client reference.] 02/12/2026-I02",
+          "User: I need this research turned into a client-ready package for Acme Manufacturing v. BrightHome LLC, Case No. 2026-CV-0142 (Alameda County Superior Court). The pre-mediation submission is due in mid-May at 9:00 AM PST. The client has a $25,000 cap for litigation-related work and will commit up to $5,000 for settlement negotiation only. Here is the relevant contract excerpt: \"Seller warrants that the Product will be free from defects in materials and workmanship for a period of 24 months from delivery. Remedies are limited to repair or replacement at Seller's option. Seller disclaims all other warranties, including implied warranties of merchantability and fitness.\" Please produce: (1) a one-page executive summary of key holdings and likely outcomes tailored to Alameda County practice, (2) a prioritized list of recommended contract clause revisions and negotiation/litigation options that fit the client's budget and risk tolerance, and (3) a draft client email to Maria Espinoza and a Q&A checklist they can use before the pre-mediation submission.",
+          "Assistant: Understood — I'll prepare a client-ready package for the Alameda County matter and the mid-May pre-mediation deadline: (A) a one-page executive summary listing the top three controlling holdings, how those holdings apply to the seller's warranty language, a realistic range of likely outcomes, and a recommended mediation stance based on local precedent; (B) a prioritized set of recommended contract clause revisions and negotiation/litigation options that match the client's $25,000 litigation cap and $5,000 negotiation budget, with suggested drafting language and anticipated counterarguments (priority items: expand available remedies beyond repair/replacement; add narrow damages caps or carve-outs; add clear notice-and-cure procedures; constrain overbroad disclaimer language); and (C) a draft client email addressed to Maria Espinoza summarizing the recommended posture for the pre-mediation submission and requesting authorization for the proposed negotiation spend, plus a concise Q&A checklist of facts to confirm, documents to attach, and client sign-off items. I will format the one-pager for direct inclusion in the pre-mediation packet and flag the specific items that need your review before the mid-May deadline."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/05/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_004",
+            "matched_values": [
+              "555-0147"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 1,
+      "needs_revision": true
+    },
+    {
+      "rank": 4,
+      "timestamp": "11/15/2025-I05",
+      "history_index": 20,
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_016",
+      "source_event_date": "11/15/2025",
+      "task_goal": "Create a set of practical, clinic-ready materials and procedures I can use at future tenant-rights pro bono shifts: a concise plain-language intake template, a two-page fact sheet for common tenant issues, a confidentiality/consent checklist, and a simple follow-up/referral workflow I can share with the clinic coordinator and volunteers.",
+      "prev_event": "Volunteered at a tenant-rights pro bono clinic and provided intake and plain-language explanations to six clients during a four-hour shift.",
+      "context_can_add": {
+        "my_role_and_qualification": "User would like to specify whether they are a supervising attorney, a law student, or a non-attorney volunteer; this matters because templates and suggested scripts must be calibrated to what volunteers are allowed to say, what disclaimers to include, and whether to include supervised advice language.",
+        "clinic_coordinator_contact": "User could share the clinic coordinator's contact details (name, email, phone) so drafts can be tailored for direct handoff and the user can be given copy-and-paste emails or a checklist the coordinator can approve; this is sensitive contact information (email and phone) the user might provide for coordination.",
+        "example_intake_sheet_or_redacted_client_note": "User might upload or paste an anonymized (or full) example intake sheet they used during the shift so the templates map exactly to the fields they collect; this could include sensitive client details (client initials or name, address, lease dates, rent amounts, specific dispute facts), and if shared unredacted would be private client data—redacted examples are preferable.",
+        "jurisdiction_and_clinic_policy": "User could add the jurisdiction (city/county/state, e.g., Fakesville, CA) and whether the clinic has specific policies (no legal advice without supervising attorney present, mandatory reporting rules, data retention rules); this legal/policy context is not highly sensitive but is critical to ensure wording and referral suggestions comply with local rules and clinic constraints."
+      },
+      "sensitive_info": {
+        "clinic_coordinator_contact": [
+          "alex.kim@goggle.com",
+          "555-0123"
+        ],
+        "example_intake_sheet_or_redacted_client_note": [
+          "Client initials: M.J.",
+          "Housing address: 742 Elm St, Fakesville, CA 98765",
+          "Lease signed: 2024-06-01"
+        ]
+      },
+      "sensitive_values": [
+        "alex.kim@goggle.com",
+        "555-0123",
+        "Client initials: M.J.",
+        "Housing address: 742 Elm St, Fakesville, CA 98765",
+        "Lease signed: 2024-06-01"
+      ],
+      "conversation_block": {
+        "timestamp": "11/15/2025-I05",
+        "event_text": "Volunteered at a tenant-rights pro bono clinic and provided intake and plain-language explanations to six clients during a four-hour shift.",
+        "start_index": 62,
+        "lines": [
+          "Side_Note: [Volunteered at a tenant-rights pro bono clinic and provided intake and plain-language explanations to six clients during a four-hour shift.] 11/15/2025-I05",
+          "User: I want clinic-ready materials for future tenant-rights shifts — I'm the supervising attorney, coordinator contact is alex.kim@goggle.com, 555-0123, and I have an example intake note with client initials M.J. and a redacted housing address. Please make a plain-language intake template, a two-page fact sheet on common tenant issues, a confidentiality/consent checklist, and a simple follow-up/referral workflow I can share with the coordinator and volunteers.",
+          "Assistant: I'll prepare: (1) a concise plain-language intake template with fields for contact info, tenancy details, immediate relief sought, and clear redaction guidance so you can anonymize M.J.; (2) a two-page fact sheet summarizing common tenant remedies, key timelines, and sample language volunteers can use; (3) a confidentiality and consent checklist aligned with clinic procedures and your supervising-attorney oversight; and (4) a one-page follow-up/referral workflow the coordinator alex.kim@goggle.com can circulate. I'll also include tailored disclaimers and supervised-attorney language."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/12/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_002",
+            "matched_values": [
+              "555-0123"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [
+        "555-0123",
+        "alex.kim@goggle.com"
+      ],
+      "prefer_as_key": true,
+      "future_conflict_count": 1,
+      "needs_revision": true
+    }
+  ],
+  "protected_probe_turns": [
+    {
+      "rank": 0,
+      "timestamp": "01/20/2026-I01",
+      "history_index": 2,
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_002",
+      "source_event_date": "01/20/2026",
+      "task_goal": "Turn the skills I practiced in the weekend negotiation roleplay into a concrete plan and materials I can use for an upcoming real settlement negotiation: identify my BATNA and target terms, draft a one-page negotiation script and opening offer, and get coaching on handling likely pushback and closing language.",
+      "prev_event": "Attended a weekend negotiation roleplay series and led a successful simulated settlement, enjoying the dynamics and strategy practice.",
+      "context_can_add": {
+        "Upcoming real negotiation (context and stakes)": "User would like to say they have a real negotiation coming up (for example, a severance discussion with their employer or a contract settlement with a vendor). This context is relevant because the strategy, tone, and acceptable concessions depend on the counterpart, timeline, confidentiality requirements, and a target settlement amount. If shared, the user might provide sensitive details such as the employer or counterparty name, the dispute type, and a target or floor settlement figure so advice can be tailored to realistic leverage and legal considerations.",
+        "Recorded roleplay materials and feedback (documents/files/contact)": "User could upload or reference the roleplay transcript, audio recording, or a draft settlement sheet and optionally share the contact info of the colleague or coach who ran the simulation. These materials are useful for concrete feedback on phrasing, concessions, timing, and repeated patterns in their style. This item may include sensitive files (e.g., a transcript file name or an email/phone for the roleplay partner) that should only be shared if comfortable.",
+        "Schedule constraints for prep and coaching": "User can provide their real availability and time zone constraints (specific days/times they can practice or receive live coaching). This is relevant so the assistant can propose a realistic practice schedule, deadlines for drafts, and suggest when to rehearse. Availability is sensitive personal schedule information (e.g., Tue/Thu evenings, specific dates) that the user may prefer to keep private.",
+        "Experience level and negotiation priorities (non-sensitive)": "User might add a short note on their self-assessed strengths/weaknesses from the roleplay (e.g., strong at creative offers, weaker at handling escalation) and what priorities matter most in the real negotiation (money, timeline, confidentiality, non-compete). This helps the assistant prioritize which tactics and scripts to develop next; it is non-sensitive unless it references confidential case details."
+      },
+      "sensitive_info": {
+        "employer_name": [
+          "Greenfield Tech LLC"
+        ],
+        "desired_settlement_amount": [
+          "$25,000"
+        ],
+        "recording_file": [
+          "negotiation_roleplay_2026-03-21_transcript.pdf"
+        ],
+        "roleplay_partner_email": [
+          "alex.kim@goggle.com"
+        ],
+        "roleplay_partner_phone": [
+          "555-0123"
+        ],
+        "availability": [
+          "Tue/Thu 19:00-21:00 PST"
+        ]
+      },
+      "sensitive_values": [
+        "Greenfield Tech LLC",
+        "$25,000",
+        "negotiation_roleplay_2026-03-21_transcript.pdf",
+        "alex.kim@goggle.com",
+        "555-0123",
+        "Tue/Thu 19:00-21:00 PST"
+      ],
+      "conversation_block": {
+        "timestamp": "01/20/2026-I01",
+        "event_text": "Attended a weekend negotiation roleplay series and led a successful simulated settlement, enjoying the dynamics and strategy practice.",
+        "start_index": 8,
+        "lines": [
+          "Side_Note: [Attended a weekend negotiation roleplay series and led a successful simulated settlement, enjoying the dynamics and strategy practice.] 01/20/2026-I01",
+          "User: I have a real negotiation coming up with my employer, Greenfield Tech LLC — it's essentially a severance discussion and my target is $25,000. I recorded the roleplay and have the transcript (negotiation_roleplay_transcript.pdf) and feedback from my partner; my roleplay partner is alex.kim@goggle.com and their phone is 555-0123. I'm available to practice Tue/Thu 7–9 PM PST. Can you help me identify my BATNA and target terms, draft a one-page negotiation script and an opening offer, and give specific coaching on handling likely pushback and closing language?",
+          "Assistant: Yes — here’s a concise, actionable plan I’ll prepare and rehearse with you: (1) BATNA worksheet: list realistic alternatives (unemployment, other offers, potential legal claim value, and time/cost to litigate) and calculate a clear walk-away floor tied to those costs and risks; (2) Target terms to propose: $25,000 settlement amount, neutral reference language, confidentiality if you want it, precise release scope, and payment timing and method; (3) One-page script: tight opening lines, 2–3 value-building points, an anchor (I recommend opening around $32,000 to leave room to concede), concession phrases, and concise closing language; (4) Pushback handling: short rebuttals for “budget” and “precedent” defenses, conditional concession templates (e.g., faster payment for a narrower release), and closing lines that create urgency (mutual release plus prompt payment); (5) Deliverables and rehearsals: a BATNA worksheet, the one-page script, an opening-offer script, and suggested concession ladder — then two 45–60 minute rehearsals using your transcript and partner feedback, plus one focused roleplay on the toughest pushback during one of your Tue/Thu 7–9 PM PST windows. Tell me which practice nights you prefer and whether you want confidentiality language included in the draft, and I’ll build the materials and the first rehearsal script."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/12/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_002",
+            "matched_values": [
+              "555-0123"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "555-0123",
+        "alex.kim@goggle.com"
+      ],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": false,
+      "future_conflict_count": 1,
+      "needs_revision": true
+    },
+    {
+      "rank": 2,
+      "timestamp": "02/28/2026-I03",
+      "history_index": 6,
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_004",
+      "source_event_date": "02/28/2026",
+      "task_goal": "Find and hire a vetted assistant or professional service to organize mixed paper and digital legal case files — get recommendations, cost estimates, a security/NDAs plan for handling privileged material, and a step-by-step timeline to transfer and index ongoing matters without disrupting active cases.",
+      "prev_event": "Spent a frustrating weekend reorganizing years of mixed paper and digital case files, disliked the process and started looking for an assistant or service to avoid repeating it.",
+      "context_can_add": {
+        "case_volume_and_types": "User would like to share the approximate number and types of matters (e.g., 120 total client files, 30 active matters across landlord/tenant and small-business contracts). This may include one representative case reference (e.g., 'Smith v. Ortega, intake ID A1989-4321') so the helper can judge complexity, required expertise, and confidentiality level — and estimate hours and staffing skill set needed. (Sensitive: contains client/case identifiers.)",
+        "budget_and_billing_preference": "User could state a budget or acceptable hourly/project rate (for example, $1,200 for an initial cleanup or $40–60/hour for a contractor). That figure guides realistic vendor recommendations (solo organizer, paralegal contractor, or agency) and whether to suggest hiring part-time staff vs. one-off vendors. (Sensitive: financial/budget detail.)",
+        "current_storage_and_access": "User could list where digital files live (Google Drive, Dropbox, Clio) and provide an admin/contact to coordinate access (for example, alex.kim@lawfirm.com, 555-0123), and whether there is a physical storage address for paper boxes (for example, 1234 Imaginary Lane, Fakesville, CA 98765). This helps identify transfer logistics, required credentials, and secure chain-of-custody steps. (Sensitive: contact info and physical address.)",
+        "privacy_and_confidentiality_requirements": "User should specify whether files include particularly sensitive data (e.g., limited PHI or juvenile/criminal matters) and whether they require NDAs, background checks, or encrypted transfer. Example: 'Contains medical records for 2 clients; NDA and background check required.' This determines what vendors are acceptable and what contractual safeguards to propose. (Sensitive: health/privileged content indicator.)",
+        "timeline_and_availability": "User can state preferred timeline and availability for handoff and oversight (e.g., 'must be completed within 6 weeks, available to meet evenings or weekends'). This guides whether to recommend urgent contractors vs. longer-term hires and shapes the proposed project schedule. (Non-sensitive scheduling detail.)"
+      },
+      "sensitive_info": {
+        "representative_case_reference": [
+          "Smith v. Ortega — intake ID A1989-4321"
+        ],
+        "budget_amount": [
+          "$1,200"
+        ],
+        "cloud_admin_contact": [
+          "alex.kim@lawfirm.com",
+          "555-0123"
+        ],
+        "physical_storage_address": [
+          "1234 Imaginary Lane, Fakesville, CA 98765"
+        ],
+        "phi_presence": [
+          "Contains medical records for 2 clients (limited PHI)"
+        ]
+      },
+      "sensitive_values": [
+        "Smith v. Ortega — intake ID A1989-4321",
+        "$1,200",
+        "alex.kim@lawfirm.com",
+        "555-0123",
+        "1234 Imaginary Lane, Fakesville, CA 98765",
+        "Contains medical records for 2 clients (limited PHI)"
+      ],
+      "conversation_block": {
+        "timestamp": "02/28/2026-I03",
+        "event_text": "Spent a frustrating weekend reorganizing years of mixed paper and digital case files, disliked the process and started looking for an assistant or service to avoid repeating it.",
+        "start_index": 20,
+        "lines": [
+          "Side_Note: [Spent a frustrating weekend reorganizing years of mixed paper and digital case files, disliked the process and started looking for an assistant or service to avoid repeating it.] 02/28/2026-I03",
+          "User: I want to hire a vetted assistant or service to organize mixed paper and digital legal case files; I have a representative file, Smith v. Ortega (intake ID A1989-4321), and an initial cleanup budget of $1,200. Cloud admin Alex Kim (alex.kim@goggle.com, 555-0123) can grant access. Physical boxes are at 1234 Imaginary Lane, Fakesville, CA 98765. The archive includes limited PHI—medical records for two clients—so I need NDAs and background checks. Please provide vetted vendor recommendations with cost estimates, a security/NDAs plan for handling privileged material, and a step-by-step timeline to transfer and index ongoing matters without disrupting active cases.",
+          "Assistant: Practical plan: 1) Vendor recommendations — (a) Solo paralegal/organizer for a one-off cleanup: $40–$60/hour, ~20–30 hours (~$800–$1,800); (b) Small agency specializing in legal records: project fee $1,200–$3,000; (c) Document-scanning vendor for paper boxes + indexing: $0.30–$0.60 per page plus setup. With your $1,200 initial budget, a focused paralegal doing triage and digital indexing is the most realistic fit. 2) Security, NDAs, and background checks — require a signed vendor NDA, a written data-handling SOP, and criminal-background checks for any on-site staff; use encrypted SFTP or secure Google Drive sharing for digital transfers (coordinate access with alex.kim@goggle.com, 555-0123); for paper, require signed chain-of-custody receipts and on-site supervised scanning; tag the two PHI files as restricted and handle them under heightened procedures. 3) Six-week step-by-step timeline — Week 1: shortlist vendors, execute NDAs, start background checks; Week 2: provision limited cloud access with your admin contact; Weeks 3–4: on-site triage at 1234 Imaginary Lane with supervised scanning and basic indexing; Week 5: clean up digital files and apply the folder taxonomy; Week 6: final review, deliver indexed folders, migration log, chain-of-custody receipts, and a short SOP. 4) Staffing and deliverables — one experienced paralegal plus an hourly scanning helper; deliverables: indexed digital folder structure, migration log, chain-of-custody receipts, and a concise SOP for future intake. I can draft the NDA and the project checklist you can send to candidates."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/12/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_002",
+            "matched_values": [
+              "555-0123"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "555-0123"
+      ],
+      "later_duplicate_sensitive_values": [
+        "555-0123"
+      ],
+      "prefer_as_key": false,
+      "future_conflict_count": 1,
+      "needs_revision": true
+    },
+    {
+      "rank": 3,
+      "timestamp": "04/03/2026-I04",
+      "history_index": 10,
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_007",
+      "source_event_date": "04/03/2026",
+      "task_goal": "Turn my one-page podcast summary into a concise internal memo and a short slide outline for a 10–15 minute practice-group presentation; optionally draft an email to my supervising partner to circulate the memo and indicate which case-specific details should be redacted.",
+      "prev_event": "Listened to a three-episode legal podcast series on arbitration trends and produced a one-page summary of practical takeaways.",
+      "context_can_add": {
+        "Audience_and_use": "User would like to specify the target audience (e.g., supervising partner, arbitration practice group, or broader firm list) and the intended use (internal briefing, client-facing note, training slide deck). This determines tone, level of detail, citation style, and whether to include action items or next steps. This is not sensitive but helps tailor format and language.",
+        "Case_context_sensitive": "User could indicate whether the memo should be tied to a specific ongoing arbitration matter (for example, a tenant eviction arbitration). If so, they'd provide the case identifier and very brief confidential facts (e.g., case ID, opposing party name, arbitration provider). These are sensitive details that the assistant should redact or flag for privilege when drafting and when recommending what to share externally.",
+        "Supervisor_contact_sensitive": "User might supply the supervising partner's contact and their preferred sign-off/format (for example, email alex.kim@goggle.com and primary phone 555-0123) and whether they want the memo sent on their behalf. This is sensitive contact information that affects email formatting, cc/bcc choices, and logistics.",
+        "Document_reference_sensitive": "User could attach or paste the original one-page summary or the podcast transcript filename (e.g., 'ArbitrationPodcast_Summary_2026-04-05.docx' or 'podcast_ep1_transcript.txt') so the assistant can edit in place and quote accurately. The file content may contain proprietary or privileged material, so the assistant should treat it as confidential and only use it for the requested redrafting."
+      },
+      "sensitive_info": {
+        "supervising_partner_contact": [
+          "alex.kim@goggle.com",
+          "555-0123"
+        ],
+        "case_identifier_and_parties": [
+          "T-2026-0897; Greenfield Properties v. Rivera"
+        ],
+        "document_filename": [
+          "ArbitrationPodcast_Summary_2026-04-05.docx"
+        ]
+      },
+      "sensitive_values": [
+        "alex.kim@goggle.com",
+        "555-0123",
+        "T-2026-0897; Greenfield Properties v. Rivera",
+        "ArbitrationPodcast_Summary_2026-04-05.docx"
+      ],
+      "conversation_block": {
+        "timestamp": "04/03/2026-I04",
+        "event_text": "Listened to a three-episode legal podcast series on arbitration trends and produced a one-page summary of practical takeaways.",
+        "start_index": 32,
+        "lines": [
+          "Side_Note: [Listened to a three-episode legal podcast series on arbitration trends and produced a one-page summary of practical takeaways.] 04/03/2026-I04",
+          "User: I want to turn my one-page arbitration summary into a concise internal memo and a short slide outline for a 10–15 minute practice-group presentation. My supervising partner is alex.kim@goggle.com, 555-0123; please mark any case-specific details tied to T-2026-0897; Greenfield Properties v. Rivera for redaction if the memo is circulated firm-wide. The original file is ArbitrationPodcast_Summary.docx. Please draft the memo, a slide outline, and an optional email to alex.kim@goggle.com indicating redactions.",
+          "Assistant: I will prepare a one-page internal memo with three practical takeaways, brief citations for further reading, and recommended action items; a 6–8 slide outline for a 10–15 minute talk with speaker notes; and a short email to alex.kim@goggle.com proposing redaction of T-2026-0897 and specifying what to remove before wider circulation. I will also flag any language tied to Greenfield Properties v. Rivera so you can confirm what to redact."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/12/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_002",
+            "matched_values": [
+              "555-0123"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "555-0123",
+        "alex.kim@goggle.com"
+      ],
+      "later_duplicate_sensitive_values": [
+        "555-0123",
+        "alex.kim@goggle.com"
+      ],
+      "prefer_as_key": false,
+      "future_conflict_count": 1,
+      "needs_revision": true
+    }
+  ],
+  "rejected_turns": []
+}

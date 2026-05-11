@@ -1,0 +1,740 @@
+{
+  "source_file": "data/output/legalConsultation/conversation_legalConsultation_persona7_sample0.json",
+  "periods": [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage"
+  ],
+  "initial_interaction_count": 6,
+  "selection_policy": {
+    "key_target_count": 3,
+    "probe_target_count": 3,
+    "prefer_last_exact_sensitive_occurrence": true,
+    "future_conflict_detection": [
+      "exact reuse of later [Sensitive Info] values",
+      "exact reuse of later [Context Can Add] keys",
+      "later event or interaction belonging to the source event's descendant chain",
+      "boolean high-similarity check over later [Task Goal] text"
+    ],
+    "key_selection_priority": [
+      "lower future conflict count",
+      "prefer the last exact sensitive-value occurrence",
+      "earlier history index as a stable tiebreaker"
+    ]
+  },
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "01/16/2026-I01",
+      "12/01/2023-I06",
+      "05/03/2024-I03"
+    ],
+    "all_selected_keys_conflict_free": false,
+    "keys_requiring_revision": [
+      "01/16/2026-I01",
+      "05/03/2024-I03",
+      "12/01/2023-I06"
+    ],
+    "key_conflicts": {
+      "01/16/2026-I01": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/22/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "Email: lamar.jenkins@goggle.com",
+              "Phone: 555-0123"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "12/01/2023-I06": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "05/06/2026-I03",
+            "event_id": "I_WEEK_003",
+            "source_event_id": "E_WEEK_007",
+            "matched_values": [
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_001",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/01/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_002",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "05/03/2024-I03": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "123 Fishing Ln, Riverside, CA 90210",
+              "555-0123"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_001",
+            "matched_values": [
+              "555-0123"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/01/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_002",
+            "matched_values": [
+              "555-0123"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "07/01/2026-I03",
+            "event_id": "I_YEAR_003",
+            "source_event_id": "E_YEAR_007",
+            "matched_values": [
+              "123 Fishing Ln, Riverside, CA 90210"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      }
+    },
+    "baseline_conversation_action": "manual_or_future_targeted_revision_needed"
+  },
+  "key_turns": [
+    {
+      "rank": 0,
+      "timestamp": "01/16/2026-I01",
+      "history_index": 1,
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_001",
+      "source_event_date": "01/16/2026",
+      "task_goal": "Design a 10-minute telephone-intake roleplay script suite (3 graded scenarios of varying difficulty), a short privacy-prompt checklist, and a concise 1-page note-taking template plus a simple scoring rubric so I can run the next workshop and objectively assess trainees' privacy prompts, active listening, and time-compressed note-taking.",
+      "prev_event": "Held a roleplaying workshop simulating telephone intake calls, focusing on privacy prompts, active listening, and concise note-taking under time pressure.",
+      "context_can_add": {
+        "typical_caller_examples": "User would like to provide 2–3 typical caller scenarios the intake team receives (for example: a tenant dispute alleging harassment, an impersonation/account-takeover complaint, or an urgent benefits inquiry). These examples help the assistant create realistic roleplays that surface privacy red flags and required statutory notices. The user may share redacted sensitive allegations, dates, or partial locations to guide scenario specificity.",
+        "sample_intake_document": "User could paste or attach their current intake sheet or a redacted completed example so the assistant can tailor the 1-page note-taking template to the fields they already collect (which fields to prioritize, which can be abbreviated). This will naturally include a filename or partial entries (e.g., caller initials, partial address, incident date) that are sensitive document references.",
+        "preferred_callback_and_availability": "User may share the preferred callback contact (phone and/or email) for workshop follow-ups and the organizer's availability windows so the assistant proposes realistic scheduling and delivery options. This will involve private contact details and specific schedule constraints (days/times) which should only be used for planning and follow-up.",
+        "jurisdiction_and_record_retention_rules": "User can specify the legal jurisdiction (state or county) and any internal retention or confidentiality limits (for example: audio recordings kept 30 days, intake notes archived indefinitely) so scripts include correct privacy notices and the note template lists legally required retention fields. Jurisdiction and policy details influence what prompt language and disclosures are required."
+      },
+      "sensitive_info": {
+        "example_case_detail": [
+          "Impersonation complaint: alleged account takeover of county benefits portal reported 2026-03-12; redacted location: Riverside area; related issue noted as 'impersonation complaint' in intake logs"
+        ],
+        "sample_intake_document": [
+          "Intake_Sheet_Riverside_2026-03-20.pdf (redacted sample: Caller initials A.L., partial address 123 Fishing Ln, Riverside, CA, incident date 2026-03-12)"
+        ],
+        "preferred_callback_and_availability": [
+          "Phone: 555-0123",
+          "Email: lamar.jenkins@goggle.com",
+          "Availability: Monday & Wednesday 13:00-17:00 PST"
+        ]
+      },
+      "sensitive_values": [
+        "Impersonation complaint: alleged account takeover of county benefits portal reported 2026-03-12; redacted location: Riverside area; related issue noted as 'impersonation complaint' in intake logs",
+        "Intake_Sheet_Riverside_2026-03-20.pdf (redacted sample: Caller initials A.L., partial address 123 Fishing Ln, Riverside, CA, incident date 2026-03-12)",
+        "Phone: 555-0123",
+        "Email: lamar.jenkins@goggle.com",
+        "Availability: Monday & Wednesday 13:00-17:00 PST"
+      ],
+      "conversation_block": {},
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/22/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "Email: lamar.jenkins@goggle.com",
+              "Phone: 555-0123"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 1,
+      "needs_revision": true
+    },
+    {
+      "rank": 5,
+      "timestamp": "12/01/2023-I06",
+      "history_index": 23,
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_018",
+      "source_event_date": "12/01/2023",
+      "task_goal": "Turn the favored AI contract-review tool into a repeatable, secure workflow for my practice: produce an implementation checklist (security assessment, integration steps, sample templates/labels, training plan for associates), a short playbook for initial triage outputs, and success metrics to evaluate ROI and accuracy over the first 90 days.",
+      "prev_event": "Tested three AI contract review tools on a standard service agreement; favored one for flagging ambiguous clauses and speeding up initial triage.",
+      "context_can_add": {
+        "firm_profile": "User would like to share firm size, primary practice areas, and average monthly contract volume (e.g., 5–20 service agreements) so recommendations scale to their headcount, review capacity, and typical contract types rather than generic enterprise advice.",
+        "sample_contract_or_clauses": "User could upload or paste a redacted example (e.g., a draft service agreement file name like 'AcmeCo_Service_Agreement_redacted.pdf' or specific ambiguous clause text). This would allow tailoring the tool's labeling taxonomy, risk thresholds, and sample output templates. Note: the uploaded draft may contain sensitive client names, payment terms or IP clauses—these should be redacted or shared with consent.",
+        "deployment_and_security_constraints": "User could provide internal deployment constraints and an IT/security contact (e.g., contact email and phone) and whether documents must remain on-premises or can go to vendor cloud. This guides recommendations on SSO, data residency, encryption, and whether the tool meets procurement/security requirements. Sensitive details here include the IT contact (name/email/phone) and internal repo locations.",
+        "procurement_budget_and_approval_timeline": "User could share the planned budget and timeline for procurement/approval (for example, a target budget like $18,000/year and an approval window of Q3 2026). This helps prioritize pricing tiers, phased rollouts, and whether to recommend pilot vs enterprise licensing. Budget and approver names/timelines are sensitive procurement details."
+      },
+      "sensitive_info": {
+        "sample_contract_or_clauses": [
+          "AcmeCo_Service_Agreement_redacted.pdf"
+        ],
+        "deployment_and_security_constraints": [
+          "lamar.jenkins@goggle.com",
+          "555-0123"
+        ],
+        "procurement_budget_and_approval_timeline": [
+          "$18,000/year",
+          "Target approval: 2026-09-30"
+        ]
+      },
+      "sensitive_values": [
+        "AcmeCo_Service_Agreement_redacted.pdf",
+        "lamar.jenkins@goggle.com",
+        "555-0123",
+        "$18,000/year",
+        "Target approval: 2026-09-30"
+      ],
+      "conversation_block": {},
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "05/06/2026-I03",
+            "event_id": "I_WEEK_003",
+            "source_event_id": "E_WEEK_007",
+            "matched_values": [
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_001",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/01/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_002",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [
+        "555-0123",
+        "lamar.jenkins@goggle.com"
+      ],
+      "prefer_as_key": true,
+      "future_conflict_count": 4,
+      "needs_revision": true
+    },
+    {
+      "rank": 2,
+      "timestamp": "05/03/2024-I03",
+      "history_index": 9,
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_007",
+      "source_event_date": "05/03/2024",
+      "task_goal": "Draft a professional reply template, triage intake form, and short follow-up script for listener emails to lamar.jenkins@goggle.com about tenant-rights issues (including an urgent-response checklist and privacy/consent language for using questions on the podcast).",
+      "prev_event": "Released a 28-minute episode of a legal advice podcast covering tenant rights and set the public contact email to lamar.jenkins@goggle.com for listener questions.",
+      "context_can_add": {
+        "listener_question_text": "User would paste the full text of a listener's email asking about an eviction notice. This is relevant so the assistant can draft an accurate, specific reply, identify urgent legal issues (e.g., imminent lockout), and recommend next steps; the pasted text would likely include sensitive details such as the tenant's name, the landlord's name, the property address, lease dates, and the eviction/notice date.",
+        "preferred_response_tone_and_disclaimer": "User would say whether replies should be informal and empathetic or formal and lawyerly, and whether to include an explicit attorney-client and non-reliance disclaimer. This guides wording of the template and what legal caveats to include (not sensitive).",
+        "intake_form_template_needs": "User would specify which contact and case details to collect (e.g., listener name, phone, email, preferred contact method, whether they consent to publishing or being quoted, and whether they want a referral to pro bono counsel). This will include sensitive contact details (email and phone) and a checkbox for consent to publish, which affects permissibility of using the content on the podcast.",
+        "audio_transcript_reference_and_consent": "If the listener left a voicemail or audio recording, the user could provide the audio transcript reference or filename and whether the listener has already consented to publishing. That filename or transcript ID is sensitive metadata needed to match consent records and to prepare anonymized excerpts for publication."
+      },
+      "sensitive_info": {
+        "tenant_name": [
+          "Alicia Rivera"
+        ],
+        "property_address": [
+          "123 Fishing Ln, Riverside, CA 90210"
+        ],
+        "landlord_name": [
+          "John Morales"
+        ],
+        "eviction_notice_date": [
+          "2026-03-28"
+        ],
+        "lease_start_date": [
+          "2023-04-01"
+        ],
+        "listener_contact_email": [
+          "alicia.rivera@example.com"
+        ],
+        "listener_phone": [
+          "555-0123"
+        ],
+        "audio_transcript_reference": [
+          "intake_audio_2026-04-02_S123456789.mp3"
+        ]
+      },
+      "sensitive_values": [
+        "Alicia Rivera",
+        "123 Fishing Ln, Riverside, CA 90210",
+        "John Morales",
+        "2026-03-28",
+        "2023-04-01",
+        "alicia.rivera@example.com",
+        "555-0123",
+        "intake_audio_2026-04-02_S123456789.mp3"
+      ],
+      "conversation_block": {},
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "123 Fishing Ln, Riverside, CA 90210",
+              "555-0123"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_001",
+            "matched_values": [
+              "555-0123"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/01/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_002",
+            "matched_values": [
+              "555-0123"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "07/01/2026-I03",
+            "event_id": "I_YEAR_003",
+            "source_event_id": "E_YEAR_007",
+            "matched_values": [
+              "123 Fishing Ln, Riverside, CA 90210"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "123 Fishing Ln, Riverside, CA 90210",
+        "555-0123"
+      ],
+      "later_duplicate_sensitive_values": [
+        "123 Fishing Ln, Riverside, CA 90210",
+        "555-0123"
+      ],
+      "prefer_as_key": false,
+      "future_conflict_count": 4,
+      "needs_revision": true
+    }
+  ],
+  "protected_probe_turns": [
+    {
+      "rank": 1,
+      "timestamp": "03/09/2021-I02",
+      "history_index": 6,
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_005",
+      "source_event_date": "03/09/2021",
+      "task_goal": "Design a lightweight, low‑maintenance compliance checklist system for my small nonprofit — include templates, automation or reminder triggers, a simple update workflow (who does what), recommended tools (free/low‑cost), and a 30/60/90‑day plan to minimize time spent on ongoing checklist maintenance.",
+      "prev_event": "Created compliance checklists for a small nonprofit but found the repetitive checklist maintenance tedious and started minimizing time spent on that activity.",
+      "context_can_add": {
+        "nonprofit_state_and_size": "User would like to share the state of registration (e.g., California) and the organization size (number of staff vs. volunteers). This matters because state filing deadlines, required reports, and realistic delegation options depend on jurisdiction and how many people can be assigned checklist tasks.",
+        "preferred_tools_and_formats": "User would like to say which tools they already use or prefer (e.g., Google Sheets, Airtable, Slack, or printed packets). This guides recommendations so solutions fit current workflows and avoid introducing heavy new systems.",
+        "organization_address": "User might provide the nonprofit's official mailing address and registered city/county (sensitive). That address determines local compliance requirements and which filings need physical mail or specific local contacts, so it should guide jurisdiction‑specific checklist items.",
+        "project_contact": "User could share the primary project contact or coordinator who will receive automated reminders — typically an email and phone number (sensitive). Knowing whether the contact is a volunteer or paid staff and their contact details helps design notification routing, escalation, and whether SMS or email reminders are appropriate.",
+        "annual_compliance_budget": "User may disclose the annual or per‑year budget available for compliance tools or outsourcing (sensitive, e.g., $1,200/year). This influences whether to propose free solutions, low‑cost subscriptions, or hiring a part‑time consultant to take checklist maintenance off the user's plate."
+      },
+      "sensitive_info": {
+        "organization_address": [
+          "123 Fishing Ln, Riverside, CA 90210"
+        ],
+        "project_contact_email": [
+          "lamar.jenkins@goggle.com"
+        ],
+        "project_contact_phone": [
+          "555-0123"
+        ],
+        "annual_compliance_budget": [
+          "$1,200/year"
+        ],
+        "document_reference": [
+          "clause library audit"
+        ]
+      },
+      "sensitive_values": [
+        "123 Fishing Ln, Riverside, CA 90210",
+        "lamar.jenkins@goggle.com",
+        "555-0123",
+        "$1,200/year",
+        "clause library audit"
+      ],
+      "conversation_block": {},
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "05/06/2026-I03",
+            "event_id": "I_WEEK_003",
+            "source_event_id": "E_WEEK_007",
+            "matched_values": [
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "123 Fishing Ln, Riverside, CA 90210",
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_001",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/01/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_002",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "07/01/2026-I03",
+            "event_id": "I_YEAR_003",
+            "source_event_id": "E_YEAR_007",
+            "matched_values": [
+              "123 Fishing Ln, Riverside, CA 90210"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "123 Fishing Ln, Riverside, CA 90210",
+        "555-0123",
+        "lamar.jenkins@goggle.com"
+      ],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": false,
+      "future_conflict_count": 5,
+      "needs_revision": true
+    },
+    {
+      "rank": 3,
+      "timestamp": "08/14/2024-I04",
+      "history_index": 15,
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_012",
+      "source_event_date": "08/14/2024",
+      "task_goal": "Adapt the posted PDF into a small outreach package and review workflow: create a one-page printable flyer and a short social-media post (with alt text), draft a plain-language FAQ update and a one-sentence legal disclaimer, and prepare an email/phone script to request a quick vetting from a local tenants' rights clinic so I can re-post an updated version.",
+      "prev_event": "Drafted a plain-language guide for renters explaining security deposit rules and posted the PDF to a neighborhood noticeboard to improve accessibility.",
+      "context_can_add": {
+        "distribution_goals": "User would like to explain how broadly they plan to distribute the materials (e.g., number of printed copies, which social platforms or neighborhood listservs, target audiences such as renters in multiunit buildings vs homeowners). This helps tailor length, formatting, and whether to include translations, accessibility features (large print, audio), or production budget constraints.",
+        "noticeboard_location": "User could share the physical address or intersection of the neighborhood noticeboard (private detail: exact address). Knowing the location lets the assistant check which local/state security-deposit rules likely apply, suggest nearby pickup/drop points, and tailor jurisdiction-specific phrasing or references in the flyer.",
+        "vetting_contact": "User might provide contact details for a local tenants' rights organization or attorney (private details: name, email, phone). With a contact, the assistant can draft a concise, professional outreach email/phone script that includes the right materials and a brief review request, and it can suggest what to send and how to follow up.",
+        "ongoing_deposit_dispute": "If the user or someone they help is currently in a security-deposit dispute they might share a brief case reference, landlord/property manager name, or intake ID (private detail: case or file ID, landlord name). This is relevant when asking for tailored guidance or an FAQ entry about how the general rules apply to a live dispute and whether the flyer should include a ‘seek legal help if’ disclaimer."
+      },
+      "sensitive_info": {
+        "noticeboard_address": [
+          "123 Fishing Ln, Riverside, CA 90210"
+        ],
+        "vetting_contact": [
+          "lamar.jenkins@goggle.com",
+          "555-0123"
+        ],
+        "tenant_dispute_reference": [
+          "S123456789",
+          "Greenwood Management LLC"
+        ]
+      },
+      "sensitive_values": [
+        "123 Fishing Ln, Riverside, CA 90210",
+        "lamar.jenkins@goggle.com",
+        "555-0123",
+        "S123456789",
+        "Greenwood Management LLC"
+      ],
+      "conversation_block": {},
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "05/06/2026-I03",
+            "event_id": "I_WEEK_003",
+            "source_event_id": "E_WEEK_007",
+            "matched_values": [
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "123 Fishing Ln, Riverside, CA 90210",
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_001",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/01/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_002",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "07/01/2026-I03",
+            "event_id": "I_YEAR_003",
+            "source_event_id": "E_YEAR_007",
+            "matched_values": [
+              "123 Fishing Ln, Riverside, CA 90210"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "123 Fishing Ln, Riverside, CA 90210",
+        "555-0123",
+        "lamar.jenkins@goggle.com"
+      ],
+      "later_duplicate_sensitive_values": [
+        "123 Fishing Ln, Riverside, CA 90210",
+        "555-0123",
+        "lamar.jenkins@goggle.com"
+      ],
+      "prefer_as_key": false,
+      "future_conflict_count": 5,
+      "needs_revision": true
+    },
+    {
+      "rank": 4,
+      "timestamp": "09/15/2025-I05",
+      "history_index": 18,
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_014",
+      "source_event_date": "09/15/2025",
+      "task_goal": "Turn the mock client consultation roleplay into an improved, repeatable training: get a scoring rubric and written feedback templates, revise the intake and consent forms used in the exercise, produce a short debrief script and confidentiality/consent language, and create a follow-up plan to contact volunteers and schedule the next workshop.",
+      "prev_event": "Led a three-hour mock client consultation roleplay workshop with six volunteers to practice intake, fact-finding, and closing summaries; received positive feedback on the simulated interviews.",
+      "context_can_add": {
+        "request_feedback_and_rubric": "User would like a scored rubric and sample written feedback to evaluate volunteers' intake, fact-finding, and closing skills. This is relevant because objective scoring and templates will make debriefs faster, highlight skill gaps to address in future sessions, and guide revisions of workshop goals.",
+        "share_sample_intake_or_transcripts": "User could share the actual intake sheet(s) or an audio transcript from one simulated interview to get concrete redlines and privacy-safe editing. This would involve uploading a document filename or transcript excerpt (sensitive: the intake form may contain client pseudonyms, short factual statements, or case notes). Reviewing the real document will let the assistant suggest precise edits to questions, consent language, and redaction practices.",
+        "volunteer_contact_list_for_followup": "User may provide the contact list (emails and/or phone numbers) of the six volunteers so the assistant can draft personalized follow-up messages, sign-up links, and a consent/feedback request. This will involve sharing private contact details (sensitive: volunteer emails and phone numbers) and will guide the tone and scheduling of outreach.",
+        "next_workshop_schedule_and_location_constraints": "User might add constraints for future sessions (preferred days/times, room/location) so the assistant can propose specific dates and a registration plan. This may include sharing a physical address for the training site and availability windows (sensitive: specific address and the organizer's scheduling limitations), which will help produce location-specific consent wording and calendar invites."
+      },
+      "sensitive_info": {
+        "intake_document": [
+          "intake_sheet_2026-03-18.pdf"
+        ],
+        "audio_transcript": [
+          "mock_interview_transcript_2026-03-18.mp3"
+        ],
+        "participant_contacts": [
+          "lamar.jenkins@goggle.com",
+          "555-0123",
+          "ana.martinez@lawclinic.org"
+        ],
+        "workshop_address": [
+          "123 Fishing Ln, Riverside, CA 90210"
+        ],
+        "preferred_times": [
+          "Weekday evenings 6:00–9:00 PM",
+          "Avoid weekends; prefer Monday or Tuesday"
+        ]
+      },
+      "sensitive_values": [
+        "intake_sheet_2026-03-18.pdf",
+        "mock_interview_transcript_2026-03-18.mp3",
+        "lamar.jenkins@goggle.com",
+        "555-0123",
+        "ana.martinez@lawclinic.org",
+        "123 Fishing Ln, Riverside, CA 90210",
+        "Weekday evenings 6:00–9:00 PM",
+        "Avoid weekends; prefer Monday or Tuesday"
+      ],
+      "conversation_block": {},
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "05/06/2026-I03",
+            "event_id": "I_WEEK_003",
+            "source_event_id": "E_WEEK_007",
+            "matched_values": [
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "123 Fishing Ln, Riverside, CA 90210",
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "03/01/2027-I01",
+            "event_id": "I_YEAR_001",
+            "source_event_id": "E_YEAR_001",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/01/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_002",
+            "matched_values": [
+              "555-0123",
+              "lamar.jenkins@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "07/01/2026-I03",
+            "event_id": "I_YEAR_003",
+            "source_event_id": "E_YEAR_007",
+            "matched_values": [
+              "123 Fishing Ln, Riverside, CA 90210"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "555-0123",
+        "lamar.jenkins@goggle.com"
+      ],
+      "later_duplicate_sensitive_values": [
+        "123 Fishing Ln, Riverside, CA 90210",
+        "555-0123",
+        "lamar.jenkins@goggle.com"
+      ],
+      "prefer_as_key": false,
+      "future_conflict_count": 5,
+      "needs_revision": true
+    }
+  ],
+  "rejected_turns": []
+}

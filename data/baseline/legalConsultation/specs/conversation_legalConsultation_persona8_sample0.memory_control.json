@@ -1,0 +1,808 @@
+{
+  "source_file": "data/output/legalConsultation/conversation_legalConsultation_persona8_sample0.json",
+  "periods": [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage"
+  ],
+  "initial_interaction_count": 6,
+  "selection_policy": {
+    "key_target_count": 3,
+    "probe_target_count": 3,
+    "prefer_last_exact_sensitive_occurrence": true,
+    "future_conflict_detection": [
+      "exact reuse of later [Sensitive Info] values",
+      "exact reuse of later [Context Can Add] keys",
+      "later event or interaction belonging to the source event's descendant chain",
+      "boolean high-similarity check over later [Task Goal] text"
+    ],
+    "key_selection_priority": [
+      "lower future conflict count",
+      "prefer the last exact sensitive-value occurrence",
+      "earlier history index as a stable tiebreaker"
+    ]
+  },
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "03/02/2026-I02",
+      "12/15/2025-I06",
+      "02/14/2025-I01"
+    ],
+    "all_selected_keys_conflict_free": false,
+    "keys_requiring_revision": [
+      "02/14/2025-I01",
+      "12/15/2025-I06"
+    ],
+    "key_conflicts": {
+      "12/15/2025-I06": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "03/15/2026-I02",
+            "event_id": "I_WEEK_002",
+            "source_event_id": "E_WEEK_004",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/16/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/14/2026-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_008",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/30/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_003",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "02/14/2025-I01": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "03/15/2026-I02",
+            "event_id": "I_WEEK_002",
+            "source_event_id": "E_WEEK_004",
+            "matched_values": [
+              "alexis.lane@goggle.com",
+              "TX-987654321"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/16/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "alexis.lane@goggle.com",
+              "TX-987654321"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/14/2026-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_008",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/30/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_003",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      }
+    },
+    "baseline_conversation_action": "manual_or_future_targeted_revision_needed"
+  },
+  "key_turns": [
+    {
+      "rank": 1,
+      "timestamp": "03/02/2026-I02",
+      "history_index": 5,
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_004",
+      "source_event_date": "03/02/2026",
+      "task_goal": "Turn the vendor comparison into a concrete implementation plan: recommend which platform to adopt, define the set of standardized templates to migrate, outline step-by-step migration/refactoring tasks, create a vendor-negotiation checklist (pricing, SLAs, security), propose a training and rollout timeline for attorneys and staff, and produce a short compliance/security checklist to satisfy our clients' requirements.",
+      "prev_event": "Ran a three-hour hands-on evaluation of three document-automation platforms and produced a one-page vendor comparison to recommend standard templates for recurring client matters.",
+      "context_can_add": {
+        "monthly_volume_and_matter_types": "User would like to share current monthly volumes and the types of recurring matters (e.g., NDAs, engagement letters, lease matters, tenant files). This helps prioritize which templates to standardize first and estimate migration effort and licensing needs; this is non-sensitive operational info (e.g., 'approx 150 NDAs/month, 60 engagement letters/month, 30 lease matters/month').",
+        "sample_draft_files_and_repository_paths": "User could provide example templates and the repository paths (filenames and locations) so the assistant can suggest concrete refactors and mapping to the automation platform. This would involve sensitive internal file references such as drive paths and sample client drafts (e.g., 'S:/Legal/Templates/NDA_Standard_v1.docx', 'S:/Legal/Matters/Tenant_File_Sample.pdf').",
+        "security_and_client_compliance_constraints": "User may specify security/compliance requirements that affect platform choice and configuration (e.g., SOC 2 Type II, GDPR data residency, HIPAA for healthcare clients, or two clients requiring on‑prem hosting). This is sensitive because it references client regulatory needs and possibly client identities; it should guide selection of hosting model, encryption, and data access controls.",
+        "procurement_budget_and_timeline_constraints": "User might share procurement constraints such as an annual budget cap, preferred contract length, and hard procurement deadlines so the plan fits financial and procurement windows (e.g., '$40,000 annual SaaS budget cap' and 'procurement decision by 2026-06-30'). These are sensitive financial and scheduling details that will shape vendor negotiation strategy and phased rollout.",
+        "implementation_team_and_primary_contact": "User can identify who will own the rollout internally and provide a point of contact (name, role, email, phone) so the assistant can draft stakeholder communication templates and a delegated task list. This is sensitive PII (e.g., 'Alexis Lane, Legal Operations Manager, alexis.lane@goggle.com, 555-123-4567')."
+      },
+      "sensitive_info": {
+        "sample_draft_files": [
+          "S:/Legal/Templates/NDA_Standard_v1.docx",
+          "S:/Legal/Templates/Engagement_Letter_Standard_v3.docx",
+          "S:/Legal/Matters/Tenant_File_Sample.pdf"
+        ],
+        "procurement_budget": [
+          "$40,000 annual SaaS budget cap",
+          "procurement decision deadline: 2026-06-30"
+        ],
+        "implementation_contact": [
+          "Alexis Lane; Legal Operations Manager; alexis.lane@goggle.com; 555-123-4567"
+        ],
+        "security_requirements": [
+          "SOC 2 Type II required",
+          "EU data residency/GDPR for EU clients",
+          "HIPAA required for two healthcare clients (Acme Health, Medicorp); on-prem or dedicated-hosting preferred for those engagements"
+        ]
+      },
+      "sensitive_values": [
+        "S:/Legal/Templates/NDA_Standard_v1.docx",
+        "S:/Legal/Templates/Engagement_Letter_Standard_v3.docx",
+        "S:/Legal/Matters/Tenant_File_Sample.pdf",
+        "$40,000 annual SaaS budget cap",
+        "procurement decision deadline: 2026-06-30",
+        "Alexis Lane; Legal Operations Manager; alexis.lane@goggle.com; 555-123-4567",
+        "SOC 2 Type II required",
+        "EU data residency/GDPR for EU clients",
+        "HIPAA required for two healthcare clients (Acme Health, Medicorp); on-prem or dedicated-hosting preferred for those engagements"
+      ],
+      "conversation_block": {
+        "timestamp": "03/02/2026-I02",
+        "event_text": "Ran a three-hour hands-on evaluation of three document-automation platforms and produced a one-page vendor comparison to recommend standard templates for recurring client matters.",
+        "start_index": 17,
+        "lines": [
+          "Side_Note: [Ran a three-hour hands-on evaluation of three document-automation platforms and produced a one-page vendor comparison to recommend standard templates for recurring client matters.] 03/02/2026-I02",
+          "User: Please turn that vendor comparison into a concrete implementation plan: recommend which platform to adopt, define which standardized templates to migrate first (we handle about 150 NDAs/month, 60 engagement letters/month, 30 lease matters/month), outline step-by-step migration/refactor tasks using our sample files (S:/Legal/Templates/NDA_Standard_v1.docx, S:/Legal/Templates/Engagement_Letter_Standard_v3.docx, S:/Legal/Matters/Tenant_File_Sample.pdf), create a vendor-negotiation checklist (pricing, SLAs, security) that respects our $40,000 annual SaaS budget cap and our procurement decision deadline of June 30, 2026, propose a training and rollout timeline, and produce a short compliance/security checklist reflecting SOC 2 Type II, EU data residency/GDPR, and HIPAA requirements for two healthcare clients (Acme Health, Medicorp) where on‑prem or dedicated hosting is preferred; our implementation contact is Alexis Lane, Legal Operations Manager, alexis.lane@goggle.com, 555-123-4567 — include stakeholder communication templates and a delegated task list for her.",
+          "Assistant: I will deliver a phased implementation plan that (1) recommends a primary platform and a fallback, (2) prioritizes template migration by volume (start with NDAs), (3) lists the exact templates to migrate first, (4) maps step-by-step migration and refactor tasks to your sample files and repository paths, and (5) provides a vendor-negotiation checklist covering pricing, SLAs, and security aligned to your $40,000 annual SaaS cap and the procurement deadline of June 30, 2026. I will also propose a training and rollout timeline, produce a concise compliance/security checklist addressing SOC 2 Type II, EU data-residency/GDPR, and HIPAA with on‑prem/dedicated-hosting options for Acme Health and Medicorp, and draft stakeholder email templates plus a delegated task list for Alexis Lane (alexis.lane@goggle.com, 555-123-4567)."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 5,
+      "timestamp": "12/15/2025-I06",
+      "history_index": 22,
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_017",
+      "source_event_date": "12/15/2025",
+      "task_goal": "Prepare and send the CLE follow-up packet: finalize attendance certificates, compile and submit the attendee roster and bar numbers to the state bar for CLE credit, draft a volunteer thank-you + stipend/invoice email to Alexis Lane (registration contact) and volunteers, and create a short attendee feedback survey — all while ensuring privacy-compliant handling of the roster and timely submission by the state-bar deadline.",
+      "prev_event": "Organized a half-day CLE seminar on practical ethics, handled volunteer coordination and emailed the volunteer roster and registration contact at alexis.lane@goggle.com.",
+      "context_can_add": {
+        "attendee_roster_with_bar_numbers": "User could share the finalized attendee roster (names, emails, and bar numbers) because this is required to generate and email CLE attendance certificates and to submit for CLE credit. This is sensitive personal data (contact info and professional ID) that should guide how the assistant formats certificates, the CSV for submission, and wording addressing privacy/consent.",
+        "event_budget_and_reimbursement": "User could provide the event budget and reimbursement details (total expenses, line items like volunteer stipends, and preferred reimbursement contact) because the assistant can draft accurate stipend/invoice language and calculate per-volunteer payments. This includes sensitive financial figures and a payroll/contact phone number, which affect invoicing phrasing and who gets cc'd.",
+        "state_bar_accreditation_code_and_deadline": "User might supply the state bar accreditation code or event ID and the CLE submission deadline (e.g., the numeric accreditation reference) because the assistant needs that exact identifier and timeline to prepare the submission packet and confirm compliance. This code is a sensitive administrative identifier that must be placed precisely on forms.",
+        "registration_contact_preferences_and_availability": "User could add any private scheduling constraints or Alexis Lane's preferred contact times/methods (e.g., email vs. phone, best hours) and whether Alexis asked to be cc'd on all volunteer communications. These are semi-sensitive contact preferences that affect when and how the assistant drafts or schedules messages."
+      },
+      "sensitive_info": {
+        "attendee_roster_with_bar_numbers": [
+          "Jordan Kim | jordan.kim@examplelaw.com | Bar #CA321654",
+          "Samantha Ortiz | sortiz@lawfirm.com | Bar #TX112233",
+          "Marcus Green | m.green@nonprofit.org | Bar #NY998877"
+        ],
+        "event_budget_and_reimbursement": [
+          "Total expenses: $1,250",
+          "Volunteer stipends: $300 (total)",
+          "Sponsor invoice amount due: $950"
+        ],
+        "state_bar_accreditation_code_and_deadline": [
+          "Accreditation code: TX-987654321",
+          "Submission deadline: 2026-04-21"
+        ],
+        "registration_contact_email": [
+          "alexis.lane@goggle.com"
+        ]
+      },
+      "sensitive_values": [
+        "Jordan Kim | jordan.kim@examplelaw.com | Bar #CA321654",
+        "Samantha Ortiz | sortiz@lawfirm.com | Bar #TX112233",
+        "Marcus Green | m.green@nonprofit.org | Bar #NY998877",
+        "Total expenses: $1,250",
+        "Volunteer stipends: $300 (total)",
+        "Sponsor invoice amount due: $950",
+        "Accreditation code: TX-987654321",
+        "Submission deadline: 2026-04-21",
+        "alexis.lane@goggle.com"
+      ],
+      "conversation_block": {
+        "timestamp": "12/15/2025-I06",
+        "event_text": "Organized a half-day CLE seminar on practical ethics, handled volunteer coordination and emailed the volunteer roster and registration contact at alexis.lane@goggle.com.",
+        "start_index": 68,
+        "lines": [
+          "Side_Note: [Organized a half-day CLE seminar on practical ethics, handled volunteer coordination and emailed the volunteer roster and registration contact at alexis.lane@goggle.com.] 12/15/2025-I06",
+          "User: Please prepare and send the CLE follow-up packet: finalize attendance certificates, compile and format the attendee roster with bar numbers for submission to the state bar for CLE credit, draft a volunteer thank-you plus stipend/invoice email to Alexis Lane (alexis.lane@goggle.com) and to the volunteers, and create a short attendee feedback survey. I can provide the attendee roster with bar numbers: Jordan Kim | jordan.kim@examplelaw.com | Bar #CA321654; Samantha Ortiz | sortiz@lawfirm.com | Bar #TX112233; Marcus Green | m.green@nonprofit.org | Bar #NY998877. Event budget details: Total expenses: $1,250; Volunteer stipends: $300 total; Sponsor invoice amount due: $950. Accreditation code: TX-987654321 and submission deadline 2026-04-21. Please ensure privacy-compliant handling and prepare the CSV and certificate templates accordingly.",
+          "Assistant: I will finalize the attendance certificates, produce a privacy-compliant CSV that includes the exact bar numbers, and assemble the state-bar submission packet using accreditation code TX-987654321 for the 2026-04-21 deadline. I will also draft the volunteer thank-you and stipend/invoice email addressed to alexis.lane@goggle.com (plus a version for the volunteers), prepare a short attendee feedback survey, and format the attendee roster for submission. I will send you the certificate and CSV templates and the proposed emails for review before submission."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "03/15/2026-I02",
+            "event_id": "I_WEEK_002",
+            "source_event_id": "E_WEEK_004",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/16/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/14/2026-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_008",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/30/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_003",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [
+        "alexis.lane@goggle.com"
+      ],
+      "prefer_as_key": true,
+      "future_conflict_count": 5,
+      "needs_revision": true
+    },
+    {
+      "rank": 0,
+      "timestamp": "02/14/2025-I01",
+      "history_index": 2,
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_002",
+      "source_event_date": "02/14/2025",
+      "task_goal": "Draft a concise client- and partner-ready memo (1–2 pages) applying the five controlling preemption opinions to my active case, recommend immediate litigation steps (e.g., preemption motion strategy, preservation/appeal posture), produce Bluebook-formatted citations for the controlling authorities, and a one-page talk track for a partner meeting summarizing risks and next steps.",
+      "prev_event": "Completed a focused two-day legal research deep-dive on recent preemption doctrine developments and summarized five controlling opinions for quick reference.",
+      "context_can_add": {
+        "client_case_file_and_key_facts (sensitive)": "User would like to share the case file for their tenant-eviction matter (case number, complaint, operative pleadings, salient factual timeline) so the memo can directly map each controlling opinion to the facts and identify which claims are most vulnerable to a preemption defense. This is sensitive because it contains confidential client information and a case identifier; it should guide the assistant to tailor remedies, confidentiality notices, and privilege cautions.",
+        "draft_filing_and_opposing_counsel_contact (sensitive)": "User might upload the current draft motion/response and provide opposing counsel contact details (email and/or phone) so the assistant can suggest specific redlines, citation fixes, and tactical language targeted to the opponent's likely positions. This involves privileged drafts and a private contact (opposing counsel) that the user may only want used for drafting and not shared externally.",
+        "jurisdiction_and_deadline_constraints (sensitive)": "User could specify the controlling forum (e.g., Northern District of Texas / Fifth Circuit) and any imminent filing or briefing deadlines (date/time). Knowing jurisdiction and deadlines will shape whether the assistant recommends immediate emergency filings, expedited research, or preserving issues for appeal; the deadline itself is a sensitive scheduling constraint affecting feasibility.",
+        "audience_and_format_preferences": "User would state whether the memo is for a supervising partner, the client, or a court (and preferred length, tone, and citation style). This guides level of detail, whether to include background facts, and how formal the argument should be (e.g., persuasive vs. neutral)."
+      },
+      "sensitive_info": {
+        "case_reference": [
+          "TX-987654321"
+        ],
+        "opposing_counsel_email": [
+          "alexis.lane@goggle.com"
+        ],
+        "draft_filing_reference": [
+          "draft motion to dismiss - tenant eviction (intake sheet attached)"
+        ],
+        "jurisdiction_and_deadline": [
+          "Northern District of Texas; Response due 2026-04-20 11:59 PM CT"
+        ]
+      },
+      "sensitive_values": [
+        "TX-987654321",
+        "alexis.lane@goggle.com",
+        "draft motion to dismiss - tenant eviction (intake sheet attached)",
+        "Northern District of Texas; Response due 2026-04-20 11:59 PM CT"
+      ],
+      "conversation_block": {
+        "timestamp": "02/14/2025-I01",
+        "event_text": "Completed a focused two-day legal research deep-dive on recent preemption doctrine developments and summarized five controlling opinions for quick reference.",
+        "start_index": 8,
+        "lines": [
+          "Side_Note: [Completed a focused two-day legal research deep-dive on recent preemption doctrine developments and summarized five controlling opinions for quick reference.] 02/14/2025-I01",
+          "User: I need a concise client- and partner-ready memo (1–2 pages) applying the five controlling preemption opinions to my active tenant-eviction case (case number TX-987654321); recommend immediate litigation steps (for example, preemption motion strategy and preservation/appeal posture); produce Bluebook-formatted citations for the controlling authorities; and draft a one-page partner talk track summarizing risks and next steps. I will share the case file (complaint, operative pleadings, salient factual timeline), my current draft motion/response titled 'draft motion to dismiss - tenant eviction (intake sheet attached)', and opposing counsel contact alexis.lane@goggle.com so you can tailor redlines and tactical language. The controlling forum is the Northern District of Texas, with the response due in mid-April 2026. Please treat all materials as confidential and advise on privilege language and any immediate preservation steps.",
+          "Assistant: Understood. I will draft a concise 1–2 page memo mapping each controlling opinion to the facts of TX-987654321, recommend immediate actions (including whether to move to dismiss on preemption grounds versus preserving the issue for appeal), produce Bluebook-formatted citations for the controlling authorities, and prepare a one-page partner talk track summarizing risks and next steps. I will treat the case file, your draft motion titled 'draft motion to dismiss - tenant eviction (intake sheet attached)', and opposing counsel contact alexis.lane@goggle.com as confidential; the memo will include a privilege/confidentiality notice, recommended retention and preservation steps, and concrete redlines keyed to your draft motion. Please upload the case file and draft motion when ready and I will begin tailoring the memo and redlines immediately."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "03/15/2026-I02",
+            "event_id": "I_WEEK_002",
+            "source_event_id": "E_WEEK_004",
+            "matched_values": [
+              "alexis.lane@goggle.com",
+              "TX-987654321"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/16/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "alexis.lane@goggle.com",
+              "TX-987654321"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/14/2026-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_008",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/30/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_003",
+            "matched_values": [
+              "alexis.lane@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "TX-987654321",
+        "alexis.lane@goggle.com"
+      ],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": false,
+      "future_conflict_count": 5,
+      "needs_revision": true
+    }
+  ],
+  "protected_probe_turns": [
+    {
+      "rank": 2,
+      "timestamp": "06/21/2025-I03",
+      "history_index": 10,
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_008",
+      "source_event_date": "06/21/2025",
+      "task_goal": "Convert the 12-point compliance checklist into a prioritized, actionable pre-contract review procedure: mark which checks are mandatory vs optional, map each item to a risk tier and owner, produce short redline templates or sample language for common problem clauses, and produce a one-page user guide and a fillable checklist that a small-business owner (non-lawyer) can use before signing any contract.",
+      "prev_event": "Built a 12-point compliance checklist for small businesses to use before contract execution, then tested it on three sample scenarios to confirm usability.",
+      "context_can_add": {
+        "sample_contract_reference": "User could share one of the sample contracts used during testing (or a redacted draft) so you can map checklist items to real clauses and draft targeted redlines. This would be a document reference (e.g., file name or excerpt such as 'Draft_Service_Agreement_2026.docx'). It is sensitive because it contains commercial terms and proprietary language that should be handled confidentially.",
+        "counterparty_contact_and_jurisdiction": "User could provide the counterparty's typical contact info and the governing jurisdiction they usually see (company name, contact email or phone, and state/country). That helps tailor suggestions for notice clauses, dispute resolution, and required local compliance. Sharing would include private contact details like alexis.lane@goggle.com and 555-123-4567 and a business address, which are sensitive personal/business contact data.",
+        "monthly_revenue_and_legal_budget": "User could disclose the small business's approximate monthly revenue and the budget available for legal review/mitigation to prioritize checklist items and propose cost-effective thresholds (for example, monthly revenue ~$25,000 and a one-time contract review budget of $1,500). These financial figures are sensitive and should guide recommendations toward affordable controls.",
+        "previous_legal_flags_or_case_reference": "User might mention any prior disputes or ongoing compliance flags (for example, a clause-library audit or an incident tracked under ID TX-987654321). Knowing past problem areas helps prioritize checklist items and suggest document-specific mitigations. This may include a confidential dispute reference or case ID and brief description of the issue."
+      },
+      "sensitive_info": {
+        "sample_contract_reference": [
+          "Draft_Service_Agreement_2026.docx"
+        ],
+        "counterparty_contact_and_jurisdiction": [
+          "alexis.lane@goggle.com",
+          "555-123-4567",
+          "123 Maple Lane, Anytown, XY 12345"
+        ],
+        "monthly_revenue_and_legal_budget": [
+          "$25,000",
+          "$1,500"
+        ],
+        "previous_legal_flags_or_case_reference": [
+          "TX-987654321",
+          "clause library audit"
+        ]
+      },
+      "sensitive_values": [
+        "Draft_Service_Agreement_2026.docx",
+        "alexis.lane@goggle.com",
+        "555-123-4567",
+        "123 Maple Lane, Anytown, XY 12345",
+        "$25,000",
+        "$1,500",
+        "TX-987654321",
+        "clause library audit"
+      ],
+      "conversation_block": {
+        "timestamp": "06/21/2025-I03",
+        "event_text": "Built a 12-point compliance checklist for small businesses to use before contract execution, then tested it on three sample scenarios to confirm usability.",
+        "start_index": 32,
+        "lines": [
+          "Side_Note: [Built a 12-point compliance checklist for small businesses to use before contract execution, then tested it on three sample scenarios to confirm usability.] 06/21/2025-I03",
+          "User: Please convert the 12-point checklist into a prioritized, actionable pre-contract review procedure: indicate which checks are mandatory versus optional, assign a risk tier and an owner to each item, draft short redline templates or sample language for common problem clauses, and produce a one-page user guide plus a fillable checklist a small-business owner can use. I can share one sample contract (Draft_Service_Agreement_2026.docx) and provide counterparty contact info and jurisdictional patterns including alexis.lane@goggle.com, 555-123-4567, and 123 Maple Lane, Anytown, XY 12345. Our approximate monthly revenue is ~$25,000 and our one-time contract review budget is $1,500—please tailor cost-effective thresholds and factor in the prior clause-library audit and case reference TX-987654321 when prioritizing.",
+          "Assistant: I will deliver a prioritized pre-contract review procedure that flags mandatory versus optional checks, assigns risk tiers and owners, and includes concise redline templates or sample language for likely problem clauses; I will also provide a one-page user guide and a fillable checklist tailored to a small business with about $25,000 monthly revenue and a $1,500 one-time review budget, and I will map the items to Draft_Service_Agreement_2026.docx while incorporating the prior clause-library audit and case TX-987654321 when setting priorities."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "03/15/2026-I02",
+            "event_id": "I_WEEK_002",
+            "source_event_id": "E_WEEK_004",
+            "matched_values": [
+              "$25,000",
+              "555-123-4567",
+              "alexis.lane@goggle.com",
+              "TX-987654321"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/16/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "123 Maple Lane, Anytown, XY 12345",
+              "555-123-4567",
+              "alexis.lane@goggle.com",
+              "TX-987654321"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/14/2026-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_008",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/30/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_003",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "555-123-4567",
+        "TX-987654321",
+        "alexis.lane@goggle.com"
+      ],
+      "later_duplicate_sensitive_values": [
+        "TX-987654321",
+        "alexis.lane@goggle.com"
+      ],
+      "prefer_as_key": false,
+      "future_conflict_count": 5,
+      "needs_revision": true
+    },
+    {
+      "rank": 3,
+      "timestamp": "08/30/2024-I04",
+      "history_index": 14,
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_011",
+      "source_event_date": "08/30/2024",
+      "task_goal": "Create a pre-submission checklist, corrected template snippets, and a step-by-step validation plan that fixes the two identified formatting errors, confirms optimal timing for upload/confirmation, and produces a short script/email for internal coordination before final electronic filing.",
+      "prev_event": "Ran a simulated electronic filing for a regulatory application to test timing and document formatting; identified two common formatting errors to avoid.",
+      "context_can_add": {
+        "regulatory_body_and_portal": "User would state which agency and e‑filing portal were used (for example, 'State Environmental Agency — eRegPortal') so the assistant can apply the portal's specific file-type restrictions, character/metadata rules, and expected confirmation timing.",
+        "submission_reference": "User could share the submission reference/ID assigned during the simulation (sensitive: the unique application ID such as TX-987654321). Knowing the exact ID helps map checklist items to the portal workflow, check for portal-specific validation messages, and reference logs if available.",
+        "near_term_deadline_and_schedule": "User may provide the real submission deadline and team availability (sensitive: exact deadline datetime, time zone, and reviewer blackout windows). This will let the assistant prioritize which checks must be completed first, recommend timed uploads to avoid peak-hour delays, and draft reminders.",
+        "sample_draft_document": "User could upload or paste a redacted excerpt of the draft or the specific form pages that showed the formatting errors (sensitive: confidential file name/content such as 'draft_regulatory_application_v3.pdf'). Having the actual snippets enables the assistant to produce precise corrected markup or template replacements.",
+        "internal_contact_for_filing": "User might provide the email/phone and role of the internal filing lead or project coordinator (sensitive: contact details like alexis.lane@goggle.com and 555-123-4567). With that, the assistant can draft an email/confirmation checklist addressed to the right person and include timing/backup contact instructions."
+      },
+      "sensitive_info": {
+        "submission_reference": [
+          "TX-987654321"
+        ],
+        "near_term_deadline_and_schedule": [
+          "2026-05-15T17:00:00-04:00 (submission deadline, ET); lead reviewer unavailable 2026-05-12 to 2026-05-14"
+        ],
+        "sample_draft_document": [
+          "draft_regulatory_application_v3.pdf (contains the draft cover letter and form pages that exhibited the two formatting errors)"
+        ],
+        "internal_contact_for_filing": [
+          "alexis.lane@goggle.com",
+          "555-123-4567",
+          "Alexis Lane, Project Coordinator"
+        ]
+      },
+      "sensitive_values": [
+        "TX-987654321",
+        "2026-05-15T17:00:00-04:00 (submission deadline, ET); lead reviewer unavailable 2026-05-12 to 2026-05-14",
+        "draft_regulatory_application_v3.pdf (contains the draft cover letter and form pages that exhibited the two formatting errors)",
+        "alexis.lane@goggle.com",
+        "555-123-4567",
+        "Alexis Lane, Project Coordinator"
+      ],
+      "conversation_block": {
+        "timestamp": "08/30/2024-I04",
+        "event_text": "Ran a simulated electronic filing for a regulatory application to test timing and document formatting; identified two common formatting errors to avoid.",
+        "start_index": 44,
+        "lines": [
+          "Side_Note: [Ran a simulated electronic filing for a regulatory application to test timing and document formatting; identified two common formatting errors to avoid.] 08/30/2024-I04",
+          "I need a pre-submission checklist, corrected template snippets, and a step-by-step validation plan that fixes the two formatting errors found in the simulation, confirms optimal timing for upload and confirmation, and includes a short internal script/email for coordination before the final e-filing. For context: the simulation used submission ID TX-987654321; the real submission deadline is 2026-05-15T17:00:00-04:00 (ET); the lead reviewer will be unavailable 2026-05-12 through 2026-05-14. I can share draft_regulatory_application_v3.pdf (it contains the cover letter and form pages that showed the errors). Our internal filing lead is Alexis Lane (alexis.lane@goggle.com, 555-123-4567). Please produce the checklist, corrected snippets, and a short coordination email addressed to Alexis.",
+          "I will prepare a targeted pre-submission checklist, corrected template snippets tailored to draft_regulatory_application_v3.pdf, a step-by-step validation plan that resolves the two formatting errors, and a timed upload/confirmation schedule that accounts for the lead reviewer's unavailability; I will also draft a short coordination email to Alexis Lane. Attach the draft_regulatory_application_v3.pdf and I will generate the checklist, the corrected snippets, the validation steps, the upload timeline, and the coordination email for immediate use."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "03/15/2026-I02",
+            "event_id": "I_WEEK_002",
+            "source_event_id": "E_WEEK_004",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com",
+              "TX-987654321"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/16/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com",
+              "TX-987654321"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/14/2026-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_008",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/30/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_003",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "555-123-4567",
+        "alexis.lane@goggle.com"
+      ],
+      "later_duplicate_sensitive_values": [
+        "555-123-4567",
+        "TX-987654321",
+        "alexis.lane@goggle.com"
+      ],
+      "prefer_as_key": false,
+      "future_conflict_count": 5,
+      "needs_revision": true
+    },
+    {
+      "rank": 4,
+      "timestamp": "09/10/2025-I05",
+      "history_index": 17,
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_013",
+      "source_event_date": "09/10/2025",
+      "task_goal": "Create a concrete post-clinic follow-up plan: triage unresolved tenant-landlord cases into prioritized next steps, draft 2–3 template letters/checklists (demand letter, response-to-eviction-notice, habitability repair request), assemble a vetted referral/resource list (legal aid, housing repair, translators), and set up a secure schedule and documentation workflow so volunteers can reliably complete follow-ups within two weeks.",
+      "prev_event": "Led a weekend pro bono intake clinic focused on tenant-landlord disputes and stayed through the afternoon to ensure each attendee left with a clear next step.",
+      "context_can_add": {
+        "number_and_type_of_attendees": "User would like to report how many people attended (e.g., 18) and the breakdown by issue (nonpayment, eviction notices, habitability, lease disputes). This helps prioritize which templates and referrals to produce first and estimate volunteer bandwidth.",
+        "high_priority_client_case": "User could share one or two unresolved client cases that need immediate attention so the assistant can draft tailored next steps and a checklist. If shared, this will likely include sensitive private details such as tenant name, tenant address, lease start/end dates, date the eviction notice was served, monthly rent, and income or benefits information. Those specifics should be used to customize letters and deadlines.",
+        "clinic_coordinator_contact": "User could provide the clinic coordinator's contact info (email and/or phone) so the assistant can draft a follow-up email template and a volunteer assignment sheet. This is private contact information (email/phone) that would only be used to coordinate outreach and confirm next steps.",
+        "intake_sheets_and_documents": "User might reference or upload the intake sheet and key documents (signed lease, eviction notice PDF/photo, photos of habitability issues). Document filenames or record IDs are private and are necessary to populate templates with exact dates, clause citations, and to attach referenced evidence to referrals.",
+        "volunteer_availability_and_capacity": "User could specify volunteers' availability and capacity (e.g., two volunteers available weekday evenings, one legal volunteer can take pro bono representation), including schedule constraints. This helps create a realistic follow-up schedule and assign tasks; schedule details are mildly sensitive but important for planning."
+      },
+      "sensitive_info": {
+        "high_priority_client_case": [
+          "Maria Gonzalez; 456 Oak Ave, Anytown, XY 12345; lease start 09/01/2020; rent $1,200/mo; eviction notice served 03/28/2026; reported income: $1,600/month from part-time work; primary language: Spanish"
+        ],
+        "clinic_coordinator_contact": [
+          "alexis.lane@goggle.com",
+          "555-123-4567"
+        ],
+        "intake_document_refs": [
+          "intake_MariaG_032826.pdf",
+          "lease_MariaG_09012020.pdf",
+          "eviction_notice_032826.jpg"
+        ]
+      },
+      "sensitive_values": [
+        "Maria Gonzalez; 456 Oak Ave, Anytown, XY 12345; lease start 09/01/2020; rent $1,200/mo; eviction notice served 03/28/2026; reported income: $1,600/month from part-time work; primary language: Spanish",
+        "alexis.lane@goggle.com",
+        "555-123-4567",
+        "intake_MariaG_032826.pdf",
+        "lease_MariaG_09012020.pdf",
+        "eviction_notice_032826.jpg"
+      ],
+      "conversation_block": {
+        "timestamp": "09/10/2025-I05",
+        "event_text": "Led a weekend pro bono intake clinic focused on tenant-landlord disputes and stayed through the afternoon to ensure each attendee left with a clear next step.",
+        "start_index": 53,
+        "lines": [
+          "Side_Note: [Led a weekend pro bono intake clinic focused on tenant-landlord disputes and stayed through the afternoon to ensure each attendee left with a clear next step.] 09/10/2025-I05",
+          "User: For the post-clinic follow-up plan please triage unresolved tenant-landlord cases, draft 2–3 template letters (demand letter, response to an eviction notice, habitability repair request), assemble a vetted referral/resource list (legal aid, housing repair, translators), and set up a secure schedule and documentation workflow so volunteers can complete follow-ups within two weeks; 18 people attended and one high-priority client is Maria Gonzalez — lease started September 2020, rent $1,200/month, eviction notice served late March 2026, reported income $1,600/month, primary language Spanish — intake documents include intake_MariaG.pdf, lease_MariaG.pdf, eviction_notice_MariaG.jpg, and our clinic coordinator contact is alexis.lane@goggle.com, 555-123-4567; please tailor templates and assignment sheets accordingly and include Spanish-language options and referral contacts.",
+          "Assistant: I will create a triage matrix to prioritize cases, draft the three requested templates (including Spanish versions tailored for Maria Gonzalez), compile a vetted referral and resource list, and set up a secure two-week follow-up schedule and volunteer assignment sheet that references the intake files you provided while protecting client confidentiality; I will also include Spanish-language templates and referral contacts and coordinate as needed with alexis.lane@goggle.com, 555-123-4567."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Early Stage",
+            "timestamp": "03/15/2026-I02",
+            "event_id": "I_WEEK_002",
+            "source_event_id": "E_WEEK_004",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/08/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_001",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "04/16/2026-I02",
+            "event_id": "I_MONTH_002",
+            "source_event_id": "E_MONTH_003",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "05/14/2026-I03",
+            "event_id": "I_MONTH_003",
+            "source_event_id": "E_MONTH_008",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "04/30/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_003",
+            "matched_values": [
+              "555-123-4567",
+              "alexis.lane@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [
+        "alexis.lane@goggle.com"
+      ],
+      "later_duplicate_sensitive_values": [
+        "555-123-4567",
+        "alexis.lane@goggle.com"
+      ],
+      "prefer_as_key": false,
+      "future_conflict_count": 5,
+      "needs_revision": true
+    }
+  ],
+  "rejected_turns": []
+}

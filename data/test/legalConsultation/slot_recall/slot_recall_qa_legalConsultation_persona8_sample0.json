@@ -1,0 +1,2594 @@
+{
+  "source_rendered": "data/test/legalConsultation/specs/conversation_legalConsultation_persona8_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/legalConsultation/specs/conversation_legalConsultation_persona8_sample0.memory_control.json",
+  "source_conversation": "data/output/legalConsultation/conversation_legalConsultation_persona8_sample0.json",
+  "model": "gpt-5-mini",
+  "items": [
+    {
+      "timestamp": "03/02/2026-I02",
+      "turn_role": "key",
+      "identifier_label": "Vendor implementation plan",
+      "user_turn": "Please turn that vendor comparison into a concrete implementation plan: recommend which platform to adopt, define which standardized templates to migrate first (we handle about 150 NDAs/month, 60 engagement letters/month, 30 lease matters/month), outline step-by-step migration/refactor tasks using our sample files (S:/Legal/Templates/NDA_Standard_v1.docx, S:/Legal/Templates/Engagement_Letter_Standard_v3.docx, S:/Legal/Matters/Tenant_File_Sample.pdf), create a vendor-negotiation checklist (pricing, SLAs, security) that respects our $40,000 annual SaaS budget cap and our procurement decision deadline of June 30, 2026, propose a training and rollout timeline, and produce a short compliance/security checklist reflecting SOC 2 Type II, EU data residency/GDPR, and HIPAA requirements for two healthcare clients (Acme Health, Medicorp) where on‑prem or dedicated hosting is preferred; our implementation contact is Alexis Lane, Legal Operations Manager, alexis.lane@goggle.com, 555-123-4567 — include stakeholder communication templates and a delegated task list for her.",
+      "task_goal": "Turn the vendor comparison into a concrete implementation plan: recommend which platform to adopt, define the set of standardized templates to migrate, outline step-by-step migration/refactoring tasks, create a vendor-negotiation checklist (pricing, SLAs, security), propose a training and rollout timeline for attorneys and staff, and produce a short compliance/security checklist to satisfy our clients' requirements.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "S",
+            "sensitive_value": "/Legal/Templates/NDA_Standard_v1.docx",
+            "identifier_label": "Vendor implementation plan",
+            "question": "Which NDA template file did I say we would migrate first?",
+            "choices": {
+              "A": "The NDA template you specified is S:/Legal/Templates/NDA_Standard_v2.docx.",
+              "B": "I don’t recall the exact NDA template file path you provided.",
+              "C": "The NDA template you specified is S:/Legal/Templates/NDA_Standard_v1.docx."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The NDA template you specified is S:/Legal/Templates/NDA_Standard_v1.docx."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The NDA template you specified is S:/Legal/Templates/NDA_Standard_v2.docx."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don’t recall the exact NDA template file path you provided."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The NDA template you specified is S:/Legal/Templates/NDA_Standard_v2.docx."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don’t recall the exact NDA template file path you provided."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "The NDA template you specified is S:/Legal/Templates/NDA_Standard_v1.docx."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "S",
+            "sensitive_value": "/Legal/Templates/Engagement_Letter_Standard_v3.docx",
+            "identifier_label": "Vendor implementation plan",
+            "question": "Which engagement letter template file did I provide to migrate?",
+            "choices": {
+              "A": "The engagement letter template you provided is S:/Legal/Templates/Engagement_Letter_Standard_v2.docx.",
+              "B": "I don’t remember the exact engagement letter template file path you gave.",
+              "C": "The engagement letter template you provided is S:/Legal/Templates/Engagement_Letter_Standard_v3.docx."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The engagement letter template you provided is S:/Legal/Templates/Engagement_Letter_Standard_v3.docx."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The engagement letter template you provided is S:/Legal/Templates/Engagement_Letter_Standard_v2.docx."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don’t remember the exact engagement letter template file path you gave."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The engagement letter template you provided is S:/Legal/Templates/Engagement_Letter_Standard_v2.docx."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don’t remember the exact engagement letter template file path you gave."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "The engagement letter template you provided is S:/Legal/Templates/Engagement_Letter_Standard_v3.docx."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "S",
+            "sensitive_value": "/Legal/Matters/Tenant_File_Sample.pdf",
+            "identifier_label": "Vendor implementation plan",
+            "question": "Which sample matter file did I include for lease matters?",
+            "choices": {
+              "A": "The sample tenant file you included is S:/Legal/Matters/Tenant_Sample_v2.pdf.",
+              "B": "The sample tenant file you included is S:/Legal/Matters/Tenant_File_Sample.pdf.",
+              "C": "I don’t recall the exact sample tenant file path you provided."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The sample tenant file you included is S:/Legal/Matters/Tenant_File_Sample.pdf."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The sample tenant file you included is S:/Legal/Matters/Tenant_Sample_v2.pdf."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don’t recall the exact sample tenant file path you provided."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The sample tenant file you included is S:/Legal/Matters/Tenant_Sample_v2.pdf."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "The sample tenant file you included is S:/Legal/Matters/Tenant_File_Sample.pdf."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don’t recall the exact sample tenant file path you provided."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "$40,000 annual SaaS budget cap",
+            "identifier_label": "Vendor implementation plan",
+            "question": "What annual SaaS budget cap did I set for the vendor selection?",
+            "choices": {
+              "A": "You set a $40,000 annual SaaS budget cap.",
+              "B": "I don’t remember the exact annual SaaS budget cap you specified.",
+              "C": "You set a $50,000 annual SaaS budget cap."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You set a $40,000 annual SaaS budget cap."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You set a $50,000 annual SaaS budget cap."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don’t remember the exact annual SaaS budget cap you specified."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You set a $40,000 annual SaaS budget cap."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don’t remember the exact annual SaaS budget cap you specified."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You set a $50,000 annual SaaS budget cap."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "procurement decision deadline",
+            "sensitive_value": "2026-06-30",
+            "identifier_label": "Vendor implementation plan",
+            "question": "What procurement decision deadline did I give for selecting a vendor?",
+            "choices": {
+              "A": "The procurement decision deadline you gave is July 31, 2026.",
+              "B": "I don’t recall the exact procurement decision deadline you specified.",
+              "C": "The procurement decision deadline you gave is June 30, 2026."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The procurement decision deadline you gave is June 30, 2026."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The procurement decision deadline you gave is July 31, 2026."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don’t recall the exact procurement decision deadline you specified."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The procurement decision deadline you gave is July 31, 2026."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don’t recall the exact procurement decision deadline you specified."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "The procurement decision deadline you gave is June 30, 2026."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Alexis Lane; Legal Operations Manager; alexis.lane@goggle.com; 555-123-4567",
+            "identifier_label": "Vendor implementation plan",
+            "question": "Who is the implementation contact and how can I reach them?",
+            "choices": {
+              "A": "I don’t remember the implementation contact details you provided.",
+              "B": "The implementation contact is Jordan Kim; jordan.kim@examplelaw.com; 555-987-6543.",
+              "C": "The implementation contact is Alexis Lane, Legal Operations Manager; alexis.lane@goggle.com; 555-123-4567."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The implementation contact is Alexis Lane, Legal Operations Manager; alexis.lane@goggle.com; 555-123-4567."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The implementation contact is Jordan Kim; jordan.kim@examplelaw.com; 555-987-6543."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don’t remember the implementation contact details you provided."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don’t remember the implementation contact details you provided."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "The implementation contact is Jordan Kim; jordan.kim@examplelaw.com; 555-987-6543."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "The implementation contact is Alexis Lane, Legal Operations Manager; alexis.lane@goggle.com; 555-123-4567."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "SOC 2 Type II required",
+            "identifier_label": "Vendor implementation plan",
+            "question": "Did we require SOC 2 Type II compliance from the vendor?",
+            "choices": {
+              "A": "Yes — SOC 2 Type II was required.",
+              "B": "No — we required ISO 27001 instead.",
+              "C": "I don’t recall whether you required SOC 2 Type II compliance."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Yes — SOC 2 Type II was required."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "No — we required ISO 27001 instead."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don’t recall whether you required SOC 2 Type II compliance."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "Yes — SOC 2 Type II was required."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "No — we required ISO 27001 instead."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don’t recall whether you required SOC 2 Type II compliance."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "EU data residency/GDPR for EU clients",
+            "identifier_label": "Vendor implementation plan",
+            "question": "What GDPR or data-residency constraints did we specify for EU clients?",
+            "choices": {
+              "A": "You required EU data residency and GDPR compliance for EU clients.",
+              "B": "I don’t remember the exact GDPR or data-residency requirements you specified.",
+              "C": "You required GDPR compliance but not strict EU data residency."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You required EU data residency and GDPR compliance for EU clients."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You required GDPR compliance but not strict EU data residency."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don’t remember the exact GDPR or data-residency requirements you specified."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You required EU data residency and GDPR compliance for EU clients."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don’t remember the exact GDPR or data-residency requirements you specified."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You required GDPR compliance but not strict EU data residency."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "HIPAA required for two healthcare clients (Acme Health, Medicorp); on-prem or dedicated hosting is preferred for those engagements",
+            "identifier_label": "Vendor implementation plan",
+            "question": "What compliance and hosting preferences did we state for our healthcare clients?",
+            "choices": {
+              "A": "You required HIPAA for Acme Health and Medicorp and preferred on-prem or dedicated hosting for those engagements.",
+              "B": "I don’t remember the HIPAA or hosting preferences you specified for the healthcare clients.",
+              "C": "You required HIPAA for those clients but preferred multi-tenant cloud hosting for the engagements."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You required HIPAA for Acme Health and Medicorp and preferred on-prem or dedicated hosting for those engagements."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You required HIPAA for those clients but preferred multi-tenant cloud hosting for the engagements."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don’t remember the HIPAA or hosting preferences you specified for the healthcare clients."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You required HIPAA for Acme Health and Medicorp and preferred on-prem or dedicated hosting for those engagements."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don’t remember the HIPAA or hosting preferences you specified for the healthcare clients."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You required HIPAA for those clients but preferred multi-tenant cloud hosting for the engagements."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "12/15/2025-I06",
+      "turn_role": "key",
+      "identifier_label": "CLE follow-up packet",
+      "user_turn": "Please prepare and send the CLE follow-up packet: finalize attendance certificates, compile and format the attendee roster with bar numbers for submission to the state bar for CLE credit, draft a volunteer thank-you plus stipend/invoice email to Alexis Lane (alexis.lane@goggle.com) and to the volunteers, and create a short attendee feedback survey. I can provide the attendee roster with bar numbers: Jordan Kim | jordan.kim@examplelaw.com | Bar #CA321654; Samantha Ortiz | sortiz@lawfirm.com | Bar #TX112233; Marcus Green | m.green@nonprofit.org | Bar #NY998877. Event budget details: Total expenses: $1,250; Volunteer stipends: $300 total; Sponsor invoice amount due: $950. Accreditation code: TX-987654321 and submission deadline 2026-04-21. Please ensure privacy-compliant handling and prepare the CSV and certificate templates accordingly.",
+      "task_goal": "Prepare and send the CLE follow-up packet: finalize attendance certificates, compile and submit the attendee roster and bar numbers to the state bar for CLE credit, draft a volunteer thank-you + stipend/invoice email to Alexis Lane (registration contact) and volunteers, and create a short attendee feedback survey — all while ensuring privacy-compliant handling of the roster and timely submission by the state-bar deadline.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Jordan Kim | jordan.kim@examplelaw.com | Bar #CA321654",
+            "identifier_label": "CLE follow-up packet",
+            "question": "What was Jordan Kim's email address and bar number from the attendee roster I provided?",
+            "choices": {
+              "A": "Jordan Kim's email is jordan.kim@examplelaw.com and their bar number is CA321654.",
+              "B": "I don't have Jordan Kim's email or bar number saved right now; could you resend them?",
+              "C": "Jordan Kim's email is jordan.kim@lawoffice.com and their bar number is CA123456."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Jordan Kim's email is jordan.kim@examplelaw.com and their bar number is CA321654."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Jordan Kim's email is jordan.kim@lawoffice.com and their bar number is CA123456."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't have Jordan Kim's email or bar number saved right now; could you resend them?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "Jordan Kim's email is jordan.kim@examplelaw.com and their bar number is CA321654."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't have Jordan Kim's email or bar number saved right now; could you resend them?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Jordan Kim's email is jordan.kim@lawoffice.com and their bar number is CA123456."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Samantha Ortiz | sortiz@lawfirm.com | Bar #TX112233",
+            "identifier_label": "CLE follow-up packet",
+            "question": "Can you confirm Samantha Ortiz's email and bar number from the roster I sent?",
+            "choices": {
+              "A": "Samantha Ortiz's email is sortiz@lawfirm.com and her bar number is TX112233.",
+              "B": "I don't have Samantha Ortiz's email or bar number on file at the moment; please provide them again.",
+              "C": "Samantha Ortiz's email is s.ortiz@firm.com and her bar number is TX445566."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Samantha Ortiz's email is sortiz@lawfirm.com and her bar number is TX112233."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Samantha Ortiz's email is s.ortiz@firm.com and her bar number is TX445566."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't have Samantha Ortiz's email or bar number on file at the moment; please provide them again."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "Samantha Ortiz's email is sortiz@lawfirm.com and her bar number is TX112233."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't have Samantha Ortiz's email or bar number on file at the moment; please provide them again."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Samantha Ortiz's email is s.ortiz@firm.com and her bar number is TX445566."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Marcus Green | m.green@nonprofit.org | Bar #NY998877",
+            "identifier_label": "CLE follow-up packet",
+            "question": "What email and bar number did I give for Marcus Green in the attendee list?",
+            "choices": {
+              "A": "I don't have Marcus Green's contact or bar number saved; could you share them again?",
+              "B": "Marcus Green's email is marcus.green@ngo.org and his bar number is NY112233.",
+              "C": "Marcus Green's email is m.green@nonprofit.org and his bar number is NY998877."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Marcus Green's email is m.green@nonprofit.org and his bar number is NY998877."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Marcus Green's email is marcus.green@ngo.org and his bar number is NY112233."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't have Marcus Green's contact or bar number saved; could you share them again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't have Marcus Green's contact or bar number saved; could you share them again?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "Marcus Green's email is marcus.green@ngo.org and his bar number is NY112233."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "Marcus Green's email is m.green@nonprofit.org and his bar number is NY998877."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Total expenses",
+            "sensitive_value": "$1,250",
+            "identifier_label": "CLE follow-up packet",
+            "question": "What total expenses did I report for the event?",
+            "choices": {
+              "A": "The total expenses you reported were $1,250.",
+              "B": "I don't have the total expenses noted right now; can you remind me of the amount?",
+              "C": "The total expenses reported were $1,500."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The total expenses you reported were $1,250."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The total expenses reported were $1,500."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't have the total expenses noted right now; can you remind me of the amount?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "The total expenses you reported were $1,250."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't have the total expenses noted right now; can you remind me of the amount?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "The total expenses reported were $1,500."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Volunteer stipends",
+            "sensitive_value": "$300 (total)",
+            "identifier_label": "CLE follow-up packet",
+            "question": "How much did I list as the total for volunteer stipends?",
+            "choices": {
+              "A": "I don't recall the total volunteer stipend amount; could you tell me again?",
+              "B": "You listed the total volunteer stipends as $300.",
+              "C": "You listed the total volunteer stipends as $400."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You listed the total volunteer stipends as $300."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You listed the total volunteer stipends as $400."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the total volunteer stipend amount; could you tell me again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't recall the total volunteer stipend amount; could you tell me again?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You listed the total volunteer stipends as $300."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You listed the total volunteer stipends as $400."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Sponsor invoice amount due",
+            "sensitive_value": "$950",
+            "identifier_label": "CLE follow-up packet",
+            "question": "What amount did I say was due on the sponsor invoice?",
+            "choices": {
+              "A": "The sponsor invoice amount due was $950.",
+              "B": "The sponsor invoice amount due was $1,050.",
+              "C": "I don't have the sponsor invoice amount recorded; could you remind me of it?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The sponsor invoice amount due was $950."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The sponsor invoice amount due was $1,050."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't have the sponsor invoice amount recorded; could you remind me of it?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "The sponsor invoice amount due was $950."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "The sponsor invoice amount due was $1,050."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't have the sponsor invoice amount recorded; could you remind me of it?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Accreditation code",
+            "sensitive_value": "TX-987654321",
+            "identifier_label": "CLE follow-up packet",
+            "question": "What accreditation code did I provide for the CLE submission?",
+            "choices": {
+              "A": "The accreditation code you provided is TX-987654321.",
+              "B": "The accreditation code provided was TX-123456789.",
+              "C": "I don't have the accreditation code on hand; can you share it again?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The accreditation code you provided is TX-987654321."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The accreditation code provided was TX-123456789."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't have the accreditation code on hand; can you share it again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "The accreditation code you provided is TX-987654321."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "The accreditation code provided was TX-123456789."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't have the accreditation code on hand; can you share it again?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Submission deadline",
+            "sensitive_value": "2026-04-21",
+            "identifier_label": "CLE follow-up packet",
+            "question": "What's the CLE submission deadline I mentioned for the state bar filing?",
+            "choices": {
+              "A": "The submission deadline you gave is 2026-04-21.",
+              "B": "The submission deadline you mentioned was 2026-04-30.",
+              "C": "I don't see the submission deadline in my notes; could you remind me of the date?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The submission deadline you gave is 2026-04-21."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The submission deadline you mentioned was 2026-04-30."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't see the submission deadline in my notes; could you remind me of the date?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "The submission deadline you gave is 2026-04-21."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "The submission deadline you mentioned was 2026-04-30."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't see the submission deadline in my notes; could you remind me of the date?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "alexis.lane@goggle.com",
+            "identifier_label": "CLE follow-up packet",
+            "question": "What email address did I give for Alexis Lane, the registration contact?",
+            "choices": {
+              "A": "Alexis Lane's email is alexis.lane@goggle.com.",
+              "B": "I don't have Alexis Lane's email on file; could you resend it?",
+              "C": "Alexis Lane's contact is alexis.lane@google.com and her phone is 555-123-4567."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Alexis Lane's email is alexis.lane@goggle.com."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Alexis Lane's contact is alexis.lane@google.com and her phone is 555-123-4567."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't have Alexis Lane's email on file; could you resend it?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "Alexis Lane's email is alexis.lane@goggle.com."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't have Alexis Lane's email on file; could you resend it?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Alexis Lane's contact is alexis.lane@google.com and her phone is 555-123-4567."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "02/14/2025-I01",
+      "turn_role": "key",
+      "identifier_label": "Tenant-eviction preemption memo",
+      "user_turn": "I need a concise client- and partner-ready memo (1–2 pages) applying the five controlling preemption opinions to my active tenant-eviction case (case number TX-987654321); recommend immediate litigation steps (for example, preemption motion strategy and preservation/appeal posture); produce Bluebook-formatted citations for the controlling authorities; and draft a one-page partner talk track summarizing risks and next steps. I will share the case file (complaint, operative pleadings, salient factual timeline), my current draft motion/response titled 'draft motion to dismiss - tenant eviction (intake sheet attached)', and opposing counsel contact alexis.lane@goggle.com so you can tailor redlines and tactical language. The controlling forum is the Northern District of Texas, with the response due in mid-April 2026. Please treat all materials as confidential and advise on privilege language and any immediate preservation steps.",
+      "task_goal": "Draft a concise client- and partner-ready memo (1–2 pages) applying the five controlling preemption opinions to my active case, recommend immediate litigation steps (e.g., preemption motion strategy, preservation/appeal posture), produce Bluebook-formatted citations for the controlling authorities, and a one-page talk track for a partner meeting summarizing risks and next steps.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "TX-987654321",
+            "identifier_label": "Tenant-eviction preemption memo",
+            "question": "What case number did I provide for my active tenant-eviction case?",
+            "choices": {
+              "A": "You listed the case number as TX-123456789.",
+              "B": "You gave the case number as TX-987654321.",
+              "C": "I don't recall the specific case number you provided."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You gave the case number as TX-987654321."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You listed the case number as TX-123456789."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the specific case number you provided."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "You listed the case number as TX-123456789."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You gave the case number as TX-987654321."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't recall the specific case number you provided."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "alexis.lane@goggle.com",
+            "identifier_label": "Tenant-eviction preemption memo",
+            "question": "What contact email did I give for opposing counsel?",
+            "choices": {
+              "A": "You provided alexis.lane@goggle.com as opposing counsel's email address.",
+              "B": "You provided Alexis Lane, Legal Operations Manager, at alexis.lane@google.com with phone 555-123-4567.",
+              "C": "I don't recall the opposing counsel's contact email."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You provided alexis.lane@goggle.com as opposing counsel's email address."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided Alexis Lane, Legal Operations Manager, at alexis.lane@google.com with phone 555-123-4567."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the opposing counsel's contact email."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You provided alexis.lane@goggle.com as opposing counsel's email address."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided Alexis Lane, Legal Operations Manager, at alexis.lane@google.com with phone 555-123-4567."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't recall the opposing counsel's contact email."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "draft motion to dismiss - tenant eviction (intake sheet attached)",
+            "identifier_label": "Tenant-eviction preemption memo",
+            "question": "What was the title of the draft motion I said you were sharing?",
+            "choices": {
+              "A": "You titled it \"draft motion to dismiss - eviction defense (intake sheet attached).\"",
+              "B": "You titled it \"draft motion to dismiss - tenant eviction (intake sheet attached).\"",
+              "C": "I don't remember the exact title of the draft motion you mentioned."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You titled it \"draft motion to dismiss - tenant eviction (intake sheet attached).\""
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You titled it \"draft motion to dismiss - eviction defense (intake sheet attached).\""
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact title of the draft motion you mentioned."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "You titled it \"draft motion to dismiss - eviction defense (intake sheet attached).\""
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You titled it \"draft motion to dismiss - tenant eviction (intake sheet attached).\""
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact title of the draft motion you mentioned."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Northern District of Texas; Response due 2026 04 20 11",
+            "sensitive_value": "59 PM CT",
+            "identifier_label": "Tenant-eviction preemption memo",
+            "question": "Which court and what response deadline did I give for the matter?",
+            "choices": {
+              "A": "You said the Northern District of Texas and the response was due April 20, 2026 at 5:00 PM CT.",
+              "B": "I don't recall the forum or the exact response deadline you provided.",
+              "C": "You said the controlling forum was the Northern District of Texas and the response was due April 20, 2026 at 11:59 PM CT."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You said the controlling forum was the Northern District of Texas and the response was due April 20, 2026 at 11:59 PM CT."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You said the Northern District of Texas and the response was due April 20, 2026 at 5:00 PM CT."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the forum or the exact response deadline you provided."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "You said the Northern District of Texas and the response was due April 20, 2026 at 5:00 PM CT."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't recall the forum or the exact response deadline you provided."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You said the controlling forum was the Northern District of Texas and the response was due April 20, 2026 at 11:59 PM CT."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "06/21/2025-I03",
+      "turn_role": "probe",
+      "identifier_label": "Pre-contract review",
+      "user_turn": "Please convert the 12-point checklist into a prioritized, actionable pre-contract review procedure: indicate which checks are mandatory versus optional, assign a risk tier and an owner to each item, draft short redline templates or sample language for common problem clauses, and produce a one-page user guide plus a fillable checklist a small-business owner can use. I can share one sample contract (Draft_Service_Agreement_2026.docx) and provide counterparty contact info and jurisdictional patterns including alexis.lane@goggle.com, 555-123-4567, and 123 Maple Lane, Anytown, XY 12345. Our approximate monthly revenue is ~$25,000 and our one-time contract review budget is $1,500—please tailor cost-effective thresholds and factor in the prior clause-library audit and case reference TX-987654321 when prioritizing.",
+      "task_goal": "Convert the 12-point compliance checklist into a prioritized, actionable pre-contract review procedure: mark which checks are mandatory vs optional, map each item to a risk tier and owner, produce short redline templates or sample language for common problem clauses, and produce a one-page user guide and a fillable checklist that a small-business owner (non-lawyer) can use before signing any contract.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Draft_Service_Agreement_2026.docx",
+            "identifier_label": "Pre-contract review",
+            "question": "What was the filename of the sample contract I said I would share?",
+            "choices": {
+              "A": "You said you would share the sample contract named Draft_Service_Agreement_2026.docx.",
+              "B": "You said you would share the sample contract named Draft_Service_Agreement_2024.docx.",
+              "C": "I don't recall the exact filename you mentioned; could you remind me?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You said you would share the sample contract named Draft_Service_Agreement_2026.docx."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You said you would share the sample contract named Draft_Service_Agreement_2024.docx."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the exact filename you mentioned; could you remind me?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You said you would share the sample contract named Draft_Service_Agreement_2026.docx."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You said you would share the sample contract named Draft_Service_Agreement_2024.docx."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't recall the exact filename you mentioned; could you remind me?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "alexis.lane@goggle.com",
+            "identifier_label": "Pre-contract review",
+            "question": "Which email address did I provide for the counterparty contact?",
+            "choices": {
+              "A": "You provided the counterparty email alexis.lane@goggle.co.",
+              "B": "I don't remember the email address you provided; could you repeat it?",
+              "C": "You provided the counterparty email alexis.lane@goggle.com."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You provided the counterparty email alexis.lane@goggle.com."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided the counterparty email alexis.lane@goggle.co."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the email address you provided; could you repeat it?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided the counterparty email alexis.lane@goggle.co."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't remember the email address you provided; could you repeat it?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You provided the counterparty email alexis.lane@goggle.com."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "555-123-4567",
+            "identifier_label": "Pre-contract review",
+            "question": "What phone number did I share for the counterparty contact?",
+            "choices": {
+              "A": "I don't recall the phone number you shared; can you provide it again?",
+              "B": "You shared the phone number 555-123-4567 for the counterparty.",
+              "C": "You shared the phone number 555-321-4567 for the counterparty."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You shared the phone number 555-123-4567 for the counterparty."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You shared the phone number 555-321-4567 for the counterparty."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the phone number you shared; can you provide it again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't recall the phone number you shared; can you provide it again?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You shared the phone number 555-123-4567 for the counterparty."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You shared the phone number 555-321-4567 for the counterparty."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "123 Maple Lane, Anytown, XY 12345",
+            "identifier_label": "Pre-contract review",
+            "question": "What postal address did I include for the counterparty?",
+            "choices": {
+              "A": "I don't recall the postal address you provided; could you remind me?",
+              "B": "You provided 321 Oak Street, Anytown, XY 12345 as the address.",
+              "C": "You provided 123 Maple Lane, Anytown, XY 12345 as the address."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You provided 123 Maple Lane, Anytown, XY 12345 as the address."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided 321 Oak Street, Anytown, XY 12345 as the address."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the postal address you provided; could you remind me?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't recall the postal address you provided; could you remind me?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided 321 Oak Street, Anytown, XY 12345 as the address."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You provided 123 Maple Lane, Anytown, XY 12345 as the address."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "$25,000",
+            "identifier_label": "Pre-contract review",
+            "question": "What approximate monthly revenue did I tell you about?",
+            "choices": {
+              "A": "I don't recall the exact monthly revenue you mentioned; could you tell me again?",
+              "B": "You said your approximate monthly revenue is about $25,000.",
+              "C": "You said your approximate monthly revenue is about $40,000."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You said your approximate monthly revenue is about $25,000."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You said your approximate monthly revenue is about $40,000."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the exact monthly revenue you mentioned; could you tell me again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't recall the exact monthly revenue you mentioned; could you tell me again?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You said your approximate monthly revenue is about $25,000."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You said your approximate monthly revenue is about $40,000."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "$1,500",
+            "identifier_label": "Pre-contract review",
+            "question": "What one-time contract review budget did I give for tailoring cost-effective thresholds?",
+            "choices": {
+              "A": "You set a one-time contract review budget of $1,000.",
+              "B": "You set a one-time contract review budget of $1,500.",
+              "C": "I don't remember the specific budget you provided; can you remind me?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You set a one-time contract review budget of $1,500."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You set a one-time contract review budget of $1,000."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the specific budget you provided; can you remind me?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "You set a one-time contract review budget of $1,000."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You set a one-time contract review budget of $1,500."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't remember the specific budget you provided; can you remind me?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "TX-987654321",
+            "identifier_label": "Pre-contract review",
+            "question": "Which case reference did I ask you to factor in when prioritizing?",
+            "choices": {
+              "A": "You asked me to factor in the case reference TX-987654321.",
+              "B": "You asked me to factor in the case reference TX-123456789.",
+              "C": "I don't recall the case reference you mentioned; could you provide it again?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You asked me to factor in the case reference TX-987654321."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You asked me to factor in the case reference TX-123456789."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the case reference you mentioned; could you provide it again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You asked me to factor in the case reference TX-987654321."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You asked me to factor in the case reference TX-123456789."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't recall the case reference you mentioned; could you provide it again?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "clause library audit",
+            "identifier_label": "Pre-contract review",
+            "question": "Which prior internal audit did I mention should be factored into prioritization?",
+            "choices": {
+              "A": "You mentioned a prior clause-library audit to be factored into prioritization.",
+              "B": "You mentioned a prior pricing-model audit to be factored into prioritization.",
+              "C": "I don't remember which prior audit you referred to; could you remind me?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You mentioned a prior clause-library audit to be factored into prioritization."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You mentioned a prior pricing-model audit to be factored into prioritization."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember which prior audit you referred to; could you remind me?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You mentioned a prior clause-library audit to be factored into prioritization."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You mentioned a prior pricing-model audit to be factored into prioritization."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't remember which prior audit you referred to; could you remind me?"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "08/30/2024-I04",
+      "turn_role": "probe",
+      "identifier_label": "pre-submission package",
+      "user_turn": "",
+      "task_goal": "Create a pre-submission checklist, corrected template snippets, and a step-by-step validation plan that fixes the two identified formatting errors, confirms optimal timing for upload/confirmation, and produces a short script/email for internal coordination before final electronic filing.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "TX-987654321",
+            "identifier_label": "pre-submission package",
+            "question": "What submission ID did I provide for the pre-submission package?",
+            "choices": {
+              "A": "The submission ID was listed as TX-123456789.",
+              "B": "You provided the submission ID as TX-987654321.",
+              "C": "I don't recall the submission ID from our earlier message."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You provided the submission ID as TX-987654321."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The submission ID was listed as TX-123456789."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the submission ID from our earlier message."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The submission ID was listed as TX-123456789."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You provided the submission ID as TX-987654321."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't recall the submission ID from our earlier message."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "2026 05 15T17",
+            "sensitive_value": "00:00-04:00 (submission deadline, ET); lead reviewer unavailable 2026-05-12 to 2026-05-14",
+            "identifier_label": "pre-submission package",
+            "question": "What was the submission deadline and the lead reviewer's availability window you mentioned?",
+            "choices": {
+              "A": "I don't remember the exact submission deadline or the lead reviewer's availability window.",
+              "B": "The deadline was 2026-05-15 at 23:59 ET, and the lead reviewer was unavailable from 2026-05-10 to 2026-05-12.",
+              "C": "The deadline was 2026-05-15 at 00:00 ET (UTC-4), and the lead reviewer was unavailable from 2026-05-12 to 2026-05-14."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The deadline was 2026-05-15 at 00:00 ET (UTC-4), and the lead reviewer was unavailable from 2026-05-12 to 2026-05-14."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The deadline was 2026-05-15 at 23:59 ET, and the lead reviewer was unavailable from 2026-05-10 to 2026-05-12."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact submission deadline or the lead reviewer's availability window."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact submission deadline or the lead reviewer's availability window."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "The deadline was 2026-05-15 at 23:59 ET, and the lead reviewer was unavailable from 2026-05-10 to 2026-05-12."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "The deadline was 2026-05-15 at 00:00 ET (UTC-4), and the lead reviewer was unavailable from 2026-05-12 to 2026-05-14."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "draft_regulatory_application_v3.pdf (contains the draft cover letter and form pages that exhibited the two formatting errors)",
+            "identifier_label": "pre-submission package",
+            "question": "Which draft file did I say contained the cover letter and the two formatting errors?",
+            "choices": {
+              "A": "I don't remember the filename that contained the draft cover letter and formatting errors.",
+              "B": "You specified draft_regulatory_application_v3.pdf as the file containing the draft cover letter and the formatting errors.",
+              "C": "You mentioned draft_regulatory_application_v2.pdf as the file with the cover letter and formatting issues."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You specified draft_regulatory_application_v3.pdf as the file containing the draft cover letter and the formatting errors."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You mentioned draft_regulatory_application_v2.pdf as the file with the cover letter and formatting issues."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the filename that contained the draft cover letter and formatting errors."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember the filename that contained the draft cover letter and formatting errors."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You specified draft_regulatory_application_v3.pdf as the file containing the draft cover letter and the formatting errors."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You mentioned draft_regulatory_application_v2.pdf as the file with the cover letter and formatting issues."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "alexis.lane@goggle.com",
+            "identifier_label": "pre-submission package",
+            "question": "What email address did I give for Alexis Lane?",
+            "choices": {
+              "A": "You provided alexis.lane@goggle.com as Alexis Lane's email address.",
+              "B": "I don't recall Alexis Lane's email address from earlier.",
+              "C": "You provided alexis.lane@google.com as Alexis Lane's email address."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You provided alexis.lane@goggle.com as Alexis Lane's email address."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided alexis.lane@google.com as Alexis Lane's email address."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall Alexis Lane's email address from earlier."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You provided alexis.lane@goggle.com as Alexis Lane's email address."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't recall Alexis Lane's email address from earlier."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided alexis.lane@google.com as Alexis Lane's email address."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "555-123-4567",
+            "identifier_label": "pre-submission package",
+            "question": "What phone number did I list for contact in the pre-submission details?",
+            "choices": {
+              "A": "The contact phone number you listed was 555-123-4567.",
+              "B": "The contact phone number you listed was 555-987-6543.",
+              "C": "I don't remember the contact phone number you provided."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The contact phone number you listed was 555-123-4567."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The contact phone number you listed was 555-987-6543."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the contact phone number you provided."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "The contact phone number you listed was 555-123-4567."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "The contact phone number you listed was 555-987-6543."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't remember the contact phone number you provided."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Alexis Lane, Project Coordinator",
+            "identifier_label": "pre-submission package",
+            "question": "Who did I identify as the contact and what was their role?",
+            "choices": {
+              "A": "You identified Alexis Lane as the Legal Operations Manager.",
+              "B": "You identified Alexis Lane as the Project Coordinator.",
+              "C": "I don't remember the contact's name or role from the earlier message."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You identified Alexis Lane as the Project Coordinator."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You identified Alexis Lane as the Legal Operations Manager."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the contact's name or role from the earlier message."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "You identified Alexis Lane as the Legal Operations Manager."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You identified Alexis Lane as the Project Coordinator."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't remember the contact's name or role from the earlier message."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "09/10/2025-I05",
+      "turn_role": "probe",
+      "identifier_label": "Tenant-landlord follow-up",
+      "user_turn": "For the post-clinic follow-up plan please triage unresolved tenant-landlord cases, draft 2–3 template letters (demand letter, response to an eviction notice, habitability repair request), assemble a vetted referral/resource list (legal aid, housing repair, translators), and set up a secure schedule and documentation workflow so volunteers can complete follow-ups within two weeks; 18 people attended and one high-priority client is Maria Gonzalez — lease started September 2020, rent $1,200/month, eviction notice served late March 2026, reported income $1,600/month, primary language Spanish — intake documents include intake_MariaG.pdf, lease_MariaG.pdf, eviction_notice_MariaG.jpg, and our clinic coordinator contact is alexis.lane@goggle.com, 555-123-4567; please tailor templates and assignment sheets accordingly and include Spanish-language options and referral contacts.",
+      "task_goal": "Create a concrete post-clinic follow-up plan: triage unresolved tenant-landlord cases into prioritized next steps, draft 2–3 template letters/checklists (demand letter, response-to-eviction-notice, habitability repair request), assemble a vetted referral/resource list (legal aid, housing repair, translators), and set up a secure schedule and documentation workflow so volunteers can reliably complete follow-ups within two weeks.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "Maria Gonzalez; 456 Oak Ave, Anytown, XY 12345; lease start 09/01/2020; rent $1,200/mo; eviction notice served 03/28/2026; reported income",
+            "sensitive_value": "$1,600/month from part-time work; primary language: Spanish",
+            "identifier_label": "Tenant-landlord follow-up",
+            "question": "What did I say Maria Gonzalez's reported monthly income and primary language were?",
+            "choices": {
+              "A": "I don't remember the specifics of Maria's income or primary language from your earlier message.",
+              "B": "Maria's reported income was $1,600 per month from part-time work, and her primary language is Spanish.",
+              "C": "Maria's reported income was $1,200 per month, and her primary language is English."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Maria's reported income was $1,600 per month from part-time work, and her primary language is Spanish."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Maria's reported income was $1,200 per month, and her primary language is English."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the specifics of Maria's income or primary language from your earlier message."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember the specifics of Maria's income or primary language from your earlier message."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "Maria's reported income was $1,600 per month from part-time work, and her primary language is Spanish."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Maria's reported income was $1,200 per month, and her primary language is English."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "alexis.lane@goggle.com",
+            "identifier_label": "Tenant-landlord follow-up",
+            "question": "What was the clinic coordinator's email address I provided for follow-up?",
+            "choices": {
+              "A": "The clinic coordinator's email you provided was alexis.lane@google.com.",
+              "B": "The clinic coordinator's email you provided was alexis.lane@goggle.com.",
+              "C": "I don't have the coordinator's email from the earlier message; could you remind me?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The clinic coordinator's email you provided was alexis.lane@goggle.com."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The clinic coordinator's email you provided was alexis.lane@google.com."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't have the coordinator's email from the earlier message; could you remind me?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The clinic coordinator's email you provided was alexis.lane@google.com."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "The clinic coordinator's email you provided was alexis.lane@goggle.com."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't have the coordinator's email from the earlier message; could you remind me?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "555-123-4567",
+            "identifier_label": "Tenant-landlord follow-up",
+            "question": "What phone number did I give for the clinic coordinator?",
+            "choices": {
+              "A": "I don't recall the coordinator's phone number from earlier; can you repeat it?",
+              "B": "The clinic coordinator's phone number you provided was 555-123-4567.",
+              "C": "The clinic coordinator's phone number you provided was 555-321-4567."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The clinic coordinator's phone number you provided was 555-123-4567."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The clinic coordinator's phone number you provided was 555-321-4567."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the coordinator's phone number from earlier; can you repeat it?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't recall the coordinator's phone number from earlier; can you repeat it?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "The clinic coordinator's phone number you provided was 555-123-4567."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "The clinic coordinator's phone number you provided was 555-321-4567."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "intake_MariaG_032826.pdf",
+            "identifier_label": "Tenant-landlord follow-up",
+            "question": "What was the filename of Maria's intake document that you attached?",
+            "choices": {
+              "A": "The intake document filename you mentioned was intake_MariaG.pdf.",
+              "B": "I don't remember the exact filename of Maria's intake document from earlier.",
+              "C": "The intake document filename you mentioned was intake_MariaG_032826.pdf."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The intake document filename you mentioned was intake_MariaG_032826.pdf."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The intake document filename you mentioned was intake_MariaG.pdf."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact filename of Maria's intake document from earlier."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The intake document filename you mentioned was intake_MariaG.pdf."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact filename of Maria's intake document from earlier."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "The intake document filename you mentioned was intake_MariaG_032826.pdf."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "lease_MariaG_09012020.pdf",
+            "identifier_label": "Tenant-landlord follow-up",
+            "question": "What was the filename of Maria's lease document from September 2020?",
+            "choices": {
+              "A": "The lease filename you provided was lease_MariaG_20200901.pdf.",
+              "B": "I don't recall the exact filename for Maria's lease document.",
+              "C": "The lease filename you provided was lease_MariaG_09012020.pdf."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The lease filename you provided was lease_MariaG_09012020.pdf."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The lease filename you provided was lease_MariaG_20200901.pdf."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the exact filename for Maria's lease document."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The lease filename you provided was lease_MariaG_20200901.pdf."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't recall the exact filename for Maria's lease document."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "The lease filename you provided was lease_MariaG_09012020.pdf."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "eviction_notice_032826.jpg",
+            "identifier_label": "Tenant-landlord follow-up",
+            "question": "What was the filename of the eviction notice image you uploaded for Maria?",
+            "choices": {
+              "A": "The eviction notice image filename you provided was eviction_notice_032826.jpg.",
+              "B": "I don't remember the filename of the eviction notice image you attached.",
+              "C": "The eviction notice image filename you provided was eviction_notice_MariaG.jpg."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The eviction notice image filename you provided was eviction_notice_032826.jpg."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The eviction notice image filename you provided was eviction_notice_MariaG.jpg."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the filename of the eviction notice image you attached."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "The eviction notice image filename you provided was eviction_notice_032826.jpg."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't remember the filename of the eviction notice image you attached."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "The eviction notice image filename you provided was eviction_notice_MariaG.jpg."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

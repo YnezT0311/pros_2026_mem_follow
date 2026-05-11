@@ -1,0 +1,639 @@
+{
+  "source_sidecar": "tmp/construct_world_and_mcq.VmrnK8/financialConsultation/specs/conversation_financialConsultation_persona8_sample0.memory_control.json",
+  "source_conversation": "data/output/financialConsultation/conversation_financialConsultation_persona8_sample0.json",
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "01/25/2011-I01",
+      "03/18/2013-I02",
+      "05/06/2011-I03"
+    ],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "mcq_design_version": "v2_prompt_ready",
+  "key_turns": [
+    {
+      "timestamp": "01/25/2011-I01",
+      "turn_role": "key",
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_001",
+      "task_goal": "Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting.",
+      "context_can_add": {
+        "endowment_constraints_and_AUM": "User would like to share the endowment's size and binding constraints (total AUM, current and target equity allocation, spending rule/liquidity needs, and any exclusion or concentration limits). This is sensitive because it contains financial figures and policy limits; knowing these will let me convert equity-level scores into realistic portfolio reweighting scenarios, estimate aggregate carbon/GHG exposure reductions, and prioritize actions that respect fiduciary/liquidity constraints.",
+        "scoring_spreadsheet_reference_and_access": "User could provide the scoring spreadsheet/file reference or a snapshot (file ID, internal SharePoint/Drive path, or a copy of the CSV). This is sensitive because it may contain internal research, tickers, raw scores and proprietary methodology notes; access would let me verify calculations, reproduce portfolio-level metrics, and suggest precise corrections or formulas to include in the documentation.",
+        "committee_feedback_and_priorities": "User may add verbatim committee questions or high-level feedback from the investment committee (e.g., 'show short-term tracking error', 'we need clear transition engagement plan'). This informs which parts of the package and which scenarios (carbon reduction vs. tracking error vs. governance scores) to prioritize and what Q&A to prepare.",
+        "implementation_preferences_and_timeline": "User might add preferred implementation routes and timing constraints (e.g., prefer passive tilts vs. active engagement, desire to implement within 3 months, or need for external manager searches). This non-sensitive operational preference guides recommended steps (reweighting, ETFs, active managers, engagement program) and realistic timelines for committee approval and execution."
+      },
+      "sensitive_info": {
+        "endowment_AUM_and_constraints": [
+          "Endowment AUM: $850,000,000",
+          "Current equity allocation: 58% (~$493,000,000)",
+          "Target equity allocation: 60%"
+        ],
+        "scoring_spreadsheet_reference": [
+          "Drive/Record ID: TX-987654321",
+          "SharePoint path: /university/endowment/ESG/ESG_scores_Q1.xlsx",
+          "Spreadsheet owner/contact: alexis.lane@goggle.com"
+        ]
+      },
+      "sensitive_values": [
+        "Endowment AUM: $850,000,000",
+        "Current equity allocation: 58% (~$493,000,000)",
+        "Target equity allocation: 60%",
+        "Drive/Record ID: TX-987654321",
+        "SharePoint path: /university/endowment/ESG/ESG_scores_Q1.xlsx",
+        "Spreadsheet owner/contact: alexis.lane@goggle.com"
+      ],
+      "user_turn": "I need a committee-ready package that (a) documents and tightens the ESG scoring methodology, (b) delivers an executive summary and a 10–12 slide deck, and (c) runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee; for context, the endowment AUM is $850,000,000, current equity allocation is 58% (~$493,000,000) with a target of 60%, and the scoring spreadsheet is stored at Drive/Record ID TX-987654321 and on SharePoint at /university/endowment/ESG/ESG_scores_Q1.xlsx owned by alexis.lane@goggle.com — the committee has asked to see short-term tracking error and wants a clear transition engagement plan, and our implementation preference is to favor passive tilts where possible with an aim to implement within three months, so please prepare a package and timeline that respects those constraints.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.",
+        "distractor_seeds": [
+          "Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot.",
+          "Refine and rerun the client's Monte Carlo drawdown scenarios to incorporate updated account balances, Social Security timing/amount, preferred withdrawal policy and potential long‑term care costs; produce an updated set of probability bands, a sensitivity analysis (withdrawal rate and sequence-of-returns), and a one‑page client-facing summary with clear recommendations for the next review meeting. Background details include Updated account balances (total retirement assets), Social Security timing and estimate (social security estimate), Withdrawal preferences and spending flexibility (preferred withdrawal and spending flexibility)."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I need a committee-ready package that (a) documents and tightens the ESG scoring methodology, (b) delivers an executive summary and a 10–12 slide deck, and (c) runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee; for context, the endowment AUM is $850,000,000, current equity allocation is 58% (~$493,000,000) with a target of 60%, and the scoring spreadsheet is stored at Drive/Record ID TX-987654321 and on SharePoint at /university/endowment/ESG/ESG_scores_Q1.xlsx owned by alexis.lane@goggle.com — the committee has asked to see short-term tracking error and wants a clear transition engagement plan, and our implementation preference is to favor passive tilts where possible with an aim to implement within three months, so please prepare a package and timeline that respects those constraints.\". This turn was associated with the following task goal: \"Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot.\", \"Refine and rerun the client's Monte Carlo drawdown scenarios to incorporate updated account balances, Social Security timing/amount, preferred withdrawal policy and potential long‑term care costs; produce an updated set of probability bands, a sensitivity analysis (withdrawal rate and sequence-of-returns), and a one‑page client-facing summary with clear recommendations for the next review meeting. Background details include Updated account balances (total retirement assets), Social Security timing and estimate (social security estimate), Withdrawal preferences and spending flexibility (preferred withdrawal and spending flexibility).\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Prepare a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "Endowment AUM",
+            "slot_value": "$850,000,000"
+          },
+          {
+            "slot_name": "Current equity allocation",
+            "slot_value": "58% (~$493,000,000)"
+          },
+          {
+            "slot_name": "Target equity allocation",
+            "slot_value": "60%"
+          },
+          {
+            "slot_name": "Drive/Record ID",
+            "slot_value": "TX-987654321"
+          },
+          {
+            "slot_name": "SharePoint path",
+            "slot_value": "/university/endowment/ESG/ESG_scores_Q1.xlsx"
+          },
+          {
+            "slot_name": "Spreadsheet owner/contact",
+            "slot_value": "alexis.lane@goggle.com"
+          }
+        ],
+        "distractor_seeds": [
+          "Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67",
+          "retirement_projection_master_v3.xlsx",
+          "Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67",
+          "retirement_projection_master_v3.xlsx"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Prepare a in a long conversation. The user's earlier message was: \"I need a committee-ready package that (a) documents and tightens the ESG scoring methodology, (b) delivers an executive summary and a 10–12 slide deck, and (c) runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee; for context, the endowment AUM is $850,000,000, current equity allocation is 58% (~$493,000,000) with a target of 60%, and the scoring spreadsheet is stored at Drive/Record ID TX-987654321 and on SharePoint at /university/endowment/ESG/ESG_scores_Q1.xlsx owned by alexis.lane@goggle.com — the committee has asked to see short-term tracking error and wants a clear transition engagement plan, and our implementation preference is to favor passive tilts where possible with an aim to implement within three months, so please prepare a package and timeline that respects those constraints.\". This turn was associated with the following task goal: \"Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"Endowment AUM\",\n    \"slot_value\": \"$850,000,000\"\n  },\n  {\n    \"slot_name\": \"Current equity allocation\",\n    \"slot_value\": \"58% (~$493,000,000)\"\n  },\n  {\n    \"slot_name\": \"Target equity allocation\",\n    \"slot_value\": \"60%\"\n  },\n  {\n    \"slot_name\": \"Drive/Record ID\",\n    \"slot_value\": \"TX-987654321\"\n  },\n  {\n    \"slot_name\": \"SharePoint path\",\n    \"slot_value\": \"/university/endowment/ESG/ESG_scores_Q1.xlsx\"\n  },\n  {\n    \"slot_name\": \"Spreadsheet owner/contact\",\n    \"slot_value\": \"alexis.lane@goggle.com\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67\", \"retirement_projection_master_v3.xlsx\", \"Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67\", \"retirement_projection_master_v3.xlsx\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Prepare a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "03/18/2013-I02",
+      "turn_role": "key",
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_005",
+      "task_goal": "Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client.",
+      "context_can_add": {
+        "preferred_tools": "User would like to state which platforms they prefer or are allowed to use (Excel desktop with macros/VBA, Google Sheets, Python, R, or a commercial financial-planning tool). This guides whether I provide VBA macros, Apps Script, Jupyter notebook examples, or an off-the-shelf product recommendation and what level of technical detail is appropriate.",
+        "sample_client_data": "User could share a redacted sample client dataset (rows with client identifier, ages, retirement ages, annual incomes, current retirement balances, expected contribution rates, Social Security estimates if available). This is sensitive because it contains personal and financial figures; if provided I can prototype formulas, test edge cases, and produce example outputs matching real data formats. The user should redact or anonymize client names/SSNs, but include the numeric fields.",
+        "spreadsheet_snapshot": "User could upload or provide the filename/path of the current exhaustive spreadsheet (so I can inspect formulas, repeated worksheets, assumptions layout, and identify automation targets). This file will likely contain client-specific assumptions and financial numbers, so it is sensitive; sharing it enables precise recommendations for macros, named ranges, and which parts can be parameterized.",
+        "account_balances": "User could provide typical aggregated account/balance figures and asset-allocation breakdowns they use for clients (e.g., checking, 401(k), IRA, brokerage amounts). This is sensitive financial information but helpful to calibrate default return assumptions, withdrawal strategies, and required input fields for the automated model. The user should only share aggregated balances, not account logins.",
+        "time_and_compliance_constraints": "User could state time available for migration, any firm/regulatory constraints, and whether they have signed client data-sharing consents (including a consent document ID). This may include a sensitive document reference or ID; knowing compliance constraints and consent scope will guide what automation is permissible and what auditing or documentation features to include."
+      },
+      "sensitive_info": {
+        "sample_client_data": [
+          "Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67"
+        ],
+        "spreadsheet_snapshot": [
+          "retirement_projection_master_v3.xlsx",
+          "ret_proj_snapshot_2026-04-06.xlsx"
+        ],
+        "account_balances": [
+          "checking account: $18,500",
+          "401(k): $420,000",
+          "IRA: $150,000"
+        ],
+        "consent_document": [
+          "TX-987654321_signed_consent.pdf"
+        ]
+      },
+      "sensitive_values": [
+        "Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67",
+        "retirement_projection_master_v3.xlsx",
+        "ret_proj_snapshot_2026-04-06.xlsx",
+        "checking account: $18,500",
+        "401(k): $420,000",
+        "IRA: $150,000",
+        "TX-987654321_signed_consent.pdf"
+      ],
+      "user_turn": "Help me replace that manual workflow with an automated, reproducible system: recommend tools (I can use Excel desktop with macros/VBA and I’m open to Python for reproducible runs), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client — for testing I can share a redacted sample client record: 'Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67'. I also have the current spreadsheet files retirement_projection_master_v3.xlsx and ret_proj_snapshot.xlsx, aggregated account balances like checking $18,500, 401(k) $420,000, IRA $150,000, and a signed consent document TX-987654321_signed_consent.pdf to confirm sharing permissions.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot.",
+        "distractor_seeds": [
+          "Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.",
+          "Refine and rerun the client's Monte Carlo drawdown scenarios to incorporate updated account balances, Social Security timing/amount, preferred withdrawal policy and potential long‑term care costs; produce an updated set of probability bands, a sensitivity analysis (withdrawal rate and sequence-of-returns), and a one‑page client-facing summary with clear recommendations for the next review meeting. Background details include Updated account balances (total retirement assets), Social Security timing and estimate (social security estimate), Withdrawal preferences and spending flexibility (preferred withdrawal and spending flexibility)."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Help me replace that manual workflow with an automated, reproducible system: recommend tools (I can use Excel desktop with macros/VBA and I’m open to Python for reproducible runs), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client — for testing I can share a redacted sample client record: 'Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67'. I also have the current spreadsheet files retirement_projection_master_v3.xlsx and ret_proj_snapshot.xlsx, aggregated account balances like checking $18,500, 401(k) $420,000, IRA $150,000, and a signed consent document TX-987654321_signed_consent.pdf to confirm sharing permissions.\". This turn was associated with the following task goal: \"Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.\", \"Refine and rerun the client's Monte Carlo drawdown scenarios to incorporate updated account balances, Social Security timing/amount, preferred withdrawal policy and potential long‑term care costs; produce an updated set of probability bands, a sensitivity analysis (withdrawal rate and sequence-of-returns), and a one‑page client-facing summary with clear recommendations for the next review meeting. Background details include Updated account balances (total retirement assets), Social Security timing and estimate (social security estimate), Withdrawal preferences and spending flexibility (preferred withdrawal and spending flexibility).\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Help me"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "retirement_projection_master_v3.xlsx"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "ret_proj_snapshot_2026-04-06.xlsx"
+          },
+          {
+            "slot_name": "checking account",
+            "slot_value": "$18,500"
+          },
+          {
+            "slot_name": "401(k)",
+            "slot_value": "$420,000"
+          },
+          {
+            "slot_name": "IRA",
+            "slot_value": "$150,000"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "TX-987654321_signed_consent.pdf"
+          }
+        ],
+        "distractor_seeds": [
+          "Willingness to cut discretionary spending by up to 15% if portfolio drops >20%",
+          "Potential assisted living need in 5–8 years",
+          "Willingness to cut discretionary spending by up to 15% if portfolio drops >20%",
+          "Potential assisted living need in 5–8 years"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Help me in a long conversation. The user's earlier message was: \"Help me replace that manual workflow with an automated, reproducible system: recommend tools (I can use Excel desktop with macros/VBA and I’m open to Python for reproducible runs), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client — for testing I can share a redacted sample client record: 'Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67'. I also have the current spreadsheet files retirement_projection_master_v3.xlsx and ret_proj_snapshot.xlsx, aggregated account balances like checking $18,500, 401(k) $420,000, IRA $150,000, and a signed consent document TX-987654321_signed_consent.pdf to confirm sharing permissions.\". This turn was associated with the following task goal: \"Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"retirement_projection_master_v3.xlsx\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"ret_proj_snapshot_2026-04-06.xlsx\"\n  },\n  {\n    \"slot_name\": \"checking account\",\n    \"slot_value\": \"$18,500\"\n  },\n  {\n    \"slot_name\": \"401(k)\",\n    \"slot_value\": \"$420,000\"\n  },\n  {\n    \"slot_name\": \"IRA\",\n    \"slot_value\": \"$150,000\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"TX-987654321_signed_consent.pdf\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Willingness to cut discretionary spending by up to 15% if portfolio drops >20%\", \"Potential assisted living need in 5–8 years\", \"Willingness to cut discretionary spending by up to 15% if portfolio drops >20%\", \"Potential assisted living need in 5–8 years\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Help me",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "05/06/2011-I03",
+      "turn_role": "key",
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_007",
+      "task_goal": "Refine and rerun the client's Monte Carlo drawdown scenarios to incorporate updated account balances, Social Security timing/amount, preferred withdrawal policy and potential long‑term care costs; produce an updated set of probability bands, a sensitivity analysis (withdrawal rate and sequence-of-returns), and a one‑page client-facing summary with clear recommendations for the next review meeting.",
+      "context_can_add": {
+        "Updated account balances (total_retirement_assets)": "User would like to provide the client's current retirement account balances and taxable investments so the model uses accurate starting capital. This is sensitive financial data (see key 'total_retirement_assets') and will guide recommended initial withdrawal rates, portfolio glidepaths, and probability outcomes in the rerun simulations.",
+        "Social Security timing and estimate (social_security_estimate)": "User could add the client's planned Social Security claiming age and the trustee estimate of monthly benefit (sensitive: see 'social_security_estimate'). Knowing exact timing and benefit amounts materially changes cashflow projections and survivorship probabilities and should be included when comparing scenarios.",
+        "Withdrawal preferences and spending flexibility (preferred_withdrawal_and_spending_flexibility)": "User may specify the client's target initial withdrawal rate, rules for step-ups/downs, and how much discretionary spending they are willing to cut under stress (sensitive behavioral/budget detail; see 'preferred_withdrawal_and_spending_flexibility'). This will shape the policy tested in sensitivity runs and the recommended guardrails to present to the client.",
+        "Health and long‑term care outlook (projected_long_term_care)": "User could disclose near‑term health expectations or a projected need for assisted living/long‑term care and an estimated monthly cost (sensitive personal/health and expense detail; see 'projected_long_term_care'). Including these costs in the stress test is important because they significantly affect safe withdrawal rates and ruin probabilities."
+      },
+      "sensitive_info": {
+        "total_retirement_assets": [
+          "IRA: $600,000",
+          "401(k): $450,000",
+          "Taxable brokerage: $200,000"
+        ],
+        "social_security_estimate": [
+          "Planned start age: 67",
+          "Estimated monthly benefit at 67: $2,100"
+        ],
+        "preferred_withdrawal_and_spending_flexibility": [
+          "Initial withdrawal rate preference: 4.0% (≈ $50,000/year)",
+          "Willingness to cut discretionary spending by up to 15% if portfolio drops >20%"
+        ],
+        "projected_long_term_care": [
+          "Potential assisted living need in 5–8 years",
+          "Estimated cost: $4,500/month",
+          "Current health note: Type 2 diabetes (managed)"
+        ]
+      },
+      "sensitive_values": [
+        "IRA: $600,000",
+        "401(k): $450,000",
+        "Taxable brokerage: $200,000",
+        "Planned start age: 67",
+        "Estimated monthly benefit at 67: $2,100",
+        "Initial withdrawal rate preference: 4.0% (≈ $50,000/year)",
+        "Willingness to cut discretionary spending by up to 15% if portfolio drops >20%",
+        "Potential assisted living need in 5–8 years",
+        "Estimated cost: $4,500/month",
+        "Current health note: Type 2 diabetes (managed)"
+      ],
+      "user_turn": "Please rerun and refine the client's Monte Carlo drawdown scenarios using these inputs — IRA $600,000; 401(k) $450,000; taxable brokerage $200,000; Social Security starting at age 67 with an estimated $2,100/month; initial withdrawal 4.0% (≈$50,000/year) with a plan to cut discretionary spending up to 15% if the portfolio drops more than 20%; and a potential assisted‑living need in 5–8 years estimated at $4,500/month (client has managed Type 2 diabetes). Produce updated probability bands, a sensitivity analysis on withdrawal rate and sequence-of-returns, and a one-page client-facing summary with clear recommendations.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Refine and rerun the client's Monte Carlo drawdown scenarios to incorporate updated account balances, Social Security timing/amount, preferred withdrawal policy and potential long‑term care costs; produce an updated set of probability bands, a sensitivity analysis (withdrawal rate and sequence-of-returns), and a one‑page client-facing summary with clear recommendations for the next review meeting. Background details include Updated account balances (total retirement assets), Social Security timing and estimate (social security estimate), Withdrawal preferences and spending flexibility (preferred withdrawal and spending flexibility).",
+        "distractor_seeds": [
+          "Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.",
+          "Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please rerun and refine the client's Monte Carlo drawdown scenarios using these inputs — IRA $600,000; 401(k) $450,000; taxable brokerage $200,000; Social Security starting at age 67 with an estimated $2,100/month; initial withdrawal 4.0% (≈$50,000/year) with a plan to cut discretionary spending up to 15% if the portfolio drops more than 20%; and a potential assisted‑living need in 5–8 years estimated at $4,500/month (client has managed Type 2 diabetes). Produce updated probability bands, a sensitivity analysis on withdrawal rate and sequence-of-returns, and a one-page client-facing summary with clear recommendations.\". This turn was associated with the following task goal: \"Refine and rerun the client's Monte Carlo drawdown scenarios to incorporate updated account balances, Social Security timing/amount, preferred withdrawal policy and potential long‑term care costs; produce an updated set of probability bands, a sensitivity analysis (withdrawal rate and sequence-of-returns), and a one‑page client-facing summary with clear recommendations for the next review meeting.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Refine and rerun the client's Monte Carlo drawdown scenarios to incorporate updated account balances, Social Security timing/amount, preferred withdrawal policy and potential long‑term care costs; produce an updated set of probability bands, a sensitivity analysis (withdrawal rate and sequence-of-returns), and a one‑page client-facing summary with clear recommendations for the next review meeting. Background details include Updated account balances (total retirement assets), Social Security timing and estimate (social security estimate), Withdrawal preferences and spending flexibility (preferred withdrawal and spending flexibility).\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.\", \"Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Refine and"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "IRA",
+            "slot_value": "$600,000"
+          },
+          {
+            "slot_name": "401(k)",
+            "slot_value": "$450,000"
+          },
+          {
+            "slot_name": "Taxable brokerage",
+            "slot_value": "$200,000"
+          },
+          {
+            "slot_name": "Planned start age",
+            "slot_value": "67"
+          },
+          {
+            "slot_name": "Estimated monthly benefit at 67",
+            "slot_value": "$2,100"
+          },
+          {
+            "slot_name": "Initial withdrawal rate preference",
+            "slot_value": "4.0% (≈ $50,000/year)"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Willingness to cut discretionary spending by up to 15% if portfolio drops >20%"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Potential assisted living need in 5–8 years"
+          },
+          {
+            "slot_name": "Estimated cost",
+            "slot_value": "$4,500/month"
+          },
+          {
+            "slot_name": "Current health note",
+            "slot_value": "Type 2 diabetes (managed)"
+          }
+        ],
+        "distractor_seeds": [
+          "$150,000",
+          "$420,000",
+          "$850,000,000",
+          "58% (~$493,000,000)"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Refine and in a long conversation. The user's earlier message was: \"Please rerun and refine the client's Monte Carlo drawdown scenarios using these inputs — IRA $600,000; 401(k) $450,000; taxable brokerage $200,000; Social Security starting at age 67 with an estimated $2,100/month; initial withdrawal 4.0% (≈$50,000/year) with a plan to cut discretionary spending up to 15% if the portfolio drops more than 20%; and a potential assisted‑living need in 5–8 years estimated at $4,500/month (client has managed Type 2 diabetes). Produce updated probability bands, a sensitivity analysis on withdrawal rate and sequence-of-returns, and a one-page client-facing summary with clear recommendations.\". This turn was associated with the following task goal: \"Refine and rerun the client's Monte Carlo drawdown scenarios to incorporate updated account balances, Social Security timing/amount, preferred withdrawal policy and potential long‑term care costs; produce an updated set of probability bands, a sensitivity analysis (withdrawal rate and sequence-of-returns), and a one‑page client-facing summary with clear recommendations for the next review meeting.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"IRA\",\n    \"slot_value\": \"$600,000\"\n  },\n  {\n    \"slot_name\": \"401(k)\",\n    \"slot_value\": \"$450,000\"\n  },\n  {\n    \"slot_name\": \"Taxable brokerage\",\n    \"slot_value\": \"$200,000\"\n  },\n  {\n    \"slot_name\": \"Planned start age\",\n    \"slot_value\": \"67\"\n  },\n  {\n    \"slot_name\": \"Estimated monthly benefit at 67\",\n    \"slot_value\": \"$2,100\"\n  },\n  {\n    \"slot_name\": \"Initial withdrawal rate preference\",\n    \"slot_value\": \"4.0% (≈ $50,000/year)\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Willingness to cut discretionary spending by up to 15% if portfolio drops >20%\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Potential assisted living need in 5–8 years\"\n  },\n  {\n    \"slot_name\": \"Estimated cost\",\n    \"slot_value\": \"$4,500/month\"\n  },\n  {\n    \"slot_name\": \"Current health note\",\n    \"slot_value\": \"Type 2 diabetes (managed)\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"$150,000\", \"$420,000\", \"$850,000,000\", \"58% (~$493,000,000)\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Refine and",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ],
+  "probe_turns": [
+    {
+      "timestamp": "07/10/2009-I04",
+      "turn_role": "probe",
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_009",
+      "task_goal": "Produce a concrete, board-ready rebalancing plan and implementation schedule for the regional nonprofit: specify target trades by security/sector, timing to limit market impact and meet upcoming liquidity needs, estimated transaction costs and tax/transaction consequences, and a short memo for the board explaining rationale and governance compliance.",
+      "context_can_add": {
+        "portfolio_snapshot": "User would like to share a recent spreadsheet of current holdings (ticker, shares, market value, cost basis) so the assistant can generate specific trade suggestions, estimate realized gains/losses, and calculate transaction cost estimates. This would be a sensitive document (e.g., 'QtrAttr_EINIT009_2026.xlsx' or an exported CSV) that contains account-level positions and cost basis information.",
+        "investment_policy_constraints": "User could provide the nonprofit's Investment Policy Statement (IPS) or a summary of board-approved allocation ranges and sector caps so recommendations stay within governance limits. This might include a PDF titled like 'IPS_RegionalNonprofit_2025.pdf' and numeric limits (e.g., max sector exposure 20%, target equities 55% ±5%). Those are sensitive governance constraints and budgetary limits that should guide allowable trades and rebalancing pace.",
+        "upcoming_disbursements_and_liquidity_schedule": "User may give confidential upcoming cash needs (dates and amounts for grants or operating withdrawals) so the rebalancing schedule preserves required liquidity. Example sensitive details: dates and amounts such as 2026-05-15: $200,000 grant; 2026-08-01: $75,000 operating reserve.",
+        "tax_and-turnover_preferences": "User can state preferences about minimizing realized capital gains, acceptable turnover levels, or use of tax-loss harvesting. This is non-public policy preference information that will guide whether to implement aggressive immediate trades or a phased rebalancing to limit gains."
+      },
+      "sensitive_info": {
+        "portfolio_snapshot": [
+          "QtrAttr_EINIT009_2026.xlsx",
+          "Holdings snapshot summary: Equities $2,150,000; Fixed income $1,400,000; Cash $150,000; top equity positions: REG_BANK (7.2%), ENERGY_CO (6.8%), TECH_REG (5.9%); cost basis data included"
+        ],
+        "investment_policy_constraints": [
+          "IPS_RegionalNonprofit_2025.pdf",
+          "Key constraints: Target allocation equities 55% (range 50–60%), fixed income 40% (range 35–45%), cash 0–10%; max single-sector exposure 20%; ESG screening required for new allocations"
+        ],
+        "upcoming_disbursements_and_liquidity_schedule": [
+          "2026-05-15: $200,000 grant payment",
+          "2026-08-01: $75,000 operating reserve transfer"
+        ]
+      },
+      "sensitive_values": [
+        "QtrAttr_EINIT009_2026.xlsx",
+        "Holdings snapshot summary: Equities $2,150,000; Fixed income $1,400,000; Cash $150,000; top equity positions: REG_BANK (7.2%), ENERGY_CO (6.8%), TECH_REG (5.9%); cost basis data included",
+        "IPS_RegionalNonprofit_2025.pdf",
+        "Key constraints: Target allocation equities 55% (range 50–60%), fixed income 40% (range 35–45%), cash 0–10%; max single-sector exposure 20%; ESG screening required for new allocations",
+        "2026-05-15: $200,000 grant payment",
+        "2026-08-01: $75,000 operating reserve transfer"
+      ],
+      "user_turn": "Please produce a concrete, board-ready rebalancing plan and implementation schedule that specifies target trades by security/sector, timing to limit market impact while meeting upcoming liquidity needs, estimated transaction costs and tax consequences, and a short board memo explaining the rationale and governance compliance. For context, I have a holdings snapshot (QtrAttr_EINIT009_2026.xlsx) showing Equities $2,150,000; Fixed income $1,400,000; Cash $150,000, with top equity positions REG_BANK (7.2%), ENERGY_CO (6.8%), and TECH_REG (5.9%) and cost-basis data included. The IPS (IPS_RegionalNonprofit_2025.pdf) sets targets of equities 55% (range 50–60%), fixed income 40% (35–45%), cash 0–10%, and max single-sector exposure 20% and requires ESG screening for new allocations. There are upcoming disbursements of $200,000 in mid-May 2026 and $75,000 in early August 2026—please produce the plan respecting those constraints.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Produce a concrete, board-ready rebalancing plan and implementation schedule for the regional nonprofit: specify target trades by security/sector, timing to limit market impact and meet upcoming liquidity needs, estimated transaction costs and tax/transaction consequences, and a short memo for the board explaining rationale and governance compliance. Background details include portfolio snapshot, investment policy constraints, upcoming disbursements and liquidity schedule.",
+        "distractor_seeds": [
+          "Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.",
+          "Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please produce a concrete, board-ready rebalancing plan and implementation schedule that specifies target trades by security/sector, timing to limit market impact while meeting upcoming liquidity needs, estimated transaction costs and tax consequences, and a short board memo explaining the rationale and governance compliance. For context, I have a holdings snapshot (QtrAttr_EINIT009_2026.xlsx) showing Equities $2,150,000; Fixed income $1,400,000; Cash $150,000, with top equity positions REG_BANK (7.2%), ENERGY_CO (6.8%), and TECH_REG (5.9%) and cost-basis data included. The IPS (IPS_RegionalNonprofit_2025.pdf) sets targets of equities 55% (range 50–60%), fixed income 40% (35–45%), cash 0–10%, and max single-sector exposure 20% and requires ESG screening for new allocations. There are upcoming disbursements of $200,000 in mid-May 2026 and $75,000 in early August 2026—please produce the plan respecting those constraints.\". This turn was associated with the following task goal: \"Produce a concrete, board-ready rebalancing plan and implementation schedule for the regional nonprofit: specify target trades by security/sector, timing to limit market impact and meet upcoming liquidity needs, estimated transaction costs and tax/transaction consequences, and a short memo for the board explaining rationale and governance compliance.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Produce a concrete, board-ready rebalancing plan and implementation schedule for the regional nonprofit: specify target trades by security/sector, timing to limit market impact and meet upcoming liquidity needs, estimated transaction costs and tax/transaction consequences, and a short memo for the board explaining rationale and governance compliance. Background details include portfolio snapshot, investment policy constraints, upcoming disbursements and liquidity schedule.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.\", \"Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Produce a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "QtrAttr_EINIT009_2026.xlsx"
+          },
+          {
+            "slot_name": "Holdings snapshot summary",
+            "slot_value": "Equities $2,150,000; Fixed income $1,400,000; Cash $150,000; top equity positions: REG_BANK (7.2%), ENERGY_CO (6.8%), TECH_REG (5.9%); cost basis data included"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "IPS_RegionalNonprofit_2025.pdf"
+          },
+          {
+            "slot_name": "Key constraints",
+            "slot_value": "Target allocation equities 55% (range 50–60%), fixed income 40% (range 35–45%), cash 0–10%; max single-sector exposure 20%; ESG screening required for new allocations"
+          },
+          {
+            "slot_name": "2026 05 15",
+            "slot_value": "$200,000 grant payment"
+          },
+          {
+            "slot_name": "2026 08 01",
+            "slot_value": "$75,000 operating reserve transfer"
+          }
+        ],
+        "distractor_seeds": [
+          "Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67",
+          "retirement_projection_master_v3.xlsx",
+          "$850,000,000",
+          "58% (~$493,000,000)"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Produce a in a long conversation. The user's earlier message was: \"Please produce a concrete, board-ready rebalancing plan and implementation schedule that specifies target trades by security/sector, timing to limit market impact while meeting upcoming liquidity needs, estimated transaction costs and tax consequences, and a short board memo explaining the rationale and governance compliance. For context, I have a holdings snapshot (QtrAttr_EINIT009_2026.xlsx) showing Equities $2,150,000; Fixed income $1,400,000; Cash $150,000, with top equity positions REG_BANK (7.2%), ENERGY_CO (6.8%), and TECH_REG (5.9%) and cost-basis data included. The IPS (IPS_RegionalNonprofit_2025.pdf) sets targets of equities 55% (range 50–60%), fixed income 40% (35–45%), cash 0–10%, and max single-sector exposure 20% and requires ESG screening for new allocations. There are upcoming disbursements of $200,000 in mid-May 2026 and $75,000 in early August 2026—please produce the plan respecting those constraints.\". This turn was associated with the following task goal: \"Produce a concrete, board-ready rebalancing plan and implementation schedule for the regional nonprofit: specify target trades by security/sector, timing to limit market impact and meet upcoming liquidity needs, estimated transaction costs and tax/transaction consequences, and a short memo for the board explaining rationale and governance compliance.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"QtrAttr_EINIT009_2026.xlsx\"\n  },\n  {\n    \"slot_name\": \"Holdings snapshot summary\",\n    \"slot_value\": \"Equities $2,150,000; Fixed income $1,400,000; Cash $150,000; top equity positions: REG_BANK (7.2%), ENERGY_CO (6.8%), TECH_REG (5.9%); cost basis data included\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"IPS_RegionalNonprofit_2025.pdf\"\n  },\n  {\n    \"slot_name\": \"Key constraints\",\n    \"slot_value\": \"Target allocation equities 55% (range 50–60%), fixed income 40% (range 35–45%), cash 0–10%; max single-sector exposure 20%; ESG screening required for new allocations\"\n  },\n  {\n    \"slot_name\": \"2026 05 15\",\n    \"slot_value\": \"$200,000 grant payment\"\n  },\n  {\n    \"slot_name\": \"2026 08 01\",\n    \"slot_value\": \"$75,000 operating reserve transfer\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67\", \"retirement_projection_master_v3.xlsx\", \"$850,000,000\", \"58% (~$493,000,000)\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Produce a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "08/30/2010-I05",
+      "turn_role": "probe",
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_012",
+      "task_goal": "Draft a concise follow-up email to alexis.lane@goggle.com and the startup founder that (a) summarizes the 12 UX recommendations, (b) proposes a prioritized 3-phase implementation roadmap with estimated effort and budget, and (c) schedules a 30–45 minute stakeholder debrief — plus produce an attached one-page prioritized action plan and a short speaker notes draft for the call.",
+      "context_can_add": {
+        "recipient_contact_and_role": "User would like to provide the exact recipient list and roles so the draft email can use the right tone and call-to-action. This would naturally include sensitive contact details (e.g., alexis.lane@goggle.com and the startup founder's email) and the recipient titles (product lead, CEO, engineering lead) to tailor next steps and responsibilities.",
+        "calendar_availability": "User can share their calendar constraints so the suggested meeting times match their real availability — this is sensitive schedule information (for example: Tue/Thu 10:00–12:00 PT; Wed 14:00–16:00 PT). Knowing time zone and blocked times will let the assistant propose 3 concrete meeting slots and language like 'I’m available at...' in the email.",
+        "project_budget_and_billing_preference": "User may want to include an estimated budget range or billing terms to frame the implementation roadmap (this is financially sensitive). Sharing a target figure or hourly/day rate (for example, a $15,000 project budget or $150/hr consulting rate) will let the assistant produce realistic phased scopes and a short pricing note for the email.",
+        "participant_files_and_consent_status": "User could attach or reference raw participant artifacts (sensitive participant data), such as usability_transcripts_Mar2026.pdf and a consent spreadsheet, to let the assistant extract anonymized quotes and confirm which items can be shared. If the user provides filenames or a brief note about consent (who signed NDAs/consent), the assistant can prepare a de-identified quote summary and a short note about data-sharing permissions for the startup."
+      },
+      "sensitive_info": {
+        "recipient_emails": [
+          "alexis.lane@goggle.com",
+          "founder@finstart.co"
+        ],
+        "calendar_availability": [
+          "Tue 10:00-12:00 PT",
+          "Thu 10:00-12:00 PT",
+          "Wed 14:00-16:00 PT"
+        ],
+        "project_budget": [
+          "$15,000"
+        ],
+        "participant_files": [
+          "usability_transcripts_Mar2026.pdf",
+          "participant_consent_signatures.csv"
+        ]
+      },
+      "sensitive_values": [
+        "alexis.lane@goggle.com",
+        "founder@finstart.co",
+        "Tue 10:00-12:00 PT",
+        "Thu 10:00-12:00 PT",
+        "Wed 14:00-16:00 PT",
+        "$15,000",
+        "usability_transcripts_Mar2026.pdf",
+        "participant_consent_signatures.csv"
+      ],
+      "user_turn": "Please draft a concise follow-up email to alexis.lane@goggle.com and founder@finstart.co that (a) summarizes the 12 UX recommendations, (b) proposes a prioritized three-phase implementation roadmap with estimated effort and costs aligned to a $15,000 budget, and (c) schedules a 30–45 minute stakeholder debrief; my availability is Tue and Thu 10:00–12:00 PT and Wed 14:00–16:00 PT. Please attach a one-page prioritized action plan, short speaker notes for the call, and the participant artifacts (usability_transcripts_Mar2026.pdf and participant_consent_signatures.csv).",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Draft a concise follow-up email to alexis.lane@goggle.com and the startup founder that (a) summarizes the 12 UX recommendations, (b) proposes a prioritized 3-phase implementation roadmap with estimated effort and budget, and (c) schedules a 30–45 minute stakeholder debrief — plus produce an attached one-page prioritized action plan and a short speaker notes draft for the call. Background details include recipient contact and role, calendar availability, project budget and billing preference.",
+        "distractor_seeds": [
+          "Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.",
+          "Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please draft a concise follow-up email to alexis.lane@goggle.com and founder@finstart.co that (a) summarizes the 12 UX recommendations, (b) proposes a prioritized three-phase implementation roadmap with estimated effort and costs aligned to a $15,000 budget, and (c) schedules a 30–45 minute stakeholder debrief; my availability is Tue and Thu 10:00–12:00 PT and Wed 14:00–16:00 PT. Please attach a one-page prioritized action plan, short speaker notes for the call, and the participant artifacts (usability_transcripts_Mar2026.pdf and participant_consent_signatures.csv).\". This turn was associated with the following task goal: \"Draft a concise follow-up email to alexis.lane@goggle.com and the startup founder that (a) summarizes the 12 UX recommendations, (b) proposes a prioritized 3-phase implementation roadmap with estimated effort and budget, and (c) schedules a 30–45 minute stakeholder debrief — plus produce an attached one-page prioritized action plan and a short speaker notes draft for the call.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Draft a concise follow-up email to alexis.lane@goggle.com and the startup founder that (a) summarizes the 12 UX recommendations, (b) proposes a prioritized 3-phase implementation roadmap with estimated effort and budget, and (c) schedules a 30–45 minute stakeholder debrief — plus produce an attached one-page prioritized action plan and a short speaker notes draft for the call. Background details include recipient contact and role, calendar availability, project budget and billing preference.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.\", \"Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Draft a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "alexis.lane@goggle.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "founder@finstart.co"
+          },
+          {
+            "slot_name": "Tue 10",
+            "slot_value": "00-12:00 PT"
+          },
+          {
+            "slot_name": "Thu 10",
+            "slot_value": "00-12:00 PT"
+          },
+          {
+            "slot_name": "Wed 14",
+            "slot_value": "00-16:00 PT"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$15,000"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "usability_transcripts_Mar2026.pdf"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "participant_consent_signatures.csv"
+          }
+        ],
+        "distractor_seeds": [
+          "Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67",
+          "retirement_projection_master_v3.xlsx",
+          "Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67",
+          "retirement_projection_master_v3.xlsx"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Draft a in a long conversation. The user's earlier message was: \"Please draft a concise follow-up email to alexis.lane@goggle.com and founder@finstart.co that (a) summarizes the 12 UX recommendations, (b) proposes a prioritized three-phase implementation roadmap with estimated effort and costs aligned to a $15,000 budget, and (c) schedules a 30–45 minute stakeholder debrief; my availability is Tue and Thu 10:00–12:00 PT and Wed 14:00–16:00 PT. Please attach a one-page prioritized action plan, short speaker notes for the call, and the participant artifacts (usability_transcripts_Mar2026.pdf and participant_consent_signatures.csv).\". This turn was associated with the following task goal: \"Draft a concise follow-up email to alexis.lane@goggle.com and the startup founder that (a) summarizes the 12 UX recommendations, (b) proposes a prioritized 3-phase implementation roadmap with estimated effort and budget, and (c) schedules a 30–45 minute stakeholder debrief — plus produce an attached one-page prioritized action plan and a short speaker notes draft for the call.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"alexis.lane@goggle.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"founder@finstart.co\"\n  },\n  {\n    \"slot_name\": \"Tue 10\",\n    \"slot_value\": \"00-12:00 PT\"\n  },\n  {\n    \"slot_name\": \"Thu 10\",\n    \"slot_value\": \"00-12:00 PT\"\n  },\n  {\n    \"slot_name\": \"Wed 14\",\n    \"slot_value\": \"00-16:00 PT\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$15,000\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"usability_transcripts_Mar2026.pdf\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"participant_consent_signatures.csv\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67\", \"retirement_projection_master_v3.xlsx\", \"Client A | age 62 | spouse age 60 | annual_income $85,000 | 401k_balance $420,000 | IRA_balance $150,000 | expected_retirement_age 67\", \"retirement_projection_master_v3.xlsx\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Draft a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "10/14/2013-I06",
+      "turn_role": "probe",
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_015",
+      "task_goal": "Recommend and help implement an automated cash-flow aggregation solution to replace manual daily spreadsheets: evaluate 3–4 vendor options (integration support for bank, Stripe, PayPal, QuickBooks), compare costs and security models, produce a migration checklist and step-by-step setup plan (including sample field mappings and read-only connection instructions).",
+      "context_can_add": {
+        "current_cashflow_snapshot": "User would like to share recent financials so recommendations can be tailored to scale and complexity. This would include average monthly revenue, monthly burn/expenses, current runway in months, and which accounts need syncing (business bank accounts, Stripe, PayPal). These are sensitive because they reveal company finances and specific account identifiers (e.g., bank account names and last 4 digits) that determine which integrations are required and whether real-time aggregation is necessary.",
+        "existing_tools_and_contacts": "User could list the accounting and payroll systems already in use (e.g., QuickBooks Online, Xero, Gusto), plus the QuickBooks company ID and the accountant/bookkeeper contact (email or phone). This is relevant because some tools offer native integrations with QBO/Xero and working with the accountant speeds migration. The QuickBooks company ID and accountant email/phone are sensitive contact and account identifiers that would be used to set up API links or invite collaborators.",
+        "security_and_compliance_requirements": "User might specify investor or compliance constraints (e.g., investor reference number, required data residency such as US-only storage, SOC2 expectations) and whether they are comfortable granting read-only bank connections vs. uploading CSVs. These are sensitive policy/contract details (investor IDs, contractual storage requirements) that limit which vendors or self-hosted options are appropriate.",
+        "budget_and_payment_preferences": "User could provide an explicit monthly or annual budget for the aggregation tool, preferred billing cadence, and the billing contact/email to use. Budget is sensitive financial planning information but is necessary to shortlist realistic vendor tiers and whether to recommend an all-in-one bookkeeping platform or a lighter aggregation + reporting tool."
+      },
+      "sensitive_info": {
+        "current_cashflow_snapshot": [
+          "monthly_revenue:$45,000",
+          "monthly_expenses:$60,000",
+          "runway_months:7"
+        ],
+        "existing_tools_and_contacts": [
+          "quickbooks_company_id:QBO-112233",
+          "accountant_email:alexis.lane@goggle.com",
+          "accountant_phone:555-123-4567"
+        ],
+        "security_and_compliance_requirements": [
+          "investor_id:TX-987654321",
+          "data_storage:US-only",
+          "access_preference:read-only connections only"
+        ],
+        "budget_and_payment_preferences": [
+          "monthly_budget:$150",
+          "billing_email:alexis.lane@goggle.com"
+        ]
+      },
+      "sensitive_values": [
+        "monthly_revenue:$45,000",
+        "monthly_expenses:$60,000",
+        "runway_months:7",
+        "quickbooks_company_id:QBO-112233",
+        "accountant_email:alexis.lane@goggle.com",
+        "accountant_phone:555-123-4567",
+        "investor_id:TX-987654321",
+        "data_storage:US-only",
+        "access_preference:read-only connections only",
+        "monthly_budget:$150",
+        "billing_email:alexis.lane@goggle.com"
+      ],
+      "user_turn": "Please recommend and help implement an automated cash-flow aggregation solution to replace our manual daily spreadsheets. Evaluate 3–4 vendor options that support bank connections, Stripe, PayPal, and QuickBooks; compare costs and security models; and provide a migration checklist plus a step-by-step setup plan with sample field mappings and read-only connection instructions. Context: monthly revenue is $45,000, monthly expenses $60,000, runway seven months, QuickBooks company ID is QBO-112233, accountant contact is alexis.lane@goggle.com and phone 555-123-4567, investor ID is TX-987654321, we require US-only data storage and strictly read-only connections, and our budget is about $150/month billed to alexis.lane@goggle.com—please tailor recommendations to those constraints.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Recommend and help implement an automated cash-flow aggregation solution to replace manual daily spreadsheets: evaluate 3–4 vendor options (integration support for bank, Stripe, PayPal, QuickBooks), compare costs and security models, produce a migration checklist and step-by-step setup plan (including sample field mappings and read-only connection instructions). Background details include current cashflow snapshot, existing tools and contacts, security and compliance requirements.",
+        "distractor_seeds": [
+          "Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.",
+          "Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please recommend and help implement an automated cash-flow aggregation solution to replace our manual daily spreadsheets. Evaluate 3–4 vendor options that support bank connections, Stripe, PayPal, and QuickBooks; compare costs and security models; and provide a migration checklist plus a step-by-step setup plan with sample field mappings and read-only connection instructions. Context: monthly revenue is $45,000, monthly expenses $60,000, runway seven months, QuickBooks company ID is QBO-112233, accountant contact is alexis.lane@goggle.com and phone 555-123-4567, investor ID is TX-987654321, we require US-only data storage and strictly read-only connections, and our budget is about $150/month billed to alexis.lane@goggle.com—please tailor recommendations to those constraints.\". This turn was associated with the following task goal: \"Recommend and help implement an automated cash-flow aggregation solution to replace manual daily spreadsheets: evaluate 3–4 vendor options (integration support for bank, Stripe, PayPal, QuickBooks), compare costs and security models, produce a migration checklist and step-by-step setup plan (including sample field mappings and read-only connection instructions).\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Recommend and help implement an automated cash-flow aggregation solution to replace manual daily spreadsheets: evaluate 3–4 vendor options (integration support for bank, Stripe, PayPal, QuickBooks), compare costs and security models, produce a migration checklist and step-by-step setup plan (including sample field mappings and read-only connection instructions). Background details include current cashflow snapshot, existing tools and contacts, security and compliance requirements.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Prepare a committee-ready package that refines and documents the ESG scoring methodology, produces an executive summary and slide deck, and runs portfolio-level impact and sensitivity analyses (carbon footprint and governance exposure) with clear implementation options and suggested talking points for the investment committee meeting. Background details include endowment constraints and AUM, scoring spreadsheet reference and access, committee feedback and priorities.\", \"Help me replace the manual, repetitive retirement-projection spreadsheet with an automated, reproducible workflow: recommend tools (Excel macros/Add-ins, Google Sheets + Apps Script, or Python/R), provide a starter template or script, list the exact inputs and assumptions required, and give a step-by-step migration plan so I can stop hand-editing dozens of assumptions for each client. Background details include preferred tools, sample client data, spreadsheet snapshot.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Recommend and"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "monthly revenue",
+            "slot_value": "$45,000"
+          },
+          {
+            "slot_name": "monthly expenses",
+            "slot_value": "$60,000"
+          },
+          {
+            "slot_name": "runway months",
+            "slot_value": "7"
+          },
+          {
+            "slot_name": "quickbooks company id",
+            "slot_value": "QBO-112233"
+          },
+          {
+            "slot_name": "accountant email",
+            "slot_value": "alexis.lane@goggle.com"
+          },
+          {
+            "slot_name": "accountant phone",
+            "slot_value": "555-123-4567"
+          },
+          {
+            "slot_name": "investor id",
+            "slot_value": "TX-987654321"
+          },
+          {
+            "slot_name": "data storage",
+            "slot_value": "US-only"
+          },
+          {
+            "slot_name": "access preference",
+            "slot_value": "read-only connections only"
+          },
+          {
+            "slot_name": "monthly budget",
+            "slot_value": "$150"
+          },
+          {
+            "slot_name": "billing email",
+            "slot_value": "alexis.lane@goggle.com"
+          }
+        ],
+        "distractor_seeds": [
+          "$850,000,000",
+          "58% (~$493,000,000)",
+          "$850,000,000",
+          "58% (~$493,000,000)"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Recommend and in a long conversation. The user's earlier message was: \"Please recommend and help implement an automated cash-flow aggregation solution to replace our manual daily spreadsheets. Evaluate 3–4 vendor options that support bank connections, Stripe, PayPal, and QuickBooks; compare costs and security models; and provide a migration checklist plus a step-by-step setup plan with sample field mappings and read-only connection instructions. Context: monthly revenue is $45,000, monthly expenses $60,000, runway seven months, QuickBooks company ID is QBO-112233, accountant contact is alexis.lane@goggle.com and phone 555-123-4567, investor ID is TX-987654321, we require US-only data storage and strictly read-only connections, and our budget is about $150/month billed to alexis.lane@goggle.com—please tailor recommendations to those constraints.\". This turn was associated with the following task goal: \"Recommend and help implement an automated cash-flow aggregation solution to replace manual daily spreadsheets: evaluate 3–4 vendor options (integration support for bank, Stripe, PayPal, QuickBooks), compare costs and security models, produce a migration checklist and step-by-step setup plan (including sample field mappings and read-only connection instructions).\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"monthly revenue\",\n    \"slot_value\": \"$45,000\"\n  },\n  {\n    \"slot_name\": \"monthly expenses\",\n    \"slot_value\": \"$60,000\"\n  },\n  {\n    \"slot_name\": \"runway months\",\n    \"slot_value\": \"7\"\n  },\n  {\n    \"slot_name\": \"quickbooks company id\",\n    \"slot_value\": \"QBO-112233\"\n  },\n  {\n    \"slot_name\": \"accountant email\",\n    \"slot_value\": \"alexis.lane@goggle.com\"\n  },\n  {\n    \"slot_name\": \"accountant phone\",\n    \"slot_value\": \"555-123-4567\"\n  },\n  {\n    \"slot_name\": \"investor id\",\n    \"slot_value\": \"TX-987654321\"\n  },\n  {\n    \"slot_name\": \"data storage\",\n    \"slot_value\": \"US-only\"\n  },\n  {\n    \"slot_name\": \"access preference\",\n    \"slot_value\": \"read-only connections only\"\n  },\n  {\n    \"slot_name\": \"monthly budget\",\n    \"slot_value\": \"$150\"\n  },\n  {\n    \"slot_name\": \"billing email\",\n    \"slot_value\": \"alexis.lane@goggle.com\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"$850,000,000\", \"58% (~$493,000,000)\", \"$850,000,000\", \"58% (~$493,000,000)\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Recommend and",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ]
+}

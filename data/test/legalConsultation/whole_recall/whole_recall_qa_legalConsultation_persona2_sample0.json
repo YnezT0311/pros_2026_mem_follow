@@ -1,0 +1,440 @@
+{
+  "source_rendered": "data/test/legalConsultation/specs/conversation_legalConsultation_persona2_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/legalConsultation/specs/conversation_legalConsultation_persona2_sample0.memory_control.json",
+  "source_conversation": "data/output/legalConsultation/conversation_legalConsultation_persona2_sample0.json",
+  "model": "gpt-5-mini",
+  "items": [
+    {
+      "timestamp": "12/29/2025-I06",
+      "turn_role": "key",
+      "identifier_label": "Settlement consolidation",
+      "user_turn": "Please consolidate the six memos into a prioritized action plan: create a one-page standardized settlement-options template and draft client follow-up emails and negotiation talking points with proposed settlement ranges. Here are the client contacts and schedules: Maria Lopez <maria.lopez@lopezcafe.com>, 555-0123, prefers Tue/Thu mornings 9–11am; David Park <david.park@parkhandyman.com>, 555-6789, prefers afternoons after 2pm; Sanjay Patel <sanjay@patelprintco.com>, 555-4410, flexible. Their settlement authorities and budgets: Lopez Café (Case A): $25,000 max, retainer balance $4,200; Park Handyman (Case B): $10,000 cap without board approval, can authorize $7,500 immediately; Patel Print Co (Case C): target $50,000, walk-away threshold $100,000. Opposing party contacts and references include Riverton Supply LLC with opposing counsel David Chen <dchen@rslaw.com> (disputed Sales Agreement §7.1; Exhibit A) and Broadway Leasing Co. with opposing counsel Ellen Morse <emorse@broadwaylaw.com> (Lease Agreement §12.2; Exhibit B). Please produce the template, tailored follow-up emails to each client with proposed call windows, and negotiation talking points and ranges for each matter.",
+      "task_goal": "Consolidate the six client memos into a prioritized action plan and produce: (1) a one-page standardized settlement-options template to send to clients, (2) draft client follow-up emails to schedule calls, and (3) negotiation talking points and proposed settlement ranges for each case.",
+      "rendered": {
+        "identifier_label": "Settlement consolidation",
+        "question": "Was I asking you to consolidate multiple client memos into a prioritized action plan and to produce a one-page standardized settlement-options template, draft client follow-up emails to schedule calls, and negotiation talking points with proposed settlement ranges for each matter?",
+        "choices": {
+          "A": "Yes — you asked me to consolidate the client memos into a prioritized action plan and produce three deliverables: (1) a one-page standardized settlement-options template, (2) draft client follow-up emails to schedule calls, and (3) negotiation talking points with proposed settlement ranges for each matter.",
+          "B": "I don't recall the earlier message in detail; could you resend the request or a brief summary so I can confirm?",
+          "C": "You asked me to perform a financial audit of the firms and prepare tax filings for each client."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "not_remember": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "not_remember",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to consolidate the client memos into a prioritized action plan and produce three deliverables: (1) a one-page standardized settlement-options template, (2) draft client follow-up emails to schedule calls, and (3) negotiation talking points with proposed settlement ranges for each matter."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You asked me to perform a financial audit of the firms and prepare tax filings for each client."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't recall the earlier message in detail; could you resend the request or a brief summary so I can confirm?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to consolidate the client memos into a prioritized action plan and produce three deliverables: (1) a one-page standardized settlement-options template, (2) draft client follow-up emails to schedule calls, and (3) negotiation talking points with proposed settlement ranges for each matter."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don't recall the earlier message in detail; could you resend the request or a brief summary so I can confirm?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "You asked me to perform a financial audit of the firms and prepare tax filings for each client."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "12/29/2025-I06"
+        ],
+        "rationale": "The label 'Settlement consolidation' directly matches the task_goal and user_turn at 12/29/2025-I06, which explicitly asks to 'Consolidate the six client memos into a prioritized action plan' and produce a one-page settlement-options template, client follow-up emails, and negotiation talking points with proposed settlement ranges. Other candidate turns involve related subjects (research-to-client package, negotiation practice, hiring vendors, clinic materials, internal memo) but do not request consolidation of multiple memos into settlement templates and client communications, so they are not natural matches."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "02/12/2026-I02",
+      "turn_role": "key",
+      "identifier_label": "Warranty package",
+      "user_turn": "I need this research turned into a client-ready package for Acme Manufacturing v. BrightHome LLC, Case No. 2026-CV-0142 (Alameda County Superior Court). The pre-mediation submission is due in mid-May at 9:00 AM PST. The client has a $25,000 cap for litigation-related work and will commit up to $5,000 for settlement negotiation only. Here is the relevant contract excerpt: \"Seller warrants that the Product will be free from defects in materials and workmanship for a period of 24 months from delivery. Remedies are limited to repair or replacement at Seller's option. Seller disclaims all other warranties, including implied warranties of merchantability and fitness.\" Please produce: (1) a one-page executive summary of key holdings and likely outcomes tailored to Alameda County practice, (2) a prioritized list of recommended contract clause revisions and negotiation/litigation options that fit the client's budget and risk tolerance, and (3) a draft client email to Maria Espinoza and a Q&A checklist they can use before the pre-mediation submission.",
+      "task_goal": "Convert the three-day warranty-precedent research memo into a client-ready package: a one-page executive summary of the key holdings and likely outcomes, a prioritized list of recommended contract clause revisions and negotiation/litigation options, and a draft client email and Q&A checklist to prepare for the next call or mediation.",
+      "rendered": {
+        "identifier_label": "Warranty package",
+        "question": "Was I asking you to prepare a client-ready package based on my warranty-precedent research memo?",
+        "choices": {
+          "A": "I don't recall the earlier detail — could you remind me what you wanted me to prepare from your research memo?",
+          "B": "Yes — you asked me to convert your warranty-precedent research memo into a client-ready package, including a one-page executive summary of key holdings and likely outcomes, a prioritized list of recommended contract clause revisions and negotiation/litigation options, and a draft client email plus a Q&A checklist.",
+          "C": "No — you asked me to draft a new complaint and file it in court."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to convert your warranty-precedent research memo into a client-ready package, including a one-page executive summary of key holdings and likely outcomes, a prioritized list of recommended contract clause revisions and negotiation/litigation options, and a draft client email plus a Q&A checklist."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "No — you asked me to draft a new complaint and file it in court."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't recall the earlier detail — could you remind me what you wanted me to prepare from your research memo?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don't recall the earlier detail — could you remind me what you wanted me to prepare from your research memo?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to convert your warranty-precedent research memo into a client-ready package, including a one-page executive summary of key holdings and likely outcomes, a prioritized list of recommended contract clause revisions and negotiation/litigation options, and a draft client email plus a Q&A checklist."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "No — you asked me to draft a new complaint and file it in court."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "02/12/2026-I02"
+        ],
+        "rationale": "The 02/12/2026-I02 turn explicitly requests converting a warranty-precedent research memo into a client-ready package (executive summary, contract clause revisions, negotiation/litigation options, draft client email and Q&A checklist) and includes the warranty contract excerpt. No other candidate concerns warranty research or warranty-related deliverables."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "11/15/2025-I05",
+      "turn_role": "key",
+      "identifier_label": "tenant clinic materials",
+      "user_turn": "I want clinic-ready materials for future tenant-rights shifts — I'm the supervising attorney, coordinator contact is alex.kim@goggle.com, 555-0123, and I have an example intake note with client initials M.J. and a redacted housing address. Please make a plain-language intake template, a two-page fact sheet on common tenant issues, a confidentiality/consent checklist, and a simple follow-up/referral workflow I can share with the coordinator and volunteers.",
+      "task_goal": "Create a set of practical, clinic-ready materials and procedures I can use at future tenant-rights pro bono shifts: a concise plain-language intake template, a two-page fact sheet for common tenant issues, a confidentiality/consent checklist, and a simple follow-up/referral workflow I can share with the clinic coordinator and volunteers.",
+      "rendered": {
+        "identifier_label": "tenant clinic materials",
+        "question": "Do you remember I asked you to prepare clinic-ready materials for tenant-rights pro bono shifts—a plain-language intake template, a two-page fact sheet on common tenant issues, a confidentiality/consent checklist, and a simple follow-up/referral workflow to share with the coordinator and volunteers?",
+        "choices": {
+          "A": "I don't have that earlier message available anymore. Could you remind me which clinic materials you wanted for the tenant-rights shifts so I can recreate them?",
+          "B": "Yes — you asked me to create practical, clinic-ready tenant-rights materials for future pro bono shifts: a concise plain-language intake template, a two-page fact sheet on common tenant issues, a confidentiality/consent checklist, and a simple follow-up/referral workflow to share with your coordinator and volunteers; you also noted your supervising-attorney role and provided an example intake note as background.",
+          "C": "No — you asked me to consolidate several client memos into a prioritized action plan and produce a one-page standardized settlement-options template, draft client follow-up emails to schedule calls, and negotiation talking points with proposed settlement ranges for each case."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to create practical, clinic-ready tenant-rights materials for future pro bono shifts: a concise plain-language intake template, a two-page fact sheet on common tenant issues, a confidentiality/consent checklist, and a simple follow-up/referral workflow to share with your coordinator and volunteers; you also noted your supervising-attorney role and provided an example intake note as background."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "No — you asked me to consolidate several client memos into a prioritized action plan and produce a one-page standardized settlement-options template, draft client follow-up emails to schedule calls, and negotiation talking points with proposed settlement ranges for each case."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier message available anymore. Could you remind me which clinic materials you wanted for the tenant-rights shifts so I can recreate them?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier message available anymore. Could you remind me which clinic materials you wanted for the tenant-rights shifts so I can recreate them?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to create practical, clinic-ready tenant-rights materials for future pro bono shifts: a concise plain-language intake template, a two-page fact sheet on common tenant issues, a confidentiality/consent checklist, and a simple follow-up/referral workflow to share with your coordinator and volunteers; you also noted your supervising-attorney role and provided an example intake note as background."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "No — you asked me to consolidate several client memos into a prioritized action plan and produce a one-page standardized settlement-options template, draft client follow-up emails to schedule calls, and negotiation talking points with proposed settlement ranges for each case."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "11/15/2025-I05"
+        ],
+        "rationale": "The label 'tenant clinic materials' directly matches the 11/15/2025-I05 turn, which requests clinic-ready materials for tenant-rights shifts (intake template, two-page fact sheet on common tenant issues, confidentiality/consent checklist, follow-up/referral workflow). No other candidate concerns tenant clinic materials."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "01/20/2026-I01",
+      "turn_role": "probe",
+      "identifier_label": "Severance negotiation plan",
+      "user_turn": "I have a real negotiation coming up with my employer, Greenfield Tech LLC — it's essentially a severance discussion and my target is $25,000. I recorded the roleplay and have the transcript (negotiation_roleplay_transcript.pdf) and feedback from my partner; my roleplay partner is alex.kim@goggle.com and their phone is 555-0123. I'm available to practice Tue/Thu 7–9 PM PST. Can you help me identify my BATNA and target terms, draft a one-page negotiation script and an opening offer, and give specific coaching on handling likely pushback and closing language?",
+      "task_goal": "Turn the skills I practiced in the weekend negotiation roleplay into a concrete plan and materials I can use for an upcoming real settlement negotiation: identify my BATNA and target terms, draft a one-page negotiation script and opening offer, and get coaching on handling likely pushback and closing language.",
+      "rendered": {
+        "identifier_label": "Severance negotiation plan",
+        "question": "Do you still have the work I asked for to turn my weekend negotiation roleplay into concrete materials for an upcoming settlement/severance negotiation—identify my BATNA and target terms, draft a one-page negotiation script and opening offer, and coach me on handling likely pushback and closing language?",
+        "choices": {
+          "A": "I don't have that earlier request in my memory anymore. Could you resend or summarize what you wanted me to prepare from the roleplay so I can pick up where we left off?",
+          "B": "I believe you wanted me to consolidate several client case memos into a prioritized action plan and produce a one‑page settlement‑options template to send to clients, plus draft client follow‑up emails to schedule calls and generate negotiation talking points and proposed settlement ranges for each case.",
+          "C": "Yes—I remember your request: turn the weekend negotiation roleplay into a concrete plan and materials for an upcoming settlement/severance negotiation by identifying your BATNA and target terms, drafting a one‑page negotiation script and an opening offer, and providing specific coaching on likely pushback and closing language, using your roleplay transcript and partner feedback as source materials."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "distractor_irrelevant": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "distractor_irrelevant",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes—I remember your request: turn the weekend negotiation roleplay into a concrete plan and materials for an upcoming settlement/severance negotiation by identifying your BATNA and target terms, drafting a one‑page negotiation script and an opening offer, and providing specific coaching on likely pushback and closing language, using your roleplay transcript and partner feedback as source materials."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "I believe you wanted me to consolidate several client case memos into a prioritized action plan and produce a one‑page settlement‑options template to send to clients, plus draft client follow‑up emails to schedule calls and generate negotiation talking points and proposed settlement ranges for each case."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier request in my memory anymore. Could you resend or summarize what you wanted me to prepare from the roleplay so I can pick up where we left off?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier request in my memory anymore. Could you resend or summarize what you wanted me to prepare from the roleplay so I can pick up where we left off?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "I believe you wanted me to consolidate several client case memos into a prioritized action plan and produce a one‑page settlement‑options template to send to clients, plus draft client follow‑up emails to schedule calls and generate negotiation talking points and proposed settlement ranges for each case."
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "Yes—I remember your request: turn the weekend negotiation roleplay into a concrete plan and materials for an upcoming settlement/severance negotiation by identifying your BATNA and target terms, drafting a one‑page negotiation script and an opening offer, and providing specific coaching on likely pushback and closing language, using your roleplay transcript and partner feedback as source materials."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "01/20/2026-I01"
+        ],
+        "rationale": "The label 'Severance negotiation plan' directly matches the user request in 01/20/2026-I01, which asks for turning a negotiation roleplay into a concrete plan for an upcoming severance/settlement negotiation (identify BATNA, one-page script, opening offer, and coaching). No other turns concern a severance negotiation."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "02/28/2026-I03",
+      "turn_role": "probe",
+      "identifier_label": "File organization project",
+      "user_turn": "I want to hire a vetted assistant or service to organize mixed paper and digital legal case files; I have a representative file, Smith v. Ortega (intake ID A1989-4321), and an initial cleanup budget of $1,200. Cloud admin Alex Kim (alex.kim@goggle.com, 555-0123) can grant access. Physical boxes are at 1234 Imaginary Lane, Fakesville, CA 98765. The archive includes limited PHI—medical records for two clients—so I need NDAs and background checks. Please provide vetted vendor recommendations with cost estimates, a security/NDAs plan for handling privileged material, and a step-by-step timeline to transfer and index ongoing matters without disrupting active cases.",
+      "task_goal": "Find and hire a vetted assistant or professional service to organize mixed paper and digital legal case files — get recommendations, cost estimates, a security/NDAs plan for handling privileged material, and a step-by-step timeline to transfer and index ongoing matters without disrupting active cases.",
+      "rendered": {
+        "identifier_label": "File organization project",
+        "question": "Was I asking you to help me hire a vetted assistant or professional service to organize my mixed paper and digital legal case files and to provide vendor recommendations, cost estimates, a security/NDAs plan for privileged material, and a step‑by‑step timeline to transfer and index ongoing matters without disrupting active cases?",
+        "choices": {
+          "A": "Yes — you asked for help finding and hiring a vetted assistant or service to organize your mixed paper and digital legal case files, plus vendor recommendations, cost estimates, a security/NDAs plan for handling privileged material, and a timeline to transfer and index ongoing matters without disrupting active cases.",
+          "B": "No — you were asking for help preparing litigation strategy and drafting motions for a particular case.",
+          "C": "I don't remember the earlier request clearly; could you remind me whether you wanted hiring and file-organization assistance or something different?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "distractor_irrelevant": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "distractor_irrelevant",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked for help finding and hiring a vetted assistant or service to organize your mixed paper and digital legal case files, plus vendor recommendations, cost estimates, a security/NDAs plan for handling privileged material, and a timeline to transfer and index ongoing matters without disrupting active cases."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "No — you were asking for help preparing litigation strategy and drafting motions for a particular case."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't remember the earlier request clearly; could you remind me whether you wanted hiring and file-organization assistance or something different?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked for help finding and hiring a vetted assistant or service to organize your mixed paper and digital legal case files, plus vendor recommendations, cost estimates, a security/NDAs plan for handling privileged material, and a timeline to transfer and index ongoing matters without disrupting active cases."
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "No — you were asking for help preparing litigation strategy and drafting motions for a particular case."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "I don't remember the earlier request clearly; could you remind me whether you wanted hiring and file-organization assistance or something different?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "02/28/2026-I03"
+        ],
+        "rationale": "The label 'File organization project' directly matches the task_goal and user_turn at 02/28/2026-I03, which explicitly requests hiring a vetted assistant/service to organize mixed paper and digital legal case files, vendor recommendations, cost estimates, a security/NDA plan for privileged material (including PHI), and a timeline to transfer and index matters. No other candidate turn concerns file organization."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "04/03/2026-I04",
+      "turn_role": "probe",
+      "identifier_label": "arbitration memo",
+      "user_turn": "I want to turn my one-page arbitration summary into a concise internal memo and a short slide outline for a 10–15 minute practice-group presentation. My supervising partner is alex.kim@goggle.com, 555-0123; please mark any case-specific details tied to T-2026-0897; Greenfield Properties v. Rivera for redaction if the memo is circulated firm-wide. The original file is ArbitrationPodcast_Summary.docx. Please draft the memo, a slide outline, and an optional email to alex.kim@goggle.com indicating redactions.",
+      "task_goal": "Turn my one-page podcast summary into a concise internal memo and a short slide outline for a 10–15 minute practice-group presentation; optionally draft an email to my supervising partner to circulate the memo and indicate which case-specific details should be redacted.",
+      "rendered": {
+        "identifier_label": "arbitration memo",
+        "question": "Was I asking you to convert my one-page arbitration podcast summary into a concise internal memo and a short slide outline for a practice-group presentation, and optionally to draft an email to my supervising partner about circulating the memo and indicating which case-specific details should be redacted?",
+        "choices": {
+          "A": "No — you asked me to draft a litigation timeline and prepare witness lists for an upcoming trial.",
+          "B": "I don't recall that specific earlier request. Could you resend or summarize it so I can proceed?",
+          "C": "Yes — you asked me to turn your one-page arbitration podcast summary into a concise internal memo and a short slide outline for a practice-group presentation, and optionally to draft an email to your supervising partner about circulating the memo and noting which case-specific details need redaction."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "not_remember": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "not_remember",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to turn your one-page arbitration podcast summary into a concise internal memo and a short slide outline for a practice-group presentation, and optionally to draft an email to your supervising partner about circulating the memo and noting which case-specific details need redaction."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "No — you asked me to draft a litigation timeline and prepare witness lists for an upcoming trial."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't recall that specific earlier request. Could you resend or summarize it so I can proceed?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "No — you asked me to draft a litigation timeline and prepare witness lists for an upcoming trial."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don't recall that specific earlier request. Could you resend or summarize it so I can proceed?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "Yes — you asked me to turn your one-page arbitration podcast summary into a concise internal memo and a short slide outline for a practice-group presentation, and optionally to draft an email to your supervising partner about circulating the memo and noting which case-specific details need redaction."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "04/03/2026-I04"
+        ],
+        "rationale": "The user request in 04/03/2026-I04 explicitly asks to turn a one-page arbitration summary (ArbitrationPodcast_Summary.docx) into an internal memo and slide outline and mentions case-specific redactions (T-2026-0897; Greenfield Properties v. Rivera), so the label 'arbitration memo' clearly refers to this turn."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

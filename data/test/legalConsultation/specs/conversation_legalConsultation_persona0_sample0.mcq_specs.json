@@ -1,0 +1,609 @@
+{
+  "source_sidecar": "tmp/construct_world_and_mcq.VmrnK8/legalConsultation/specs/conversation_legalConsultation_persona0_sample0.memory_control.json",
+  "source_conversation": "data/output/legalConsultation/conversation_legalConsultation_persona0_sample0.json",
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "03/02/2025-I01",
+      "03/22/2026-I02",
+      "09/10/2025-I03"
+    ],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "mcq_design_version": "v2_prompt_ready",
+  "key_turns": [
+    {
+      "timestamp": "03/02/2025-I01",
+      "turn_role": "key",
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_004",
+      "task_goal": "Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval.",
+      "context_can_add": {
+        "detailed_usability_findings": "User would like to share the summarized usability findings (specific sequencing issues, wording that confused volunteers, and recommended wording/flow changes) so the assistant can generate precise redline edits and sample language rather than high-level suggestions.",
+        "volunteer_transcripts_with_PII": "User could provide the raw volunteer transcripts or notes, which may include volunteer names (e.g., Anna Lopez, Marcus Reid) and brief personal examples they shared during testing. This is relevant to identify and strip or anonymize PII, preserve useful phrasing for anonymized quotes, and ensure consent/privacy language addresses what was captured during testing.",
+        "pilot_budget_and_funding_source": "User might disclose the pilot budget and its funding source (for example, $2,500 from a Discretionary Program Fund). Knowing the exact budget guides recommendations on tooling (paper vs digital), participant incentives, printing, and staff time allocation so the proposed pilot is realistic.",
+        "compliance_reviewer_contact": "User may provide the compliance reviewer or legal contact (name, email, phone — e.g., Maria Gonzalez, maria.gonzalez@legalclinic.org, (555) 987-6543) who will approve consent and data-handling text. This helps coordinate timelines, produce materials that meet reviewer expectations, and prepare a submission checklist for review."
+      },
+      "sensitive_info": {
+        "volunteer_names": [
+          "Anna Lopez",
+          "Marcus Reid",
+          "Priya Sharma"
+        ],
+        "pilot_budget": [
+          "$2,500",
+          "Discretionary Program Fund"
+        ],
+        "compliance_contact": [
+          "Maria Gonzalez",
+          "maria.gonzalez@legalclinic.org",
+          "(555) 987-6543"
+        ]
+      },
+      "sensitive_values": [
+        "Anna Lopez",
+        "Marcus Reid",
+        "Priya Sharma",
+        "$2,500",
+        "Discretionary Program Fund",
+        "Maria Gonzalez",
+        "maria.gonzalez@legalclinic.org",
+        "(555) 987-6543"
+      ],
+      "user_turn": "I need a finalized intake form and a pilot rollout package: use the usability-test feedback to produce a redlined form, concise consent/privacy wording that reflects what testing captured, staff facilitation notes, and a two-week pilot schedule with a budget and success metrics for internal approval. I can share summarized usability findings (sequencing issues, wording that confused volunteers, and my recommended wording/flow changes), and I may provide raw volunteer transcripts that include names like Anna Lopez, Marcus Reid, and Priya Sharma so you can show how you'd anonymize or strip PII and preserve useful phrasing for anonymized quotes. The pilot budget is $2,500 from the Discretionary Program Fund, and the compliance reviewer to approve consent and data-handling text is Maria Gonzalez at maria.gonzalez@legalclinic.org, (555) 987-6543—please incorporate that reviewer in the checklist.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.",
+        "distractor_seeds": [
+          "Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget.",
+          "Turn the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach/consent templates, schedule follow-up appointments with clients or partner organizations, and prepare any short-form documents (referral letters, emergency pleadings, safety plans) needed for the highest-priority cases. Background details include follow up contacts, priority case details, clinic document templates."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I need a finalized intake form and a pilot rollout package: use the usability-test feedback to produce a redlined form, concise consent/privacy wording that reflects what testing captured, staff facilitation notes, and a two-week pilot schedule with a budget and success metrics for internal approval. I can share summarized usability findings (sequencing issues, wording that confused volunteers, and my recommended wording/flow changes), and I may provide raw volunteer transcripts that include names like Anna Lopez, Marcus Reid, and Priya Sharma so you can show how you'd anonymize or strip PII and preserve useful phrasing for anonymized quotes. The pilot budget is $2,500 from the Discretionary Program Fund, and the compliance reviewer to approve consent and data-handling text is Maria Gonzalez at maria.gonzalez@legalclinic.org, (555) 987-6543—please incorporate that reviewer in the checklist.\". This turn was associated with the following task goal: \"Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget.\", \"Turn the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach/consent templates, schedule follow-up appointments with clients or partner organizations, and prepare any short-form documents (referral letters, emergency pleadings, safety plans) needed for the highest-priority cases. Background details include follow up contacts, priority case details, clinic document templates.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Prepare a"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "Anna Lopez"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Marcus Reid"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Priya Sharma"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$2,500"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Discretionary Program Fund"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Maria Gonzalez"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "maria.gonzalez@legalclinic.org"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "(555) 987-6543"
+          }
+        ],
+        "distractor_seeds": [
+          "Maria Lopez, (555) 234-5678, maria.lopez@example.org",
+          "Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org",
+          "Maria Lopez, (555) 234-5678, maria.lopez@example.org",
+          "Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Prepare a in a long conversation. The user's earlier message was: \"I need a finalized intake form and a pilot rollout package: use the usability-test feedback to produce a redlined form, concise consent/privacy wording that reflects what testing captured, staff facilitation notes, and a two-week pilot schedule with a budget and success metrics for internal approval. I can share summarized usability findings (sequencing issues, wording that confused volunteers, and my recommended wording/flow changes), and I may provide raw volunteer transcripts that include names like Anna Lopez, Marcus Reid, and Priya Sharma so you can show how you'd anonymize or strip PII and preserve useful phrasing for anonymized quotes. The pilot budget is $2,500 from the Discretionary Program Fund, and the compliance reviewer to approve consent and data-handling text is Maria Gonzalez at maria.gonzalez@legalclinic.org, (555) 987-6543—please incorporate that reviewer in the checklist.\". This turn was associated with the following task goal: \"Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Anna Lopez\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Marcus Reid\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Priya Sharma\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$2,500\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Discretionary Program Fund\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Maria Gonzalez\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"maria.gonzalez@legalclinic.org\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"(555) 987-6543\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Maria Lopez, (555) 234-5678, maria.lopez@example.org\", \"Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org\", \"Maria Lopez, (555) 234-5678, maria.lopez@example.org\", \"Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Prepare a",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "03/22/2026-I02",
+      "turn_role": "key",
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_005",
+      "task_goal": "Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff.",
+      "context_can_add": {
+        "sample_client_record": "User could share a redacted or full example intake entry (e.g., client name, DOB, phone, address, case number, brief issue). This lets me map template fields to real data, set validation rules, and produce example-generated documents to test edge cases. Note: sharing would include sensitive PII such as names, phone numbers, addresses, and case identifiers.",
+        "cms_integration_details": "User could provide the case-management system name, field schema, or API details (base URL, example endpoints, and which fields are required on their side). That information is needed to produce an exact field-to-field mapping, sample API payloads, and step-by-step integration instructions. Sharing may include sensitive technical details like internal endpoints or API keys/credentials.",
+        "pilot_timeline_and_budget": "User could specify pilot constraints such as target go-live date, staff availability windows, and the allocated budget (e.g., number of weeks and dollar amount). This will guide recommendations on what to prioritize, how much automation to include in the first release, and realistic training time. The budget figure and schedule are internal-sensitive details.",
+        "compliance_requirements": "User could list required privacy/regulatory constraints (e.g., data residency, encryption-at-rest, retention limits, or whether intake will include health/legal-vulnerability details). This will guide safe defaults for data handling, suggested redaction/encryption rules, and whether to avoid storing certain fields in the platform."
+      },
+      "sensitive_info": {
+        "sample_client_record": [
+          "Maria Gonzalez; DOB 1987-04-12; (555) 012-3456; 1234 University Lane, Townsville, TS 12345; Case #TN-2026-045; issue: eviction defense"
+        ],
+        "cms_api_details": [
+          "CaseFlow Pro API base: https://api.caseflowpro.internal/v1; example endpoint POST /clients; example field names: first_name, last_name, dob, contact.phone, contact.address; API key (test): sk_test_9a8b7c6d5e4f3g2h1i0j"
+        ],
+        "pilot_budget": [
+          "$8,500 allocated for a 4-week pilot (Innovation Fund line item IF-22); target go-live: 2026-05-15"
+        ]
+      },
+      "sensitive_values": [
+        "Maria Gonzalez; DOB 1987-04-12; (555) 012-3456; 1234 University Lane, Townsville, TS 12345; Case #TN-2026-045; issue: eviction defense",
+        "CaseFlow Pro API base: https://api.caseflowpro.internal/v1; example endpoint POST /clients; example field names: first_name, last_name, dob, contact.phone, contact.address; API key (test): sk_test_9a8b7c6d5e4f3g2h1i0j",
+        "$8,500 allocated for a 4-week pilot (Innovation Fund line item IF-22); target go-live: 2026-05-15"
+      ],
+      "user_turn": "For the doc-automation pilot I need a refined intake template and a concrete integration and rollout plan.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget.",
+        "distractor_seeds": [
+          "Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.",
+          "Turn the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach/consent templates, schedule follow-up appointments with clients or partner organizations, and prepare any short-form documents (referral letters, emergency pleadings, safety plans) needed for the highest-priority cases. Background details include follow up contacts, priority case details, clinic document templates."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"For the doc-automation pilot I need a refined intake template and a concrete integration and rollout plan.\". This turn was associated with the following task goal: \"Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.\", \"Turn the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach/consent templates, schedule follow-up appointments with clients or partner organizations, and prepare any short-form documents (referral letters, emergency pleadings, safety plans) needed for the highest-priority cases. Background details include follow up contacts, priority case details, clinic document templates.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Refine the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "Maria Gonzalez; DOB 1987 04 12; (555) 012 3456; 1234 University Lane, Townsville, TS 12345; Case #TN 2026 045; issue",
+            "slot_value": "eviction defense"
+          },
+          {
+            "slot_name": "CaseFlow Pro API base",
+            "slot_value": "https://api.caseflowpro.internal/v1; example endpoint POST /clients; example field names: first_name, last_name, dob, contact.phone, contact.address; API key (test): sk_test_9a8b7c6d5e4f3g2h1i0j"
+          },
+          {
+            "slot_name": "$8,500 allocated for a 4 week pilot (Innovation Fund line item IF 22); target go live",
+            "slot_value": "2026-05-15"
+          }
+        ],
+        "distractor_seeds": [
+          "Anna Lopez",
+          "Marcus Reid",
+          "Anna Lopez",
+          "Marcus Reid"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Refine the in a long conversation. The user's earlier message was: \"For the doc-automation pilot I need a refined intake template and a concrete integration and rollout plan.\". This turn was associated with the following task goal: \"Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"Maria Gonzalez; DOB 1987 04 12; (555) 012 3456; 1234 University Lane, Townsville, TS 12345; Case #TN 2026 045; issue\",\n    \"slot_value\": \"eviction defense\"\n  },\n  {\n    \"slot_name\": \"CaseFlow Pro API base\",\n    \"slot_value\": \"https://api.caseflowpro.internal/v1; example endpoint POST /clients; example field names: first_name, last_name, dob, contact.phone, contact.address; API key (test): sk_test_9a8b7c6d5e4f3g2h1i0j\"\n  },\n  {\n    \"slot_name\": \"$8,500 allocated for a 4 week pilot (Innovation Fund line item IF 22); target go live\",\n    \"slot_value\": \"2026-05-15\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Anna Lopez\", \"Marcus Reid\", \"Anna Lopez\", \"Marcus Reid\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Refine the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "09/10/2025-I03",
+      "turn_role": "key",
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_012",
+      "task_goal": "Turn the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach/consent templates, schedule follow-up appointments with clients or partner organizations, and prepare any short-form documents (referral letters, emergency pleadings, safety plans) needed for the highest-priority cases.",
+      "context_can_add": {
+        "follow_up_contacts": "User would like to share a short client contact list collected at the clinic (names, phone numbers, emails) so the assistant can draft tailored outreach messages, consent language for follow-up, and a contact-scheduling script. This is sensitive because it contains personally identifiable contact details for real clinic clients.",
+        "priority_case_details": "User could provide brief de-identified but concrete details about 1–3 highest-priority cases (case type, property address or workplace, key dates, rent amount or income, any imminent deadlines or safety risks). These specifics are needed to prioritize tasks (e.g., emergency eviction response, domestic violence safety planning, immigration referral) and to draft immediate filings or referral letters. This will likely include private facts such as addresses, income figures, and immigration or health/safety status.",
+        "clinic_document_templates": "User may ask for or paste an example of the intake sheet or the clinic's consent/confidentiality language (non-sensitive if redacted). The assistant can convert that into polished templates (follow-up intake, limited-scope representation agreement, referral form) and advise on mandatory disclosures and recordkeeping.",
+        "volunteer_availability_and_coordinator": "User could provide their volunteer availability and the clinic coordinator's contact so the assistant can schedule follow-ups and create a rota for continued pro bono coverage. This includes potentially sensitive schedule details and a coordinator contact (name, email, phone) that the assistant would use to draft scheduling emails or calls."
+      },
+      "sensitive_info": {
+        "follow_up_contacts": [
+          "Maria Lopez, (555) 234-5678, maria.lopez@example.org",
+          "Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org"
+        ],
+        "priority_case_details": [
+          "Eviction case — Tenant: Jorge Ramirez; Property address: 456 Oak Street, Townsville, TS 12345; Landlord: Sunrise Properties; Lease signed 05/10/2023; Pay-or-vacate notice served: 03/20/2026; Rent: $950/month; Tenant monthly income: $1,800; Immigration status: pending application"
+        ],
+        "volunteer_availability_and_coordinator": [
+          "Clinic coordinator: Alex Kim, alex.kim@townsvillecc.org, (555) 012-3456; Clinic address: 1234 University Lane, Townsville, TS 12345; Volunteer availability: weekdays 18:00-21:00, Saturdays 09:00-12:00"
+        ]
+      },
+      "sensitive_values": [
+        "Maria Lopez, (555) 234-5678, maria.lopez@example.org",
+        "Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org",
+        "Eviction case — Tenant: Jorge Ramirez; Property address: 456 Oak Street, Townsville, TS 12345; Landlord: Sunrise Properties; Lease signed 05/10/2023; Pay-or-vacate notice served: 03/20/2026; Rent: $950/month; Tenant monthly income: $1,800; Immigration status: pending application",
+        "Clinic coordinator: Alex Kim, alex.kim@townsvillecc.org, (555) 012-3456; Clinic address: 1234 University Lane, Townsville, TS 12345; Volunteer availability: weekdays 18:00-21:00, Saturdays 09:00-12:00"
+      ],
+      "user_turn": "I want to convert the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach and consent templates, schedule follow-up appointments with clients or partner organizations, and prepare short-form documents for the highest-priority cases. I can share the clinic's contact list: Maria Lopez, (555) 234-5678, maria.lopez@example.org and Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org, and I have priority case details—an eviction case for Jorge Ramirez at 456 Oak Street, Townsville (pay-or-vacate notice served earlier this month; rent $950/month; tenant income $1,800; immigration status: pending)—plus clinic coordinator info: Alex Kim, alex.kim@townsvillecc.org, (555) 012-3456, and volunteer availability (weekdays 18:00–21:00, Saturdays 09:00–12:00). Please draft tailored outreach messages, consent language for follow-up, a scheduling script, and any emergency pleadings or referral letters needed.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach/consent templates, schedule follow-up appointments with clients or partner organizations, and prepare any short-form documents (referral letters, emergency pleadings, safety plans) needed for the highest-priority cases. Background details include follow up contacts, priority case details, clinic document templates.",
+        "distractor_seeds": [
+          "Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.",
+          "Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I want to convert the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach and consent templates, schedule follow-up appointments with clients or partner organizations, and prepare short-form documents for the highest-priority cases. I can share the clinic's contact list: Maria Lopez, (555) 234-5678, maria.lopez@example.org and Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org, and I have priority case details—an eviction case for Jorge Ramirez at 456 Oak Street, Townsville (pay-or-vacate notice served earlier this month; rent $950/month; tenant income $1,800; immigration status: pending)—plus clinic coordinator info: Alex Kim, alex.kim@townsvillecc.org, (555) 012-3456, and volunteer availability (weekdays 18:00–21:00, Saturdays 09:00–12:00). Please draft tailored outreach messages, consent language for follow-up, a scheduling script, and any emergency pleadings or referral letters needed.\". This turn was associated with the following task goal: \"Turn the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach/consent templates, schedule follow-up appointments with clients or partner organizations, and prepare any short-form documents (referral letters, emergency pleadings, safety plans) needed for the highest-priority cases.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach/consent templates, schedule follow-up appointments with clients or partner organizations, and prepare any short-form documents (referral letters, emergency pleadings, safety plans) needed for the highest-priority cases. Background details include follow up contacts, priority case details, clinic document templates.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.\", \"Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "Maria Lopez, (555) 234-5678, maria.lopez@example.org"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org"
+          },
+          {
+            "slot_name": "Eviction case — Tenant",
+            "slot_value": "Jorge Ramirez; Property address: 456 Oak Street, Townsville, TS 12345; Landlord: Sunrise Properties; Lease signed 05/10/2023; Pay-or-vacate notice served: 03/20/2026; Rent: $950/month; Tenant monthly income: $1,800; Immigration status: pending application"
+          },
+          {
+            "slot_name": "Clinic coordinator",
+            "slot_value": "Alex Kim, alex.kim@townsvillecc.org, (555) 012-3456; Clinic address: 1234 University Lane, Townsville, TS 12345; Volunteer availability: weekdays 18:00-21:00, Saturdays 09:00-12:00"
+          }
+        ],
+        "distractor_seeds": [
+          "Anna Lopez",
+          "Marcus Reid",
+          "Anna Lopez",
+          "Marcus Reid"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"I want to convert the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach and consent templates, schedule follow-up appointments with clients or partner organizations, and prepare short-form documents for the highest-priority cases. I can share the clinic's contact list: Maria Lopez, (555) 234-5678, maria.lopez@example.org and Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org, and I have priority case details—an eviction case for Jorge Ramirez at 456 Oak Street, Townsville (pay-or-vacate notice served earlier this month; rent $950/month; tenant income $1,800; immigration status: pending)—plus clinic coordinator info: Alex Kim, alex.kim@townsvillecc.org, (555) 012-3456, and volunteer availability (weekdays 18:00–21:00, Saturdays 09:00–12:00). Please draft tailored outreach messages, consent language for follow-up, a scheduling script, and any emergency pleadings or referral letters needed.\". This turn was associated with the following task goal: \"Turn the walk-in clinic intake work into an actionable follow-up plan: prioritize which clients need continued representation or referrals, draft outreach/consent templates, schedule follow-up appointments with clients or partner organizations, and prepare any short-form documents (referral letters, emergency pleadings, safety plans) needed for the highest-priority cases.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Maria Lopez, (555) 234-5678, maria.lopez@example.org\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Jorge Ramirez, (555) 345-6789, jorge.ramirez@example.org\"\n  },\n  {\n    \"slot_name\": \"Eviction case — Tenant\",\n    \"slot_value\": \"Jorge Ramirez; Property address: 456 Oak Street, Townsville, TS 12345; Landlord: Sunrise Properties; Lease signed 05/10/2023; Pay-or-vacate notice served: 03/20/2026; Rent: $950/month; Tenant monthly income: $1,800; Immigration status: pending application\"\n  },\n  {\n    \"slot_name\": \"Clinic coordinator\",\n    \"slot_value\": \"Alex Kim, alex.kim@townsvillecc.org, (555) 012-3456; Clinic address: 1234 University Lane, Townsville, TS 12345; Volunteer availability: weekdays 18:00-21:00, Saturdays 09:00-12:00\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Anna Lopez\", \"Marcus Reid\", \"Anna Lopez\", \"Marcus Reid\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ],
+  "probe_turns": [
+    {
+      "timestamp": "10/20/2024-I04",
+      "turn_role": "probe",
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_015",
+      "task_goal": "Synthesize the advisory group's feedback and convert the annotated research memo into a concise client-facing guidance memo that (a) summarizes controlling precedents and recommended legal strategies, (b) proposes prioritized next steps (litigation vs. administrative/negotiation), (c) includes draft template documents (notice letters/pleading language), and (d) produces 5–7 talking points and slides for an upcoming advisory/client meeting.",
+      "context_can_add": {
+        "advisory_feedback": "User can paste or summarize the consolidated comments from the small advisory group so the deliverable reconciles differing views and highlights any unresolved legal questions. This may include quoted emails or feedback from named colleagues (sensitive: colleague names and work emails), which would help me align tone, cite who supports each recommendation, and flag items requiring further research or client sign-off.",
+        "client_case_specifics": "User can provide the specific tenant/client facts (tenant name, unit/address, lease start/end dates, amounts claimed, key evidence like inspection reports or rent ledger). These facts are needed to tailor the memo, choose the most applicable precedents, and draft template letters/pleadings (sensitive: tenant name, street address, lease terms, monetary amounts).",
+        "settlement_budget_and_risk_tolerance": "User can state the client's settlement threshold and budget for continued litigation (e.g., maximum acceptable settlement, cap on outside counsel fees). This financial information guides whether to recommend aggressive litigation, early settlement, or alternative dispute resolution (sensitive: concrete monetary figures and internal budget constraints).",
+        "court_deadlines_and_case_reference": "User can supply any pending filing deadlines, court or agency names, and case numbers so the memo includes immediate, time-sensitive next steps and a filing calendar (sensitive: case number and exact deadline dates).",
+        "upcoming_meeting_schedule_and_attendees": "User can share the planned meeting date/time, length, and a list of attendees (internal and client-side) so I can tailor talking points and a slide deck to the audience and time available (sensitive: meeting times and attendee contact info/names)."
+      },
+      "sensitive_info": {
+        "advisory_commenter_email": [
+          "alex.cho@oldbridgelegal.com"
+        ],
+        "tenant_name": [
+          "María Santos"
+        ],
+        "unit_address": [
+          "432 Parkside Ave, Apt 2B, Townsville, TS 12345"
+        ],
+        "lease_period": [
+          "03/01/2020 - 02/28/2026"
+        ],
+        "claimed_amounts": [
+          "Security deposit $4,200",
+          "Unpaid rent $1,800",
+          "Repair charges $650"
+        ],
+        "settlement_threshold": [
+          "$6,500"
+        ],
+        "litigation_budget": [
+          "$18,000"
+        ],
+        "court_and_case_number": [
+          "Townsville Housing Court, Case No. THC-2026-00458"
+        ],
+        "next_filing_deadline": [
+          "2026-04-21"
+        ],
+        "meeting_time_and_attendees": [
+          "2026-04-15 10:00 AM ET; Attendees: Jen Park (Lead counsel, jen.park@oldbridgelegal.com), Carlos Reyes (Client rep, c.reyes@pmgmt.co)"
+        ]
+      },
+      "sensitive_values": [
+        "alex.cho@oldbridgelegal.com",
+        "María Santos",
+        "432 Parkside Ave, Apt 2B, Townsville, TS 12345",
+        "03/01/2020 - 02/28/2026",
+        "Security deposit $4,200",
+        "Unpaid rent $1,800",
+        "Repair charges $650",
+        "$6,500",
+        "$18,000",
+        "Townsville Housing Court, Case No. THC-2026-00458",
+        "2026-04-21",
+        "2026-04-15 10:00 AM ET; Attendees: Jen Park (Lead counsel, jen.park@oldbridgelegal.com), Carlos Reyes (Client rep, c.reyes@pmgmt.co)"
+      ],
+      "user_turn": "Please synthesize the advisory group's feedback and turn the annotated research memo into a concise client-facing guidance memo: summarize controlling precedents and recommended strategies, propose prioritized next steps (litigation v. administrative/negotiation), include draft template notice letters and pleading language, and produce 5–7 talking points and slides for an upcoming meeting. I can share advisory comments (including a comment from alex.cho@oldbridgelegal.com), and client specifics: tenant María Santos at 432 Parkside Ave, Apt 2B, Townsville; lease from March 1, 2020 to February 28, 2026; claimed amounts: security deposit $4,200, unpaid rent $1,800, repair charges $650; client's settlement threshold is $6,500 and litigation budget is $18,000. The case is in Townsville Housing Court, Case No. THC-2026-00458 with a filing deadline of April 21, 2026 and a prep meeting scheduled for April 15, 2026 at 10:00 AM ET with attendees Jen Park (Lead counsel, jen.park@oldbridgelegal.com) and Carlos Reyes (Client rep, c.reyes@pmgmt.co). Please reconcile feedback, flag unresolved legal questions, and produce the memo and slides tailored to that meeting.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Synthesize the advisory group's feedback and convert the annotated research memo into a concise client-facing guidance memo that (a) summarizes controlling precedents and recommended legal strategies, (b) proposes prioritized next steps (litigation vs. administrative/negotiation), (c) includes draft template documents (notice letters/pleading language), and (d) produces 5–7 talking points and slides for an upcoming advisory/client meeting. Background details include advisory feedback, client case specifics, settlement budget and risk tolerance.",
+        "distractor_seeds": [
+          "Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.",
+          "Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please synthesize the advisory group's feedback and turn the annotated research memo into a concise client-facing guidance memo: summarize controlling precedents and recommended strategies, propose prioritized next steps (litigation v. administrative/negotiation), include draft template notice letters and pleading language, and produce 5–7 talking points and slides for an upcoming meeting. I can share advisory comments (including a comment from alex.cho@oldbridgelegal.com), and client specifics: tenant María Santos at 432 Parkside Ave, Apt 2B, Townsville; lease from March 1, 2020 to February 28, 2026; claimed amounts: security deposit $4,200, unpaid rent $1,800, repair charges $650; client's settlement threshold is $6,500 and litigation budget is $18,000. The case is in Townsville Housing Court, Case No. THC-2026-00458 with a filing deadline of April 21, 2026 and a prep meeting scheduled for April 15, 2026 at 10:00 AM ET with attendees Jen Park (Lead counsel, jen.park@oldbridgelegal.com) and Carlos Reyes (Client rep, c.reyes@pmgmt.co). Please reconcile feedback, flag unresolved legal questions, and produce the memo and slides tailored to that meeting.\". This turn was associated with the following task goal: \"Synthesize the advisory group's feedback and convert the annotated research memo into a concise client-facing guidance memo that (a) summarizes controlling precedents and recommended legal strategies, (b) proposes prioritized next steps (litigation vs. administrative/negotiation), (c) includes draft template documents (notice letters/pleading language), and (d) produces 5–7 talking points and slides for an upcoming advisory/client meeting.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Synthesize the advisory group's feedback and convert the annotated research memo into a concise client-facing guidance memo that (a) summarizes controlling precedents and recommended legal strategies, (b) proposes prioritized next steps (litigation vs. administrative/negotiation), (c) includes draft template documents (notice letters/pleading language), and (d) produces 5–7 talking points and slides for an upcoming advisory/client meeting. Background details include advisory feedback, client case specifics, settlement budget and risk tolerance.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.\", \"Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Synthesize the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "alex.cho@oldbridgelegal.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "María Santos"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "432 Parkside Ave, Apt 2B, Townsville, TS 12345"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "03/01/2020 - 02/28/2026"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Security deposit $4,200"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Unpaid rent $1,800"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Repair charges $650"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$6,500"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "$18,000"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Townsville Housing Court, Case No. THC-2026-00458"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "2026-04-21"
+          },
+          {
+            "slot_name": "2026 04 15 10",
+            "slot_value": "00 AM ET; Attendees: Jen Park (Lead counsel, jen.park@oldbridgelegal.com), Carlos Reyes (Client rep, c.reyes@pmgmt.co)"
+          }
+        ],
+        "distractor_seeds": [
+          "Anna Lopez",
+          "Marcus Reid",
+          "Anna Lopez",
+          "Marcus Reid"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Synthesize the in a long conversation. The user's earlier message was: \"Please synthesize the advisory group's feedback and turn the annotated research memo into a concise client-facing guidance memo: summarize controlling precedents and recommended strategies, propose prioritized next steps (litigation v. administrative/negotiation), include draft template notice letters and pleading language, and produce 5–7 talking points and slides for an upcoming meeting. I can share advisory comments (including a comment from alex.cho@oldbridgelegal.com), and client specifics: tenant María Santos at 432 Parkside Ave, Apt 2B, Townsville; lease from March 1, 2020 to February 28, 2026; claimed amounts: security deposit $4,200, unpaid rent $1,800, repair charges $650; client's settlement threshold is $6,500 and litigation budget is $18,000. The case is in Townsville Housing Court, Case No. THC-2026-00458 with a filing deadline of April 21, 2026 and a prep meeting scheduled for April 15, 2026 at 10:00 AM ET with attendees Jen Park (Lead counsel, jen.park@oldbridgelegal.com) and Carlos Reyes (Client rep, c.reyes@pmgmt.co). Please reconcile feedback, flag unresolved legal questions, and produce the memo and slides tailored to that meeting.\". This turn was associated with the following task goal: \"Synthesize the advisory group's feedback and convert the annotated research memo into a concise client-facing guidance memo that (a) summarizes controlling precedents and recommended legal strategies, (b) proposes prioritized next steps (litigation vs. administrative/negotiation), (c) includes draft template documents (notice letters/pleading language), and (d) produces 5–7 talking points and slides for an upcoming advisory/client meeting.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"alex.cho@oldbridgelegal.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"María Santos\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"432 Parkside Ave, Apt 2B, Townsville, TS 12345\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"03/01/2020 - 02/28/2026\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Security deposit $4,200\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Unpaid rent $1,800\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Repair charges $650\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$6,500\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"$18,000\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Townsville Housing Court, Case No. THC-2026-00458\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"2026-04-21\"\n  },\n  {\n    \"slot_name\": \"2026 04 15 10\",\n    \"slot_value\": \"00 AM ET; Attendees: Jen Park (Lead counsel, jen.park@oldbridgelegal.com), Carlos Reyes (Client rep, c.reyes@pmgmt.co)\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Anna Lopez\", \"Marcus Reid\", \"Anna Lopez\", \"Marcus Reid\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Synthesize the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "12/01/2024-I06",
+      "turn_role": "probe",
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_018",
+      "task_goal": "Follow up with the four attendees to schedule individual one-on-one counseling appointments to convert their basic repayment outlines into prioritized, document-backed repayment plans; prepare customized negotiation letters, budget worksheets, and a checklist of documents to review at each appointment.",
+      "context_can_add": {
+        "attendee_contact_info": "User would like to share the list of the four attendees' names, phone numbers, and emails so the counselor can contact them to schedule one-on-one sessions and send preparatory materials. This is sensitive because it includes personal contact details; if provided, the assistant should draft outreach messages, propose available time slots, and suggest privacy-respecting ways to collect documents ahead of meetings.",
+        "sample_debt_profiles": "User could provide sanitized sample profiles for the attendees (creditor names, outstanding balances, last four digits of account numbers, and any active collection actions such as wage garnishment or repossession notices). These financial details are highly sensitive but would let the assistant prioritize urgent cases, tailor negotiation templates, estimate realistic repayment timelines, and flag cases needing immediate legal referral.",
+        "available_times_and_center_address": "User may give their availability windows for follow-up sessions and confirm the neighborhood center address or preferred alternate locations. This includes schedule constraints (specific days/times) and a street address, which are personal/sensitive logistics—sharing them lets the assistant propose concrete appointment slots, map directions, and prepare in-person materials for the venue.",
+        "documents_to_request_before_appointments": "User might list which documents they want attendees to bring (recent pay stubs, bank statements, collection letters, the basic repayment outlines drafted in the session). This isn't deeply personal in itself but references sensitive financial documents; the assistant should produce a clear intake checklist and explain safe ways for attendees to transmit those documents (encrypted email, in-person drop-off, or secure portal)."
+      },
+      "sensitive_info": {
+        "attendee_contact_info": [
+          "Anna Lopez, (555) 214-7789, anna.lopez@mailbox.org",
+          "Marcus Reed, (555) 309-4412, m.reed89@gmail.com",
+          "Priya Patel, (555) 678-9901, priya.patel@homeemail.com"
+        ],
+        "sample_debt_profiles": [
+          "Anna Lopez — First National Bank credit card, balance $6,200, acct last4 4321, recent collection letter dated 2026-03-20",
+          "Marcus Reed — Green Credit Union personal loan, balance $1,850, acct last4 9876, no active garnishment but two missed payments",
+          "Priya Patel — City Utilities medical bill, balance $950, acct ref 105-224, awaiting payment plan offer"
+        ],
+        "available_times_and_center_address": [
+          "Neighborhood Center address: 742 Maple Street, Riverton, RV 67890",
+          "User availability: weekdays 9:00–12:00 and Tuesdays 14:00–18:00 for in-person one-hour slots"
+        ],
+        "documents_to_request_before_appointments": [
+          "Recent 2 pay stubs (or proof of income), last two months of bank statements, any collection letters or notices, the repayment outline drafted at the workshop (intake_sheet_0426.pdf)"
+        ]
+      },
+      "sensitive_values": [
+        "Anna Lopez, (555) 214-7789, anna.lopez@mailbox.org",
+        "Marcus Reed, (555) 309-4412, m.reed89@gmail.com",
+        "Priya Patel, (555) 678-9901, priya.patel@homeemail.com",
+        "Anna Lopez — First National Bank credit card, balance $6,200, acct last4 4321, recent collection letter dated 2026-03-20",
+        "Marcus Reed — Green Credit Union personal loan, balance $1,850, acct last4 9876, no active garnishment but two missed payments",
+        "Priya Patel — City Utilities medical bill, balance $950, acct ref 105-224, awaiting payment plan offer",
+        "Neighborhood Center address: 742 Maple Street, Riverton, RV 67890",
+        "User availability: weekdays 9:00–12:00 and Tuesdays 14:00–18:00 for in-person one-hour slots",
+        "Recent 2 pay stubs (or proof of income), last two months of bank statements, any collection letters or notices, the repayment outline drafted at the workshop (intake_sheet_0426.pdf)"
+      ],
+      "user_turn": "Please help me follow up with the four attendees to schedule one-on-one counseling to convert their repayment outlines into prioritized, document-backed plans: draft outreach messages, propose available time slots, and prepare customized negotiation letters, budget worksheets, and a documents checklist; I can share attendee contact info — Anna Lopez, (555) 214-7789, anna.lopez@mailbox.org; Marcus Reed, (555) 309-4412, m.reed89@gmail.com; Priya Patel, (555) 678-9901, priya.patel@homeemail.com — and sample debt profiles (Anna: FNB card balance $6,200 acct last4 4321, collection letter from March 2026; Marcus: Green Credit Union loan $1,850 last4 9876; Priya: City Utilities medical bill $950 ref 105-224); the neighborhood center address is 742 Maple Street, Riverton, RV 67890 and my availability for one-hour in-person slots is weekdays 9:00–12:00 and Tuesdays 14:00–18:00; also tell me which documents to request beforehand and how to accept them securely.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Follow up with the four attendees to schedule individual one-on-one counseling appointments to convert their basic repayment outlines into prioritized, document-backed repayment plans; prepare customized negotiation letters, budget worksheets, and a checklist of documents to review at each appointment. Background details include attendee contact info, sample debt profiles, available times and center address.",
+        "distractor_seeds": [
+          "Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.",
+          "Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"Please help me follow up with the four attendees to schedule one-on-one counseling to convert their repayment outlines into prioritized, document-backed plans: draft outreach messages, propose available time slots, and prepare customized negotiation letters, budget worksheets, and a documents checklist; I can share attendee contact info — Anna Lopez, (555) 214-7789, anna.lopez@mailbox.org; Marcus Reed, (555) 309-4412, m.reed89@gmail.com; Priya Patel, (555) 678-9901, priya.patel@homeemail.com — and sample debt profiles (Anna: FNB card balance $6,200 acct last4 4321, collection letter from March 2026; Marcus: Green Credit Union loan $1,850 last4 9876; Priya: City Utilities medical bill $950 ref 105-224); the neighborhood center address is 742 Maple Street, Riverton, RV 67890 and my availability for one-hour in-person slots is weekdays 9:00–12:00 and Tuesdays 14:00–18:00; also tell me which documents to request beforehand and how to accept them securely.\". This turn was associated with the following task goal: \"Follow up with the four attendees to schedule individual one-on-one counseling appointments to convert their basic repayment outlines into prioritized, document-backed repayment plans; prepare customized negotiation letters, budget worksheets, and a checklist of documents to review at each appointment.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Follow up with the four attendees to schedule individual one-on-one counseling appointments to convert their basic repayment outlines into prioritized, document-backed repayment plans; prepare customized negotiation letters, budget worksheets, and a checklist of documents to review at each appointment. Background details include attendee contact info, sample debt profiles, available times and center address.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.\", \"Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Follow up"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "Anna Lopez, (555) 214-7789, anna.lopez@mailbox.org"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Marcus Reed, (555) 309-4412, m.reed89@gmail.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Priya Patel, (555) 678-9901, priya.patel@homeemail.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Anna Lopez — First National Bank credit card, balance $6,200, acct last4 4321, recent collection letter dated 2026-03-20"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Marcus Reed — Green Credit Union personal loan, balance $1,850, acct last4 9876, no active garnishment but two missed payments"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Priya Patel — City Utilities medical bill, balance $950, acct ref 105-224, awaiting payment plan offer"
+          },
+          {
+            "slot_name": "Neighborhood Center address",
+            "slot_value": "742 Maple Street, Riverton, RV 67890"
+          },
+          {
+            "slot_name": "User availability",
+            "slot_value": "weekdays 9:00–12:00 and Tuesdays 14:00–18:00 for in-person one-hour slots"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Recent 2 pay stubs (or proof of income), last two months of bank statements, any collection letters or notices, the repayment outline drafted at the workshop (intake_sheet_0426.pdf)"
+          }
+        ],
+        "distractor_seeds": [
+          "Anna Lopez",
+          "Marcus Reid",
+          "Anna Lopez",
+          "Marcus Reid"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Follow up in a long conversation. The user's earlier message was: \"Please help me follow up with the four attendees to schedule one-on-one counseling to convert their repayment outlines into prioritized, document-backed plans: draft outreach messages, propose available time slots, and prepare customized negotiation letters, budget worksheets, and a documents checklist; I can share attendee contact info — Anna Lopez, (555) 214-7789, anna.lopez@mailbox.org; Marcus Reed, (555) 309-4412, m.reed89@gmail.com; Priya Patel, (555) 678-9901, priya.patel@homeemail.com — and sample debt profiles (Anna: FNB card balance $6,200 acct last4 4321, collection letter from March 2026; Marcus: Green Credit Union loan $1,850 last4 9876; Priya: City Utilities medical bill $950 ref 105-224); the neighborhood center address is 742 Maple Street, Riverton, RV 67890 and my availability for one-hour in-person slots is weekdays 9:00–12:00 and Tuesdays 14:00–18:00; also tell me which documents to request beforehand and how to accept them securely.\". This turn was associated with the following task goal: \"Follow up with the four attendees to schedule individual one-on-one counseling appointments to convert their basic repayment outlines into prioritized, document-backed repayment plans; prepare customized negotiation letters, budget worksheets, and a checklist of documents to review at each appointment.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Anna Lopez, (555) 214-7789, anna.lopez@mailbox.org\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Marcus Reed, (555) 309-4412, m.reed89@gmail.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Priya Patel, (555) 678-9901, priya.patel@homeemail.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Anna Lopez — First National Bank credit card, balance $6,200, acct last4 4321, recent collection letter dated 2026-03-20\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Marcus Reed — Green Credit Union personal loan, balance $1,850, acct last4 9876, no active garnishment but two missed payments\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Priya Patel — City Utilities medical bill, balance $950, acct ref 105-224, awaiting payment plan offer\"\n  },\n  {\n    \"slot_name\": \"Neighborhood Center address\",\n    \"slot_value\": \"742 Maple Street, Riverton, RV 67890\"\n  },\n  {\n    \"slot_name\": \"User availability\",\n    \"slot_value\": \"weekdays 9:00–12:00 and Tuesdays 14:00–18:00 for in-person one-hour slots\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Recent 2 pay stubs (or proof of income), last two months of bank statements, any collection letters or notices, the repayment outline drafted at the workshop (intake_sheet_0426.pdf)\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Anna Lopez\", \"Marcus Reid\", \"Anna Lopez\", \"Marcus Reid\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Follow up",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    },
+    {
+      "timestamp": "11/30/2025-I05",
+      "turn_role": "probe",
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_017",
+      "task_goal": "Turn the observation notes from the civil bench hearing into an anonymized courtroom-observation template and a 1–2 page memo for my supervisor with redaction guidance, suggested changes to courtroom reporting practices, and a short checklist for future observations.",
+      "context_can_add": {
+        "Sample observation notes/excerpt": "User would like to share an excerpt or the full observation file so the assistant can convert real content into a reusable template and show concrete redaction examples. This may include hearing dates, case numbers, participant names, verbatim quotes, or short transcript snippets (sensitive: file name, case number, participant names, excerpts). The assistant should use those details only to identify what to redact and how to paraphrase or anonymize legally sensitive items.",
+        "Intended audience and distribution": "User would clarify who will receive the memo/template (e.g., internal reporting team, public-facing blog, court press list) and whether it will be uploaded to an internal drive or published externally. This may include a supervisor contact email or list of recipients (sensitive: supervisor contact/email). That determines the level of anonymization and citation needed.",
+        "Confidentiality or sealing constraints": "User would indicate if any part of the hearing was sealed, covered by a protective order, or otherwise confidential, and could share the protective-order/reference number or internal policy clause. This is sensitive legal information that will shape redaction rules and determine whether any content cannot be summarized or must be excluded entirely.",
+        "Timeline and delivery constraints": "User would provide the deadline and any scheduling constraints (e.g., need the memo in 3 business days or must fit a briefing slot on a certain date). This scheduling detail (sensitive: exact deadline/time) will guide the assistant's prioritization, length, and level of detail when producing drafts and revision suggestions."
+      },
+      "sensitive_info": {
+        "observation_notes_file": [
+          "BenchObservation_2026-03-12.txt",
+          "Case CV-2026-04567"
+        ],
+        "supervisor_email": [
+          "kenji.tanaka@goggle.com"
+        ],
+        "protective_order": [
+          "ProtectOrder-2026-88"
+        ],
+        "deadline": [
+          "2026-03-20T17:00:00"
+        ]
+      },
+      "sensitive_values": [
+        "BenchObservation_2026-03-12.txt",
+        "Case CV-2026-04567",
+        "kenji.tanaka@goggle.com",
+        "ProtectOrder-2026-88",
+        "2026-03-20T17:00:00"
+      ],
+      "user_turn": "I want to turn my bench-hearing observation notes into an anonymized courtroom-observation template and a 1–2 page memo for my supervisor with redaction guidance, suggested changes to courtroom reporting practices, and a short checklist for future observations; I can share the observation file BenchObservation.txt and the case reference Case CV-2026-04567, my supervisor is kenji.tanaka@goggle.com, and there's a protective order ProtectOrder-2026-88 affecting parts of the record — I need the deliverable by 5:00 PM on March 20, 2026, and please include concrete redaction examples and a draft memo addressed to my supervisor.",
+      "whole_recall": {
+        "qa_family": "whole_recall",
+        "answer_seed": "Turn the observation notes from the civil bench hearing into an anonymized courtroom-observation template and a 1–2 page memo for my supervisor with redaction guidance, suggested changes to courtroom reporting practices, and a short checklist for future observations. Background details include Sample observation notes/excerpt, Intended audience and distribution, Confidentiality or sealing constraints.",
+        "distractor_seeds": [
+          "Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.",
+          "Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget."
+        ],
+        "correct_option_available": "A",
+        "correct_option_restricted": "D",
+        "render_prompt": "You are helping create a multiple-choice question for a conversation-memory evaluation. The target interaction is an earlier user turn in a long conversation. The user's earlier message was: \"I want to turn my bench-hearing observation notes into an anonymized courtroom-observation template and a 1–2 page memo for my supervisor with redaction guidance, suggested changes to courtroom reporting practices, and a short checklist for future observations; I can share the observation file BenchObservation.txt and the case reference Case CV-2026-04567, my supervisor is kenji.tanaka@goggle.com, and there's a protective order ProtectOrder-2026-88 affecting parts of the record — I need the deliverable by 5:00 PM on March 20, 2026, and please include concrete redaction examples and a draft memo addressed to my supervisor.\". This turn was associated with the following task goal: \"Turn the observation notes from the civil bench hearing into an anonymized courtroom-observation template and a 1–2 page memo for my supervisor with redaction guidance, suggested changes to courtroom reporting practices, and a short checklist for future observations.\". Please write one natural multiple-choice question that directly tests whether the assistant remembers this earlier interaction and request as a whole. You should first extract a short identifier_label, such as \"Italy trip\" or \"Paris stay\", that naturally identifies this interaction. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. The question should focus only on the overall purpose of the earlier request. Do not ask in the question about specific sensitive details such as dates, budgets, contact information, schedules, or any other slot-level facts. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. Then write three answer candidates. \"remember_correct\" should be the natural answer if the assistant does remember the earlier interaction correctly as a whole, based on this seed: \"Turn the observation notes from the civil bench hearing into an anonymized courtroom-observation template and a 1–2 page memo for my supervisor with redaction guidance, suggested changes to courtroom reporting practices, and a short checklist for future observations. Background details include Sample observation notes/excerpt, Intended audience and distribution, Confidentiality or sealing constraints.\". \"remember_correct\" should answer at the level of the overall request rather than listing slot-level details unless a brief mention is necessary for clarity. \"distractor_irrelevant\" should be a distraction answer that is not actually correct for this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Prepare a finalized intake form and pilot rollout package: incorporate the usability-test feedback into a redlined form, draft concise consent/privacy wording and staff facilitation notes, and produce a two-week pilot schedule with budget and success metrics for internal approval. Background details include detailed usability findings, volunteer transcripts with PII, pilot budget and funding source.\", \"Refine the pilot intake template and prepare an integration and rollout plan: map template fields to the case-management system, address privacy/compliance settings, estimate time and budget for full rollout, and draft a short user guide and training checklist for staff. Background details include sample client record, cms integration details, pilot timeline and budget.\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail, based on this seed: \"I don't have that detail available anymore. Could you share it again?\". Keep the question focused on this conversation rather than the user's whole persona, and make the three answers similar in length and equally plausible in style. Return valid JSON only in the following format: {\"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]} No other words.",
+        "identifier_label_seed": "Turn the"
+      },
+      "slot_recall": {
+        "qa_family": "slot_recall",
+        "sensitive_items": [
+          {
+            "slot_name": "detail",
+            "slot_value": "BenchObservation_2026-03-12.txt"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "Case CV-2026-04567"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "kenji.tanaka@goggle.com"
+          },
+          {
+            "slot_name": "detail",
+            "slot_value": "ProtectOrder-2026-88"
+          },
+          {
+            "slot_name": "2026 03 20T17",
+            "slot_value": "00:00"
+          }
+        ],
+        "distractor_seeds": [
+          "Anna Lopez",
+          "Marcus Reid",
+          "Anna Lopez",
+          "Marcus Reid"
+        ],
+        "render_prompt": "You are helping create multiple-choice questions for a conversation-memory evaluation. The target interaction is an earlier user turn related to Turn the in a long conversation. The user's earlier message was: \"I want to turn my bench-hearing observation notes into an anonymized courtroom-observation template and a 1–2 page memo for my supervisor with redaction guidance, suggested changes to courtroom reporting practices, and a short checklist for future observations; I can share the observation file BenchObservation.txt and the case reference Case CV-2026-04567, my supervisor is kenji.tanaka@goggle.com, and there's a protective order ProtectOrder-2026-88 affecting parts of the record — I need the deliverable by 5:00 PM on March 20, 2026, and please include concrete redaction examples and a draft memo addressed to my supervisor.\". This turn was associated with the following task goal: \"Turn the observation notes from the civil bench hearing into an anonymized courtroom-observation template and a 1–2 page memo for my supervisor with redaction guidance, suggested changes to courtroom reporting practices, and a short checklist for future observations.\". The sensitive details revealed in this interaction are: [\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"BenchObservation_2026-03-12.txt\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"Case CV-2026-04567\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"kenji.tanaka@goggle.com\"\n  },\n  {\n    \"slot_name\": \"detail\",\n    \"slot_value\": \"ProtectOrder-2026-88\"\n  },\n  {\n    \"slot_name\": \"2026 03 20T17\",\n    \"slot_value\": \"00:00\"\n  }\n]. For each revealed sensitive detail, please write one natural multiple-choice question that directly tests whether the assistant remembers that specific earlier detail from this interaction. The existing keys for the sensitive details may sometimes be recurring abstract anchors rather than natural user-facing labels. When writing the question, you may come up with a more accurate and human-understandable label for the target detail based on the key and value, in a way that fits the context more naturally. Do not use formulaic openings such as For the ... request, In the earlier interaction labeled ..., or quotation-marked identifier labels. Write the question the way a natural user would ask it in a later conversation. When wording the question, adopt the user's perspective and use the person reference that would sound most natural for the user asking about their own earlier message. Use the identifier_label only as a latent reference anchor that helps you track what the earlier interaction was mainly about; do not force it into the wording if a more natural phrasing is available. If the question needs to refer to the interaction as a whole, you may use the given identifier_label, but only when it helps the wording stay natural and clear. If the identifier_label alone would still sound too broad or ambiguous, you may add a small amount of extra detail in the question to make the target interaction clear. For each question, write three answer candidates. \"remember_correct\" should be the natural answer if the assistant still remembers the earlier detail correctly. \"distractor_irrelevant\" should be a distraction answer that is not actually the correct detail from this interaction, but still sounds like a plausible reply; you may draw its general direction from these distractor seeds: [\"Anna Lopez\", \"Marcus Reid\", \"Anna Lopez\", \"Marcus Reid\"]. \"distractor_irrelevant\" should stay in the same topical neighborhood as the correct answer. \"distractor_irrelevant\" should sound like a plausible response to the same request, not a reply about a different conversation. \"distractor_irrelevant\" should be similar in length, sentence form, and specificity to the correct answer. \"not_remember\" should be a natural answer as if you are a helpful assistant who no longer remembers the earlier detail. Write all three answers as natural assistant responses rather than bare values or field fragments. Even when the target detail is a date, budget, email, phone number, or other short value, express the answer as a short natural sentence. Keep all three answers similar in length and sentence form. Return valid JSON only in the following format: {\"items\": [{\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}, {\"sensitive_key\": \"...\", \"sensitive_value\": \"...\", \"identifier_label\": \"...\", \"question\": \"...\", \"answers\": [{\"answer_type\": \"remember_correct\", \"text\": \"...\"}, {\"answer_type\": \"distractor_irrelevant\", \"text\": \"...\"}, {\"answer_type\": \"not_remember\", \"text\": \"...\"}]}]} Each sensitive_key must be one key from the given sensitive details, and sensitive_value must be one of the values associated with that sensitive_key. If a sensitive_key has multiple values, there should be one item in the returned JSON for each value. No other words."
+      },
+      "application": {
+        "qa_family": "application",
+        "status": "TODO_deferred",
+        "identifier_label_seed": "Turn the",
+        "note": "Application / reasoning MCQs are intentionally deferred until the recall pipeline is stable."
+      }
+    }
+  ]
+}

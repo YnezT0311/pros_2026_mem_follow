@@ -1,0 +1,2114 @@
+{
+  "source_rendered": "data/test/legalConsultation/specs/conversation_legalConsultation_persona2_sample0.recall_rendered.json",
+  "source_sidecar": "data/baseline/legalConsultation/specs/conversation_legalConsultation_persona2_sample0.memory_control.json",
+  "source_conversation": "data/output/legalConsultation/conversation_legalConsultation_persona2_sample0.json",
+  "model": "gpt-5-mini",
+  "items": [
+    {
+      "timestamp": "12/29/2025-I06",
+      "turn_role": "key",
+      "identifier_label": "Settlement consolidation",
+      "user_turn": "Please consolidate the six memos into a prioritized action plan: create a one-page standardized settlement-options template and draft client follow-up emails and negotiation talking points with proposed settlement ranges. Here are the client contacts and schedules: Maria Lopez <maria.lopez@lopezcafe.com>, 555-0123, prefers Tue/Thu mornings 9–11am; David Park <david.park@parkhandyman.com>, 555-6789, prefers afternoons after 2pm; Sanjay Patel <sanjay@patelprintco.com>, 555-4410, flexible. Their settlement authorities and budgets: Lopez Café (Case A): $25,000 max, retainer balance $4,200; Park Handyman (Case B): $10,000 cap without board approval, can authorize $7,500 immediately; Patel Print Co (Case C): target $50,000, walk-away threshold $100,000. Opposing party contacts and references include Riverton Supply LLC with opposing counsel David Chen <dchen@rslaw.com> (disputed Sales Agreement §7.1; Exhibit A) and Broadway Leasing Co. with opposing counsel Ellen Morse <emorse@broadwaylaw.com> (Lease Agreement §12.2; Exhibit B). Please produce the template, tailored follow-up emails to each client with proposed call windows, and negotiation talking points and ranges for each matter.",
+      "task_goal": "Consolidate the six client memos into a prioritized action plan and produce: (1) a one-page standardized settlement-options template to send to clients, (2) draft client follow-up emails to schedule calls, and (3) negotiation talking points and proposed settlement ranges for each case.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Maria Lopez <maria.lopez@lopezcafe.com>, 555-0123, prefers Tue/Thu mornings 9–11am",
+            "identifier_label": "Settlement consolidation",
+            "question": "What contact information and preferred call times did I provide for Maria Lopez?",
+            "choices": {
+              "A": "I don't recall Maria Lopez's contact details or preferred call times; could you resend them?",
+              "B": "Maria Lopez's contact is maria.lopez@lopezcafe.com, 555-0123, and she prefers Tuesday/Thursday mornings between 9 and 11am.",
+              "C": "Maria Lopez's contact is maria.lopez@lopezcafe.com, 555-0123, and she prefers weekday afternoons after 2pm."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Maria Lopez's contact is maria.lopez@lopezcafe.com, 555-0123, and she prefers Tuesday/Thursday mornings between 9 and 11am."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Maria Lopez's contact is maria.lopez@lopezcafe.com, 555-0123, and she prefers weekday afternoons after 2pm."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall Maria Lopez's contact details or preferred call times; could you resend them?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't recall Maria Lopez's contact details or preferred call times; could you resend them?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "Maria Lopez's contact is maria.lopez@lopezcafe.com, 555-0123, and she prefers Tuesday/Thursday mornings between 9 and 11am."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Maria Lopez's contact is maria.lopez@lopezcafe.com, 555-0123, and she prefers weekday afternoons after 2pm."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "David Park <david.park@parkhandyman.com>, 555-6789, prefers afternoons after 2pm",
+            "identifier_label": "Settlement consolidation",
+            "question": "What contact information and availability did I list for David Park?",
+            "choices": {
+              "A": "David Park's contact is david.park@parkhandyman.com, 555-6789, and he prefers afternoons after 2pm.",
+              "B": "I don't remember David Park's contact info or preferred availability; can you provide it again?",
+              "C": "David Park's contact is david.park@parkhandyman.com, 555-6789, and he prefers Tuesday/Thursday mornings between 9 and 11am."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "David Park's contact is david.park@parkhandyman.com, 555-6789, and he prefers afternoons after 2pm."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "David Park's contact is david.park@parkhandyman.com, 555-6789, and he prefers Tuesday/Thursday mornings between 9 and 11am."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember David Park's contact info or preferred availability; can you provide it again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "David Park's contact is david.park@parkhandyman.com, 555-6789, and he prefers afternoons after 2pm."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't remember David Park's contact info or preferred availability; can you provide it again?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "David Park's contact is david.park@parkhandyman.com, 555-6789, and he prefers Tuesday/Thursday mornings between 9 and 11am."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Sanjay Patel <sanjay@patelprintco.com>, 555-4410, flexible",
+            "identifier_label": "Settlement consolidation",
+            "question": "What contact details and scheduling preference did I include for Sanjay Patel?",
+            "choices": {
+              "A": "Sanjay Patel's contact is sanjay@patelprintco.com, 555-4410, and he prefers mornings only.",
+              "B": "I don't recall Sanjay Patel's contact or availability; could you remind me?",
+              "C": "Sanjay Patel's contact is sanjay@patelprintco.com, 555-4410, and his schedule is listed as flexible."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Sanjay Patel's contact is sanjay@patelprintco.com, 555-4410, and his schedule is listed as flexible."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Sanjay Patel's contact is sanjay@patelprintco.com, 555-4410, and he prefers mornings only."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall Sanjay Patel's contact or availability; could you remind me?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "Sanjay Patel's contact is sanjay@patelprintco.com, 555-4410, and he prefers mornings only."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't recall Sanjay Patel's contact or availability; could you remind me?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "Sanjay Patel's contact is sanjay@patelprintco.com, 555-4410, and his schedule is listed as flexible."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Lopez Café (Case A)",
+            "sensitive_value": "$25,000 maximum settlement authority; retainer balance $4,200",
+            "identifier_label": "Settlement consolidation",
+            "question": "What settlement authority and retainer balance did I specify for Lopez Café (Case A)?",
+            "choices": {
+              "A": "I don't remember Lopez Café's settlement authority or retainer balance; can you repeat those numbers?",
+              "B": "Lopez Café has a $25,000 cap for settlements but is only willing to allocate $5,000 specifically for settlement negotiations.",
+              "C": "Lopez Café has a $25,000 maximum settlement authority and a retainer balance of $4,200."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Lopez Café has a $25,000 maximum settlement authority and a retainer balance of $4,200."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Lopez Café has a $25,000 cap for settlements but is only willing to allocate $5,000 specifically for settlement negotiations."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember Lopez Café's settlement authority or retainer balance; can you repeat those numbers?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember Lopez Café's settlement authority or retainer balance; can you repeat those numbers?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "Lopez Café has a $25,000 cap for settlements but is only willing to allocate $5,000 specifically for settlement negotiations."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "Lopez Café has a $25,000 maximum settlement authority and a retainer balance of $4,200."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Park Handyman (Case B)",
+            "sensitive_value": "$10,000 cap without board approval; can authorize $7,500 immediately",
+            "identifier_label": "Settlement consolidation",
+            "question": "What settlement authority did I note for Park Handyman (Case B)?",
+            "choices": {
+              "A": "Park Handyman has a $10,000 cap without board approval and can authorize up to $7,500 immediately.",
+              "B": "I don't recall the settlement authority you gave for Park Handyman; could you restate it?",
+              "C": "Park Handyman has a $10,000 cap without board approval and can authorize only $2,500 immediately."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Park Handyman has a $10,000 cap without board approval and can authorize up to $7,500 immediately."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Park Handyman has a $10,000 cap without board approval and can authorize only $2,500 immediately."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the settlement authority you gave for Park Handyman; could you restate it?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "Park Handyman has a $10,000 cap without board approval and can authorize up to $7,500 immediately."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't recall the settlement authority you gave for Park Handyman; could you restate it?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Park Handyman has a $10,000 cap without board approval and can authorize only $2,500 immediately."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Patel Print Co (Case C)",
+            "sensitive_value": "target $50,000, walk-away threshold $100,000",
+            "identifier_label": "Settlement consolidation",
+            "question": "What target settlement and walk-away threshold did I set for Patel Print Co (Case C)?",
+            "choices": {
+              "A": "Patel Print's target settlement is $50,000 and the walk-away threshold is $75,000.",
+              "B": "Patel Print's target settlement is $50,000 and the walk-away threshold is $100,000.",
+              "C": "I don't remember Patel Print's target or walk-away threshold; can you tell me again?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Patel Print's target settlement is $50,000 and the walk-away threshold is $100,000."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Patel Print's target settlement is $50,000 and the walk-away threshold is $75,000."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember Patel Print's target or walk-away threshold; can you tell me again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "Patel Print's target settlement is $50,000 and the walk-away threshold is $75,000."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "Patel Print's target settlement is $50,000 and the walk-away threshold is $100,000."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't remember Patel Print's target or walk-away threshold; can you tell me again?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Riverton Supply LLC; opposing counsel",
+            "sensitive_value": "David Chen <dchen@rslaw.com>; disputed clause: Sales Agreement §7.1 (noncompete); Exhibit A (purchase order)",
+            "identifier_label": "Settlement consolidation",
+            "question": "Who is the opposing counsel for Riverton Supply LLC and which clause/exhibit is disputed?",
+            "choices": {
+              "A": "I don't recall who the opposing counsel is for Riverton Supply or which clause is in dispute; could you remind me?",
+              "B": "Opposing counsel is David Chen (dchen@rslaw.com), and the dispute involves Sales Agreement §7.1 (noncompete) and Exhibit A (purchase order).",
+              "C": "Opposing counsel is David Chen (dchen@rslaw.com), and the dispute involves Sales Agreement §7.1 (liability cap) and Exhibit A (purchase order)."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Opposing counsel is David Chen (dchen@rslaw.com), and the dispute involves Sales Agreement §7.1 (noncompete) and Exhibit A (purchase order)."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Opposing counsel is David Chen (dchen@rslaw.com), and the dispute involves Sales Agreement §7.1 (liability cap) and Exhibit A (purchase order)."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall who the opposing counsel is for Riverton Supply or which clause is in dispute; could you remind me?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't recall who the opposing counsel is for Riverton Supply or which clause is in dispute; could you remind me?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "Opposing counsel is David Chen (dchen@rslaw.com), and the dispute involves Sales Agreement §7.1 (noncompete) and Exhibit A (purchase order)."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Opposing counsel is David Chen (dchen@rslaw.com), and the dispute involves Sales Agreement §7.1 (liability cap) and Exhibit A (purchase order)."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "02/12/2026-I02",
+      "turn_role": "key",
+      "identifier_label": "Warranty package",
+      "user_turn": "I need this research turned into a client-ready package for Acme Manufacturing v. BrightHome LLC, Case No. 2026-CV-0142 (Alameda County Superior Court). The pre-mediation submission is due in mid-May at 9:00 AM PST. The client has a $25,000 cap for litigation-related work and will commit up to $5,000 for settlement negotiation only. Here is the relevant contract excerpt: \"Seller warrants that the Product will be free from defects in materials and workmanship for a period of 24 months from delivery. Remedies are limited to repair or replacement at Seller's option. Seller disclaims all other warranties, including implied warranties of merchantability and fitness.\" Please produce: (1) a one-page executive summary of key holdings and likely outcomes tailored to Alameda County practice, (2) a prioritized list of recommended contract clause revisions and negotiation/litigation options that fit the client's budget and risk tolerance, and (3) a draft client email to Maria Espinoza and a Q&A checklist they can use before the pre-mediation submission.",
+      "task_goal": "Convert the three-day warranty-precedent research memo into a client-ready package: a one-page executive summary of the key holdings and likely outcomes, a prioritized list of recommended contract clause revisions and negotiation/litigation options, and a draft client email and Q&A checklist to prepare for the next call or mediation.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Acme Manufacturing v. BrightHome LLC, Case No. 2026-CV-0142 (Alameda County Superior Court)",
+            "identifier_label": "Warranty package",
+            "question": "What was the case name and number I asked you to prepare the client package for?",
+            "choices": {
+              "A": "The case is Acme Manufacturing v. BrightHome LLC, Case No. 2026-CV-0142 in Alameda County Superior Court.",
+              "B": "The case is Lopez Foods v. Park Enterprises, Case No. 2026-CV-0078 in San Francisco Superior Court.",
+              "C": "I don't recall the case name and number offhand; could you remind me?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The case is Acme Manufacturing v. BrightHome LLC, Case No. 2026-CV-0142 in Alameda County Superior Court."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The case is Lopez Foods v. Park Enterprises, Case No. 2026-CV-0078 in San Francisco Superior Court."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the case name and number offhand; could you remind me?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "The case is Acme Manufacturing v. BrightHome LLC, Case No. 2026-CV-0142 in Alameda County Superior Court."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "The case is Lopez Foods v. Park Enterprises, Case No. 2026-CV-0078 in San Francisco Superior Court."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't recall the case name and number offhand; could you remind me?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "2026 05 15 09",
+            "sensitive_value": "00 AM PST (pre-mediation submission due)",
+            "identifier_label": "Warranty package",
+            "question": "When did I say the pre-mediation submission was due?",
+            "choices": {
+              "A": "I don't remember the exact pre-mediation deadline; can you tell me the date and time again?",
+              "B": "The pre-mediation submission is due May 15, 2026 at 9:00 AM PST.",
+              "C": "The pre-mediation submission was due June 1, 2026 at 10:00 AM PST."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The pre-mediation submission is due May 15, 2026 at 9:00 AM PST."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The pre-mediation submission was due June 1, 2026 at 10:00 AM PST."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact pre-mediation deadline; can you tell me the date and time again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact pre-mediation deadline; can you tell me the date and time again?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "The pre-mediation submission is due May 15, 2026 at 9:00 AM PST."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "The pre-mediation submission was due June 1, 2026 at 10:00 AM PST."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "$25,000 cap for litigation-related work (willing to allocate up to $5,000 for settlement negotiation only)",
+            "identifier_label": "Warranty package",
+            "question": "What budget limits did I give for litigation work and settlement negotiation?",
+            "choices": {
+              "A": "You allocated $30,000 for litigation-related work and up to $7,500 for settlement negotiation.",
+              "B": "I don't recall the exact budget caps you provided; could you confirm them?",
+              "C": "You set a $25,000 cap for litigation-related work and will commit up to $5,000 specifically for settlement negotiation."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You set a $25,000 cap for litigation-related work and will commit up to $5,000 specifically for settlement negotiation."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You allocated $30,000 for litigation-related work and up to $7,500 for settlement negotiation."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the exact budget caps you provided; could you confirm them?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "You allocated $30,000 for litigation-related work and up to $7,500 for settlement negotiation."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't recall the exact budget caps you provided; could you confirm them?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You set a $25,000 cap for litigation-related work and will commit up to $5,000 specifically for settlement negotiation."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Seller warrants that the Product will be free from defects in materials and workmanship for a period of 24 months from delivery. Remedies are limited to repair or replacement at Seller's option. Seller disclaims all other warranties, including implied warranties of merchantability and fitness.",
+            "identifier_label": "Warranty package",
+            "question": "What did the contract warranty clause say about duration, remedies, and disclaimers?",
+            "choices": {
+              "A": "The contract warrants the Product free from defects in materials and workmanship for 24 months from delivery, limits remedies to repair or replacement at the Seller's option, and disclaims all other warranties including implied warranties of merchantability and fitness.",
+              "B": "The contract provided a 12-month warranty with a refund option and did not disclaim implied warranties of merchantability and fitness.",
+              "C": "I don't remember the exact warranty language; could you paste the clause again?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The contract warrants the Product free from defects in materials and workmanship for 24 months from delivery, limits remedies to repair or replacement at the Seller's option, and disclaims all other warranties including implied warranties of merchantability and fitness."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The contract provided a 12-month warranty with a refund option and did not disclaim implied warranties of merchantability and fitness."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact warranty language; could you paste the clause again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "The contract warrants the Product free from defects in materials and workmanship for 24 months from delivery, limits remedies to repair or replacement at the Seller's option, and disclaims all other warranties including implied warranties of merchantability and fitness."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "The contract provided a 12-month warranty with a refund option and did not disclaim implied warranties of merchantability and fitness."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact warranty language; could you paste the clause again?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "maria.espinoza@acmelegal.com",
+            "identifier_label": "Warranty package",
+            "question": "What email address did I give for Maria Espinoza?",
+            "choices": {
+              "A": "I don't have Maria's email saved; could you tell me her email address again?",
+              "B": "You provided maria.lopez@lopezcafe.com as the contact email.",
+              "C": "You provided maria.espinoza@acmelegal.com as Maria Espinoza's email address."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You provided maria.espinoza@acmelegal.com as Maria Espinoza's email address."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided maria.lopez@lopezcafe.com as the contact email."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't have Maria's email saved; could you tell me her email address again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't have Maria's email saved; could you tell me her email address again?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided maria.lopez@lopezcafe.com as the contact email."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You provided maria.espinoza@acmelegal.com as Maria Espinoza's email address."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "555-0147",
+            "identifier_label": "Warranty package",
+            "question": "What phone number did I include for the client contact?",
+            "choices": {
+              "A": "I don't recall the phone number; could you share it again?",
+              "B": "You provided 555-0147 as the contact phone number.",
+              "C": "You provided 555-0123 as the contact phone number."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You provided 555-0147 as the contact phone number."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided 555-0123 as the contact phone number."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the phone number; could you share it again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't recall the phone number; could you share it again?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You provided 555-0147 as the contact phone number."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided 555-0123 as the contact phone number."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "11/15/2025-I05",
+      "turn_role": "key",
+      "identifier_label": "tenant clinic materials",
+      "user_turn": "I want clinic-ready materials for future tenant-rights shifts — I'm the supervising attorney, coordinator contact is alex.kim@goggle.com, 555-0123, and I have an example intake note with client initials M.J. and a redacted housing address. Please make a plain-language intake template, a two-page fact sheet on common tenant issues, a confidentiality/consent checklist, and a simple follow-up/referral workflow I can share with the coordinator and volunteers.",
+      "task_goal": "Create a set of practical, clinic-ready materials and procedures I can use at future tenant-rights pro bono shifts: a concise plain-language intake template, a two-page fact sheet for common tenant issues, a confidentiality/consent checklist, and a simple follow-up/referral workflow I can share with the clinic coordinator and volunteers.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "alex.kim@goggle.com",
+            "identifier_label": "tenant clinic materials",
+            "question": "What coordinator email did I give in my earlier message about clinic materials?",
+            "choices": {
+              "A": "I don't remember the coordinator email from your earlier message.",
+              "B": "The coordinator contact email you provided was maria.lopez@lopezcafe.com.",
+              "C": "The coordinator contact email you provided was alex.kim@goggle.com."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The coordinator contact email you provided was alex.kim@goggle.com."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The coordinator contact email you provided was maria.lopez@lopezcafe.com."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the coordinator email from your earlier message."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember the coordinator email from your earlier message."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "The coordinator contact email you provided was maria.lopez@lopezcafe.com."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "The coordinator contact email you provided was alex.kim@goggle.com."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "555-0123",
+            "identifier_label": "tenant clinic materials",
+            "question": "What phone number did I give for the coordinator in that message?",
+            "choices": {
+              "A": "The coordinator phone number you listed was 555-6789.",
+              "B": "I don't remember the coordinator phone number from your earlier message.",
+              "C": "The coordinator phone number you listed was 555-0123."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The coordinator phone number you listed was 555-0123."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The coordinator phone number you listed was 555-6789."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the coordinator phone number from your earlier message."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The coordinator phone number you listed was 555-6789."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't remember the coordinator phone number from your earlier message."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "The coordinator phone number you listed was 555-0123."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Client initials",
+            "sensitive_value": "M.J.",
+            "identifier_label": "tenant clinic materials",
+            "question": "What were the client initials in the example intake note I mentioned?",
+            "choices": {
+              "A": "The example intake note used the client initials M.L.",
+              "B": "I don't recall the client's initials from your earlier message.",
+              "C": "The example intake note used the client initials M.J."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The example intake note used the client initials M.J."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The example intake note used the client initials M.L."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the client's initials from your earlier message."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The example intake note used the client initials M.L."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't recall the client's initials from your earlier message."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "The example intake note used the client initials M.J."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Housing address",
+            "sensitive_value": "742 Elm St, Fakesville, CA 98765",
+            "identifier_label": "tenant clinic materials",
+            "question": "What was the redacted housing address I included in the intake example?",
+            "choices": {
+              "A": "The redacted housing address you included was 123 Oak Ave, Anytown, CA 90210.",
+              "B": "The redacted housing address you included was 742 Elm St, Fakesville, CA 98765.",
+              "C": "I don't remember the redacted housing address from your earlier message."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The redacted housing address you included was 742 Elm St, Fakesville, CA 98765."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The redacted housing address you included was 123 Oak Ave, Anytown, CA 90210."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the redacted housing address from your earlier message."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "The redacted housing address you included was 123 Oak Ave, Anytown, CA 90210."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "The redacted housing address you included was 742 Elm St, Fakesville, CA 98765."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't remember the redacted housing address from your earlier message."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Lease signed",
+            "sensitive_value": "2024-06-01",
+            "identifier_label": "tenant clinic materials",
+            "question": "What lease signing date did I report for the tenant in my example intake?",
+            "choices": {
+              "A": "I don't recall the lease signing date you mentioned.",
+              "B": "You reported that the lease was signed on 2023-11-15.",
+              "C": "You reported that the lease was signed on 2024-06-01."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You reported that the lease was signed on 2024-06-01."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You reported that the lease was signed on 2023-11-15."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the lease signing date you mentioned."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't recall the lease signing date you mentioned."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You reported that the lease was signed on 2023-11-15."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You reported that the lease was signed on 2024-06-01."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "01/20/2026-I01",
+      "turn_role": "probe",
+      "identifier_label": "Severance negotiation plan",
+      "user_turn": "I have a real negotiation coming up with my employer, Greenfield Tech LLC — it's essentially a severance discussion and my target is $25,000. I recorded the roleplay and have the transcript (negotiation_roleplay_transcript.pdf) and feedback from my partner; my roleplay partner is alex.kim@goggle.com and their phone is 555-0123. I'm available to practice Tue/Thu 7–9 PM PST. Can you help me identify my BATNA and target terms, draft a one-page negotiation script and an opening offer, and give specific coaching on handling likely pushback and closing language?",
+      "task_goal": "Turn the skills I practiced in the weekend negotiation roleplay into a concrete plan and materials I can use for an upcoming real settlement negotiation: identify my BATNA and target terms, draft a one-page negotiation script and opening offer, and get coaching on handling likely pushback and closing language.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Greenfield Tech LLC",
+            "identifier_label": "Severance negotiation plan",
+            "question": "Which company did I say I was negotiating my severance with?",
+            "choices": {
+              "A": "I don't remember which employer you mentioned in that earlier message.",
+              "B": "You said the employer was Lopez Cafe (Maria Lopez).",
+              "C": "You said the employer was Greenfield Tech LLC."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You said the employer was Greenfield Tech LLC."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You said the employer was Lopez Cafe (Maria Lopez)."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember which employer you mentioned in that earlier message."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember which employer you mentioned in that earlier message."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You said the employer was Lopez Cafe (Maria Lopez)."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You said the employer was Greenfield Tech LLC."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "$25,000",
+            "identifier_label": "Severance negotiation plan",
+            "question": "What target severance amount did I specify?",
+            "choices": {
+              "A": "You set a target severance amount of $25,000.",
+              "B": "I don't remember the target amount you mentioned earlier.",
+              "C": "You said a target severance amount of $15,000."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You set a target severance amount of $25,000."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You said a target severance amount of $15,000."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the target amount you mentioned earlier."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You set a target severance amount of $25,000."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't remember the target amount you mentioned earlier."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You said a target severance amount of $15,000."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "negotiation_roleplay_2026-03-21_transcript.pdf",
+            "identifier_label": "Severance negotiation plan",
+            "question": "What was the filename of the roleplay transcript I said I had?",
+            "choices": {
+              "A": "I don't remember the transcript filename you mentioned earlier.",
+              "B": "You said the transcript file was named negotiation_roleplay_transcript.pdf.",
+              "C": "You said the transcript file was named negotiation_roleplay_2026-03-21_transcript.pdf."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You said the transcript file was named negotiation_roleplay_2026-03-21_transcript.pdf."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You said the transcript file was named negotiation_roleplay_transcript.pdf."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the transcript filename you mentioned earlier."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember the transcript filename you mentioned earlier."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You said the transcript file was named negotiation_roleplay_transcript.pdf."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You said the transcript file was named negotiation_roleplay_2026-03-21_transcript.pdf."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "alex.kim@goggle.com",
+            "identifier_label": "Severance negotiation plan",
+            "question": "What email address did I give for my roleplay partner?",
+            "choices": {
+              "A": "I don't remember the email address you provided for your partner.",
+              "B": "You gave alex.kim@goggle.com as your roleplay partner's email.",
+              "C": "You gave maria.lopez@lopezcafe.com as the partner's email."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You gave alex.kim@goggle.com as your roleplay partner's email."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You gave maria.lopez@lopezcafe.com as the partner's email."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the email address you provided for your partner."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember the email address you provided for your partner."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You gave alex.kim@goggle.com as your roleplay partner's email."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You gave maria.lopez@lopezcafe.com as the partner's email."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "555-0123",
+            "identifier_label": "Severance negotiation plan",
+            "question": "What phone number did I list for my roleplay partner?",
+            "choices": {
+              "A": "I don't remember the phone number you provided for your partner.",
+              "B": "You listed 555-6789 as the partner's phone number.",
+              "C": "You listed 555-0123 as your roleplay partner's phone number."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You listed 555-0123 as your roleplay partner's phone number."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You listed 555-6789 as the partner's phone number."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the phone number you provided for your partner."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember the phone number you provided for your partner."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You listed 555-6789 as the partner's phone number."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You listed 555-0123 as your roleplay partner's phone number."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "Tue/Thu 19",
+            "sensitive_value": "00-21:00 PST",
+            "identifier_label": "Severance negotiation plan",
+            "question": "What days and times did I say I'm available to practice?",
+            "choices": {
+              "A": "You said you're available Tue/Thu 00-21:00 PST.",
+              "B": "You said you're available Tue/Thu mornings 9–11 AM.",
+              "C": "I don't remember the availability you listed for practice."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You said you're available Tue/Thu 00-21:00 PST."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You said you're available Tue/Thu mornings 9–11 AM."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the availability you listed for practice."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You said you're available Tue/Thu 00-21:00 PST."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You said you're available Tue/Thu mornings 9–11 AM."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't remember the availability you listed for practice."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "02/28/2026-I03",
+      "turn_role": "probe",
+      "identifier_label": "File organization project",
+      "user_turn": "I want to hire a vetted assistant or service to organize mixed paper and digital legal case files; I have a representative file, Smith v. Ortega (intake ID A1989-4321), and an initial cleanup budget of $1,200. Cloud admin Alex Kim (alex.kim@goggle.com, 555-0123) can grant access. Physical boxes are at 1234 Imaginary Lane, Fakesville, CA 98765. The archive includes limited PHI—medical records for two clients—so I need NDAs and background checks. Please provide vetted vendor recommendations with cost estimates, a security/NDAs plan for handling privileged material, and a step-by-step timeline to transfer and index ongoing matters without disrupting active cases.",
+      "task_goal": "Find and hire a vetted assistant or professional service to organize mixed paper and digital legal case files — get recommendations, cost estimates, a security/NDAs plan for handling privileged material, and a step-by-step timeline to transfer and index ongoing matters without disrupting active cases.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Smith v. Ortega — intake ID A1989-4321",
+            "identifier_label": "File organization project",
+            "question": "What intake ID did I provide for the Smith v. Ortega representative file?",
+            "choices": {
+              "A": "You provided intake ID A1989-4321 for the Smith v. Ortega file.",
+              "B": "I don't recall the intake ID you shared for that file; could you remind me?",
+              "C": "You provided intake ID B2010-9934 for the Smith v. Ortega file."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You provided intake ID A1989-4321 for the Smith v. Ortega file."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided intake ID B2010-9934 for the Smith v. Ortega file."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall the intake ID you shared for that file; could you remind me?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You provided intake ID A1989-4321 for the Smith v. Ortega file."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't recall the intake ID you shared for that file; could you remind me?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You provided intake ID B2010-9934 for the Smith v. Ortega file."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "$1,200",
+            "identifier_label": "File organization project",
+            "question": "What initial cleanup budget did I say I had for the project?",
+            "choices": {
+              "A": "You mentioned an initial cleanup budget of $2,500.",
+              "B": "I don't remember the exact budget you mentioned; could you tell me again?",
+              "C": "You said your initial cleanup budget was $1,200."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You said your initial cleanup budget was $1,200."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You mentioned an initial cleanup budget of $2,500."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact budget you mentioned; could you tell me again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "You mentioned an initial cleanup budget of $2,500."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't remember the exact budget you mentioned; could you tell me again?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You said your initial cleanup budget was $1,200."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "alex.kim@lawfirm.com",
+            "identifier_label": "File organization project",
+            "question": "What was the cloud admin Alex Kim's email address that can grant access?",
+            "choices": {
+              "A": "I don't remember the cloud admin's email; can you provide it again?",
+              "B": "You said cloud admin Alex Kim's email is alex.kim@goggle.com.",
+              "C": "You said cloud admin Alex Kim's email is alex.kim@lawfirm.com."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You said cloud admin Alex Kim's email is alex.kim@lawfirm.com."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You said cloud admin Alex Kim's email is alex.kim@goggle.com."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the cloud admin's email; can you provide it again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I don't remember the cloud admin's email; can you provide it again?"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You said cloud admin Alex Kim's email is alex.kim@goggle.com."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You said cloud admin Alex Kim's email is alex.kim@lawfirm.com."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "555-0123",
+            "identifier_label": "File organization project",
+            "question": "What phone number did I give for Alex Kim, the cloud admin?",
+            "choices": {
+              "A": "You gave Alex Kim's phone number as 555-0123.",
+              "B": "You gave Alex Kim's phone number as 555-6789.",
+              "C": "I don't recall Alex Kim's phone number; please resend it."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You gave Alex Kim's phone number as 555-0123."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You gave Alex Kim's phone number as 555-6789."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall Alex Kim's phone number; please resend it."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You gave Alex Kim's phone number as 555-0123."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You gave Alex Kim's phone number as 555-6789."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't recall Alex Kim's phone number; please resend it."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "1234 Imaginary Lane, Fakesville, CA 98765",
+            "identifier_label": "File organization project",
+            "question": "What address did I say the physical boxes are stored at?",
+            "choices": {
+              "A": "You said the physical boxes are at 1234 Imaginary Lane, Fakesville, CA 98765.",
+              "B": "You said the physical boxes are at 4321 Real Road, Fakesville, CA 98765.",
+              "C": "I don't remember the storage address for the physical boxes; could you tell me again?"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You said the physical boxes are at 1234 Imaginary Lane, Fakesville, CA 98765."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You said the physical boxes are at 4321 Real Road, Fakesville, CA 98765."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't remember the storage address for the physical boxes; could you tell me again?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You said the physical boxes are at 1234 Imaginary Lane, Fakesville, CA 98765."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You said the physical boxes are at 4321 Real Road, Fakesville, CA 98765."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I don't remember the storage address for the physical boxes; could you tell me again?"
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "Contains medical records for 2 clients (limited PHI)",
+            "identifier_label": "File organization project",
+            "question": "How much PHI did I say the archive includes, specifically medical records?",
+            "choices": {
+              "A": "You said the archive includes medical records for two clients, i.e., limited PHI.",
+              "B": "I don't recall how much PHI you said was included; can you remind me?",
+              "C": "You said the archive includes medical records for five clients."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You said the archive includes medical records for two clients, i.e., limited PHI."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You said the archive includes medical records for five clients."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I don't recall how much PHI you said was included; can you remind me?"
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "You said the archive includes medical records for two clients, i.e., limited PHI."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I don't recall how much PHI you said was included; can you remind me?"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "You said the archive includes medical records for five clients."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "04/03/2026-I04",
+      "turn_role": "probe",
+      "identifier_label": "arbitration memo",
+      "user_turn": "I want to turn my one-page arbitration summary into a concise internal memo and a short slide outline for a 10–15 minute practice-group presentation. My supervising partner is alex.kim@goggle.com, 555-0123; please mark any case-specific details tied to T-2026-0897; Greenfield Properties v. Rivera for redaction if the memo is circulated firm-wide. The original file is ArbitrationPodcast_Summary.docx. Please draft the memo, a slide outline, and an optional email to alex.kim@goggle.com indicating redactions.",
+      "task_goal": "Turn my one-page podcast summary into a concise internal memo and a short slide outline for a 10–15 minute practice-group presentation; optionally draft an email to my supervising partner to circulate the memo and indicate which case-specific details should be redacted.",
+      "rendered": {
+        "items": [
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "alex.kim@goggle.com",
+            "identifier_label": "arbitration memo",
+            "question": "What was the supervising partner's email address that I provided for circulating the memo?",
+            "choices": {
+              "A": "I’m sorry, I don’t remember the supervising partner's email from that message.",
+              "B": "The supervising partner's email was alex.kim@goggle.com.",
+              "C": "The supervising partner's email was maria.lopez@lopezcafe.com."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The supervising partner's email was alex.kim@goggle.com."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The supervising partner's email was maria.lopez@lopezcafe.com."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I’m sorry, I don’t remember the supervising partner's email from that message."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I’m sorry, I don’t remember the supervising partner's email from that message."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "The supervising partner's email was alex.kim@goggle.com."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "The supervising partner's email was maria.lopez@lopezcafe.com."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "555-0123",
+            "identifier_label": "arbitration memo",
+            "question": "What phone number did I give for my supervising partner?",
+            "choices": {
+              "A": "I’m sorry, I don’t recall the phone number you provided for your supervising partner.",
+              "B": "You provided the phone number 555-0123 for your supervising partner.",
+              "C": "The phone number was 555-6789."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You provided the phone number 555-0123 for your supervising partner."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The phone number was 555-6789."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I’m sorry, I don’t recall the phone number you provided for your supervising partner."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I’m sorry, I don’t recall the phone number you provided for your supervising partner."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "You provided the phone number 555-0123 for your supervising partner."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "The phone number was 555-6789."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "T-2026-0897; Greenfield Properties v. Rivera",
+            "identifier_label": "arbitration memo",
+            "question": "Which case did I ask to mark for redaction if the memo is circulated firm-wide?",
+            "choices": {
+              "A": "I’m sorry, I don’t remember which case you asked to mark for redaction.",
+              "B": "You asked to mark case T-2025-0442, Lopez Holdings v. Park, for redaction.",
+              "C": "You asked to mark case T-2026-0897, Greenfield Properties v. Rivera, for redaction."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "You asked to mark case T-2026-0897, Greenfield Properties v. Rivera, for redaction."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You asked to mark case T-2025-0442, Lopez Holdings v. Park, for redaction."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I’m sorry, I don’t remember which case you asked to mark for redaction."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I’m sorry, I don’t remember which case you asked to mark for redaction."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You asked to mark case T-2025-0442, Lopez Holdings v. Park, for redaction."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "You asked to mark case T-2026-0897, Greenfield Properties v. Rivera, for redaction."
+              }
+            ]
+          },
+          {
+            "sensitive_key": "detail",
+            "sensitive_value": "ArbitrationPodcast_Summary_2026-04-05.docx",
+            "identifier_label": "arbitration memo",
+            "question": "What was the original file name of the one-page arbitration summary I wanted turned into a memo?",
+            "choices": {
+              "A": "I’m sorry, I don’t recall the original file name of the summary.",
+              "B": "The original file name was ArbitrationPodcast_Summary_2026-04-05.docx.",
+              "C": "The original file name was ArbitrationPodcast_Summary.docx."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "The original file name was ArbitrationPodcast_Summary_2026-04-05.docx."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The original file name was ArbitrationPodcast_Summary.docx."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I’m sorry, I don’t recall the original file name of the summary."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I’m sorry, I don’t recall the original file name of the summary."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "The original file name was ArbitrationPodcast_Summary_2026-04-05.docx."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "The original file name was ArbitrationPodcast_Summary.docx."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

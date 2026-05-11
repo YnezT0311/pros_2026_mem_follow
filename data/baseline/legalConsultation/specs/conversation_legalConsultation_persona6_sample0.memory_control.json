@@ -1,0 +1,500 @@
+{
+  "source_file": "data/output/legalConsultation/conversation_legalConsultation_persona6_sample0.json",
+  "periods": [
+    "Conversation Initial Stage",
+    "Conversation Early Stage",
+    "Conversation Intermediate Stage",
+    "Conversation Late Stage"
+  ],
+  "initial_interaction_count": 6,
+  "selection_policy": {
+    "key_target_count": 3,
+    "probe_target_count": 3,
+    "prefer_last_exact_sensitive_occurrence": true,
+    "future_conflict_detection": [
+      "exact reuse of later [Sensitive Info] values",
+      "exact reuse of later [Context Can Add] keys",
+      "later event or interaction belonging to the source event's descendant chain",
+      "boolean high-similarity check over later [Task Goal] text"
+    ],
+    "key_selection_priority": [
+      "lower future conflict count",
+      "prefer the last exact sensitive-value occurrence",
+      "earlier history index as a stable tiebreaker"
+    ]
+  },
+  "baseline_resolution": {
+    "selected_key_timestamps": [
+      "01/18/2013-I01",
+      "02/02/2019-I02",
+      "02/10/2025-I03"
+    ],
+    "all_selected_keys_conflict_free": true,
+    "keys_requiring_revision": [],
+    "key_conflicts": {},
+    "baseline_conversation_action": "copy_source_conversation_unchanged"
+  },
+  "key_turns": [
+    {
+      "rank": 0,
+      "timestamp": "01/18/2013-I01",
+      "history_index": 1,
+      "event_id": "I_INIT_001",
+      "source_event_id": "E_INIT_001",
+      "source_event_date": "01/18/2013",
+      "task_goal": "Create a reusable pro bono intake + scope-of-work template (clearly defining deliverables, revision limits, and deadlines), a short acceptance-email script that sets explicit timelines and limits, a polite decline-and-refer email template, and a brief checklist to use before agreeing to any future pro bono drafting work.",
+      "prev_event": "Took on a volunteer pro bono contract-drafting assignment with tight deadlines and unclear scope, which resulted in multiple revisions and frustration; has chosen to refer similar pro bono drafting work unless scope and timelines are explicit.",
+      "context_can_add": {
+        "pro_bono_organization_contact": "User would like to share the pro bono organization's coordinator contact (name, org, email and/or phone) so the assistant can draft personalized emails and confirm any organization-specific expectations or intake processes. This is sensitive because it contains a contact's name and direct contact details (email/phone) that would be used only to personalize outreach or referral language.",
+        "previous_draft_document_reference": "User could provide the filename or link to the prior draft (e.g., 'Draft_Agreement_Clinic_2026_v2.docx' or an intake sheet/transcript) so the assistant can tailor the scope template and estimate reasonable revision limits based on document complexity. This is sensitive because it references private client documents or internal intake records.",
+        "weekly_availability_and_deadline_constraints": "User could give their typical pro bono availability (hours per week) and any near-term schedule conflicts or firm deadlines (e.g., limited to 6–8 hrs/week, unavailable certain dates) so the assistant can propose realistic timelines and language to include in the acceptance template. This is sensitive personal-schedule info that affects commitments.",
+        "jurisdiction_and_contract_type": "User might add the governing jurisdiction and the kind of contract most frequently requested (e.g., CA employment agreement, commercial lease) so the scope and sample clauses reflect relevant local considerations; this information guides clause recommendations but is not inherently sensitive."
+      },
+      "sensitive_info": {
+        "pro_bono_organization_contact": [
+          "Maya Patel, Pro Bono Coordinator, Community Legal Clinic",
+          "maya.patel@communityclinic.org",
+          "555-210-3344"
+        ],
+        "previous_draft_document_reference": [
+          "Draft_Agreement_Clinic_2026_v2.docx",
+          "intake_sheet_Clinic_SYN123456789.pdf"
+        ],
+        "weekly_availability_and_deadline_constraints": [
+          "Available up to 8 hours/week for pro bono drafting",
+          "Unavailable Monday mornings and all day Thursday",
+          "Cannot accept any new turn-around < 2 weeks for multi‑clause agreements"
+        ]
+      },
+      "sensitive_values": [
+        "Maya Patel, Pro Bono Coordinator, Community Legal Clinic",
+        "maya.patel@communityclinic.org",
+        "555-210-3344",
+        "Draft_Agreement_Clinic_2026_v2.docx",
+        "intake_sheet_Clinic_SYN123456789.pdf",
+        "Available up to 8 hours/week for pro bono drafting",
+        "Unavailable Monday mornings and all day Thursday",
+        "Cannot accept any new turn-around < 2 weeks for multi‑clause agreements"
+      ],
+      "conversation_block": {
+        "timestamp": "01/18/2013-I01",
+        "event_text": "Took on a volunteer pro bono contract-drafting assignment with tight deadlines and unclear scope, which resulted in multiple revisions and frustration; has chosen to refer similar pro bono drafting work unless scope and timelines are explicit.",
+        "start_index": 5,
+        "lines": [
+          "Side_Note: [Took on a volunteer pro bono contract-drafting assignment with tight deadlines and unclear scope, which resulted in multiple revisions and frustration; has chosen to refer similar pro bono drafting work unless scope and timelines are explicit.] 01/18/2013-I01",
+          "User: Please create a reusable pro bono package for me: an intake and scope-of-work template that clearly defines deliverables, revision limits, and deadlines; a short acceptance email script that sets timelines and limits; a polite decline-and-refer email; and a brief pre-acceptance checklist I can use before agreeing to any future pro bono drafting work.",
+          "User: For context, I may want to personalize outreach to the pro bono coordinator, Maya Patel (Pro Bono Coordinator, Community Legal Clinic), and I can reference prior files (Draft_Agreement_Clinic_2026_v2.docx and intake_sheet_Clinic_SYN123456789.pdf) to estimate reasonable revision limits.",
+          "User: My availability is up to 8 hours per week, I'm unavailable Monday mornings and all day Thursday, and I cannot accept any new multi-clause agreement with a turnaround under two weeks.",
+          "Assistant: Intake + Scope-of-Work Template (reusable):",
+          "Assistant: Client & matter — client name, organization, coordinator contact, and a one-line description of the requested document(s).",
+          "Assistant: Deliverables — be specific, for example: Draft short-form services agreement (maximum 6 substantive clauses); include existing filename if provided, e.g., Draft_Agreement_Clinic_2026_v2.docx.",
+          "Assistant: Scope boundaries — list what is excluded, for example: no counterpart negotiation, no multi-jurisdictional review, and no litigation support.",
+          "Assistant: Level of drafting — state whether this is an initial draft, a redline to an existing draft, and whether a plain-language summary is required.",
+          "Assistant: Revision limits — include explicit limits, for example: up to 2 rounds of substantive revisions plus up to 3 minor clerical edits; additional rounds will be billed or declined.",
+          "Assistant: Timeline & milestones — set the expected first-draft and final-draft windows, for example: first draft within two weeks for standard multi-clause matters, with intermediate milestones as needed; note your availability of up to 8 hours/week and that you cannot accept multi-clause turnarounds under two weeks.",
+          "Assistant: Deliverable format & delivery method — specify file type (DOCX/PDF), preferred delivery (email or cloud link), and target filenames or storage paths.",
+          "Assistant: Conflict check & confidentiality — request completion of a conflict check and any privilege/confidentiality notes before work begins.",
+          "Assistant: Sign-off — include a coordinator signature line and date block to confirm agreement on scope and timeline.",
+          "Assistant: Short acceptance-email script (concise):",
+          "Assistant: Hello [Coordinator name],",
+          "Assistant: Thank you for sending this; I can prepare [specific deliverable] under the following scope: up to 2 rounds of substantive revisions and up to 3 minor clerical edits, delivered in Word and PDF formats.",
+          "Assistant: Based on the materials you provided (for example, Draft_Agreement_Clinic_2026_v2.docx) I estimate the first draft in two weeks; I am available up to 8 hours per week, unavailable Monday mornings and all day Thursday, and I cannot accept multi-clause requests with turnarounds shorter than two weeks.",
+          "Assistant: If that timing and scope work, please confirm and share any priority clauses or file links and I will run a conflict check and start drafting.",
+          "Assistant: Polite decline-and-refer email template:",
+          "Assistant: Hello [Coordinator name],",
+          "Assistant: Thank you for the referral; I’m unable to take on multi-clause drafting or faster turnarounds right now, but I can handle single-clause edits or template clean-ups with a minimum two-week turnaround.",
+          "Assistant: If you need quicker or larger drafting support, I can suggest trusted volunteers or clinics who handle heavier loads, otherwise I’m happy to review limited-scope items under the constraints above.",
+          "Assistant: Best, [Your name]",
+          "Assistant: Pre-acceptance checklist (brief):",
+          "Assistant: Confirm the exact deliverable and attach any prior drafts, for example Draft_Agreement_Clinic_2026_v2.docx or intake_sheet_Clinic_SYN123456789.pdf.",
+          "Assistant: Confirm the number of permitted revisions and whether negotiation or direct contact with counterparties is required.",
+          "Assistant: Confirm the timeline fits your rule that multi-clause matters need at least two weeks and check my blocked times (no Monday mornings, no Thursdays).",
+          "Assistant: Estimate the hours required against my capacity (up to 8 hours per week) and decline if the work exceeds that estimate.",
+          "Assistant: Ask the coordinator to sign the scope, complete a conflict check, and provide any privileged documents before work begins.",
+          "Assistant: I will fill in Maya Patel and the file references now and produce fillable versions of each template for you."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 1,
+      "timestamp": "02/02/2019-I02",
+      "history_index": 3,
+      "event_id": "I_INIT_002",
+      "source_event_id": "E_INIT_002",
+      "source_event_date": "02/02/2019",
+      "task_goal": "Convert the internal AFA templates and pricing models into a client-ready pilot package: a tailored proposal and pricing calculator for fixed and milestone fees, sample contract clauses (billing triggers, change-order/scope language, termination and indemnity), a risk-allocation and reserve recommendation, an internal approval checklist, and a client-facing email/proposal draft to launch the pilot.",
+      "prev_event": "Drafted internal templates and models for alternate fee arrangements over several months to offer clients fixed and milestone pricing options; liked the creativity of aligning incentives with outcomes.",
+      "context_can_add": {
+        "Pilot client and primary contact (sensitive)": "User would like to pilot the AFA with a specific client and could provide the client's legal entity name and a primary contact's name, email and/or phone number. That detail is needed to tailor fee levels, milestone timing, confidentiality and conflict-check steps, and to draft a client-specific proposal and outreach email.",
+        "Historical billing and matter performance (sensitive)": "User could share past billing data for similar matters (e.g., prior matter fees, hourly spend by phase, realization rates, capped-budget outcomes). Those numbers are needed to calibrate fixed fees, create appropriate milestone amounts, set an internal reserve, and run sensitivity scenarios. This will naturally include private financial figures from prior engagements.",
+        "Internal approvers and timeline constraints (sensitive)": "User may provide the list of internal stakeholders (names, roles, and quickest contact method) and any hard dates or budget-cycle deadlines for approving the pilot. Knowing who must sign off and by when guides the level of legal/commercial detail in the package and whether an accelerated approval path or executive summary is required.",
+        "Jurisdiction and practice-area constraints (non-sensitive)": "User can state the governing law, jurisdiction(s) where the work will be performed, and the practice area (e.g., M&A, IP licensing, regulatory), which helps tailor sample contract clauses and compliance considerations without revealing private details."
+      },
+      "sensitive_info": {
+        "pilot_client_contact": [
+          "Acme Biotech LLC — primary contact: Maria Lopez, maria.lopez@acmebio.com, +1-415-555-0199"
+        ],
+        "historical_billing_data": [
+          "2023 Matter #A-128: total billed $185,000 (phase breakdown: diligence $60k, negotiation $95k, post-closing $30k); realization rate 82%",
+          "2022 Matter #B-044: capped budget $120,000; final cost $137,500 (overage handled via hourly add-on)"
+        ],
+        "internal_approvers": [
+          "Carlos Ramirez — Head of Commercial (carlos.ramirez@goggle.com, +1-555-123-4567)",
+          "Jamal Peters — Finance Controller (jamal.peters@firmexample.com, +1-212-555-0101)"
+        ]
+      },
+      "sensitive_values": [
+        "Acme Biotech LLC — primary contact: Maria Lopez, maria.lopez@acmebio.com, +1-415-555-0199",
+        "2023 Matter #A-128: total billed $185,000 (phase breakdown: diligence $60k, negotiation $95k, post-closing $30k); realization rate 82%",
+        "2022 Matter #B-044: capped budget $120,000; final cost $137,500 (overage handled via hourly add-on)",
+        "Carlos Ramirez — Head of Commercial (carlos.ramirez@goggle.com, +1-555-123-4567)",
+        "Jamal Peters — Finance Controller (jamal.peters@firmexample.com, +1-212-555-0101)"
+      ],
+      "conversation_block": {
+        "timestamp": "02/02/2019-I02",
+        "event_text": "Drafted internal templates and models for alternate fee arrangements over several months to offer clients fixed and milestone pricing options; liked the creativity of aligning incentives with outcomes.",
+        "start_index": 39,
+        "lines": [
+          "Side_Note: [Drafted internal templates and models for alternate fee arrangements over several months to offer clients fixed and milestone pricing options; liked the creativity of aligning incentives with outcomes.] 02/02/2019-I02",
+          "User: Help me convert the internal AFA templates and pricing models into a client-ready pilot package to propose to Acme Biotech LLC (primary contact Maria Lopez). For calibration, here are historical billing datapoints: 2023 Matter #A-128 total billed $185,000 (diligence $60k, negotiation $95k, post-closing $30k), realization rate 82%; 2022 Matter #B-044 capped budget $120,000 final cost $137,500 (overage billed hourly). Internal approvers who will need to sign off are Carlos Ramirez — Head of Commercial and Jamal Peters — Finance Controller. I need a tailored proposal and pricing calculator for fixed and milestone fees, sample clauses (billing triggers, change-order/scope language, termination and indemnity), a risk-allocation and reserve recommendation, an internal approval checklist, and a client-facing email/proposal draft to launch the pilot (addressed to Maria Lopez).",
+          "Assistant: Client-ready AFA pilot package (concise): a one-page proposal cover addressed to Maria Lopez summarizing scope, fixed fees by phase, milestone deliverables and acceptance triggers, and a contingency reserve; a pricing calculator with inputs and rules; short sample clauses for billing triggers, change orders, termination, and indemnity; a recommended risk-allocation and reserve range; an internal approval checklist for Carlos Ramirez and Jamal Peters; and a client-facing email/proposal draft to launch the pilot. Proposed fee structure (matches historical spend and rounds to marketable figures): Phase 1 (diligence) fixed $55,000; Phase 2 (negotiation) fixed $95,000; Phase 3 (post-closing) fixed $30,000 — total $180,000, with an $18,000 contingency reserve (about 10%). Pricing calculator rules: base fixed fee = historical billed × realization adjustment (example: $185,000 × 0.95 ≈ $175,750, rounded to $180,000); allocate milestones by deliverable weight (diligence 30%, negotiation 53%, post-closing 17%); require documented Change Order and client signoff before charging against the reserve. Reserve and risk allocation: recommend holding 8–12% ($14k–$22k) based on prior overages, with draws only after written change orders and hourly add-on at pre-agreed rates if the reserve is exhausted. Sample clause highlights: billing triggers — milestone fee due on delivery and client acceptance (5 business days to review) or deemed accepted if no written objections; change-order — written Change Order with estimated hours and milestone impact, signed before work begins; termination — either party may terminate on 30 days’ notice, client pays for completed milestones and reasonable wind-down; indemnity — mutual indemnities with exceptions for willful misconduct and gross negligence and caps tied to aggregate fees unless the client requests higher limits. Internal approval checklist for Carlos Ramirez and Jamal Peters: confirm pilot fees and milestone allocations; approve reserve amount and overage billing path; complete conflict check; finance sign-off on realization assumptions and accounting treatment; commercial sign-off on client-facing language and termination terms. Client-facing email/proposal draft to Maria Lopez (short): Hello Maria, we'd like to pilot a fixed/milestone engagement for [project]. Based on similar matters, we propose a three-phase fixed fee of $180,000 with an $18,000 contingency reserve. Attached is a short proposal with milestone deliverables, acceptance criteria, and a simple change-order process. If this structure looks workable, we'll schedule a short call to align on scope and execute a pilot engagement letter. Best, [Your name]. I can produce the full proposal document, a spreadsheet pricing calculator using your historical numbers, and an internal sign-off memo addressed to Carlos Ramirez and Jamal Peters, ready for review and approval."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 2,
+      "timestamp": "02/10/2025-I03",
+      "history_index": 5,
+      "event_id": "I_INIT_003",
+      "source_event_id": "E_INIT_003",
+      "source_event_date": "02/10/2025",
+      "task_goal": "Help me prepare a concise request and debrief template to ask the simulation organizers to (a) include structured debriefs after fast-paced negotiation drills, (b) reduce simulation-only frequency for me unless a debrief is scheduled, and (c) provide tips I can use during and after simulations to avoid burnout—include a short script/email I can send and a 20–30 minute debrief agenda.",
+      "prev_event": "Sat through a client-facing contract negotiation simulation with three opposing counsel and found the rapid-fire bargaining style exhausting; afterward, decided to avoid frequent simulation-only drills unless paired with structured debriefs.",
+      "context_can_add": {
+        "Training history and learning preferences": "User would like to add how often they've done negotiation simulations (e.g., monthly for 6 months), which formats helped (paired practice, role-reversal, coached debriefs), and whether they prefer written feedback or verbal group debriefs. This helps tailor the debrief agenda and the wording of the request (e.g., propose written takeaways if they prefer asynchronous feedback).",
+        "Workload and schedule constraints (sensitive)": "User could share their role and team (e.g., junior associate at a mid-size firm), typical work hours and billable target (sensitive schedule/workload info), and upcoming conflicts (for example: client hearing on 2026-04-20). This is relevant so the script can propose alternative timing, justify limiting simulation frequency, and request accommodations that fit real deadlines and energy limits.",
+        "Simulation materials and transcripts (sensitive document)": "User might share the specific simulation scenario or draft agreement they were using (e.g., file name like draft_agreement_sim_Apr2026.docx or an audio transcript). Seeing the materials would let me tailor debrief questions to the exact negotiation topics and suggest targeted improvement points, and it is sensitive because it may include confidential client or firm information.",
+        "Coordinator contact details (sensitive contact)": "User could provide the simulation coordinator's contact (name, email, phone) so I can draft a personalized message/email or talking points to use in a short call. This is sensitive contact information (e.g., the coordinator's email and phone) and would be used only to craft wording addressed to that person."
+      },
+      "sensitive_info": {
+        "work_schedule": [
+          "Role: Junior Associate at Hargrove & Lee LLP; Typical hours Mon–Fri 9:00–19:00; Billable target 180 hours/month; Upcoming client hearing: 2026-04-20"
+        ],
+        "simulation_draft_agreement": [
+          "draft_agreement_sim_Apr2026.docx"
+        ],
+        "simulation_coordinator_contact": [
+          "Carlos Ramirez <carlos.ramirez@goggle.com>, 555-123-4567"
+        ]
+      },
+      "sensitive_values": [
+        "Role: Junior Associate at Hargrove & Lee LLP; Typical hours Mon–Fri 9:00–19:00; Billable target 180 hours/month; Upcoming client hearing: 2026-04-20",
+        "draft_agreement_sim_Apr2026.docx",
+        "Carlos Ramirez <carlos.ramirez@goggle.com>, 555-123-4567"
+      ],
+      "conversation_block": {
+        "timestamp": "02/10/2025-I03",
+        "event_text": "Sat through a client-facing contract negotiation simulation with three opposing counsel and found the rapid-fire bargaining style exhausting; afterward, decided to avoid frequent simulation-only drills unless paired with structured debriefs.",
+        "start_index": 45,
+        "lines": [
+          "Side_Note: [Sat through a client-facing contract negotiation simulation with three opposing counsel and found the rapid-fire bargaining style exhausting; afterward, decided to avoid frequent simulation-only drills unless paired with structured debriefs.] 02/10/2025-I03",
+          "User: Please help me prepare a concise request and a 20–30 minute debrief template to ask simulation organizers to (a) include structured debriefs after fast-paced negotiation drills, (b) reduce simulation-only frequency for me unless a debrief is scheduled, and (c) give me tips to avoid burnout during and after simulations; for background, I'm a junior associate at Hargrove & Lee LLP working roughly Mon–Fri 9:00–19:00 with a 180-hour monthly billable target, I have an upcoming client hearing on 2026-04-20 that limits my time, I've been using draft_agreement_sim_Apr2026.docx in these sessions, and the simulation coordinator is Carlos Ramirez (carlos.ramirez@goggle.com, 555-123-4567). I'd like a short script/email to Carlos and a 20–30 minute debrief agenda.",
+          "Assistant: Email script to Carlos Ramirez (carlos.ramirez@goggle.com):",
+          "Assistant: Subject: Add a 20–30 minute structured debrief after fast-paced drills and adjust my simulation schedule.",
+          "Assistant: Hi Carlos, thanks for organizing the recent negotiation simulation; the fast-paced, multi-counsel format is valuable, but I find the intensity hard to process without a structured wrap-up.",
+          "Assistant: Please add a 20–30 minute structured debrief immediately after fast-paced drills and, for my schedule, limit pure simulation-only slots unless a debrief will follow.",
+          "Assistant: I have an upcoming client hearing on 2026-04-20 and a 180-hour monthly billable target, so scheduling with those constraints in mind would help me participate effectively.",
+          "Assistant: I've been using draft_agreement_sim_Apr2026.docx in these sessions and can send the file ahead of simulations if that helps the organizers.",
+          "Assistant: Thank you, [Your Name].",
+          "Assistant: 20–30 minute debrief agenda (structured):",
+          "Assistant: 0–5 min — Quick factual recap: what happened, who played which role, and the timeline.",
+          "Assistant: 5–12 min — Tactical wins: each participant names one concrete thing that worked and why.",
+          "Assistant: 12–20 min — Focused improvement: identify one specific area to improve and run a short coach-led drill to practice it.",
+          "Assistant: 20–25 min — Action items: assign who will practice what, how they will do it, and target completion dates.",
+          "Assistant: 25–30 min — Wellbeing check and scheduling: a quick emotional check-in and confirmation of the next debrief.",
+          "Assistant: Tips to avoid burnout during and after simulations:",
+          "Assistant: During simulations, rely on a three-point personal script — opening ask, a key concession, and a clear walk-away threshold — so you don't have to process everything live.",
+          "Assistant: During intense drills, take a one-minute pause every 15 minutes framed as a brief check-in to reset focus.",
+          "Assistant: After each session, immediately jot three takeaways: what to keep, what to change, and one concrete practice item; email them to yourself for quick reference.",
+          "Assistant: Block a 30-minute slot within 48 hours to review notes, run a short replay, and set any follow-up practice.",
+          "Assistant: I can adjust the email wording for your tone or scheduling constraints and prepare a one-page handout to share with organizers and participants."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    }
+  ],
+  "protected_probe_turns": [
+    {
+      "rank": 3,
+      "timestamp": "03/21/2023-I04",
+      "history_index": 8,
+      "event_id": "I_INIT_004",
+      "source_event_id": "E_INIT_005",
+      "source_event_date": "03/21/2023",
+      "task_goal": "Turn the three-month portfolio review into a concrete 12‑month action plan: produce a prioritized renewal and enforcement calendar, estimated costs, next‑step templates (renewal filings, cease-and-desist, evidence packages), and recommendations for external counsel or takedown vendors.",
+      "prev_event": "Performed a three-month review of a small client's IP filings and organized a prioritized renewal and enforcement calendar, enjoying the strategic overview of the portfolio and protections.",
+      "context_can_add": {
+        "portfolio_summary": "User could provide a short inventory (number of active trademarks, patents, design registrations, key brands/products). This non-sensitive summary helps set scope and prioritization rules (e.g., focus on consumer-facing brands first) and guides trade-offs between renewals and enforcement.",
+        "renewal_schedule": "User could share the actual renewal entries (jurisdiction, mark/serial/reg. numbers, and due dates). These specific dates and application numbers are sensitive because they identify exact filings and deadlines; having them would allow me to build a precise prioritized calendar, flag imminent expiries, and draft reminders and filing checklists.",
+        "enforcement_targets": "User might supply names/URLs/ASINs of suspected infringers and a brief description of the evidence (screenshots, listing links, dates). Those are sensitive operational details about active enforcement targets; with them I can recommend tailored takedown/cease-and-desist steps, estimate success likelihood, and prepare DMCA/marketplace takedown templates.",
+        "budget_constraints": "User could disclose available IP budget figures or per-case authorization limits (annual IP budget, quarterly enforcement budget, max spend without board approval). Financial limits are sensitive but necessary to prioritize actions, recommend cost-effective filings vs. enforcement, and propose staged budgets for high-risk items.",
+        "preferred_counsel_contact": "User may provide preferred outside counsel or vendor contact details (name, firm, email, phone). These private contact details let me suggest who to assign specific tasks, draft a handoff email, and propose fee structures tied to known partners."
+      },
+      "sensitive_info": {
+        "renewal_schedule": [
+          "US TM Serial 87234567 - 'BlueSail' (goods: apparel & accessories) - renewal due 2026-07-15",
+          "EU Reg 2019-0456 - 'MarinaTech' (class 9) - renewal due 2026-09-01",
+          "WO Pat. 2020/123456 - maintenance window 2026-11-30"
+        ],
+        "enforcement_targets": [
+          "Amazon ASIN B09ABCD123 - counterfeit 'BlueSail' sunglasses by seller 'HarborGoods LLC' - screenshot 2026-03-20",
+          "Website buysailscheap.com using MarinaTech logo on product page - evidence captured 2026-02-28"
+        ],
+        "budget_constraints": [
+          "Annual IP budget: $45,000",
+          "Quarterly enforcement allocation (Q2 2026): $12,000",
+          "Per-case litigation cap without board approval: $10,000"
+        ],
+        "preferred_counsel_contact": [
+          "Ana Martinez, Martinez IP - ana.martinez@martinezip.com - 555-987-6543"
+        ]
+      },
+      "sensitive_values": [
+        "US TM Serial 87234567 - 'BlueSail' (goods: apparel & accessories) - renewal due 2026-07-15",
+        "EU Reg 2019-0456 - 'MarinaTech' (class 9) - renewal due 2026-09-01",
+        "WO Pat. 2020/123456 - maintenance window 2026-11-30",
+        "Amazon ASIN B09ABCD123 - counterfeit 'BlueSail' sunglasses by seller 'HarborGoods LLC' - screenshot 2026-03-20",
+        "Website buysailscheap.com using MarinaTech logo on product page - evidence captured 2026-02-28",
+        "Annual IP budget: $45,000",
+        "Quarterly enforcement allocation (Q2 2026): $12,000",
+        "Per-case litigation cap without board approval: $10,000",
+        "Ana Martinez, Martinez IP - ana.martinez@martinezip.com - 555-987-6543"
+      ],
+      "conversation_block": {
+        "timestamp": "03/21/2023-I04",
+        "event_text": "Performed a three-month review of a small client's IP filings and organized a prioritized renewal and enforcement calendar, enjoying the strategic overview of the portfolio and protections.",
+        "start_index": 72,
+        "lines": [
+          "Side_Note: [Performed a three-month review of a small client's IP filings and organized a prioritized renewal and enforcement calendar, enjoying the strategic overview of the portfolio and protections.] 03/21/2023-I04",
+          "User: Please turn the three-month IP portfolio review into a 12-month action plan that produces a prioritized renewal and enforcement calendar, estimated costs, next-step templates (renewal filings, cease-and-desist, evidence packages), and recommendations for outside counsel or takedown vendors; key items are: US TM Serial 87234567 - 'BlueSail' (apparel & accessories) renewal due July 15, 2026; EU Reg 2019-0456 - 'MarinaTech' (class 9) renewal due September 1, 2026; WO Pat. 2020/123456 maintenance window by November 30, 2026; enforcement targets are Amazon ASIN B09ABCD123 - counterfeit 'BlueSail' sunglasses sold by HarborGoods LLC (screenshot dated March 20, 2026) and the site buysailscheap.com using the MarinaTech logo (evidence dated February 28, 2026); budget constraints are a $45,000 annual IP budget, $12,000 enforcement allocation in Q2, and a $10,000 per-case litigation cap without board approval; preferred counsel is Ana Martinez, Martinez IP (contact on file).",
+          "Assistant: 12-month IP action plan — high level.",
+          "Assistant: Immediate (next 30 days): flag the BlueSail US renewal due July 15, 2026, prepare a renewal filing checklist and confirm priority goods/classes, and estimate filing and attorney fees at $800–$1,200 while reserving $1,500 for clearance and enforcement prep.",
+          "Assistant: Immediate (next 30 days): preserve and assemble evidence for enforcement targets — include timestamped screenshots, marketplace listings for Amazon ASIN B09ABCD123, seller IDs, and captures of buysailscheap.com into an evidence package.",
+          "Assistant: Q2 (use the $12,000 enforcement allocation): send a cease-and-desist to the Amazon seller HarborGoods LLC and submit marketplace takedown requests for the counterfeit BlueSail listings, estimating marketplace admin and counsel fees at $1,200–$3,000 per takedown.",
+          "Assistant: Q2 escalation plan: if marketplace takedowns fail, escalate to DMCA notices, marketplace counternotices, or an enforcement vendor, and reserve litigation spend while not exceeding the $10,000 per-case cap without board approval.",
+          "Assistant: Mid-year renewals and patent maintenance (Q3–Q4): prepare the MarinaTech EU renewal due September 1, 2026 with estimated EU filing and counsel costs of $1,500–$2,500 and plan the WO patent national-entry/maintenance decisions before November 30, 2026 with anticipated national-entry fees and counsel costs of $10,000–$18,000 depending on selected jurisdictions.",
+          "Assistant: Prioritization and budgeting rules: keep core maintenance renewals on the calendar, prioritize the consumer-facing BlueSail US renewal first, allocate enforcement funds to quick marketplace takedowns initially, and escalate only for repeated or high-volume infringement.",
+          "Assistant: Maintain a contingency of roughly $5,000 from the $45,000 annual budget for unexpected enforcement or accelerated filings.",
+          "Assistant: Next-step templates — Renewal filing checklist: include mark/serial, class, goods, renewal deadline, fee estimate, responsible counsel, and storage path.",
+          "Assistant: Next-step templates — Cease-and-desist: identify the mark, attach an evidence list, demand cessation and listing removal, set a 7–14 day cure period, and provide a point of contact for resolution.",
+          "Assistant: Next-step templates — Evidence package: include timestamped screenshots, seller IDs and ASINs (e.g., B09ABCD123), listing URLs, and purchase or order records."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 5,
+      "timestamp": "11/05/2025-I06",
+      "history_index": 21,
+      "event_id": "I_INIT_006",
+      "source_event_id": "E_INIT_016",
+      "source_event_date": "11/05/2025",
+      "task_goal": "Turn the one-page plain-language summary you prepared into a reusable template and checklist for the entire service agreement (one template per stakeholder type), confirm which legal points must remain verbatim, and produce draft summaries for the remaining sections ready for stakeholder review by the existing deadline.",
+      "prev_event": "Prepared a series of plain-language one-page summaries for a complex service agreement to share with nonlawyer stakeholders; received positive feedback on clarity and felt energized by simplifying dense legal text.",
+      "context_can_add": {
+        "stakeholder_priorities": "User would like to share a prioritized list of stakeholder groups (e.g., operations, finance, sales, compliance) and what each group most needs to see (risk, pricing, timelines, obligations). This helps tailor tone, length, and which legal nuances must be highlighted in each one-page template.",
+        "risky_clauses_and_doc": "User could provide the draft agreement filename and identify specific clauses that are legally sensitive (for example, limitation of liability, indemnities, or termination language). This may include sharing the draft document reference (e.g., Draft_Service_Agreement_v3.docx) and short excerpts or clause numbers (sensitive legal text) so the assistant can flag which language must remain unchanged and suggest safe plain-language paraphrases elsewhere.",
+        "deadline_and_meeting_times": "User might add the hard deadline for finalizing the templates and any standing review meeting times (e.g., final delivery date and a weekly review slot). These are scheduling constraints (sensitive: specific dates/times) that will determine pacing, what can be included in each draft, and how many review iterations are realistic.",
+        "primary_reviewer_contact": "User may supply the primary reviewer's contact details (name, email, phone) and their role (e.g., client legal lead or internal general counsel). This sensitive contact info lets the assistant draft a targeted review note/email and anticipate the reviewer’s likely preferences or redlines."
+      },
+      "sensitive_info": {
+        "draft_document": [
+          "Draft_Service_Agreement_v3.docx"
+        ],
+        "sensitive_clause_excerpt": [
+          "Section 12.3 Limitation of Liability: 'Client's aggregate liability shall not exceed fifty thousand dollars ($50,000) for any claim arising out of this Agreement.'"
+        ],
+        "deadline_and_schedule": [
+          "Final summaries due 2026-04-20",
+          "Weekly review meeting: Tuesdays 10:00 AM PST"
+        ],
+        "primary_reviewer_contact": [
+          "maria.gonzalez@clientco.com",
+          "555-987-6543"
+        ]
+      },
+      "sensitive_values": [
+        "Draft_Service_Agreement_v3.docx",
+        "Section 12.3 Limitation of Liability: 'Client's aggregate liability shall not exceed fifty thousand dollars ($50,000) for any claim arising out of this Agreement.'",
+        "Final summaries due 2026-04-20",
+        "Weekly review meeting: Tuesdays 10:00 AM PST",
+        "maria.gonzalez@clientco.com",
+        "555-987-6543"
+      ],
+      "conversation_block": {
+        "timestamp": "11/05/2025-I06",
+        "event_text": "Prepared a series of plain-language one-page summaries for a complex service agreement to share with nonlawyer stakeholders; received positive feedback on clarity and felt energized by simplifying dense legal text.",
+        "start_index": 121,
+        "lines": [
+          "Side_Note: [Prepared a series of plain-language one-page summaries for a complex service agreement to share with nonlawyer stakeholders; received positive feedback on clarity and felt energized by simplifying dense legal text.] 11/05/2025-I06",
+          "User: I need to turn the one-page plain-language summary into reusable templates and a checklist for the entire service agreement (one template per stakeholder type). Please confirm which legal points must remain verbatim and produce draft summaries for the remaining sections by the existing deadline. For context the draft is Draft_Service_Agreement_v3.docx and a sensitive clause excerpt is Section 12.3 Limitation of Liability: 'Client's aggregate liability shall not exceed fifty thousand dollars ($50,000) for any claim arising out of this Agreement.' Final summaries are due 2026-04-20 and we review weekly on Tuesdays 10:00 AM PST; the primary reviewer is maria.gonzalez@clientco.com (555-987-6543). Stakeholder groups to cover include operations, finance, sales and compliance.",
+          "Assistant: Deliverables (concise):",
+          "Templates: one-page templates for each stakeholder — operations, finance, sales, and compliance.",
+          "Operations template will focus on timelines, SLAs, deliverables, acceptance criteria, and operational responsibilities.",
+          "Finance template will emphasize pricing, invoicing schedule, payment terms, and liability caps.",
+          "Sales template will highlight scope, key customer commitments, pricing summary, and termination notice periods.",
+          "Compliance template will call out data handling, audit rights, reporting obligations, and applicable regulatory controls.",
+          "Clauses to keep verbatim: Section 12.3 Limitation of Liability must remain unchanged ('Client's aggregate liability shall not exceed fifty thousand dollars ($50,000) for any claim arising out of this Agreement.').",
+          "Flag indemnities, confidentiality carve-outs, and any statutory compliance language for counsel review before paraphrasing.",
+          "Draft summaries: I will produce 2–4 sentence plain-language paragraphs for each major contract section, prioritized by stakeholder need.",
+          "I will prepare these drafts to match your review cycle and have them ready before the final deadline, aligned with your weekly Tuesday 10:00 AM PST reviews.",
+          "Suggested workflow: I'll deliver first drafts 48 hours before the Tuesday review, collect comments, and finalize by the deadline.",
+          "I can also draft an email to Maria Gonzalez that summarizes changes and links the drafts for her review."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 0,
+      "needs_revision": false
+    },
+    {
+      "rank": 4,
+      "timestamp": "03/22/2024-I05",
+      "history_index": 10,
+      "event_id": "I_INIT_005",
+      "source_event_id": "E_INIT_006",
+      "source_event_date": "03/22/2024",
+      "task_goal": "Help me turn the volunteer test findings into a concrete next step: propose a reordered intake form (field order + specific validation rules and masking), a short script for volunteers to run a follow-up micro-test, and a rollout checklist (privacy controls, storage, and metrics to confirm improved completion rates) so I can implement changes within two weeks.",
+      "prev_event": "Led a brief internal usability test of an intake workflow with three volunteers, refined field order and validation rules, and felt rewarded by the immediate improvement in questionnaire completion rates.",
+      "context_can_add": {
+        "current_fields_and_metrics": "User would like to paste the current JSON or list of intake fields and the recent completion/abandonment metrics (e.g., step-by-step dropoff percentages). This helps the assistant recommend exact field reorderings, which fields to make optional/required, and where validation or progressive disclosure will have the biggest impact. This item describes field types (name, DOB, SSN, address, phone, case-type) but does not need to include specific client values unless the user chooses to share them.",
+        "anonymized_sample_response": "User could share one or two anonymized filled-in responses (synthetic but realistic) that show where volunteers encountered errors or left the form. This would likely include private data types (name, date of birth, phone, partial SSN or last4, and address) and helps reproduce validation failures and timing issues; if shared, the assistant should treat them as sensitive and focus on structural/UX fixes rather than the content.",
+        "storage_and_compliance": "User can state where intake data is currently stored (e.g., Google Drive folder, shared drive, or a CRM), the account or contact responsible for storage (e.g., an admin email), and whether data is subject to special rules (HIPAA, CCPA). This is relevant because recommendations must include masking, retention policies, and secure rollout steps tailored to the actual storage and compliance constraints. The user might share an admin contact email and a folder path as private operational details.",
+        "timeline_and_budget": "User can share the implementation deadline (e.g., must deploy changes in two weeks), available volunteer/test sessions, and a small budget for engineering or tooling (e.g., $1,000). These are operationally sensitive details that will shape the scope of recommendations (quick UX tweaks vs. full platform changes) and the suggested monitoring plan."
+      },
+      "sensitive_info": {
+        "anonymized_sample_response": [
+          "Name: Maria Alvarez; DOB: 1985-07-12; Phone: 555-987-6543; Address: 4567 Elm St, Springfield, CA 94107; SSN (last4): 6789"
+        ],
+        "storage_account_email": [
+          "carlos.ramirez@goggle.com"
+        ],
+        "storage_path": [
+          "/LegalClinic/Intake/2026/IntakeSheets"
+        ],
+        "timeline_deadline": [
+          "2026-04-21"
+        ],
+        "budget": [
+          "1000"
+        ]
+      },
+      "sensitive_values": [
+        "Name: Maria Alvarez; DOB: 1985-07-12; Phone: 555-987-6543; Address: 4567 Elm St, Springfield, CA 94107; SSN (last4): 6789",
+        "carlos.ramirez@goggle.com",
+        "/LegalClinic/Intake/2026/IntakeSheets",
+        "2026-04-21",
+        "1000"
+      ],
+      "conversation_block": {
+        "timestamp": "03/22/2024-I05",
+        "event_text": "Led a brief internal usability test of an intake workflow with three volunteers, refined field order and validation rules, and felt rewarded by the immediate improvement in questionnaire completion rates.",
+        "start_index": 88,
+        "lines": [
+          "Side_Note: [Led a brief internal usability test of an intake workflow with three volunteers, refined field order and validation rules, and felt rewarded by the immediate improvement in questionnaire completion rates.] 03/22/2024-I05",
+          "User: Help me convert the volunteer test findings into a concrete plan: propose a reordered intake form with field order and validation/masking, a short script for volunteers to run a follow-up micro-test, and a rollout checklist covering privacy controls, storage, and metrics to confirm improved completion rates. For background I can share an anonymized sample response separately, storage account contact carlos.ramirez@goggle.com and path /LegalClinic/Intake/2026/IntakeSheets, the deadline to deploy is April 21, 2026, and I have about $1,000 budget.",
+          "Assistant: Recommended reordered intake form with validations and masking: 1) Triage: 'Case type' (required dropdown) to route the intake; 2) Contact: First name (required), Last name (required), Preferred contact method (phone/email). Phone entry: accept digits only, require 10 digits, format as (###) ###-#### in the UI, store encrypted and display masked; 3) Dates: DOB — validate as a past date and enforce any minimum-age rules; do not collect full SSN (only last4 if absolutely necessary), mark last4 as optional, accept exactly 4 digits, mask and encrypt at rest; 4) Address: Street, City, State, ZIP — enable autocomplete and validate ZIP format; 5) Matter details: short description (required, 300-char limit), uploads prompt (allowed types and max size); 6) Consent & privacy: required checkbox with brief storage/retention notice and consent logging. Validation & masking rules (practical specifics): strip non-digits from phone, enforce length, show masked values in the UI; reject future DOBs and flag improbable ages; accept last4 SSN only as 4 digits, store masked/encrypted and prefer alternatives to collecting it; restrict uploads to PDF/JPG/PNG, virus-scan on ingest, and store minimal metadata. Volunteer micro-test script (short, low-effort): 1) 30s welcome/objective: explain we’re testing field order and validation; 2) 5–7 min task: complete the intake using the anonymized persona you shared and attempt an upload; 3) 3 min observation: note where you hesitated or hit validation errors; 4) 5 min verbal debrief: state one thing that confused you and one suggested improvement. Rollout checklist for carlos.ramirez@goggle.com (storage admin) and deployment: - Confirm folder /LegalClinic/Intake/2026/IntakeSheets exists and has restricted access; - Ensure server-side encryption at rest for PII fields (DOB, phone, last4 SSN) and that uploads are virus-scanned on ingest; - Implement UI masking for PII and verify encryption keys/permissions with the storage admin; - Add a short privacy notice, a retention schedule (retain for a defined period then archive/delete), and log consent; - Run a test ingest with one volunteer and review access logs and encryption/masking behavior; - Configure monitoring: baseline overall completion rate, step-by-step dropoff, and average time to complete, then compare to two-week post-deploy metrics. Deployment timeline and budget-conscious steps given your deadline and ~$1,000 budget: Week 1 — implement field reorder, basic client-side and server-side validation, and run the volunteer micro-tests (volunteer time keeps costs low); Week 2 — finalize masking/encryption settings with the storage admin, deploy the form, and begin metric collection and short-term monitoring. I will produce the exact JSON schema for the intake fields and a one‑page tester checklist you can hand to volunteers, and I can include a CSV variant for easier review."
+        ]
+      },
+      "future_conflicts": {
+        "reused_sensitive_info": [
+          {
+            "section": "Interaction History Intermediate Stage",
+            "timestamp": "03/30/2026-I01",
+            "event_id": "I_MONTH_001",
+            "source_event_id": "E_MONTH_004",
+            "matched_values": [
+              "carlos.ramirez@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "05/01/2026-I02",
+            "event_id": "I_YEAR_002",
+            "source_event_id": "E_YEAR_006",
+            "matched_values": [
+              "carlos.ramirez@goggle.com"
+            ]
+          },
+          {
+            "section": "Interaction History Late Stage",
+            "timestamp": "09/01/2026-I03",
+            "event_id": "I_YEAR_003",
+            "source_event_id": "E_YEAR_009",
+            "matched_values": [
+              "carlos.ramirez@goggle.com"
+            ]
+          }
+        ],
+        "reused_context_can_add": [],
+        "event_lineage_reuse": [],
+        "similar_task_goals": []
+      },
+      "earlier_duplicate_sensitive_values": [],
+      "later_duplicate_sensitive_values": [],
+      "prefer_as_key": true,
+      "future_conflict_count": 3,
+      "needs_revision": true
+    }
+  ],
+  "rejected_turns": []
+}
