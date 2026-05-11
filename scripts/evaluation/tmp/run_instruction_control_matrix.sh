@@ -113,7 +113,8 @@ run_plain() {
     return
   fi
   echo "RUN plain $model $world $ask_period -> $output_path"
-  conda run -n agent python -m memory_control_tests.evaluation.evaluate_recall_mcqs \
+  conda run -n agent python -m memory_control_tests.evaluation.mem_evals \
+    --method plain \
     --rendered "$rendered" \
     --model "$model" \
     --world "$world" \

@@ -93,7 +93,8 @@ run_plain_case() {
   if [[ -n "$release" ]]; then
     extra_args+=(--no_use_release_period "$release")
   fi
-  "$AGENT_PY" -m memory_control_tests.evaluation.evaluate_recall_mcqs \
+  "$AGENT_PY" -m memory_control_tests.evaluation.mem_evals \
+    --method plain \
     --rendered "$rendered" \
     --model "$MODEL" \
     --world "$world" \

@@ -68,6 +68,8 @@ run_langmem_case() {
     --model "$MODEL" \
     --world "$world" \
     --ask_period "$ask_period" \
+    --api_key_file "keys/openrouter_key.txt" \
+    --preload_batch_size 2 \
     "${extra_args[@]}" \
     --output "$out"
 }
