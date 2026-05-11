@@ -22,20 +22,28 @@ SUMMARY_KEYS = [
 ]
 
 
-def _backend_from_name(name: str) -> Optional[str]:
-    if ".mem0_retrieval_eval_" in name:
+def _backend_from_name(text: str) -> Optional[str]:
+    if ".mem0_retrieval_eval_" in text:
         return "mem0"
-    if ".a_mem_retrieval_eval_" in name:
+    if ".a_mem_retrieval_eval_" in text:
         return "A-Mem"
-    if ".langmem_retrieval_eval_" in name:
+    if ".langmem_retrieval_eval_" in text:
         return "LangMem"
-    if ".recall_eval_" in name:
+    if ".zep_retrieval_eval_" in text:
+        return "Zep"
+    if ".memoryos_retrieval_eval_" in text:
+        return "MemoryOS"
+    if ".memtree_retrieval_eval_" in text:
+        return "MemTree"
+    if ".raw_eval_" in text:
+        return "plain"
+    if ".recall_eval_" in text:
         return "plain"
     return None
 
 
-def _persona_from_name(name: str) -> Optional[int]:
-    match = re.search(r"persona(\d+)_sample", name)
+def _persona_from_name(text: str) -> Optional[int]:
+    match = re.search(r"persona(\d+)_sample", text)
     return int(match.group(1)) if match else None
 
 
@@ -93,26 +101,36 @@ def _load_candidate_paths(input_roots: Iterable[Path]) -> List[Path]:
     return out
 
 
+_REASONING_DIR_RE = re.compile(r"_reasoning_(low|medium|high)(?:/|$)")
+
+
+def _reasoning_effort_from_path(path_str: str) -> str:
+    match = _REASONING_DIR_RE.search(path_str)
+    return match.group(1) if match else ""
+
+
 def _load_records(input_roots: Iterable[Path], models: Iterable[str]) -> List[Dict[str, Any]]:
     records: List[Dict[str, Any]] = []
     model_set = set(models)
     for path in _load_candidate_paths(input_roots):
-        backend = _backend_from_name(path.name)
+        backend = _backend_from_name(path.as_posix())
         if backend is None:
             continue
         data = json.loads(path.read_text(encoding="utf-8"))
         model = data.get("model", "")
         if model not in model_set:
             continue
-        persona = _persona_from_name(path.name)
+        persona = _persona_from_name(path.as_posix())
         if persona is None:
             continue
+        reasoning_effort = data.get("reasoning_effort", "") or _reasoning_effort_from_path(path.as_posix())
         records.append(
             {
                 "path": str(path),
                 "name": path.name,
                 "backend": backend,
                 "model": model,
+                "reasoning_effort": reasoning_effort,
                 "world": data.get("world", ""),
                 "persona": persona,
                 "ask_period": data.get("ask_period", "Conversation Late Stage"),

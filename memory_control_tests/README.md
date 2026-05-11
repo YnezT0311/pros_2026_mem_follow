@@ -26,13 +26,13 @@ Run the pipeline in this order:
 4. export final QA files
    - `python -m memory_control_tests.generation.export_test_benchmark --source_dir data/test`
 5. run evaluation
-   - plain:
-     - `python -m memory_control_tests.evaluation.evaluate_recall_mcqs --rendered ...`
-   - memory-backed:
-     - `python -m memory_control_tests.evaluation.evaluate_mem0_recall_mcqs --rendered ...`
-     - `python -m memory_control_tests.evaluation.evaluate_amem_recall_mcqs --rendered ...`
-     - `python -m memory_control_tests.evaluation.evaluate_langmem_recall_mcqs --rendered ...`
-     - `python -m memory_control_tests.evaluation.evaluate_zep_recall_mcqs --rendered ...`
+   - unified entry point:
+     - `python -m memory_control_tests.evaluation.mem_evals --rendered ... --method plain --world baseline`
+     - `--method` accepts `plain | mem0 | langmem | amem | zep`
+   - score raw outputs:
+     - single file: `python -m memory_control_tests.evaluation.scores --path eval_results/.../foo.json`
+     - bulk in-place over a tree: `python -m memory_control_tests.evaluation.scores --path eval_results/ --write_in_place`
+     - add `--rebuild_summary` to also recompute the `summary` block
 
 The design is built around one principle: we first stabilize a clean baseline world, and only then apply memory-control interventions.
 
@@ -50,6 +50,21 @@ The intended workflow is:
 7. evaluate with fixed MCQ sets over the transformed context
 
 The main design choice is that we do **not** materialize a separate static world for every gap condition. Instead, we keep one baseline conversation and insert instruction/reply turns on the fly during evaluation.
+
+## Raw Output Then Scoring
+
+The recommended evaluation flow is two-stage:
+
+1. run the evaluator to save raw model outputs
+2. run `scores.py` to parse answer labels and compute summaries
+
+This is especially useful for plain API models because it lets us:
+
+- reuse old raw outputs when we improve answer parsing
+- add new scoring analyses without rerunning the model
+- keep model execution separate from result interpretation
+
+For plain API evaluation, the script now builds the conversation context incrementally by stage before sending the final prompt, instead of rebuilding the full history structure multiple times inside the evaluator logic.
 
 ## Baseline World
 
@@ -680,11 +695,13 @@ Because of this, `key` and `probe` rates should never be merged during analysis 
 
 ## Plain API Evaluation
 
-The plain evaluator is implemented in:
+The plain evaluator runs through the unified entry point with `--method plain`:
 
-- `evaluation/evaluate_recall_mcqs.py`
+- `evaluation/mem_evals.py` + `evaluation/methods/plain/`
 
 It does not use an external memory system. Instead, it measures what `gpt-5.4-mini` can recover directly from the truncated conversation context that is already inside the API request.
+
+Because plain has no shared memory state across MCQs, the adapter declares `supports_parallel_mcq = True`. `mem_evals.py` then dispatches MCQ scoring through a `ThreadPoolExecutor` sized by `--workers` (default 10). Memory-backed adapters keep the sequential path because their preload state is shared.
 
 The runtime flow is:
 
@@ -703,7 +720,7 @@ This is the reference condition for all memory-system comparisons.
 
 The Mem0 evaluator is implemented in:
 
-- `evaluation/evaluate_mem0_recall_mcqs.py`
+- `evaluation/methods/mem0/` (adapter) + `evaluation/mem_evals.py --method mem0` (entry point)
 
 ### Runtime Logic
 
@@ -727,23 +744,40 @@ This implementation uses Mem0's retrieval backend, which already includes the pa
 
 Mem0's paper positions the system as a memory-centric architecture that extracts, consolidates, and retrieves salient information for long-horizon agents. That write-time extraction and consolidation path is the behavior used here. Mem0's product stack now also includes broader platform features such as hosted infrastructure, multi-level user/session/agent memory scopes, and agent-framework integrations, including OpenAI Agents SDK support. Those product integrations are not required for the benchmark path here; the primary evaluation path is the core `add -> search -> answer` loop.
 
+### Self-Hosted vs Managed
+
+The mem0 paper's `mem0_official/evaluation/` runs against the managed `MemoryClient` (mem0.ai SaaS), where the service handles fact-extraction, UPDATE_MEMORY validation, and history storage internally. This benchmark instead runs **self-hosted** mem0 (`from mem0 import Memory` with local Qdrant + history db), to keep the comparison apples-to-apples with the other self-hosted backends (A-Mem, LangMem) under the same OpenRouter model.
+
+Self-hosting + a smaller OpenRouter LLM is more error-prone in the UPDATE_MEMORY step (the LLM occasionally hallucinates memory IDs that the managed service would reject). To compensate, `methods/mem0/_patches.py` reproduces the managed-side validation:
+
+- a **strict UPDATE_MEMORY prompt** (`MEM0_STRICT_UPDATE_MEMORY_PROMPT`) prepended to the action prompt so the LLM is told not to invent IDs
+- an **action guard** that drops UPDATE/DELETE actions referencing IDs not in the current-memory block (and rewrites them as ADD when the action carries text)
+- a **history-write disable** that silences the local sqlite history table so parallel workers don't contend on the lock
+
+These patches are applied automatically when the `mem0` adapter builds its `Memory` instance. They are not modifications to mem0 itself; they are workarounds for differences between self-hosted and managed mem0 that surface only with smaller LLMs.
+
 ### Command
 
 ```bash
-conda run -n mem0 python -m memory_control_tests.evaluation.evaluate_mem0_recall_mcqs \
+conda run -n mem0 python -m memory_control_tests.evaluation.mem_evals \
+  --method mem0 \
   --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
   --model gpt-5.4-mini \
-  --backend retrieval \
   --world baseline
 ```
 
-An optional `openai_agents` backend is also implemented for integration experiments, but the benchmark path is the retrieval backend above.
+The mem0 adapter accepts a few self-hosting flags:
+
+- `--mem0_runtime_root <path>` — where to put the local Qdrant store and history db (default: `data/runtime/mem0/<world>/<persona-stem>/`)
+- `--mem0_keep_runtime` — reuse the existing on-disk store instead of resetting it before each run
+
+The adapter records the LLM calls mem0 makes during `add()` (prompt + response) into `method_debug.preload.llm_call_trace`. This is wrapping only — no extra LLM calls — and is useful for diagnosing why mem0 extracted (or failed to extract) a particular fact.
 
 ## A-Mem Evaluation
 
 The A-Mem evaluator is implemented in:
 
-- `evaluation/evaluate_amem_recall_mcqs.py`
+- `evaluation/methods/amem/` (adapter) + `evaluation/methods/vendor/amem/amem.py` (wrapper around the cloned A-Mem repo) + `evaluation/mem_evals.py --method amem` (entry point)
 
 ### Runtime Logic
 
@@ -774,17 +808,20 @@ The A-Mem paper centers on dynamic note construction, linking, and memory evolut
 
 ```bash
 HF_HOME=/home/yao/.cache/huggingface TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
-conda run -n amem python -m memory_control_tests.evaluation.evaluate_amem_recall_mcqs \
+conda run -n amem python -m memory_control_tests.evaluation.mem_evals \
+  --method amem \
   --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
   --model gpt-5.4-mini \
   --world baseline
 ```
 
+A-Mem is imported from a clone of the official repo (default: `/mnt/yao_data/proj_2026_agent/A-mem`). Override with `AMEM_REPO_ROOT=...`.
+
 ## LangMem Evaluation
 
 The LangMem evaluator is implemented in:
 
-- `evaluation/evaluate_langmem_recall_mcqs.py`
+- `evaluation/methods/langmem/` (adapter) + `evaluation/mem_evals.py --method langmem` (entry point)
 
 ### Runtime Logic
 
@@ -818,7 +855,8 @@ The broader LangMem product/library surface also includes richer store backends,
 ### Command
 
 ```bash
-conda run -n langmem311 python -m memory_control_tests.evaluation.evaluate_langmem_recall_mcqs \
+conda run -n langmem311 python -m memory_control_tests.evaluation.mem_evals \
+  --method langmem \
   --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
   --model gpt-5.4-mini \
   --world baseline
@@ -828,7 +866,7 @@ conda run -n langmem311 python -m memory_control_tests.evaluation.evaluate_langm
 
 The Zep evaluator is implemented in:
 
-- `evaluation/evaluate_zep_recall_mcqs.py`
+- `evaluation/methods/zep/` (adapter) + `evaluation/mem_evals.py --method zep` (entry point)
 
 ### Runtime Logic
 
@@ -864,13 +902,14 @@ The benchmark uses Zep's managed thread/context API, so it exercises Graphiti's 
 ### Command
 
 ```bash
-conda run -n zep311 python -m memory_control_tests.evaluation.evaluate_zep_recall_mcqs \
+conda run -n zep311 python -m memory_control_tests.evaluation.mem_evals \
+  --method zep \
   --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
   --model gpt-5.4-mini \
   --world baseline
 ```
 
-This evaluator reads credentials from environment variables or local files:
+The evaluator reads credentials from environment variables or local files:
 
 - `OPENROUTER_API_KEY` or `keys/openrouter_key.txt`
 - `ZEP_API_KEY` or `keys/zep_api_key.txt`

@@ -543,7 +543,7 @@ class QueryLLM:
         prompt = self._append_pii_constraints(step, prompt)
 
         # Independent API calls every time
-        if (step == 'expand_persona' or step == 'qa_helper' or step == 'expand_conversation_section' or step == 'translate_code'
+        if (step == 'expand_persona' or step == 'elaborate_topic' or step == 'qa_helper' or step == 'expand_conversation_section' or step == 'translate_code'
                 or step == 'rewrite_email' or step == 'rewrite_creative_writing' or step == 'new_content' or step == 'find_stereotype'
                 or step == 'select_interaction_events' or step == 'derive_interaction_details'
                 or step.startswith('reflect_')):
@@ -557,7 +557,10 @@ class QueryLLM:
                 if verbose:
                     print(f'{utils.Colors.OKGREEN}{step.capitalize()}:{utils.Colors.ENDC} {response}')
             except Exception as e:
-                raise RuntimeError(f"LLM call failed at step={step}: {e}") from None
+                raise RuntimeError(
+                    f"LLM call failed at step={step}: {e!r} "
+                    f"(type={type(e).__name__}, cause={e.__cause__!r}, context={e.__context__!r})"
+                ) from None
 
         # API calls within a thread in a multi-turn fashion
         else:
@@ -590,7 +593,10 @@ class QueryLLM:
                         print(f'{utils.Colors.OKGREEN}{topic}{utils.Colors.ENDC}' if topic else '')
                         print(f'{utils.Colors.OKGREEN}{step.capitalize()}:{utils.Colors.ENDC} {response}')
             except Exception as e:
-                raise RuntimeError(f"LLM threaded call failed at step={step}: {e}") from None
+                raise RuntimeError(
+                    f"LLM threaded call failed at step={step}: {e!r} "
+                    f"(type={type(e).__name__}, cause={e.__cause__!r}, context={e.__context__!r})"
+                ) from None
 
         # Save general personal history to be shared across contexts
         if idx_topic == 0:

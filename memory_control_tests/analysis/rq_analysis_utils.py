@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from html import escape
 from pathlib import Path
+from math import isnan
 from statistics import mean
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
@@ -10,10 +11,20 @@ import json
 from memory_control_tests.analysis.summarize_instruction_control_results import _load_records
 
 
-ROOT = Path("/mnt/yao_data/proj_2026_agent/PersonaMem-main")
+ROOT = Path("/mnt/yao_data/proj_2026_agent/MemoryCtrl")
 DATA_ROOT = ROOT / "data/test/travelPlanning/specs"
 EVAL_ROOT = ROOT / "eval_results/travelPlanning"
-MODELS = ["gpt-4o", "gpt-5.4-mini"]
+MODELS = [
+    "gpt-4o",
+    "gpt-5.4-mini",
+    "openai/gpt-5.4-mini",
+    "openai/gpt-5.4",
+    "openai/gpt-5.5",
+    "anthropic/claude-sonnet-4.6",
+    "anthropic/claude-opus-4.7",
+    "gemini-3.1-pro-preview",
+    "google/gemini-3.1-pro-preview",
+]
 EXTRA_MODELS = ["openai/gpt-5.3-chat"]
 EXPECTED_COUNTS = {"baseline": 12, "no_store": 12, "forget": 30, "no_use": 32}
 PERSONA_LIMITS = {"baseline": 4, "no_store": 4, "forget": 10, "no_use": 4}
@@ -30,56 +41,119 @@ STAGE_LABELS = {
 SYSTEM_ORDER = [
     "GPT-4o",
     "GPT-5.4-mini",
+    "GPT-5.4",
+    "GPT-5.5",
+    "Claude Sonnet 4.6",
+    "Claude Opus 4.7",
+    "Gemini 3.1 Pro",
     "GPT-4o + mem0",
-    "GPT-5.4-mini + mem0",
     "GPT-4o + A-Mem",
-    "GPT-5.4-mini + A-Mem",
     "GPT-4o + LangMem",
+    "GPT-5.4-mini + mem0",
+    "GPT-5.4-mini + A-Mem",
     "GPT-5.4-mini + LangMem",
+    "GPT-5.4-mini + Zep",
+    "GPT-5.4-mini + MemoryOS",
+    "GPT-5.4-mini + MemTree",
 ]
 SYSTEM_GROUPS = {
-    "API Models": ["GPT-4o", "GPT-5.4-mini"],
-    "Memory Systems": [
+    "API Models": [
+        "GPT-4o",
+        "GPT-5.4-mini",
+        "GPT-5.4",
+        "GPT-5.5",
+        "Claude Sonnet 4.6",
+        "Claude Opus 4.7",
+        "Gemini 3.1 Pro",
+    ],
+    "Memory Systems (GPT-4o)": [
         "GPT-4o + mem0",
-        "GPT-5.4-mini + mem0",
         "GPT-4o + A-Mem",
-        "GPT-5.4-mini + A-Mem",
         "GPT-4o + LangMem",
+    ],
+    "Memory Systems (GPT-5.4-mini)": [
+        "GPT-5.4-mini + mem0",
+        "GPT-5.4-mini + A-Mem",
         "GPT-5.4-mini + LangMem",
+        "GPT-5.4-mini + Zep",
+        "GPT-5.4-mini + MemoryOS",
+        "GPT-5.4-mini + MemTree",
     ],
 }
 WORLD_COLORS = {"no_store": "#1f77b4", "forget": "#d62728", "no_use": "#2ca02c"}
 API_COLORS = {
     "GPT-4o": "#1f77b4",
+    "Claude Sonnet 4.6": "#9467bd",
+    "Claude Opus 4.7": "#54278f",
+    "GPT-5.4": "#8c2d04",
+    "GPT-5.5": "#a63603",
+    "Gemini 3.1 Pro": "#ff7f0e",
     "GPT-5.4-mini": "#d62728",
     "GPT-5.3": "#2ca02c",
     "ChatGPT (5.3)": "#2ca02c",
 }
 SHORT_LABELS = {
     "GPT-4o": "4o",
+    "Claude Sonnet 4.6": "Claude-4.6",
+    "Claude Opus 4.7": "Opus-4.7",
+    "GPT-5.4": "5.4",
+    "GPT-5.5": "5.5",
+    "Gemini 3.1 Pro": "Gemini-3.1",
     "GPT-5.4-mini": "5.4-mini",
     "GPT-4o + mem0": "4o+mem0",
-    "GPT-5.4-mini + mem0": "5.4+mem0",
     "GPT-4o + A-Mem": "4o+A-Mem",
-    "GPT-5.4-mini + A-Mem": "5.4+A-Mem",
     "GPT-4o + LangMem": "4o+LangMem",
-    "GPT-5.4-mini + LangMem": "5.4+LangMem",
     "GPT-5.3 + LangMem": "5.3+LangMem",
     "ChatGPT (5.3)": "ChatGPT",
 }
 
 
+def _api_model_label(model_name: str) -> str:
+    mapping = {
+        "gpt-4o": "GPT-4o",
+        "gpt-4o-mini": "GPT-4o-mini",
+        "gpt-5.4-mini": "GPT-5.4-mini",
+        "openai/gpt-5.4-mini": "GPT-5.4-mini",
+        "openai/gpt-5.4": "GPT-5.4",
+        "openai/gpt-5.5": "GPT-5.5",
+        "openai/gpt-5.3-chat": "GPT-5.3",
+        "anthropic/claude-sonnet-4.6": "Claude Sonnet 4.6",
+        "anthropic/claude-opus-4.7": "Claude Opus 4.7",
+        "gemini-3.1-pro-preview": "Gemini 3.1 Pro",
+        "google/gemini-3.1-pro-preview": "Gemini 3.1 Pro",
+    }
+    return mapping.get(model_name, model_name)
+
+
 def system_label(rec: Dict[str, Any]) -> str:
-    model = "GPT-4o" if rec["model"] == "gpt-4o" else "GPT-5.4-mini"
-    if rec["backend"] == "plain":
+    model = _api_model_label(rec["model"])
+    backend = rec["backend"]
+    if backend == "plain":
+        if rec.get("reasoning_effort"):
+            return f"{model} + reasoning"
         return model
-    return f"{model} + {rec['backend']}"
+    backend_label = {
+        "mem0": "mem0",
+        "mem0_retrieval": "mem0",
+        "LangMem": "LangMem",
+        "langmem_retrieval": "LangMem",
+        "A-Mem": "A-Mem",
+        "a_mem_retrieval": "A-Mem",
+        "Zep": "Zep",
+        "zep_retrieval": "Zep",
+        "MemoryOS": "MemoryOS",
+        "memoryos_retrieval": "MemoryOS",
+        "MemTree": "MemTree",
+        "memtree_retrieval": "MemTree",
+    }.get(backend, backend)
+    return f"{model} + {backend_label}"
 
 
 def _record_key(rec: Dict[str, Any]) -> Tuple[Any, ...]:
     return (
         rec["backend"],
         rec["model"],
+        rec.get("reasoning_effort", ""),
         rec["world"],
         rec["persona"],
         rec["ask_period"],
@@ -88,12 +162,12 @@ def _record_key(rec: Dict[str, Any]) -> Tuple[Any, ...]:
     )
 
 
-def load_complete_records() -> List[Dict[str, Any]]:
+def load_complete_records(*, include_zep: bool = True) -> List[Dict[str, Any]]:
     raw = _load_records([DATA_ROOT, EVAL_ROOT], MODELS)
     dedup: Dict[Tuple[Any, ...], Dict[str, Any]] = {}
     for rec in raw:
         label = system_label(rec)
-        if "Zep" in label:
+        if not include_zep and "Zep" in label:
             continue
         key = _record_key(rec)
         current = dedup.get(key)
@@ -138,6 +212,10 @@ def _safe_mean(values: List[float]) -> float:
     return mean(values) if values else float("nan")
 
 
+def _is_missing(value: Optional[float]) -> bool:
+    return value is None or (isinstance(value, float) and isnan(value))
+
+
 def _combined_answer_rate(items: List[Dict[str, Any]], answer_type: str) -> float:
     if not items:
         return float("nan")
@@ -178,15 +256,27 @@ def q1_q2_rows(records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 def q1_q2_mean_row(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
     out: Dict[str, Any] = {"System": "Mean", "Baseline_FPR": None}
-    out["Baseline_TPR"] = _safe_mean([row["Baseline_TPR"] for row in rows])
+    out["Baseline_TPR"] = _safe_mean([row["Baseline_TPR"] for row in rows if not _is_missing(row["Baseline_TPR"])])
     for world in ["no_store", "forget", "no_use"]:
-        out[f"{world}_FPR"] = _safe_mean([row[f"{world}_FPR"] for row in rows])
-        out[f"{world}_DeltaTPR"] = _safe_mean([row[f"{world}_DeltaTPR"] for row in rows])
+        out[f"{world}_FPR"] = _safe_mean([row[f"{world}_FPR"] for row in rows if not _is_missing(row[f"{world}_FPR"])])
+        out[f"{world}_DeltaTPR"] = _safe_mean([row[f"{world}_DeltaTPR"] for row in rows if not _is_missing(row[f"{world}_DeltaTPR"])])
     return out
 
 
+def _q1_q2_hidden_systems() -> set[str]:
+    return set()
+
+
+def _filtered_q1_q2_rows(records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    hidden = _q1_q2_hidden_systems()
+    return [
+        row for row in q1_q2_rows(records)
+        if row["System"] not in hidden and not _is_missing(row["Baseline_TPR"])
+    ]
+
+
 def q1_q2_html_table(records: List[Dict[str, Any]]) -> str:
-    rows = q1_q2_rows(records)
+    rows = _filtered_q1_q2_rows(records)
     rows.append(q1_q2_mean_row(rows))
     lines = [
         "<table>",
@@ -196,13 +286,11 @@ def q1_q2_html_table(records: List[Dict[str, Any]]) -> str:
         "<th colspan='1'>Baseline</th>",
         "<th colspan='1'>No-store</th>",
         "<th colspan='1'>Forget</th>",
-        "<th colspan='1'>No-use</th>",
         "</tr>",
         "<tr>",
-        "<th>TPR</th>",
-        "<th>FPR (ΔTPR)</th>",
-        "<th>FPR (ΔTPR)</th>",
-        "<th>FPR (ΔTPR)</th>",
+        "<th>Utility</th>",
+        "<th>Violation (ΔUtility)</th>",
+        "<th>Violation (ΔUtility)</th>",
         "</tr>",
         "</thead>",
         "<tbody>",
@@ -211,34 +299,211 @@ def q1_q2_html_table(records: List[Dict[str, Any]]) -> str:
         lines.append("<tr>")
         lines.append(f"<td>{escape(row['System'])}</td>")
         lines.append(f"<td>{row['Baseline_TPR']:.2f}</td>")
-        for world in ["no_store", "forget", "no_use"]:
+        for world in ["no_store", "forget"]:
             lines.append(f"<td>{row[f'{world}_FPR']:.2f} ({row[f'{world}_DeltaTPR']:+.2f})</td>")
         lines.append("</tr>")
     lines.append("</tbody></table>")
     return "\n".join(lines)
 
 
+# ---- split whole/slot variants (per CLAUDE.md guidance: don't merge whole+slot) ----
+
+def _record_probe_rate_split(rec: Dict[str, Any], qa_family: str) -> float:
+    """qa_family ∈ {"whole", "slot"}: returns the probe-turn TPR for that family."""
+    return _summary_rate(rec["summary"], f"{qa_family}_recall_probe_turns", "remember_correct_rate")
+
+
+def _record_key_rate_split(rec: Dict[str, Any], qa_family: str) -> Optional[float]:
+    if rec["world"] == "baseline":
+        return None
+    return _summary_rate(rec["summary"], f"{qa_family}_recall_key_turns", "remember_correct_rate")
+
+
+def q1_q2_rows_split(records: List[Dict[str, Any]], qa_family: str) -> List[Dict[str, Any]]:
+    """Same shape as q1_q2_rows() but per-family (whole or slot)."""
+    rows = []
+    for label in SYSTEM_ORDER:
+        baseline_recs = _world_records(records, label, "baseline")
+        baseline_tpr_vals = [_record_probe_rate_split(r, qa_family) for r in baseline_recs]
+        baseline_tpr = _safe_mean(baseline_tpr_vals) if baseline_tpr_vals else float("nan")
+        row: Dict[str, Any] = {
+            "System": label,
+            "Baseline_TPR": baseline_tpr,
+            "n_baseline": len(baseline_recs),
+        }
+        for world in ["no_store", "forget", "no_use"]:
+            world_recs = _world_records(records, label, world)
+            fpr_vals = [
+                v for v in (_record_key_rate_split(r, qa_family) for r in world_recs)
+                if v is not None
+            ]
+            tpr_vals = [_record_probe_rate_split(r, qa_family) for r in world_recs]
+            row[f"{world}_FPR"] = _safe_mean(fpr_vals) if fpr_vals else float("nan")
+            row[f"{world}_TPR"] = _safe_mean(tpr_vals) if tpr_vals else float("nan")
+            row[f"{world}_DeltaTPR"] = (
+                row[f"{world}_TPR"] - baseline_tpr
+                if not _is_missing(baseline_tpr) and not _is_missing(row[f"{world}_TPR"])
+                else float("nan")
+            )
+            row[f"n_{world}"] = len(world_recs)
+        rows.append(row)
+    return rows
+
+
+def q1_q2_html_table_split(records: List[Dict[str, Any]], qa_family: str, *, title: str = "") -> str:
+    """One HTML table per qa_family (whole or slot).
+
+    Cells:
+      Baseline column → Utility (TPR over probe turns)
+      No-store / Forget columns → 'FPR (ΔTPR)' = key-turn leakage and probe-utility delta vs. baseline
+    """
+    rows = q1_q2_rows_split(records, qa_family)
+    # Group rows by SYSTEM_GROUPS heading; emit one tbody section per group.
+    rows_by_label = {r["System"]: r for r in rows}
+
+    def fmt_pct(x: Any) -> str:
+        if x is None or _is_missing(x):
+            return "—"
+        return f"{x:.2f}"
+
+    def fmt_delta(x: Any) -> str:
+        if x is None or _is_missing(x):
+            return ""
+        return f" ({x:+.2f})"
+
+    def cell_baseline(r: Dict[str, Any]) -> str:
+        return fmt_pct(r.get("Baseline_TPR"))
+
+    def cell_world(r: Dict[str, Any], world: str) -> str:
+        # If we have no records for this world (e.g. Zep gpt-5.4-mini outside baseline), show "—".
+        if r.get(f"n_{world}", 0) == 0:
+            return "—"
+        return fmt_pct(r.get(f"{world}_FPR")) + fmt_delta(r.get(f"{world}_DeltaTPR"))
+
+    title_html = f"<h3 class='split-table-title'>{escape(title)}</h3>" if title else ""
+    lines: List[str] = [
+        title_html,
+        "<table class='split-table'>",
+        "<thead>",
+        "<tr>",
+        "<th rowspan='2' class='sys-col'>System</th>",
+        "<th class='baseline-col'>Baseline</th>",
+        "<th>No-store</th>",
+        "<th>Forget</th>",
+        "</tr>",
+        "<tr>",
+        "<th class='baseline-col'>Utility</th>",
+        "<th>Violation (Δ Utility)</th>",
+        "<th>Violation (Δ Utility)</th>",
+        "</tr>",
+        "</thead>",
+        "<tbody>",
+    ]
+    for group_name, labels in SYSTEM_GROUPS.items():
+        group_rows = [rows_by_label.get(label) for label in labels]
+        group_rows = [r for r in group_rows if r is not None]
+        if not group_rows:
+            continue
+        lines.append(
+            f"<tr class='group-header'><td colspan='4'>{escape(group_name)}</td></tr>"
+        )
+        for r in group_rows:
+            # If a system has zero records anywhere, render an all-"—" placeholder row
+            n_total = r.get("n_baseline", 0) + r.get("n_no_store", 0) + r.get("n_forget", 0)
+            if n_total == 0:
+                lines.append(
+                    f"<tr class='placeholder-row'>"
+                    f"<td>{escape(r['System'])}</td>"
+                    f"<td>—</td><td>—</td><td>—</td>"
+                    f"</tr>"
+                )
+                continue
+            lines.append(
+                f"<tr>"
+                f"<td>{escape(r['System'])}</td>"
+                f"<td class='baseline-col'>{cell_baseline(r)}</td>"
+                f"<td>{cell_world(r, 'no_store')}</td>"
+                f"<td>{cell_world(r, 'forget')}</td>"
+                f"</tr>"
+            )
+
+    # Web (browser-based) systems: ChatGPT and Claude (two model variants).
+    # ΔTPR is computed against EACH system's own baseline.
+    def _web_cell(fpr: Optional[float], tpr: Optional[float], base_tpr: Optional[float]) -> str:
+        if fpr is None and tpr is None:
+            return "—"
+        s = fmt_pct(fpr) if fpr is not None else "—"
+        if tpr is not None and base_tpr is not None:
+            s += f" ({tpr - base_tpr:+.2f})"
+        return s
+
+    def _web_row(label: str, base_fpr_tpr, ns_fpr_tpr, fg_fpr_tpr) -> str:
+        base_fpr, base_tpr = base_fpr_tpr
+        ns_fpr, ns_tpr = ns_fpr_tpr
+        fg_fpr, fg_tpr = fg_fpr_tpr
+        baseline_cell = fmt_pct(base_tpr) if base_tpr is not None else "—"
+        return (
+            f"<tr>"
+            f"<td>{escape(label)}</td>"
+            f"<td class='baseline-col'>{baseline_cell}</td>"
+            f"<td>{_web_cell(ns_fpr, ns_tpr, base_tpr)}</td>"
+            f"<td>{_web_cell(fg_fpr, fg_tpr, base_tpr)}</td>"
+            f"</tr>"
+        )
+
+    lines.append(
+        "<tr class='group-header'><td colspan='4'>Web (Browser) Systems</td></tr>"
+    )
+    lines.append(_web_row(
+        "ChatGPT (5.4 Web)",
+        chatgpt_world_metrics_split("baseline", qa_family),
+        chatgpt_world_metrics_split("no_store", qa_family),
+        chatgpt_world_metrics_split("forget", qa_family),
+    ))
+    lines.append(_web_row(
+        "Claude (Opus 4.7 Web)",
+        claude_world_metrics_split("baseline", qa_family, variant="opus"),
+        claude_world_metrics_split("no_store", qa_family, variant="opus"),
+        claude_world_metrics_split("forget", qa_family, variant="opus"),
+    ))
+    lines.append(_web_row(
+        "Claude (Sonnet 4.6 Web)",
+        claude_world_metrics_split("baseline", qa_family, variant="sonnet"),
+        claude_world_metrics_split("no_store", qa_family, variant="sonnet"),
+        claude_world_metrics_split("forget", qa_family, variant="sonnet"),
+    ))
+    lines.append("</tbody></table>")
+    return "\n".join(lines)
+
+
 def q1_q2_markdown_table(records: List[Dict[str, Any]]) -> str:
-    rows = q1_q2_rows(records)
+    rows = _filtered_q1_q2_rows(records)
     rows.append(q1_q2_mean_row(rows))
-    gpt53_records = load_gpt53_langmem_records()
 
     display_rows: List[List[str]] = []
-    display_rows.append(["API Models", "", "", "", ""])
-    for label in ["GPT-4o", "GPT-5.4-mini"]:
-        row = next(r for r in rows if r["System"] == label)
+    display_rows.append(["API Models", "", "", ""])
+    for label in ["GPT-4o", "Claude Sonnet 4.6"]:
+        row = next((r for r in rows if r["System"] == label), None)
+        if row is None:
+            continue
         display_rows.append([
             label,
             f"{row['Baseline_TPR']:.2f}",
             f"{row['no_store_FPR']:.2f} ({row['no_store_DeltaTPR']:+.2f})",
             f"{row['forget_FPR']:.2f} ({row['forget_DeltaTPR']:+.2f})",
-            f"{row['no_use_FPR']:.2f} ({row['no_use_DeltaTPR']:+.2f})",
         ])
 
-    display_rows.append(["Memory Agent", "", "", "", ""])
-    for model in ["GPT-4o", "GPT-5.4-mini"]:
-        display_rows.append([model, "", "", "", ""])
-        for variant in ["mem0", "A-Mem", "LangMem"]:
+    display_rows.append(["Memory Agent", "", "", ""])
+    for model in ["GPT-4o"]:
+        shown_variants = [
+            variant for variant in ["mem0", "A-Mem", "LangMem"]
+            if f"{model} + {variant}" not in _q1_q2_hidden_systems()
+            and any(r["System"] == f"{model} + {variant}" for r in rows)
+        ]
+        if not shown_variants:
+            continue
+        display_rows.append([model, "", "", ""])
+        for variant in shown_variants:
             label = f"{model} + {variant}"
             row = next(r for r in rows if r["System"] == label)
             display_rows.append([
@@ -246,45 +511,30 @@ def q1_q2_markdown_table(records: List[Dict[str, Any]]) -> str:
                 f"{row['Baseline_TPR']:.2f}",
                 f"{row['no_store_FPR']:.2f} ({row['no_store_DeltaTPR']:+.2f})",
                 f"{row['forget_FPR']:.2f} ({row['forget_DeltaTPR']:+.2f})",
-                f"{row['no_use_FPR']:.2f} ({row['no_use_DeltaTPR']:+.2f})",
             ])
-
-    g53_base = [rec for rec in gpt53_records if rec["backend"] == "LangMem" and rec["model"] == "openai/gpt-5.3-chat" and rec["world"] == "baseline"]
-    g53_no_store = [rec for rec in gpt53_records if rec["backend"] == "LangMem" and rec["model"] == "openai/gpt-5.3-chat" and rec["world"] == "no_store"]
-    g53_forget = [rec for rec in gpt53_records if rec["backend"] == "LangMem" and rec["model"] == "openai/gpt-5.3-chat" and rec["world"] == "forget"]
-    g53_baseline_tpr = _safe_mean([_record_probe_tpr(rec) for rec in g53_base]) if g53_base else None
-    g53_no_store_fpr = _safe_mean([_record_key_fpr(rec) for rec in g53_no_store if _record_key_fpr(rec) is not None]) if g53_no_store else None
-    g53_no_store_tpr = _safe_mean([_record_probe_tpr(rec) for rec in g53_no_store]) if g53_no_store else None
-    g53_forget_fpr = _safe_mean([_record_key_fpr(rec) for rec in g53_forget if _record_key_fpr(rec) is not None]) if g53_forget else None
-    g53_forget_tpr = _safe_mean([_record_probe_tpr(rec) for rec in g53_forget]) if g53_forget else None
-    display_rows.append(["GPT-5.3", "", "", "", ""])
-    display_rows.append([
-        "  -LangMem",
-        _fmt_cell("baseline", g53_baseline_tpr, None, g53_baseline_tpr),
-        _fmt_cell("no_store", g53_baseline_tpr, g53_no_store_fpr, g53_no_store_tpr),
-        _fmt_cell("forget", g53_baseline_tpr, g53_forget_fpr, g53_forget_tpr),
-        "",
-    ])
 
     chat_base_fpr, chat_base_tpr = chatgpt_world_metrics("baseline")
     chat_ns_fpr, chat_ns_tpr = chatgpt_world_metrics("no_store")
     chat_fg_fpr, chat_fg_tpr = chatgpt_world_metrics("forget")
-    display_rows.append(["ChatGPT Web", "", "", "", ""])
+    display_rows.append(["ChatGPT Web", "", "", ""])
     display_rows.append([
         "ChatGPT (5.3)",
-        _fmt_cell("baseline", chat_base_tpr, chat_base_fpr, chat_base_tpr, chatgpt_style=True),
-        _fmt_cell("no_store", chat_base_tpr, chat_ns_fpr, chat_ns_tpr, chatgpt_style=True),
-        _fmt_cell("forget", chat_base_tpr, chat_fg_fpr, chat_fg_tpr, chatgpt_style=True),
-        "",
+        _fmt_cell("baseline", chat_base_tpr, chat_base_fpr, chat_base_tpr),
+        _fmt_cell("no_store", chat_base_tpr, chat_ns_fpr, chat_ns_tpr),
+        _fmt_cell("forget", chat_base_tpr, chat_fg_fpr, chat_fg_tpr),
     ])
 
     mean_row = rows[-1]
     display_rows.append(["Mean", f"{mean_row['Baseline_TPR']:.2f}",
                          f"{mean_row['no_store_FPR']:.2f} ({mean_row['no_store_DeltaTPR']:+.2f})",
-                         f"{mean_row['forget_FPR']:.2f} ({mean_row['forget_DeltaTPR']:+.2f})",
-                         f"{mean_row['no_use_FPR']:.2f} ({mean_row['no_use_DeltaTPR']:+.2f})"])
+                         f"{mean_row['forget_FPR']:.2f} ({mean_row['forget_DeltaTPR']:+.2f})"])
 
-    headers = ["System", "Baseline", "No-store", "Forget", "No-use"]
+    headers = [
+        "System",
+        "Baseline Utility",
+        "No-store Violation (ΔUtility)",
+        "Forget Violation (ΔUtility)",
+    ]
     widths = [len(h) for h in headers]
     for row in display_rows:
         for i, cell in enumerate(row):
@@ -296,7 +546,7 @@ def q1_q2_markdown_table(records: List[Dict[str, Any]]) -> str:
     sep = "-+-".join("-" * w for w in widths)
     lines = [fmt_row(headers), sep]
     for row in display_rows:
-        if row[1:] == ["", "", "", ""]:
+        if row[1:] == ["", "", ""]:
             lines.append(row[0])
         else:
             lines.append(fmt_row(row))
@@ -353,19 +603,122 @@ def chatgpt_world_metrics(world: str) -> Tuple[Optional[float], Optional[float]]
     return fpr, tpr
 
 
-def _fmt_cell(world: str, baseline_tpr: Optional[float], fpr: Optional[float], tpr: Optional[float], *, chatgpt_style: bool = False) -> str:
+def chatgpt_world_metrics_split(world: str, qa_family: str) -> Tuple[Optional[float], Optional[float]]:
+    """Per-family (whole or slot) ChatGPT-Web metrics.
+
+    Returns (key_FPR, probe_TPR). Filters rows by qa_family in
+    {"whole_recall", "slot_recall"}.
+    """
+    target_family = f"{qa_family}_recall"
+    rows = [r for r in _iter_chatgpt_rows(world) if r.get("qa_family") == target_family]
+    if not rows:
+        return None, None
+    probe = [r for r in rows if r.get("turn_role") == "probe"]
+    key = [r for r in rows if r.get("turn_role") == "key"]
+    tpr = _combined_answer_rate(probe, "remember_correct") if probe else None
+    if world == "baseline":
+        return None, tpr
+    fpr = _combined_answer_rate(key, "remember_correct") if key else None
+    return fpr, tpr
+
+
+# Two Claude Web variants share the same results layout — only the dir
+# differs. claude_web_results/ now holds Opus 4.7; claude_web_sonnet_results/
+# holds Sonnet 4.6.
+_CLAUDE_WEB_DIRS = {
+    "opus": "claude_web_results",
+    "sonnet": "claude_web_sonnet_results",
+}
+
+
+def _claude_results_root(variant: str = "opus") -> Path:
+    sub = _CLAUDE_WEB_DIRS[variant]
+    return ROOT / f"memory_control_tests/evaluation/claude/results/{sub}/travelPlanning"
+
+
+def _iter_claude_rows(world: str, variant: str = "opus") -> List[Dict[str, Any]]:
+    root = _claude_results_root(variant)
+    rows: List[Dict[str, Any]] = []
+    if not root.exists():
+        return rows
+    for sample_dir in sorted(root.iterdir()):
+        path = sample_dir / f"test_type_{world}" / "results.jsonl"
+        if not path.exists():
+            continue
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            if row.get("error") is None:
+                rows.append(row)
+    return rows
+
+
+def claude_world_metrics(world: str, variant: str = "opus") -> Tuple[Optional[float], Optional[float]]:
+    rows = _iter_claude_rows(world, variant)
+    if not rows:
+        return None, None
+    probe = [row for row in rows if row.get("turn_role") == "probe"]
+    key = [row for row in rows if row.get("turn_role") == "key"]
+    tpr = _combined_answer_rate(probe, "remember_correct") if probe else None
+    if world == "baseline":
+        return None, tpr
+    fpr = _combined_answer_rate(key, "remember_correct") if key else None
+    return fpr, tpr
+
+
+def claude_world_metrics_split(
+    world: str,
+    qa_family: str,
+    variant: str = "opus",
+) -> Tuple[Optional[float], Optional[float]]:
+    """Per-family (whole or slot) Claude-Web metrics. Mirrors chatgpt_world_metrics_split.
+
+    `variant`: "opus" (claude_web_results, Opus 4.7) or "sonnet"
+    (claude_web_sonnet_results, Sonnet 4.6).
+    """
+    target_family = f"{qa_family}_recall"
+    rows = [r for r in _iter_claude_rows(world, variant) if r.get("qa_family") == target_family]
+    if not rows:
+        return None, None
+    probe = [r for r in rows if r.get("turn_role") == "probe"]
+    key = [r for r in rows if r.get("turn_role") == "key"]
+    tpr = _combined_answer_rate(probe, "remember_correct") if probe else None
+    if world == "baseline":
+        return None, tpr
+    fpr = _combined_answer_rate(key, "remember_correct") if key else None
+    return fpr, tpr
+
+
+def _fmt_cell(world: str, baseline_tpr: Optional[float], fpr: Optional[float], tpr: Optional[float]) -> str:
     if world == "baseline":
         return "" if baseline_tpr is None else f"{baseline_tpr:.2f}"
     if fpr is None:
         return ""
     if tpr is None:
         return f"{fpr:.2f}"
-    if chatgpt_style:
-        return f"{fpr:.2f} (TPR={tpr:.2f})"
     if baseline_tpr is None:
         return f"{fpr:.2f} ({tpr:.2f})"
     delta = tpr - baseline_tpr
     return f"{fpr:.2f} ({delta:+.2f})"
+
+
+def _metric_column_name(name: str) -> str:
+    mapping = {
+        "Baseline_TPR": "Baseline Utility",
+        "Baseline_FPR": "Baseline Violation",
+        "no_store_FPR": "No-store Violation",
+        "no_store_DeltaTPR": "No-store ΔUtility",
+        "forget_FPR": "Forget Violation",
+        "forget_DeltaTPR": "Forget ΔUtility",
+        "no_use_FPR": "No-use Violation",
+        "no_use_DeltaTPR": "No-use ΔUtility",
+        "TPR": "Utility",
+        "FPR": "Violation",
+        "TNR": "Forget Rate",
+        "Delta_TPR": "ΔUtility",
+    }
+    return mapping.get(name, name)
 
 
 def table1_grouped_html(records: List[Dict[str, Any]]) -> str:
@@ -407,12 +760,17 @@ def table1_grouped_html(records: List[Dict[str, Any]]) -> str:
         "<tr><td colspan='5' style='border:1px solid #d9d9d9; padding:8px; font-weight:700; background:#fafafa;'>API Models</td></tr>",
     ]
 
-    for label in ["GPT-4o", "GPT-5.4-mini"]:
+    for label in ["GPT-4o"]:
+        if not any(rec["System"] == label for rec in q1_q2_rows(records)):
+            continue
         b, ns, fg = from_label(label)
         html.append(row_html(label, "", b, ns, fg))
 
     html.append("<tr><td colspan='5' style='border:1px solid #d9d9d9; padding:8px; font-weight:700; background:#fafafa;'>Memory Agent</td></tr>")
-    for model in ["GPT-4o", "GPT-5.4-mini"]:
+    for model in ["GPT-4o"]:
+        model_variants = [variant for variant in ["mem0", "LangMem"] if any(system_label(rec) == f"{model} + {variant}" for rec in records)]
+        if not model_variants:
+            continue
         html.append(
             f"<tr><td style='border:1px solid #d9d9d9; padding:8px; font-weight:700;'>{escape(model)}</td>"
             "<td style='border:1px solid #d9d9d9; padding:8px;'></td>"
@@ -420,7 +778,7 @@ def table1_grouped_html(records: List[Dict[str, Any]]) -> str:
             "<td style='border:1px solid #d9d9d9; padding:8px;'></td>"
             "<td style='border:1px solid #d9d9d9; padding:8px;'></td></tr>"
         )
-        for variant in ["mem0", "A-Mem", "LangMem"]:
+        for variant in model_variants:
             label = f"{model} + {variant}"
             b, ns, fg = from_label(label)
             html.append(row_html("", f"-{variant}", b, ns, fg))
@@ -449,9 +807,9 @@ def table1_grouped_html(records: List[Dict[str, Any]]) -> str:
     html.append(
         f"<tr><td style='border:1px solid #d9d9d9; padding:8px; font-weight:700;'>ChatGPT (5.3)</td>"
         "<td style='border:1px solid #d9d9d9; padding:8px;'></td>"
-        f"<td style='border:1px solid #d9d9d9; padding:8px;'>{_fmt_cell('baseline', chat_base_tpr, chat_base_fpr, chat_base_tpr, chatgpt_style=True)}</td>"
-        f"<td style='border:1px solid #d9d9d9; padding:8px;'>{_fmt_cell('no_store', chat_base_tpr, chat_ns_fpr, chat_ns_tpr, chatgpt_style=True)}</td>"
-        f"<td style='border:1px solid #d9d9d9; padding:8px;'>{_fmt_cell('forget', chat_base_tpr, chat_fg_fpr, chat_fg_tpr, chatgpt_style=True)}</td></tr>"
+        f"<td style='border:1px solid #d9d9d9; padding:8px;'>{_fmt_cell('baseline', chat_base_tpr, chat_base_fpr, chat_base_tpr)}</td>"
+        f"<td style='border:1px solid #d9d9d9; padding:8px;'>{_fmt_cell('no_store', chat_base_tpr, chat_ns_fpr, chat_ns_tpr)}</td>"
+        f"<td style='border:1px solid #d9d9d9; padding:8px;'>{_fmt_cell('forget', chat_base_tpr, chat_fg_fpr, chat_fg_tpr)}</td></tr>"
     )
     html.append("</tbody></table>")
     return "\n".join(html)
@@ -472,7 +830,7 @@ def tradeoff_rows(records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
                     "Delta_TPR": _safe_mean([_record_probe_tpr(rec) for rec in world_records]) - baseline_tpr,
                     "FPR": _safe_mean([x for x in (_record_key_fpr(rec) for rec in world_records) if x is not None]),
                     "Group": group,
-                    "API": "GPT-4o" if "GPT-4o" in label else "GPT-5.4-mini",
+                    "API": _api_model_label(next((rec["model"] for rec in world_records), "gpt-4o" if "GPT-4o" in label else "gpt-5.4-mini")),
                 }
             )
     return rows
@@ -678,7 +1036,7 @@ def markdown_table(headers: List[str], rows: List[List[str]]) -> str:
 
 
 def rows_to_markdown_table(rows: List[Dict[str, Any]], columns: List[str]) -> str:
-    header = columns
+    header = [_metric_column_name(col) for col in columns]
     lines = ["| " + " | ".join(header) + " |", "| " + " | ".join(["---"] * len(header)) + " |"]
     for row in rows:
         vals = []
@@ -719,6 +1077,15 @@ def _short_label(label: str) -> str:
     return SHORT_LABELS.get(label, label)
 
 
+def _metric_display(metric: str) -> str:
+    return {
+        "TPR": "Utility",
+        "FPR": "Violation",
+        "TNR": "Forget Rate",
+        "Delta_TPR": "ΔUtility",
+    }.get(metric, metric)
+
+
 def scatter_svg(rows: List[Dict[str, Any]], width: int = 720, height: int = 576, world_filter: Optional[str] = None) -> str:
     if world_filter is not None:
         rows = [row for row in rows if row["World"] == world_filter]
@@ -726,7 +1093,9 @@ def scatter_svg(rows: List[Dict[str, Any]], width: int = 720, height: int = 576,
     plot_w = width - left - right
     plot_h = height - top - bottom
     x_min, x_max = 0.0, max(row["FPR"] for row in rows) * 1.15
-    y_min, y_max = min(row["TPR"] for row in rows) * 0.95, 1.0
+    y_vals = [row["Delta_TPR"] for row in rows]
+    y_min = min(min(y_vals) * 1.15, -0.05)
+    y_max = max(max(y_vals) * 1.15, 0.05)
 
     def sx(x: float) -> float:
         return left + (x - x_min) / (x_max - x_min + 1e-9) * plot_w
@@ -736,12 +1105,12 @@ def scatter_svg(rows: List[Dict[str, Any]], width: int = 720, height: int = 576,
 
     inner = [
         f"<rect x='{left}' y='{top}' width='{plot_w}' height='{plot_h}' fill='white' stroke='#999'/>",
-        f"<text x='{width/2}' y='18' text-anchor='middle' font-size='15'>Q3. Trade-off{'' if world_filter is None else f' ({escape(world_filter)})'}</text>",
-        f"<text x='{width/2}' y='{height-10}' text-anchor='middle' font-size='11'>FPR</text>",
-        f"<text x='16' y='{height/2}' transform='rotate(-90 16 {height/2})' text-anchor='middle' font-size='11'>TPR</text>",
+        f"<text x='{width/2}' y='18' text-anchor='middle' font-size='15'>Q3. ΔUtility vs Violation{'' if world_filter is None else f' ({escape(world_filter)})'}</text>",
+        f"<text x='{width/2}' y='{height-10}' text-anchor='middle' font-size='11'>Violation</text>",
+        f"<text x='16' y='{height/2}' transform='rotate(-90 16 {height/2})' text-anchor='middle' font-size='11'>ΔUtility</text>",
     ]
     for row in rows:
-        x, y = sx(row["FPR"]), sy(row["TPR"])
+        x, y = sx(row["FPR"]), sy(row["Delta_TPR"])
         color = API_COLORS[row["API"]]
         inner.append(_point_shape(x, y, row["Group"], color))
         label = escape(_short_label(row["System"]))
@@ -802,8 +1171,8 @@ def two_panel_line_svg(rows: List[Dict[str, Any]], title: str, width: int = 720,
         return inner
 
     inner = [f"<text x='{width/2}' y='18' text-anchor='middle' font-size='15'>{escape(title)}</text>"]
-    inner.extend(draw_panel(margins["left"], "TPR", "(a) TPR vs stage"))
-    inner.extend(draw_panel(margins["left"] + panel_w + panel_gap, "FPR", "(b) FPR vs stage"))
+    inner.extend(draw_panel(margins["left"], "TPR", "(a) Utility vs stage"))
+    inner.extend(draw_panel(margins["left"] + panel_w + panel_gap, "FPR", "(b) Violation vs stage"))
     legend_y = 70
     for label in SYSTEM_ORDER:
         color = API_COLORS["GPT-4o"] if "GPT-4o" in label else API_COLORS["GPT-5.4-mini"]
@@ -854,8 +1223,8 @@ def forget_stage_svg(rows: List[Dict[str, Any]], title: str, width: int = 720, h
         return inner
 
     inner = [f"<text x='{width/2}' y='18' text-anchor='middle' font-size='15'>{escape(title)}</text>"]
-    inner.extend(draw_panel(margins["left"], "TNR", "(a) TNR vs stage"))
-    inner.extend(draw_panel(margins["left"] + panel_w + panel_gap, "FPR", "(b) FPR vs stage"))
+    inner.extend(draw_panel(margins["left"], "TNR", "(a) Forget Rate vs stage"))
+    inner.extend(draw_panel(margins["left"] + panel_w + panel_gap, "FPR", "(b) Violation vs stage"))
     legend_y = 70
     for label in SYSTEM_ORDER:
         color = API_COLORS["GPT-4o"] if "GPT-4o" in label else API_COLORS["GPT-5.4-mini"]
@@ -912,7 +1281,7 @@ def ranked_bar_svg(rows: List[Tuple[str, float]], title: str, width: int = 720, 
         inner.append(f"<text x='{left-8}' y='{y + bar_h*0.65:.1f}' text-anchor='end' font-size='11'>{escape(label)}</text>")
         inner.append(f"<rect x='{left}' y='{y + 3:.1f}' width='{w:.1f}' height='{max(6, bar_h-6):.1f}' fill='#d62728'/>")
         inner.append(f"<text x='{left + w + 6:.1f}' y='{y + bar_h*0.65:.1f}' font-size='10'>{val:.2f}</text>")
-    inner.append(f"<text x='{width/2}' y='{height-10}' text-anchor='middle' font-size='12'>FPR under forget</text>")
+    inner.append(f"<text x='{width/2}' y='{height-10}' text-anchor='middle' font-size='12'>Forget Rate under forget</text>")
     return _svg_wrap(width, height, inner)
 
 
@@ -945,18 +1314,19 @@ def plot_tradeoff_matplotlib(rows: List[Dict[str, Any]], world_filter: str) -> A
         color = API_COLORS[row["API"]]
         marker = "o" if row["Group"] == "API Models" else "*"
         size = 60 if marker == "o" else 110
-        ax.scatter(row["FPR"], row["TPR"], color=color, marker=marker, s=size, alpha=0.9)
+        ax.scatter(row["FPR"], row["Delta_TPR"], color=color, marker=marker, s=size, alpha=0.9)
         ax.text(
             row["FPR"] + 0.006,
-            row["TPR"] + 0.004,
+            row["Delta_TPR"] + 0.004,
             _short_label(row["System"]),
             fontsize=label_fs,
         )
 
-    ax.set_xlabel("FPR", fontsize=11, fontweight="bold")
-    ax.set_ylabel("TPR", fontsize=11, fontweight="bold")
-    ax.set_title(f"Q3. {world_filter} trade-off", fontsize=11, fontweight="bold")
+    ax.set_xlabel("Violation", fontsize=11, fontweight="bold")
+    ax.set_ylabel("ΔUtility", fontsize=11, fontweight="bold")
+    ax.set_title(f"Q3. {world_filter} ΔUtility vs Violation", fontsize=11, fontweight="bold")
     ax.grid(True)
+    ax.axhline(0.0, color="#888888", linewidth=1.0, linestyle="--")
 
     from matplotlib.lines import Line2D
 
@@ -1015,10 +1385,10 @@ def plot_stage_lines_matplotlib(rows: List[Dict[str, Any]], title: str, left_met
         axes[0].plot(x, [row[left_metric] for row in sub], marker="o", linewidth=2, markersize=5, color=color, label=_short_label(label))
         axes[1].plot(x, [row[right_metric] for row in sub], marker="o", linewidth=2, markersize=5, color=color, label=_short_label(label))
 
-    axes[0].set_title(f"(a) {left_metric} vs stage", fontsize=11, fontweight="bold")
-    axes[1].set_title(f"(b) {right_metric} vs stage", fontsize=11, fontweight="bold")
-    axes[0].set_ylabel(left_metric, fontsize=11, fontweight="bold")
-    axes[1].set_ylabel(right_metric, fontsize=11, fontweight="bold")
+    axes[0].set_title(f"(a) {_metric_display(left_metric)} vs stage", fontsize=11, fontweight="bold")
+    axes[1].set_title(f"(b) {_metric_display(right_metric)} vs stage", fontsize=11, fontweight="bold")
+    axes[0].set_ylabel(_metric_display(left_metric), fontsize=11, fontweight="bold")
+    axes[1].set_ylabel(_metric_display(right_metric), fontsize=11, fontweight="bold")
     for ax in axes:
         ax.set_xticks(x)
         ax.set_xticklabels(stage_names)
@@ -1063,8 +1433,8 @@ def plot_stage_mean_bar_matplotlib(
     width = 0.34
 
     for ax, metric, panel_title in [
-        (axes[0], left_metric, f"(a) mean {left_metric} by stage"),
-        (axes[1], right_metric, f"(b) mean {right_metric} by stage"),
+        (axes[0], left_metric, f"(a) mean {_metric_display(left_metric)} by stage"),
+        (axes[1], right_metric, f"(b) mean {_metric_display(right_metric)} by stage"),
     ]:
         for idx, category in enumerate(categories):
             vals = []
@@ -1087,7 +1457,7 @@ def plot_stage_mean_bar_matplotlib(
             )
 
         ax.set_title(panel_title, fontsize=11, fontweight="bold")
-        ax.set_ylabel(metric, fontsize=11, fontweight="bold")
+        ax.set_ylabel(_metric_display(metric), fontsize=11, fontweight="bold")
         ax.set_xticks(x)
         ax.set_xticklabels(stage_names)
         ax.set_xlabel("Stage", fontsize=11, fontweight="bold")
@@ -1144,8 +1514,8 @@ def plot_dual_slot_heatmap_matplotlib(
     im_right = axes[1].imshow(arr_right, aspect="auto", cmap="coolwarm", vmin=0, vmax=1)
 
     for ax, arr, row_labels, col_labels, subtitle in [
-        (axes[0], arr_left, row_labels_left, col_labels_left, "(a) Baseline TPR"),
-        (axes[1], arr_right, row_labels_right, col_labels_right, "(b) Controlled-world TNR"),
+        (axes[0], arr_left, row_labels_left, col_labels_left, "(a) Baseline Utility"),
+        (axes[1], arr_right, row_labels_right, col_labels_right, "(b) Controlled-world Forget Rate"),
     ]:
         ax.set_xticks(range(len(col_labels)))
         ax.set_xticklabels(col_labels)
@@ -1226,7 +1596,7 @@ def plot_ranked_bar_matplotlib(rows: List[Tuple[str, float]], title: str) -> Any
     vals = [val for _, val in rows]
     ax.barh(labels, vals, color="#d62728")
     ax.invert_yaxis()
-    ax.set_xlabel("TNR under forget", fontsize=11, fontweight="bold")
+    ax.set_xlabel("Forget Rate under forget", fontsize=11, fontweight="bold")
     ax.set_title(title, fontsize=11, fontweight="bold")
     ax.grid(True, axis="x")
     fig.tight_layout()
