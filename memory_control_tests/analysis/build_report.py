@@ -514,15 +514,6 @@ def _summarize_baseline_topic(topic: str, encoder) -> List[Dict[str, Any]]:
     return rows
 
 
-def _stat_cell(values: List[int]) -> str:
-    if not values:
-        return "—"
-    return (
-        f"mean {round(statistics.mean(values)):,} · "
-        f"min {min(values):,} · max {max(values):,}"
-    )
-
-
 def _render_benchmark_stats(topic: str = "travelPlanning") -> str:
     """Token & turn statistics for the topic's evaluation conversations.
 
@@ -551,16 +542,23 @@ def _render_benchmark_stats(topic: str = "travelPlanning") -> str:
     u_turns = [r["user_turns"] for r in rows]
     a_turns = [r["assistant_turns"] for r in rows]
 
-    overall_row = (
-        f"<tr><td class='sys-col'>{escape(topic)} (n={len(rows)})</td>"
-        f"<td>{_stat_cell(inits)}</td>"
-        f"<td>{_stat_cell(earlys)}</td>"
-        f"<td>{_stat_cell(inters)}</td>"
-        f"<td>{_stat_cell(lates)}</td>"
-        f"<td><b>{_stat_cell(totals)}</b></td>"
-        f"<td>{_stat_cell(u_turns)}</td>"
-        f"<td>{_stat_cell(a_turns)}</td></tr>"
-    )
+    stat_columns = (inits, earlys, inters, lates, totals, u_turns, a_turns)
+
+    def _stat_row(label: str, fn) -> str:
+        cells = []
+        for col_idx, values in enumerate(stat_columns):
+            v = int(round(fn(values))) if label == "mean" else fn(values)
+            cell = f"{v:,}"
+            if col_idx == 4:  # conv total — emphasize
+                cell = f"<b>{cell}</b>"
+            cells.append(f"<td>{cell}</td>")
+        return f"<tr><td class='sys-col'>{label}</td>{''.join(cells)}</tr>"
+
+    overall_rows_html = "".join([
+        _stat_row("min", min),
+        _stat_row("max", max),
+        _stat_row("mean", statistics.mean),
+    ])
 
     detail_rows = []
     for r in rows:
@@ -581,21 +579,15 @@ def _render_benchmark_stats(topic: str = "travelPlanning") -> str:
         if not t_rows:
             continue
         t_totals = [x["total_tokens"] for x in t_rows]
-        t_users = [x["user_turns"] for x in t_rows]
-        t_asst = [x["assistant_turns"] for x in t_rows]
         highlight = (t == topic)
         sys_cls = "sys-col baseline-col" if highlight else "sys-col"
         cell_cls = " class='baseline-col'" if highlight else ""
         cross_rows.append(
             f"<tr><td class='{sys_cls}'>{escape(t)}</td>"
             f"<td{cell_cls}>{len(t_rows)}</td>"
-            f"<td{cell_cls}>{round(statistics.mean(t_totals)):,}</td>"
-            f"<td{cell_cls}>{int(statistics.median(t_totals)):,}</td>"
             f"<td{cell_cls}>{min(t_totals):,}</td>"
             f"<td{cell_cls}>{max(t_totals):,}</td>"
-            f"<td{cell_cls}>{sum(t_totals):,}</td>"
-            f"<td{cell_cls}>{round(statistics.mean(t_users))}</td>"
-            f"<td{cell_cls}>{round(statistics.mean(t_asst))}</td></tr>"
+            f"<td{cell_cls}>{round(statistics.mean(t_totals)):,}</td></tr>"
         )
 
     return (
@@ -612,11 +604,11 @@ def _render_benchmark_stats(topic: str = "travelPlanning") -> str:
         f"<div class='split-table-title'>Overall — {escape(topic)} ({len(rows)} personas)</div>"
         "<table class='split-table'>"
         "<thead><tr>"
-        "<th class='sys-col'>scope</th>"
+        "<th class='sys-col'></th>"
         "<th>initial</th><th>early</th><th>intermediate</th><th>late</th>"
         "<th>conv total</th><th>user turns</th><th>assistant turns</th>"
         "</tr></thead>"
-        f"<tbody>{overall_row}</tbody>"
+        f"<tbody>{overall_rows_html}</tbody>"
         "</table>"
         "<details class='err-fold err-fold-sub' style='margin: 0 0 18px;'>"
         "<summary>Per-persona breakdown (click to expand)</summary>"
@@ -635,8 +627,7 @@ def _render_benchmark_stats(topic: str = "travelPlanning") -> str:
         "<table class='split-table'>"
         "<thead><tr>"
         "<th class='sys-col'>topic</th>"
-        "<th>n</th><th>mean</th><th>median</th><th>min</th><th>max</th><th>sum</th>"
-        "<th>mean user turns</th><th>mean asst turns</th>"
+        "<th>n</th><th>min</th><th>max</th><th>mean</th>"
         "</tr></thead>"
         f"<tbody>{''.join(cross_rows)}</tbody>"
         "</table>"
