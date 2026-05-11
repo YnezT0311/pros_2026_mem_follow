@@ -6,7 +6,12 @@ from ..common import build_baseline_spec, dump_json, load_json
 
 
 def iter_conversation_files(source_dir: Path):
+    # Skip files inside per-conversation .json.logs/ sidecar directories — those hold
+    # internal generation logs (conversation_history.*.json) that glob `conversation_*.json`
+    # also matches.
     for path in sorted(source_dir.rglob("conversation_*.json")):
+        if any(parent.name.endswith(".json.logs") for parent in path.parents):
+            continue
         yield path
 
 
