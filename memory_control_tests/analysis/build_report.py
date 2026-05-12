@@ -1731,60 +1731,33 @@ def _spec_langmem() -> MemorySystemSpec:
         sample_question="What was my nightly budget for Paris stay?",
         read_steps=[
             FlowStep(
-                label="1. query_agent.prompt(state) pre-search (0 LLM calls — pure store.search)",
+                label="1. Direct store.search(query=question, limit=10)",
                 description=(
-                    "Before the LLM step runs, the prompt-builder calls "
-                    "store.search(('memories',), query=last_user_message). The hits are "
-                    "pasted into the system prompt the LLM will see."
+                    "Answer-time retrieval is intentionally read-only. The MCQ question "
+                    "is used only as a search query against the shared InMemoryStore; no "
+                    "LangMem agent is invoked and no manage-memory tool is available."
                 ),
                 sample_input='question = "What was my nightly budget for Paris stay?"',
                 sample_output=(
-                    "Pre-injected memories (snippet of system prompt the LLM sees):\n"
-                    "  ## Memories\n"
-                    "  <memories>\n"
-                    "  - 'User is planning a Paris trip from Oct 15-20 with a $150/night budget.'\n"
-                    "  - 'Assistant suggested boutique hotels in Le Marais.'\n"
-                    "  </memories>"
-                ),
-            ),
-            FlowStep(
-                label="2. query_agent reasoning round (1 LLM call)",
-                description=(
-                    "The LLM sees the system prompt + the user question. It can either "
-                    "answer directly OR call create_search_memory_tool with a rewritten "
-                    "query for more retrieval. With our search-only agent this tool call "
-                    "is the only action allowed — the manage tool is not in the toolset."
-                ),
-                sample_output=(
-                    "(LLM might call:)\n"
-                    "  search_memory_tool(query='Paris nightly budget')\n"
-                    "(or just answer directly using the pre-injected memories)"
-                ),
-            ),
-            FlowStep(
-                label="3. Optional follow-up search (0 LLM calls if tool was called — just embedding lookup)",
-                description="If the agent issued a search_memory_tool call, the result is fed back to the LLM for a final synthesis turn.",
-                sample_output=(
                     "[\n"
-                    "  {'value': {'content': 'User Paris budget = $150/night'}, 'score': 0.88},\n"
-                    "  {'value': {'content': 'Boutique hotel preference in Le Marais'}, 'score': 0.62}\n"
+                    "  {'value': {'content': 'User is planning a Paris trip from Oct 15-20 with a $150/night budget.'}, 'score': 0.88},\n"
+                    "  {'value': {'content': 'Assistant suggested boutique hotels in Le Marais.'}, 'score': 0.62}\n"
                     "]"
                 ),
             ),
             FlowStep(
-                label="4. Final AIMessage from query_agent (1 LLM call if it had to synthesize)",
+                label="2. Render retrieved memories as plain text",
                 description=(
-                    "What we forward as `retrieved_text` to the answer prompt. Note: this "
-                    "is the SAME model (GPT-5.4-mini) that will then pick the MCQ option — "
-                    "no information from a stronger model is injected."
+                    "The store hits are converted to numbered memory snippets and passed "
+                    "to the final answer prompt."
                 ),
                 sample_output=(
-                    "Based on the memories, the user mentioned a Paris trip from Oct 15-20\n"
-                    "with a $150 per night budget. They preferred boutique hotels in Le Marais."
+                    "1. User is planning a Paris trip from Oct 15-20 with a $150/night budget.\n"
+                    "2. Assistant suggested boutique hotels in Le Marais."
                 ),
             ),
             FlowStep(
-                label="5. answer model picks MCQ option (1 LLM call)",
+                label="3. answer model picks MCQ option (1 LLM call)",
                 description="`OFFICIAL_STYLE_MCq_ANSWER_PROMPT.format(memories=retrieved_text, question, options)`.",
                 sample_output="<final_answer>(b)</final_answer>",
             ),
@@ -1806,10 +1779,8 @@ def _spec_langmem() -> MemorySystemSpec:
             "All conversation turns are streamed in incrementally — store accumulates across stages",
         ],
         read_path=[
-            "query_agent.invoke({'messages': [user: question]}) — has ONLY search_memory_tool",
-            "  - prompt() pre-injects store.search(query=question) results into system prompt",
-            "  - agent may additionally call search_memory_tool with LLM-rewritten queries",
-            "Returned final AIMessage carries the synthesized retrieval summary",
+            "store.search(('memories',), query=question, limit=10)",
+            "Returned memory hits are rendered as plain text",
             "That text is passed as 'Memories:' to the answer model with the MCQ prompt",
         ],
         tools=[
@@ -1826,8 +1797,8 @@ def _spec_langmem() -> MemorySystemSpec:
                 ),
             ),
             MemoryToolCard(
-                name="create_search_memory_tool (both agents)",
-                description="Read-only retrieval tool over the InMemoryStore.",
+                name="create_search_memory_tool (preload agent)",
+                description="Read-only retrieval tool available while the preload agent decides how to manage memories.",
                 prompt_or_signature=(
                     "Namespace: ('memories',)\n"
                     "Embedding index: openai:{EMBEDDING_MODEL} (default text-embedding-3-small)\n"
@@ -1835,14 +1806,13 @@ def _spec_langmem() -> MemorySystemSpec:
                 ),
             ),
             MemoryToolCard(
-                name="query_agent (no manage tool)",
-                description="Answer-time react agent. Cannot write — by construction.",
+                name="direct store.search (answer time)",
+                description="Answer-time retrieval. Cannot write because it bypasses the agent and calls the store directly.",
                 prompt_or_signature=(
-                    "create_react_agent(\n"
-                    "    model=f'openai:{MODEL}',\n"
-                    "    prompt=vendor_langmem.prompt,    # pre-injects search results\n"
-                    "    tools=[create_search_memory_tool(namespace=('memories',))],\n"
-                    "    store=preload_agent.store,        # ← shared with preload\n"
+                    "store.search(\n"
+                    "    ('memories',),\n"
+                    "    query=question,\n"
+                    "    limit=10,\n"
                     ")"
                 ),
             ),

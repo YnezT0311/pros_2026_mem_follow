@@ -22,7 +22,7 @@ METHOD_DEFAULTS: Dict[str, Dict[str, Any]] = {
         "mem0_reset_runtime": True,
     },
     "langmem": {
-        "memory_limit": 5,
+        "memory_limit": 10,
         "embedding_model": "text-embedding-3-small",
         "preload_batch_size": 2,
     },

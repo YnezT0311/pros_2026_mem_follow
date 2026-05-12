@@ -778,7 +778,8 @@ shared evaluator CLI. For example:
 {
   "mem0_runtime_root": "data/runtime/mem0/custom",
   "mem0_reset_runtime": false,
-  "memory_limit": 5
+  "memory_limit": 10,
+  "preload_batch_size": 2
 }
 ```
 
@@ -797,7 +798,8 @@ The mem0 adapter accepts these self-hosting config keys:
 
 - `mem0_runtime_root` — where to put the local Qdrant store and history db (default: `data/runtime/mem0/<world>/<persona-stem>/`)
 - `mem0_reset_runtime` — reset the on-disk store before each run; set to `false` to reuse it
-- `memory_limit` — max retrieved memories per MCQ
+- `memory_limit` — max retrieved memories per MCQ; default `10`, matching the official LOCOMO mem0 search `top_k`
+- `preload_batch_size` — number of messages passed to each mem0 `add()` call; default `2`, matching the official LOCOMO mem0 write batch size
 
 The adapter records the LLM calls mem0 makes during `add()` (prompt + response) into `method_debug.preload.llm_call_trace`. This is wrapping only — no extra LLM calls — and is useful for diagnosing why mem0 extracted (or failed to extract) a particular fact.
 
@@ -858,18 +860,17 @@ For each `persona × world`:
 
 1. the evaluator loads the truncated conversation history up to the target `ask_period`
 2. it creates a LangMem `InMemoryStore`
-3. it writes each utterance through LangMem's memory-management tool:
-   - `create_manage_memory_tool(...).invoke({"content": "role: utterance", "action": "create"})`
-4. for each MCQ, it retrieves candidate memories through two LangMem retrieval paths:
-   - `create_search_memory_tool(...)`
-   - `create_memory_searcher(...)`
+3. it writes utterances through LangMem's official memory-management agent, in small batches:
+   - the agent has `create_manage_memory_tool(...)` and `create_search_memory_tool(...)`
+4. for each MCQ, it retrieves candidate memories with a read-only store lookup:
+   - `store.search(("memories",), query=question, limit=10)`
 5. it formats the retrieved memories into text
 6. it appends that retrieved-memory block ahead of the standard MCQ prompt
 7. `gpt-5.4-mini` answers the final multiple-choice question
 
 ### Write-Time and Retrieval Logic
 
-The LangMem store uses OpenAI embeddings for semantic indexing. Memory writes are performed through LangMem's own memory-management tool rather than direct raw store insertion, so the benchmark path uses the same create/update/delete interface LangMem exposes to agents. Retrieval uses both the direct search tool and the model-guided memory searcher. The model-guided path uses `gpt-5.4-mini` to generate effective search queries before reading from the store.
+The LangMem store uses OpenAI embeddings for semantic indexing. Memory writes are performed through LangMem's own memory-management agent rather than direct raw store insertion, so the benchmark path uses the same create/update/delete interface LangMem exposes to agents. Answer-time retrieval is deliberately separated from writing: MCQ questions call `store.search` directly and cannot create, update, or delete memories.
 
 ### Paper-Core Behavior vs Product-Level Additions
 
@@ -877,7 +878,7 @@ LangMem is primarily distributed as a library and documentation stack rather tha
 
 - `create_manage_memory_tool`
 - `create_search_memory_tool`
-- `create_memory_searcher`
+- `InMemoryStore.search`
 
 The broader LangMem product/library surface also includes richer store backends, profile and episodic helpers, background/deferred memory processing, and deeper LangGraph-native orchestration patterns. Those broader orchestration options are not required for this benchmark; the evaluated path is the core tool-driven memory-management and retrieval loop.
 

@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -112,44 +111,15 @@ class LangMemAdapter(MethodAdapter):
             "store_snapshot": [],
             "runtime_user_id": self.runtime_user_id,
         }
-        # Build a search-only react agent that shares the same store as the
-        # preload agent. This is used at answer time so the LLM can do
-        # query rewriting + multi-step retrieval (LangMem's intended usage)
-        # while being physically incapable of writing the MCQ question into
-        # the memory store (no manage_memory_tool in its tool list).
-        self.query_agent = self._build_query_agent()
-        self._query_counter = 0
-
-    def _build_query_agent(self) -> Any:
-        """search-only react agent sharing the underlying store with langmem_impl.
-
-        Reuses LangMem's built-in `prompt` function (which pre-injects
-        store.search results into the system prompt) so retrieval semantics
-        match the official path. The only difference vs. the preload agent
-        is that this one has no `create_manage_memory_tool` — the LLM cannot
-        write the MCQ question into memory.
-        """
-        import os
-
-        from langgraph.prebuilt import create_react_agent
-        from langmem import create_search_memory_tool
-
-        from ..utils import load_official_langmem_module
-
-        vendor = load_official_langmem_module()
-        return create_react_agent(
-            f"openai:{os.getenv('MODEL')}",
-            prompt=vendor.prompt,
-            tools=[create_search_memory_tool(namespace=("memories",))],
-            store=self.langmem_impl.store,
-            # No checkpointer: each MCQ is a one-shot query.
-        )
 
     def _snapshot_store(self, query: str = "", limit: int = 200) -> List[Any]:
         try:
-            items = self.langmem_impl.store.search(("memories",), query=query or None)
+            items = self.langmem_impl.store.search(("memories",), query=query or None, limit=limit)
         except TypeError:
-            items = self.langmem_impl.store.search(("memories",), query=query)
+            try:
+                items = self.langmem_impl.store.search(("memories",), query=query or None)
+            except TypeError:
+                items = self.langmem_impl.store.search(("memories",), query=query)
         return [_jsonable(item) for item in list(items)[:limit]]
 
     def preload(
@@ -192,36 +162,11 @@ class LangMemAdapter(MethodAdapter):
         self.preload_log["store_snapshot"] = self._snapshot_store()
 
     def answer_mcq(self, question: str, choices: Dict[str, str]) -> Dict[str, Any]:
-        # Two retrieval paths, controlled by env LANGMEM_USE_FULL_AGENT:
-        #   "1" → full agent (manage + search tools) — original mem0_official path
-        #   else → dual-agent Option 2 (search-only query_agent, no write tool)
-        use_full_agent = os.environ.get("LANGMEM_USE_FULL_AGENT", "0") == "1"
-        self._query_counter += 1
-        query_config = {
-            "configurable": {
-                "thread_id": f"langmem-query-{self.runtime_user_id}-{self._query_counter}"
-            }
-        }
-        try:
-            if use_full_agent:
-                retrieved_text, _ = self.langmem_impl.search_memory(question, query_config)
-                agent_messages = []
-            else:
-                agent_result = self.query_agent.invoke(
-                    {"messages": [{"role": "user", "content": question}]},
-                    config=query_config,
-                )
-                agent_messages = agent_result.get("messages", [])
-                retrieved_text = (
-                    getattr(agent_messages[-1], "content", "") if agent_messages else ""
-                )
-        except Exception as exc:
-            agent_messages = []
-            retrieved_text = ""
-            print(f"[langmem] retrieval failed: {exc}", flush=True)
-
-        # Also keep a raw store snapshot for debug visibility.
+        # Keep evaluation read-only at answer time: preload uses LangMem's
+        # official memory-writing agent, then MCQs retrieve directly from the
+        # shared store and answer in a separate LLM call.
         store_hits = self._snapshot_store(query=question, limit=self.memory_limit)
+        retrieved_text = _format_store_hits(store_hits)
 
         answer_prompt = OFFICIAL_STYLE_MCq_ANSWER_PROMPT.format(
             memories=retrieved_text or "No relevant memories were retrieved.",
@@ -238,7 +183,7 @@ class LangMemAdapter(MethodAdapter):
             "retrieved_memories": store_hits,
             "debug": {
                 "retrieved_memories_text": retrieved_text,
-                "agent_message_count": len(agent_messages),
+                "retrieval_mode": "direct_store_search",
             },
         }
 
