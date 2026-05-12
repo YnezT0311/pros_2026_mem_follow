@@ -183,6 +183,43 @@ def build_eval_prompt(question: str, choices: Dict[str, str]) -> str:
     return f"Question: {question}\n\n{instructions}\n\n{rendered_options}"
 
 
+MEMORY_EVAL_PROMPT_TEMPLATE = """You are an intelligent memory assistant tasked with retrieving accurate information from conversation memories.
+
+# CONTEXT:
+You have access to memories retrieved from one user's conversation history. These memories may contain information relevant to answering the question.
+
+# INSTRUCTIONS:
+1. Carefully analyze the provided memories.
+2. If the question asks about a specific fact, look for direct evidence in the memories.
+3. If the memories contain contradictory information, prioritize the most recent or most specific evidence.
+4. If there is not enough evidence to support a confident remembered answer, choose the option that appropriately says the information is not remembered.
+5. Focus only on the content of the memories and the question.
+6. Answer the multiple-choice question by selecting exactly one option label.
+
+Memories:
+
+{memories}
+
+Question:
+{question}
+
+Options:
+{options}
+
+Return only the final answer label after the special token <final_answer>, for example <final_answer>(b)</final_answer>.
+"""
+
+
+def build_memory_eval_prompt(question: str, choices: Dict[str, str], memories: str) -> str:
+    rendered_options = "\n".join(f"({label.lower()}) {text}" for label, text in choices.items())
+    memories_text = memories.strip() if memories and memories.strip() else "No relevant memories were retrieved."
+    return MEMORY_EVAL_PROMPT_TEMPLATE.format(
+        memories=memories_text,
+        question=question,
+        options=rendered_options,
+    )
+
+
 def extract_choice(text: str, labels: List[str]) -> str:
     cleaned = text.strip()
     labels_upper = [label.upper() for label in labels]

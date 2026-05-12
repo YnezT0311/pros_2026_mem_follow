@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 from ..base import MethodAdapter
-from ...shared import build_eval_prompt, ensure_openai_env, load_openai_client, request_text, resolve_model_name
+from ...shared import build_memory_eval_prompt, ensure_openai_env, load_openai_client, resolve_model_name
 from ._client import load_local_mem0_memory, reset_runtime_root
 from ._patches import (
     format_memories,
@@ -194,12 +194,11 @@ class Mem0Adapter(MethodAdapter):
             run_id=self.run_id,
             limit=self.memory_limit,
         )
-        prompt = build_eval_prompt(question, choices)
         memories_text = format_memories(search_result)
         messages = self.persona_messages + [
             {
                 "role": "user",
-                "content": f"Retrieved memories:\n{memories_text}\n\n{prompt}",
+                "content": build_memory_eval_prompt(question, choices, memories_text),
             },
         ]
         response = self.answer_call(messages)

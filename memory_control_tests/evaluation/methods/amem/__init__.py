@@ -3,7 +3,7 @@ from typing import Any, Dict, List
 
 from ..base import MethodAdapter
 from ..utils import load_official_amem_module
-from ...shared import build_eval_prompt, ensure_openai_env, load_openai_client, request_text, resolve_model_name
+from ...shared import build_memory_eval_prompt, ensure_openai_env, load_openai_client, resolve_model_name
 
 
 def _new_token_log() -> Dict[str, Dict[str, int]]:
@@ -199,11 +199,10 @@ class AMemAdapter(MethodAdapter):
         keyword_text = self.amem_impl.generate_query_keywords(question)
         retrieved = self.amem_impl.search_memory(keyword_text, k=self.memory_limit)
         memories_text = retrieved if retrieved.strip() else "No relevant memories were retrieved."
-        prompt = build_eval_prompt(question, choices)
         messages = self.persona_messages + [
             {
                 "role": "user",
-                "content": f"Retrieved memories:\n{memories_text}\n\n{prompt}",
+                "content": build_memory_eval_prompt(question, choices, memories_text),
             },
         ]
         response = self.answer_call(messages)

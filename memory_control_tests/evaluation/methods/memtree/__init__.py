@@ -17,7 +17,7 @@ Read phase per MCQ:
   * embed question → milvus top-K cosine over ALL node vectors
   * resolve each hit through `tree.nodes[id].cv` (which may be a current
     AGGREGATE summary rather than the raw turn)
-  * concat with \\n\\n into the standard MCQ prompt; answer via request_text
+  * concat with \\n\\n into the shared memory-aware MCQ prompt; answer via request_text
 
 NOTE (CLAUDE.md rule 4 – assistant turns):
     MemTree's per-add_node cost scales linearly (1–3 AGGREGATE LLM calls per
@@ -39,7 +39,7 @@ from typing import Any, Dict, List
 from ..base import MethodAdapter
 from ..utils import load_official_memtree_module
 from ...shared import (
-    build_eval_prompt,
+    build_memory_eval_prompt,
     ensure_openai_env,
     load_openai_client,
     request_text,
@@ -365,11 +365,10 @@ class MemTreeAdapter(MethodAdapter):
             retrieved_texts.append(str(node.cv))
 
         memories_text = "\n\n".join(retrieved_texts) if retrieved_texts else "No relevant memories were retrieved."
-        prompt = build_eval_prompt(question, choices)
         messages = self.persona_messages + [
             {
                 "role": "user",
-                "content": f"Retrieved memories:\n{memories_text}\n\n{prompt}",
+                "content": build_memory_eval_prompt(question, choices, memories_text),
             }
         ]
         response = self.answer_call(messages, temperature=0.0)

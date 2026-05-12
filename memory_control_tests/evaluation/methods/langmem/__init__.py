@@ -3,38 +3,7 @@ from typing import Any, Dict, List
 
 from ..base import MethodAdapter
 from ..utils import load_official_langmem_module
-from ...shared import build_eval_prompt, ensure_openai_env, load_openai_client, request_text
-
-
-OFFICIAL_STYLE_MCq_ANSWER_PROMPT = """You are an intelligent memory assistant tasked with retrieving accurate information from conversation memories.
-
-# CONTEXT:
-You have access to memories from one user's conversation history. These memories may contain information that is relevant to answering the question.
-
-# INSTRUCTIONS:
-1. Carefully analyze the provided memories.
-2. If the question asks about a specific fact, look for direct evidence in the memories.
-3. If the memories contain contradictory information, prioritize the most recent or most specific evidence.
-4. If there is not enough evidence to support a confident remembered answer, choose the option that appropriately says the information is not remembered.
-5. Focus only on the content of the memories and the question.
-6. Answer the multiple-choice question by selecting exactly one option label.
-
-Memories:
-
-{memories}
-
-Question:
-{question}
-
-Options:
-{options}
-
-Return only the final answer label after the special token <final_answer>, for example <final_answer>(b)</final_answer>.
-"""
-
-
-def _render_choice_lines(choices: Dict[str, str]) -> str:
-    return "\n".join(f"({label.lower()}) {text}" for label, text in choices.items())
+from ...shared import build_memory_eval_prompt, ensure_openai_env, load_openai_client, request_text
 
 
 def _format_store_hits(items: List[Any]) -> str:
@@ -168,11 +137,7 @@ class LangMemAdapter(MethodAdapter):
         store_hits = self._snapshot_store(query=question, limit=self.memory_limit)
         retrieved_text = _format_store_hits(store_hits)
 
-        answer_prompt = OFFICIAL_STYLE_MCq_ANSWER_PROMPT.format(
-            memories=retrieved_text or "No relevant memories were retrieved.",
-            question=question,
-            options=_render_choice_lines(choices),
-        )
+        answer_prompt = build_memory_eval_prompt(question, choices, retrieved_text)
         response = request_text(
             self.client,
             self.model,

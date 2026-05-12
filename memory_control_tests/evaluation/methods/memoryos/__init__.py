@@ -10,8 +10,8 @@ MemoryCtrl evaluation pipeline:
     feed it pages in order.
   * Answer: ``Memoryos.retriever.retrieve_context`` is read-only and returns
     ``retrieved_pages`` (mid-term), ``retrieved_user_knowledge``,
-    ``retrieved_assistant_knowledge``. We then build the standard MCQ prompt
-    via ``build_eval_prompt`` and route the final answer call through
+    ``retrieved_assistant_knowledge``. We then build the shared memory-aware
+    MCQ prompt via ``build_memory_eval_prompt`` and route the final answer call through
     OpenRouter (so all methods share one model surface). MemoryOS's own
     ``get_response`` is bypassed because it would call ``add_memory`` again
     and pollute downstream stages (CLAUDE.md rule 3).
@@ -39,7 +39,7 @@ from typing import Any, Dict, List
 from ..base import MethodAdapter
 from ..utils import load_official_memoryos_module
 from ...shared import (
-    build_eval_prompt,
+    build_memory_eval_prompt,
     ensure_openai_env,
     load_openai_client,
     load_openai_credentials,
@@ -378,11 +378,10 @@ class MemoryOSAdapter(MethodAdapter):
             user_id=self.user_id,
         )
         memories_text = self._format_retrieved(retrieval)
-        prompt = build_eval_prompt(question, choices)
         messages = self.persona_messages + [
             {
                 "role": "user",
-                "content": f"Retrieved memories:\n{memories_text}\n\n{prompt}",
+                "content": build_memory_eval_prompt(question, choices, memories_text),
             }
         ]
         response = self.answer_call(messages)

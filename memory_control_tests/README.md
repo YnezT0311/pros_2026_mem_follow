@@ -738,7 +738,7 @@ For each `persona × world`:
 4. for each MCQ, it issues:
    - `memory.search(query=question, user_id=..., limit=k)`
 5. it formats the retrieved memories into text
-6. it appends that retrieved-memory block ahead of the standard MCQ prompt
+6. it puts that retrieved-memory block into the shared memory-aware MCQ prompt
 7. `gpt-5.4-mini` answers the final multiple-choice question
 
 ### Write-Time and Retrieval Logic
@@ -821,7 +821,7 @@ For each `persona × world`:
 5. for each MCQ, it retrieves notes with:
    - `search_agentic(question, k=...)`
 6. it formats the retrieved notes into text
-7. it appends that retrieved-memory block ahead of the standard MCQ prompt
+7. it puts that retrieved-memory block into the shared memory-aware MCQ prompt
 8. `gpt-5.4-mini` answers the final multiple-choice question
 
 ### Write-Time and Retrieval Logic
@@ -865,7 +865,7 @@ For each `persona × world`:
 4. for each MCQ, it retrieves candidate memories with a read-only store lookup:
    - `store.search(("memories",), query=question, limit=10)`
 5. it formats the retrieved memories into text
-6. it appends that retrieved-memory block ahead of the standard MCQ prompt
+6. it puts that retrieved-memory block into the shared memory-aware MCQ prompt
 7. `gpt-5.4-mini` answers the final multiple-choice question
 
 ### Write-Time and Retrieval Logic
