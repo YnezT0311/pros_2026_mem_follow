@@ -29,8 +29,6 @@ def _backend_from_name(text: str) -> Optional[str]:
         return "A-Mem"
     if ".langmem_retrieval_eval_" in text:
         return "LangMem"
-    if ".zep_retrieval_eval_" in text:
-        return "Zep"
     if ".memoryos_retrieval_eval_" in text:
         return "MemoryOS"
     if ".memtree_retrieval_eval_" in text:
@@ -393,7 +391,7 @@ def main() -> None:
     )
     parser.add_argument("--output_json", default="eval_results/travelPlanning/instruction_control_summary.json")
     parser.add_argument("--output_md", default="eval_results/travelPlanning/instruction_control_summary.md")
-    parser.add_argument("--models", nargs="+", default=["gpt-5.4-mini", "gpt-4o"])
+    parser.add_argument("--models", nargs="+", default=["gpt-oss-120b", "gpt-5.4-mini", "gpt-4o"])
     parser.add_argument("--other_personas", type=int, default=4)
     parser.add_argument("--forget_personas", type=int, default=10)
     parser.add_argument("--slot_type_model", default="gpt-5-mini")

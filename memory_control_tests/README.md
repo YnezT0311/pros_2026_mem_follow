@@ -28,7 +28,7 @@ Run the pipeline in this order:
 5. run evaluation
    - unified entry point:
      - `python -m memory_control_tests.evaluation.mem_evals --rendered ... --method plain --world baseline`
-     - `--method` accepts `plain | mem0 | langmem | amem | zep`
+     - `--method` accepts `plain | mem0 | langmem | amem | memoryos | memtree`
    - score raw outputs:
      - single file: `python -m memory_control_tests.evaluation.scores --path eval_results/.../foo.json`
      - bulk in-place over a tree: `python -m memory_control_tests.evaluation.scores --path eval_results/ --write_in_place`
@@ -328,7 +328,7 @@ without storing a large number of static world files.
 
 The repository also includes a browser-based evaluator:
 
-- [evaluate_chatgpt_web.py](/mnt/yao_data/proj_2026_agent/MemoryCtrl/memory_control_tests/evaluation/evaluate_chatgpt_web.py)
+- `memory_control_tests/evaluation/chatgpt/evaluate_chatgpt_web.py`
 
 This script replays the conversation inside ChatGPT Web and asks the rendered
 MCQs in the same browser session.
@@ -417,8 +417,8 @@ rather than waiting until the very end and asking everything at once.
 
 The browser evaluator reads:
 
-- [whole_recall](/mnt/yao_data/proj_2026_agent/PersonaMem-main/data/test/travelPlanning/whole_recall)
-- [slot_recall](/mnt/yao_data/proj_2026_agent/PersonaMem-main/data/test/travelPlanning/slot_recall)
+- `data/test/travelPlanning/whole_recall`
+- `data/test/travelPlanning/slot_recall`
 
 and combines them into a single list of `McqItem`s.
 
@@ -625,7 +625,8 @@ The backend directory names are:
 - `gpt-5.4-mini+mem0`
 - `gpt-5.4-mini+A-Mem`
 - `gpt-5.4-mini+LangMem`
-- `gpt-5.4-mini+Zep`
+- `gpt-5.4-mini+MemoryOS`
+- `gpt-5.4-mini+MemTree`
 
 ## API Evaluation Prompt
 
@@ -766,10 +767,33 @@ conda run -n mem0 python -m memory_control_tests.evaluation.mem_evals \
   --world baseline
 ```
 
-The mem0 adapter accepts a few self-hosting flags:
+Backend-specific settings now live in a method config JSON rather than on the
+shared evaluator CLI. For example:
 
-- `--mem0_runtime_root <path>` — where to put the local Qdrant store and history db (default: `data/runtime/mem0/<world>/<persona-stem>/`)
-- `--mem0_keep_runtime` — reuse the existing on-disk store instead of resetting it before each run
+```json
+{
+  "mem0_runtime_root": "data/runtime/mem0/custom",
+  "mem0_reset_runtime": false,
+  "memory_limit": 5
+}
+```
+
+Run it with:
+
+```bash
+conda run -n mem0 python -m memory_control_tests.evaluation.mem_evals \
+  --method mem0 \
+  --method_config configs/mem0_eval.json \
+  --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
+  --model gpt-5.4-mini \
+  --world baseline
+```
+
+The mem0 adapter accepts these self-hosting config keys:
+
+- `mem0_runtime_root` — where to put the local Qdrant store and history db (default: `data/runtime/mem0/<world>/<persona-stem>/`)
+- `mem0_reset_runtime` — reset the on-disk store before each run; set to `false` to reuse it
+- `memory_limit` — max retrieved memories per MCQ
 
 The adapter records the LLM calls mem0 makes during `add()` (prompt + response) into `method_debug.preload.llm_call_trace`. This is wrapping only — no extra LLM calls — and is useful for diagnosing why mem0 extracted (or failed to extract) a particular fact.
 
@@ -807,7 +831,7 @@ The A-Mem paper centers on dynamic note construction, linking, and memory evolut
 ### Command
 
 ```bash
-HF_HOME=/home/yao/.cache/huggingface TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
+HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}" TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
 conda run -n amem python -m memory_control_tests.evaluation.mem_evals \
   --method amem \
   --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
@@ -815,7 +839,8 @@ conda run -n amem python -m memory_control_tests.evaluation.mem_evals \
   --world baseline
 ```
 
-A-Mem is imported from a clone of the official repo (default: `/mnt/yao_data/proj_2026_agent/A-mem`). Override with `AMEM_REPO_ROOT=...`.
+A-Mem is imported from `memory_layer_robust.py`. Install A-Mem on `PYTHONPATH`
+or set `AMEM_REPO_ROOT` to a clone containing that file.
 
 ## LangMem Evaluation
 
@@ -861,59 +886,6 @@ conda run -n langmem311 python -m memory_control_tests.evaluation.mem_evals \
   --model gpt-5.4-mini \
   --world baseline
 ```
-
-## Zep Evaluation
-
-The Zep evaluator is implemented in:
-
-- `evaluation/methods/zep/` (adapter) + `evaluation/mem_evals.py --method zep` (entry point)
-
-### Runtime Logic
-
-For each `persona × world`:
-
-1. the evaluator loads the truncated conversation history up to the target `ask_period`
-2. it ensures that a benchmark user exists in Zep
-3. it creates one temporary Zep thread for that `persona × world`
-4. it writes the transformed conversation history into that thread once
-5. for each MCQ, it appends the current question to the same thread with:
-   - `return_context=True`
-6. it reads the returned context block, falling back to `get_user_context(...)` when needed
-7. it appends that Zep context block ahead of the standard MCQ prompt
-8. `gpt-5.4-mini` answers the final multiple-choice question
-
-### Write-Time and Retrieval Logic
-
-Zep handles the memory-processing pipeline on the service side. The client writes raw messages and questions into Zep threads; Zep then assembles the context block returned for each question. Under the hood, Zep is powered by Graphiti's temporal knowledge graph: ingested episodes are converted into evolving entities and relationships with validity windows, and retrieval combines relationship-aware context assembly with graph-backed search over that temporal state.
-
-The evaluator reuses a single thread per `persona × world` so the benchmark pays the ingestion cost once and then reuses the same memory state across the whole MCQ set.
-
-### Paper-Core Behavior vs Product-Level Additions
-
-The paper-core path behind Zep is Graphiti, which emphasizes temporal context graphs, episode provenance, fact invalidation over time, and hybrid retrieval across semantic, keyword, and graph signals. Zep adds the managed platform layer on top of that engine:
-
-- user and thread management
-- production-ready context assembly
-- governed retrieval infrastructure
-- dashboarding and hosted operations
-
-The benchmark uses Zep's managed thread/context API, so it exercises Graphiti's graph-backed memory behavior through the current product interface rather than through a standalone self-hosted Graphiti stack.
-
-### Command
-
-```bash
-conda run -n zep311 python -m memory_control_tests.evaluation.mem_evals \
-  --method zep \
-  --rendered data/test/travelPlanning/specs/conversation_travelPlanning_persona0_sample0.recall_rendered.json \
-  --model gpt-5.4-mini \
-  --world baseline
-```
-
-The evaluator reads credentials from environment variables or local files:
-
-- `OPENROUTER_API_KEY` or `keys/openrouter_key.txt`
-- `ZEP_API_KEY` or `keys/zep_api_key.txt`
-- optionally `ZEP_API_URL` or `keys/zep_api_url.txt`
 
 ### Recall Rendering Rule
 

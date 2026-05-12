@@ -6,7 +6,7 @@ cd "$ROOT_DIR"
 
 # Same env as the new memoryos / a-mem battery: pymilvus + faiss-cpu +
 # sentence-transformers are installed there.
-MEMTREE_PY="/home/yao/.conda/envs/amem/bin/python"
+MEMTREE_PY="${MEMTREE_PY:-python}"
 MODEL="gpt-5.4-mini"
 TOPIC="travelPlanning"
 
@@ -65,7 +65,7 @@ run_memtree_case() {
   if [[ -n "$release" ]]; then
     extra_args+=(--no_use_release_period "$release")
   fi
-  HF_HOME=/home/yao/.cache/huggingface TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
+  HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}" TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
     "$MEMTREE_PY" -m memory_control_tests.evaluation.mem_evals \
       --method memtree \
       --rendered "$rendered" \

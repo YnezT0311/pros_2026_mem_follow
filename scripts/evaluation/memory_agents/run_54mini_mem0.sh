@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
-MEM0_PY="/home/yao/.conda/envs/mem0/bin/python"
+MEM0_PY="${MEM0_PY:-python}"
 MODEL="gpt-5.4-mini"
 TOPIC="travelPlanning"
 
@@ -60,7 +60,8 @@ run_mem0_case() {
   if [[ -n "$release" ]]; then
     extra_args+=(--no_use_release_period "$release")
   fi
-  "$MEM0_PY" -m memory_control_tests.evaluation.evaluate_mem0_recall_mcqs \
+  "$MEM0_PY" -m memory_control_tests.evaluation.mem_evals \
+    --method mem0 \
     --rendered "$rendered" \
     --model "$MODEL" \
     --world "$world" \

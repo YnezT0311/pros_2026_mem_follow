@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
-AMEM_PY="/home/yao/.conda/envs/amem/bin/python"
+AMEM_PY="${AMEM_PY:-python}"
 MODEL="gpt-5.4-mini"
 TOPIC="travelPlanning"
 
@@ -45,8 +45,9 @@ run_forget_case() {
     return
   fi
   echo "RUN A-Mem forget $ask_period -> $out"
-  HF_HOME=/home/yao/.cache/huggingface TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
-    "$AMEM_PY" -m memory_control_tests.evaluation.evaluate_amem_recall_mcqs \
+  HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}" TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
+    "$AMEM_PY" -m memory_control_tests.evaluation.mem_evals \
+      --method amem \
       --rendered "$rendered" \
       --model "$MODEL" \
       --world forget \

@@ -11,7 +11,7 @@ cd "$ROOT_DIR"
 
 # Reuse the amem env — we pip-installed mem0ai==1.0.11 + faiss-cpu + pymilvus
 # into it so it can drive every memory-agent backend via mem_evals.py.
-PY="/home/yao/.conda/envs/amem/bin/python"
+PY="${PY:-python}"
 MODEL="gpt-5.4-mini"
 TOPIC="travelPlanning"
 
@@ -74,7 +74,7 @@ run_mem0_case() {
   if [[ -n "$release" ]]; then
     extra_args+=(--no_use_release_period "$release")
   fi
-  HF_HOME=/home/yao/.cache/huggingface TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
+  HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}" TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
     "$PY" -m memory_control_tests.evaluation.mem_evals \
       --method mem0 \
       --rendered "$rendered" \

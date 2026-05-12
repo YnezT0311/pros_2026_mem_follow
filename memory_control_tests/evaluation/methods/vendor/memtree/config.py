@@ -31,7 +31,7 @@ def get_embedding_model(config):
     model = SentenceTransformer(resolved_model_name)
 
     # if config.embedding_model_name == "models--BAAI--bge-m3":
-    #     model = SentenceTransformer("/home/yaodong/codes/GNNRAG/models--BAAI--bge-m3/snapshots/5617a9f61b028005a4858fdac845db406aefb181")
+    #     model = SentenceTransformer("<local-or-hub-embedding-model>")
         
     # elif config.embedding_model_name == "nvidia/NV-Embed-v2":
     #     model = SentenceTransformer('nvidia/NV-Embed-v2', trust_remote_code=True, model_kwargs={"torch_dtype": "float16"}, device="cuda")

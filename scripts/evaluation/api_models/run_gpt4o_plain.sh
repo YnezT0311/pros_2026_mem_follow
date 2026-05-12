@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
-AGENT_PY="/home/yao/.conda/envs/agent/bin/python"
+AGENT_PY="${AGENT_PY:-python}"
 MODEL="gpt-4o"
 TOPIC="travelPlanning"
 

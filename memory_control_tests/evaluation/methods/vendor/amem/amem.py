@@ -1,11 +1,9 @@
 """Vendored A-Mem wrapper modeled on `A-mem/test_advanced_robust.py`.
 
-A-Mem ships its memory layer (`memory_layer_robust.py`) as a clone-and-import
-project rather than a pip package. We do not copy that source in. Instead we
-inject the cloned repo onto `sys.path`, import `RobustAgenticMemorySystem` and
-`RobustOpenAIController`, patch the OpenAI controller for OpenRouter, and
-expose a `add_memory` / `search_memory` surface that mirrors the other
-vendored wrappers (`vendor/langmem/langmem.py`, `vendor/memzero/*`).
+A-Mem ships its memory layer (`memory_layer_robust.py`) outside this package.
+We first try a normal import, then optionally inject `AMEM_REPO_ROOT` onto
+`sys.path` when the caller explicitly points at a clone. We do not fall back to
+machine-specific sibling paths.
 
 The keyword-extraction step at `search_memory` follows test_advanced_robust.py
 lines 96-107: a short LLM call turns a question into comma-separated keywords,
@@ -37,14 +35,14 @@ RETRYABLE_ERROR_MARKERS = (
 
 def _resolve_amem_repo_root() -> Path:
     repo_root = os.getenv("AMEM_REPO_ROOT", "").strip()
-    if repo_root:
-        candidate = Path(repo_root)
-    else:
-        candidate = Path("/mnt/yao_data/proj_2026_agent/A-mem")
+    if not repo_root:
+        raise FileNotFoundError(
+            "Could not import A-Mem modules. Install A-Mem on PYTHONPATH or set AMEM_REPO_ROOT."
+        )
+    candidate = Path(repo_root)
     if not candidate.exists():
         raise FileNotFoundError(
-            "A-mem repo not found. Set AMEM_REPO_ROOT or place the repo at "
-            "/mnt/yao_data/proj_2026_agent/A-mem."
+            f"A-Mem repo not found at AMEM_REPO_ROOT={candidate}."
         )
     return candidate
 
@@ -131,17 +129,25 @@ def _patch_openai_controller_for_openrouter(controller_cls: Any) -> None:
 
 
 def _import_amem_modules() -> Tuple[Any, Any, Any]:
-    _ensure_amem_on_path()
     try:
         from memory_layer_robust import (
             RobustAgenticMemorySystem,
             RobustLLMController,
             RobustOpenAIController,
         )
-    except ImportError as exc:
-        raise ImportError(
-            "Could not import A-mem robust modules from the cloned repo."
-        ) from exc
+    except ImportError:
+        _ensure_amem_on_path()
+        try:
+            from memory_layer_robust import (
+                RobustAgenticMemorySystem,
+                RobustLLMController,
+                RobustOpenAIController,
+            )
+        except ImportError as exc:
+            raise ImportError(
+                "Could not import A-Mem robust modules. Install A-Mem on PYTHONPATH "
+                "or set AMEM_REPO_ROOT to a clone containing memory_layer_robust.py."
+            ) from exc
     return RobustAgenticMemorySystem, RobustLLMController, RobustOpenAIController
 
 

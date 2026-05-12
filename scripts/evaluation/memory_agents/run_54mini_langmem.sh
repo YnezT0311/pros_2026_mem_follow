@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
-LANGMEM_PY="/home/yao/.conda/envs/langmem311/bin/python"
+LANGMEM_PY="${LANGMEM_PY:-python}"
 MODEL="${MODEL-gpt-5.4-mini}"
 TOPIC="travelPlanning"
 OTHER_PERSONAS="${OTHER_PERSONAS-0 1 2 3}"
@@ -68,7 +68,8 @@ run_langmem_case() {
   if [[ -n "$release" ]]; then
     extra_args+=(--no_use_release_period "$release")
   fi
-  "$LANGMEM_PY" -m memory_control_tests.evaluation.evaluate_langmem_recall_mcqs \
+  "$LANGMEM_PY" -m memory_control_tests.evaluation.mem_evals \
+    --method langmem \
     --rendered "$rendered" \
     --model "$MODEL" \
     --world "$world" \

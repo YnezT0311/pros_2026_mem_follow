@@ -13,6 +13,7 @@ from ..transforms import apply_no_store, apply_no_use, apply_staged_forget
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 OPENROUTER_TITLE = "MemoryCtrl"
 DEFAULT_MODEL_ALIASES = {
+    "gpt-oss-120b": "openai/gpt-oss-120b",
     "gpt-5.4-mini": "openai/gpt-5.4-mini",
     "gpt-5-mini": "openai/gpt-5-mini",
     "gemini-3.1-pro-preview": "google/gemini-3.1-pro-preview",

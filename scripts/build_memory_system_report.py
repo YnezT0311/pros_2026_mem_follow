@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 
-ROOT = Path("/mnt/yao_data/proj_2026_agent/MemoryCtrl")
+ROOT = Path(__file__).resolve().parents[1]
 EVAL_ROOT = ROOT / "eval_results" / "travelPlanning"
 OUTPUT_PATH = EVAL_ROOT / "memory_system_report.html"
 SUMMARY_PATH = EVAL_ROOT / "instruction_control_summary.json"

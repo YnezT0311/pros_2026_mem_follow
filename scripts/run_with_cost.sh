@@ -11,7 +11,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 KEY_FILE="${OPENROUTER_KEY_FILE:-${SCRIPT_DIR}/../keys/openrouter_key.txt}"
-PYTHON_BIN="${PYTHON_BIN:-/home/yao/.conda/envs/mem0/bin/python}"
+PYTHON_BIN="${PYTHON_BIN:-python}"
 
 if [[ ! -f "$KEY_FILE" ]]; then
   echo "[cost] WARN: OpenRouter key file not found at $KEY_FILE; skipping cost tracking" >&2

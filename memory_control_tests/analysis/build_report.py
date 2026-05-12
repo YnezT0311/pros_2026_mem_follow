@@ -35,7 +35,7 @@ from memory_control_tests.evaluation.shared import (
 )
 
 
-REPO_ROOT = Path("/mnt/yao_data/proj_2026_agent/MemoryCtrl")
+REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT = REPO_ROOT / "eval_results" / "travelPlanning" / "report.html"
 DEMO_PERSONA_PATH = (
     REPO_ROOT
@@ -470,7 +470,7 @@ _BASELINE_TOPICS = (
 
 
 def _iter_period_messages(data: Dict[str, Any], period: str):
-    """Mirror evaluation.mem_evals._build_period_messages exactly."""
+    """Mirror evaluation.tasks.build_period_messages exactly."""
     for line in data.get(period, []) or []:
         if not isinstance(line, str) or line.startswith("Side_Note"):
             continue
@@ -1863,183 +1863,6 @@ def _spec_langmem() -> MemorySystemSpec:
     )
 
 
-def _spec_zep() -> MemorySystemSpec:
-    return MemorySystemSpec(
-        label="Zep (Cloud)",
-        one_liner="Server-side temporal knowledge graph (powered by Graphiti); ingestion is opaque, query via graph.search.",
-        operations=[
-            "ADD edge / node",
-            "UPDATE (server-side validity windows)",
-            "DELETE edge / node (soft via invalid_at; explicit via API)",
-        ],
-        sample_input=(
-            "User: I'm planning a Paris trip Oct 15-20, my budget is $150 per night.\n"
-            "(only USER turns are ingested, see CLAUDE.md / cost note)"
-        ),
-        write_steps=[
-            FlowStep(
-                label="1. thread.create(thread_id, user_id) — idempotent",
-                description="Container for the conversation turns under this user.",
-                sample_input=(
-                    "User: I'm planning a Paris trip Oct 15-20, my budget is $150 per night."
-                ),
-            ),
-            FlowStep(
-                label="2. thread.add_messages(thread_id, [Message(role, role_type='user', content=f'{ts}: {text}')])",
-                description=(
-                    "We embed the timestamp directly in the content string (matching "
-                    "mem0_official's locomo10 evaluation). Per-message ingestion."
-                ),
-                prompt_excerpt=(
-                    "Message(role='user', role_type='user',\n"
-                    "        content='10/15/2026: I am planning a Paris trip Oct 15-20, my budget is $150 per night.')"
-                ),
-            ),
-            FlowStep(
-                label="3. (server-side, opaque) Graphiti extracts entities + edges",
-                description=(
-                    "Zep's server runs an LLM-based extraction pipeline producing "
-                    "fact edges (with valid_at / invalid_at) and entity nodes (with summaries)."
-                ),
-            ),
-        ],
-        sample_memory_shape=(
-            "Per-user temporal graph:\n"
-            "  Node Paris trip — summary='User's planned Paris trip in October 2026'\n"
-            "  Edge: User --(plans)--> Paris trip   valid_at=2026-04-01\n"
-            "  Edge: Paris trip --(has-budget)--> $150/night   valid_at=2026-04-01\n"
-            "  Edge: Paris trip --(date-range)--> Oct 15-20"
-        ),
-        sample_question="What was my nightly budget for Paris stay?",
-        read_steps=[
-            FlowStep(
-                label="1. graph.search(scope='edges', reranker='cross_encoder', query, limit=20) — 0 client LLM calls",
-                description=(
-                    "Server-side retrieval. Returns the top-20 graph edges (facts) most "
-                    "relevant to the query, each with a `valid_at` / `invalid_at` window. "
-                    "The reranker uses a cross-encoder for high-quality semantic match."
-                ),
-                sample_input='question = "What was my nightly budget for Paris stay?"',
-                sample_output=(
-                    "[\n"
-                    "  EntityEdge(fact='User has $150/night budget for Paris trip', valid_at='2026-04-01', invalid_at=None),\n"
-                    "  EntityEdge(fact='Paris trip is Oct 15-20', valid_at='2026-04-01', invalid_at=None),\n"
-                    "  EntityEdge(fact='User prefers boutique hotels', valid_at='2026-04-01', invalid_at=None)\n"
-                    "]"
-                ),
-            ),
-            FlowStep(
-                label="2. graph.search(scope='nodes', reranker='rrf', query, limit=20) — 0 client LLM calls",
-                description="Returns relevant entities (nodes) and their server-summarized descriptions.",
-                sample_output=(
-                    "[\n"
-                    "  EntityNode(name='Paris trip', summary=\"User's planned Paris trip Oct 15-20\"),\n"
-                    "  EntityNode(name='budget', summary='Travel budgets the user has set'),\n"
-                    "  EntityNode(name='boutique hotels', summary='User preference for small hotels')\n"
-                    "]"
-                ),
-            ),
-            FlowStep(
-                label="3. compose_search_context(edges, nodes) — pure Python, no LLM",
-                description="Flattens facts and entities into one formatted text block for the answer prompt.",
-                sample_output=(
-                    "FACTS and ENTITIES represent relevant context to the current conversation.\n\n"
-                    "# These are the most relevant facts and their valid date ranges\n"
-                    "  - User has $150/night budget for Paris trip (2026-04-01 - present)\n"
-                    "  - Paris trip is Oct 15-20 (2026-04-01 - present)\n"
-                    "  - User prefers boutique hotels (2026-04-01 - present)\n\n"
-                    "# These are the most relevant entities\n"
-                    "  - Paris trip: User's planned Paris trip Oct 15-20\n"
-                    "  - budget: Travel budgets the user has set"
-                ),
-            ),
-            FlowStep(
-                label="4. answer model picks MCQ option (1 LLM call)",
-                description="Single LLM call with the formatted context injected as 'Retrieved memories:'.",
-                sample_output="<final_answer>(b)</final_answer>",
-            ),
-        ],
-        final_answer_prompt_excerpt=(
-            "Retrieved memories:\n\n"
-            "FACTS and ENTITIES represent relevant context to the current conversation.\n\n"
-            "# These are the most relevant facts and their valid date ranges\n"
-            "  - User has a $150/night budget for the Paris trip (2026-04-01 - present)\n"
-            "  - User is planning a Paris trip Oct 15-20 (2026-04-01 - present)\n\n"
-            "# These are the most relevant entities\n"
-            "  - Paris trip: User's planned Paris trip in October 2026\n\n"
-            "Question: What was my nightly budget for Paris stay?\n"
-            "(a) ... (b) $150 per night (c) ...\n"
-            "<final_answer>"
-        ),
-        write_path=[
-            "thread.create(thread_id, user_id) (idempotent)",
-            "thread.add_messages(thread_id, [Message(role, role_type='user', content=f'{ts}: {text}')])",
-            "Server-side: extract entities + edges with temporal validity, build per-user graph",
-        ],
-        read_path=[
-            "graph.search(user_id, query, scope='edges', reranker='cross_encoder', limit=20)",
-            "graph.search(user_id, query, scope='nodes', reranker='rrf', limit=20)",
-            "Compose context block (facts + entities) → answer model",
-        ],
-        tools=[
-            MemoryToolCard(
-                name="thread.create",
-                description="Create a thread tied to a user. Container for messages.",
-                prompt_or_signature="thread.create(thread_id, user_id) — idempotent in our adapter",
-            ),
-            MemoryToolCard(
-                name="thread.add_messages",
-                description="Push one message into the thread; server extracts facts.",
-                prompt_or_signature=(
-                    "Message(role=<user/assistant>, role_type='user',\n"
-                    "        content=f'{timestamp}: {text}')\n"
-                    "Note: we ingest only USER turns to halve Zep credit cost\n"
-                    "      (Zep bills per byte of episode ingested)."
-                ),
-            ),
-            MemoryToolCard(
-                name="graph.search (edges)",
-                description="Retrieve relevant facts (edges) with temporal validity ranges.",
-                prompt_or_signature=(
-                    "graph.search(user_id, scope='edges',\n"
-                    "             reranker='cross_encoder', query, limit=20)\n"
-                    "→ List[EntityEdge(fact, valid_at, invalid_at)]"
-                ),
-            ),
-            MemoryToolCard(
-                name="graph.search (nodes)",
-                description="Retrieve relevant entities (nodes) with summaries.",
-                prompt_or_signature=(
-                    "graph.search(user_id, scope='nodes',\n"
-                    "             reranker='rrf', query, limit=20)\n"
-                    "→ List[EntityNode(name, summary)]"
-                ),
-            ),
-        ],
-    )
-
-
-_MEMTREE_AGGREGATE_PROMPT = (
-    "// MemTree AGGREGATE_PROMPT (verbatim from prompt.py):\n"
-    "You will receive two pieces of information:\n"
-    "  New Information is detailed, and Existing Information is a summary from\n"
-    "  {n_children} previous entries.\n"
-    "Your task is to merge these into a single, cohesive summary that highlights\n"
-    "the most important insights. Focus on the key points from both inputs.\n"
-    "If the number of previous entries in Existing Information is accumulating\n"
-    "(more than 2), focus on summarizing more concisely, only capturing the\n"
-    "overarching theme, and getting more abstract in your summary.\n"
-    "Output the summary directly.\n\n"
-    "[New Information]\n"
-    "{new_content}\n"
-    "[Existing Information (from {n_children} previous entries)]\n"
-    "{current_content}\n\n"
-    "IMPORTANT! Don't output additional commentary, explanations, or unrelated\n"
-    "information. Provide only the exact information or output requested.\n"
-    "[Output Summary]"
-)
-
-
 def _spec_memtree() -> MemorySystemSpec:
     return MemorySystemSpec(
         label="MemTree (Memory-in-the-LLM-Era)",
@@ -2631,7 +2454,7 @@ def _render_arch_diagram() -> str:
   <div class='flow-divider'></div>
 
   <div class='flow-augmented'>
-    <div class='flow-label'>② Memory-augmented prompting <span class='flow-tag flow-tag-good'>mem0 / A-Mem / LangMem / Zep / MemTree / MemoryOS</span></div>
+    <div class='flow-label'>② Memory-augmented prompting <span class='flow-tag flow-tag-good'>mem0 / A-Mem / LangMem / MemTree / MemoryOS</span></div>
     <div class='flow-row flow-row-converging'>
       <!-- 6-column grid: history, →, memory, →, [relevant info / current query], [↘ / ↗] -->
       <div class='flow-branches-grid'>
@@ -2663,7 +2486,7 @@ def _render_arch_diagram() -> str:
 
 
 def render_section_systems() -> str:
-    specs = [_spec_mem0(), _spec_amem(), _spec_langmem(), _spec_zep(), _spec_memtree(), _spec_memoryos()]
+    specs = [_spec_mem0(), _spec_amem(), _spec_langmem(), _spec_memtree(), _spec_memoryos()]
     cards = "".join(_render_spec_card(s) for s in specs)
     return (
         "<section id='sec-systems'>"
@@ -2737,7 +2560,7 @@ _ACCIDENTAL_MECHANISMS = [
 # would have surfaced in baseline?
 #
 # Ideal evidence would be store snapshots from baseline + no_store. But
-# A-Mem / MemTree / MemoryOS / Zep don't reliably dump baseline store
+# A-Mem / MemTree / MemoryOS don't reliably dump baseline store
 # snapshots (only no_store runs do). So we use an end-to-end proxy:
 # baseline MCQ outcome (remember_correct = system had the value
 # retrievable end-to-end). We pair each no_store MCQ with its baseline
@@ -2968,7 +2791,7 @@ def _aggregate_cascade_buckets(worlds: Optional[Set[str]] = None) -> Dict[str, D
             if "gpt-5.4-mini" not in system_label:
                 continue
             if not any(b in system_label for b in
-                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem", "+Zep")):
+                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
                 continue
             for path in sys_dir.glob("*.json"):
                 try:
@@ -3034,7 +2857,7 @@ def _aggregate_accidental_s1_mechanisms(worlds: Optional[Set[str]] = None) -> Di
             if "gpt-5.4-mini" not in system_label:
                 continue
             if not any(b in system_label for b in
-                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem", "+Zep")):
+                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
                 continue
             for path in sys_dir.glob("*.json"):
                 try:
@@ -3132,7 +2955,7 @@ def _aggregate_no_store_cascade() -> Dict[str, Dict[str, int]]:
         if "gpt-5.4-mini" not in system_label:
             continue
         if not any(b in system_label for b in
-                   ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem", "+Zep")):
+                   ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
             continue
         for path in sys_dir.glob("*.json"):
             try:
@@ -3180,7 +3003,7 @@ def _aggregate_no_store_cascade_x_outcome() -> Dict[str, Dict[str, Dict[str, int
         if "gpt-5.4-mini" not in system_label:
             continue
         if not any(b in system_label for b in
-                   ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem", "+Zep")):
+                   ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
             continue
         for path in sys_dir.glob("*.json"):
             try:
@@ -3329,7 +3152,7 @@ def _aggregate_baseline_target_absent_in_neverextract(worlds: Optional[Set[str]]
             if "gpt-5.4-mini" not in system_label:
                 continue
             if not any(b in system_label for b in
-                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem", "+Zep")):
+                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
                 continue
             for path in sys_dir.glob("*.json"):
                 try:
@@ -3484,8 +3307,7 @@ def _find_cascade_walkthrough_example(
 _SYSTEM_ORDER_FOR_CASCADE = [
     ("gpt-5.4-mini+mem0",     "GPT-5.4-mini + mem0"),
     ("gpt-5.4-mini+A-Mem",    "GPT-5.4-mini + A-Mem"),
-    ("gpt-5.4-mini+Zep",      "GPT-5.4-mini + Zep"),
-    ("gpt-5.4-mini+MemoryOS", "GPT-5.4-mini + MemoryOS"),
+        ("gpt-5.4-mini+MemoryOS", "GPT-5.4-mini + MemoryOS"),
     ("gpt-5.4-mini+MemTree",  "GPT-5.4-mini + MemTree"),
 ]
 
@@ -4343,7 +4165,7 @@ def _aggregate_forget_leaves(worlds: Optional[Set[str]] = None) -> Dict[str, Dic
             if "gpt-5.4-mini" not in system_label:
                 continue
             if not any(b in system_label for b in
-                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem", "+Zep")):
+                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
                 continue
             for path in sys_dir.glob("*.json"):
                 try:
@@ -4396,7 +4218,7 @@ def _aggregate_success_s2_action(worlds: Optional[Set[str]] = None) -> Dict[str,
             if "gpt-5.4-mini" not in system_label:
                 continue
             if not any(b in system_label for b in
-                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem", "+Zep")):
+                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
                 continue
             for path in sys_dir.glob("*.json"):
                 try:
@@ -6139,7 +5961,6 @@ def _stringify_retrieved(retrieved: Any) -> str:
     if isinstance(retrieved, str):
         return retrieved
     if isinstance(retrieved, dict):
-        # Zep: {"context": "...", "edges": [...], "nodes": [...]}
         if "context" in retrieved:
             return str(retrieved.get("context", ""))
         # mem0: {"results": [...]} or simple list
@@ -6360,28 +6181,7 @@ def _extract_store_entries(data: Dict[str, Any], system_label: str) -> List[Dict
             for p in pages if isinstance(p, dict)
         ]
 
-    if "+Zep" in system_label:
-        # Zep adapter already logs each ingested user turn with timestamp.
-        msgs = preload.get("input_messages") or []
-        return [
-            {"text": str(m.get("content", "")), "timestamp": str(m.get("timestamp", ""))}
-            for m in msgs if isinstance(m, dict)
-        ]
 
-    return []
-
-
-def _inspect_store(
-    *,
-    data: Dict[str, Any],
-    system_label: str,
-    target_ts: str,
-    target_turn: str,
-    question: str,
-    sensitive_key: str,
-    expected_text: str,
-) -> Dict[str, Any]:
-    entries = _extract_store_entries(data, system_label)
     if not entries:
         return {"available": False, "status": "unavailable", "excerpt": ""}
 
@@ -6922,7 +6722,6 @@ _ERROR_SYSTEM_ORDER: List[str] = [
     "gpt-5.4-mini+mem0",
     "gpt-5.4-mini+A-Mem",
     "gpt-5.4-mini+LangMem",
-    "gpt-5.4-mini+Zep",
     "gpt-5.4-mini+MemoryOS",
     "gpt-5.4-mini+MemTree",
 ]
@@ -6940,7 +6739,6 @@ _ERROR_SYSTEM_DISPLAY_LABEL: Dict[str, str] = {
     "gpt-5.4-mini+mem0":     "GPT-5.4-mini + mem0",
     "gpt-5.4-mini+A-Mem":    "GPT-5.4-mini + A-Mem",
     "gpt-5.4-mini+LangMem":  "GPT-5.4-mini + LangMem",
-    "gpt-5.4-mini+Zep":      "GPT-5.4-mini + Zep",
     "gpt-5.4-mini+MemoryOS": "GPT-5.4-mini + MemoryOS",
     "gpt-5.4-mini+MemTree":  "GPT-5.4-mini + MemTree",
 }
@@ -7503,7 +7301,7 @@ def _render_error_card(s: Dict[str, Any]) -> str:
                 f"</div>"
             )
     else:
-        # Non-mem0 memory backends (A-Mem, LangMem, MemoryOS, MemTree, Zep)
+        # Non-mem0 memory backends (A-Mem, LangMem, MemoryOS, MemTree)
         # are append-only — no native delete API. So no `forget` instruction
         # can remove anything from their stores; effect is structurally null.
         is_mem_backend = "+" in sys_label and ("Web" not in sys_label)
@@ -7902,7 +7700,6 @@ _ERROR_BACKEND_GROUPS = {
     "mem0":     ("+mem0",),
     "A-Mem":    ("+A-Mem", "+a_mem", "+A-mem"),
     "LangMem":  ("+LangMem", "+langmem"),
-    "Zep":      ("+Zep", "+zep"),
     "MemTree":  ("+MemTree", "+memtree"),
     "MemoryOS": ("+MemoryOS", "+memoryos"),
 }
@@ -7912,7 +7709,7 @@ def _classify_error_system(system_label: str) -> Tuple[str, str]:
     """Returns (top_group, sub_group) for grouping in section 4.
     top_group ∈ {"API Models", "Memory Systems", "Chatbot Web"}.
     sub_group is empty for API Models / Chatbot Web; for memory systems it is
-    one of {"mem0", "A-Mem", "LangMem", "Zep"} based on the suffix.
+    one of {"mem0", "A-Mem", "LangMem"} based on the suffix.
     """
     s = system_label
     if any(tag in s.lower() for tag in ("chatgpt", "web")):
@@ -8034,7 +7831,7 @@ def _render_memory_by_model_subfolds(grouped_memory: Dict[str, List[str]], cells
 
 def _render_memory_grouped_by_world(grouped_memory: Dict[str, List[str]], cells, totals) -> str:
     """For Memory Systems by-world view: world → backend → system blocks.
-    Preserves the backend grouping (mem0 / A-Mem / LangMem / Zep) inside each world."""
+    Preserves the backend grouping (mem0 / A-Mem / LangMem) inside each world."""
     chunks: List[str] = []
     for w in _WORLD_ORDER:
         backend_chunks: List[str] = []
@@ -8925,7 +8722,7 @@ def render_section_error_analysis() -> str:
     )
     mem_intro_html = (
         "<p style='font-size:13px; color:#444; margin: 0 0 6px;'>"
-        "<b>Memory-backend systems</b> (mem0, A-Mem, LangMem, Zep, MemTree, MemoryOS) are classified by a "
+        "<b>Memory-backend systems</b> (mem0, A-Mem, LangMem, MemTree, MemoryOS) are classified by a "
         "write → retrieve → answer pipeline when store-side debug is available:"
         "</p>"
         "<ol style='margin: 0 0 8px 18px; font-size: 13px;'>"
@@ -8936,7 +8733,7 @@ def render_section_error_analysis() -> str:
         "</ol>"
         "<p style='font-size:12px; color:#666; margin: 0 0 6px;'>"
         "For backends whose eval dumps do not contain a stable write-side snapshot "
-        "(most notably some mem0 / Zep runs), we fall back to "
+        "(most notably some mem0 runs), we fall back to "
         "<i>write/retrieve: store-side evidence unavailable</i> instead of pretending we can fully separate write from retrieval failure."
         "</p>"
         f"<div class='err-legend'><span class='legend-group-label'>failure modes:</span>{mem_legend_items}</div>"
@@ -9456,7 +9253,7 @@ def main() -> None:
     args = parser.parse_args()
 
     rendered, conversation, sidecar = _load_demo_data()
-    records = rq.load_complete_records(include_zep=True)
+    records = rq.load_complete_records()
 
     methodology = render_section_methodology(
         rendered=rendered, conversation=conversation, sidecar=sidecar,

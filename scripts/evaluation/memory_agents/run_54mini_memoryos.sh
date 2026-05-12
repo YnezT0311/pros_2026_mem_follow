@@ -6,10 +6,13 @@ cd "$ROOT_DIR"
 
 # Reuse the amem env — it already has sentence-transformers + openai, and we
 # `pip install`-ed faiss-cpu / pymilvus into it for the new adapters.
-MEMORYOS_PY="/home/yao/.conda/envs/amem/bin/python"
+MEMORYOS_PY="${MEMORYOS_PY:-python}"
 MODEL="gpt-5.4-mini"
 TOPIC="travelPlanning"
 SHORT_TERM_CAPACITY=20  # smoke-tested on persona0 baseline; whole 1.00 / slot 0.71
+METHOD_CONFIG="tmp/method_configs/memoryos_short_${SHORT_TERM_CAPACITY}.json"
+mkdir -p "$(dirname "$METHOD_CONFIG")"
+printf '{"memoryos_short_term_capacity": %s}\n' "$SHORT_TERM_CAPACITY" >"$METHOD_CONFIG"
 
 period_tag() {
   case "$1" in
@@ -63,14 +66,14 @@ run_memoryos_case() {
   if [[ -n "$release" ]]; then
     extra_args+=(--no_use_release_period "$release")
   fi
-  HF_HOME=/home/yao/.cache/huggingface TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
+  HF_HOME="${HF_HOME:-$HOME/.cache/huggingface}" TRANSFORMERS_OFFLINE=1 HF_HUB_OFFLINE=1 \
     "$MEMORYOS_PY" -m memory_control_tests.evaluation.mem_evals \
       --method memoryos \
       --rendered "$rendered" \
       --model "$MODEL" \
       --world "$world" \
       --ask_period "$ask_period" \
-      --memoryos_short_term_capacity "$SHORT_TERM_CAPACITY" \
+      --method_config "$METHOD_CONFIG" \
       "${extra_args[@]}" \
       --output "$out"
 }

@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
-PYTHON_BIN="/home/yao/.conda/envs/mem0/bin/python"
+PYTHON_BIN="${PYTHON_BIN:-python}"
 MODEL="anthropic/claude-sonnet-4.6"
 MODEL_TAG="anthropic_claude-sonnet-4.6"
 TOPIC="travelPlanning"

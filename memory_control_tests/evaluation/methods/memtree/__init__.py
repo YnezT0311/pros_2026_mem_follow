@@ -24,7 +24,8 @@ NOTE (CLAUDE.md rule 4 – assistant turns):
     parent on the traversal path). Feeding the assistant turn would double
     write-phase cost without adding test signal — assistant utterances are
     never the subject of MCQ probes. So we ingest only `role == "user"` turns.
-    Mirrors the Zep precedent.
+    Mirrors the user-only ingestion convention used by retrieval backends with
+    per-turn write cost.
 """
 
 from __future__ import annotations
@@ -49,8 +50,8 @@ from ...shared import (
 # ---------------------------------------------------------------------------
 # Embedding-model dimensions for the popular default + a few common picks. The
 # Milvus collection has to be created with a matching `dimension`, so we infer
-# it from the model name. Override at the CLI with --embedding_model if you
-# pass an exotic model.
+# it from the model name. Override with the method config `embedding_model` if
+# you pass an exotic model.
 # ---------------------------------------------------------------------------
 
 _EMBEDDING_DIMS: Dict[str, int] = {

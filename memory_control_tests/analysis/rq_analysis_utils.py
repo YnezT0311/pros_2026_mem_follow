@@ -11,11 +11,12 @@ import json
 from memory_control_tests.analysis.summarize_instruction_control_results import _load_records
 
 
-ROOT = Path("/mnt/yao_data/proj_2026_agent/MemoryCtrl")
+ROOT = Path(__file__).resolve().parents[2]
 DATA_ROOT = ROOT / "data/test/travelPlanning/specs"
 EVAL_ROOT = ROOT / "eval_results/travelPlanning"
 MODELS = [
     "gpt-4o",
+    "gpt-oss-120b",
     "gpt-5.4-mini",
     "openai/gpt-5.4-mini",
     "openai/gpt-5.4",
@@ -25,7 +26,7 @@ MODELS = [
     "gemini-3.1-pro-preview",
     "google/gemini-3.1-pro-preview",
 ]
-EXTRA_MODELS = ["openai/gpt-5.3-chat"]
+EXTRA_MODELS: List[str] = []
 EXPECTED_COUNTS = {"baseline": 12, "no_store": 12, "forget": 30, "no_use": 32}
 PERSONA_LIMITS = {"baseline": 4, "no_store": 4, "forget": 10, "no_use": 4}
 STAGE_ORDER = [
@@ -52,9 +53,13 @@ SYSTEM_ORDER = [
     "GPT-5.4-mini + mem0",
     "GPT-5.4-mini + A-Mem",
     "GPT-5.4-mini + LangMem",
-    "GPT-5.4-mini + Zep",
     "GPT-5.4-mini + MemoryOS",
     "GPT-5.4-mini + MemTree",
+    "GPT-OSS-120B + mem0",
+    "GPT-OSS-120B + A-Mem",
+    "GPT-OSS-120B + LangMem",
+    "GPT-OSS-120B + MemoryOS",
+    "GPT-OSS-120B + MemTree",
 ]
 SYSTEM_GROUPS = {
     "API Models": [
@@ -75,9 +80,15 @@ SYSTEM_GROUPS = {
         "GPT-5.4-mini + mem0",
         "GPT-5.4-mini + A-Mem",
         "GPT-5.4-mini + LangMem",
-        "GPT-5.4-mini + Zep",
         "GPT-5.4-mini + MemoryOS",
         "GPT-5.4-mini + MemTree",
+    ],
+    "Memory Systems (GPT-OSS-120B)": [
+        "GPT-OSS-120B + mem0",
+        "GPT-OSS-120B + A-Mem",
+        "GPT-OSS-120B + LangMem",
+        "GPT-OSS-120B + MemoryOS",
+        "GPT-OSS-120B + MemTree",
     ],
 }
 WORLD_COLORS = {"no_store": "#1f77b4", "forget": "#d62728", "no_use": "#2ca02c"}
@@ -89,7 +100,7 @@ API_COLORS = {
     "GPT-5.5": "#a63603",
     "Gemini 3.1 Pro": "#ff7f0e",
     "GPT-5.4-mini": "#d62728",
-    "GPT-5.3": "#2ca02c",
+    "GPT-OSS-120B": "#2ca02c",
     "ChatGPT (5.3)": "#2ca02c",
 }
 SHORT_LABELS = {
@@ -100,10 +111,10 @@ SHORT_LABELS = {
     "GPT-5.5": "5.5",
     "Gemini 3.1 Pro": "Gemini-3.1",
     "GPT-5.4-mini": "5.4-mini",
+    "GPT-OSS-120B": "oss-120b",
     "GPT-4o + mem0": "4o+mem0",
     "GPT-4o + A-Mem": "4o+A-Mem",
     "GPT-4o + LangMem": "4o+LangMem",
-    "GPT-5.3 + LangMem": "5.3+LangMem",
     "ChatGPT (5.3)": "ChatGPT",
 }
 
@@ -112,11 +123,12 @@ def _api_model_label(model_name: str) -> str:
     mapping = {
         "gpt-4o": "GPT-4o",
         "gpt-4o-mini": "GPT-4o-mini",
+        "gpt-oss-120b": "GPT-OSS-120B",
+        "openai/gpt-oss-120b": "GPT-OSS-120B",
         "gpt-5.4-mini": "GPT-5.4-mini",
         "openai/gpt-5.4-mini": "GPT-5.4-mini",
         "openai/gpt-5.4": "GPT-5.4",
         "openai/gpt-5.5": "GPT-5.5",
-        "openai/gpt-5.3-chat": "GPT-5.3",
         "anthropic/claude-sonnet-4.6": "Claude Sonnet 4.6",
         "anthropic/claude-opus-4.7": "Claude Opus 4.7",
         "gemini-3.1-pro-preview": "Gemini 3.1 Pro",
@@ -139,8 +151,6 @@ def system_label(rec: Dict[str, Any]) -> str:
         "langmem_retrieval": "LangMem",
         "A-Mem": "A-Mem",
         "a_mem_retrieval": "A-Mem",
-        "Zep": "Zep",
-        "zep_retrieval": "Zep",
         "MemoryOS": "MemoryOS",
         "memoryos_retrieval": "MemoryOS",
         "MemTree": "MemTree",
@@ -162,13 +172,11 @@ def _record_key(rec: Dict[str, Any]) -> Tuple[Any, ...]:
     )
 
 
-def load_complete_records(*, include_zep: bool = True) -> List[Dict[str, Any]]:
+def load_complete_records() -> List[Dict[str, Any]]:
     raw = _load_records([DATA_ROOT, EVAL_ROOT], MODELS)
     dedup: Dict[Tuple[Any, ...], Dict[str, Any]] = {}
     for rec in raw:
         label = system_label(rec)
-        if not include_zep and "Zep" in label:
-            continue
         key = _record_key(rec)
         current = dedup.get(key)
         if current is None or Path(rec["path"]).stat().st_mtime >= Path(current["path"]).stat().st_mtime:
@@ -375,7 +383,7 @@ def q1_q2_html_table_split(records: List[Dict[str, Any]], qa_family: str, *, tit
         return fmt_pct(r.get("Baseline_TPR"))
 
     def cell_world(r: Dict[str, Any], world: str) -> str:
-        # If we have no records for this world (e.g. Zep gpt-5.4-mini outside baseline), show "—".
+        # If we have no records for this world, show "—".
         if r.get(f"n_{world}", 0) == 0:
             return "—"
         return fmt_pct(r.get(f"{world}_FPR")) + fmt_delta(r.get(f"{world}_DeltaTPR"))
@@ -561,10 +569,6 @@ def _aggregate_system_world(records: List[Dict[str, Any]], label: str, world: st
     return fpr, tpr
 
 
-def load_gpt53_langmem_records() -> List[Dict[str, Any]]:
-    return _load_records([DATA_ROOT, EVAL_ROOT], EXTRA_MODELS)
-
-
 def _chatgpt_results_root() -> Path:
     return ROOT / "results/chatgpt_web_results/travelPlanning"
 
@@ -719,8 +723,6 @@ def _metric_column_name(name: str) -> str:
 
 
 def table1_grouped_html(records: List[Dict[str, Any]]) -> str:
-    gpt53_records = load_gpt53_langmem_records()
-
     def row_html(system: str, variant: str, baseline_label: str, no_store_label: str, forget_label: str) -> str:
         return (
             "<tr>"
@@ -780,22 +782,6 @@ def table1_grouped_html(records: List[Dict[str, Any]]) -> str:
             b, ns, fg = from_label(label)
             html.append(row_html("", f"-{variant}", b, ns, fg))
 
-    g53_label = "GPT-5.3"
-    g53_base = [rec for rec in gpt53_records if rec["backend"] == "LangMem" and rec["model"] == "openai/gpt-5.3-chat" and rec["world"] == "baseline"]
-    g53_no_store = [rec for rec in gpt53_records if rec["backend"] == "LangMem" and rec["model"] == "openai/gpt-5.3-chat" and rec["world"] == "no_store"]
-    g53_forget = [rec for rec in gpt53_records if rec["backend"] == "LangMem" and rec["model"] == "openai/gpt-5.3-chat" and rec["world"] == "forget"]
-    g53_baseline_tpr = _safe_mean([_record_probe_tpr(rec) for rec in g53_base]) if g53_base else None
-    g53_no_store_fpr = _safe_mean([_record_key_fpr(rec) for rec in g53_no_store if _record_key_fpr(rec) is not None]) if g53_no_store else None
-    g53_no_store_tpr = _safe_mean([_record_probe_tpr(rec) for rec in g53_no_store]) if g53_no_store else None
-    g53_forget_fpr = _safe_mean([_record_key_fpr(rec) for rec in g53_forget if _record_key_fpr(rec) is not None]) if g53_forget else None
-    g53_forget_tpr = _safe_mean([_record_probe_tpr(rec) for rec in g53_forget]) if g53_forget else None
-    html.append(
-        f"<tr><td style='border:1px solid #d9d9d9; padding:8px; font-weight:700;'>{g53_label}</td>"
-        "<td style='border:1px solid #d9d9d9; padding:8px;'>-LangMem</td>"
-        f"<td style='border:1px solid #d9d9d9; padding:8px;'>{_fmt_cell('baseline', g53_baseline_tpr, None, g53_baseline_tpr)}</td>"
-        f"<td style='border:1px solid #d9d9d9; padding:8px;'>{_fmt_cell('no_store', g53_baseline_tpr, g53_no_store_fpr, g53_no_store_tpr)}</td>"
-        f"<td style='border:1px solid #d9d9d9; padding:8px;'>{_fmt_cell('forget', g53_baseline_tpr, g53_forget_fpr, g53_forget_tpr)}</td></tr>"
-    )
 
     chat_base_fpr, chat_base_tpr = chatgpt_world_metrics("baseline")
     chat_ns_fpr, chat_ns_tpr = chatgpt_world_metrics("no_store")
@@ -1114,7 +1100,7 @@ def scatter_svg(rows: List[Dict[str, Any]], width: int = 720, height: int = 576,
         inner.append(f"<text x='{x+7:.1f}' y='{y-5:.1f}' font-size='8'>{label}</text>")
     legend_y = 62
     inner.append(f"<text x='{width-145}' y='{legend_y-16}' font-size='10' font-weight='700'>Color</text>")
-    for api, color in [("GPT-4o", API_COLORS["GPT-4o"]), ("GPT-5.4-mini", API_COLORS["GPT-5.4-mini"]), ("GPT-5.3", API_COLORS["GPT-5.3"])]:
+    for api, color in [("GPT-4o", API_COLORS["GPT-4o"]), ("GPT-5.4-mini", API_COLORS["GPT-5.4-mini"]), ("GPT-OSS-120B", API_COLORS["GPT-OSS-120B"])]:
         inner.append(f"<circle cx='{width-140}' cy='{legend_y}' r='5' fill='{color}'/>")
         inner.append(f"<text x='{width-128}' y='{legend_y+4}' font-size='10'>{escape(api)}</text>")
         legend_y += 22
@@ -1346,7 +1332,7 @@ def plot_tradeoff_matplotlib(rows: List[Dict[str, Any]], world_filter: str) -> A
     color_labels = [
         ("GPT-4o family", API_COLORS["GPT-4o"]),
         ("GPT-5.4-mini family", API_COLORS["GPT-5.4-mini"]),
-        ("GPT-5.3 family", API_COLORS["GPT-5.3"]),
+        ("GPT-OSS-120B family", API_COLORS["GPT-OSS-120B"]),
     ]
     x0 = 0.98
     y0 = 0.04
@@ -1410,8 +1396,10 @@ def _system_api_family(label: str) -> str:
         return "GPT-4o family"
     if "GPT-5.4-mini" in label:
         return "GPT-5.4-mini family"
-    if "GPT-5.3" in label or "ChatGPT" in label:
-        return "GPT-5.3 family"
+    if "GPT-OSS-120B" in label:
+        return "GPT-OSS-120B family"
+    if "ChatGPT" in label:
+        return "ChatGPT family"
     return "Other"
 
 

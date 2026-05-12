@@ -15,7 +15,7 @@ managed service performs internally:
     parallel workers do not contend on the lock file.
 
 Also keeps the LLM-trace and fact-extraction debug helpers so eval outputs can
-be diffed against the legacy `evaluate_mem0_recall_mcqs.py` runs.
+be compared across unified `mem_evals.py` runs.
 """
 
 from __future__ import annotations

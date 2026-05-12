@@ -6,7 +6,7 @@
 #   4. Always regenerate the report at the end
 
 set -e
-cd /mnt/yao_data/proj_2026_agent/MemoryCtrl
+cd "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 LOG_DIR="logs/langmem_overnight_$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$LOG_DIR"
