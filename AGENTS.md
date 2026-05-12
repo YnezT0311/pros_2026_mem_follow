@@ -216,7 +216,7 @@ These are repo-level collaboration rules for Codex work in `MemoryCtrl`.
 
 ### Temporary Files
 
-- Put logs, pid files, ad hoc debug outputs, one-off test artifacts, and other unrelated runtime byproducts under [`tmp/`](/mnt/yao_data/proj_2026_agent/MemoryCtrl/tmp).
+- Put logs, pid files, ad hoc debug outputs, one-off test artifacts, and other unrelated runtime byproducts under the repo-local `tmp/` directory.
 - Do not scatter temporary files across code, results, or data directories.
 - If a test or probe script is only needed briefly, prefer placing it in `tmp/` or running it inline instead of leaving it in the main code tree.
 

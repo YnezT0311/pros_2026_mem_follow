@@ -78,7 +78,7 @@ def worker_ollama(prompt):
     try:
         llm_base_url = getattr(globalconfig, "llm_base_url", "http://localhost:8000/v1")
         llm_api_key = getattr(globalconfig, "llm_api_key", "EMPTY")
-        llm_model = getattr(globalconfig, "llm_model", "/home/docker/LLaMA-Factory/output/qwen2_5_lora_sft")
+        llm_model = getattr(globalconfig, "llm_model", "gpt-oss-120b")
         client = OpenAI(base_url=llm_base_url, api_key=llm_api_key)
         res = client.chat.completions.create(
             model=llm_model,

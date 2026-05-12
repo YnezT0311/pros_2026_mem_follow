@@ -15,8 +15,9 @@ WORLDS = ("baseline", "no_store", "forget", "no_use")
 METHOD_DEFAULTS: Dict[str, Dict[str, Any]] = {
     "plain": {},
     "mem0": {
-        "memory_limit": 5,
+        "memory_limit": 10,
         "embedding_model": "",
+        "preload_batch_size": 2,
         "mem0_runtime_root": "",
         "mem0_reset_runtime": True,
     },

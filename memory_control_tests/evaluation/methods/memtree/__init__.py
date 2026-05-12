@@ -1,6 +1,6 @@
 """MemTree (Memory-in-the-LLM-Era) adapter.
 
-Vendored from Memory-in-the-LLM-Era-main/code/Method/memtree/. The adapter
+The vendored MemTree adapter
 constructs the GlobalConfig-shaped state in-process (skipping the original
 config.yaml + Milvus auto-init), routes every internal LLM call to OpenRouter,
 and shims out the multiprocessing pool that the official `modify_nodes` step

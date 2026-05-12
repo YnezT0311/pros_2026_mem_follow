@@ -70,6 +70,7 @@ class Mem0Adapter(MethodAdapter):
         user_id: str,
         run_id: str,
         memory_limit: int,
+        preload_batch_size: int,
         persona_messages: List[Dict[str, str]],
     ) -> None:
         self.memory = memory
@@ -79,6 +80,7 @@ class Mem0Adapter(MethodAdapter):
         self.user_id = user_id
         self.run_id = run_id
         self.memory_limit = memory_limit
+        self.preload_batch_size = max(1, preload_batch_size)
         self.persona_messages = persona_messages
         self.token_log = _new_token_log()
         self.answer_call = _build_counting_request_text(client, resolved_model, self.token_log["answer"])
@@ -120,8 +122,7 @@ class Mem0Adapter(MethodAdapter):
 
         # Snapshot store contents BEFORE this stage's add() so the report can
         # diff against the post snapshot to attribute writes/deletes to this
-        # stage. (mem0 batches one extractor call per add(), so we keep the
-        # batched call to preserve behavior; we don't split per-turn.)
+        # stage.
         try:
             pre_snapshot = snapshot_store(
                 self.memory, user_id=self.user_id, run_id=self.run_id, limit=200
@@ -132,19 +133,27 @@ class Mem0Adapter(MethodAdapter):
         else:
             pre_snapshot_error = None
 
-        add_result, llm_call_trace = run_add_with_llm_trace(
-            self.memory,
-            clean_messages,
-            user_id=self.user_id,
-            run_id=self.run_id,
-            usage_log=self.token_log["internal"],
-        )
+        add_results = []
+        llm_call_trace = []
+        for start in range(0, len(clean_messages), self.preload_batch_size):
+            batch_messages = clean_messages[start : start + self.preload_batch_size]
+            batch_result, batch_trace = run_add_with_llm_trace(
+                self.memory,
+                batch_messages,
+                user_id=self.user_id,
+                run_id=self.run_id,
+                usage_log=self.token_log["internal"],
+            )
+            add_results.append(batch_result)
+            llm_call_trace.extend(batch_trace)
+        add_result = add_results[-1] if add_results else None
         self.preload_log["add_result"] = add_result
         self.preload_log["llm_call_trace"].extend(llm_call_trace)
         step_log: Dict[str, Any] = {
             "stage": stage_label,
             "input_messages": clean_messages,
             "add_result": add_result,
+            "add_results": add_results,
             "llm_call_trace": llm_call_trace,
             "pre_add_snapshot": pre_snapshot,
             "pre_add_snapshot_error": pre_snapshot_error,
@@ -163,8 +172,10 @@ class Mem0Adapter(MethodAdapter):
         # mem0's add_result so the report can show "did the backend issue any
         # delete during this stage?" at a glance.
         events_by_kind: Dict[str, List[Dict[str, str]]] = {}
-        if isinstance(add_result, dict):
-            for r in (add_result.get("results") or []):
+        for result in add_results:
+            if not isinstance(result, dict):
+                continue
+            for r in (result.get("results") or []):
                 if not isinstance(r, dict):
                     continue
                 ev = str(r.get("event", "") or "").upper()
@@ -203,6 +214,7 @@ class Mem0Adapter(MethodAdapter):
         return {
             "preload": self.preload_log,
             "memory_limit": self.memory_limit,
+            "preload_batch_size": self.preload_batch_size,
             "mem0_source": "self_hosted_with_memoryctrl_patches",
             "token_usage": {
                 "model": self.resolved_model,
@@ -256,5 +268,6 @@ def build_adapter(
         user_id=user_id,
         run_id=run_id,
         memory_limit=args.memory_limit,
+        preload_batch_size=getattr(args, "preload_batch_size", 2),
         persona_messages=persona_messages,
     )

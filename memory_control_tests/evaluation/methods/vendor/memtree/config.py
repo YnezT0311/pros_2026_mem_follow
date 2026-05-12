@@ -19,13 +19,13 @@ def clean_str(input) -> str:
 
 def get_embedding_model(config):
     from sentence_transformers import SentenceTransformer
-    model_name = getattr(config, "embedding_model_name", "/home/docker/Model/bge-m3")
+    model_name = getattr(config, "embedding_model_name", "BAAI/bge-m3")
     embedding_aliases = {
-        "minilm": "/home/docker/Model/all-MiniLM-L6-v2",
-        "all-minilm-l6-v2": "/home/docker/Model/all-MiniLM-L6-v2",
-        "all-MiniLM-L6-v2": "/home/docker/Model/all-MiniLM-L6-v2",
-        "bge-m3": "/home/docker/Model/bge-m3",
-        "models--BAAI--bge-m3": "/home/docker/Model/bge-m3",
+        "minilm": "all-MiniLM-L6-v2",
+        "all-minilm-l6-v2": "all-MiniLM-L6-v2",
+        "all-MiniLM-L6-v2": "all-MiniLM-L6-v2",
+        "bge-m3": "BAAI/bge-m3",
+        "models--BAAI--bge-m3": "BAAI/bge-m3",
     }
     resolved_model_name = embedding_aliases.get(model_name, model_name)
     model = SentenceTransformer(resolved_model_name)

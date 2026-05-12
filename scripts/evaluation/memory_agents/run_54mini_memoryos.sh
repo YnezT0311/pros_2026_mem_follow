@@ -9,7 +9,7 @@ cd "$ROOT_DIR"
 MEMORYOS_PY="${MEMORYOS_PY:-python}"
 MODEL="gpt-5.4-mini"
 TOPIC="travelPlanning"
-SHORT_TERM_CAPACITY=20  # smoke-tested on persona0 baseline; whole 1.00 / slot 0.71
+SHORT_TERM_CAPACITY=20  # validated on persona0 baseline; whole 1.00 / slot 0.71
 METHOD_CONFIG="tmp/method_configs/memoryos_short_${SHORT_TERM_CAPACITY}.json"
 mkdir -p "$(dirname "$METHOD_CONFIG")"
 printf '{"memoryos_short_term_capacity": %s}\n' "$SHORT_TERM_CAPACITY" >"$METHOD_CONFIG"

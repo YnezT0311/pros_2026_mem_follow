@@ -1,6 +1,6 @@
 """MemoryOS (3-tier short / mid / long) adapter.
 
-Vendored from MemoryOS-main/memoryos-pypi/. The adapter layers MemoryOS into the
+The vendored MemoryOS adapter layers MemoryOS into the
 MemoryCtrl evaluation pipeline:
 
   * Preload: pair each user turn with the next assistant turn into a single QA

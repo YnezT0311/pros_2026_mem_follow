@@ -634,6 +634,10 @@ All recall evaluators share the same outer prompt shape so the comparison isolat
 
 All API-facing evaluation calls are routed through OpenRouter. The evaluators accept `gpt-5.4-mini` at the command line and map it to OpenRouter's `openai/gpt-5.4-mini` model slug internally. Credentials are loaded from `OPENROUTER_API_KEY` or `keys/openrouter_key.txt`, the default base URL is `https://openrouter.ai/api/v1`, and requests include `X-OpenRouter-Title: MemoryCtrl`.
 
+The unified evaluator also snapshots OpenRouter account usage before and after
+each run and prints the cost delta to stderr. Runner scripts do not need a
+separate cost wrapper.
+
 For every MCQ item:
 
 1. load the baseline conversation
