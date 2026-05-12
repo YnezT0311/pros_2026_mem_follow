@@ -221,9 +221,36 @@ def run_add_with_llm_trace(
     *,
     user_id: str,
     run_id: str,
+    usage_log: Dict[str, int] | None = None,
 ) -> tuple[List[Any], List[Dict[str, Any]]]:
     llm_calls: List[Dict[str, Any]] = []
     original_generate = memory.llm.generate_response
+
+    # Also hook the underlying chat.completions.create so we can record
+    # `response.usage` (prompt_tokens / completion_tokens). mem0's
+    # generate_response parses to text and discards usage, so without this
+    # bypass the adapter couldn't report internal-LLM cost.
+    underlying_client = getattr(memory.llm, "client", None)
+    original_create = None
+    if usage_log is not None and underlying_client is not None:
+        try:
+            original_create = underlying_client.chat.completions.create
+
+            def counting_create(*args: Any, **kwargs: Any):
+                resp = original_create(*args, **kwargs)
+                usage = getattr(resp, "usage", None)
+                if usage is not None:
+                    pt = int(getattr(usage, "prompt_tokens", 0) or 0)
+                    ct = int(getattr(usage, "completion_tokens", 0) or 0)
+                    usage_log["calls"] = usage_log.get("calls", 0) + 1
+                    usage_log["prompt_tokens"] = usage_log.get("prompt_tokens", 0) + pt
+                    usage_log["completion_tokens"] = usage_log.get("completion_tokens", 0) + ct
+                    usage_log["total_tokens"] = usage_log.get("total_tokens", 0) + pt + ct
+                return resp
+
+            underlying_client.chat.completions.create = counting_create
+        except Exception:
+            original_create = None  # bail; preload still works without counts
 
     def traced_generate_response(*args: Any, **kwargs: Any):
         messages = kwargs.get("messages")
@@ -256,6 +283,8 @@ def run_add_with_llm_trace(
         ]
     finally:
         memory.llm.generate_response = original_generate
+        if original_create is not None and underlying_client is not None:
+            underlying_client.chat.completions.create = original_create
     return add_results, llm_calls
 
 

@@ -460,12 +460,9 @@ def q1_q2_html_table_split(records: List[Dict[str, Any]], qa_family: str, *, tit
         chatgpt_world_metrics_split("no_store", qa_family),
         chatgpt_world_metrics_split("forget", qa_family),
     ))
-    lines.append(_web_row(
-        "Claude (Opus 4.7 Web)",
-        claude_world_metrics_split("baseline", qa_family, variant="opus"),
-        claude_world_metrics_split("no_store", qa_family, variant="opus"),
-        claude_world_metrics_split("forget", qa_family, variant="opus"),
-    ))
+    # Claude (Opus 4.7 Web) row intentionally removed — current results are
+    # unreliable (the live agent's behavior on the recorded sessions doesn't
+    # match the offline scoring assumptions). Re-enable once re-validated.
     lines.append(_web_row(
         "Claude (Sonnet 4.6 Web)",
         claude_world_metrics_split("baseline", qa_family, variant="sonnet"),

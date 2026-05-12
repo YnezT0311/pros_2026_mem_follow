@@ -302,8 +302,37 @@ class MemTreeAdapter(MethodAdapter):
                     flush=True,
                 )
         step_log["tree_size_after"] = self.tree.size
+        # Dump every node's CURRENT cv. Internal nodes' cv was rewritten by
+        # AGGREGATE_PROMPT during the turn-by-turn ingest above; this lets the
+        # report show exactly what summaries MemTree settled on. Leaves still
+        # carry the original turn text (plus, per modify_nodes, the parent's
+        # pre-AGGREGATE text gets re-attached as a sibling leaf, which is the
+        # main reason MemTree "can't forget" — both abstract summary and raw
+        # detail end up retrievable).
+        step_log["store_snapshot"] = self._snapshot_tree_nodes()
         self.preload_log["preload_steps"].append(step_log)
         self.preload_log["tree_size"] = self.tree.size
+        self.preload_log["store_snapshot"] = step_log["store_snapshot"]
+
+    def _snapshot_tree_nodes(self) -> List[Dict[str, Any]]:
+        """Dump (id, depth, parent_id, child_count, cv) for every node. Sorted
+        by depth ascending so root → internal-summary → leaves reads naturally
+        in the report. Each cv is the *current* text — for internal nodes
+        that's the latest AGGREGATE summary; for leaves it's the original
+        turn (or the re-attached pre-AGGREGATE text from modify_nodes)."""
+        nodes = self.tree.nodes
+        adjacency = self.tree.adjacency
+        out: List[Dict[str, Any]] = []
+        for node_id, node in nodes.items():
+            out.append({
+                "id": node_id,
+                "depth": getattr(node, "dv", 0),
+                "parent_id": getattr(node, "pv", None),
+                "child_count": len(adjacency.get(node_id, set()) or set()),
+                "cv": str(getattr(node, "cv", "")),
+            })
+        out.sort(key=lambda r: (r["depth"], r["id"]))
+        return out
 
     def answer_mcq(self, question: str, choices: Dict[str, str]) -> Dict[str, Any]:
         get_embedding = self.memtree_module.utils.get_embedding

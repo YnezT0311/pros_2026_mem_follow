@@ -3,13 +3,58 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 from ..base import MethodAdapter
-from ...shared import build_eval_prompt, ensure_openai_env, load_openai_client, request_text
+from ...shared import build_eval_prompt, ensure_openai_env, load_openai_client, request_text, resolve_model_name
 from ._client import load_local_mem0_memory, reset_runtime_root
 from ._patches import (
     format_memories,
     run_add_with_llm_trace,
     snapshot_store,
 )
+
+
+def _new_token_log() -> Dict[str, Dict[str, int]]:
+    return {
+        bucket: {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "failed": 0}
+        for bucket in ("internal", "answer")
+    }
+
+
+def _build_counting_request_text(
+    client: Any,
+    model: str,
+    usage_log: Dict[str, int],
+) -> Any:
+    """Replacement for `request_text` that captures `response.usage` so the
+    adapter can report final-MCQ-answer token cost separately from mem0's
+    internal extraction / update LLM calls.
+    """
+
+    def _call(messages: List[Dict[str, str]]) -> str:
+        try:
+            resp = client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=0.0,
+            )
+        except Exception as exc:  # noqa: BLE001
+            usage_log["calls"] += 1
+            usage_log["failed"] += 1
+            print(f"[mem0] OpenRouter answer call failed: {exc}", flush=True)
+            return ""
+        usage_log["calls"] += 1
+        u = getattr(resp, "usage", None)
+        if u is not None:
+            pt = int(getattr(u, "prompt_tokens", 0) or 0)
+            ct = int(getattr(u, "completion_tokens", 0) or 0)
+            usage_log["prompt_tokens"] += pt
+            usage_log["completion_tokens"] += ct
+            usage_log["total_tokens"] += pt + ct
+        try:
+            return (resp.choices[0].message.content or "").strip()
+        except (AttributeError, IndexError, TypeError):
+            return ""
+
+    return _call
 
 
 class Mem0Adapter(MethodAdapter):
@@ -21,6 +66,7 @@ class Mem0Adapter(MethodAdapter):
         memory: Any,
         client: Any,
         model: str,
+        resolved_model: str,
         user_id: str,
         run_id: str,
         memory_limit: int,
@@ -29,10 +75,13 @@ class Mem0Adapter(MethodAdapter):
         self.memory = memory
         self.client = client
         self.model = model
+        self.resolved_model = resolved_model
         self.user_id = user_id
         self.run_id = run_id
         self.memory_limit = memory_limit
         self.persona_messages = persona_messages
+        self.token_log = _new_token_log()
+        self.answer_call = _build_counting_request_text(client, resolved_model, self.token_log["answer"])
         self.preload_log: Dict[str, Any] = {
             "input_messages": [],
             "infer": True,
@@ -88,6 +137,7 @@ class Mem0Adapter(MethodAdapter):
             clean_messages,
             user_id=self.user_id,
             run_id=self.run_id,
+            usage_log=self.token_log["internal"],
         )
         self.preload_log["add_result"] = add_result
         self.preload_log["llm_call_trace"].extend(llm_call_trace)
@@ -141,17 +191,31 @@ class Mem0Adapter(MethodAdapter):
                 "content": f"Retrieved memories:\n{memories_text}\n\n{prompt}",
             },
         ]
-        response = request_text(self.client, self.model, messages)
+        response = self.answer_call(messages)
         return {
             "model_response": response,
             "retrieved_memories": search_result,
         }
 
     def debug_payload(self) -> Dict[str, Any]:
+        internal = self.token_log["internal"]
+        answer = self.token_log["answer"]
         return {
             "preload": self.preload_log,
             "memory_limit": self.memory_limit,
             "mem0_source": "self_hosted_with_memoryctrl_patches",
+            "token_usage": {
+                "model": self.resolved_model,
+                "internal": dict(internal),
+                "answer": dict(answer),
+                "total": {
+                    "calls": internal.get("calls", 0) + answer.get("calls", 0),
+                    "prompt_tokens": internal.get("prompt_tokens", 0) + answer.get("prompt_tokens", 0),
+                    "completion_tokens": internal.get("completion_tokens", 0) + answer.get("completion_tokens", 0),
+                    "total_tokens": internal.get("total_tokens", 0) + answer.get("total_tokens", 0),
+                    "failed": internal.get("failed", 0) + answer.get("failed", 0),
+                },
+            },
         }
 
 
@@ -188,6 +252,7 @@ def build_adapter(
         memory=memory,
         client=client,
         model=args.model,
+        resolved_model=resolve_model_name(args.model),
         user_id=user_id,
         run_id=run_id,
         memory_limit=args.memory_limit,

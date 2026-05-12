@@ -53,6 +53,75 @@ def _safe_token(text: str) -> str:
     return cleaned.strip("_") or "default"
 
 
+def _new_token_log() -> Dict[str, Dict[str, int]]:
+    return {
+        bucket: {"calls": 0, "prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0, "failed": 0}
+        for bucket in ("internal", "answer")
+    }
+
+
+def _install_token_counter(openai_client: Any, usage_log: Dict[str, int]) -> Any:
+    """Wrap `openai_client.chat.completions.create` so each call's
+    `response.usage` accumulates into ``usage_log``. MemoryOS's
+    ``OpenAIClient.chat_completion`` is a thin wrapper around this method,
+    so patching here catches every internal LLM call (CONTINUITY_CHECK,
+    META_INFO, MULTI_SUMMARY, PERSONALITY_ANALYSIS, KNOWLEDGE_EXTRACTION,
+    UPDATE_PROFILE, etc.)."""
+    original_create = openai_client.chat.completions.create
+
+    def counting_create(*args: Any, **kwargs: Any):
+        try:
+            resp = original_create(*args, **kwargs)
+        except Exception:
+            usage_log["calls"] += 1
+            usage_log["failed"] += 1
+            raise
+        usage_log["calls"] += 1
+        usage = getattr(resp, "usage", None)
+        if usage is not None:
+            pt = int(getattr(usage, "prompt_tokens", 0) or 0)
+            ct = int(getattr(usage, "completion_tokens", 0) or 0)
+            usage_log["prompt_tokens"] += pt
+            usage_log["completion_tokens"] += ct
+            usage_log["total_tokens"] += pt + ct
+        return resp
+
+    openai_client.chat.completions.create = counting_create
+    return original_create
+
+
+def _build_counting_answer_call(client: Any, resolved_model: str, usage_log: Dict[str, int]) -> Any:
+    """OpenRouter answer-call wrapper that records token usage. Separates the
+    final MCQ-answer cost from MemoryOS's internal write-time LLM cost."""
+
+    def _call(messages: List[Dict[str, str]]) -> str:
+        try:
+            resp = client.chat.completions.create(
+                model=resolved_model,
+                messages=messages,
+                temperature=0.0,
+            )
+        except Exception as exc:  # noqa: BLE001
+            usage_log["calls"] += 1
+            usage_log["failed"] += 1
+            print(f"[memoryos] OpenRouter answer call failed: {exc}", flush=True)
+            return ""
+        usage_log["calls"] += 1
+        u = getattr(resp, "usage", None)
+        if u is not None:
+            pt = int(getattr(u, "prompt_tokens", 0) or 0)
+            ct = int(getattr(u, "completion_tokens", 0) or 0)
+            usage_log["prompt_tokens"] += pt
+            usage_log["completion_tokens"] += ct
+            usage_log["total_tokens"] += pt + ct
+        try:
+            return (resp.choices[0].message.content or "").strip()
+        except (AttributeError, IndexError, TypeError):
+            return ""
+
+    return _call
+
+
 def _pair_turns(messages: List[Dict[str, str]], start_ts: str = "2026-04-01 00:00") -> List[Dict[str, str]]:
     """Pair consecutive (user → assistant) turns into a single QA page.
 
@@ -121,6 +190,17 @@ class MemoryOSAdapter(MethodAdapter):
             llm_model=resolved_model,
             embedding_model_name=embedding_model_name,
         )
+        # Token counter: wrap the underlying OpenAI client inside Memoryos's
+        # OpenAIClient wrapper so every internal call (continuity check,
+        # meta info, multi-summary, personality + knowledge extraction,
+        # update profile) accumulates usage. Final-answer call is a separate
+        # bucket via _build_counting_answer_call below.
+        self.token_log = _new_token_log()
+        try:
+            _install_token_counter(self.memoryos.client.client, self.token_log["internal"])
+        except AttributeError:
+            print("[memoryos] WARNING: could not install token counter — memoryos.client.client missing", flush=True)
+        self.answer_call = _build_counting_answer_call(client, resolved_model, self.token_log["answer"])
         self.preload_log: Dict[str, Any] = {
             "input_messages": [],
             "preload_steps": [],
@@ -190,7 +270,64 @@ class MemoryOSAdapter(MethodAdapter):
             step_log["post_stage_stats"] = stats
         except Exception as exc:
             step_log["post_stage_stats_error"] = repr(exc)
+        # Dump everything MemoryOS extracted from the conversation so far:
+        # short-term FIFO, mid-term topic-summarized sessions, and the long-term
+        # knowledge entries + user profile that the heat-triggered LLM analyses
+        # produced. Stored once per stage; the final stage is a strict superset.
+        step_log["store_snapshot"] = self._snapshot_memoryos_state()
         self.preload_log["preload_steps"].append(step_log)
+        self.preload_log["store_snapshot"] = step_log["store_snapshot"]
+
+    def _snapshot_memoryos_state(self) -> Dict[str, Any]:
+        """Read-only dump of every layer's contents so the report can show
+        exactly what MemoryOS distilled from the conversation."""
+        out: Dict[str, Any] = {}
+        try:
+            st = self.memoryos.short_term_memory
+            out["short_term"] = list(st.get_all())
+        except Exception as exc:
+            out["short_term_error"] = repr(exc)
+        try:
+            mt = self.memoryos.mid_term_memory
+            sessions_dump = []
+            for sid, sess in (mt.sessions or {}).items():
+                sessions_dump.append({
+                    "sid": sid,
+                    "summary": sess.get("summary", ""),
+                    "keywords": list(sess.get("keywords", []) or []),
+                    "H_segment": sess.get("H_segment"),
+                    "N_visit": sess.get("N_visit"),
+                    "page_count": len(sess.get("details", []) or []),
+                })
+            out["mid_term_sessions"] = sessions_dump
+        except Exception as exc:
+            out["mid_term_error"] = repr(exc)
+        try:
+            ltm_user = self.memoryos.user_long_term_memory
+            out["user_profile"] = ltm_user.get_raw_user_profile(self.user_id) or ""
+            knowledge_list = []
+            for entry in (ltm_user.knowledge_base or []):
+                if isinstance(entry, dict):
+                    knowledge_list.append({
+                        "knowledge": entry.get("knowledge", ""),
+                        "timestamp": entry.get("timestamp", ""),
+                    })
+            out["user_knowledge"] = knowledge_list
+        except Exception as exc:
+            out["user_long_term_error"] = repr(exc)
+        try:
+            ltm_asst = self.memoryos.assistant_long_term_memory
+            asst_list = []
+            for entry in (ltm_asst.knowledge_base or []):
+                if isinstance(entry, dict):
+                    asst_list.append({
+                        "knowledge": entry.get("knowledge", ""),
+                        "timestamp": entry.get("timestamp", ""),
+                    })
+            out["assistant_knowledge"] = asst_list
+        except Exception as exc:
+            out["assistant_long_term_error"] = repr(exc)
+        return out
 
     def _format_retrieved(self, retrieval: Dict[str, Any]) -> str:
         retrieved_pages = retrieval.get("retrieved_pages", []) or []
@@ -248,7 +385,7 @@ class MemoryOSAdapter(MethodAdapter):
                 "content": f"Retrieved memories:\n{memories_text}\n\n{prompt}",
             }
         ]
-        response = request_text(self.client, self.model, messages)
+        response = self.answer_call(messages)
         return {
             "model_response": response,
             "retrieved_memories": {
@@ -260,9 +397,23 @@ class MemoryOSAdapter(MethodAdapter):
         }
 
     def debug_payload(self) -> Dict[str, Any]:
+        internal = self.token_log["internal"]
+        answer = self.token_log["answer"]
         return {
             "preload": self.preload_log,
             "memoryos_source": "vendored_memoryos_pypi",
+            "token_usage": {
+                "model": getattr(self.memoryos, "llm_model", ""),
+                "internal": dict(internal),
+                "answer": dict(answer),
+                "total": {
+                    "calls": internal.get("calls", 0) + answer.get("calls", 0),
+                    "prompt_tokens": internal.get("prompt_tokens", 0) + answer.get("prompt_tokens", 0),
+                    "completion_tokens": internal.get("completion_tokens", 0) + answer.get("completion_tokens", 0),
+                    "total_tokens": internal.get("total_tokens", 0) + answer.get("total_tokens", 0),
+                    "failed": internal.get("failed", 0) + answer.get("failed", 0),
+                },
+            },
         }
 
 
