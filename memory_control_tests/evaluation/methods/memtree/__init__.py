@@ -38,6 +38,7 @@ from typing import Any, Dict, List
 
 from ..base import MethodAdapter
 from ..utils import load_official_memtree_module
+from ...paths import rendered_stem
 from ...shared import (
     build_memory_eval_prompt,
     ensure_openai_env,
@@ -446,7 +447,7 @@ def _build_config_ns(
         llm_api_key=os.environ.get("OPENAI_API_KEY", ""),
         llm_model=resolve_model_name(args.model),
         # dataset metadata
-        dataset_name=Path(args.rendered).stem.replace(".recall_rendered", ""),
+        dataset_name=rendered_stem(args.rendered),
         dataset_path="",
     )
 
@@ -455,7 +456,7 @@ def _resolve_runtime_root(args: Any) -> Path:
     explicit = getattr(args, "memtree_runtime_root", "") or ""
     if explicit:
         return Path(explicit)
-    stem = Path(args.rendered).stem.replace(".recall_rendered", "")
+    stem = rendered_stem(args.rendered)
     world = getattr(args, "world", "baseline")
     return Path("data/runtime/memtree") / world / stem
 
@@ -496,7 +497,7 @@ def build_adapter(
 
     # Per-(world, persona) Milvus Lite store. Filename is unique to this
     # eval run so multiple methods can coexist on disk.
-    stem = Path(args.rendered).stem.replace(".recall_rendered", "")
+    stem = rendered_stem(args.rendered)
     world = _safe_token(getattr(args, "world", "baseline"))
     db_name = str(runtime_root / "milvus.db")
     from pymilvus import MilvusClient  # type: ignore

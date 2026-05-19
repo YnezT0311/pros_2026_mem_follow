@@ -38,6 +38,7 @@ from typing import Any, Dict, List
 
 from ..base import MethodAdapter
 from ..utils import load_official_memoryos_module
+from ...paths import rendered_stem
 from ...shared import (
     build_memory_eval_prompt,
     ensure_openai_env,
@@ -420,7 +421,7 @@ def _resolve_runtime_root(args: Any) -> Path:
     explicit = getattr(args, "memoryos_runtime_root", "") or ""
     if explicit:
         return Path(explicit)
-    stem = Path(args.rendered).stem.replace(".recall_rendered", "")
+    stem = rendered_stem(args.rendered)
     world = getattr(args, "world", "baseline")
     return Path("data/runtime/memoryos") / world / stem
 
@@ -452,7 +453,7 @@ def build_adapter(
     memoryos_module = load_official_memoryos_module()
     client = load_openai_client(args.api_key_file)
 
-    stem = Path(args.rendered).stem.replace(".recall_rendered", "")
+    stem = rendered_stem(args.rendered)
     user_id = _safe_token(f"{getattr(args, 'world', 'baseline')}_{stem}")
     resolved_model = resolve_model_name(args.model)
 

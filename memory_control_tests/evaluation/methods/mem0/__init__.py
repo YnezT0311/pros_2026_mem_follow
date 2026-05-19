@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Any, Dict, List
 
 from ..base import MethodAdapter
+from ...paths import rendered_stem
 from ...shared import build_memory_eval_prompt, ensure_openai_env, load_openai_client, resolve_model_name
 from ._client import load_local_mem0_memory, reset_runtime_root
 from ._patches import (
@@ -210,11 +211,19 @@ class Mem0Adapter(MethodAdapter):
     def debug_payload(self) -> Dict[str, Any]:
         internal = self.token_log["internal"]
         answer = self.token_log["answer"]
+        llm_config = getattr(getattr(self.memory, "llm", None), "config", None)
+        internal_model = getattr(llm_config, "model", None)
         return {
             "preload": self.preload_log,
             "memory_limit": self.memory_limit,
             "preload_batch_size": self.preload_batch_size,
             "mem0_source": "self_hosted_with_memoryctrl_patches",
+            "model_routing": {
+                "requested_model": self.model,
+                "resolved_model": self.resolved_model,
+                "internal_llm_model": internal_model,
+                "answer_model": self.resolved_model,
+            },
             "token_usage": {
                 "model": self.resolved_model,
                 "internal": dict(internal),
@@ -234,7 +243,7 @@ def _resolve_runtime_root(args: Any) -> Path:
     explicit = getattr(args, "mem0_runtime_root", "") or ""
     if explicit:
         return Path(explicit)
-    stem = Path(args.rendered).stem.replace(".recall_rendered", "")
+    stem = rendered_stem(args.rendered)
     world = getattr(args, "world", "baseline")
     return Path("data/runtime/mem0") / world / stem
 
@@ -254,16 +263,17 @@ def build_adapter(
     if getattr(args, "mem0_reset_runtime", True):
         reset_runtime_root(runtime_root)
 
-    memory = load_local_mem0_memory(runtime_root)
+    resolved_model = resolve_model_name(args.model)
+    memory = load_local_mem0_memory(runtime_root, llm_model=resolved_model)
     client = load_openai_client(args.api_key_file)
-    stem = Path(args.rendered).stem.replace(".recall_rendered", "")
+    stem = rendered_stem(args.rendered)
     user_id = f"{args.world}_{stem}"
     run_id = stem
     return Mem0Adapter(
         memory=memory,
         client=client,
         model=args.model,
-        resolved_model=resolve_model_name(args.model),
+        resolved_model=resolved_model,
         user_id=user_id,
         run_id=run_id,
         memory_limit=args.memory_limit,

@@ -634,6 +634,126 @@ def _render_benchmark_stats(topic: str = "travelPlanning") -> str:
     )
 
 
+_PERSONA0_NO_STORE_HISTORY_PATH = (
+    REPO_ROOT
+    / "data" / "test" / "travelPlanning" / "no_store"
+    / "transformed_histories"
+    / "conversation_travelPlanning_persona0_sample0.no_store.transformed_history.json"
+)
+
+
+def _render_persona0_no_store_full() -> str:
+    """Collapsed fold showing the complete persona0 / no_store transformed
+    conversation, broken out per stage. Designed for meeting analysis —
+    every turn is visible, with Side_Note timestamps and the inserted
+    no_store instructions highlighted in purple via `instr-suffix`."""
+    path = _PERSONA0_NO_STORE_HISTORY_PATH
+    if not path.exists():
+        return ""
+    try:
+        conv = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return ""
+
+    # Build per-stage HTML.
+    stage_blocks: List[str] = []
+    no_store_sigs = _INSTR_SIGS.get("no_store", [])
+    total_turns = 0
+    for stage in PERIODS:
+        lines = conv.get(stage, [])
+        if not isinstance(lines, list) or not lines:
+            continue
+        rows: List[str] = []
+        stage_turn_count = 0
+        for line in lines:
+            if not isinstance(line, str):
+                continue
+            # Side_Notes are internal timestamp markers, not dialog turns —
+            # skip them in this meeting-facing view.
+            if parse_side_note(line):
+                continue
+            role = "user" if line.startswith("User:") else (
+                "assistant" if line.startswith("Assistant:") else "other"
+            )
+            content = line.split(":", 1)[1].strip() if ":" in line[:15] else line.strip()
+            # Highlight inserted no_store instruction (prefix or suffix on key turn).
+            inner = _highlight_no_store_in_content(content, no_store_sigs)
+            stage_turn_count += 1
+            total_turns += 1
+            role_glyph = "👤" if role == "user" else ("🤖" if role == "assistant" else "•")
+            row_cls = f"full-conv-row full-conv-{role}"
+            rows.append(
+                f"<div class='{row_cls}'>"
+                f"<span class='full-conv-role'>{role_glyph}</span>"
+                f"<span class='full-conv-text'>{inner}</span>"
+                f"</div>"
+            )
+        stage_label = PERIOD_LABELS.get(stage, stage)
+        stage_blocks.append(
+            f"<details class='full-conv-stage' open>"
+            f"<summary><b>{escape(stage_label)}</b> "
+            f"<span class='fold-meta'>{stage_turn_count} dialog turns</span></summary>"
+            f"<div class='full-conv-stage-body'>{''.join(rows)}</div>"
+            f"</details>"
+        )
+
+    if not stage_blocks:
+        return ""
+
+    note = (
+        "<p style='font-size:12px;color:#555; margin: 4px 0 8px;'>"
+        "Full <code>persona0 · no_store</code> conversation as fed into the "
+        "evaluators (read from "
+        f"<code>{escape(str(path.relative_to(REPO_ROOT)))}</code>). "
+        "Inserted no_store instruction fragments are highlighted in purple. "
+        "<code>Side_Note</code> lines are hidden — they are internal timestamp "
+        "markers, not part of the dialog the model sees. "
+        f"<b>{total_turns}</b> total dialog turns across {len(stage_blocks)} stages."
+        "</p>"
+    )
+
+    return (
+        "<details class='full-conv-fold'>"
+        "<summary><b>Full persona0 · no_store conversation</b> "
+        "<span class='fold-meta'>click to expand — useful for meeting walkthroughs</span></summary>"
+        f"<div class='full-conv-body'>{note}{''.join(stage_blocks)}</div>"
+        "</details>"
+    )
+
+
+def _highlight_no_store_in_content(content: str, no_store_sigs: List[str]) -> str:
+    """Look for a no_store template fragment inside `content`; if found, wrap
+    that fragment in an <span class='instr-suffix'> to highlight it the same
+    way Section 1's pipeline diagram does. Otherwise just escape and return."""
+    text_lc = content.lower()
+    for sig in no_store_sigs:
+        if sig and sig in text_lc:
+            # Locate the fragment (case-insensitive) and split.
+            idx = text_lc.find(sig)
+            # Find a sensible end-of-fragment: extend to the next sentence
+            # boundary (period or end-of-string).
+            end_idx = idx + len(sig)
+            for tail_end in range(end_idx, min(len(content), end_idx + 80)):
+                if content[tail_end] == "." :
+                    end_idx = tail_end + 1
+                    break
+            else:
+                end_idx = min(len(content), end_idx + 60)
+            pre = content[:idx].strip()
+            instr = content[idx:end_idx].strip()
+            post = content[end_idx:].strip()
+            parts = []
+            if pre:
+                parts.append(escape(pre))
+            parts.append(
+                f"<span class='instr-suffix'>{escape(instr)}</span>"
+            )
+            if post:
+                parts.append(escape(post))
+            return " ".join(parts)
+    return escape(content)
+
+
 def render_section_methodology(*, rendered: Dict[str, Any],
                                 conversation: Dict[str, Any],
                                 sidecar: Dict[str, Any]) -> str:
@@ -660,6 +780,7 @@ def render_section_methodology(*, rendered: Dict[str, Any],
     )
 
     benchmark_stats = _render_benchmark_stats(topic="travelPlanning")
+    full_no_store_persona0 = _render_persona0_no_store_full()
 
     return (
         "<section id='sec-methodology'>"
@@ -682,6 +803,7 @@ def render_section_methodology(*, rendered: Dict[str, Any],
         f"{legend}"
         f"{''.join(strips_html)}"
         f"{benchmark_stats}"
+        f"{full_no_store_persona0}"
         "</section>"
     )
 
@@ -1833,6 +1955,27 @@ def _spec_langmem() -> MemorySystemSpec:
     )
 
 
+_MEMTREE_AGGREGATE_PROMPT = (
+    "// MemTree AGGREGATE_PROMPT (verbatim from prompt.py):\n"
+    "You will receive two pieces of information:\n"
+    "  New Information is detailed, and Existing Information is a summary from\n"
+    "  {n_children} previous entries.\n"
+    "Your task is to merge these into a single, cohesive summary that highlights\n"
+    "the most important insights. Focus on the key points from both inputs.\n"
+    "If the number of previous entries in Existing Information is accumulating\n"
+    "(more than 2), focus on summarizing more concisely, only capturing the\n"
+    "overarching theme, and getting more abstract in your summary.\n"
+    "Output the summary directly.\n\n"
+    "[New Information]\n"
+    "{new_content}\n"
+    "[Existing Information (from {n_children} previous entries)]\n"
+    "{current_content}\n\n"
+    "IMPORTANT! Don't output additional commentary, explanations, or unrelated\n"
+    "information. Provide only the exact information or output requested.\n"
+    "[Output Summary]"
+)
+
+
 def _spec_memtree() -> MemorySystemSpec:
     return MemorySystemSpec(
         label="MemTree (Memory-in-the-LLM-Era)",
@@ -2863,23 +3006,26 @@ def _aggregate_accidental_s1_mechanisms(worlds: Optional[Set[str]] = None) -> Di
     return out
 
 
-def _load_baseline_pair(no_store_path: Path) -> Optional[Dict[str, Any]]:
-    """Return the baseline-world eval JSON that pairs with this no_store file
-    (same system / persona / sample / ask_period). Returns None if not found.
-
-    File-naming convention:
-      eval_results/travelPlanning/no_store/<sys>/<...>.no_store.<period>.<...>.json
-      eval_results/travelPlanning/baseline/<sys>/<...>.baseline.<period>.<...>.json
+def _load_baseline_pair(eval_path: Path) -> Optional[Dict[str, Any]]:
+    """Return the baseline-world eval JSON that pairs with this non-baseline
+    file (same system / persona / sample / ask_period). Returns None if not
+    found. Generalised across forget / no_store / no_use.
     """
-    parts = list(no_store_path.parts)
-    try:
-        world_idx = parts.index("no_store")
-    except ValueError:
+    parts = list(eval_path.parts)
+    world_idx = -1
+    src_world = None
+    for w in ("forget", "no_store", "no_use"):
+        try:
+            world_idx = parts.index(w)
+            src_world = w
+            break
+        except ValueError:
+            continue
+    if src_world is None:
         return None
     parts[world_idx] = "baseline"
     baseline_dir = Path(*parts[:-1])
-    # Filename swap: ".no_store." -> ".baseline."
-    new_name = no_store_path.name.replace(".no_store.", ".baseline.")
+    new_name = eval_path.name.replace(f".{src_world}.", ".baseline.")
     baseline_path = baseline_dir / new_name
     if not baseline_path.exists():
         return None
@@ -2887,6 +3033,41 @@ def _load_baseline_pair(no_store_path: Path) -> Optional[Dict[str, Any]]:
         return json.loads(baseline_path.read_text(encoding="utf-8"))
     except Exception:
         return None
+
+
+def _baseline_recall_lookup(baseline_data: Dict[str, Any]) -> Dict[Tuple[str, str, str], str]:
+    """Build {(qa_family, timestamp, identifier_label): predicted_answer_type}
+    from a baseline eval file's MCQ results, restricted to key turns."""
+    out: Dict[Tuple[str, str, str], str] = {}
+    for qa_family, items in (
+        ("whole", baseline_data.get("whole_recall_results", []) or []),
+        ("slot",  baseline_data.get("slot_recall_results", []) or []),
+    ):
+        for item in items:
+            if item.get("turn_role") != "key":
+                continue
+            ts = str(item.get("timestamp", "") or "")
+            ident = str(item.get("identifier_label", "") or "")
+            sens = str(item.get("sensitive_key", "") or "")
+            key = (qa_family, ts, ident + "|" + sens)
+            out[key] = str(item.get("predicted_answer_type", "") or "")
+    return out
+
+
+def _baseline_recalled(
+    lookup: Dict[Tuple[str, str, str], str],
+    qa_family: str,
+    item: Dict[str, Any],
+) -> Optional[bool]:
+    """True if baseline-twin MCQ predicted remember_correct, False if
+    explicitly something else, None if no twin found."""
+    ts = str(item.get("timestamp", "") or "")
+    ident = str(item.get("identifier_label", "") or "")
+    sens = str(item.get("sensitive_key", "") or "")
+    key = (qa_family, ts, ident + "|" + sens)
+    if key not in lookup:
+        return None
+    return lookup[key] == "remember_correct"
 
 
 def _classify_no_store_pair(
@@ -3769,72 +3950,59 @@ def _render_forget_outcome_tree_svg() -> str:
     # question text lives in an optional `subtitle` rendered below the pill
     # in smaller gray text, so the pill stays narrow and doesn't crowd the
     # edges emerging from it.
+    # Q1 (fact extracted?) layer was REMOVED — section 5 conditions on
+    # baseline-recalled, so by construction the fact IS extracted. The tree
+    # therefore starts at Q2 (was the directive extracted?).
     tree = {
         "label": "Forget MCQ",
+        "subtitle": "(conditional on baseline-recalled)",
         "branch_color": BR_GRAY,
         "children": [{
-            "label": "Q1",
-            "subtitle": "fact extracted?",
+            "label": "Q2",
+            "subtitle": "instr extracted?",
             "edge_label": "",
             "branch_color": BR_GRAY,
             "children": [
                 {
-                    "label": "",
+                    "label": "Sub-A",
                     "edge_label": "No",
-                    "branch_color": BR_RED,
-                    "children": [
-                        {"label": "", "edge_label": "LLM=nr",   "branch_color": BR_RED, "leaf": LEAF_ACC, "leaf_label": "ACCIDENTAL (vacuous)"},
-                        {"label": "", "edge_label": "LLM=leak", "branch_color": BR_RED, "leaf": LEAF_VIO, "leaf_label": "hallucination"},
-                    ],
+                    "branch_color": BR_YELLOW,
+                    "children": sub_a_branch(BR_YELLOW),
                 },
                 {
-                    "label": "Q2",
-                    "subtitle": "instr extracted?",
+                    "label": "Q3",
+                    "subtitle": "action?",
                     "edge_label": "Yes",
                     "branch_color": BR_GRAY,
                     "children": [
                         {
                             "label": "Sub-A",
-                            "edge_label": "No",
+                            "subtitle": "(same as above)",
+                            "edge_label": "Nothing",
                             "branch_color": BR_YELLOW,
                             "children": sub_a_branch(BR_YELLOW),
                         },
                         {
-                            "label": "Q3",
-                            "subtitle": "action?",
-                            "edge_label": "Yes",
-                            "branch_color": BR_GRAY,
+                            "label": "Sub-B",
+                            "edge_label": "ADD only",
+                            "branch_color": BR_ORANGE,
                             "children": [
-                                {
-                                    "label": "Sub-A",
-                                    "subtitle": "(same as above)",
-                                    "edge_label": "Nothing",
-                                    "branch_color": BR_YELLOW,
-                                    "children": sub_a_branch(BR_YELLOW),
-                                },
-                                {
-                                    "label": "Sub-B",
-                                    "edge_label": "ADD only",
-                                    "branch_color": BR_ORANGE,
-                                    "children": [
-                                        {"label": "", "edge_label": "fact NOT in retr → LLM=nr",                "branch_color": BR_ORANGE, "leaf": LEAF_AMB, "leaf_label": "AMBIGUOUS"},
-                                        {"label": "", "edge_label": "fact NOT in retr → LLM=leak",              "branch_color": BR_ORANGE, "leaf": LEAF_VIO, "leaf_label": "hallucination"},
-                                        {"label": "", "edge_label": "fact in retr, instr NOT → LLM=nr",         "branch_color": BR_ORANGE, "leaf": LEAF_ACC, "leaf_label": "ACCIDENTAL"},
-                                        {"label": "", "edge_label": "fact in retr, instr NOT → LLM=leak",       "branch_color": BR_ORANGE, "leaf": LEAF_VIO, "leaf_label": "normal recall"},
-                                        {"label": "", "edge_label": "both in retr → LLM=nr",                    "branch_color": BR_ORANGE, "leaf": LEAF_FULL,"leaf_label": "FULL PASS via ADD"},
-                                        {"label": "", "edge_label": "both in retr → LLM=leak",                  "branch_color": BR_ORANGE, "leaf": LEAF_SEVERE, "leaf_label": "SEVERE VIOLATION"},
-                                    ],
-                                },
-                                {
-                                    "label": "Sub-C",
-                                    "edge_label": "UPDATE / DELETE",
-                                    "branch_color": BR_GREEN,
-                                    "children": [
-                                        {"label": "", "edge_label": "clean delete → LLM=nr",   "branch_color": BR_GREEN, "leaf": LEAF_FULL, "leaf_label": "FULL PASS via DELETE"},
-                                        {"label": "", "edge_label": "clean delete → LLM=leak", "branch_color": BR_GREEN, "leaf": LEAF_VIO,  "leaf_label": "hallucination"},
-                                        {"label": "", "edge_label": "fact survived / bug",     "branch_color": BR_GREEN, "leaf": LEAF_VIO,  "leaf_label": "→ see Sub-B"},
-                                    ],
-                                },
+                                {"label": "", "edge_label": "fact NOT in retr → LLM=nr",                "branch_color": BR_ORANGE, "leaf": LEAF_AMB, "leaf_label": "AMBIGUOUS"},
+                                {"label": "", "edge_label": "fact NOT in retr → LLM=leak",              "branch_color": BR_ORANGE, "leaf": LEAF_VIO, "leaf_label": "hallucination"},
+                                {"label": "", "edge_label": "fact in retr, instr NOT → LLM=nr",         "branch_color": BR_ORANGE, "leaf": LEAF_ACC, "leaf_label": "ACCIDENTAL"},
+                                {"label": "", "edge_label": "fact in retr, instr NOT → LLM=leak",       "branch_color": BR_ORANGE, "leaf": LEAF_VIO, "leaf_label": "normal recall"},
+                                {"label": "", "edge_label": "both in retr → LLM=nr",                    "branch_color": BR_ORANGE, "leaf": LEAF_FULL,"leaf_label": "FULL PASS via ADD"},
+                                {"label": "", "edge_label": "both in retr → LLM=leak",                  "branch_color": BR_ORANGE, "leaf": LEAF_SEVERE, "leaf_label": "SEVERE VIOLATION"},
+                            ],
+                        },
+                        {
+                            "label": "Sub-C",
+                            "edge_label": "UPDATE / DELETE",
+                            "branch_color": BR_GREEN,
+                            "children": [
+                                {"label": "", "edge_label": "clean delete → LLM=nr",   "branch_color": BR_GREEN, "leaf": LEAF_FULL, "leaf_label": "FULL PASS via DELETE"},
+                                {"label": "", "edge_label": "clean delete → LLM=leak", "branch_color": BR_GREEN, "leaf": LEAF_VIO,  "leaf_label": "hallucination"},
+                                {"label": "", "edge_label": "fact survived / bug",     "branch_color": BR_GREEN, "leaf": LEAF_VIO,  "leaf_label": "→ see Sub-B"},
                             ],
                         },
                     ],
@@ -4654,6 +4822,294 @@ def _render_pre_or_fold(content: str, label: str, fold_threshold: int = 800) -> 
     )
 
 
+def _find_mem0_stage2_walkthrough(q2_outcome: str) -> Dict[str, Any]:
+    """Find one mem0 forget MCQ where q2_action_on_target == `q2_outcome`
+    (one of "add_only" / "update_delete"). Returns the same `ex` shape as
+    `_find_walkthrough_case_richer` so it can flow into the existing
+    walkthrough card renderer.
+    """
+    eval_root = REPO_ROOT / "eval_results" / "travelPlanning" / "forget"
+    if not eval_root.exists():
+        return {}
+
+    def _expected(item: Dict[str, Any], qa_family: str) -> str:
+        if qa_family == "slot":
+            return str(item.get("sensitive_value", "") or "")
+        cto = item.get("choice_to_answer_type", {}) or {}
+        choices = item.get("choices", {}) or {}
+        for label, t in cto.items():
+            if t == "remember_correct":
+                return str(choices.get(label, ""))
+        return ""
+
+    for sys_dir in eval_root.iterdir():
+        if not sys_dir.is_dir() or "+mem0" not in sys_dir.name:
+            continue
+        if "gpt-5.4-mini" not in sys_dir.name:
+            continue
+        system_dirname = sys_dir.name
+        for path in sys_dir.glob("*.json"):
+            if path.name.endswith(".bak"):
+                continue
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            for qa_family, items in (
+                ("slot",  data.get("slot_recall_results", []) or []),
+                ("whole", data.get("whole_recall_results", []) or []),
+            ):
+                for item in items:
+                    if item.get("turn_role") != "key":
+                        continue
+                    retrieved = (item.get("debug", {}) or {}).get(
+                        "retrieved_memories_text"
+                    ) or _stringify_retrieved(item.get("retrieved_memories"))
+                    exp = _expected(item, qa_family)
+                    cls = _classify_forget_4q(
+                        data=data, system_label=system_dirname,
+                        retrieved_text=str(retrieved),
+                        expected_text=exp,
+                        predicted_type=item.get("predicted_answer_type", "") or "",
+                    )
+                    if cls["q2_action_on_target"] != q2_outcome:
+                        continue
+                    identifier_label = str(item.get("identifier_label", "") or "")
+                    input_msgs = ((data.get("method_debug") or {}).get("preload") or {}).get("input_messages", []) or []
+                    if identifier_label and not _find_topic_directive_user_msg(input_msgs, identifier_label):
+                        continue
+
+                    ex: Dict[str, Any] = {
+                        "world": "forget",
+                        "case_file": path.name,
+                        "qa_family": qa_family,
+                        "question": item.get("question", ""),
+                        "expected_text": exp,
+                        "identifier_label": identifier_label,
+                        "predicted_choice": item.get("predicted_choice", ""),
+                        "predicted_answer_type": item.get("predicted_answer_type", ""),
+                        "model_response": item.get("model_response", ""),
+                        "retrieved_text": str(retrieved)[:1500],
+                    }
+                    target_batch = _mem0_find_batch_containing(data, exp)
+                    target_turn  = _mem0_extract_user_turn(target_batch.get("batch_text", ""), exp)
+                    topic_directive_line = _find_topic_directive_user_msg(input_msgs, identifier_label) if identifier_label else ""
+                    if topic_directive_line:
+                        directive_batch_found = _mem0_find_batch_containing(data, topic_directive_line[:80])
+                        directive_turn = _mem0_extract_directive_turn(
+                            directive_batch_found.get("batch_text", ""), identifier_label,
+                        ) or topic_directive_line
+                        directive_fact_resp   = directive_batch_found.get("fact_response", "")
+                        directive_update_resp = directive_batch_found.get("update_response", "")
+                    else:
+                        directive_batch_full = _find_mem0_directive_batch(data, prefer_output_match=True)
+                        directive_turn = _mem0_extract_directive_turn(
+                            directive_batch_full.get("fact_input_text", "")
+                        )
+                        directive_fact_resp   = directive_batch_full.get("fact_response_text", "")
+                        directive_update_resp = directive_batch_full.get("update_response_text", "")
+
+                    ex["mem0_target_turn"] = target_turn
+                    ex["mem0_target_fact_response"] = target_batch.get("fact_response", "")
+                    ex["mem0_directive_turn"] = directive_turn
+                    ex["mem0_directive_fact_response"] = _mem0_filter_facts_to_directive(
+                        directive_fact_resp, topic_substring=identifier_label,
+                    )
+                    ex["mem0_directive_update_response"] = _mem0_filter_memory_events_to_directive(
+                        directive_update_resp, topic_substring=identifier_label,
+                    )
+                    # For UPDATE/DELETE cases the directive's own UPDATE_MEMORY
+                    # batch may not contain the deletion (mem0 sometimes deletes
+                    # the target in a *later* batch when more context arrives).
+                    # Surface every UPDATE/DELETE event whose payload mentions
+                    # the target value, with surrounding context, so the reader
+                    # can see exactly what was deleted.
+                    if q2_outcome == "update_delete":
+                        ex["mem0_target_delete_update_events"] = _mem0_collect_target_delete_update_events(
+                            data, exp,
+                        )
+                    return ex
+    return {}
+
+
+def _find_mem0_stage3_walkthrough(q3_outcome: str) -> Dict[str, Any]:
+    """Pick one mem0 forget MCQ in the funnel up to Stage 3 (q1=Yes, q2 in
+    {add_only, update_delete}, baseline-recalled) where q3_retrieval_state
+    matches the requested outcome. Returns ex with target turn + directive
+    turn + retrieved memories at MCQ time.
+    """
+    eval_root = REPO_ROOT / "eval_results" / "travelPlanning" / "forget"
+    if not eval_root.exists():
+        return {}
+
+    def _expected(item: Dict[str, Any], qa_family: str) -> str:
+        if qa_family == "slot":
+            return str(item.get("sensitive_value", "") or "")
+        cto = item.get("choice_to_answer_type", {}) or {}
+        choices = item.get("choices", {}) or {}
+        for label, t in cto.items():
+            if t == "remember_correct":
+                return str(choices.get(label, ""))
+        return ""
+
+    for sys_dir in eval_root.iterdir():
+        if not sys_dir.is_dir() or "+mem0" not in sys_dir.name:
+            continue
+        if "gpt-5.4-mini" not in sys_dir.name:
+            continue
+        system_dirname = sys_dir.name
+        for path in sys_dir.glob("*.json"):
+            if path.name.endswith(".bak"):
+                continue
+            base_data = _load_baseline_pair(path)
+            if base_data is None:
+                continue
+            base_lookup = _baseline_recall_lookup(base_data)
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            for qa_family, items in (
+                ("slot",  data.get("slot_recall_results", []) or []),
+                ("whole", data.get("whole_recall_results", []) or []),
+            ):
+                for item in items:
+                    if item.get("turn_role") != "key":
+                        continue
+                    if _baseline_recalled(base_lookup, qa_family, item) is not True:
+                        continue
+                    retrieved = (item.get("debug", {}) or {}).get(
+                        "retrieved_memories_text"
+                    ) or _stringify_retrieved(item.get("retrieved_memories"))
+                    exp = _expected(item, qa_family)
+                    cls = _classify_forget_4q(
+                        data=data, system_label=system_dirname,
+                        retrieved_text=str(retrieved),
+                        expected_text=exp,
+                        predicted_type=item.get("predicted_answer_type", "") or "",
+                    )
+                    if not cls["q1_directive_extracted"]:
+                        continue
+                    if cls["q2_action_on_target"] not in ("add_only", "update_delete"):
+                        continue
+                    if cls["q3_retrieval_state"] != q3_outcome:
+                        continue
+                    identifier_label = str(item.get("identifier_label", "") or "")
+                    input_msgs = ((data.get("method_debug") or {}).get("preload") or {}).get("input_messages", []) or []
+                    if identifier_label and not _find_topic_directive_user_msg(input_msgs, identifier_label):
+                        continue
+                    ex: Dict[str, Any] = {
+                        "world": "forget",
+                        "case_file": path.name,
+                        "qa_family": qa_family,
+                        "question": item.get("question", ""),
+                        "expected_text": exp,
+                        "identifier_label": identifier_label,
+                        "predicted_choice": item.get("predicted_choice", ""),
+                        "predicted_answer_type": item.get("predicted_answer_type", ""),
+                        "model_response": item.get("model_response", ""),
+                        "retrieved_text": str(retrieved)[:1500],
+                    }
+                    target_batch = _mem0_find_batch_containing(data, exp)
+                    target_turn  = _mem0_extract_user_turn(target_batch.get("batch_text", ""), exp)
+                    topic_directive_line = _find_topic_directive_user_msg(input_msgs, identifier_label) if identifier_label else ""
+                    if topic_directive_line:
+                        directive_batch_found = _mem0_find_batch_containing(data, topic_directive_line[:80])
+                        directive_turn = _mem0_extract_directive_turn(
+                            directive_batch_found.get("batch_text", ""), identifier_label,
+                        ) or topic_directive_line
+                    else:
+                        directive_turn = ""
+                    ex["mem0_target_turn"] = target_turn
+                    ex["mem0_directive_turn"] = directive_turn
+                    return ex
+    return {}
+
+
+def _find_mem0_stage4_leak_walkthrough(skip_keys: Optional[set] = None) -> Dict[str, Any]:
+    """Pick one mem0 forget MCQ in the Stage-4 funnel (q1=Yes, q2 in
+    {add_only, update_delete}, q3 == 'absent_with_signal') where the LLM
+    leaked (predicted == remember_correct). Returns ex with MCQ + retrieved
+    + model response. Skips MCQs whose (case_file, qa_family, timestamp)
+    tuple is in `skip_keys` so the caller can find a second distinct example.
+    """
+    skip_keys = skip_keys or set()
+    eval_root = REPO_ROOT / "eval_results" / "travelPlanning" / "forget"
+    if not eval_root.exists():
+        return {}
+
+    def _expected(item: Dict[str, Any], qa_family: str) -> str:
+        if qa_family == "slot":
+            return str(item.get("sensitive_value", "") or "")
+        cto = item.get("choice_to_answer_type", {}) or {}
+        choices = item.get("choices", {}) or {}
+        for label, t in cto.items():
+            if t == "remember_correct":
+                return str(choices.get(label, ""))
+        return ""
+
+    for sys_dir in eval_root.iterdir():
+        if not sys_dir.is_dir() or "+mem0" not in sys_dir.name:
+            continue
+        if "gpt-5.4-mini" not in sys_dir.name:
+            continue
+        system_dirname = sys_dir.name
+        for path in sys_dir.glob("*.json"):
+            if path.name.endswith(".bak"):
+                continue
+            base_data = _load_baseline_pair(path)
+            if base_data is None:
+                continue
+            base_lookup = _baseline_recall_lookup(base_data)
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            for qa_family, items in (
+                ("slot",  data.get("slot_recall_results", []) or []),
+                ("whole", data.get("whole_recall_results", []) or []),
+            ):
+                for item in items:
+                    if item.get("turn_role") != "key":
+                        continue
+                    key = (path.name, qa_family, str(item.get("timestamp", "")))
+                    if key in skip_keys:
+                        continue
+                    if _baseline_recalled(base_lookup, qa_family, item) is not True:
+                        continue
+                    retrieved = (item.get("debug", {}) or {}).get(
+                        "retrieved_memories_text"
+                    ) or _stringify_retrieved(item.get("retrieved_memories"))
+                    exp = _expected(item, qa_family)
+                    cls = _classify_forget_4q(
+                        data=data, system_label=system_dirname,
+                        retrieved_text=str(retrieved),
+                        expected_text=exp,
+                        predicted_type=item.get("predicted_answer_type", "") or "",
+                    )
+                    if (not cls["q1_directive_extracted"]
+                            or cls["q2_action_on_target"] not in ("add_only", "update_delete")
+                            or cls["q3_retrieval_state"] != "absent_with_signal"):
+                        continue
+                    if cls["q4_said_nr"]:
+                        continue
+                    return {
+                        "_walk_key": key,
+                        "world": "forget",
+                        "case_file": path.name,
+                        "qa_family": qa_family,
+                        "question": item.get("question", ""),
+                        "expected_text": exp,
+                        "identifier_label": str(item.get("identifier_label", "") or ""),
+                        "predicted_choice": item.get("predicted_choice", ""),
+                        "predicted_answer_type": item.get("predicted_answer_type", ""),
+                        "model_response": item.get("model_response", ""),
+                        "retrieved_text": str(retrieved)[:1800],
+                        "choices": item.get("choices", {}),
+                    }
+    return {}
+
+
 def _render_walkthrough_card_v2(*,
     title: str,
     oneliner: str,
@@ -5001,63 +5457,18 @@ def _render_walkthrough_card(*,
 
 
 def render_section_forget_analysis() -> str:
-    """Section 4 — pipeline-stage cascade analysis.
+    """Section 5 — linear per-stage pipeline analysis.
 
-    Reframed around the user's 4 pipeline questions:
-        ① was instruction extracted?
-        ② was UPDATE/DELETE applied?
-        ③ was target retrieved (excluded)?
-        ④ was answer correct?
+    Forget: 4-stage funnel (① directive extracted → ② action on target →
+    ③ retrieval appropriate → ④ answer = "I don't remember"), conditional
+    on baseline-recalled.
 
-    For each system: one bar showing how many cases (a) violated, (b) came
-    out correct *only* because an upstream pipeline stage failed, vs.
-    (c) genuinely succeeded at all 4 stages.
+    No-store: gate question (was target stored at probe turn?) splits the
+    population into two branches, each with its own short stage analysis.
     """
-    # `forget` and `no_store` need different success criteria — "not extracted"
-    # is a stage-1 failure for forget (the original fact should exist AND be
-    # deleted), but is *correct behavior* for no_store (the system was told
-    # not to write). So they get separate aggregations.
-    agg = _aggregate_cascade_buckets({"forget"})
+    from typing import Callable
 
-    intro = (
-        "<p>Section 2 reports forget-Δ / no_store-Δ values close to 0 for most "
-        "memory systems — but that doesn't tell us <i>why</i>. This section traces "
-        "each key-turn MCQ through a 4-stage pipeline:</p>"
-        "<ol style='margin:6px 0 10px;'>"
-        "<li><b>①</b> <b>Was the directive extracted into memory?</b> "
-        "(For forget: did the system register the user's request to forget X? For no_store: "
-        "did the system avoid registering X in the first place?)</li>"
-        "<li><b>②</b> <b>Was UPDATE/DELETE applied to the target?</b> "
-        "(Forget-specific: did the system actually emit a DELETE/UPDATE on the existing memory entry for X?)</li>"
-        "<li><b>③</b> <b>Did retrieval give the answer-LLM appropriate info?</b> "
-        "(Either target absent at MCQ time, OR target present with a forget-signal alongside it.)</li>"
-        "<li><b>④</b> <b>Was the answer &quot;I don't remember&quot;?</b></li>"
-        "</ol>"
-        "<p><b>Forget</b> and <b>no_store</b> have different success criteria, so we analyze "
-        "them separately:</p>"
-        "<ul style='margin:6px 0 12px;'>"
-        "<li><b>4.A — Forget:</b> the target fact should already be in the store; "
-        "the directive should trigger a DELETE/UPDATE that removes it. "
-        "&quot;Not extracted&quot; (stage ① fail) is a <i>real failure</i> here — the system never "
-        "had the chance to act on the directive. We bucket every case by first failed stage.</li>"
-        "<li><b>4.B — No-store:</b> the user explicitly said &quot;don't keep this in "
-        "memory.&quot; The correct behavior is to <i>not write</i> the target at all. "
-        "&quot;Not extracted&quot; can be either compliance OR accidental absence. "
-        "We pair each no_store case with its baseline twin and compare end-to-end: did baseline recall "
-        "the target? Did no_store also recall it? Three buckets fall out.</li>"
-        "</ul>"
-    )
-
-    # ============== 4.A: SUCCESS-SIDE ANALYSIS ==============
-    # Custom-rendered table with a grouped header:
-    #     | system | S1 failed | S2 fail (do nothing) | All Pass                      | total |
-    #                                                  | S2 = ADD only | S2 = UPDATE/DELETE |
-    # For mem0 we can measure all four sub-buckets precisely. For
-    # non-mem0 systems, only S1 failed is measurable; everything else
-    # (S2 sub-types) is merged into a single &quot;All Pass &mdash; action n/a&quot;
-    # cell spanning the 3 right-most data columns.
-    success_s2_agg = _aggregate_success_s2_action({"forget"})
-
+    # ===== shared helpers =====
     def _fmt_count_pct(n: int, total: int) -> str:
         if total == 0:
             return "<span style='color:#aaa;'>—</span>"
@@ -5067,744 +5478,721 @@ def render_section_forget_analysis() -> str:
             f"<span style='font-size:11px;color:#333;'>({pct}%)</span>"
         )
 
-    success_rows_html = []
-    for sys_dirname, sys_display in _SYSTEM_ORDER_FOR_CASCADE:
-        b = success_s2_agg.get(sys_dirname, {}) or {}
-        n_s1   = b.get("SUCC_S1_FAILED", 0)
-        n_none = b.get("SUCC_S2_NOTHING", 0)
-        n_add  = b.get("SUCC_S2_ADD", 0)
-        n_upd  = b.get("SUCC_S2_UPDATE_DELETE", 0)
-        n_unk  = b.get("SUCC_S1_OK_UNKNOWN", 0)
-        total = n_s1 + n_none + n_add + n_upd + n_unk
-        if total == 0:
-            success_rows_html.append(
-                f"<tr><td style='padding:5px 10px;'>{sys_display}</td>"
-                "<td style='text-align:right;padding:5px 10px;color:#aaa;' colspan='4'>—</td>"
-                "<td style='text-align:right;padding:5px 10px;color:#aaa;'>—</td></tr>"
-            )
-            continue
-        # S1 failed cell (always)
-        s1_bg  = _hex_to_rgba("#fadbd8", 0.45)
-        s1_cell = (
-            f"<td style='text-align:right;padding:5px 10px;background:{s1_bg};white-space:nowrap;'>"
-            f"{_fmt_count_pct(n_s1, total)}</td>"
-        )
-        total_cell = f"<td style='text-align:right;padding:5px 10px;color:#444;'>n={total}</td>"
-        if "+mem0" in sys_dirname:
-            # mem0: all three action-type cells measurable
-            none_bg = _hex_to_rgba("#f5cba7", 0.50)
-            add_bg  = _hex_to_rgba("#aedea1", 0.55)
-            upd_bg  = _hex_to_rgba("#27ae60", 0.45)
-            none_cell = (
-                f"<td style='text-align:right;padding:5px 10px;background:{none_bg};white-space:nowrap;'>"
-                f"{_fmt_count_pct(n_none, total)}</td>"
-            )
-            add_cell = (
-                f"<td style='text-align:right;padding:5px 10px;background:{add_bg};white-space:nowrap;'>"
-                f"{_fmt_count_pct(n_add, total)}</td>"
-            )
-            upd_cell = (
-                f"<td style='text-align:right;padding:5px 10px;background:{upd_bg};white-space:nowrap;'>"
-                f"{_fmt_count_pct(n_upd, total)}</td>"
-            )
-            success_rows_html.append(
-                f"<tr><td style='padding:5px 10px;font-weight:500;'>{sys_display}</td>"
-                f"{s1_cell}{none_cell}{add_cell}{upd_cell}{total_cell}</tr>"
-            )
-        else:
-            # Non-mem0: merge the 3 right-most data cells. The SUCC_S1_OK_UNKNOWN
-            # bucket captures everything that wasn't S1 failed for this row.
-            non_s1_n = n_none + n_add + n_upd + n_unk
-            merged_bg = _hex_to_rgba("#d9d9d9", 0.45)
-            merged_cell = (
-                f"<td colspan='3' style='text-align:right;padding:5px 10px;"
-                f"background:{merged_bg};white-space:nowrap;color:#444;font-style:italic;'>"
-                f"{_fmt_count_pct(non_s1_n, total)} "
-                f"<span style='font-size:11px;color:#666;'>(action type not observable)</span>"
-                f"</td>"
-            )
-            success_rows_html.append(
-                f"<tr><td style='padding:5px 10px;font-weight:500;'>{sys_display}</td>"
-                f"{s1_cell}{merged_cell}{total_cell}</tr>"
-            )
+    def _stage_table(
+        *,
+        title: str,
+        oneliner: str,
+        rows: List[Tuple[str, Dict[str, int], int]],
+        cols: List[Tuple[str, str, str]],   # (key, header_html, color_hex)
+        denominator_label: str = "n",
+        footnote: str = "",
+        full_n_by_sys: Optional[Dict[str, int]] = None,
+        compliance_n_by_sys: Optional[Dict[str, int]] = None,
+        sys_display_to_dirname: Optional[Dict[str, str]] = None,
+    ) -> str:
+        """Render one stage table.
 
-    success_table = (
-        "<table style='border-collapse:separate;border-spacing:1px;margin:10px 0 8px;'>"
-        "<thead>"
-        "<tr>"
-        "<th rowspan='2' style='text-align:left;padding:6px 10px;border-bottom:2px solid #888;'>system</th>"
-        "<th rowspan='2' style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;white-space:nowrap;'>S1 failed</th>"
-        "<th rowspan='2' style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;white-space:nowrap;'>S2 failed<br><span style='font-weight:400;color:#666;font-size:11px;'>(do nothing)</span></th>"
-        "<th colspan='2' style='text-align:center;padding:6px 10px;border-bottom:1px solid #888;'>All Pass</th>"
-        "<th rowspan='2' style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;'>total</th>"
-        "</tr>"
-        "<tr>"
-        "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;font-weight:600;font-size:12px;white-space:nowrap;'>S2 = ADD only</th>"
-        "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;font-weight:600;font-size:12px;white-space:nowrap;'>S2 = UPDATE/DELETE</th>"
-        "</tr>"
-        "</thead>"
-        f"<tbody>{''.join(success_rows_html)}</tbody></table>"
-    )
-    # success_card is opened here and *closed in forget_subsection* — the
-    # per-bucket walkthrough cards (stage1..genuine) are injected inside
-    # this <details> so they fold/expand together with the table.
-    success_card_open = (
-        "<details class='sys-spec' open><summary class='sys-summary'>"
-        "<div class='sys-header'><h3 class='sys-label'>Cascade — &quot;success&quot; cases by Stage 2 action</h3>"
-        "<div class='sys-ops'><span class='op-label'>within &quot;not_remember&quot; cases only</span></div></div>"
-        "<p class='sys-oneliner'>For each success case (LLM said &quot;I don't remember&quot;), what did the system actually do on the store side? The columns partition by Stage 2 action.</p>"
-        "</summary>"
-        f"{success_table}"
-        "<p style='font-size:12px;color:#555;margin-top:6px;'>"
-        "<i>Columns:</i> <b>S1 failed</b> = directive never extracted for this topic. "
-        "<b>S2 = do nothing</b> = directive extracted but UPDATE_MEMORY emitted no related event (the cascade's old &quot;S2 failed&quot;). "
-        "<b>S2 = ADD only</b> = UPDATE_MEMORY ADDed the directive paraphrase as a new memory but didn't touch the target. "
-        "<b>S2 = UPDATE/DELETE</b> = the target memory was actively UPDATEd or DELETEd. "
-        "<b>S1 ok, action n/a</b> = non-mem0 system: directive captured by best-effort keyword scan, but we can't inspect the underlying write action.</p>"
-        "<p style='font-size:12px;color:#555;margin-top:4px;'>"
-        "Only <b>S2 = UPDATE/DELETE</b> is directive-driven suppression. The other columns are accidental: "
-        "<b>S1 failed</b> and <b>S2 = do nothing</b> are the system ignoring the directive entirely; "
-        "<b>S2 = ADD only</b> depends on retrieval surfacing the directive alongside the target. "
-        "S3 isn't a column here because for success cases the LLM already said nr &mdash; whatever retrieval looked like, "
-        "the answer-LLM ended up refusing.</p>"
-    )
-
-    # Per-stage walkthroughs: pick a representative case per (system, bucket).
-    # Default focus on mem0 — has the cleanest internal-state observability.
-    stage1_ex = _find_walkthrough_case_richer("ACCIDENTAL_S1", "gpt-5.4-mini+mem0")
-    stage2_ex = _find_walkthrough_case_richer("ACCIDENTAL_S2", "gpt-5.4-mini+mem0")
-    stage3_ex = _find_walkthrough_case_richer("ACCIDENTAL_S3", "gpt-5.4-mini+mem0")
-    genuine_ex = _find_walkthrough_case_richer("GENUINE", "gpt-5.4-mini+mem0")
-    violation_s1_ex = _find_walkthrough_case_richer("VIOLATION_S1", "gpt-5.4-mini+mem0")
-    violation_s2_ex = _find_walkthrough_case_richer("VIOLATION_S2", "gpt-5.4-mini+mem0")
-    violation_s3_ex = _find_walkthrough_case_richer("VIOLATION_S3", "gpt-5.4-mini+mem0")
-    violation_s4_ex = _find_walkthrough_case_richer("VIOLATION_S4", "gpt-5.4-mini+mem0")
-
-    def _write_side_sections(ex: Dict[str, Any], include_update: bool) -> List[Tuple[str, str]]:
-        """Compact write-side sections for mem0 walkthroughs:
-            (1) target turn (the user turn that introduces the value),
-            (2) FACT_RETRIEVAL output for the batch containing that turn,
-            (3) instruction turn (the user turn with the forget directive),
-            (4) FACT_RETRIEVAL output for the batch containing the directive,
-            (5) [optional] UPDATE_MEMORY output for the directive batch.
-        Falls back to the older full-batch view if turn extraction failed
-        (e.g., whole_recall expected_text couldn't be located verbatim).
+        When `full_n_by_sys` and `compliance_n_by_sys` are both provided
+        (keyed by system DIRNAME, with `sys_display_to_dirname` mapping
+        each row's display label back to dirname), two extra header columns
+        are emitted:
+          - 总 n  — full key-MCQ count for that system in this world
+          - expected Yes — projection of the system's overall compliance
+            rate (1 - violation_rate, computed on the full data) onto
+            total n. Lets the reader sanity-check how much of the column's
+            "Yes" is real directive compliance vs. accidental.
         """
-        if not ex:
-            return []
-        secs: List[Tuple[str, str]] = []
-        target_turn  = ex.get("mem0_target_turn") or ""
-        target_resp  = ex.get("mem0_target_fact_response") or ""
-        instr_turn   = ex.get("mem0_directive_turn") or ""
-        instr_resp   = ex.get("mem0_directive_fact_response") or ""
-        update_resp  = ex.get("mem0_directive_update_response") or ""
-
-        if target_turn:
-            secs.append(("Target turn (user introduces the value)", target_turn))
-        if target_resp:
-            secs.append(("FACT_RETRIEVAL output for the target-turn batch", target_resp))
-        if instr_turn:
-            secs.append(("Instruction turn (user gives the forget directive)", instr_turn))
-        if instr_resp:
-            secs.append(("FACT_RETRIEVAL output for the instruction-turn batch", instr_resp))
-        if include_update and update_resp:
-            secs.append(("UPDATE_MEMORY output for the instruction-turn batch", update_resp))
-
-        # Fallback (only triggers when no turn-level data was found, e.g. a
-        # whole_recall case where the paraphrased expected_text doesn't
-        # match the verbatim conversation): show the full batch as before.
-        if not secs:
-            batch = ex.get("mem0_directive_batch") or {}
-            if batch.get("fact_input_text"):
-                secs.append(("Conversation batch passed to FACT_RETRIEVAL (raw)", batch["fact_input_text"]))
-            if batch.get("fact_response_text"):
-                secs.append(("FACT_RETRIEVAL output (raw)", batch["fact_response_text"]))
-            if include_update and batch.get("update_response_text"):
-                secs.append(("UPDATE_MEMORY output (raw)", batch["update_response_text"]))
-        return secs
-
-    def _read_side_sections(ex: Dict[str, Any]) -> List[Tuple[str, str]]:
-        """Sections for walkthroughs that hinge on what happened at
-        retrieval / answer time."""
-        if not ex:
-            return []
-        out: List[Tuple[str, str]] = []
-        # Show the MCQ question at the top of read-side walkthroughs only;
-        # for these buckets the failure was at retrieval/answer time so
-        # the question is genuinely load-bearing.
-        q = ex.get("question", "")
-        if q:
-            out.append(("MCQ question", q))
-        rt = ex.get("retrieved_text", "")
-        if rt:
-            out.append(("Retrieved memories shown to answer LLM", rt))
-        mr = ex.get("model_response", "")
-        if mr:
-            out.append(("Answer-LLM response (raw)", mr))
-        return out
-
-    stage1_card = _render_walkthrough_card_v2(
-        title="Walkthrough — Stage ① failure (directive not extracted)",
-        oneliner="mem0 example: the conversation batch containing the forget directive, and the FACT_RETRIEVAL output that came back without capturing it.",
-        ex=stage1_ex,
-        sections=_write_side_sections(stage1_ex, include_update=False),
-    )
-
-    stage2_card = _render_walkthrough_card_v2(
-        title="Walkthrough — Stage ② failure (extracted, no UPDATE/DELETE on target)",
-        oneliner="mem0 example: FACT_RETRIEVAL captured the directive and UPDATE_MEMORY only ADDed it as a new memory. Adding the directive is reasonable &mdash; the question is whether retrieval at MCQ time surfaces it alongside (or instead of) the target.",
-        ex=stage2_ex,
-        sections=_write_side_sections(stage2_ex, include_update=True) + _read_side_sections(stage2_ex),
-    )
-
-    stage3_card = _render_walkthrough_card_v2(
-        title="Walkthrough — Stage ③ failure (target retrieved, LLM refused)",
-        oneliner="Retrieval surfaced the target value to the answer-LLM, but the LLM said &quot;don't remember.&quot;",
-        ex=stage3_ex,
-        sections=_read_side_sections(stage3_ex),
-    )
-
-    genuine_card = _render_walkthrough_card_v2(
-        title="Walkthrough — All stages OK / S2 = ADD only (mem0)",
-        oneliner="mem0 example of the dominant pattern: directive extracted, UPDATE_MEMORY ADDed it as a new memory (id 16). No UPDATE/DELETE fired. Target was never stored as a discrete fact, so the directive memory + retrieval miss together gave a vacuous &quot;don't remember&quot; answer.",
-        ex=genuine_ex,
-        sections=(_write_side_sections(genuine_ex, include_update=True) + _read_side_sections(genuine_ex)),
-    )
-
-    violation_s1_card = _render_walkthrough_card_v2(
-        title="Walkthrough — Violation, stage ① failure (most common)",
-        oneliner="mem0 example: the directive batch and the FACT_RETRIEVAL output that missed it; MCQ outcome was &quot;remember_correct&quot; because the original fact stayed in the store.",
-        ex=violation_s1_ex,
-        sections=_write_side_sections(violation_s1_ex, include_update=False),
-    )
-
-    violation_s2_card = _render_walkthrough_card_v2(
-        title="Walkthrough — Violation, stage ② failure",
-        oneliner="mem0 example: directive extracted, UPDATE_MEMORY only emitted ADD events — store has both the directive paraphrase AND the target. Look at retrieval below to see why the LLM still leaked.",
-        ex=violation_s2_ex,
-        sections=_write_side_sections(violation_s2_ex, include_update=True) + _read_side_sections(violation_s2_ex),
-    )
-
-    violation_s3_card = _render_walkthrough_card_v2(
-        title="Walkthrough — Violation, stage ③ failure (rare)",
-        oneliner="UPDATE/DELETE fired on the target, yet retrieval still surfaced it and the LLM picked it.",
-        ex=violation_s3_ex,
-        sections=(_write_side_sections(violation_s3_ex, include_update=True) + _read_side_sections(violation_s3_ex)),
-    )
-
-    violation_s4_card = _render_walkthrough_card_v2(
-        title="Walkthrough — Violation, stage ④ failure (ultra rare)",
-        oneliner="Retrieval was clean (no target verbatim), yet the answer-LLM produced the target — likely hallucination.",
-        ex=violation_s4_ex,
-        sections=_read_side_sections(violation_s4_ex),
-    )
-
-    # ============== mechanism walkthroughs ==============
-    # InStore,NotRetr: forget data shows only MemoryOS has any (n=1).
-    instore_ex = _find_mechanism_case("TARGET_IN_STORE_NOT_RETRIEVED", "gpt-5.4-mini+MemoryOS")
-    instore_sections: List[Tuple[str, str]] = []
-    if instore_ex:
-        if instore_ex.get("final_store_excerpt"):
-            instore_sections.append(("Final store excerpt containing the target (MemoryOS)", instore_ex["final_store_excerpt"]))
-        if instore_ex.get("question"):
-            instore_sections.append(("MCQ question", instore_ex["question"]))
-        if instore_ex.get("retrieved_text"):
-            instore_sections.append(("Retrieved memories at MCQ time (target missing)", instore_ex["retrieved_text"]))
-        if instore_ex.get("model_response"):
-            instore_sections.append(("Answer-LLM response (raw)", instore_ex["model_response"]))
-    instore_card = _render_walkthrough_card_v2(
-        title="Mechanism walkthrough — InStore,NotRetr (MemoryOS)",
-        oneliner="The target value is sitting in MemoryOS's final store, but retrieval at MCQ time didn't surface it; the LLM said &quot;don't remember.&quot;",
-        ex=instore_ex,
-        sections=instore_sections,
-        extra_html=(
-            "<p style='font-size:13px;color:#555;'>"
-            "Across the forget battery only MemoryOS produces InStore,NotRetr cases (n=1). The target ended up in mid-term or "
-            "user_knowledge layer; retrieval's embedding similarity at MCQ time put it below the cutoff. "
-            "The &quot;don't remember&quot; answer is accidental — caused by retrieval miss, not by directive-driven suppression.</p>"
-        ),
-    )
-
-    # Retr,LLMRefused: one example per system (mem0=1, A-Mem=12, MemTree=1, MemoryOS=1).
-    retr_systems: List[Tuple[str, str]] = [
-        ("gpt-5.4-mini+mem0",     "mem0"),
-        ("gpt-5.4-mini+A-Mem",    "A-Mem"),
-        ("gpt-5.4-mini+MemTree",  "MemTree"),
-        ("gpt-5.4-mini+MemoryOS", "MemoryOS"),
-    ]
-    retr_card_blocks: List[str] = []
-    for sys_dir, sys_short in retr_systems:
-        rex = _find_mechanism_case("TARGET_RETRIEVED_LLM_REFUSED", sys_dir)
-        if not rex:
-            continue
-        rsec: List[Tuple[str, str]] = []
-        if rex.get("question"):
-            rsec.append(("MCQ question", rex["question"]))
-        if rex.get("retrieved_text"):
-            rsec.append((f"Retrieved memories at MCQ time ({sys_short})", rex["retrieved_text"]))
-        if rex.get("model_response"):
-            rsec.append(("Answer-LLM response (raw)", rex["model_response"]))
-        retr_card_blocks.append(
-            _render_walkthrough_card_v2(
-                title=f"Mechanism walkthrough — Retr,LLMRefused ({sys_short})",
-                oneliner="Retrieval surfaced the target value to the answer-LLM, but the LLM answered &quot;don't remember&quot; anyway "
-                         "(usually because a forget-paraphrase was alongside the target).",
-                ex=rex,
-                sections=rsec,
-            )
+        show_extra = bool(full_n_by_sys and compliance_n_by_sys and sys_display_to_dirname)
+        header_cells = "".join(
+            f"<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;"
+            f"white-space:nowrap;font-weight:600;font-size:12px;'>{h}</th>"
+            for _, h, _ in cols
         )
-    retr_mechanism_html = "".join(retr_card_blocks) if retr_card_blocks else (
-        "<p style='color:#888;font-size:13px'>No concrete Retr,LLMRefused examples available.</p>"
-    )
-
-    # Mechanism breakdown across ALL accidental successes (any stage).
-    mech_agg = _aggregate_accidental_s1_mechanisms({"forget"})
-    mech_short_labels = ["not extract anything", "extract wrong", "in store, not retr", "retr, LLM refused"]
-    # Only mem0 has the FACT_RETRIEVAL trace we need to distinguish "not
-    # extract anything" from "extract wrong". For other systems, all
-    # NEVER_EXTRACTED cases fall into "extract wrong" by convention —
-    # render the "not extract anything" cell as n/a for those rows.
-    mech_unavailable = {
-        (sd, "TARGET_NOT_EXTRACT_ANYTHING")
-        for sd, _ in _SYSTEM_ORDER_FOR_CASCADE
-        if "+mem0" not in sd
-    }
-    mech_table = _render_subset_table(
-        mech_agg, _ACCIDENTAL_MECHANISMS,
-        short_labels=mech_short_labels,
-        unavailable_cells=mech_unavailable,
-    )
-
-    # Baseline comparison: for cases in (NotExtractAnything + ExtractWrong)
-    # in the forget world, was the target ALSO absent from baseline? If
-    # yes for most of them, the "didn't extract" rate is just baseline
-    # behavior (the system never had the value to begin with), not a
-    # directive-driven suppression.
-    baseline_compare = _aggregate_baseline_target_absent_in_neverextract({"forget"})
-    bc_row_html = []
-    for sys_dirname, sys_display in _SYSTEM_ORDER_FOR_CASCADE:
-        b = mech_agg.get(sys_dirname, {}) or {}
-        forget_n   = b.get("TARGET_NOT_EXTRACT_ANYTHING", 0) + b.get("TARGET_EXTRACT_WRONG", 0)
-        checked    = baseline_compare.get(sys_dirname, {}).get("checked", 0)
-        baseline_n = baseline_compare.get(sys_dirname, {}).get("baseline_target_absent", 0)
-        if forget_n == 0:
-            forget_cell   = "<span style='color:#aaa;'>—</span>"
-            baseline_cell = "<span style='color:#aaa;'>—</span>"
-            pct_cell      = "<span style='color:#aaa;'>—</span>"
-        elif checked == 0:
-            forget_cell   = f"<span style='font-weight:600;color:#111;'>{forget_n}</span>"
-            baseline_cell = "<span style='color:#888;'>no baseline pair</span>"
-            pct_cell      = "<span style='color:#aaa;'>—</span>"
-        else:
-            pct = baseline_n / checked * 100
-            color = "#922b21" if pct >= 80 else ("#1e8449" if pct <= 50 else "#666")
-            forget_cell   = f"<span style='font-weight:600;color:#111;'>{forget_n}</span>"
-            baseline_cell = (
-                f"<span style='font-weight:600;color:#111;'>{baseline_n}</span> "
-                f"<span style='font-size:11px;color:#555;'>/ {checked} paired</span>"
+        extra_header = ""
+        if show_extra:
+            extra_header = (
+                "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;"
+                "white-space:nowrap;font-weight:600;font-size:12px;color:#555;'>total n<br>"
+                "<span style='font-weight:400;font-size:11px;'>full key-MCQ</span></th>"
+                "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;"
+                "white-space:nowrap;font-weight:600;font-size:12px;color:#555;'>expected Yes<br>"
+                "<span style='font-weight:400;font-size:11px;'>= total n − violation count<br>(= all \"forgotten\" outcomes; ideally directive-driven)</span></th>"
             )
-            pct_cell = (
-                f"<span style='font-weight:600;color:{color};'>{pct:.0f}%</span>"
+        body_rows = []
+        for sys_display, counts, total in rows:
+            extra_cells = ""
+            if show_extra:
+                dn = sys_display_to_dirname.get(sys_display, "")
+                full_n = full_n_by_sys.get(dn, 0)
+                comp_n = compliance_n_by_sys.get(dn, 0)
+                extra_cells = (
+                    f"<td style='text-align:right;padding:5px 10px;color:#666;font-size:12px;'>"
+                    f"{full_n if full_n else '—'}</td>"
+                    f"<td style='text-align:right;padding:5px 10px;color:#666;font-size:12px;'>"
+                    f"{comp_n if full_n else '—'}</td>"
+                )
+            if total == 0:
+                cells = "".join(
+                    f"<td style='text-align:right;padding:5px 10px;color:#aaa;'>—</td>"
+                    for _ in cols
+                )
+                body_rows.append(
+                    f"<tr><td style='padding:5px 10px;'>{sys_display}</td>{cells}"
+                    f"<td style='text-align:right;padding:5px 10px;color:#aaa;'>—</td>"
+                    f"{extra_cells}</tr>"
+                )
+                continue
+            cell_html = "".join(
+                f"<td style='text-align:right;padding:5px 10px;background:{_hex_to_rgba(color, 0.45)};white-space:nowrap;'>"
+                f"{_fmt_count_pct(counts.get(key, 0), total)}</td>"
+                for key, _, color in cols
             )
-        bc_row_html.append(
-            f"<tr><td style='padding:5px 10px;font-weight:500;'>{sys_display}</td>"
-            f"<td style='text-align:right;padding:5px 10px;'>{forget_cell}</td>"
-            f"<td style='text-align:right;padding:5px 10px;'>{baseline_cell}</td>"
-            f"<td style='text-align:right;padding:5px 10px;'>{pct_cell}</td></tr>"
+            body_rows.append(
+                f"<tr><td style='padding:5px 10px;font-weight:500;'>{sys_display}</td>"
+                f"{cell_html}"
+                f"<td style='text-align:right;padding:5px 10px;color:#444;'>{denominator_label}={total}</td>"
+                f"{extra_cells}</tr>"
+            )
+        foot = (
+            f"<p style='font-size:12px;color:#555;margin:6px 0 4px;'>{footnote}</p>"
+            if footnote else ""
         )
-    baseline_compare_table = (
-        "<table style='border-collapse:separate;border-spacing:1px;margin:8px 0 4px;'>"
-        "<thead><tr>"
-        "<th style='text-align:left;padding:6px 10px;border-bottom:2px solid #888;'>system</th>"
-        "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;'>"
-        "Forget-side n<br><span style='font-weight:400;color:#666;font-size:11px;'>"
-        "cases in &quot;not extract anything&quot; + &quot;extract wrong&quot;</span></th>"
-        "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;'>"
-        "Baseline target absent<br><span style='font-weight:400;color:#666;font-size:11px;'>"
-        "of paired cases, baseline store also missed it</span></th>"
-        "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;'>"
-        "Concordance<br><span style='font-weight:400;color:#666;font-size:11px;'>"
-        "baseline-absent / paired &mdash; high means baseline already missed too</span></th>"
-        "</tr></thead>"
-        f"<tbody>{''.join(bc_row_html)}</tbody></table>"
-    )
-
-    # Opened here, closed in forget_subsection after mechanism walkthroughs.
-    mech_card_open = (
-        "<details class='sys-spec' open><summary class='sys-summary'>"
-        "<div class='sys-header'><h3 class='sys-label'>How do memory systems &quot;forget&quot; the facts?</h3></div>"
-        "<p class='sys-oneliner'>Across all accidental successes (forget-world, MCQ outcome = not_remember), which of the 4 mechanisms produced the &quot;don't remember&quot; answer?</p>"
-        "</summary>"
-        f"{mech_table}"
-        "<p style='font-size:12px;color:#555;margin-top:6px;'>"
-        "<i>Columns:</i> <b>not extract anything</b> — extraction call on the directive batch returned no facts at all (mem0-precise; non-mem0 systems can't distinguish this from \"extract wrong\"). "
-        "<b>extract wrong</b> — extraction produced facts but didn't capture the target value. "
-        "<b>in store, not retr</b> — target IS in final store, retrieval embedding missed it at MCQ time. "
-        "<b>retr, LLM refused</b> — target was retrieved, but the answer-LLM said &quot;not_remember&quot; anyway.</p>"
-        "<p style='font-size:13px;color:#555;margin-top:10px;'>"
-        "<b>Baseline-comparison check.</b> The first two columns dominate. To tell whether that's directive-driven suppression or just baseline behavior (the system never had the value to begin with), "
-        "we re-classify those cases under their baseline twin and count how many also had target absent in the baseline store. "
-        "If the number is close to the forget-side count, the &quot;didn't extract&quot; rate is the system's <i>default behavior</i>, not the directive.</p>"
-        f"{baseline_compare_table}"
-    )
-
-    # ============== 4.A: VIOLATION CASCADE (forget world only) ==============
-    violation_buckets = [b for b in _CASCADE_BUCKETS if b[0].startswith("VIOLATION")]
-    violation_short_labels = ["S1 failed", "S2 failed", "S3 failed", "S4 failed"]
-    violation_table_html = _render_subset_table(agg, violation_buckets, short_labels=violation_short_labels)
-    # Opened here, closed in forget_subsection after violation walkthroughs.
-    violation_card_open = (
-        "<details class='sys-spec' open><summary class='sys-summary'>"
-        "<div class='sys-header'><h3 class='sys-label'>Cascade — forget violations by pipeline depth</h3>"
-        "<div class='sys-ops'><span class='op-label'>forget world; within violation cases only</span></div></div>"
-        "<p class='sys-oneliner'>Per system, of forget cases where the model recalled the forbidden value, how far into the pipeline did it get before breaking.</p>"
-        "</summary>"
-        f"{violation_table_html}"
-        "<p style='font-size: 13px; color: #555; margin-top: 10px;'>"
-        "<b>S1 failed</b> = extraction failed (palest); <b>S2 failed</b> = extracted but no UPDATE/DELETE on target; "
-        "<b>S3 failed</b> = target retrieved without forget signal; <b>S4 failed</b> = clean retrieval but LLM still leaked (darkest). "
-        "Almost all forget violations sit in <b>S1 failed</b> &mdash; the directive was never extracted, so the system had no chance of acting on it.</p>"
-    )
-
-    # ============== 4.B: NO-STORE BASELINE-PAIR ANALYSIS ==============
-    ns_agg = _aggregate_no_store_cascade()
-    ns_x_outcome = _aggregate_no_store_cascade_x_outcome()
-
-    # 4-bucket joint-probability view — partition over (baseline_recall,
-    # no_store_recall). Rows sum to 100%.
-    cp_rows = []
-    for sys_dirname, sys_display in _SYSTEM_ORDER_FOR_CASCADE:
-        b = ns_agg.get(sys_dirname, {})
-        both_failed   = b.get("NS_BOTH_FAILED", 0)
-        new_recall    = b.get("NS_NEW_RECALL", 0)
-        recalled_any  = b.get("NS_RECALLED_ANYWAY", 0)
-        suppressed    = b.get("NS_SUPPRESSED", 0)
-        total = both_failed + new_recall + recalled_any + suppressed
-        if total == 0:
-            cp_rows.append(
-                f"<tr><td style='padding:5px 10px;'>{sys_display}</td>"
-                + "<td style='text-align:right;padding:5px 10px;color:#aaa;'>—</td>" * 4
-                + "</tr>"
-            )
-            continue
-        raw_pcts = [both_failed/total*100, new_recall/total*100,
-                    recalled_any/total*100, suppressed/total*100]
-        floored = [int(r) for r in raw_pcts]
-        remainder = 100 - sum(floored)
-        order = sorted(range(4), key=lambda i: raw_pcts[i] - floored[i], reverse=True)
-        for i in order[:remainder]:
-            floored[i] += 1
-        p_bf, p_nr, p_ra, p_supp = floored
-
-        def _cell(num: int, pct: int, bg_rgba: str) -> str:
-            return (
-                f"<td style='text-align:right;padding:5px 10px;background:{bg_rgba};white-space:nowrap;'>"
-                f"<span style='font-weight:600;color:#111;'>{pct}%</span> "
-                f"<span style='font-size:11px;color:#555;'>({num}/{total})</span>"
-                "</td>"
-            )
-        cp_rows.append(
-            f"<tr><td style='padding:5px 10px;font-weight:500;'>{sys_display}</td>"
-            + _cell(both_failed,  p_bf,   "rgba(217,217,217,0.45)")
-            + _cell(new_recall,   p_nr,   "rgba(245,203,167,0.45)")
-            + _cell(recalled_any, p_ra,   "rgba(241,148,138,0.35)")
-            + _cell(suppressed,   p_supp, "rgba(39,174,96,0.30)")
-            + "</tr>"
+        return (
+            "<details class='sys-spec' open style='margin:10px 0;'>"
+            f"<summary class='sys-summary'><div class='sys-header'>"
+            f"<h3 class='sys-label'>{title}</h3></div>"
+            f"<p class='sys-oneliner'>{oneliner}</p></summary>"
+            "<table style='border-collapse:separate;border-spacing:1px;margin:10px 0 4px;'>"
+            "<thead><tr>"
+            "<th style='text-align:left;padding:6px 10px;border-bottom:2px solid #888;'>system</th>"
+            f"{header_cells}"
+            "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;'>total</th>"
+            f"{extra_header}"
+            "</tr></thead>"
+            f"<tbody>{''.join(body_rows)}</tbody></table>"
+            f"{foot}"
+            "</details>"
         )
-    cp_table = (
-        "<table style='border-collapse:separate;border-spacing:1px;margin:10px 0 8px;'>"
-        "<thead><tr>"
-        "<th style='text-align:left;padding:6px 10px;border-bottom:2px solid #888;'>system</th>"
-        "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;'>"
-        "P(both failed)"
-        "<br><span style='font-weight:400;color:#666;font-size:11px;'>baseline=nr, no_store=nr &mdash; vacuous</span></th>"
-        "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;'>"
-        "P(new recall)"
-        "<br><span style='font-weight:400;color:#666;font-size:11px;'>baseline=nr, no_store=recall &mdash; odd</span></th>"
-        "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;'>"
-        "P(recalled anyway)"
-        "<br><span style='font-weight:400;color:#666;font-size:11px;'>baseline=recall, no_store=recall &mdash; directive ignored</span></th>"
-        "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;'>"
-        "P(suppressed)"
-        "<br><span style='font-weight:400;color:#666;font-size:11px;'>baseline=recall, no_store=nr &mdash; directive worked?</span></th>"
-        "</tr></thead>"
-        f"<tbody>{''.join(cp_rows)}</tbody></table>"
+
+    # ===== intro =====
+    intro = (
+        "<p>Section 2 reports forget-Δ / no_store-Δ values close to 0 for most "
+        "memory systems — but that doesn't tell us <i>why</i>. This section walks "
+        "the post-extraction pipeline as a linear funnel and reports the per-stage "
+        "outcome distribution per system.</p>"
+        "<div style='background:#f4f9ff;border-left:3px solid #5b8def;padding:10px 14px;margin:10px 0;'>"
+        "<b>Baseline-extracted set (5.A and 5.B).</b> Both subsections count key-turn MCQs whose "
+        "<i>baseline-twin</i> (same persona, same MCQ, no directive inserted) was answered "
+        "<code>remember_correct</code>. The system <b>did</b> extract and store the fact under "
+        "baseline conditions; the only question is whether the directive subsequently caused "
+        "5.A — suppression at MCQ time, or 5.B — non-storage at write time. The Q1 (fact extracted?) "
+        "layer is therefore not a branch in the funnel below — it is conditioned to <i>yes</i>."
+        "<br/><br/>"
+        "<b>Persona scope.</b> Both <code>baseline-extracted n</code> AND <code>total n</code> in "
+        "this section restrict to personas 0&ndash;3 — the 4 personas where the baseline cell was "
+        "actually run for these backends. Forget personas 4&ndash;9 still appear in section 2's "
+        "main results table, but the conditional cascade analysis is on the 4-persona universe "
+        "where pairing is possible. Within that universe, the forget eval only tests key MCQs that "
+        "the stage-specific directive actually targets (~1/3 of the baseline keys per persona), "
+        "and of those, only the ones the system actually recalled in baseline make it into "
+        "<code>baseline-extracted n</code>; <code>total n</code> is everything tested in forget "
+        "world for those personas."
+        "<br/><br/>"
+        "<b>About \"expected Yes\".</b> For each system we also report <code>total n</code> "
+        "(every key MCQ in the forget world, including personas without baseline pairs) and "
+        "<code>expected Yes = total n − violation count</code>. \"Expected Yes\" is just the count "
+        "of MCQs the system <i>did</i> answer with not_remember in the forget world &mdash; the "
+        "outcomes we'd <i>like</i> to be the result of real directive compliance. Comparing it to "
+        "the actual per-stage Yes counts on the left tells us how much of that \"forgotten\" "
+        "behaviour is accidental (the system would have refused anyway, no directive needed) "
+        "vs directive-driven."
+        "</div>"
+        "<p><b>Forget</b> and <b>no_store</b> have different success criteria, so we analyze "
+        "them separately.</p>"
     )
 
-    # P(Suppressed) walkthrough — show a mem0 case that landed in
-    # NS_SUPPRESSED, so the reader can judge whether the suppression
-    # actually came from the directive or from the system's vacuous-nr
-    # tendency.
-    suppressed_ex = _find_no_store_suppressed_example("gpt-5.4-mini+mem0")
-    suppressed_sections: List[Tuple[str, str]] = []
-    if suppressed_ex:
-        if suppressed_ex.get("question"):
-            suppressed_sections.append(("MCQ question", suppressed_ex["question"]))
-        if suppressed_ex.get("baseline_response"):
-            suppressed_sections.append(("Baseline-world model response (recalled)", suppressed_ex["baseline_response"]))
-        if suppressed_ex.get("retrieved_text"):
-            suppressed_sections.append(("Retrieved memories at no_store MCQ time", suppressed_ex["retrieved_text"]))
-        if suppressed_ex.get("model_response"):
-            suppressed_sections.append(("no_store-world model response (said nr)", suppressed_ex["model_response"]))
-        if suppressed_ex.get("mem0_directive_turn"):
-            suppressed_sections.append(("Instruction turn (what the user said)", suppressed_ex["mem0_directive_turn"]))
-        if suppressed_ex.get("mem0_directive_fact_response"):
-            suppressed_sections.append(("FACT_RETRIEVAL output (filtered to directive facts)", suppressed_ex["mem0_directive_fact_response"]))
-        if suppressed_ex.get("mem0_directive_update_response"):
-            suppressed_sections.append(("UPDATE_MEMORY events (filtered to directive)", suppressed_ex["mem0_directive_update_response"]))
-    suppressed_card = _render_walkthrough_card_v2(
-        title="P(suppressed) walkthrough — one mem0 case",
-        oneliner="Inspect a single mem0 NS_SUPPRESSED case end-to-end: was the &quot;don't remember&quot; answer really driven by the directive, or could it be retrieval noise / vacuous nr?",
-        ex=suppressed_ex,
-        sections=suppressed_sections,
-    )
-
-    ns_write_card = (
-        "<details class='sys-spec' open><summary class='sys-summary'>"
-        "<div class='sys-header'><h3 class='sys-label'>Baseline-pair — did the directive change the answer?</h3>"
-        "<div class='sys-ops'><span class='op-label'>4 mutually-exclusive joint probabilities over (baseline recall, no_store recall)</span></div></div>"
-        "<p class='sys-oneliner'>Of all key-turn no_store MCQs, what fraction lands in each (baseline, no_store) cell? Rows sum to 100%.</p>"
-        "</summary>"
-        f"{cp_table}"
-        f"{suppressed_card}"
-        "</details>"
-    )
-
-    success_walkthroughs_label = (
-        "<p style='font-size:13px;color:#555;margin:10px 0 6px;'>"
-        "<b>Walkthroughs &mdash; one mem0 case per success bucket:</b></p>"
-    )
-    mech_walkthroughs_label = (
-        "<p style='font-size:13px;color:#555;margin:10px 0 6px;'>"
-        "<b>Walkthroughs &mdash; mechanism examples (only the last two mechanisms have observable cases):</b></p>"
-    )
-    violation_walkthroughs_label = (
-        "<p style='font-size:13px;color:#555;margin:10px 0 6px;'>"
-        "<b>Walkthroughs &mdash; one mem0 case per violation bucket:</b></p>"
-    )
-    # Tree of all forget MCQ outcomes, drawn as a real CSS tree (not
-    # ASCII art) with the main spine showing chronological decisions
-    # (fact extracted? → instr extracted? → action?) and three named
-    # sub-trees handling the retrieval/answer combinations.
+    # ===== outcome tree (kept as visual reference) =====
     forget_tree_svg = _render_forget_outcome_tree_svg()
     forget_tree_html = (
-        "<details class='sys-spec' open style='margin-top:12px;'>"
+        "<details class='sys-spec' style='margin-top:12px;'>"
         "<summary class='sys-summary'>"
-        "<div class='sys-header'><h3 class='sys-label' style='margin:0;'>Outcome tree for a single forget MCQ</h3></div>"
-        "<p class='sys-oneliner'>Every forget MCQ takes exactly one path through this tree, ending at a colored leaf. "
-        "Branch colors mark the sub-tree (Q1=No path in <span style='color:#e74c3c;font-weight:600;'>red</span>, "
-        "Sub-A in <span style='color:#f1c40f;font-weight:600;'>yellow</span> &mdash; appears twice with the same color since it's the same sub-tree, "
-        "Sub-B in <span style='color:#e67e22;font-weight:600;'>orange</span>, "
-        "Sub-C in <span style='color:#27ae60;font-weight:600;'>green</span>). "
-        "Leaf badge colors: "
-        "<span style='background:#d4edda;color:#155724;padding:1px 6px;border-radius:3px;font-weight:600;'>full pass</span>, "
-        "<span style='background:#f8d7da;color:#721c24;padding:1px 6px;border-radius:3px;font-weight:600;'>accidental success</span>, "
-        "<span style='background:#fff3cd;color:#856404;padding:1px 6px;border-radius:3px;font-weight:600;'>ambiguous</span>, "
-        "<span style='background:#922b21;color:#fff;padding:1px 6px;border-radius:3px;font-weight:600;'>severe violation</span>, "
-        "<span style='background:#e0e0e0;color:#444;padding:1px 6px;border-radius:3px;font-weight:600;'>uninformative violation</span>.</p>"
+        "<div class='sys-header'><h3 class='sys-label' style='margin:0;'>Outcome tree for a single forget MCQ <span style='color:#666;font-weight:400;font-size:13px;'>(visual reference; conditional on baseline-recalled)</span></h3></div>"
+        "<p class='sys-oneliner'>Click to expand. Every <i>baseline-recalled</i> forget MCQ takes exactly one path through this tree, ending at a colored leaf. The per-stage tables below count cases by the linear pipeline questions, not by tree leaves.</p>"
         "</summary>"
         "<div style='background:#fafafa;border:1px solid #ddd;border-radius:4px;padding:14px 16px;margin:10px 0;overflow-x:auto;'>"
         f"{forget_tree_svg}"
         "</div>"
-        "<p style='font-size:12px;color:#555;margin-top:6px;'>"
-        "<b>How to read:</b> Trace from the root on the left to a leaf on the right. The per-subtree count tables below count cases per leaf.</p>"
         "</details>"
     )
 
+    # ===== 5.A FORGET: per-stage funnel =====
+    fcls = _aggregate_forget_4q(condition_on_baseline_recalled=True)
 
-    # --- Per-subtree count tables ---
-    # Each MCQ lands in exactly one leaf. We build 4 small tables that
-    # together account for every forget MCQ:
-    #   Q1 table — fact never extracted (Q1=No)
-    #   Sub-tree A table — fact in store, no directive signal
-    #   Sub-tree B table — ADD only path (mem0) / assumed-ADD for non-mem0
-    #   Sub-tree C table — UPDATE/DELETE path (mem0; mostly empty)
-    forget_leaves_agg = _aggregate_forget_leaves({"forget"})
+    # Section 5 excludes +A-Mem because its forget eval files were generated
+    # by an older runner that did NOT restrict key MCQs to directive-targeted
+    # topics (~3× larger key-MCQ count per persona vs other backends), so
+    # cross-backend numbers in this section would be apples-to-oranges. Once
+    # A-Mem is re-run on the unified MCQ-scoping pipeline it can come back in.
+    _section5_systems = [
+        (d, n) for d, n in _SYSTEM_ORDER_FOR_CASCADE if "+A-Mem" not in d
+    ]
+    forget_rows: List[Tuple[str, str, List[Dict[str, Any]]]] = [
+        (sys_dirname, sys_display, fcls.get(sys_dirname, []) or [])
+        for sys_dirname, sys_display in _section5_systems
+    ]
+    sys_display_to_dirname = {sys_display: sys_dirname for sys_dirname, sys_display in _section5_systems}
 
-    LEAF_PALETTE = {
-        "full": ("#d4edda", "#155724"),  # green     — full pass
-        "acc":  ("#f8d7da", "#721c24"),  # light red — accidental success
-        "amb":  ("#fff3cd", "#856404"),  # yellow    — ambiguous
-        "vio":  ("#e0e0e0", "#444444"),  # gray      — uninformative violation
-        "sev":  ("#922b21", "#ffffff"),  # dark red  — severe violation
-    }
-
-    def _leaf_cell(n: int, total: int, color_class: str) -> str:
-        bg_hex, fg_hex = LEAF_PALETTE.get(color_class, ("#ffffff", "#222"))
-        bg = _hex_to_rgba(bg_hex, 0.55)
-        if total == 0:
-            return f"<td style='text-align:right;padding:5px 10px;color:#aaa;'>—</td>"
-        pct = round(n / total * 100) if total else 0
-        if n == 0:
-            return (
-                f"<td style='text-align:right;padding:5px 10px;color:#888;'>"
-                f"0 <span style='font-size:11px;'>(0%)</span></td>"
-            )
-        return (
-            f"<td style='text-align:right;padding:5px 10px;background:{bg};color:{fg_hex};white-space:nowrap;'>"
-            f"<span style='font-weight:600;'>{n}</span> "
-            f"<span style='font-size:11px;color:#333;'>({pct}%)</span></td>"
-        )
-
-    def _sub_table(title: str, oneliner: str, columns: List[Tuple[str, str, str]]) -> str:
-        """columns: list of (leaf_code, short_header_html, color_class)"""
-        rows = []
-        for sys_dirname, sys_display in _SYSTEM_ORDER_FOR_CASCADE:
-            b = forget_leaves_agg.get(sys_dirname, {}) or {}
-            counts = [b.get(c, 0) for c, _, _ in columns]
-            row_total = sum(counts)
-            if row_total == 0:
-                cells = "".join(
-                    f"<td style='text-align:right;padding:5px 10px;color:#aaa;'>—</td>"
-                    for _ in columns
-                )
-                rows.append(
-                    f"<tr><td style='padding:5px 10px;'>{sys_display}</td>{cells}"
-                    f"<td style='text-align:right;padding:5px 10px;color:#aaa;'>—</td></tr>"
-                )
+    # Per-system FULL key-MCQ counts and compliance counts, restricted to
+    # the SAME persona universe as the baseline-extracted set (i.e. only
+    # personas with a baseline twin available). This keeps "total n" /
+    # "expected Yes" comparable to "baseline-extracted n" — both are on
+    # personas 0–3 (the baseline cell's coverage). Otherwise total n would
+    # count personas 4–9 too and the comparison would be apples-to-oranges.
+    full_n_by_sys: Dict[str, int] = {}
+    compliance_n_by_sys: Dict[str, int] = {}
+    forget_root = REPO_ROOT / "eval_results" / "travelPlanning" / "forget"
+    if forget_root.exists():
+        for sys_dir in forget_root.iterdir():
+            if not sys_dir.is_dir() or "+" not in sys_dir.name:
                 continue
-            cell_html = "".join(
-                _leaf_cell(n, row_total, color_class)
-                for n, (_, _, color_class) in zip(counts, columns)
-            )
-            rows.append(
-                f"<tr><td style='padding:5px 10px;font-weight:500;'>{sys_display}</td>"
-                f"{cell_html}"
-                f"<td style='text-align:right;padding:5px 10px;color:#444;'>n={row_total}</td>"
-                f"</tr>"
-            )
-        header_cells = "".join(
-            f"<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;font-weight:600;font-size:11.5px;white-space:nowrap;'>{h}</th>"
-            for _, h, _ in columns
-        )
-        return (
-            "<details class='sys-spec' open><summary class='sys-summary'>"
-            f"<div class='sys-header'><h3 class='sys-label'>{title}</h3></div>"
-            f"<p class='sys-oneliner'>{oneliner}</p>"
-            "</summary>"
-            "<table style='border-collapse:separate;border-spacing:1px;margin:10px 0 8px;'>"
-            "<thead><tr>"
-            "<th style='text-align:left;padding:6px 10px;border-bottom:2px solid #888;'>system</th>"
-            f"{header_cells}"
-            "<th style='text-align:right;padding:6px 10px;border-bottom:2px solid #888;'>entered this sub-tree</th>"
-            "</tr></thead>"
-            f"<tbody>{''.join(rows)}</tbody></table>"
-            "</details>"
-        )
+            sys_dirname = sys_dir.name
+            if "gpt-5.4-mini" not in sys_dirname:
+                continue
+            if not any(b in sys_dirname for b in
+                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
+                continue
+            n_total = 0
+            n_comp = 0
+            for path in sys_dir.glob("*.json"):
+                if path.name.endswith(".bak"):
+                    continue
+                # Skip personas without a baseline twin so total n stays
+                # on the same persona scope as baseline-extracted n.
+                if _load_baseline_pair(path) is None:
+                    continue
+                try:
+                    data = json.loads(path.read_text(encoding="utf-8"))
+                except Exception:
+                    continue
+                for items in (data.get("whole_recall_results", []) or [],
+                              data.get("slot_recall_results", []) or []):
+                    for item in items:
+                        if item.get("turn_role") != "key":
+                            continue
+                        n_total += 1
+                        if item.get("predicted_answer_type", "") != "remember_correct":
+                            n_comp += 1
+            full_n_by_sys[sys_dirname] = n_total
+            compliance_n_by_sys[sys_dirname] = n_comp
 
-    q1_table = _sub_table(
-        title="Q1 — fact never extracted into memory",
-        oneliner="The target value never made it into the store. Most of the volume across systems lives here.",
-        columns=[
-            ("Q1_NO_NR",    "LLM=nr<br><span style='font-weight:400;color:#666;'>accidental (vacuous)</span>", "acc"),
-            ("Q1_NO_LEAK",  "LLM=leak<br><span style='font-weight:400;color:#666;'>hallucination</span>",      "vio"),
-            ("Q1_NO_OTHER", "LLM=other",                                                                       "vio"),
+    # Stage 1: directive extracted? (denom = full conditional set)
+    s1_rows = []
+    for sys_dirname, sys_display, items in forget_rows:
+        total = len(items)
+        n_yes = sum(1 for c in items if c["q1_directive_extracted"])
+        n_no  = total - n_yes
+        s1_rows.append((sys_display, {"yes": n_yes, "no": n_no}, total))
+
+    s1_table = _stage_table(
+        title="Stage ① — Was the directive extracted into memory?",
+        oneliner="Did FACT_RETRIEVAL capture the user's request to forget X as a fact (any form)?",
+        rows=s1_rows,
+        cols=[
+            ("yes", "Yes &mdash; directive captured", "#27ae60"),
+            ("no",  "No &mdash; directive lost",      "#e74c3c"),
         ],
+        denominator_label="baseline-extracted n",
+        footnote="Detected via store-side intent / instruction-keyword scan on the system's final memory snapshot. "
+                 "Yes = a directive-shaped entry exists; No = nothing in the store references the directive.",
+        full_n_by_sys=full_n_by_sys,
+        compliance_n_by_sys=compliance_n_by_sys,
+        sys_display_to_dirname=sys_display_to_dirname,
     )
 
-    sub_a_table = _sub_table(
-        title="Sub-tree A — fact in store, no directive signal",
-        oneliner="Fact was extracted; either no directive captured (Q2=No), or directive captured but no store action (Q3=Nothing).",
-        columns=[
-            ("A_FACT_NO_NR",    "fact NOT in retr<br>LLM=nr<br><span style='font-weight:400;color:#666;'>accidental (retr missed)</span>", "acc"),
-            ("A_FACT_NO_LEAK",  "fact NOT in retr<br>LLM=leak<br><span style='font-weight:400;color:#666;'>hallucination</span>",         "vio"),
-            ("A_FACT_NO_OTHER", "fact NOT in retr<br>LLM=other",                                                                          "vio"),
-            ("A_FACT_YES_NR",   "fact IN retr<br>LLM=nr<br><span style='font-weight:400;color:#666;'>indep. refusal</span>",              "acc"),
-            ("A_FACT_YES_LEAK", "fact IN retr<br>LLM=leak<br><span style='font-weight:400;color:#666;'>normal recall</span>",             "vio"),
-            ("A_FACT_YES_OTHER","fact IN retr<br>LLM=other",                                                                              "vio"),
+    # Stages 2-4 are restricted to mem0 because no other backend exposes
+    # the per-stage internal state (UPDATE/DELETE events, target-in-store
+    # snapshot, retrieval contents). Showing partial rows for the others
+    # would just report unobservable noise.
+    mem0_rows = [(d, n, items) for d, n, items in forget_rows if "+mem0" in d]
+
+    # Stage 2: action on target. Funnel — denom = stage-1 yes (mem0 only).
+    s2_rows = []
+    for sys_dirname, sys_display, items in mem0_rows:
+        sub = [c for c in items if c["q1_directive_extracted"]]
+        total = len(sub)
+        n_nothing = sum(1 for c in sub if c["q2_action_on_target"] == "nothing")
+        n_add     = sum(1 for c in sub if c["q2_action_on_target"] == "add_only")
+        n_upd     = sum(1 for c in sub if c["q2_action_on_target"] == "update_delete")
+        s2_rows.append((sys_display, {
+            "nothing": n_nothing, "add": n_add, "upd": n_upd,
+        }, total))
+
+    s2_cols: List[Tuple[str, str, str]] = [
+        ("nothing", "No &mdash; nothing<br><span style='font-weight:400;color:#666;'>directive captured but UPDATE_MEMORY did nothing</span>", "#e74c3c"),
+        ("add",     "Yes &mdash; ADD only<br><span style='font-weight:400;color:#666;'>directive ADDed as a new memory; target untouched</span>", "#aedea1"),
+        ("upd",     "Yes &mdash; UPDATE / DELETE<br><span style='font-weight:400;color:#666;'>target memory actively modified</span>", "#27ae60"),
+    ]
+
+    s2_table = _stage_table(
+        title="Stage ② — Was UPDATE/DELETE applied to the target? <span style='color:#666;font-weight:400;font-size:13px;'>(mem0 only)</span>",
+        oneliner="Conditional on Stage ① = Yes. Yes = an action was emitted (ADD or UPDATE/DELETE); No = nothing.",
+        rows=s2_rows,
+        cols=s2_cols,
+        denominator_label="stage-1 yes n",
+        footnote="Only mem0 exposes UPDATE_MEMORY actions; A-Mem / MemTree / MemoryOS / LangMem are omitted because their per-event store state isn't observable.",
+        full_n_by_sys=full_n_by_sys,
+        compliance_n_by_sys=compliance_n_by_sys,
+        sys_display_to_dirname=sys_display_to_dirname,
+    )
+
+    # Walkthroughs — one mem0 case per Stage-2 Yes outcome, showing the
+    # target turn (what the user said that introduced the value), the
+    # FACT_RETRIEVAL output for that turn (what mem0 stored), the directive
+    # turn (the forget instruction), and what mem0 did at the directive turn.
+    s2_walk_add = _find_mem0_stage2_walkthrough("add_only")
+    s2_walk_upd = _find_mem0_stage2_walkthrough("update_delete")
+
+    def _s2_walk_sections(ex: Dict[str, Any]) -> List[Tuple[str, str]]:
+        if not ex:
+            return []
+        secs: List[Tuple[str, str]] = []
+        if ex.get("mem0_target_turn"):
+            secs.append(("① Target turn — what the user said (introduces the value)", ex["mem0_target_turn"]))
+        if ex.get("mem0_target_fact_response"):
+            secs.append(("② FACT_RETRIEVAL output for that target-turn batch — what mem0 stored", ex["mem0_target_fact_response"]))
+        if ex.get("mem0_directive_turn"):
+            secs.append(("③ Directive turn — the forget instruction", ex["mem0_directive_turn"]))
+        if ex.get("mem0_directive_fact_response"):
+            secs.append(("④a FACT_RETRIEVAL output for the directive-turn batch", ex["mem0_directive_fact_response"]))
+        if ex.get("mem0_directive_update_response"):
+            secs.append(("④b UPDATE_MEMORY events for the directive-turn batch — what mem0 did", ex["mem0_directive_update_response"]))
+        # Only present when q2 == update_delete: the actual DELETE/UPDATE
+        # event(s) hitting the target value, possibly from a non-directive
+        # batch (mem0 sometimes deletes the target lazily in a later batch).
+        if ex.get("mem0_target_delete_update_events"):
+            secs.append((
+                "⑤ DELETE / UPDATE events that actually hit the target value",
+                ex["mem0_target_delete_update_events"],
+            ))
+        return secs
+
+    s2_walk_add_card = _render_walkthrough_card_v2(
+        title="Walkthrough — Stage ② = ADD only (one mem0 case)",
+        oneliner="Directive captured into memory as a new entry, but UPDATE_MEMORY did not modify the target. The reader can check whether the directive paraphrase + the original target both end up coexisting.",
+        ex=s2_walk_add,
+        sections=_s2_walk_sections(s2_walk_add),
+    )
+    s2_walk_upd_card = _render_walkthrough_card_v2(
+        title="Walkthrough — Stage ② = UPDATE / DELETE (one mem0 case)",
+        oneliner="UPDATE_MEMORY emitted a DELETE/UPDATE on the target. The clearest signal of directive-driven suppression on the store side.",
+        ex=s2_walk_upd,
+        sections=_s2_walk_sections(s2_walk_upd),
+    )
+    s2_walkthroughs = (s2_walk_add_card or "") + (s2_walk_upd_card or "")
+
+    # Stage 3: retrieval state. Funnel — denom = stage-2 Yes (any action,
+    # i.e. add_only OR update_delete) on the mem0-only subset.
+    s3_rows = []
+    for sys_dirname, sys_display, items in mem0_rows:
+        sub = [c for c in items
+               if c["q1_directive_extracted"] and c["q2_action_on_target"] in ("add_only", "update_delete")]
+        total = len(sub)
+        n_abs_sig = sum(1 for c in sub if c["q3_retrieval_state"] == "absent_with_signal")
+        n_abs_no  = sum(1 for c in sub if c["q3_retrieval_state"] == "absent_no_signal")
+        n_retr    = sum(1 for c in sub if c["q3_retrieval_state"] == "retrieved")
+        s3_rows.append((sys_display, {
+            "abs_sig": n_abs_sig, "abs_no": n_abs_no, "retr": n_retr,
+        }, total))
+
+    s3_cols: List[Tuple[str, str, str]] = [
+        ("abs_sig", "Yes &mdash; target absent + signal alongside<br><span style='font-weight:400;color:#666;'>appropriate (target gone, LLM informed)</span>", "#27ae60"),
+        ("abs_no",  "No &mdash; target absent, no signal<br><span style='font-weight:400;color:#666;'>vacuous absence (no positive cue)</span>", "#e74c3c"),
+        ("retr",    "No &mdash; target retrieved<br><span style='font-weight:400;color:#666;'>suppression didn't take effect on retrieval</span>", "#c0392b"),
+    ]
+
+    s3_table = _stage_table(
+        title="Stage ③ — Did retrieval give the answer-LLM appropriate info? <span style='color:#666;font-weight:400;font-size:13px;'>(mem0 only)</span>",
+        oneliner="Conditional on Stage ② = Yes (an action was emitted). The only \"appropriate\" outcome is target absent AND a forget signal alongside.",
+        rows=s3_rows,
+        cols=s3_cols,
+        denominator_label="stage-2 yes n",
+        footnote="\"Signal\" = any directive keyword (forget / drop / clear / remove / disregard / not store / etc.) appearing in the retrieved-memory text. Both \"absent without signal\" and \"target retrieved\" are red because the LLM lacks positive grounding to refuse.",
+        full_n_by_sys=full_n_by_sys,
+        compliance_n_by_sys=compliance_n_by_sys,
+        sys_display_to_dirname=sys_display_to_dirname,
+    )
+
+    # Stage 4: answer = nr? Funnel — denom = stage-3 = absent_with_signal.
+    s4_rows = []
+    for sys_dirname, sys_display, items in mem0_rows:
+        sub = [c for c in items
+               if c["q1_directive_extracted"]
+               and c["q2_action_on_target"] in ("add_only", "update_delete")
+               and c["q3_retrieval_state"] == "absent_with_signal"]
+        total = len(sub)
+        n_nr  = sum(1 for c in sub if c["q4_said_nr"])
+        n_lk  = total - n_nr
+        s4_rows.append((sys_display, {"nr": n_nr, "leak": n_lk}, total))
+
+    s4_table = _stage_table(
+        title="Stage ④ — Was the answer &quot;I don't remember&quot;? <span style='color:#666;font-weight:400;font-size:13px;'>(mem0 only)</span>",
+        oneliner="Conditional on Stage ③ = appropriate. The cleanest end-to-end signal: when the system gave the LLM exactly the right info, did the LLM also refuse?",
+        rows=s4_rows,
+        cols=[
+            ("nr",   "Yes &mdash; \"I don't remember\"", "#27ae60"),
+            ("leak", "No &mdash; recalled / leaked",     "#e74c3c"),
         ],
+        denominator_label="stage-3 green n",
+        footnote="A leak here means the answer-LLM ignored a clean forget signal; very rare in practice.",
+        full_n_by_sys=full_n_by_sys,
+        compliance_n_by_sys=compliance_n_by_sys,
+        sys_display_to_dirname=sys_display_to_dirname,
     )
 
-    sub_b_table = _sub_table(
-        title="Sub-tree B — ADD only path",
-        oneliner="Directive ADDed as a new memory; fact untouched in store. (Non-mem0 systems are routed here by assumption since their action type isn't observable.)",
-        columns=[
-            ("B_FACT_NO_NR",     "fact NOT in retr<br>LLM=nr<br><span style='font-weight:400;color:#666;'><b>ambiguous</b></span>", "amb"),
-            ("B_FACT_NO_LEAK",   "fact NOT in retr<br>LLM=leak<br><span style='font-weight:400;color:#666;'>hallucination</span>",  "vio"),
-            ("B_FACT_NO_OTHER",  "fact NOT in retr<br>LLM=other",                                                                    "vio"),
-            ("B_FACT_ONLY_NR",   "fact in retr,<br>instr NOT in retr<br>LLM=nr<br><span style='font-weight:400;color:#666;'>indep. refusal</span>", "acc"),
-            ("B_FACT_ONLY_LEAK", "fact in retr,<br>instr NOT in retr<br>LLM=leak<br><span style='font-weight:400;color:#666;'>normal recall</span>", "vio"),
-            ("B_FACT_ONLY_OTHER","fact in retr,<br>instr NOT in retr<br>LLM=other",                                                                  "vio"),
-            ("B_BOTH_NR",        "both in retr<br>LLM=nr<br><span style='font-weight:400;color:#666;'><b>FULL PASS via ADD</b></span>",             "full"),
-            ("B_BOTH_LEAK",      "both in retr<br>LLM=leak<br><span style='font-weight:400;color:#666;'>severe violation</span>",                    "sev"),
-            ("B_BOTH_OTHER",     "both in retr<br>LLM=other",                                                                                        "vio"),
-        ],
-    )
+    # ===== Stage 3 walkthroughs — one mem0 case per outcome =====
+    s3_walk_green = _find_mem0_stage3_walkthrough("absent_with_signal")
+    s3_walk_abs   = _find_mem0_stage3_walkthrough("absent_no_signal")
+    s3_walk_retr  = _find_mem0_stage3_walkthrough("retrieved")
 
-    sub_c_table = _sub_table(
-        title="Sub-tree C — UPDATE / DELETE path (clean delete branch only)",
-        oneliner="The system actually fired UPDATE/DELETE on the target and the delete was clean. Mostly empty across systems — no system ever fires DELETE on this benchmark.",
-        columns=[
-            ("C_DELETE_CLEAN_NR",   "clean delete<br>LLM=nr<br><span style='font-weight:400;color:#666;'><b>FULL PASS via DELETE</b></span>", "full"),
-            ("C_DELETE_CLEAN_LEAK", "clean delete<br>LLM=leak<br><span style='font-weight:400;color:#666;'>hallucination</span>",             "vio"),
-            ("C_DELETE_CLEAN_OTHER","clean delete<br>LLM=other",                                                                              "vio"),
-        ],
-    )
+    def _s3_walk_sections(ex: Dict[str, Any]) -> List[Tuple[str, str]]:
+        if not ex:
+            return []
+        secs: List[Tuple[str, str]] = []
+        if ex.get("question"):
+            secs.append(("MCQ question", ex["question"]))
+        if ex.get("expected_text"):
+            secs.append(("Target value the user asked to forget", ex["expected_text"]))
+        if ex.get("mem0_target_turn"):
+            secs.append(("User probe (target) turn — what the user originally said", ex["mem0_target_turn"]))
+        if ex.get("mem0_directive_turn"):
+            secs.append(("Directive turn — the forget instruction", ex["mem0_directive_turn"]))
+        if ex.get("retrieved_text"):
+            secs.append(("Retrieved memories shown to the answer-LLM at MCQ time", ex["retrieved_text"]))
+        return secs
 
-    leaf_tables_html = (
-        "<p style='font-size:13px;color:#555;margin:14px 0 6px;'>"
-        "<b>Per-subtree counts</b> — each MCQ lands in exactly one cell across these 4 tables. "
-        "Row totals (<i>entered this sub-tree</i>) across the 4 tables sum to the system's total forget key MCQs.</p>"
-        f"{q1_table}"
-        f"{sub_a_table}"
-        f"{sub_b_table}"
-        f"{sub_c_table}"
+    s3_walk_green_card = _render_walkthrough_card_v2(
+        title="Walkthrough — Stage ③ = ✓ target absent + signal alongside (one mem0 case)",
+        oneliner="The clean compliance path: target value gone from retrieval AND a forget paraphrase surfaced alongside.",
+        ex=s3_walk_green,
+        sections=_s3_walk_sections(s3_walk_green),
     )
+    s3_walk_abs_card = _render_walkthrough_card_v2(
+        title="Walkthrough — Stage ③ = ✗ target absent, no signal (one mem0 case)",
+        oneliner="Target is gone from retrieval but no forget signal surfaced either; the answer-LLM has no positive cue to refuse.",
+        ex=s3_walk_abs,
+        sections=_s3_walk_sections(s3_walk_abs),
+    )
+    s3_walk_retr_card = _render_walkthrough_card_v2(
+        title="Walkthrough — Stage ③ = ✗ target retrieved (one mem0 case)",
+        oneliner="Despite Stage ② emitting an action, the target value was still surfaced at MCQ time; suppression didn't propagate to retrieval.",
+        ex=s3_walk_retr,
+        sections=_s3_walk_sections(s3_walk_retr),
+    )
+    s3_walkthroughs = (s3_walk_green_card or "") + (s3_walk_abs_card or "") + (s3_walk_retr_card or "")
+
+    # ===== Stage 4 walkthroughs — two leak cases (predicted recall the value
+    # despite Stage 3 = green) =====
+    s4_walk_a = _find_mem0_stage4_leak_walkthrough()
+    skip_set = {s4_walk_a.get("_walk_key")} if s4_walk_a and s4_walk_a.get("_walk_key") else set()
+    s4_walk_b = _find_mem0_stage4_leak_walkthrough(skip_keys=skip_set)
+
+    # Reconstruct the FULL prompt the answer-LLM saw, so the reader can
+    # diagnose why the LLM leaked despite a clean Stage-3 retrieval.
+    from memory_control_tests.evaluation.shared import build_memory_eval_prompt as _build_eval_prompt
+
+    def _s4_walk_sections(ex: Dict[str, Any]) -> List[Tuple[str, str]]:
+        if not ex:
+            return []
+        secs: List[Tuple[str, str]] = []
+        if ex.get("question"):
+            secs.append(("MCQ question", ex["question"]))
+        if ex.get("choices"):
+            choices_str = "\n".join(f"({k}) {v}" for k, v in ex["choices"].items())
+            secs.append(("MCQ choices", choices_str))
+        if ex.get("expected_text"):
+            secs.append(("Target value the user asked to forget", ex["expected_text"]))
+        if ex.get("retrieved_text"):
+            secs.append(("Retrieved memories shown to the answer-LLM (raw)", ex["retrieved_text"]))
+        # Reconstruct the complete prompt the LLM received (memories +
+        # question + choices, all wrapped in MEMORY_EVAL_PROMPT_TEMPLATE).
+        if ex.get("question") and ex.get("choices") and ex.get("retrieved_text") is not None:
+            try:
+                full_prompt = _build_eval_prompt(
+                    ex["question"], ex.get("choices") or {}, ex.get("retrieved_text", "") or "",
+                )
+                secs.append(("FULL prompt sent to the answer-LLM (reconstructed)", full_prompt))
+            except Exception as exc:
+                secs.append(("FULL prompt (reconstruction failed)", repr(exc)))
+        if ex.get("model_response"):
+            secs.append((f"Final answer-LLM response (predicted choice = {ex.get('predicted_choice','')})", ex["model_response"]))
+        return secs
+
+    s4_walk_a_card = _render_walkthrough_card_v2(
+        title="Walkthrough — Stage ④ leak case A (one mem0 case)",
+        oneliner="Stage ③ was green (target absent + signal in retrieval), but the answer-LLM still picked the value the user asked to forget.",
+        ex=s4_walk_a,
+        sections=_s4_walk_sections(s4_walk_a),
+    )
+    s4_walk_b_card = _render_walkthrough_card_v2(
+        title="Walkthrough — Stage ④ leak case B (a second mem0 case)",
+        oneliner="A second example to show whether the leak pattern is consistent across cases.",
+        ex=s4_walk_b,
+        sections=_s4_walk_sections(s4_walk_b),
+    )
+    s4_walkthroughs = (s4_walk_a_card or "") + (s4_walk_b_card or "")
 
     forget_subsection = (
         "<details class='sys-spec' open style='margin-top:18px;'>"
         "<summary class='sys-summary'>"
-        "<div class='sys-header'><h3 class='sys-label' style='margin:0;'>4.A — Forget: pipeline cascade</h3></div>"
-        "<p class='sys-oneliner'>For each forget case, was the target extracted, then updated/deleted, then absent at retrieval, then answered correctly? Cascade buckets attribute &quot;success&quot; and &quot;violation&quot; to the first failed stage.</p>"
+        "<div class='sys-header'><h3 class='sys-label' style='margin:0;'>5.A — Forget pipeline</h3></div>"
+        "<p class='sys-oneliner'>Linear funnel (① → ② → ③ → ④). Stage ① compares all backends; stages ②–④ are mem0-only because the other backends don't expose the per-stage internal state we need to attribute outcomes faithfully.</p>"
         "</summary>"
-        # --- Outcome tree (conceptual map at the top of 4.A) ---
         f"{forget_tree_html}"
-        # --- Per-subtree leaf-count tables (the actual computation of the tree) ---
-        f"{leaf_tables_html}"
-        # --- "success" cascade table (open) + walkthroughs inside + close ---
-        f"{success_card_open}"
-        f"{success_walkthroughs_label}"
-        f"{stage1_card}"
-        f"{stage2_card}"
-        f"{stage3_card}"
-        f"{genuine_card}"
+        f"{s1_table}"
+        f"{s2_table}"
+        f"{s2_walkthroughs}"
+        f"{s3_table}"
+        f"{s3_walkthroughs}"
+        f"{s4_table}"
+        f"{s4_walkthroughs}"
         "</details>"
-        # --- mechanism table (open) + walkthroughs inside + close ---
-        f"{mech_card_open}"
-        f"{mech_walkthroughs_label}"
-        f"{instore_card}"
-        f"{retr_mechanism_html}"
-        "</details>"
-        # --- violation cascade table (open) + walkthroughs inside + close ---
-        f"{violation_card_open}"
-        f"{violation_walkthroughs_label}"
-        f"{violation_s1_card}"
-        f"{violation_s2_card}"
-        f"{violation_s3_card}"
-        f"{violation_s4_card}"
-        "</details>"
-        "</details>"  # closes the 4.A subsection wrapper
+    )
+
+    # ===== 5.B NO-STORE: gate + 2 branches (mem0 only) =====
+    # The Gate question "was the target stored at the probe turn?" relies on
+    # detecting the target value in the final memory snapshot. mem0 stores
+    # FACT_RETRIEVAL output as near-literal strings, so snapshot text-match
+    # is reliable; MemTree / MemoryOS / A-Mem all summarise/paraphrase
+    # content as they store it (semantic embeddings + summarisation), so a
+    # literal-string check on the snapshot would say "not stored" for almost
+    # every case even when the system did store the content (just in
+    # paraphrased form). Restricting 5.B to mem0 keeps the signal honest;
+    # for other backends we'd need a per-backend semantic check that doesn't
+    # exist in this codebase.
+    ncls = _aggregate_no_store_3q()
+    ns_rows: List[Tuple[str, str, List[Dict[str, Any]]]] = [
+        (sys_dirname, sys_display, ncls.get(sys_dirname, []) or [])
+        for sys_dirname, sys_display in _section5_systems
+        if "+mem0" in sys_dirname
+    ]
+
+    # Per-system FULL key-MCQ counts for no_store, restricted to personas
+    # with a baseline twin (same persona universe as the baseline-extracted
+    # set, so total n stays comparable).
+    ns_full_n_by_sys: Dict[str, int] = {}
+    ns_compliance_n_by_sys: Dict[str, int] = {}
+    ns_root = REPO_ROOT / "eval_results" / "travelPlanning" / "no_store"
+    if ns_root.exists():
+        for sys_dir in ns_root.iterdir():
+            if not sys_dir.is_dir() or "+" not in sys_dir.name:
+                continue
+            sys_dirname = sys_dir.name
+            if "gpt-5.4-mini" not in sys_dirname:
+                continue
+            if not any(b in sys_dirname for b in
+                       ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
+                continue
+            n_total = 0
+            n_comp = 0
+            for path in sys_dir.glob("*.json"):
+                if path.name.endswith(".bak"):
+                    continue
+                if _load_baseline_pair(path) is None:
+                    continue
+                try:
+                    data = json.loads(path.read_text(encoding="utf-8"))
+                except Exception:
+                    continue
+                for items in (data.get("whole_recall_results", []) or [],
+                              data.get("slot_recall_results", []) or []):
+                    for item in items:
+                        if item.get("turn_role") != "key":
+                            continue
+                        n_total += 1
+                        if item.get("predicted_answer_type", "") != "remember_correct":
+                            n_comp += 1
+            ns_full_n_by_sys[sys_dirname] = n_total
+            ns_compliance_n_by_sys[sys_dirname] = n_comp
+
+    # Gate: was target stored at all?
+    gate_rows = []
+    for sys_dirname, sys_display, items in ns_rows:
+        total = len(items)
+        n_stored     = sum(1 for c in items if c["target_stored"])
+        n_not_stored = total - n_stored
+        gate_rows.append((sys_display, {"not_stored": n_not_stored, "stored": n_stored}, total))
+
+    gate_table = _stage_table(
+        title="Gate — Was the target stored at the probe turn? <span style='color:#666;font-weight:400;font-size:13px;'>(mem0 only)</span>",
+        oneliner="Two outcomes: the system either complied at write time (target never written) OR stored the target despite the directive. mem0 only — see the section header for why.",
+        rows=gate_rows,
+        cols=[
+            ("not_stored", "Not stored<br><span style='font-weight:400;color:#666;'>directive observed at write time → compliance achieved</span>", "#27ae60"),
+            ("stored",     "Stored anyway<br><span style='font-weight:400;color:#666;'>target written; need to check downstream stages</span>",     "#e74c3c"),
+        ],
+        denominator_label="baseline-extracted n",
+        footnote="\"Stored\" detected via final-store snapshot string match. For mem0 this also approximates the target-turn FACT_RETRIEVAL output. Restricted to MCQs whose baseline-twin recalled the value &mdash; so the system <i>did</i> extract the fact in baseline; the only question is whether the no_store directive prevented storage.",
+        full_n_by_sys=ns_full_n_by_sys,
+        compliance_n_by_sys=ns_compliance_n_by_sys,
+        sys_display_to_dirname=sys_display_to_dirname,
+    )
+
+    # Branch "not_stored": ONE combined table replacing the old separate
+    # Stage ③ + Stage ④ tables. The original Stage ③ was nearly trivial
+    # because by definition the target was never stored — the more useful
+    # question is "was anything topically related retrieved at all?" and
+    # "given what was retrieved, did the LLM refuse or leak?". Cross
+    # those two yields a 2x2 over (retrieval state, answer outcome).
+    #
+    # `retrieval_topical` is detected via a simple non-empty check on the
+    # retrieved-memories text — for mem0 this comes from mem0.search(question),
+    # so non-empty implies something topically relevant was surfaced (mem0's
+    # search ranks by question similarity).
+    def _retr_is_topical(c: Dict[str, Any]) -> bool:
+        # Note: ns_rows already has retrieved_text inside `c["q3_retrieval_appropriate"]`
+        # logic but we don't carry the raw text into the classification dict.
+        # Recover it from the classification's signal flags: q3_retrieval_appropriate
+        # is True only when retrieval was non-empty AND target absent. For
+        # not-stored cases, target is absent by definition so q3=True ↔ retrieval
+        # surfaced something OR was empty. We need raw retrieval state — so
+        # approximate via: q3_retrieval_appropriate True does not distinguish.
+        # Instead carry an extra flag through the classifier; for now use an
+        # ad-hoc proxy via per-item scan.
+        return bool(c.get("retrieval_text_nonempty"))
+
+    branch_a_rows = []
+    for sys_dirname, sys_display, items in ns_rows:
+        sub = [c for c in items if not c["target_stored"]]
+        total = len(sub)
+        n_topical_nr   = sum(1 for c in sub if _retr_is_topical(c) and c["q4_said_nr"])
+        n_topical_leak = sum(1 for c in sub if _retr_is_topical(c) and not c["q4_said_nr"])
+        n_empty_nr     = sum(1 for c in sub if not _retr_is_topical(c) and c["q4_said_nr"])
+        n_empty_leak   = sum(1 for c in sub if not _retr_is_topical(c) and not c["q4_said_nr"])
+        branch_a_rows.append((sys_display, {
+            "topical_nr": n_topical_nr,
+            "empty_nr":   n_empty_nr,
+            "topical_leak": n_topical_leak,
+            "empty_leak":   n_empty_leak,
+        }, total))
+
+    branch_a_table = _stage_table(
+        title="Stages ③ + ④ combined — what did retrieval surface, and what did the LLM answer?",
+        oneliner="Branch \"not stored\" (subset of baseline-extracted) &mdash; target was never written, so the question is: did the answer-LLM refuse (correct) or leak anyway, and what retrieved facts (if any) was each answer based on?",
+        rows=branch_a_rows,
+        cols=[
+            ("topical_nr",   "✓ topical retrieval + nr<br><span style='font-weight:400;color:#666;'>refused despite related context</span>", "#27ae60"),
+            ("empty_nr",     "✓ empty/no retrieval + nr<br><span style='font-weight:400;color:#666;'>nothing surfaced; refusal trivial</span>", "#aedea1"),
+            ("topical_leak", "✗ topical retrieval + leak<br><span style='font-weight:400;color:#666;'>extrapolated value from related context</span>", "#e74c3c"),
+            ("empty_leak",   "✗ empty/no retrieval + leak<br><span style='font-weight:400;color:#666;'>hallucinated value from nothing</span>", "#922b21"),
+        ],
+        denominator_label="not-stored n (within baseline-extracted)",
+        full_n_by_sys=ns_full_n_by_sys,
+        compliance_n_by_sys=ns_compliance_n_by_sys,
+        sys_display_to_dirname=sys_display_to_dirname,
+        footnote="\"Topical retrieval\" = mem0.search(question) returned at least one memory at MCQ time (those memories are by-construction question-relevant; the target value isn't among them since it was never stored). \"Empty\" = retrieval returned nothing.",
+    )
+
+    # Branch "stored": ① → ③ → ④ funnel chain.
+    # Stage ① over the full Branch B set; Stage ③ only over Stage ① = Yes
+    # (cases where the directive was captured AT LEAST as a separate entry —
+    # otherwise there's nothing to surface alongside the target); Stage ④
+    # only over Stage ③ = Yes (cases where retrieval was appropriate —
+    # otherwise the LLM's answer was foregone).
+    branch_b_rows_s1: List[Tuple[str, Dict[str, int], int]] = []
+    branch_b_rows_s3: List[Tuple[str, Dict[str, int], int]] = []
+    branch_b_rows_s4: List[Tuple[str, Dict[str, int], int]] = []
+    for sys_dirname, sys_display, items in ns_rows:
+        sub_b = [c for c in items if c["target_stored"]]
+        n_b = len(sub_b)
+        n_q1y = sum(1 for c in sub_b if c["q1_directive_extracted"])
+        n_q1n = n_b - n_q1y
+        branch_b_rows_s1.append((sys_display, {"yes": n_q1y, "no": n_q1n}, n_b))
+
+        sub_s3 = [c for c in sub_b if c["q1_directive_extracted"]]
+        n_s3 = len(sub_s3)
+        n_q3y = sum(1 for c in sub_s3 if c["q3_retrieval_appropriate"])
+        n_q3n = n_s3 - n_q3y
+        branch_b_rows_s3.append((sys_display, {"yes": n_q3y, "no": n_q3n}, n_s3))
+
+        sub_s4 = [c for c in sub_s3 if c["q3_retrieval_appropriate"]]
+        n_s4 = len(sub_s4)
+        n_q4y = sum(1 for c in sub_s4 if c["q4_said_nr"])
+        n_q4n = n_s4 - n_q4y
+        branch_b_rows_s4.append((sys_display, {"nr": n_q4y, "leak": n_q4n}, n_s4))
+
+    branch_b_s1 = _stage_table(
+        title="Stage ① — Was the directive extracted into memory?",
+        oneliner="Branch \"stored\" (subset of baseline-extracted) — the system wrote the target despite the directive; did it ALSO capture the don't-store directive as a fact?",
+        rows=branch_b_rows_s1,
+        cols=[
+            ("yes", "Yes &mdash; both target and directive captured", "#f5cba7"),
+            ("no",  "No &mdash; only target captured",                 "#e74c3c"),
+        ],
+        denominator_label="stored n (within baseline-extracted)",
+        footnote="\"Yes\" here means the system extracted both the target value AND a directive paraphrase; \"No\" means the directive was lost while the target survived.",
+        full_n_by_sys=ns_full_n_by_sys,
+        compliance_n_by_sys=ns_compliance_n_by_sys,
+        sys_display_to_dirname=sys_display_to_dirname,
+    )
+    branch_b_s3 = _stage_table(
+        title="Stage ③ — Did retrieval give the answer-LLM appropriate info?",
+        oneliner="Funnel from Stage ① = Yes only — without a captured directive there's no signal to surface alongside the target, so Stage ① = No is excluded as foregone failure.",
+        rows=branch_b_rows_s3,
+        cols=[
+            ("yes", "Yes &mdash; target absent or paired with signal", "#27ae60"),
+            ("no",  "No &mdash; target retrieved without signal",      "#e74c3c"),
+        ],
+        denominator_label="stage-① yes n",
+        full_n_by_sys=ns_full_n_by_sys,
+        compliance_n_by_sys=ns_compliance_n_by_sys,
+        sys_display_to_dirname=sys_display_to_dirname,
+    )
+    branch_b_s4 = _stage_table(
+        title="Stage ④ — Was the answer &quot;I don't remember&quot;?",
+        oneliner="Funnel from Stage ③ = Yes only — when retrieval gave appropriate info (target absent or paired with signal), did the LLM also refuse?",
+        rows=branch_b_rows_s4,
+        cols=[
+            ("nr",   "Yes &mdash; \"I don't remember\"", "#27ae60"),
+            ("leak", "No &mdash; recalled / leaked",     "#e74c3c"),
+        ],
+        denominator_label="stage-③ yes n",
+        full_n_by_sys=ns_full_n_by_sys,
+        compliance_n_by_sys=ns_compliance_n_by_sys,
+        sys_display_to_dirname=sys_display_to_dirname,
     )
 
     nostore_subsection = (
         "<details class='sys-spec' open style='margin-top:18px;'>"
         "<summary class='sys-summary'>"
-        "<div class='sys-header'><h3 class='sys-label' style='margin:0;'>4.B — No-store: baseline-pair analysis</h3></div>"
-        "<p class='sys-oneliner'>For no_store, &quot;not extracted&quot; is the goal — but it only counts if the system would have extracted in baseline. We pair each no_store case with its matching baseline run and compare end-to-end behavior.</p>"
+        "<div class='sys-header'><h3 class='sys-label' style='margin:0;'>5.B — No-store pipeline <span style='color:#666;font-weight:400;font-size:13px;'>(mem0 only)</span></h3></div>"
+        "<p class='sys-oneliner'>Restricted to the baseline-extracted set (system DID extract the value in baseline). Gate splits the population by whether the directive prevented storage; each branch gets its own short stage analysis. <b>mem0 only</b> because the Gate's \"was target stored\" check relies on literal-string match on the final snapshot — mem0 stores facts near-verbatim (reliable) while MemTree / MemoryOS / A-Mem paraphrase content as they store it (the literal-match check would say \"not stored\" for almost every case, falsely).</p>"
         "</summary>"
-        f"{ns_write_card}"
+        f"{gate_table}"
+        "<details class='sys-spec' open style='margin:14px 0 6px;'>"
+        "<summary class='sys-summary'><div class='sys-header'>"
+        "<h3 class='sys-label' style='margin:0;'>Branch A — target NOT stored at the probe turn</h3>"
+        "</div><p class='sys-oneliner'>Compliance achieved at write time. Combined ③+④ analysis: did anything topical surface in retrieval, and did the LLM refuse or leak anyway?</p></summary>"
+        f"{branch_a_table}"
+        "</details>"
+        "<details class='sys-spec' open style='margin:14px 0 6px;'>"
+        "<summary class='sys-summary'><div class='sys-header'>"
+        "<h3 class='sys-label' style='margin:0;'>Branch B — target stored anyway</h3>"
+        "</div><p class='sys-oneliner'>Write-time directive failed. Stage ① asks whether the directive at least made it into the store as a separate entry; stages ③ and ④ trace the downstream outcome.</p></summary>"
+        f"{branch_b_s1}"
+        f"{branch_b_s3}"
+        f"{branch_b_s4}"
+        "</details>"
         "</details>"
     )
 
     return (
         "<section id='sec-forget'>"
-        "<h2>4. Forget / no_store pipeline analysis</h2>"
+        "<h2>5. Forget / no_store pipeline analysis</h2>"
         f"{intro}"
         f"{forget_subsection}"
         f"{nostore_subsection}"
         "</section>"
     )
-
 # How many failure cases to show per (system, world, qa_family, failure_mode) cell.
 _ERROR_SAMPLE_LIMIT = 2
 
@@ -6241,6 +6629,252 @@ def _classify_pipeline_stages(
     return out
 
 
+# ----------------------------------------------------------------------
+# Linear per-stage classifiers used by the rewritten section 5.
+# ----------------------------------------------------------------------
+
+
+def _classify_forget_4q(
+    *,
+    data: Dict[str, Any],
+    system_label: str,
+    retrieved_text: str,
+    expected_text: str,
+    predicted_type: str,
+) -> Dict[str, Any]:
+    """4-question per-MCQ classification for forget cases.
+    Returns {q1_directive_extracted: bool, q2_action_on_target: str,
+             q3_retrieval_state: str, q4_said_nr: bool}.
+
+    `q2_action_on_target`:
+      "nothing" — directive captured but UPDATE_MEMORY emitted no event
+      "add_only" — directive captured AS a memory but didn't touch target
+      "update_delete" — target memory actively UPDATEd or DELETEd
+      "n/a" — Q1 was False (no directive captured)
+      "unknown" — non-mem0 backend (action not observable)
+
+    `q3_retrieval_state`:
+      "absent_with_signal" — target absent at MCQ retrieval AND a forget
+        signal (directive paraphrase) is present alongside → appropriate.
+      "absent_no_signal" — target absent but no signal either; the LLM has
+        no positive cue to refuse → "vacuous absent".
+      "retrieved" — target value is back in the retrieved memories
+        (regardless of whether a signal accompanies it); the suppression
+        didn't fully take effect on the retrieval path.
+    """
+    has_intent = _store_mentions_directive_intent(data, system_label)
+    has_text   = _store_mentions_instruction(data, system_label)
+    q1_extracted = bool(has_intent or has_text)
+
+    if not q1_extracted:
+        q2 = "n/a"
+    elif "+mem0" in system_label:
+        if _mem0_target_was_deleted_or_updated(data, expected_text):
+            q2 = "update_delete"
+        else:
+            q2 = "add_only" if has_text else "nothing"
+    else:
+        q2 = "unknown"
+
+    target_in_retr = _contains_expected(retrieved_text, expected_text)
+    retr_low = (retrieved_text or "").lower()
+    signal_alongside = any(k in retr_low for k in _INSTRUCTION_KEYWORDS)
+    if target_in_retr:
+        q3 = "retrieved"
+    elif signal_alongside:
+        q3 = "absent_with_signal"
+    else:
+        q3 = "absent_no_signal"
+
+    return {
+        "q1_directive_extracted": q1_extracted,
+        "q2_action_on_target": q2,
+        "q3_retrieval_state": q3,
+        "q4_said_nr": (predicted_type == "not_remember"),
+    }
+
+
+def _classify_no_store_3q(
+    *,
+    data: Dict[str, Any],
+    system_label: str,
+    retrieved_text: str,
+    expected_text: str,
+    predicted_type: str,
+) -> Dict[str, Any]:
+    """Per-MCQ classification for no_store cases."""
+    target_stored = _target_in_store(data, system_label, expected_text)
+    has_intent = _store_mentions_directive_intent(data, system_label)
+    has_text   = _store_mentions_instruction(data, system_label)
+    q1_extracted = bool(has_intent or has_text)
+
+    target_in_retr = _contains_expected(retrieved_text, expected_text)
+    retr_low = (retrieved_text or "").lower()
+    signal_alongside = any(k in retr_low for k in _INSTRUCTION_KEYWORDS)
+    if not target_in_retr:
+        q3 = True
+    else:
+        q3 = bool(signal_alongside)
+    # Retrieval state for Branch A's combined ③+④ table: did the system
+    # surface any memory at MCQ time? (mem0.search returns by question
+    # similarity, so non-empty implies topically related.)
+    retrieval_text_nonempty = bool((retrieved_text or "").strip())
+
+    return {
+        "target_stored": target_stored,
+        "q1_directive_extracted": q1_extracted,
+        "q3_retrieval_appropriate": q3,
+        "q4_said_nr": (predicted_type == "not_remember"),
+        "retrieval_text_nonempty": retrieval_text_nonempty,
+    }
+
+
+def _aggregate_forget_4q(
+    *,
+    condition_on_baseline_recalled: bool = True,
+) -> Dict[str, List[Dict[str, Any]]]:
+    """Per system, list of forget 4q classifications (conditional by default)."""
+    out: Dict[str, List[Dict[str, Any]]] = {}
+    eval_root = REPO_ROOT / "eval_results" / "travelPlanning"
+    if not eval_root.exists():
+        return out
+
+    def _expected(item: Dict[str, Any], qa_family: str) -> str:
+        if qa_family == "slot":
+            return str(item.get("sensitive_value", "") or "")
+        cto = item.get("choice_to_answer_type", {}) or {}
+        choices = item.get("choices", {}) or {}
+        for label, t in cto.items():
+            if t == "remember_correct":
+                return str(choices.get(label, ""))
+        return ""
+
+    forget_dir = eval_root / "forget"
+    if not forget_dir.exists():
+        return out
+    for sys_dir in forget_dir.iterdir():
+        if not sys_dir.is_dir() or "+" not in sys_dir.name:
+            continue
+        system_label = sys_dir.name
+        if "gpt-5.4-mini" not in system_label:
+            continue
+        if not any(b in system_label for b in
+                   ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
+            continue
+        for path in sys_dir.glob("*.json"):
+            if path.name.endswith(".bak"):
+                continue
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            base_lookup: Optional[Dict[Tuple[str, str, str], str]] = None
+            if condition_on_baseline_recalled:
+                base_data = _load_baseline_pair(path)
+                if base_data is None:
+                    continue
+                base_lookup = _baseline_recall_lookup(base_data)
+            for qa_family, items in (
+                ("whole", data.get("whole_recall_results", []) or []),
+                ("slot",  data.get("slot_recall_results", []) or []),
+            ):
+                for item in items:
+                    if item.get("turn_role") != "key":
+                        continue
+                    if base_lookup is not None:
+                        br = _baseline_recalled(base_lookup, qa_family, item)
+                        if br is not True:
+                            continue
+                    retrieved = (item.get("debug", {}) or {}).get(
+                        "retrieved_memories_text"
+                    ) or _stringify_retrieved(item.get("retrieved_memories"))
+                    cls = _classify_forget_4q(
+                        data=data, system_label=system_label,
+                        retrieved_text=str(retrieved),
+                        expected_text=_expected(item, qa_family),
+                        predicted_type=item.get("predicted_answer_type", "") or "",
+                    )
+                    out.setdefault(system_label, []).append(cls)
+    return out
+
+
+def _aggregate_no_store_3q(
+    *,
+    condition_on_baseline_recalled: bool = True,
+) -> Dict[str, List[Dict[str, Any]]]:
+    """Per system, list of no_store classifications.
+
+    With `condition_on_baseline_recalled=True` (default for section 5.B),
+    we restrict to MCQs where the baseline-twin (no-directive) result was
+    `remember_correct` — i.e. the system actually extracted and recalled
+    the fact in baseline. The only question is whether the no_store
+    directive caused it not to be stored. Cases without a baseline pair
+    are skipped.
+    """
+    out: Dict[str, List[Dict[str, Any]]] = {}
+    eval_root = REPO_ROOT / "eval_results" / "travelPlanning"
+    if not eval_root.exists():
+        return out
+
+    def _expected(item: Dict[str, Any], qa_family: str) -> str:
+        if qa_family == "slot":
+            return str(item.get("sensitive_value", "") or "")
+        cto = item.get("choice_to_answer_type", {}) or {}
+        choices = item.get("choices", {}) or {}
+        for label, t in cto.items():
+            if t == "remember_correct":
+                return str(choices.get(label, ""))
+        return ""
+
+    ns_dir = eval_root / "no_store"
+    if not ns_dir.exists():
+        return out
+    for sys_dir in ns_dir.iterdir():
+        if not sys_dir.is_dir() or "+" not in sys_dir.name:
+            continue
+        system_label = sys_dir.name
+        if "gpt-5.4-mini" not in system_label:
+            continue
+        if not any(b in system_label for b in
+                   ("+mem0", "+A-Mem", "+MemTree", "+MemoryOS", "+LangMem")):
+            continue
+        for path in sys_dir.glob("*.json"):
+            if path.name.endswith(".bak"):
+                continue
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            base_lookup: Optional[Dict[Tuple[str, str, str], str]] = None
+            if condition_on_baseline_recalled:
+                base_data = _load_baseline_pair(path)
+                if base_data is None:
+                    continue
+                base_lookup = _baseline_recall_lookup(base_data)
+            for qa_family, items in (
+                ("whole", data.get("whole_recall_results", []) or []),
+                ("slot",  data.get("slot_recall_results", []) or []),
+            ):
+                for item in items:
+                    if item.get("turn_role") != "key":
+                        continue
+                    if base_lookup is not None:
+                        br = _baseline_recalled(base_lookup, qa_family, item)
+                        if br is not True:
+                            continue
+                    retrieved = (item.get("debug", {}) or {}).get(
+                        "retrieved_memories_text"
+                    ) or _stringify_retrieved(item.get("retrieved_memories"))
+                    cls = _classify_no_store_3q(
+                        data=data, system_label=system_label,
+                        retrieved_text=str(retrieved),
+                        expected_text=_expected(item, qa_family),
+                        predicted_type=item.get("predicted_answer_type", "") or "",
+                    )
+                    out.setdefault(system_label, []).append(cls)
+    return out
+
+
 def _classify_control_pipeline(
     *,
     data: Dict[str, Any],
@@ -6559,6 +7193,71 @@ def _store_mentions_directive_intent(data: Dict[str, Any], system_label: str) ->
                     if any(v in kn for v in DIRECTIVE_VERBS):
                         return True
     return False
+
+
+def _mem0_collect_target_delete_update_events(data: Dict[str, Any], expected_text: str) -> str:
+    """For a mem0 case where the target was deleted/updated, return a
+    pretty-printed string of all DELETE/UPDATE events whose payload mentions
+    the target value (with surrounding batch context). Empty string if none.
+    """
+    import re, json as _json
+    pre = (data.get("method_debug", {}) or {}).get("preload", {})
+    expected_low = (expected_text or "").lower().strip()
+    if not expected_low:
+        return ""
+    needle = expected_low[:20]
+    out_chunks: List[str] = []
+    for call_idx, call in enumerate(pre.get("llm_call_trace", []) or []):
+        resp = str((call or {}).get("response", "") or "")
+        if '"event"' not in resp:
+            continue
+        if '"DELETE"' not in resp and '"UPDATE"' not in resp:
+            continue
+        # Skip FACT_RETRIEVAL calls (their response shape is {"facts": [...]})
+        sys_msg = next((m.get("content","") for m in (call.get("messages") or []) if m.get("role")=="system"), "")
+        if "Personal Information Organizer" in sys_msg:
+            continue
+        # Try to parse the structured response and pull just events that
+        # name the target.
+        target_events: List[Dict[str, Any]] = []
+        try:
+            parsed = _json.loads(resp)
+            for ev in (parsed.get("memory") or parsed.get("results") or []):
+                if not isinstance(ev, dict):
+                    continue
+                if ev.get("event") not in ("DELETE", "UPDATE"):
+                    continue
+                blob = " ".join(str(ev.get(k, "")) for k in ("text", "old_memory", "memory", "data")).lower()
+                if needle and needle in blob:
+                    target_events.append(ev)
+        except Exception:
+            # Fall back to regex extraction
+            for m in re.finditer(r'\{[^{}]*?"event"\s*:\s*"(DELETE|UPDATE)"[^{}]*?\}', resp, re.DOTALL):
+                blob = m.group(0).lower()
+                if needle in blob:
+                    try:
+                        target_events.append(_json.loads(m.group(0)))
+                    except Exception:
+                        pass
+
+        if not target_events:
+            continue
+        # Pull the user batch text (the input that triggered this UPDATE_MEMORY)
+        user_msg = next((m.get("content","") for m in (call.get("messages") or []) if m.get("role")=="user"), "")
+        # Strip the system-prompt pretext from the UPDATE_MEMORY user prompt;
+        # the part containing "New retrieved facts" is what we care about.
+        # mem0 wraps the new-facts and old-memories into one prompt; just
+        # truncate to first 600 chars for context.
+        ctx_text = user_msg[:600] if user_msg else ""
+        ev_text = _json.dumps({"events": target_events}, indent=2, ensure_ascii=False)
+        out_chunks.append(
+            f"// llm_call_trace[{call_idx}] — UPDATE_MEMORY call that touched the target\n"
+            f"// (user-prompt context, truncated to 600 chars):\n"
+            f"{ctx_text}\n\n"
+            f"// matching DELETE/UPDATE events (target = {expected_text}):\n"
+            f"{ev_text}"
+        )
+    return "\n\n---\n\n".join(out_chunks)
 
 
 def _mem0_target_was_deleted_or_updated(data: Dict[str, Any], expected_text: str) -> bool:
@@ -6888,6 +7587,38 @@ class CellStats:
             elif role == "key":
                 n += rs.correct
         return n
+
+
+def _inspect_store(
+    *,
+    data: Dict[str, Any],
+    system_label: str,
+    target_ts: str,
+    target_turn: str,
+    question: str,
+    sensitive_key: str,
+    expected_text: str,
+) -> Dict[str, Any]:
+    """Look up the system's store for any entry related to the target turn,
+    used by the error-analysis section to surface "did the system at least
+    have something on this topic?" context."""
+    entries = _extract_store_entries(data, system_label)
+    if not entries:
+        return {"available": False, "status": "unavailable", "excerpt": ""}
+
+    anchor = _anchor_tokens(target_turn, question, sensitive_key, expected_text)
+    related: List[Dict[str, str]] = []
+    if "+A-Mem" in system_label:
+        related = [e for e in entries if e.get("timestamp") == target_ts]
+    else:
+        related = [e for e in entries if _token_overlap(e.get("text", ""), anchor) >= 2]
+
+    if any(_contains_expected(e.get("text", ""), expected_text) for e in related):
+        match = next(e for e in related if _contains_expected(e.get("text", ""), expected_text))
+        return {"available": True, "status": "expected_present", "excerpt": match.get("text", "")[:1200]}
+    if related:
+        return {"available": True, "status": "related_but_wrong", "excerpt": related[0].get("text", "")[:1200]}
+    return {"available": True, "status": "no_related_evidence", "excerpt": ""}
 
 
 def _collect_error_samples() -> Tuple[
@@ -8874,6 +9605,35 @@ section { background: #fff; padding: 20px 24px; border-radius: 8px;
 .results-table-fold[open] > summary { border-radius: 6px 6px 0 0;
                                        border-bottom: 1px solid #d8dde5; }
 .results-table-fold > .fold-body { padding: 8px 12px; }
+
+/* ---- full-conversation fold (persona0 · no_store) ---- */
+.full-conv-fold { margin: 18px 0 8px; border: 1px solid #d8dde5; border-radius: 6px;
+                  background: #ffffff; }
+.full-conv-fold > summary { padding: 10px 14px; cursor: pointer; font-size: 14px;
+                            background: #f3f6fa; border-radius: 6px;
+                            list-style: revert; user-select: none; }
+.full-conv-fold[open] > summary { border-radius: 6px 6px 0 0;
+                                  border-bottom: 1px solid #d8dde5; }
+.full-conv-body { padding: 10px 14px 14px; }
+.full-conv-stage { margin: 10px 0; border: 1px solid #e2e8f0; border-radius: 5px;
+                   background: #fafbfc; }
+.full-conv-stage > summary { padding: 6px 10px; cursor: pointer; font-size: 13px;
+                             color: #334155; background: #eef2f7;
+                             border-radius: 5px 5px 0 0;
+                             list-style: revert; user-select: none; }
+.full-conv-stage[open] > summary { border-bottom: 1px solid #e2e8f0; }
+.full-conv-stage-body { padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; }
+.full-conv-row { display: flex; gap: 8px; padding: 4px 6px; border-radius: 4px;
+                 line-height: 1.4; font-size: 12px; align-items: flex-start; }
+.full-conv-row.full-conv-user      { background: #f0f7ff; border-left: 2px solid #cfe1f7; }
+.full-conv-row.full-conv-assistant { background: #f7f7f7; border-left: 2px solid #d4d4d4; }
+.full-conv-role { flex: 0 0 18px; font-size: 13px; line-height: 1.4; }
+.full-conv-text { flex: 1; word-break: break-word; color: #1a1a1a; }
+.full-conv-sn { font-size: 11px; font-style: italic; color: #92400e;
+                background: #fffaf0; border-left: 2px dashed #d8c79b;
+                padding: 3px 8px; border-radius: 3px; }
+.full-conv-ts { font-family: ui-monospace, Menlo, monospace; color: #b08e57; margin-right: 6px; }
+.full-conv-sn-text { color: #8a6d3b; }
 .scatter-row { display: flex; flex-wrap: wrap; gap: 16px; margin: 8px 0 24px; }
 .scatter-row > .scatter-container { flex: 1 1 480px; max-width: 100%; }
 .scatter-container { position: relative; }
