@@ -89,8 +89,8 @@ Outputs:
   the session is skipped.
 
 Manual cleanup:
-  Pass `--manual_cleanup` to pause before pre-run cleanup and before each
-  session cleanup. In that mode, you manually delete memory and delete the
+  Pass `--manual_cleanup` to pause before fresh-session cleanup and after each
+  completed session. In that mode, you manually delete memory and delete the
   current chat in the browser, then return to the main chat page and press
   Enter to continue.
 """
@@ -1181,14 +1181,31 @@ async def _run_session(
     live_log_path: Optional[Path] = None,
     live_trace_jsonl_path: Optional[Path] = None,
     attempt_index: int = 1,
+    resume_trace: Optional[list[dict[str, Any]]] = None,
 ) -> SessionRunResult:
     """
     Execute one TestSession: for each phase, feed user turns then ask MCQs.
     Returns records, a full trace, and human-readable log lines.
     """
-    await _new_chat(page)
-    results: list[dict[str, Any]] = []
-    trace: list[dict[str, Any]] = []
+    resume_trace = resume_trace or []
+    resume_progress = _resume_progress_from_trace(resume_trace)
+    if resume_trace:
+        print(
+            f"    [resume] continuing existing chat: "
+            f"{sum(len(v) for v in resume_progress['history'].values())} history turns, "
+            f"{sum(len(v) for v in resume_progress['mcq'].values())} MCQs already done",
+            flush=True,
+        )
+    else:
+        await _new_chat(page)
+    results: list[dict[str, Any]] = _records_from_trace(
+        session,
+        resume_trace,
+        sample_id=sample_id,
+        world=world,
+        conv_source=conv_source,
+    )
+    trace: list[dict[str, Any]] = list(resume_trace)
     log_lines: list[str] = []
     last_resp_len = 0
     session_memory_events: list[dict] = []
@@ -1209,13 +1226,18 @@ async def _run_session(
     for phase in session.phases:
         # --- Feed user turns ---
         for j, turn in enumerate(phase.user_turns):
+            if j in resume_progress["history"].get(phase.label, set()):
+                _log(f"    [{phase.label}] turn {j+1}/{len(phase.user_turns)} already done; skipping")
+                continue
             pre  = timing.sample_typing_delay(len(turn)) if timing else 0.4
             post = (timing.sample_reading_delay(last_resp_len) * history_rate
                     if timing else turn_delay)
             prefix = (f"    [{phase.label}] turn {j+1}/{len(phase.user_turns)} "
                       f"({len(turn)}ch pre={pre:.1f}s post={post:.1f}s)...")
+            user_input_sent = False
             try:
                 await _send_message(page, turn, pre_send_delay=pre, post_response_delay=post)
+                user_input_sent = True
                 resp_text = await _get_last_response(page)
                 _raise_if_unusual_activity(resp_text)
                 last_resp_len = len(resp_text)
@@ -1234,6 +1256,7 @@ async def _run_session(
                     "phase_label": phase.label,
                     "turn_index": j,
                     "user_input": turn,
+                    "user_input_sent": True,
                     "assistant_output": resp_text,
                     "pre_send_delay_sec": pre,
                     "post_response_delay_sec": post,
@@ -1248,6 +1271,7 @@ async def _run_session(
                     "phase_label": phase.label,
                     "turn_index": j,
                     "user_input": turn,
+                    "user_input_sent": user_input_sent,
                     "assistant_output": "",
                     "pre_send_delay_sec": pre,
                     "post_response_delay_sec": post,
@@ -1264,6 +1288,9 @@ async def _run_session(
 
         # --- Ask MCQ questions ---
         for k, item in enumerate(phase.mcq_items):
+            if _mcq_resume_key(item) in resume_progress["mcq"].get(phase.label, set()):
+                _log(f"    MCQ {k+1}/{len(phase.mcq_items)} already done; skipping")
+                continue
             prompt = _build_mcq_prompt(item)
             pre  = timing.sample_typing_delay(len(prompt)) if timing else 0.4
             post = timing.sample_reading_delay(last_resp_len) if timing else turn_delay
@@ -1299,15 +1326,17 @@ async def _run_session(
                 "error": None,
             }
 
+            user_input_sent = False
             try:
                 await _send_message(page, prompt,
                                     pre_send_delay=pre, post_response_delay=post)
+                user_input_sent = True
                 response_text = await _get_last_response(page)
                 _raise_if_unusual_activity(response_text)
                 last_resp_len = len(response_text)
 
-                predicted = _extract_choice(response_text, item.choice_order)
-                predicted_type = item.choice_to_answer_type.get(predicted, "")
+                predicted = _extract_choice(response_text, item.choice_order) or "none"
+                predicted_type = item.choice_to_answer_type.get(predicted, "none")
                 correct_type = item.choice_to_answer_type.get(item.correct_choice, "")
                 rec["model_response"] = response_text
                 rec["predicted_choice"] = predicted
@@ -1338,6 +1367,7 @@ async def _run_session(
                     "timestamp": item.timestamp,
                     "question": item.question,
                     "user_input": prompt,
+                    "user_input_sent": True,
                     "assistant_output": response_text,
                     "predicted_choice": predicted,
                     "predicted_answer_type": predicted_type,
@@ -1364,6 +1394,7 @@ async def _run_session(
                     "timestamp": item.timestamp,
                     "question": item.question,
                     "user_input": prompt,
+                    "user_input_sent": user_input_sent,
                     "assistant_output": "",
                     "predicted_choice": "",
                     "predicted_answer_type": "",
@@ -1526,6 +1557,121 @@ def _session_is_completed(result_path: Path) -> bool:
     return payload.get("status") == "completed"
 
 
+def _load_trace_jsonl(path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    events: list[dict[str, Any]] = []
+    with path.open(encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                payload = json.loads(line)
+            except Exception:
+                continue
+            if isinstance(payload, dict):
+                events.append(payload)
+    return events
+
+
+def _is_sent_turn_event(event: dict[str, Any]) -> bool:
+    if "user_input_sent" in event:
+        return event.get("user_input_sent") is True
+    # Backward compatibility for traces produced before explicit send markers.
+    return not event.get("error") and bool(event.get("assistant_output"))
+
+
+def _has_collected_response(event: dict[str, Any]) -> bool:
+    return bool(event.get("assistant_output"))
+
+
+def _mcq_resume_key(item: McqItem) -> str:
+    return f"{item.qa_family}\t{item.timestamp}\t{item.question}"
+
+
+def _mcq_resume_key_from_event(event: dict[str, Any]) -> str:
+    return f"{event.get('qa_family', '')}\t{event.get('timestamp', '')}\t{event.get('question', '')}"
+
+
+def _resume_progress_from_trace(trace: list[dict[str, Any]]) -> dict[str, dict[str, set]]:
+    progress: dict[str, dict[str, set]] = {"history": {}, "mcq": {}}
+    for event in trace:
+        if not _is_sent_turn_event(event):
+            continue
+        phase = str(event.get("phase_label", ""))
+        if event.get("event_type") == "history_turn":
+            idx = event.get("turn_index")
+            if isinstance(idx, int):
+                progress["history"].setdefault(phase, set()).add(idx)
+        elif event.get("event_type") == "mcq":
+            if not _has_collected_response(event):
+                continue
+            progress["mcq"].setdefault(phase, set()).add(_mcq_resume_key_from_event(event))
+    return progress
+
+
+def _records_from_trace(
+    session: TestSession,
+    trace: list[dict[str, Any]],
+    sample_id: str,
+    world: str,
+    conv_source: str,
+) -> list[dict[str, Any]]:
+    item_by_phase_and_key = {
+        (phase.label, _mcq_resume_key(item)): item
+        for phase in session.phases
+        for item in phase.mcq_items
+    }
+    records: list[dict[str, Any]] = []
+    seen: set[tuple[str, int]] = set()
+    for event in trace:
+        if event.get("event_type") != "mcq" or not _is_sent_turn_event(event):
+            continue
+        if not _has_collected_response(event):
+            continue
+        phase_label = str(event.get("phase_label", ""))
+        key = (phase_label, _mcq_resume_key_from_event(event))
+        if key in seen or key not in item_by_phase_and_key:
+            continue
+        item = item_by_phase_and_key[key]
+        predicted = str(event.get("predicted_choice", "")) or "none"
+        predicted_answer_type = (
+            event.get("predicted_answer_type")
+            or item.choice_to_answer_type.get(predicted, "none")
+        )
+        event_error = event.get("error")
+        records.append({
+            "sample_id": sample_id,
+            "world": world,
+            "session_key": session.session_key,
+            "phase_label": phase_label,
+            "conv_source": conv_source,
+            "qa_family": item.qa_family,
+            "timestamp": item.timestamp,
+            "turn_role": item.turn_role,
+            "identifier_label": item.identifier_label,
+            "sensitive_key": item.sensitive_key,
+            "sensitive_value": item.sensitive_value,
+            "question": item.question,
+            "choices": item.choices,
+            "choice_to_answer_type": item.choice_to_answer_type,
+            "remember_correct_choice": item.remember_correct_choice,
+            "expected_choice": item.correct_choice,
+            "expected_answer_type": item.expected_answer_type,
+            "correct_choice": item.correct_choice,
+            "num_history_turns": sum(len(p.user_turns) for p in session.phases),
+            "session_memory_events": [],
+            "model_response": event.get("assistant_output", ""),
+            "predicted_choice": predicted,
+            "predicted_answer_type": predicted_answer_type,
+            "is_expected": predicted == item.correct_choice,
+            "error": event_error,
+        })
+        seen.add(key)
+    return records
+
+
 def _write_session_artifacts(
     output_path: Path,
     topic: str,
@@ -1666,22 +1812,14 @@ async def evaluate(args: argparse.Namespace) -> None:
             print("WARNING: ChatGPT did not load — check the browser window.")
 
         # After the input appears, give the page a short grace period to settle.
+        # Cleanup is intentionally session-scoped below. If a previous run was
+        # interrupted, we must not clear memory or delete the active chat before
+        # the session has a chance to resume from its trace.
         if logged_in:
-            print(f"Waiting {args.ready_grace_sec:.1f}s before starting cleanup...")
+            print(f"Waiting {args.ready_grace_sec:.1f}s before starting evaluation...")
             await page.wait_for_timeout(int(max(0.0, args.ready_grace_sec) * 1000))
-            if args.manual_cleanup:
-                print("Pre-run cleanup: manual mode")
-                await _prompt_manual_cleanup(page, "Pre-run cleanup")
-            else:
-                print("Pre-run cleanup: clearing memory and deleting any existing chat...")
-                await _clear_chatgpt_memory(
-                    page,
-                    snapshot_dir=run_debug_dir,
-                    snapshot_label="pre_run_cleanup_memory",
-                )
-                await _delete_current_chat(page)
         else:
-            print("Skipping pre-run cleanup (not logged in).")
+            print("Skipping evaluation readiness cleanup (not logged in).")
 
         try:
             for i, sample_id in enumerate(all_samples):
@@ -1728,8 +1866,27 @@ async def evaluate(args: argparse.Namespace) -> None:
                     print(f"  [{sess.session_key}] {phase_summary}")
                     artifacts["dir"].mkdir(parents=True, exist_ok=True)
                     artifacts["debug_dir"].mkdir(parents=True, exist_ok=True)
-                    artifacts["log"].write_text("", encoding="utf-8")
-                    artifacts["trace_jsonl"].write_text("", encoding="utf-8")
+                    resume_trace = _load_trace_jsonl(artifacts["trace_jsonl"])
+                    resuming = bool(resume_trace)
+                    if resuming:
+                        print(f"  [{sess.session_key}] resuming from existing trace; skipping pre-session cleanup")
+                    else:
+                        artifacts["log"].write_text("", encoding="utf-8")
+                        artifacts["trace_jsonl"].write_text("", encoding="utf-8")
+                        if args.manual_cleanup:
+                            print("  Pre-session cleanup: manual mode")
+                            await _prompt_manual_cleanup(page, f"  [{sess.session_key}] pre-session cleanup")
+                        else:
+                            print("  Pre-session cleanup: clearing ChatGPT memory...", end=" ", flush=True)
+                            ok = await _clear_chatgpt_memory(
+                                page,
+                                snapshot_dir=artifacts["debug_dir"],
+                                snapshot_label="pre_session_cleanup_memory",
+                            )
+                            print("ok" if ok else "FAILED — please clear manually", flush=True)
+                            print("  Pre-session cleanup: deleting current chat...", end=" ", flush=True)
+                            ok2 = await _delete_current_chat(page)
+                            print("ok" if ok2 else "FAILED — please delete manually", flush=True)
 
                     max_attempts = max(1, args.session_retries + 1)
                     session_result = None
@@ -1766,6 +1923,7 @@ async def evaluate(args: argparse.Namespace) -> None:
                                 live_log_path=artifacts["log"],
                                 live_trace_jsonl_path=artifacts["trace_jsonl"],
                                 attempt_index=attempt_idx,
+                                resume_trace=resume_trace,
                             )
                             session_error = ""
                             session_status = "completed"
@@ -1822,12 +1980,6 @@ async def evaluate(args: argparse.Namespace) -> None:
                                     "timestamp_unix": time.time(),
                                 },
                             )
-                            try:
-                                await page.goto(CHATGPT_URL)
-                                await page.wait_for_timeout(3000)
-                            except Exception:
-                                pass
-
                             if attempt_idx >= max_attempts:
                                 session_result = SessionRunResult(
                                     records=[{
@@ -1843,22 +1995,8 @@ async def evaluate(args: argparse.Namespace) -> None:
                                 )
                                 break
 
-                            if args.manual_cleanup:
-                                await _prompt_manual_cleanup(
-                                    page,
-                                    f"  [{sess.session_key}] manual cleanup before retry",
-                                )
-                            else:
-                                print("  Clearing ChatGPT memory before retry...", end=" ", flush=True)
-                                ok = await _clear_chatgpt_memory(
-                                    page,
-                                    snapshot_dir=artifacts["debug_dir"],
-                                    snapshot_label=f"before_retry_attempt_{attempt_idx}",
-                                )
-                                print("ok" if ok else "FAILED — please clear manually", flush=True)
-                                print("  Deleting chat before retry...", end=" ", flush=True)
-                                ok2 = await _delete_current_chat(page)
-                                print("ok" if ok2 else "FAILED — please delete manually", flush=True)
+                            resume_trace = _load_trace_jsonl(artifacts["trace_jsonl"])
+                            print("  Keeping current chat/memory before retry; next attempt will resume from trace")
                             await page.wait_for_timeout(3000)
 
                     # Persist per-session artifacts before touching aggregate output.
@@ -1880,20 +2018,25 @@ async def evaluate(args: argparse.Namespace) -> None:
                             out_f.write(json.dumps(rec, ensure_ascii=False) + "\n")
                     done.add(triple)
 
-                    # Cleanup before the next session.
-                    if args.manual_cleanup:
-                        await _prompt_manual_cleanup(page, f"  [{sess.session_key}] manual cleanup")
+                    # Cleanup only after a completed session. If a session is
+                    # interrupted or still failing, leave the current chat and
+                    # memory intact so the next run can continue from trace.
+                    if session_status == "completed":
+                        if args.manual_cleanup:
+                            await _prompt_manual_cleanup(page, f"  [{sess.session_key}] manual cleanup")
+                        else:
+                            print("  Clearing ChatGPT memory...", end=" ", flush=True)
+                            ok = await _clear_chatgpt_memory(
+                                page,
+                                snapshot_dir=artifacts["debug_dir"],
+                                snapshot_label="post_session_cleanup_memory",
+                            )
+                            print("ok" if ok else "FAILED — please clear manually before next session")
+                            print("  Deleting chat...", end=" ", flush=True)
+                            ok2 = await _delete_current_chat(page)
+                            print("ok" if ok2 else "FAILED — please delete manually before next session")
                     else:
-                        print("  Clearing ChatGPT memory...", end=" ", flush=True)
-                        ok = await _clear_chatgpt_memory(
-                            page,
-                            snapshot_dir=artifacts["debug_dir"],
-                            snapshot_label="post_session_cleanup_memory",
-                        )
-                        print("ok" if ok else "FAILED — please clear manually before next session")
-                        print("  Deleting chat...", end=" ", flush=True)
-                        ok2 = await _delete_current_chat(page)
-                        print("ok" if ok2 else "FAILED — please delete manually before next session")
+                        print("  Session incomplete; leaving chat/memory intact for resume")
 
                     delay = timing.sample_reading_delay(200) if timing else args.sample_delay
                     await page.wait_for_timeout(int(delay * 1000))
@@ -1975,7 +2118,7 @@ def main() -> None:
                         help="Login-only mode: open browser, wait for manual login, then exit. "
                              "Run this once before the main evaluation to save the session.")
     parser.add_argument("--manual_cleanup", action="store_true",
-                        help="Before pre-run cleanup and before each session cleanup, pause and let "
+                        help="Before fresh-session cleanup and after completed-session cleanup, pause and let "
                              "the user manually delete memory and delete the current chat.")
     parser.add_argument("--limit", type=int, default=0,
                         help="Process at most N personas (0 = all)")

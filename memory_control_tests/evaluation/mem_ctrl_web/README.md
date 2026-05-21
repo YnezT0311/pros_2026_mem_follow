@@ -28,7 +28,9 @@ Before running either web test:
 - Turn on Memory in ChatGPT / Claude.
 - Keep the browser sidebar open. The cleanup code needs the sidebar/chat controls to be visible.
 - The script will first open the browser for one manual login step. After login finishes, the second browser pass starts the test automatically.
-- The automatic test pass clears Memory and deletes the current conversation before running, then cleans up after each test session.
+- For a fresh session, the automatic test pass clears Memory and deletes the current conversation before running.
+- If a previous run was interrupted, rerun the same command without manually clearing Memory or deleting the conversation. The runner resumes from `session_trace.jsonl`, skips completed history turns / MCQs, and continues in the existing chat.
+- Memory and conversation cleanup happens only after a topic/persona/world session finishes successfully.
 
 ChatGPT:
 
@@ -119,3 +121,10 @@ Both runners default to:
 Override with `DATA=/path/to/benchmark_work_v2` if needed.
 
 Full eval defaults to all samples, because `LIMIT=0` means no sample limit. For debugging, add `LIMIT=1`. To run one topic only, use `TOPIC=financialConsultation` instead of `TOPICS="..."`.
+
+Resume behavior:
+
+- Completed sessions are skipped.
+- Interrupted sessions resume from their existing `session_trace.jsonl`.
+- Do not manually clear Memory or delete the active conversation before resuming an interrupted session.
+- The current bundle has one sample/persona per topic, so the full three-topic run has three topic/persona inputs per world.

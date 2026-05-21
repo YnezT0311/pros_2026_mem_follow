@@ -569,6 +569,121 @@ def _session_is_completed(result_path: Path) -> bool:
     return payload.get("status") == "completed"
 
 
+def _load_trace_jsonl(path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    events: list[dict[str, Any]] = []
+    with path.open(encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                payload = json.loads(line)
+            except Exception:
+                continue
+            if isinstance(payload, dict):
+                events.append(payload)
+    return events
+
+
+def _is_sent_turn_event(event: dict[str, Any]) -> bool:
+    if "user_input_sent" in event:
+        return event.get("user_input_sent") is True
+    # Backward compatibility for traces produced before explicit send markers.
+    return not event.get("error") and bool(event.get("assistant_output"))
+
+
+def _has_collected_response(event: dict[str, Any]) -> bool:
+    return bool(event.get("assistant_output"))
+
+
+def _mcq_resume_key(item: McqItem) -> str:
+    return f"{item.qa_family}\t{item.timestamp}\t{item.question}"
+
+
+def _mcq_resume_key_from_event(event: dict[str, Any]) -> str:
+    return f"{event.get('qa_family', '')}\t{event.get('timestamp', '')}\t{event.get('question', '')}"
+
+
+def _resume_progress_from_trace(trace: list[dict[str, Any]]) -> dict[str, dict[str, set]]:
+    progress: dict[str, dict[str, set]] = {"history": {}, "mcq": {}}
+    for event in trace:
+        if not _is_sent_turn_event(event):
+            continue
+        phase = str(event.get("phase_label", ""))
+        if event.get("event_type") == "history_turn":
+            idx = event.get("turn_index")
+            if isinstance(idx, int):
+                progress["history"].setdefault(phase, set()).add(idx)
+        elif event.get("event_type") == "mcq":
+            if not _has_collected_response(event):
+                continue
+            progress["mcq"].setdefault(phase, set()).add(_mcq_resume_key_from_event(event))
+    return progress
+
+
+def _records_from_trace(
+    session: TestSession,
+    trace: list[dict[str, Any]],
+    sample_id: str,
+    world: str,
+    conv_source: str,
+) -> list[dict[str, Any]]:
+    item_by_phase_and_key = {
+        (phase.label, _mcq_resume_key(item)): item
+        for phase in session.phases
+        for item in phase.mcq_items
+    }
+    records: list[dict[str, Any]] = []
+    seen: set[tuple[str, str]] = set()
+    for event in trace:
+        if event.get("event_type") != "mcq" or not _is_sent_turn_event(event):
+            continue
+        if not _has_collected_response(event):
+            continue
+        phase_label = str(event.get("phase_label", ""))
+        key = (phase_label, _mcq_resume_key_from_event(event))
+        if key in seen or key not in item_by_phase_and_key:
+            continue
+        item = item_by_phase_and_key[key]
+        predicted = str(event.get("predicted_choice", "")) or "none"
+        predicted_answer_type = (
+            event.get("predicted_answer_type")
+            or item.choice_to_answer_type.get(predicted, "none")
+        )
+        event_error = event.get("error")
+        records.append({
+            "sample_id": sample_id,
+            "world": world,
+            "session_key": session.session_key,
+            "phase_label": phase_label,
+            "conv_source": conv_source,
+            "qa_family": item.qa_family,
+            "timestamp": item.timestamp,
+            "turn_role": item.turn_role,
+            "identifier_label": item.identifier_label,
+            "sensitive_key": item.sensitive_key,
+            "sensitive_value": item.sensitive_value,
+            "question": item.question,
+            "choices": item.choices,
+            "choice_to_answer_type": item.choice_to_answer_type,
+            "remember_correct_choice": item.remember_correct_choice,
+            "expected_choice": item.correct_choice,
+            "expected_answer_type": item.expected_answer_type,
+            "correct_choice": item.correct_choice,
+            "num_history_turns": sum(len(p.user_turns) for p in session.phases),
+            "session_memory_events": [],
+            "model_response": event.get("assistant_output", ""),
+            "predicted_choice": predicted,
+            "predicted_answer_type": predicted_answer_type,
+            "is_expected": predicted == item.correct_choice,
+            "error": event_error,
+        })
+        seen.add(key)
+    return records
+
+
 def _print_summary(output_path: Path) -> None:
     if not output_path.exists():
         return
@@ -1534,9 +1649,25 @@ async def _run_session(
     live_trace_jsonl_path: Optional[Path] = None,
     attempt_index: int = 1,
     session_instruction: str = "",
+    resume_trace: Optional[list[dict[str, Any]]] = None,
 ) -> SessionRunResult:
-    results = []
-    trace = []
+    resume_trace = resume_trace or []
+    resume_progress = _resume_progress_from_trace(resume_trace)
+    if resume_trace:
+        print(
+            f"    [resume] continuing existing chat: "
+            f"{sum(len(v) for v in resume_progress['history'].values())} history turns, "
+            f"{sum(len(v) for v in resume_progress['mcq'].values())} MCQs already done",
+            flush=True,
+        )
+    results = _records_from_trace(
+        session,
+        resume_trace,
+        sample_id=sample_id,
+        world=world,
+        conv_source=conv_source,
+    )
+    trace = list(resume_trace)
     log_lines = []
     last_resp_len = 0
     session_memory_events = []
@@ -1563,38 +1694,64 @@ async def _run_session(
         )
         _record_trace(event)
 
-    await _new_chat(page, on_interstitial=_record_interstitial)
+    if not resume_trace:
+        await _new_chat(page, on_interstitial=_record_interstitial)
 
     instruction = session_instruction.strip()
-    if instruction:
+    setup_done = any(
+        event.get("event_type") == "session_instruction" and _is_sent_turn_event(event)
+        for event in resume_trace
+    )
+    if instruction and not setup_done:
         pre = timing.sample_typing_delay(len(instruction)) if timing else 0.4
         post = timing.sample_reading_delay(last_resp_len) * history_rate if timing else turn_delay
         _log(f"    [setup] sending Claude eval instruction ({len(instruction)}ch)...")
-        await _send_message(
-            page,
-            instruction,
-            pre_send_delay=pre,
-            post_response_delay=post,
-            on_interstitial=_record_interstitial,
-            rate_limit_log=_log,
-        )
-        resp_text = await _get_last_response(page)
-        last_resp_len = len(resp_text)
-        _record_trace({
-            "event_type": "session_instruction",
-            "test_type": world,
-            "phase_label": "setup",
-            "user_input": instruction,
-            "assistant_output": resp_text,
-            "pre_send_delay_sec": pre,
-            "post_response_delay_sec": post,
-        })
+        user_input_sent = False
+        try:
+            await _send_message(
+                page,
+                instruction,
+                pre_send_delay=pre,
+                post_response_delay=post,
+                on_interstitial=_record_interstitial,
+                rate_limit_log=_log,
+            )
+            user_input_sent = True
+            resp_text = await _get_last_response(page)
+            last_resp_len = len(resp_text)
+            _record_trace({
+                "event_type": "session_instruction",
+                "test_type": world,
+                "phase_label": "setup",
+                "user_input": instruction,
+                "user_input_sent": True,
+                "assistant_output": resp_text,
+                "pre_send_delay_sec": pre,
+                "post_response_delay_sec": post,
+            })
+        except Exception as e:
+            _record_trace({
+                "event_type": "session_instruction",
+                "test_type": world,
+                "phase_label": "setup",
+                "user_input": instruction,
+                "user_input_sent": user_input_sent,
+                "assistant_output": "",
+                "pre_send_delay_sec": pre,
+                "post_response_delay_sec": post,
+                "error": str(e),
+            })
+            raise
 
     for phase in session.phases:
         for j, turn in enumerate(phase.user_turns):
+            if j in resume_progress["history"].get(phase.label, set()):
+                _log(f"    [{phase.label}] turn {j+1}/{len(phase.user_turns)} already done; skipping")
+                continue
             pre = timing.sample_typing_delay(len(turn)) if timing else 0.4
             post = (timing.sample_reading_delay(last_resp_len) * history_rate if timing else turn_delay)
             prefix = f"    [{phase.label}] turn {j+1}/{len(phase.user_turns)} ({len(turn)}ch pre={pre:.1f}s post={post:.1f}s)..."
+            user_input_sent = False
             try:
                 await _send_message(
                     page,
@@ -1604,6 +1761,7 @@ async def _run_session(
                     on_interstitial=_record_interstitial,
                     rate_limit_log=_log,
                 )
+                user_input_sent = True
                 resp_text = await _get_last_response(page)
                 last_resp_len = len(resp_text)
                 mem_triggered, mem_content = await _check_added_memory(page)
@@ -1621,6 +1779,7 @@ async def _run_session(
                     "phase_label": phase.label,
                     "turn_index": j,
                     "user_input": turn,
+                    "user_input_sent": True,
                     "assistant_output": resp_text,
                     "pre_send_delay_sec": pre,
                     "post_response_delay_sec": post,
@@ -1635,6 +1794,7 @@ async def _run_session(
                     "phase_label": phase.label,
                     "turn_index": j,
                     "user_input": turn,
+                    "user_input_sent": user_input_sent,
                     "assistant_output": "",
                     "pre_send_delay_sec": pre,
                     "post_response_delay_sec": post,
@@ -1650,6 +1810,9 @@ async def _run_session(
         _log(f"    [{phase.label}] asking {len(phase.mcq_items)} MCQs...")
 
         for k, item in enumerate(phase.mcq_items):
+            if _mcq_resume_key(item) in resume_progress["mcq"].get(phase.label, set()):
+                _log(f"    MCQ {k+1}/{len(phase.mcq_items)} already done; skipping")
+                continue
             prompt = _build_mcq_prompt(item)
             pre = timing.sample_typing_delay(len(prompt)) if timing else 0.4
             post = timing.sample_reading_delay(last_resp_len) if timing else turn_delay
@@ -1680,6 +1843,7 @@ async def _run_session(
                 "predicted_answer_type": "",
                 "error": None,
             }
+            user_input_sent = False
             try:
                 await _send_message(
                     page,
@@ -1689,10 +1853,11 @@ async def _run_session(
                     on_interstitial=_record_interstitial,
                     rate_limit_log=_log,
                 )
+                user_input_sent = True
                 response_text = await _get_last_response(page)
                 last_resp_len = len(response_text)
-                predicted = _extract_choice(response_text, item.choice_order)
-                predicted_type = item.choice_to_answer_type.get(predicted, "")
+                predicted = _extract_choice(response_text, item.choice_order) or "none"
+                predicted_type = item.choice_to_answer_type.get(predicted, "none")
                 correct_type = item.choice_to_answer_type.get(item.correct_choice, "")
                 rec["model_response"] = response_text
                 rec["predicted_choice"] = predicted
@@ -1724,6 +1889,7 @@ async def _run_session(
                     "timestamp": item.timestamp,
                     "question": item.question,
                     "user_input": prompt,
+                    "user_input_sent": True,
                     "assistant_output": response_text,
                     "predicted_choice": predicted,
                     "predicted_answer_type": predicted_type,
@@ -1750,6 +1916,7 @@ async def _run_session(
                     "timestamp": item.timestamp,
                     "question": item.question,
                     "user_input": prompt,
+                    "user_input_sent": user_input_sent,
                     "assistant_output": "",
                     "predicted_choice": "",
                     "predicted_answer_type": "",
@@ -1919,8 +2086,13 @@ async def evaluate(args: argparse.Namespace) -> None:
                     print(f"  [{sess.session_key}] {phase_summary}")
                     artifacts["dir"].mkdir(parents=True, exist_ok=True)
                     artifacts["debug_dir"].mkdir(parents=True, exist_ok=True)
-                    artifacts["log"].write_text("", encoding="utf-8")
-                    artifacts["trace_jsonl"].write_text("", encoding="utf-8")
+                    resume_trace = _load_trace_jsonl(artifacts["trace_jsonl"])
+                    resuming = bool(resume_trace)
+                    if resuming:
+                        print(f"  [{sess.session_key}] resuming from existing trace; skipping pre-session cleanup")
+                    else:
+                        artifacts["log"].write_text("", encoding="utf-8")
+                        artifacts["trace_jsonl"].write_text("", encoding="utf-8")
 
                     def _record_pre_session_interstitial(event: dict) -> None:
                         _append_text_line(
@@ -1943,100 +2115,101 @@ async def evaluate(args: argparse.Namespace) -> None:
                         print(message, flush=True)
                         _append_text_line(artifacts["log"], message)
 
-                    print("  Pre-session cleanup: clearing Claude memory...", end=" ", flush=True)
-                    pre_all_deleted = False
-                    pre_deletion_reply = ""
-                    pre_confirmation_reply = ""
-                    try:
-                        pre_all_deleted, pre_deletion_reply, pre_confirmation_reply = await _clear_memory(
-                            page,
-                            on_interstitial=_record_pre_session_interstitial,
-                            rate_limit_log=_pre_session_rate_limit_log,
-                        )
-                        print("ALL DELETED" if pre_all_deleted else "NOT CONFIRMED", flush=True)
-                    except Exception as exc:
-                        pre_confirmation_reply = f"pre_session_clear_memory_error: {exc}"
-                        print("ERROR", flush=True)
-                    _log_clear_memory_result(
-                        artifacts["log"],
-                        artifacts["trace_jsonl"],
-                        sample_id=sample_id,
-                        world=args.world,
-                        session_key=sess.session_key,
-                        stage="pre_session",
-                        all_deleted=pre_all_deleted,
-                        deletion_reply=pre_deletion_reply,
-                        confirmation_reply=pre_confirmation_reply,
-                    )
-                    if pre_confirmation_reply.startswith("pre_session_clear_memory_error:"):
-                        debug_paths = await _capture_debug_artifacts(
-                            page,
-                            artifacts["debug_dir"],
-                            0,
-                            "pre_session_clear_memory_error",
-                        )
-                        _append_text_line(
+                    if not resuming:
+                        print("  Pre-session cleanup: clearing Claude memory...", end=" ", flush=True)
+                        pre_all_deleted = False
+                        pre_deletion_reply = ""
+                        pre_confirmation_reply = ""
+                        try:
+                            pre_all_deleted, pre_deletion_reply, pre_confirmation_reply = await _clear_memory(
+                                page,
+                                on_interstitial=_record_pre_session_interstitial,
+                                rate_limit_log=_pre_session_rate_limit_log,
+                            )
+                            print("ALL DELETED" if pre_all_deleted else "NOT CONFIRMED", flush=True)
+                        except Exception as exc:
+                            pre_confirmation_reply = f"pre_session_clear_memory_error: {exc}"
+                            print("ERROR", flush=True)
+                        _log_clear_memory_result(
                             artifacts["log"],
-                            f"PRE-SESSION CLEAR MEMORY DEBUG: {json.dumps(debug_paths, ensure_ascii=False)}",
-                        )
-                        _append_jsonl(
                             artifacts["trace_jsonl"],
-                            {
-                                "event_type": "pre_session_clear_memory_debug",
-                                "sample_id": sample_id,
-                                "world": args.world,
-                                "session_key": sess.session_key,
-                                "debug_paths": debug_paths,
-                                "timestamp_unix": time.time(),
-                            },
+                            sample_id=sample_id,
+                            world=args.world,
+                            session_key=sess.session_key,
+                            stage="pre_session",
+                            all_deleted=pre_all_deleted,
+                            deletion_reply=pre_deletion_reply,
+                            confirmation_reply=pre_confirmation_reply,
                         )
+                        if pre_confirmation_reply.startswith("pre_session_clear_memory_error:"):
+                            debug_paths = await _capture_debug_artifacts(
+                                page,
+                                artifacts["debug_dir"],
+                                0,
+                                "pre_session_clear_memory_error",
+                            )
+                            _append_text_line(
+                                artifacts["log"],
+                                f"PRE-SESSION CLEAR MEMORY DEBUG: {json.dumps(debug_paths, ensure_ascii=False)}",
+                            )
+                            _append_jsonl(
+                                artifacts["trace_jsonl"],
+                                {
+                                    "event_type": "pre_session_clear_memory_debug",
+                                    "sample_id": sample_id,
+                                    "world": args.world,
+                                    "session_key": sess.session_key,
+                                    "debug_paths": debug_paths,
+                                    "timestamp_unix": time.time(),
+                                },
+                            )
 
-                    print("  Pre-session cleanup: deleting all Claude chat history...", end=" ", flush=True)
-                    deleted_count, delete_all_error = await _delete_all_chat_history(
-                        page,
-                        debug_log=lambda message: _append_text_line(artifacts["log"], message),
-                        on_interstitial=_record_pre_session_interstitial,
-                    )
-                    print(f"removed {deleted_count} chat(s)", flush=True)
-                    _append_text_line(
-                        artifacts["log"],
-                        f"PRE-SESSION DELETE ALL: removed {deleted_count} chat(s)"
-                        + (f" | last_error={delete_all_error}" if delete_all_error else ""),
-                    )
-                    _append_jsonl(
-                        artifacts["trace_jsonl"],
-                        {
-                            "event_type": "pre_session_delete_all",
-                            "sample_id": sample_id,
-                            "world": args.world,
-                            "session_key": sess.session_key,
-                            "deleted_count": deleted_count,
-                            "last_error": delete_all_error,
-                            "timestamp_unix": time.time(),
-                        },
-                    )
-                    if delete_all_error:
-                        debug_paths = await _capture_debug_artifacts(
+                        print("  Pre-session cleanup: deleting all Claude chat history...", end=" ", flush=True)
+                        deleted_count, delete_all_error = await _delete_all_chat_history(
                             page,
-                            artifacts["debug_dir"],
-                            0,
-                            "pre_session_delete_all_error",
+                            debug_log=lambda message: _append_text_line(artifacts["log"], message),
+                            on_interstitial=_record_pre_session_interstitial,
                         )
+                        print(f"removed {deleted_count} chat(s)", flush=True)
                         _append_text_line(
                             artifacts["log"],
-                            f"PRE-SESSION DELETE ALL DEBUG: {json.dumps(debug_paths, ensure_ascii=False)}",
+                            f"PRE-SESSION DELETE ALL: removed {deleted_count} chat(s)"
+                            + (f" | last_error={delete_all_error}" if delete_all_error else ""),
                         )
                         _append_jsonl(
                             artifacts["trace_jsonl"],
                             {
-                                "event_type": "pre_session_delete_all_debug",
+                                "event_type": "pre_session_delete_all",
                                 "sample_id": sample_id,
                                 "world": args.world,
                                 "session_key": sess.session_key,
-                                "debug_paths": debug_paths,
+                                "deleted_count": deleted_count,
+                                "last_error": delete_all_error,
                                 "timestamp_unix": time.time(),
                             },
                         )
+                        if delete_all_error:
+                            debug_paths = await _capture_debug_artifacts(
+                                page,
+                                artifacts["debug_dir"],
+                                0,
+                                "pre_session_delete_all_error",
+                            )
+                            _append_text_line(
+                                artifacts["log"],
+                                f"PRE-SESSION DELETE ALL DEBUG: {json.dumps(debug_paths, ensure_ascii=False)}",
+                            )
+                            _append_jsonl(
+                                artifacts["trace_jsonl"],
+                                {
+                                    "event_type": "pre_session_delete_all_debug",
+                                    "sample_id": sample_id,
+                                    "world": args.world,
+                                    "session_key": sess.session_key,
+                                    "debug_paths": debug_paths,
+                                    "timestamp_unix": time.time(),
+                                },
+                            )
 
                     max_attempts = max(1, args.session_retries + 1)
                     session_result = None
@@ -2059,6 +2232,7 @@ async def evaluate(args: argparse.Namespace) -> None:
                                 live_trace_jsonl_path=artifacts["trace_jsonl"],
                                 attempt_index=attempt_idx,
                                 session_instruction=args.session_instruction,
+                                resume_trace=resume_trace,
                             )
                             session_status = "completed"
                             session_error = ""
@@ -2067,11 +2241,6 @@ async def evaluate(args: argparse.Namespace) -> None:
                             session_error = str(e)
                             print(f"  SESSION ERROR (attempt {attempt_idx}/{max_attempts}): {e}", flush=True)
                             await _capture_debug_artifacts(page, artifacts["debug_dir"], attempt_idx, "session_error")
-                            try:
-                                await page.goto(CLAUDE_URL)
-                                await page.wait_for_timeout(3000)
-                            except Exception:
-                                pass
                             if attempt_idx >= max_attempts:
                                 session_result = SessionRunResult(
                                     records=[{
@@ -2084,6 +2253,8 @@ async def evaluate(args: argparse.Namespace) -> None:
                                     log_lines=[f"SESSION ERROR after {max_attempts} attempt(s): {session_error}"],
                                 )
                                 break
+                            resume_trace = _load_trace_jsonl(artifacts["trace_jsonl"])
+                            print("  Keeping current chat/memory before retry; next attempt will resume from trace")
 
                     _write_claude_session_artifacts(
                         output_root,
@@ -2099,6 +2270,54 @@ async def evaluate(args: argparse.Namespace) -> None:
                     with persona_output_path.open("a", encoding="utf-8") as out_f:
                         for rec in session_result.records:
                             out_f.write(f"{__import__('json').dumps(rec, ensure_ascii=False)}\n")
+
+                    if session_status == "completed":
+                        print("  Post-session cleanup: clearing Claude memory...", end=" ", flush=True)
+                        post_all_deleted = False
+                        post_deletion_reply = ""
+                        post_confirmation_reply = ""
+                        try:
+                            post_all_deleted, post_deletion_reply, post_confirmation_reply = await _clear_memory(
+                                page,
+                                on_interstitial=_record_pre_session_interstitial,
+                                rate_limit_log=_pre_session_rate_limit_log,
+                            )
+                            print("ALL DELETED" if post_all_deleted else "NOT CONFIRMED", flush=True)
+                        except Exception as exc:
+                            post_confirmation_reply = f"post_session_clear_memory_error: {exc}"
+                            print("ERROR", flush=True)
+                        _log_clear_memory_result(
+                            artifacts["log"],
+                            artifacts["trace_jsonl"],
+                            sample_id=sample_id,
+                            world=args.world,
+                            session_key=sess.session_key,
+                            stage="post_session",
+                            all_deleted=post_all_deleted,
+                            deletion_reply=post_deletion_reply,
+                            confirmation_reply=post_confirmation_reply,
+                        )
+                        print("  Post-session cleanup: deleting all Claude chat history...", end=" ", flush=True)
+                        deleted_count, delete_all_error = await _delete_all_chat_history(
+                            page,
+                            debug_log=lambda message: _append_text_line(artifacts["log"], message),
+                            on_interstitial=_record_pre_session_interstitial,
+                        )
+                        print(f"removed {deleted_count} chat(s)", flush=True)
+                        _append_jsonl(
+                            artifacts["trace_jsonl"],
+                            {
+                                "event_type": "post_session_delete_all",
+                                "sample_id": sample_id,
+                                "world": args.world,
+                                "session_key": sess.session_key,
+                                "deleted_count": deleted_count,
+                                "last_error": delete_all_error,
+                                "timestamp_unix": time.time(),
+                            },
+                        )
+                    else:
+                        print("  Session incomplete; leaving chat/memory intact for resume")
 
                     delay = timing.sample_reading_delay(200) if timing else args.sample_delay
                     await page.wait_for_timeout(int(delay * 1000))
