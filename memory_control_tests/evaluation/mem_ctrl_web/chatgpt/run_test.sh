@@ -46,7 +46,6 @@ for WORLD in "${WORLDS[@]}"; do
     --data_dir "$DATA_DIR" \
     --history_rate "$HISTORY_RATE" \
     --session_dir "$SESSION_DIR" \
-    --manual_cleanup \
     --stage_id_filter "$STAGE_ID" \
     --qa_family_filter "whole_recall" \
     --overwrite \

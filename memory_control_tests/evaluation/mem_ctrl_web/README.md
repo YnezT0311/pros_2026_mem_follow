@@ -19,27 +19,59 @@ mem_ctrl_web/
 
 The bundled `data/` is the minimal web-eval subset. It uses the same benchmark work directory shape as the API and memory-system evaluation.
 
+## Quick Test
+
+The quick test runs only `travelPlanning` / `Conversation Stage 01`, asks only Stage 01 `whole_recall` MCQs, and covers only `baseline` plus `no_store`.
+
+Before running either web test:
+
+- Turn on Memory in ChatGPT / Claude.
+- Keep the browser sidebar open. The cleanup code needs the sidebar/chat controls to be visible.
+- The script will first open the browser for one manual login step. After login finishes, the second browser pass starts the test automatically.
+- The automatic test pass clears Memory and deletes the current conversation before running, then cleans up after each test session.
+
+ChatGPT:
+
+```bash
+cd mem_ctrl_web/chatgpt
+
+python3.14 -m venv .venv
+source .venv/bin/activate
+
+python -m pip install --upgrade pip
+python -m pip install -r requirements.lock.txt
+python -m patchright install chrome
+
+bash run_test.sh
+```
+
+Claude:
+
+```bash
+cd mem_ctrl_web/claude
+
+python3.14 -m venv .venv
+source .venv/bin/activate
+
+python -m pip install --upgrade pip
+python -m pip install -r requirements.lock.txt
+python -m patchright install chrome
+
+bash run_test.sh
+```
+
 ## Get The Data
 
 If you already have this repository on the server, copy the whole bundle:
 
 ```bash
-scp -r USER@SERVER:/mnt/yao_data/proj_2026_agent/MemoryCtrl/memory_control_tests/evaluation/mem_ctrl_web .
+scp -r USER@SERVER: path/to/MemoryCtrl/memory_control_tests/evaluation/mem_ctrl_web .
 ```
 
-If the bundle is committed to GitHub, either download the repository zip from GitHub and keep this folder:
+If the bundle is committed to GitHub, download this folder:
 
 ```text
 memory_control_tests/evaluation/mem_ctrl_web
-```
-
-or use sparse checkout:
-
-```bash
-git clone --filter=blob:none --sparse <GITHUB_REPO_URL> memctrl-web-download
-cd memctrl-web-download
-git sparse-checkout set memory_control_tests/evaluation/mem_ctrl_web
-cp -R memory_control_tests/evaluation/mem_ctrl_web ../mem_ctrl_web
 ```
 
 After either route, your local folder should contain:
@@ -50,7 +82,7 @@ mem_ctrl_web/chatgpt
 mem_ctrl_web/claude
 ```
 
-## Run ChatGPT
+## Full ChatGPT Eval
 
 ```bash
 cd mem_ctrl_web/chatgpt
@@ -61,18 +93,10 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.lock.txt
 python -m patchright install chrome
 
-TOPIC=financialConsultation LIMIT=1 WORLDS="baseline no_store forget" bash run_chatgpt_eval.sh
+TOPICS="travelPlanning financialConsultation medicalConsultation" WORLDS="baseline no_store forget" bash run_chatgpt_eval.sh
 ```
 
-Quick Stage 01 smoke test:
-
-```bash
-bash run_test.sh
-```
-
-This feeds only `travelPlanning` / `Conversation Stage 01` and asks only Stage 01 `whole_recall` MCQs for `baseline` and `no_store`.
-
-## Run Claude
+## Full Claude Eval
 
 ```bash
 cd mem_ctrl_web/claude
@@ -83,16 +107,8 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.lock.txt
 python -m patchright install chrome
 
-TOPIC=financialConsultation LIMIT=1 WORLDS="baseline no_store forget" bash run_claude_eval.sh
+TOPICS="travelPlanning financialConsultation medicalConsultation" WORLDS="baseline no_store forget" bash run_claude_eval.sh
 ```
-
-Quick Stage 01 smoke test:
-
-```bash
-bash run_test.sh
-```
-
-This feeds only `travelPlanning` / `Conversation Stage 01` and asks only Stage 01 `whole_recall` MCQs for `baseline` and `no_store`.
 
 Both runners default to:
 
@@ -101,3 +117,5 @@ Both runners default to:
 ```
 
 Override with `DATA=/path/to/benchmark_work_v2` if needed.
+
+Full eval defaults to all samples, because `LIMIT=0` means no sample limit. For debugging, add `LIMIT=1`. To run one topic only, use `TOPIC=financialConsultation` instead of `TOPICS="..."`.

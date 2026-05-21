@@ -6,11 +6,19 @@ cd "$SCRIPT_DIR"
 
 TIMING="${TIMING:-./human_timing.json}"
 RESULTS="${RESULTS:-./results}"
-LIMIT="${LIMIT:-4}"
+LIMIT="${LIMIT:-0}"
 HISTORY_RATE="${HISTORY_RATE:-0.2}"
 SESSION_DIR="${SESSION_DIR:-./claude_session}"
 SCRIPT_PATH="./evaluate_claude_web.py"
-TOPIC="${TOPIC:-financialConsultation}"
+
+if [[ -n "${TOPICS:-}" ]]; then
+  TOPICS_STR="$TOPICS"
+elif [[ -n "${TOPIC:-}" ]]; then
+  TOPICS_STR="$TOPIC"
+else
+  TOPICS_STR="travelPlanning financialConsultation medicalConsultation"
+fi
+read -r -a TOPIC_LIST <<< "$TOPICS_STR"
 
 if [[ -n "${DATA:-}" ]]; then
   DATA_DIR="$DATA"
@@ -43,7 +51,7 @@ fi
 #   use record_claude_web_clicks.py separately for selector debugging.
 #
 # Common usage:
-#   TOPIC=financialConsultation LIMIT=1 HISTORY_RATE=0.2 WORLDS="baseline forget no_store" ./run_claude_eval.sh
+#   TOPICS="travelPlanning financialConsultation medicalConsultation" HISTORY_RATE=0.2 WORLDS="baseline forget no_store" ./run_claude_eval.sh
 #
 # Default worlds to run. Override with:
 #   WORLDS="baseline forget no_store" ./run_claude_eval.sh
@@ -54,8 +62,8 @@ mkdir -p "$RESULTS"
 
 echo "============================================"
 echo "Starting Claude web evaluation"
-echo "Personas per world: $LIMIT"
-echo "Topic: $TOPIC"
+echo "Personas per topic/world: $LIMIT (0 = all)"
+echo "Topics: ${TOPIC_LIST[*]}"
 echo "Worlds: ${WORLDS[*]}"
 echo "Timing profile: $TIMING"
 echo "Data dir: $DATA_DIR"
@@ -75,20 +83,23 @@ echo "Login step finished. The evaluation step will open Claude again"
 echo "and begin automatically once the chat UI is ready."
 
 idx=1
-for WORLD in "${WORLDS[@]}"; do
-  WORLD_LABEL="$(printf '%s' "$WORLD" | tr '[:lower:]' '[:upper:]')"
-  echo ""
-  echo "[$idx/${#WORLDS[@]}] ${WORLD_LABEL}"
-  python "$SCRIPT_PATH" \
-    --topic "$TOPIC" \
-    --world "$WORLD" \
-    --limit "$LIMIT" \
-    --timing_profile "$TIMING" \
-    --data_dir "$DATA_DIR" \
-    --history_rate "$HISTORY_RATE" \
-    --session_dir "$SESSION_DIR" \
-    --output "$RESULTS/${WORLD}.jsonl"
-  idx=$((idx + 1))
+total=$(( ${#TOPIC_LIST[@]} * ${#WORLDS[@]} ))
+for TOPIC_NAME in "${TOPIC_LIST[@]}"; do
+  for WORLD in "${WORLDS[@]}"; do
+    WORLD_LABEL="$(printf '%s' "$WORLD" | tr '[:lower:]' '[:upper:]')"
+    echo ""
+    echo "[$idx/$total] ${TOPIC_NAME} / ${WORLD_LABEL}"
+    python "$SCRIPT_PATH" \
+      --topic "$TOPIC_NAME" \
+      --world "$WORLD" \
+      --limit "$LIMIT" \
+      --timing_profile "$TIMING" \
+      --data_dir "$DATA_DIR" \
+      --history_rate "$HISTORY_RATE" \
+      --session_dir "$SESSION_DIR" \
+      --output "$RESULTS/${TOPIC_NAME}_${WORLD}.jsonl"
+    idx=$((idx + 1))
+  done
 done
 
 echo ""
