@@ -3,7 +3,7 @@ from typing import Any, Dict, List
 
 from ..base import MethodAdapter
 from ..utils import load_official_langmem_module
-from ...shared import build_memory_eval_prompt, ensure_openai_env, load_openai_client, request_text
+from ...shared import build_memory_eval_prompt, ensure_openai_env, load_openai_client, request_text, resolve_model_name
 
 
 def _format_store_hits(items: List[Any]) -> str:
@@ -62,6 +62,7 @@ class LangMemAdapter(MethodAdapter):
         langmem_impl: Any,
         client: Any,
         model: str,
+        resolved_model: str,
         user_id: str,
         memory_limit: int,
         preload_batch_size: int,
@@ -69,6 +70,7 @@ class LangMemAdapter(MethodAdapter):
         self.langmem_impl = langmem_impl
         self.client = client
         self.model = model
+        self.resolved_model = resolved_model
         self.user_id = user_id
         self.memory_limit = memory_limit
         self.preload_batch_size = max(1, preload_batch_size)
@@ -158,6 +160,12 @@ class LangMemAdapter(MethodAdapter):
             "memory_limit": self.memory_limit,
             "preload_batch_size": self.preload_batch_size,
             "langmem_source": "vendored_official_langmem",
+            "model_routing": {
+                "requested_model": self.model,
+                "resolved_model": self.resolved_model,
+                "internal_agent_model": getattr(self.langmem_impl, "model_id", None),
+                "answer_model": self.resolved_model,
+            },
         }
 
 
@@ -174,7 +182,8 @@ def build_adapter(
 
     import os
 
-    os.environ["MODEL"] = args.model
+    resolved_model = resolve_model_name(args.model)
+    os.environ["MODEL"] = resolved_model
     os.environ["EMBEDDING_MODEL"] = args.embedding_model
 
     langmem_impl = module.LangMem()
@@ -183,6 +192,7 @@ def build_adapter(
         langmem_impl=langmem_impl,
         client=client,
         model=args.model,
+        resolved_model=resolved_model,
         user_id=user_id,
         memory_limit=args.memory_limit,
         preload_batch_size=args.preload_batch_size,

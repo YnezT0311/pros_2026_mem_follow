@@ -9,7 +9,7 @@ from typing import Any, Dict
 
 
 METHODS = ("plain", "mem0", "langmem", "amem", "memoryos", "memtree")
-WORLDS = ("baseline", "no_store", "forget", "no_use")
+WORLDS = ("baseline", "no_store", "forget")
 
 
 METHOD_DEFAULTS: Dict[str, Dict[str, Any]] = {
@@ -53,19 +53,50 @@ METHOD_DEFAULTS: Dict[str, Dict[str, Any]] = {
 }
 
 
+PERIOD_TAG_TO_FULL: Dict[str, str] = {
+    "initial": "Conversation Initial Stage",
+    "early": "Conversation Early Stage",
+    "intermediate": "Conversation Intermediate Stage",
+    "late": "Conversation Late Stage",
+}
+
+
+def _resolve_period_list(spec: str) -> list[str]:
+    """Parse `--ask_periods` value (e.g. 'early,intermediate,late') into the
+    canonical PERIODS list. Empty string returns []. Unknown tags raise.
+    """
+    spec = spec.strip()
+    if not spec:
+        return []
+    out: list[str] = []
+    for raw in spec.split(","):
+        tag = raw.strip().lower()
+        if not tag:
+            continue
+        if tag not in PERIOD_TAG_TO_FULL:
+            raise ValueError(
+                f"Unknown ask_period tag '{tag}'. Use one of: {', '.join(PERIOD_TAG_TO_FULL)}"
+            )
+        out.append(PERIOD_TAG_TO_FULL[tag])
+    return out
+
+
 @dataclass
 class EvalConfig:
     rendered: str
     method: str
     model: str = "gpt-oss-120b"
-    ask_period: str = "Conversation Late Stage"
+    ask_period: str = "all_stages"
+    # When non-empty, run all listed periods in one process with a single
+    # incremental preload. Each period writes its own output file.
+    # Falls back to single `ask_period` when empty.
+    # Retired for stage-N data; mem_evals rejects it.
+    ask_periods: list[str] = field(default_factory=list)
     world: str = "baseline"
     sidecar: str = ""
     output: str = ""
     api_key_file: str = "keys/openrouter_key.txt"
     reasoning_effort: str = ""
-    no_use_restrict_period: str = "Conversation Early Stage"
-    no_use_release_period: str = ""
     workers: int = 10
     method_config: Dict[str, Any] = field(default_factory=dict)
 
@@ -86,8 +117,6 @@ class EvalConfig:
             "output": self.output,
             "api_key_file": self.api_key_file,
             "reasoning_effort": self.reasoning_effort,
-            "no_use_restrict_period": self.no_use_restrict_period,
-            "no_use_release_period": self.no_use_release_period,
             "workers": self.workers,
         }
         values.update(self.method_config)
@@ -120,7 +149,15 @@ def parse_eval_config() -> EvalConfig:
     parser.add_argument("--method", choices=METHODS, required=True)
     parser.add_argument("--method_config", default="", help="JSON object with settings for the selected method.")
     parser.add_argument("--model", default="gpt-oss-120b")
-    parser.add_argument("--ask_period", default="Conversation Late Stage")
+    parser.add_argument("--ask_period", default="all_stages")
+    parser.add_argument(
+        "--ask_periods",
+        default="",
+        help=(
+            "Deprecated. Stage-N data is evaluated once at all_stages; this option "
+            "is rejected by memory_control_tests.evaluation.mem_evals."
+        ),
+    )
     parser.add_argument("--world", choices=WORLDS, default="baseline")
     parser.add_argument("--sidecar", default="")
     parser.add_argument("--output", default="")
@@ -130,8 +167,6 @@ def parse_eval_config() -> EvalConfig:
         default="",
         help="Forward `reasoning: {effort: ...}` to OpenRouter when set.",
     )
-    parser.add_argument("--no_use_restrict_period", default="Conversation Early Stage")
-    parser.add_argument("--no_use_release_period", default="")
     parser.add_argument(
         "--workers",
         type=int,
@@ -144,13 +179,12 @@ def parse_eval_config() -> EvalConfig:
         method=args.method,
         model=args.model,
         ask_period=args.ask_period,
+        ask_periods=_resolve_period_list(args.ask_periods),
         world=args.world,
         sidecar=args.sidecar,
         output=args.output,
         api_key_file=args.api_key_file,
         reasoning_effort=args.reasoning_effort,
-        no_use_restrict_period=args.no_use_restrict_period,
-        no_use_release_period=args.no_use_release_period,
         workers=args.workers,
         method_config=load_method_config(args.method, args.method_config),
     )

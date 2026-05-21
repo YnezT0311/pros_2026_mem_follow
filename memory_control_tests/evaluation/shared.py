@@ -6,8 +6,14 @@ from typing import Any, Dict, List, Optional
 
 from openai import OpenAI
 
-from ..common import period_tag
-from ..transforms import apply_no_store, apply_no_use, apply_staged_forget
+from ..common import final_conversation_stage_key, period_tag, stage_id_to_conversation_key
+from ..transforms import (
+    MEMORY_CONTROL_METADATA_KEY,
+    MEMORY_CONTROL_TRANSFORM_VERSION,
+    apply_no_store,
+    apply_no_use,
+    apply_randomized_forget,
+)
 
 
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
@@ -176,11 +182,15 @@ def mark_cache_breakpoint(messages: List[Dict[str, Any]]) -> List[Dict[str, Any]
 def build_eval_prompt(question: str, choices: Dict[str, str]) -> str:
     labels = list(choices.keys())
     rendered_options = [f"({label.lower()}) {choices[label]}" for label in labels]
+    label_str = "/".join(label.lower() for label in labels)
     instructions = (
-        "Find the most appropriate model response and give your final answer "
-        f"{', '.join(f'({label.lower()})' for label in labels)} after the special token <final_answer>."
+        "Find the most appropriate response and briefly explain your reasoning, "
+        "quoting the exact words from the conversation when relevant.\n\n"
+        "Output format:\n"
+        "Rationale: <brief rationale citing exact conversation words when relevant>\n"
+        f"<final_answer>({label_str})</final_answer>"
     )
-    return f"Question: {question}\n\n{instructions}\n\n{rendered_options}"
+    return f"Question: {question}\n\n" + "\n".join(rendered_options) + f"\n\n{instructions}"
 
 
 MEMORY_EVAL_PROMPT_TEMPLATE = """You are an intelligent memory assistant tasked with retrieving accurate information from conversation memories.
@@ -195,6 +205,7 @@ You have access to memories retrieved from one user's conversation history. Thes
 4. If there is not enough evidence to support a confident remembered answer, choose the option that appropriately says the information is not remembered.
 5. Focus only on the content of the memories and the question.
 6. Answer the multiple-choice question by selecting exactly one option label.
+7. Before the final answer, provide a short rationale grounded in the retrieved memories, quoting the relevant memory text whenever possible.
 
 Memories:
 
@@ -206,17 +217,22 @@ Question:
 Options:
 {options}
 
-Return only the final answer label after the special token <final_answer>, for example <final_answer>(b)</final_answer>.
+Return both the rationale and the final answer label after the special token <final_answer>, for example:
+
+Rationale: <brief rationale citing relevant memory text when possible>
+<final_answer>({label_options})</final_answer>
 """
 
 
 def build_memory_eval_prompt(question: str, choices: Dict[str, str], memories: str) -> str:
     rendered_options = "\n".join(f"({label.lower()}) {text}" for label, text in choices.items())
+    label_options = "/".join(label.lower() for label in choices.keys())
     memories_text = memories.strip() if memories and memories.strip() else "No relevant memories were retrieved."
     return MEMORY_EVAL_PROMPT_TEMPLATE.format(
         memories=memories_text,
         question=question,
         options=rendered_options,
+        label_options=label_options,
     )
 
 
@@ -298,28 +314,48 @@ def apply_world_transform(
 
     transformed = conversation
     if world == "no_store":
+        no_store_insertions = []
         for turn in sidecar.get("key_turns", []):
             timestamp = turn.get("timestamp")
             if not timestamp:
                 continue
+            period = stage_id_to_conversation_key(turn.get("stage_id", "")) or final_conversation_stage_key(transformed)
             transformed = apply_no_store(
                 transformed,
-                period="Conversation Initial Stage",
+                period=period,
                 key_timestamp=timestamp,
+                user_turn=str(turn.get("user_turn", "")),
             )
+            no_store_insertions.append(
+                {
+                    "key_timestamp": str(timestamp),
+                    "key_stage": period,
+                    "placement": "key_turn_suffix",
+                }
+            )
+        metadata = dict(transformed.get(MEMORY_CONTROL_METADATA_KEY, {}))
+        metadata["transform_version"] = MEMORY_CONTROL_TRANSFORM_VERSION
+        metadata["no_store_insertions"] = no_store_insertions
+        metadata["no_store_policy"] = {
+            "placement": "same_user_turn_as_key",
+            "ask_position": "end_of_all_stages",
+        }
+        transformed[MEMORY_CONTROL_METADATA_KEY] = metadata
         return transformed
 
     if world == "forget":
-        return apply_staged_forget(
+        return apply_randomized_forget(
             transformed,
+            key_turns=sidecar.get("key_turns", []),
             target_references=target_references,
         )
 
     if world == "no_use":
+        instruction_period = final_conversation_stage_key(transformed)
         return apply_no_use(
             transformed,
-            restrict_period=no_use_restrict_period,
-            release_period=(no_use_release_period or None),
+            restrict_period=instruction_period,
+            release_period=(instruction_period if no_use_release_period else None),
         )
 
     raise ValueError(f"Unsupported world: {world}")

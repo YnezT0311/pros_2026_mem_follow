@@ -19,20 +19,6 @@ def _load_module_from_path(module_name: str, path: Path) -> ModuleType:
     if not hasattr(typing, "NotRequired") and TypingExtensionsNotRequired is not None:
         typing.NotRequired = TypingExtensionsNotRequired
 
-    # Make sure `from prompts import ...` inside vendored modules resolves to
-    # vendor/prompts.py rather than falling through to an unrelated prompts.py
-    # higher up on sys.path (e.g. the project root).
-    prompts_path = VENDOR_ROOT / "prompts.py"
-    if prompts_path.exists():
-        existing = sys.modules.get("prompts")
-        existing_file = getattr(existing, "__file__", "") if existing else ""
-        if existing_file != str(prompts_path):
-            prompts_spec = importlib.util.spec_from_file_location("prompts", prompts_path)
-            if prompts_spec is not None and prompts_spec.loader is not None:
-                prompts_module = importlib.util.module_from_spec(prompts_spec)
-                sys.modules["prompts"] = prompts_module
-                prompts_spec.loader.exec_module(prompts_module)
-
     spec = importlib.util.spec_from_file_location(module_name, path)
     if spec is None or spec.loader is None:
         raise ImportError(f"Unable to load module {module_name} from {path}")

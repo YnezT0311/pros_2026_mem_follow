@@ -34,6 +34,8 @@ INTERACTION_HISTORY_SECTIONS = [
 ]
 
 SIDE_NOTE_RE = re.compile(r"^Side_Note:\s*\[(.*)\]\s+(\d{2}/\d{2}/\d{4}(?:-I\d{2})?)\s*$")
+CONVERSATION_STAGE_RE = re.compile(r"^Conversation Stage (\d+)$")
+STAGE_ID_RE = re.compile(r"^stage_(\d+)")
 TOKEN_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9'-]*")
 
 GENERAL_WORDS = {
@@ -59,8 +61,34 @@ def dump_json(path: str, data: Dict) -> None:
 
 
 def period_tag(period: str) -> str:
+    stage_match = CONVERSATION_STAGE_RE.match(period or "")
+    if stage_match:
+        return f"stage_{int(stage_match.group(1)):02d}"
+    if period == "all_stages":
+        return "all_stages"
     tag = (period or "").replace("Conversation ", "").replace(" Stage", "")
     return tag.strip().lower().replace(" ", "_") or "late"
+
+
+def conversation_stage_keys(data: Dict[str, Any]) -> List[str]:
+    stages = []
+    for key in data:
+        match = CONVERSATION_STAGE_RE.match(str(key))
+        if match:
+            stages.append((int(match.group(1)), str(key)))
+    return [key for _, key in sorted(stages)]
+
+
+def final_conversation_stage_key(data: Dict[str, Any]) -> str:
+    stages = conversation_stage_keys(data)
+    return stages[-1] if stages else "Conversation Late Stage"
+
+
+def stage_id_to_conversation_key(stage_id: str) -> str:
+    match = STAGE_ID_RE.match(str(stage_id or ""))
+    if not match:
+        return ""
+    return f"Conversation Stage {int(match.group(1)):02d}"
 
 
 def build_no_use_setting_tag(restrict_period: str, release_period: Optional[str] = None) -> str:
@@ -79,18 +107,24 @@ def build_transformed_history_path(
     if world == "baseline":
         return None
     rendered = Path(rendered_path)
-    stem = rendered.name.replace(".recall_rendered.json", "")
+    stem = rendered.name
+    if stem == "mcq_questions.json":
+        stem = rendered.parent.name
+    else:
+        for suffix in (".mcq_questions.json",):
+            if stem.endswith(suffix):
+                stem = stem[: -len(suffix)]
+                break
     if world == "no_use":
-        setting = build_no_use_setting_tag(restrict_period or "Conversation Early Stage", release_period)
+        setting = build_no_use_setting_tag(restrict_period or "all_stages", release_period)
         filename = f"{stem}.{world}.{setting}.transformed_history.json"
     else:
         filename = f"{stem}.{world}.transformed_history.json"
     parts = rendered.parts
     try:
-        data_idx = parts.index("data")
-        if parts[data_idx + 1] == "test":
-            topic = parts[data_idx + 2]
-            return rendered.parents[2] / topic / world / "transformed_histories" / filename
+        test_idx = parts.index("test")
+        topic = parts[test_idx + 1]
+        return rendered.parents[2] / topic / world / "transformed_histories" / filename
     except (ValueError, IndexError):
         pass
     return rendered.parent / filename
@@ -98,16 +132,9 @@ def build_transformed_history_path(
 
 def build_rendered_output_path(sidecar_path: str) -> Path:
     sidecar = Path(sidecar_path)
-    stem = sidecar.name.replace(".memory_control.json", "")
-    parts = sidecar.parts
-    try:
-        data_idx = parts.index("data")
-        if parts[data_idx + 1] == "baseline":
-            topic = parts[data_idx + 2]
-            return sidecar.parents[3] / "test" / topic / "specs" / f"{stem}.recall_rendered.json"
-    except (ValueError, IndexError):
-        pass
-    return sidecar.with_name(f"{stem}.recall_rendered.json")
+    if sidecar.name != "memory_targets.json":
+        raise ValueError(f"Expected memory_targets.json, got {sidecar}")
+    return sidecar.with_name("mcq_questions.json")
 
 
 def build_plain_eval_output_path(
@@ -119,14 +146,19 @@ def build_plain_eval_output_path(
     restrict_period: Optional[str] = None,
 ) -> Path:
     rendered = Path(rendered_path)
-    stem = rendered.name.replace(".recall_rendered.json", "")
+    stem = rendered.name
+    if stem == "mcq_questions.json":
+        stem = rendered.parent.name
+    else:
+        for suffix in (".mcq_questions.json",):
+            if stem.endswith(suffix):
+                stem = stem[: -len(suffix)]
+                break
     if world == "no_use":
-        setting = build_no_use_setting_tag(restrict_period or "Conversation Early Stage", release_period)
+        setting = build_no_use_setting_tag(restrict_period or "all_stages", release_period)
         filename = f"{stem}.{world}.{setting}.test_{period_tag(ask_period)}.recall_eval_{model}.json"
     else:
-        filename = f"{stem}.{world}.recall_eval_{model}.json"
-        if ask_period != "Conversation Late Stage":
-            filename = f"{stem}.{world}.{period_tag(ask_period)}.recall_eval_{model}.json"
+        filename = f"{stem}.{world}.{period_tag(ask_period)}.recall_eval_{model}.json"
     parts = rendered.parts
     try:
         data_idx = parts.index("data")
@@ -222,20 +254,31 @@ def build_recall_summary(
     }
 
 
-def build_forget_stage_map(sidecar: Dict[str, Any]) -> Dict[str, str]:
-    """Map key-turn timestamps to the staged forget period used for that key.
-
-    The staged forget setup uses one shared transformed history and assigns the
-    first three key turns to Early, Intermediate, and Late respectively. This
-    helper makes that mapping explicit so evaluation outputs can record, for
-    each key item, which forget stage applied to it.
-    """
+def build_forget_stage_map(
+    sidecar: Dict[str, Any],
+    transformed_conversation: Optional[Dict[str, Any]] = None,
+) -> Dict[str, str]:
+    """Map key-turn timestamps to the stage where their forget instruction occurs."""
     mapping: Dict[str, str] = {}
+    metadata = (
+        (transformed_conversation or {}).get("_memory_control_metadata", {})
+        if isinstance(transformed_conversation, dict)
+        else {}
+    )
+    for item in (metadata.get("forget_insertions", []) if isinstance(metadata, dict) else []):
+        timestamp = str((item or {}).get("key_timestamp", "")).strip()
+        forget_stage = str((item or {}).get("forget_stage", "")).strip()
+        if timestamp and forget_stage:
+            mapping[timestamp] = forget_stage
+    if mapping:
+        return mapping
+
     key_turns = sidecar.get("key_turns", []) if isinstance(sidecar, dict) else []
-    for period, turn in zip(TARGET_INSTRUCTION_PERIODS, key_turns[:3]):
+    for turn in key_turns:
         timestamp = str((turn or {}).get("timestamp", "")).strip()
+        stage_id = str((turn or {}).get("stage_id", "")).strip()
         if timestamp:
-            mapping[timestamp] = period
+            mapping[timestamp] = stage_id_to_conversation_key(stage_id) or "all_stages"
     return mapping
 
 

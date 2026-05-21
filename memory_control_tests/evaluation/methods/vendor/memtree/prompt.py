@@ -15,13 +15,3 @@ Output the summary directly.
 IMPORTANT! Don't output additional commentary, explanations, or unrelated information. Provide only the exact information or output requested.
 [Output Summary]
 """
-
-ANSWER_PROMPT = """
-Write a high-quality short answer for the given question using only the provided search results (some of which might be irrelevant). Note that you should just give a consice and direct answer without any explanations or extra information.
-[ Question ]
-{query}
-[ Search Results ]
-{retrieved_content}
-# Note:
-The answer must be brief (under 5-6 words) and direct, with no extra description.
-"""

@@ -39,7 +39,7 @@ def reset_runtime_root(runtime_root: Path) -> None:
         shutil.rmtree(runtime_root)
 
 
-def load_local_mem0_memory(runtime_root: Path) -> Any:
+def load_local_mem0_memory(runtime_root: Path, *, llm_model: str) -> Any:
     """Build a self-hosted `Memory` and install the mem0 patches.
 
     Caller is expected to have already populated `OPENAI_API_KEY` /
@@ -55,6 +55,16 @@ def load_local_mem0_memory(runtime_root: Path) -> Any:
     config = MemoryConfig(
         history_db_path=str(history_db_path),
         custom_update_memory_prompt=MEM0_STRICT_UPDATE_MEMORY_PROMPT,
+        llm={
+            "provider": "openai",
+            "config": {
+                "model": llm_model,
+                "api_key": os.getenv("OPENAI_API_KEY", ""),
+                "openai_base_url": os.getenv("OPENAI_BASE_URL", ""),
+                "openrouter_base_url": os.getenv("OPENAI_BASE_URL", ""),
+                "app_name": "MemoryCtrl",
+            },
+        },
         vector_store={
             "provider": "qdrant",
             "config": {

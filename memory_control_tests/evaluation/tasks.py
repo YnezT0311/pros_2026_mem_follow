@@ -3,7 +3,7 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Callable, Dict, List, Tuple
 
-from ..common import PERIODS, TARGET_INSTRUCTION_PERIODS
+from ..common import conversation_stage_keys
 from .shared import extract_choice
 
 
@@ -13,7 +13,7 @@ def build_period_messages(data: Dict[str, Any], period: str) -> List[Dict[str, s
     if not isinstance(lines, list):
         return messages
     for line in lines:
-        if not isinstance(line, str) or line.startswith("Side_Note"):
+        if not isinstance(line, str):
             continue
         if line.startswith("User:"):
             messages.append({"role": "user", "content": line[len("User:"):].strip()})
@@ -25,10 +25,9 @@ def build_period_messages(data: Dict[str, Any], period: str) -> List[Dict[str, s
 
 
 def build_incremental_stage_batches(data: Dict[str, Any], ask_period: str) -> List[Dict[str, Any]]:
-    if ask_period not in PERIODS:
-        return []
     batches: List[Dict[str, Any]] = []
-    for period in PERIODS[: PERIODS.index(ask_period) + 1]:
+    del ask_period
+    for period in conversation_stage_keys(data):
         period_messages = build_period_messages(data, period)
         if period_messages:
             batches.append({"period": period, "messages": period_messages})
@@ -36,17 +35,22 @@ def build_incremental_stage_batches(data: Dict[str, Any], ask_period: str) -> Li
 
 
 def build_forget_eval_targets(sidecar: Dict[str, Any]) -> Dict[str, Dict[str, str]]:
-    targets: Dict[str, Dict[str, str]] = {}
     key_turns = sidecar.get("key_turns", []) if isinstance(sidecar, dict) else []
     probe_turns = sidecar.get("protected_probe_turns", []) if isinstance(sidecar, dict) else []
-    for idx, period in enumerate(TARGET_INSTRUCTION_PERIODS):
-        key_timestamp = str(key_turns[idx].get("timestamp", "")).strip() if idx < len(key_turns) else ""
-        probe_timestamp = str(probe_turns[idx].get("timestamp", "")).strip() if idx < len(probe_turns) else ""
-        targets[period] = {
-            "key_timestamp": key_timestamp,
-            "probe_timestamp": probe_timestamp,
+    return {
+        "all_stages": {
+            "key_timestamps": [
+                str(turn.get("timestamp", "")).strip()
+                for turn in key_turns
+                if str(turn.get("timestamp", "")).strip()
+            ],
+            "probe_timestamps": [
+                str(turn.get("timestamp", "")).strip()
+                for turn in probe_turns
+                if str(turn.get("timestamp", "")).strip()
+            ],
         }
-    return targets
+    }
 
 
 def should_score_item_for_world(
@@ -58,15 +62,33 @@ def should_score_item_for_world(
 ) -> bool:
     if world != "forget":
         return True
-    stage_targets = forget_targets.get(ask_period, {})
-    allowed_timestamps = {
-        str(stage_targets.get("key_timestamp", "")).strip(),
-        str(stage_targets.get("probe_timestamp", "")).strip(),
-    }
+    del ask_period
+    stage_targets = forget_targets.get("all_stages", {})
+    allowed_timestamps = set(stage_targets.get("key_timestamps", []))
+    allowed_timestamps.update(stage_targets.get("probe_timestamps", []))
     allowed_timestamps.discard("")
     if not allowed_timestamps:
         return False
     return timestamp in allowed_timestamps
+
+
+def expected_answer_type_for_world(world: str, turn_role: str) -> str:
+    if turn_role == "key" and world in {"no_store", "forget"}:
+        return "not_remember"
+    return "remember_correct"
+
+
+def expected_choice_for_world(
+    *,
+    world: str,
+    turn_role: str,
+    choice_to_answer_type: Dict[str, str],
+) -> str:
+    expected_answer_type = expected_answer_type_for_world(world, turn_role)
+    for choice, answer_type in choice_to_answer_type.items():
+        if answer_type == expected_answer_type:
+            return choice
+    return ""
 
 
 def build_mcq_tasks(
@@ -92,6 +114,7 @@ def build_mcq_tasks(
         choice_to_answer_type = rendered_item.get("choice_to_answer_type", {})
         if not choices or not choice_to_answer_type:
             continue
+        expected_answer_type = expected_answer_type_for_world(world, item["turn_role"])
         whole_tasks.append(
             (
                 whole_idx,
@@ -103,6 +126,12 @@ def build_mcq_tasks(
                     "question": rendered_item["question"],
                     "choices": choices,
                     "choice_to_answer_type": choice_to_answer_type,
+                    "expected_answer_type": expected_answer_type,
+                    "expected_choice": expected_choice_for_world(
+                        world=world,
+                        turn_role=item["turn_role"],
+                        choice_to_answer_type=choice_to_answer_type,
+                    ),
                 },
             )
         )
@@ -122,6 +151,7 @@ def build_mcq_tasks(
             choice_to_answer_type = slot_item.get("choice_to_answer_type", {})
             if not choices or not choice_to_answer_type:
                 continue
+            expected_answer_type = expected_answer_type_for_world(world, item["turn_role"])
             slot_tasks.append(
                 (
                     (slot_idx, sub_idx),
@@ -135,6 +165,12 @@ def build_mcq_tasks(
                         "question": slot_item["question"],
                         "choices": choices,
                         "choice_to_answer_type": choice_to_answer_type,
+                        "expected_answer_type": expected_answer_type,
+                        "expected_choice": expected_choice_for_world(
+                            world=world,
+                            turn_role=item["turn_role"],
+                            choice_to_answer_type=choice_to_answer_type,
+                        ),
                     },
                 )
             )

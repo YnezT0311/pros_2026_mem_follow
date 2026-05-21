@@ -7,6 +7,8 @@ def main() -> None:
     config = parse_eval_config()
     cost_start = snapshot_openrouter_usage(config.api_key_file)
     try:
+        if config.ask_periods:
+            raise ValueError("--ask_periods is retired for stage-N data; run one all_stages evaluation instead.")
         results = run_evaluation(config)
         print(write_evaluation_results(config, results))
     finally:

@@ -221,6 +221,12 @@ class AMemAdapter(MethodAdapter):
             "preload": self.preload_log,
             "memory_limit": self.memory_limit,
             "amem_source": "vendored_official_amem",
+            "model_routing": {
+                "requested_model": self.model,
+                "resolved_model": self.resolved_model,
+                "internal_llm_model": getattr(self.amem_impl, "_model", None),
+                "answer_model": self.resolved_model,
+            },
             "token_usage": {
                 "model": self.resolved_model,
                 "internal": dict(internal),
@@ -249,13 +255,13 @@ def build_adapter(
 
     amem_module = load_official_amem_module()
     embedding_model = args.embedding_model or "all-MiniLM-L6-v2"
+    resolved_model = resolve_model_name(args.model)
     amem_impl = amem_module.AMem(
-        model=args.model,
+        model=resolved_model,
         embedding_model=embedding_model,
         api_key=os.environ.get("OPENAI_API_KEY", ""),
     )
     client = load_openai_client(args.api_key_file)
-    resolved_model = resolve_model_name(args.model)
     adapter = AMemAdapter(
         amem_impl=amem_impl,
         client=client,

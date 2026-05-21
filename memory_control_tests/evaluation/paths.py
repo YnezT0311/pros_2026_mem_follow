@@ -30,13 +30,26 @@ def model_tag_for_filename(method: str, model: str) -> str:
     return str(model).replace("/", "_")
 
 
+def rendered_stem(rendered: str) -> str:
+    path = Path(rendered)
+    name = path.name
+    if name == "mcq_questions.json":
+        return path.parent.name
+    for suffix in (".mcq_questions.json",):
+        if name.endswith(suffix):
+            return name[: -len(suffix)]
+    return path.stem
+
+
 def topic_from_rendered(rendered: str) -> str:
     parts = Path(rendered).parts
     if len(parts) >= 3 and parts[-2] == "specs":
         return parts[-3]
+    if len(parts) >= 3 and parts[-1] == "mcq_questions.json":
+        return parts[-3]
     raise ValueError(
         f"Cannot infer topic from rendered path {rendered!r}; expected "
-        "'<...>/data/test/<topic>/specs/<stem>.recall_rendered.json'."
+        "'<...>/data/mcq_work/<topic>/<persona>/mcq_questions.json'."
     )
 
 
@@ -53,17 +66,15 @@ def default_output_path(
     method_tag = METHOD_FILENAME_TAG.get(method, f"{method}_eval")
     model_tag = model_tag_for_filename(method, model)
     if world == "no_use":
-        suffix = f".{world}.restrict_{period_tag(no_use_restrict_period or 'Conversation Early Stage')}"
+        suffix = f".{world}.restrict_{period_tag(no_use_restrict_period or 'all_stages')}"
         if no_use_release_period:
             suffix += f".release_{period_tag(no_use_release_period)}"
         suffix += f".test_{period_tag(ask_period)}.{method_tag}_{model_tag}.json"
     else:
-        suffix = f".{world}.{method_tag}_{model_tag}.json"
-        if ask_period != "Conversation Late Stage":
-            suffix = f".{world}.{period_tag(ask_period)}.{method_tag}_{model_tag}.json"
+        suffix = f".{world}.{period_tag(ask_period)}.{method_tag}_{model_tag}.json"
 
     topic = topic_from_rendered(rendered)
-    stem = Path(rendered).name[: -len(".recall_rendered.json")]
+    stem = rendered_stem(rendered)
     adapter_tag = METHOD_ADAPTER_DIR_TAG.get(method, method)
     model_dir = f"{str(model).replace('/', '_')}"
     folder = f"{model_dir}+{adapter_tag}" if adapter_tag else model_dir

@@ -141,32 +141,3 @@ def retrieve(query: list[str], i, token_file: str):
 #         with open(filename, 'rb') as f:
 #             return pickle.load(f)
 #     return None
-
-from .prompt import ANSWER_PROMPT
-def generation(tree, retrieve_results, i, token_file: str):
-    # tracker = TokenTracker(output_file=token_file)
-    # tracker.patch_llm_api()    
-    results = []
-    #with tracker.stage(f"Sample {i}"):
-    qa_idx = 0
-    for que, contexts_id in retrieve_results:
-        #with tracker.stage(f"Processing QA_response {qa_idx}"):
-        contexts = list(map(lambda x: tree.nodes[x].cv, contexts_id))
-        # breakpoint()
-        contexts = "\n\n".join(contexts)
-        prompt = ANSWER_PROMPT.format(query=que, retrieved_content=contexts)
-        
-        output = worker_ollama(prompt)
-        results.append((que, contexts, output))
-        qa_idx += 1
-        
-    return results
-
-
-        
-        
-
-
-
-        
-    
