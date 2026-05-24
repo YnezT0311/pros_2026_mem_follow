@@ -4,98 +4,57 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
-AGENT_PY="${AGENT_PY:-python}"
-MODEL="gpt-4o"
-TOPIC="travelPlanning"
+PYTHON_BIN="${PYTHON_BIN:-python}"
+DATA_ROOT="${DATA_ROOT:-data/recall/mcq_work}"
+TOPIC="${TOPIC:-travelPlanning}"
+MODEL="${MODEL:-gpt-4o}"
+WORLDS_STR="${WORLDS:-baseline no_store forget}"
+LIMIT="${LIMIT:-0}"
+OVERWRITE="${OVERWRITE:-0}"
+STAGE_IDS_STR="${STAGE_IDS:-auto}"
 
-period_tag() {
-  case "$1" in
-    "Conversation Early Stage") echo "early" ;;
-    "Conversation Intermediate Stage") echo "intermediate" ;;
-    "Conversation Late Stage") echo "late" ;;
-    *) echo "unknown" ;;
-  esac
-}
+read -r -a WORLDS <<< "$WORLDS_STR"
+mapfile -t RENDERED_FILES < <(find "$DATA_ROOT/$TOPIC" -mindepth 2 -maxdepth 2 -name 'mcq_questions.json' | sort)
 
-rendered_for_persona() {
-  local persona="$1"
-  echo "data/test/${TOPIC}/specs/conversation_${TOPIC}_persona${persona}_sample0.recall_rendered.json"
-}
+if [[ "${#RENDERED_FILES[@]}" -eq 0 ]]; then
+  echo "ERROR: no MCQ files found under $DATA_ROOT/$TOPIC"
+  exit 1
+fi
 
-plain_output() {
-  local rendered="$1" world="$2" ask_period="$3" restrict="${4:-}" release="${5:-}"
-  local stem out_dir filename
-  stem="$(basename "$rendered" .recall_rendered.json)"
-  out_dir="eval_results/${TOPIC}/${world}/${MODEL}"
-  mkdir -p "$out_dir"
-  if [[ "$world" == "no_use" ]]; then
-    filename="${stem}.${world}.restrict_$(period_tag "$restrict")"
-    if [[ -n "$release" ]]; then
-      filename="${filename}.release_$(period_tag "$release")"
+count=0
+for rendered in "${RENDERED_FILES[@]}"; do
+  count=$((count + 1))
+  if [[ "$LIMIT" -gt 0 && "$count" -gt "$LIMIT" ]]; then
+    break
+  fi
+  if [[ "$STAGE_IDS_STR" == "auto" ]]; then
+    mapfile -t STAGE_LIST < <(jq -r '[.whole_recall_set[], .slot_recall_set[]] | .[] | .timestamp | capture("(?<stage>stage_[0-9]+)_").stage' "$rendered" | sort -u -V)
+  else
+    read -r -a STAGE_LIST <<< "$STAGE_IDS_STR"
+  fi
+  for stage_id in "${STAGE_LIST[@]}"; do
+    for world in "${WORLDS[@]}"; do
+    mapfile -t OUT_INFO < <("$PYTHON_BIN" - "$rendered" "$world" "$MODEL" "$stage_id" <<'PY'
+from memory_control_tests.evaluation.paths import default_output_path
+import sys
+path = default_output_path(sys.argv[1], sys.argv[2], "all_stages", "plain", sys.argv[3], stage_id=sys.argv[4])
+print(path)
+PY
+)
+    out="${OUT_INFO[0]}"
+    if [[ "$OVERWRITE" != "1" && -f "$out" ]]; then
+      echo "SKIP plain $world $stage_id -> $out"
+      continue
     fi
-    filename="${filename}.test_$(period_tag "$ask_period").recall_eval_${MODEL}.json"
-    echo "${out_dir}/${filename}"
-    return
-  fi
-  filename="${stem}.${world}.recall_eval_${MODEL}.json"
-  if [[ "$ask_period" != "Conversation Late Stage" ]]; then
-    filename="${stem}.${world}.$(period_tag "$ask_period").recall_eval_${MODEL}.json"
-  fi
-  echo "${out_dir}/${filename}"
-}
-
-run_plain_case() {
-  local rendered="$1" world="$2" ask_period="$3" restrict="${4:-}" release="${5:-}"
-  local out
-  local extra_args=()
-  out="$(plain_output "$rendered" "$world" "$ask_period" "$restrict" "$release")"
-  if [[ -f "$out" ]]; then
-    echo "SKIP plain $world $ask_period -> $out"
-    return
-  fi
-  echo "RUN plain $world $ask_period -> $out"
-  if [[ -n "$restrict" ]]; then
-    extra_args+=(--no_use_restrict_period "$restrict")
-  fi
-  if [[ -n "$release" ]]; then
-    extra_args+=(--no_use_release_period "$release")
-  fi
-  "$AGENT_PY" -m memory_control_tests.evaluation.mem_evals \
-    --method plain \
-    --rendered "$rendered" \
-    --model "$MODEL" \
-    --world "$world" \
-    --ask_period "$ask_period" \
-    "${extra_args[@]}" \
-    --output "$out"
-}
-
-run_no_use_family() {
-  local rendered="$1"
-  run_plain_case "$rendered" no_use "Conversation Early Stage" "Conversation Early Stage"
-  run_plain_case "$rendered" no_use "Conversation Intermediate Stage" "Conversation Intermediate Stage"
-  run_plain_case "$rendered" no_use "Conversation Late Stage" "Conversation Late Stage"
-  run_plain_case "$rendered" no_use "Conversation Intermediate Stage" "Conversation Early Stage"
-  run_plain_case "$rendered" no_use "Conversation Late Stage" "Conversation Early Stage"
-  run_plain_case "$rendered" no_use "Conversation Early Stage" "Conversation Early Stage" "Conversation Early Stage"
-  run_plain_case "$rendered" no_use "Conversation Intermediate Stage" "Conversation Early Stage" "Conversation Early Stage"
-  run_plain_case "$rendered" no_use "Conversation Late Stage" "Conversation Early Stage" "Conversation Early Stage"
-}
-
-for persona in 0 1 2 3; do
-  rendered="$(rendered_for_persona "$persona")"
-  echo "RUN gpt-4o plain other-worlds persona${persona}"
-  for ask in "Conversation Early Stage" "Conversation Intermediate Stage" "Conversation Late Stage"; do
-    run_plain_case "$rendered" baseline "$ask"
-    run_plain_case "$rendered" no_store "$ask"
-  done
-  run_no_use_family "$rendered"
-done
-
-for persona in 0 1 2 3 4 5 6 7 8 9; do
-  rendered="$(rendered_for_persona "$persona")"
-  echo "RUN gpt-4o plain forget persona${persona}"
-  for ask in "Conversation Early Stage" "Conversation Intermediate Stage" "Conversation Late Stage"; do
-    run_plain_case "$rendered" forget "$ask"
+    echo "RUN plain $world $stage_id -> $out"
+    "$PYTHON_BIN" -m memory_control_tests.evaluation.mem_evals \
+      --method plain \
+      --rendered "$rendered" \
+      --model "$MODEL" \
+      --world "$world" \
+      --ask_period all_stages \
+      --stage_id "$stage_id" \
+      --output "$out"
+    done
   done
 done

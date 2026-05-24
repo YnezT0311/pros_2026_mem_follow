@@ -1,0 +1,276 @@
+{
+  "source_rendered": "data/recall/mcq_work/travelPlanning/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/travelPlanning/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_02",
+  "items": [
+    {
+      "timestamp": "stage_02_H002",
+      "turn_role": "probe",
+      "identifier_label": "Mexico City trip home flight",
+      "user_turn": "For the way home, I’m looking at returns between May 18 and May 20, and I’m trying to decide whether the nonstop is worth it or if a one-connection option makes more sense. If the connection is at least 2 hours, I’m okay considering it, but I have pretty low tolerance for missed connections, so I don’t want anything tight or risky.",
+      "task_goal": "Compare a nonstop return flight with a one-connection option for the trip home and decide which is the better fit based on timing and tolerance for delays.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "return date window",
+            "sensitive_value": "May 18 to May 20",
+            "identifier_label": "Mexico City trip home flight",
+            "question": "Do you remember the return date window I said I was looking at for the trip home, when we went through my Mexico City trip home flight?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "May 18 to May 20",
+              "C": "May 18 to May 22"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "May 18 to May 20"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "May 18 to May 22"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "May 18 to May 20"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "May 18 to May 22"
+              }
+            ]
+          },
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "connection duration preference",
+            "sensitive_value": "at least 2 hours",
+            "identifier_label": "Mexico City trip home flight",
+            "question": "Can you remind me how long I want the connection to be if I considered a one-connection return option for my Mexico City trip home flight?",
+            "choices": {
+              "A": "At least 1 hour",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "at least 2 hours"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "at least 2 hours"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "At least 1 hour"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "At least 1 hour"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "at least 2 hours"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_02_H004",
+      "turn_role": "probe",
+      "identifier_label": "Mexico City accessibility stay comparison",
+      "user_turn": "I’m leaning toward whatever is actually easiest for accessibility, so can you compare a hotel and a short-term rental for our May Mexico City trip? I can only handle about 20 minutes of continuous walking before I need a break, and I’ll be coming with one 18-inch carry-on plus a folded travel walker, so stairs and long hallways are a real issue. I also need a bathroom doorway at least 30 inches wide. If both options are otherwise workable, I’d rather have an elevator than a ground-floor unit.",
+      "task_goal": "Compare a hotel and a short-term rental for a May Mexico City visit by checking which option better fits accessibility needs, especially step-free access, elevator or stairs, and bathroom or doorway constraints.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "mobility limit",
+            "sensitive_value": "can handle only about 20 minutes of continuous walking before needing a break",
+            "identifier_label": "Mexico City accessibility stay comparison",
+            "question": "Can you remind me about how long can you walk continuously before you need to pause for my Mexico City accessibility stay comparison?",
+            "choices": {
+              "A": "Can handle only about 30 minutes of continuous walking before needing a break.",
+              "B": "can handle only about 20 minutes of continuous walking before needing a break",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "can handle only about 20 minutes of continuous walking before needing a break"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Can handle only about 30 minutes of continuous walking before needing a break."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "Can handle only about 30 minutes of continuous walking before needing a break."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "can handle only about 20 minutes of continuous walking before needing a break"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "transfer load",
+            "sensitive_value": "will be arriving with one 18-inch carry-on and a folded travel walker",
+            "identifier_label": "Mexico City accessibility stay comparison",
+            "question": "Do you remember what luggage and mobility gear I was planning to bring for my Mexico City accessibility stay comparison?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "will be arriving with one 18-inch carry-on and a folded travel walker",
+              "C": "Will be arriving with one 18-inch carry-on and a folded travel cane."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "will be arriving with one 18-inch carry-on and a folded travel walker"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Will be arriving with one 18-inch carry-on and a folded travel cane."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "will be arriving with one 18-inch carry-on and a folded travel walker"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Will be arriving with one 18-inch carry-on and a folded travel cane."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

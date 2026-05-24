@@ -1,0 +1,492 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_03",
+  "items": [
+    {
+      "timestamp": "stage_03_H001",
+      "turn_role": "key",
+      "identifier_label": "annual exam lab summary",
+      "user_turn": "Can you help me put my recent labs into a simple summary for my annual visit? I’ve got ALT 58 U/L, Hemoglobin A1c 5.8%, LDL cholesterol 142 mg/dL, and Vitamin D 22 ng/mL, and I want to know which ones are high or low and what I should ask the clinician about follow-up or repeat testing.",
+      "task_goal": "Summarize the recent lab results for the annual exam visit, including which tests were checked, any notable highs or lows, and what to ask the clinician about them.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "lab result 1",
+            "sensitive_value": "ALT 58 U/L",
+            "identifier_label": "annual exam lab summary",
+            "question": "Hey — can you remind me the liver enzyme result that was flagged for review for my annual exam lab summary?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "ALT was 43 U/L.",
+              "C": "ALT 58 U/L"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "ALT 58 U/L"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "ALT was 43 U/L."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "ALT was 43 U/L."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "ALT 58 U/L"
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "lab result 3",
+            "sensitive_value": "LDL cholesterol 142 mg/dL",
+            "identifier_label": "annual exam lab summary",
+            "question": "Hey — can you remind me the LDL cholesterol result that was discussed for my annual exam lab summary?",
+            "choices": {
+              "A": "LDL cholesterol 142 mg/dL",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "LDL cholesterol was 128 mg/dL."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "LDL cholesterol 142 mg/dL"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "LDL cholesterol was 128 mg/dL."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "LDL cholesterol 142 mg/dL"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "LDL cholesterol was 128 mg/dL."
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "lab result 4",
+            "sensitive_value": "Vitamin D 22 ng/mL",
+            "identifier_label": "annual exam lab summary",
+            "question": "Hey, do you remember the vitamin D level that was reported for my annual exam lab summary?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "Vitamin D 22 ng/mL",
+              "C": "Vitamin D was 31 ng/mL."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Vitamin D 22 ng/mL"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Vitamin D was 31 ng/mL."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "Vitamin D 22 ng/mL"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Vitamin D was 31 ng/mL."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_03_H003",
+      "turn_role": "key",
+      "identifier_label": "annual exam vaccine questions",
+      "user_turn": "For my annual exam, I want to be ready to ask about vaccines. My last flu shot was in October, and my last Tdap was in 2016, so I want to know which shots might be due. My childhood vaccine record is kept in a blue folder at home, in case they want that history. I also want to mention that after my last flu shot I had a sore arm and a low-grade fever for one day, so I’m wondering if that matters for side effects this time.",
+      "task_goal": "Organize questions about vaccines for the annual exam, including which shots are due, what vaccine history to mention, and whether there are any side-effect concerns to ask about.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "last flu shot",
+            "sensitive_value": "October",
+            "identifier_label": "annual exam vaccine questions",
+            "question": "Hey, do you remember when was my most recent flu shot for my annual exam vaccine questions?",
+            "choices": {
+              "A": "October",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "November."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "October"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "November."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "October"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "November."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_03_H009",
+      "turn_role": "key",
+      "identifier_label": "fatigue and ferritin portal message",
+      "user_turn": "Can you help me draft a portal message about my serum ferritin? It came back at 14 ng/mL, and last year it was 19 ng/mL. I’ve been more tired than usual during afternoon workouts, so I’m trying to understand what that number may mean and whether I should do anything now or just wait until my appointment.",
+      "task_goal": "Draft a portal message asking the clinician how to interpret one lab result and whether any next step is recommended.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "lab result value",
+            "sensitive_value": "14 ng/mL",
+            "identifier_label": "fatigue and ferritin portal message",
+            "question": "Can you remind me — what was the current ferritin result I said came back in the message draft?",
+            "choices": {
+              "A": "14 ng/mL",
+              "B": "It was 58 U/L.",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "14 ng/mL"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "It was 58 U/L."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "14 ng/mL"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "It was 58 U/L."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_03_H002",
+      "turn_role": "probe",
+      "identifier_label": "cancer screening questions at the annual visit",
+      "user_turn": "I want to make sure I ask the right cancer screening questions at this visit. I’m 45, my mom had breast cancer when she was 52, and I’d like to know which screenings are age-appropriate for me now, how that family history changes the plan, and whether I’m due for anything based on when I last had them done — my last colonoscopy was in June and my last Pap test was in September.",
+      "task_goal": "Prepare screening questions for cancer prevention, focusing on whether the recommended screenings are age-appropriate, how family history changes the plan, and when the last screening was done so the clinician can tell what is due now.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "age",
+            "sensitive_value": "45",
+            "identifier_label": "cancer screening questions at the annual visit",
+            "question": "Quick memory check, do you remember what age do I say I am so the clinician can tell which screenings are age-appropriate for me now for my cancer screening questions at the annual visit?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "45",
+              "C": "48"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "45"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "48"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "45"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "48"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_03_H004",
+      "turn_role": "probe",
+      "identifier_label": "annual exam blood pressure and heart-risk follow-up question",
+      "user_turn": "For my April 9 annual exam, I want to ask about my blood pressure and heart risk. My home readings have averaged 132/84 mmHg over the last 2 weeks, and I’ve been checking 3 mornings per week. My father had a heart attack at 54, so I’m wondering how much that changes things. Can you help me phrase a concise question about whether any follow-up is needed?",
+      "task_goal": "Draft a concise question to ask the clinician about my blood pressure or heart risk, using my recent readings and family history, and asking whether any follow-up is needed.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "recent reading average",
+            "sensitive_value": "132/84 mmHg over the last 2 weeks",
+            "identifier_label": "annual exam blood pressure and heart-risk follow-up question",
+            "question": "Quick memory check, do you remember — what average home blood pressure reading did I report over the last two weeks?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "128/82 mmHg over the last 2 weeks",
+              "C": "132/84 mmHg over the last 2 weeks"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "132/84 mmHg over the last 2 weeks"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "128/82 mmHg over the last 2 weeks"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "128/82 mmHg over the last 2 weeks"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "132/84 mmHg over the last 2 weeks"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

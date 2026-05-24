@@ -22,6 +22,7 @@ TEMPLATES = json.loads(
 
 MEMORY_CONTROL_METADATA_KEY = "_memory_control_metadata"
 MEMORY_CONTROL_TRANSFORM_VERSION = "stage_all_v2"
+MEMORY_CONTROL_STAGE_TRANSFORM_VERSION = "stage_local_v1"
 DEFAULT_FORGET_MIN_SPACING_USER_TURNS = 6
 DEFAULT_FORGET_MIN_FINAL_GAP_USER_TURNS = 5
 
@@ -497,6 +498,148 @@ def apply_randomized_forget(
     return out
 
 
+def apply_stage_local_forget(
+    data: Dict,
+    key_turns: List[Dict[str, Any]],
+    target_references: List[str],
+    stage_id: str,
+    template_index: Optional[int] = None,
+    min_gap_after_key_user_turns: int = 2,
+) -> Dict:
+    """Insert forget instructions after target turns, constrained to one stage."""
+    out = copy.deepcopy(data)
+    stage_key = stage_id_to_conversation_key(stage_id)
+    lines = out.get(stage_key, [])
+    if not stage_key or not isinstance(lines, list):
+        metadata = dict(out.get(MEMORY_CONTROL_METADATA_KEY, {}))
+        metadata["transform_version"] = MEMORY_CONTROL_STAGE_TRANSFORM_VERSION
+        metadata["forget_insertions"] = []
+        metadata["forget_insertion_policy"] = {
+            "placement": "deterministic_after_key_turn_same_stage",
+            "ask_position": "end_of_stage",
+            "stage_id": stage_id,
+        }
+        out[MEMORY_CONTROL_METADATA_KEY] = metadata
+        return out
+
+    stage_user_positions = [
+        {"line_index": line_idx, "stage_user_turn_index": user_idx}
+        for user_idx, line_idx in enumerate(
+            idx for idx, line in enumerate(lines)
+            if isinstance(line, str) and line.startswith("User:")
+        )
+    ]
+    if not stage_user_positions:
+        return out
+
+    planned: List[Dict[str, Any]] = []
+    key_reference_pairs = [
+        (turn, ref)
+        for turn, ref in zip(key_turns or [], target_references or [])
+        if str((turn or {}).get("stage_id", "")).strip() == stage_id
+    ]
+    for idx, (turn, target_reference) in enumerate(key_reference_pairs):
+        timestamp = str((turn or {}).get("timestamp", "")).strip()
+        key_pos = _find_key_position(out, turn)
+        if not key_pos or key_pos.get("stage") != stage_key:
+            continue
+        key_stage_user_index = sum(
+            1 for pos in stage_user_positions
+            if pos["line_index"] <= key_pos["line_index"]
+        ) - 1
+        candidates = [
+            pos for pos in stage_user_positions
+            if pos["stage_user_turn_index"] >= key_stage_user_index + min_gap_after_key_user_turns
+        ]
+        if candidates:
+            rng = random.Random(_stable_seed("stage_local_forget", stage_id, timestamp, target_reference, str(idx)))
+            chosen = candidates[min(len(candidates) - 1, rng.randrange(len(candidates)))]
+            insert_line_index = chosen["line_index"]
+            insertion_mode = "before_later_user_turn_same_stage"
+            insertion_before_stage_user_turn_index = chosen["stage_user_turn_index"]
+        else:
+            insert_line_index = len(lines)
+            insertion_mode = "append_to_stage_end"
+            insertion_before_stage_user_turn_index = len(stage_user_positions)
+
+        group = TEMPLATES.get("forget", {})
+        user_pool = group.get("user", [])
+        assistant_pool = group.get("assistant", [])
+        if template_index is None:
+            rng = random.Random(_stable_seed("stage_local_forget_template", timestamp, target_reference, str(idx)))
+            user_template = rng.choice(user_pool) if user_pool else ""
+            assistant_template = rng.choice(assistant_pool) if assistant_pool else ""
+        else:
+            user_template = _pick(user_pool, template_index)
+            assistant_template = _pick(assistant_pool, template_index)
+        planned.append(
+            {
+                "key_timestamp": timestamp,
+                "key_reference": target_reference,
+                "key_stage": stage_key,
+                "key_line_index": key_pos["line_index"],
+                "key_stage_user_turn_index": key_stage_user_index,
+                "forget_stage": stage_key,
+                "original_insert_line_index": insert_line_index,
+                "insertion_mode": insertion_mode,
+                "insertion_before_stage_user_turn_index": insertion_before_stage_user_turn_index,
+                "forget_user_line": _fill_template(user_template, target_reference=target_reference),
+                "forget_assistant_line": _fill_template(assistant_template, target_reference=target_reference),
+            }
+        )
+
+    planned.sort(key=lambda item: (item["original_insert_line_index"], item["key_timestamp"]))
+    offset = 0
+    insertions: List[Dict[str, Any]] = []
+    for item in planned:
+        final_line_index = max(0, min(item["original_insert_line_index"] + offset, len(lines)))
+        lines[final_line_index:final_line_index] = [
+            f"User: {item['forget_user_line']}",
+            f"Assistant: {item['forget_assistant_line']}",
+        ]
+        offset += 2
+        insertions.append(
+            {
+                "key_timestamp": item["key_timestamp"],
+                "key_reference": item["key_reference"],
+                "key_stage": item["key_stage"],
+                "key_line_index": item["key_line_index"],
+                "key_stage_user_turn_index": item["key_stage_user_turn_index"],
+                "forget_stage": stage_key,
+                "forget_user_line_index": final_line_index,
+                "forget_assistant_line_index": final_line_index + 1,
+                "insertion_mode": item["insertion_mode"],
+                "insertion_before_stage_user_turn_index": item["insertion_before_stage_user_turn_index"],
+                "reveal_to_forget_user_turn_gap": (
+                    item["insertion_before_stage_user_turn_index"] - item["key_stage_user_turn_index"]
+                ),
+                "forget_to_final_ask_user_turn_gap": (
+                    len(stage_user_positions) + len(planned)
+                    - item["insertion_before_stage_user_turn_index"]
+                    - 1
+                ),
+                "forget_user_line": item["forget_user_line"],
+                "forget_assistant_line": item["forget_assistant_line"],
+            }
+        )
+    out[stage_key] = lines
+
+    metadata = dict(out.get(MEMORY_CONTROL_METADATA_KEY, {}))
+    metadata["transform_version"] = MEMORY_CONTROL_STAGE_TRANSFORM_VERSION
+    metadata["forget_insertions"] = insertions
+    metadata["forget_insertion_policy"] = {
+        "placement": "deterministic_after_key_turn_same_stage",
+        "ask_position": "end_of_stage",
+        "stage_id": stage_id,
+        "stage_key": stage_key,
+        "preferred_min_gap_after_key_user_turns": min_gap_after_key_user_turns,
+        "total_stage_original_user_turns": len(stage_user_positions),
+        "total_stage_transformed_user_turns": len(stage_user_positions) + len(insertions),
+    }
+    out[MEMORY_CONTROL_METADATA_KEY] = metadata
+    return out
+
+
 def apply_staged_no_use(
     data: Dict,
     restrict_periods: Optional[List[str]] = None,
@@ -514,8 +657,11 @@ def apply_staged_no_use(
     return out
 
 
-def build_context_messages(data: Dict, ask_period: str) -> List[Dict]:
+def build_context_messages(data: Dict, ask_period: str, stage_id: str = "") -> List[Dict]:
     periods = conversation_stage_keys(data)
+    if stage_id:
+        stage_key = stage_id_to_conversation_key(stage_id)
+        periods = [stage_key] if stage_key in data else []
     if not periods:
         if ask_period not in PERIODS:
             return []

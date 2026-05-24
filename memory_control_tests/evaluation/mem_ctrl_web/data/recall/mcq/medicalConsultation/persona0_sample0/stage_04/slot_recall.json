@@ -1,0 +1,348 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_04",
+  "items": [
+    {
+      "timestamp": "stage_04_H009",
+      "turn_role": "key",
+      "identifier_label": "appointment message about worsening symptoms",
+      "user_turn": "Can you draft a short message asking if my appointment on May 6 at 3:20 PM should be moved up? My symptoms have been worsening over the past 10 days, and I’ve had to stop after about 15 minutes of walking. I’m also worried the next open slot may be several weeks away.",
+      "task_goal": "Draft a short message asking whether the appointment should be moved earlier because symptoms are worsening and activity is more limited, while also noting concern about the current appointment availability.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "recent worsening window",
+            "sensitive_value": "the past 10 days",
+            "identifier_label": "appointment message about worsening symptoms",
+            "question": "Hey — can you remind me the recent worsening window I mentioned for my appointment message about worsening symptoms?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "the past 10 days",
+              "C": "The past 12 days"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "the past 10 days"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The past 12 days"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "the past 10 days"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "The past 12 days"
+              }
+            ]
+          },
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "activity limit detail",
+            "sensitive_value": "I have had to stop after about 15 minutes of walking",
+            "identifier_label": "appointment message about worsening symptoms",
+            "question": "Quick memory check, do you remember the activity limit detail I gave about walking for my appointment message about worsening symptoms?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "I have had to stop after about 15 minutes of walking",
+              "C": "I have had to stop after about 17 minutes of walking"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "I have had to stop after about 15 minutes of walking"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "I have had to stop after about 17 minutes of walking"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "I have had to stop after about 15 minutes of walking"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "I have had to stop after about 17 minutes of walking"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_04_H002",
+      "turn_role": "probe",
+      "identifier_label": "specialist visit movement limits summary",
+      "user_turn": "Can you help me phrase the movement limits for my specialist visit? I can only walk about 8 minutes before the pain starts making me slow down, and standing in one place for more than 12 minutes makes it build up until I need to sit. Going up a full flight of stairs makes me pause halfway because the pain and stiffness increase, and bending to pick something up from the floor is harder, especially after I’ve been moving around for a while. I also skipped my usual evening walk twice this week because I didn’t think I could finish it.",
+      "task_goal": "Describe how the pain limits daily movement so the specialist can understand the functional impact.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "missed activity",
+            "sensitive_value": "I skipped my usual evening walk twice this week because I didn’t think I could finish it.",
+            "identifier_label": "specialist visit movement limits summary",
+            "question": "Hey, do you remember how many times did I skip my usual evening walk this week for my specialist visit movement limits summary?",
+            "choices": {
+              "A": "I skipped my usual evening walk twice this week because I didn’t think I could finish it.",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "I skipped my usual evening walk four times this week because I didn’t think I could finish it."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "I skipped my usual evening walk twice this week because I didn’t think I could finish it."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "I skipped my usual evening walk four times this week because I didn’t think I could finish it."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "I skipped my usual evening walk twice this week because I didn’t think I could finish it."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "I skipped my usual evening walk four times this week because I didn’t think I could finish it."
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "bending limit",
+            "sensitive_value": "Bending to pick something up from the floor is harder, especially after I’ve been moving around for a while.",
+            "identifier_label": "specialist visit movement limits summary",
+            "question": "Hey, do you remember the detail about bending limit for my specialist visit movement limits summary?",
+            "choices": {
+              "A": "Bending to pick something up from the floor is harder, especially after I’ve been moving around for a while.",
+              "B": "Bending to pick something up from a table is harder, especially after I’ve been moving around for a while.",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "Bending to pick something up from the floor is harder, especially after I’ve been moving around for a while."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Bending to pick something up from a table is harder, especially after I’ve been moving around for a while."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "Bending to pick something up from the floor is harder, especially after I’ve been moving around for a while."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "Bending to pick something up from a table is harder, especially after I’ve been moving around for a while."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_04_H004",
+      "turn_role": "probe",
+      "identifier_label": "specialist visit pain-cause questions",
+      "user_turn": "I want to go into this specialist visit with a few clear questions about what might be causing the pain. It’s been in my right outer hip and upper thigh, and it’s a sharp pain when I twist or get out of a car. I’ve even stopped doing my short hill walks because it flares on the climb. I’ve tried acetaminophen 500 mg and warm showers, but they only help a little. Can you help me word questions about the most likely diagnosis, what else it could be, and what tests might be needed to tell them apart?",
+      "task_goal": "Prepare a focused set of questions about possible causes of the ongoing pain, including what the most likely diagnosis might be, what else it could be, and what tests might be needed to tell them apart.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "activity limit",
+            "sensitive_value": "I have stopped doing short hill walks because the pain flares during the climb.",
+            "identifier_label": "specialist visit pain-cause questions",
+            "question": "Quick memory check, do you remember — what regular activity I had stopped because the pain got worse on the climb?",
+            "choices": {
+              "A": "I had stopped doing my short hill walks because the pain was worst in the afternoon.",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "I have stopped doing short hill walks because the pain flares during the climb."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "I have stopped doing short hill walks because the pain flares during the climb."
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "I had stopped doing my short hill walks because the pain was worst in the afternoon."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "I had stopped doing my short hill walks because the pain was worst in the afternoon."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "I have stopped doing short hill walks because the pain flares during the climb."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

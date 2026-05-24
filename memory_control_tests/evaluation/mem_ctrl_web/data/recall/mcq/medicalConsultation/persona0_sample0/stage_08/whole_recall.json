@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_08",
+  "items": [
+    {
+      "timestamp": "stage_08_H009",
+      "turn_role": "key",
+      "identifier_label": "thyroid portal message",
+      "user_turn": "Could you help me draft a spring portal message for my clinician? I'm a bit concerned about my recent Thyroid Function Test; the result came back at 5.2 mIU/L. I'd like to ask what this result indicates about my thyroid function and whether it changes anything before my next routine visit.",
+      "task_goal": "draft a spring portal message asking what a thyroid lab result indicates",
+      "rendered": {
+        "identifier_label": "thyroid portal message",
+        "question": "Do you remember what I was asking the clinician to help with for my thyroid portal message?",
+        "choices": {
+          "A": "You wanted help putting together a brief note about your fatigue, so the clinician could understand how tired they’ve been feeling and what might be causing it before the next visit.",
+          "B": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?",
+          "C": "You wanted help drafting a patient portal message to ask what their thyroid lab result means and whether it affects anything before their next routine visit."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "not_remember": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "not_remember",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help drafting a patient portal message to ask what their thyroid lab result means and whether it affects anything before their next routine visit."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help putting together a brief note about your fatigue, so the clinician could understand how tired they’ve been feeling and what might be causing it before the next visit."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help putting together a brief note about your fatigue, so the clinician could understand how tired they’ve been feeling and what might be causing it before the next visit."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "You wanted help drafting a patient portal message to ask what their thyroid lab result means and whether it affects anything before their next routine visit."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_08_H009"
+        ],
+        "rationale": "The label \"thyroid portal message\" naturally refers to the single turn where the user is drafting a portal message about a thyroid function test result and asking what it means. That exact interaction is stage_08_H009. Other thyroid-related turns are about scheduling a thyroid test or asking about TSH generally, but they are less directly the same portal-message draft about interpreting a thyroid result."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

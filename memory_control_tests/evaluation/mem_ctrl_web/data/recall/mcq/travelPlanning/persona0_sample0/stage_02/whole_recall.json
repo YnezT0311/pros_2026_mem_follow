@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/travelPlanning/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/travelPlanning/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_02",
+  "items": [
+    {
+      "timestamp": "stage_02_H002",
+      "turn_role": "probe",
+      "identifier_label": "Mexico City trip home flight",
+      "user_turn": "For the way home, I’m looking at returns between May 18 and May 20, and I’m trying to decide whether the nonstop is worth it or if a one-connection option makes more sense. If the connection is at least 2 hours, I’m okay considering it, but I have pretty low tolerance for missed connections, so I don’t want anything tight or risky.",
+      "task_goal": "Compare a nonstop return flight with a one-connection option for the trip home and decide which is the better fit based on timing and tolerance for delays.",
+      "rendered": {
+        "identifier_label": "Mexico City trip home flight",
+        "question": "Do you remember what I wanted help deciding for my Mexico City trip home flight?",
+        "choices": {
+          "A": "You wanted to compare a nonstop return flight with a one-connection option and decide which was the better fit based on timing and their tolerance for delays.",
+          "B": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?",
+          "C": "You wanted help deciding which Tokyo neighborhood would make the best home base for the trip, especially for balancing convenience, transit access, and the kind of area they’d enjoy staying in."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "not_remember": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "not_remember",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted to compare a nonstop return flight with a one-connection option and decide which was the better fit based on timing and their tolerance for delays."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help deciding which Tokyo neighborhood would make the best home base for the trip, especially for balancing convenience, transit access, and the kind of area they’d enjoy staying in."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "You wanted to compare a nonstop return flight with a one-connection option and decide which was the better fit based on timing and their tolerance for delays."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help deciding which Tokyo neighborhood would make the best home base for the trip, especially for balancing convenience, transit access, and the kind of area they’d enjoy staying in."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_02_H002"
+        ],
+        "rationale": "The label \"Mexico City trip home flight\" naturally refers to the return-flight comparison in the Mexico City trip sample. Among the candidates, stage_02_H002 is the only turn about deciding between a nonstop return and a one-connection option for the way home, which matches the wording and intent of the original user message."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

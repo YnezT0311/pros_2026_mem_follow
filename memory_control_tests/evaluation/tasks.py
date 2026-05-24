@@ -1,9 +1,10 @@
 from __future__ import annotations
 
+import sys
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any, Callable, Dict, List, Tuple
 
-from ..common import conversation_stage_keys
+from ..common import conversation_stage_keys, stage_id_to_conversation_key
 from .shared import extract_choice
 
 
@@ -24,19 +25,32 @@ def build_period_messages(data: Dict[str, Any], period: str) -> List[Dict[str, s
     return messages
 
 
-def build_incremental_stage_batches(data: Dict[str, Any], ask_period: str) -> List[Dict[str, Any]]:
+def build_incremental_stage_batches(
+    data: Dict[str, Any],
+    ask_period: str,
+    stage_id: str = "",
+) -> List[Dict[str, Any]]:
     batches: List[Dict[str, Any]] = []
     del ask_period
+    stage_key = stage_id_to_conversation_key(stage_id) if stage_id else ""
     for period in conversation_stage_keys(data):
+        if stage_key and period != stage_key:
+            continue
         period_messages = build_period_messages(data, period)
         if period_messages:
             batches.append({"period": period, "messages": period_messages})
     return batches
 
 
-def build_forget_eval_targets(sidecar: Dict[str, Any]) -> Dict[str, Dict[str, str]]:
+def build_forget_eval_targets(sidecar: Dict[str, Any], stage_id: str = "") -> Dict[str, Dict[str, str]]:
     key_turns = sidecar.get("key_turns", []) if isinstance(sidecar, dict) else []
     probe_turns = sidecar.get("protected_probe_turns", []) if isinstance(sidecar, dict) else []
+    if stage_id:
+        key_turns = [turn for turn in key_turns if str((turn or {}).get("stage_id", "")).strip() == stage_id]
+        probe_turns = [
+            turn for turn in probe_turns
+            if str((turn or {}).get("stage_id", "")).strip() == stage_id
+        ]
     return {
         "all_stages": {
             "key_timestamps": [
@@ -59,7 +73,10 @@ def should_score_item_for_world(
     ask_period: str,
     timestamp: str,
     forget_targets: Dict[str, Dict[str, str]],
+    stage_id: str = "",
 ) -> bool:
+    if stage_id and not timestamp.startswith(f"{stage_id}_"):
+        return False
     if world != "forget":
         return True
     del ask_period
@@ -98,6 +115,7 @@ def build_mcq_tasks(
     ask_period: str,
     forget_targets: Dict[str, Dict[str, str]],
     forget_stage_map: Dict[str, str],
+    stage_id: str = "",
 ) -> Tuple[List[Tuple[int, Dict[str, Any]]], List[Tuple[Tuple[int, int], Dict[str, Any]]]]:
     whole_tasks: List[Tuple[int, Dict[str, Any]]] = []
     for whole_idx, item in enumerate(rendered.get("whole_recall_set", [])):
@@ -107,6 +125,7 @@ def build_mcq_tasks(
             ask_period=ask_period,
             timestamp=timestamp,
             forget_targets=forget_targets,
+            stage_id=stage_id,
         ):
             continue
         rendered_item = item.get("rendered", {})
@@ -144,6 +163,7 @@ def build_mcq_tasks(
             ask_period=ask_period,
             timestamp=timestamp,
             forget_targets=forget_targets,
+            stage_id=stage_id,
         ):
             continue
         for sub_idx, slot_item in enumerate(item.get("rendered", {}).get("items", [])):
@@ -193,10 +213,22 @@ def run_mcq_tasks(
     run_slot: Callable[[Dict[str, Any]], Dict[str, Any]],
     workers: int,
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    total = len(whole_tasks) + len(slot_tasks)
     parallel = bool(getattr(adapter, "supports_parallel_mcq", False)) and workers > 1
     if not parallel:
-        whole_results = [run_whole(payload) for _, payload in whole_tasks]
-        slot_results = [run_slot(payload) for _, payload in slot_tasks]
+        completed = 0
+        whole_results = []
+        for idx, payload in whole_tasks:
+            result = run_whole(payload)
+            whole_results.append(result)
+            completed += 1
+            _log_mcq_progress(completed, total, "whole", payload, result)
+        slot_results = []
+        for idx, payload in slot_tasks:
+            result = run_slot(payload)
+            slot_results.append(result)
+            completed += 1
+            _log_mcq_progress(completed, total, "slot", payload, result)
         return whole_results, slot_results
 
     whole_results_by_idx: Dict[int, Dict[str, Any]] = {}
@@ -204,11 +236,51 @@ def run_mcq_tasks(
     with ThreadPoolExecutor(max_workers=max(1, workers)) as executor:
         whole_futures = {executor.submit(run_whole, payload): idx for idx, payload in whole_tasks}
         slot_futures = {executor.submit(run_slot, payload): idx for idx, payload in slot_tasks}
+        whole_payload_by_idx = {idx: payload for idx, payload in whole_tasks}
+        slot_payload_by_idx = {idx: payload for idx, payload in slot_tasks}
+        completed = 0
         for future in as_completed(list(whole_futures.keys()) + list(slot_futures.keys())):
             if future in whole_futures:
-                whole_results_by_idx[whole_futures[future]] = future.result()
+                idx = whole_futures[future]
+                result = future.result()
+                whole_results_by_idx[idx] = result
+                completed += 1
+                _log_mcq_progress(completed, total, "whole", whole_payload_by_idx[idx], result)
             else:
-                slot_results_by_idx[slot_futures[future]] = future.result()
+                idx = slot_futures[future]
+                result = future.result()
+                slot_results_by_idx[idx] = result
+                completed += 1
+                _log_mcq_progress(completed, total, "slot", slot_payload_by_idx[idx], result)
     whole_results = [whole_results_by_idx[idx] for idx, _ in whole_tasks]
     slot_results = [slot_results_by_idx[idx] for idx, _ in slot_tasks]
     return whole_results, slot_results
+
+
+def _log_mcq_progress(
+    completed: int,
+    total: int,
+    family: str,
+    payload: Dict[str, Any],
+    result: Dict[str, Any],
+) -> None:
+    debug = result.get("debug", {}) if isinstance(result, dict) else {}
+    elapsed = debug.get("elapsed_seconds", "") if isinstance(debug, dict) else ""
+    error = debug.get("error", "") if isinstance(debug, dict) else ""
+    predicted = result.get("predicted_choice", "") if isinstance(result, dict) else ""
+    expected = result.get("expected_choice", "") if isinstance(result, dict) else ""
+    pieces = [
+        f"[mcq] {completed}/{total}",
+        family,
+        str(payload.get("turn_role", "")),
+        str(payload.get("timestamp", "")),
+    ]
+    if elapsed != "":
+        pieces.append(f"elapsed={elapsed}s")
+    if predicted:
+        pieces.append(f"pred={predicted}")
+    if expected:
+        pieces.append(f"expected={expected}")
+    if error:
+        pieces.append(f"error={error}")
+    print(" ".join(pieces), file=sys.stderr, flush=True)

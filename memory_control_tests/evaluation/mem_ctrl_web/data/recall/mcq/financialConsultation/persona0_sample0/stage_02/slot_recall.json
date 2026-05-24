@@ -1,0 +1,337 @@
+{
+  "source_rendered": "data/recall/mcq_work/financialConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/financialConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_02",
+  "items": [
+    {
+      "timestamp": "stage_02_H003",
+      "turn_role": "key",
+      "identifier_label": "debt payoff cash cushion check-in",
+      "user_turn": "I want to figure out the safest amount to leave untouched before I make any debt payments. My current checking balance is €2,960, and I want to keep a €700 reserve target no matter what. I also still need to cover €385 rent due on February 28, plus €96 for electricity and €68 for phone service.",
+      "task_goal": "confirm how much cash to keep untouched as an emergency cushion before making any debt payments",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "reserve target",
+            "sensitive_value": "€700",
+            "identifier_label": "debt payoff cash cushion check-in",
+            "question": "Do you remember the reserve target I said I wanted to keep untouched before any debt payments for my debt payoff cash cushion check-in?",
+            "choices": {
+              "A": "€574",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "€700"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€700"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€574"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "€574"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "€700"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_02_H002",
+      "turn_role": "probe",
+      "identifier_label": "tax refund debt payoff decision",
+      "user_turn": "I’ve got the numbers now and I want to decide the smartest way to use the refund. One debt is a credit card with €1,640 at 19.8% APR, and the other is a personal loan with €2,180 at 9.4% APR. I have €780 available as an extra payment after setting aside the cushion, and I want to keep my emergency cushion intact. Should I split the refund between both debts, or put it all toward one balance?",
+      "task_goal": "Compare whether to split the extra tax-refund money between two debts or put it all toward one balance, using the balances, interest rates, and available extra payment to judge the best payoff strategy while keeping the emergency cushion intact.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "balance A",
+            "sensitive_value": "€1,640 on a credit card",
+            "identifier_label": "tax refund debt payoff decision",
+            "question": "Do you remember the balance on the credit card, when we went through my tax refund debt payoff decision?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "€1,640 on a credit card",
+              "C": "€1,345 on a credit card"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€1,640 on a credit card"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€1,345 on a credit card"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "€1,640 on a credit card"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "€1,345 on a credit card"
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "balance B",
+            "sensitive_value": "€2,180 on a personal loan",
+            "identifier_label": "tax refund debt payoff decision",
+            "question": "Hey, do you remember the balance on the personal loan, when we went through my tax refund debt payoff decision?",
+            "choices": {
+              "A": "€1,788 on a personal loan",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "€2,180 on a personal loan"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€2,180 on a personal loan"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€1,788 on a personal loan"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "€1,788 on a personal loan"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "€2,180 on a personal loan"
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "interest rate A",
+            "sensitive_value": "19.8% APR",
+            "identifier_label": "tax refund debt payoff decision",
+            "question": "Quick memory check, do you remember what APR was on the credit card, when we went through my tax refund debt payoff decision?",
+            "choices": {
+              "A": "21.5% APR",
+              "B": "19.8% APR",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "19.8% APR"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "21.5% APR"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "21.5% APR"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "19.8% APR"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "available extra payment",
+            "sensitive_value": "€780 available as an extra payment",
+            "identifier_label": "tax refund debt payoff decision",
+            "question": "Hey, do you remember how much extra money was available to put toward debt after keeping the emergency cushion intact for my tax refund debt payoff decision?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "€780 available as an extra payment",
+              "C": "€640 available as an extra payment"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€780 available as an extra payment"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€640 available as an extra payment"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "€780 available as an extra payment"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "€640 available as an extra payment"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

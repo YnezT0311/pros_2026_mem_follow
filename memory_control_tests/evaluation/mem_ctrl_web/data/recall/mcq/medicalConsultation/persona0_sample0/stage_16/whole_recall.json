@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_16",
+  "items": [
+    {
+      "timestamp": "stage_16_H007",
+      "turn_role": "key",
+      "identifier_label": "October health review lab checklist",
+      "user_turn": "As I get ready for my October health review, I want to ensure I've got all my lab tests organized. I completed my fasting glucose test on March 10, and I'm focusing on blood sugar trends for the appointment. I also finished a lipid profile on April 15 to keep an eye on cholesterol levels. My thyroid function test is scheduled for October 10 because I've noticed some fatigue and want to monitor that closely.",
+      "task_goal": "create an October health-review checklist for glucose, lipid, and thyroid labs",
+      "rendered": {
+        "identifier_label": "October health review lab checklist",
+        "question": "Can you remind me what was the thing I wanted help organizing for my October health review lab checklist?",
+        "choices": {
+          "A": "You wanted an October health-review checklist to organize your glucose, lipid, and thyroid lab tests for the appointment.",
+          "B": "You wanted help making a brief fatigue summary for the clinician, focusing on possible triggers and when the tiredness seemed to be worst.",
+          "C": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "distractor_irrelevant": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "distractor_irrelevant",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted an October health-review checklist to organize your glucose, lipid, and thyroid lab tests for the appointment."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help making a brief fatigue summary for the clinician, focusing on possible triggers and when the tiredness seemed to be worst."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "You wanted an October health-review checklist to organize your glucose, lipid, and thyroid lab tests for the appointment."
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help making a brief fatigue summary for the clinician, focusing on possible triggers and when the tiredness seemed to be worst."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_16_H007"
+        ],
+        "rationale": "The identifier_label is specific to an October health review checklist covering fasting glucose, lipid profile, and a scheduled thyroid test. Among the candidates, only stage_16_H007 explicitly matches that combination of October timing and those exact lab items. The label is not broad enough to naturally refer to the other turns."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

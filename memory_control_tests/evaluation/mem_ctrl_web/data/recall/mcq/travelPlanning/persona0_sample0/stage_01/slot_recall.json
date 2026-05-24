@@ -1,0 +1,154 @@
+{
+  "source_rendered": "data/recall/mcq_work/travelPlanning/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/travelPlanning/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_01",
+  "items": [
+    {
+      "timestamp": "stage_01_H005",
+      "turn_role": "key",
+      "identifier_label": "Tokyo restaurant reservation message",
+      "user_turn": "Could you help me draft a polite message to a Tokyo restaurant? I want to mention that I have a seafood allergy and confirm that my reservation is for 7:30 PM.",
+      "task_goal": "draft a polite message to a Tokyo restaurant asking about dietary needs and confirming the reservation time.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "dietary restriction",
+            "sensitive_value": "seafood allergy",
+            "identifier_label": "Tokyo restaurant reservation message",
+            "question": "Hey, do you remember what dietary restriction should be mentioned for my Tokyo restaurant reservation message?",
+            "choices": {
+              "A": "Gluten-free",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "seafood allergy"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "seafood allergy"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Gluten-free"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "Gluten-free"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "seafood allergy"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_01_H006",
+      "turn_role": "probe",
+      "identifier_label": "Shibuya to Ebisu hotel route",
+      "user_turn": "I found a possible hotel in Ebisu, so can you help me decide the easiest way from Shibuya Station to that hotel area? I’d rather avoid routes with more than 2 stair flights, and I can only manage about 10 minutes of continuous walking, so I need to figure out whether transit or walking makes more sense. If there’s a route with elevator or at-grade station exits, that would be ideal.",
+      "task_goal": "choose a mobility-friendly route for one city segment",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "mobility constraint stairs",
+            "sensitive_value": "avoid routes with more than 2 stair flights",
+            "identifier_label": "Shibuya to Ebisu hotel route",
+            "question": "Hey, do you remember the stair limit I said I need to avoid when choosing the easiest option for my Shibuya to Ebisu hotel route?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "Avoid routes with more than 4 stair flights",
+              "C": "avoid routes with more than 2 stair flights"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "avoid routes with more than 2 stair flights"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Avoid routes with more than 4 stair flights"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "Avoid routes with more than 4 stair flights"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "avoid routes with more than 2 stair flights"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

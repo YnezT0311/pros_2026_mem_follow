@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_07",
+  "items": [
+    {
+      "timestamp": "stage_07_H008",
+      "turn_role": "probe",
+      "identifier_label": "stress-management appointment checklist",
+      "user_turn": "I want to make sure I'm fully prepared for my stress-management appointment on August 30 at 3:00 PM. I need to write down the questions I want to ask, like what coping strategies can help me manage stress. Also, I should remember to bring my notes from the last appointment and my current medication list.",
+      "task_goal": "make a checklist for an upcoming appointment",
+      "rendered": {
+        "identifier_label": "stress-management appointment checklist",
+        "question": "Can you remind me what I wanted help creating for my stress-management appointment checklist?",
+        "choices": {
+          "A": "A brief fatigue summary for the clinician, including how long the tiredness had been going on and any patterns they should know about.",
+          "B": "A checklist to help prepare for the upcoming appointment, including questions to ask and what to bring.",
+          "C": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "A checklist to help prepare for the upcoming appointment, including questions to ask and what to bring."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "A brief fatigue summary for the clinician, including how long the tiredness had been going on and any patterns they should know about."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "A brief fatigue summary for the clinician, including how long the tiredness had been going on and any patterns they should know about."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "A checklist to help prepare for the upcoming appointment, including questions to ask and what to bring."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_07_H008"
+        ],
+        "rationale": "The identifier_label refers to a stress-management appointment checklist, and only stage_07_H008 naturally matches that exact kind of turn: the user is preparing for a stress-management appointment, wants to write down questions, and needs to remember to bring notes and a medication list. The other candidates are about different issues (fatigue, sleep, medication side effects, travel, etc.) or are not specifically a stress-management appointment checklist."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

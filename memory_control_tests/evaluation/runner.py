@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+import time
 from dataclasses import replace
 from pathlib import Path
 from typing import Any, Dict, List
@@ -33,6 +34,29 @@ from .tasks import (
 )
 
 
+def _safe_answer_mcq(adapter: Any, question: str, choices: Dict[str, str]) -> Dict[str, Any]:
+    started = time.monotonic()
+    try:
+        result = adapter.answer_mcq(question, choices)
+        elapsed = time.monotonic() - started
+        debug = result.get("debug", {})
+        if not isinstance(debug, dict):
+            debug = {}
+        debug["elapsed_seconds"] = round(elapsed, 3)
+        result["debug"] = debug
+        return result
+    except Exception as exc:  # noqa: BLE001
+        elapsed = time.monotonic() - started
+        return {
+            "model_response": "",
+            "retrieved_memories": None,
+            "debug": {
+                "elapsed_seconds": round(elapsed, 3),
+                "error": f"{type(exc).__name__}: {exc}",
+            },
+        }
+
+
 def _resolve_full_conversation_path(path: str) -> str:
     source = Path(path)
     parts = source.parts
@@ -46,7 +70,12 @@ def _resolve_full_conversation_path(path: str) -> str:
     return path
 
 
-def _is_fresh_transformed_history(cached: Dict[str, Any], world: str, sidecar: Dict[str, Any]) -> bool:
+def _is_fresh_transformed_history(
+    cached: Dict[str, Any],
+    world: str,
+    sidecar: Dict[str, Any],
+    stage_id: str = "",
+) -> bool:
     if world == "baseline":
         return True
     if world not in {"forget", "no_store"}:
@@ -57,7 +86,13 @@ def _is_fresh_transformed_history(cached: Dict[str, Any], world: str, sidecar: D
     if metadata.get("transform_version") != MEMORY_CONTROL_TRANSFORM_VERSION:
         return False
 
-    key_count = len(sidecar.get("key_turns", []) if isinstance(sidecar, dict) else [])
+    key_turns = sidecar.get("key_turns", []) if isinstance(sidecar, dict) else []
+    if stage_id:
+        key_turns = [
+            turn for turn in key_turns
+            if str((turn or {}).get("stage_id", "")).strip() == stage_id
+        ]
+    key_count = len(key_turns)
     if world == "forget":
         return len(metadata.get("forget_insertions", [])) == key_count
     if world == "no_store":
@@ -68,9 +103,12 @@ def _is_fresh_transformed_history(cached: Dict[str, Any], world: str, sidecar: D
 def _target_references_from_labels(
     sidecar: Dict[str, Any],
     label_map: Dict[str, str],
+    stage_id: str = "",
 ) -> List[str]:
     refs: List[str] = []
     for turn in sidecar.get("key_turns", []) if isinstance(sidecar, dict) else []:
+        if stage_id and str((turn or {}).get("stage_id", "")).strip() != stage_id:
+            continue
         timestamp = str((turn or {}).get("timestamp", "")).strip()
         label = str(label_map.get(timestamp, "")).strip()
         if label:
@@ -96,14 +134,15 @@ def _load_transformed_conversation(
     transformed_history_path = build_transformed_history_path(
         config.rendered,
         config.world,
+        stage_id=config.stage_id,
     )
     if transformed_history_path and transformed_history_path.exists():
         cached = json.loads(transformed_history_path.read_text(encoding="utf-8"))
-        if _is_fresh_transformed_history(cached, config.world, sidecar):
+        if _is_fresh_transformed_history(cached, config.world, sidecar, stage_id=config.stage_id):
             return cached, transformed_history_path
 
     label_map = build_label_map(rendered)
-    target_references = _target_references_from_labels(sidecar, label_map)
+    target_references = _target_references_from_labels(sidecar, label_map, stage_id=config.stage_id)
     transformed = apply_world_transform(
         conversation,
         sidecar,
@@ -111,6 +150,7 @@ def _load_transformed_conversation(
         target_references,
         "all_stages",
         "",
+        stage_id=config.stage_id,
     )
     if transformed_history_path:
         transformed_history_path.parent.mkdir(parents=True, exist_ok=True)
@@ -124,7 +164,7 @@ def run_evaluation(config: EvalConfig) -> Dict[str, Any]:
     conversation_path = _resolve_full_conversation_path(rendered["source_conversation"])
     conversation = json.loads(Path(conversation_path).read_text(encoding="utf-8"))
     sidecar = load_sidecar(rendered, config.sidecar)
-    forget_eval_targets = build_forget_eval_targets(sidecar)
+    forget_eval_targets = build_forget_eval_targets(sidecar, stage_id=config.stage_id)
 
     transformed_conversation, transformed_history_path = _load_transformed_conversation(
         config=config,
@@ -134,8 +174,16 @@ def run_evaluation(config: EvalConfig) -> Dict[str, Any]:
     )
     forget_stage_map = build_forget_stage_map(sidecar, transformed_conversation)
     persona_messages = build_persona_system_message(transformed_conversation)
-    context_messages = build_context_messages(transformed_conversation, config.ask_period)
-    stage_batches = build_incremental_stage_batches(transformed_conversation, config.ask_period)
+    context_messages = build_context_messages(
+        transformed_conversation,
+        config.ask_period,
+        stage_id=config.stage_id,
+    )
+    stage_batches = build_incremental_stage_batches(
+        transformed_conversation,
+        config.ask_period,
+        stage_id=config.stage_id,
+    )
 
     adapter = build_method_adapter(
         config.method,
@@ -159,6 +207,7 @@ def run_evaluation(config: EvalConfig) -> Dict[str, Any]:
         "reasoning_effort": config.reasoning_effort,
         "world": config.world,
         "ask_period": config.ask_period,
+        "stage_id": config.stage_id,
         "transformed_history_path": str(transformed_history_path) if transformed_history_path else "",
         "incremental_preload_periods": [batch["period"] for batch in stage_batches],
         "forget_eval_targets": forget_eval_targets,
@@ -174,10 +223,11 @@ def run_evaluation(config: EvalConfig) -> Dict[str, Any]:
         ask_period=config.ask_period,
         forget_targets=forget_eval_targets,
         forget_stage_map=forget_stage_map,
+        stage_id=config.stage_id,
     )
 
     def run_whole(payload: Dict[str, Any]) -> Dict[str, Any]:
-        raw_result = adapter.answer_mcq(payload["question"], payload["choices"])
+        raw_result = _safe_answer_mcq(adapter, payload["question"], payload["choices"])
         model_response = raw_result.get("model_response", "")
         predicted_choice, predicted_answer_type = decode_answer(
             model_response, payload["choices"], payload["choice_to_answer_type"],
@@ -201,7 +251,7 @@ def run_evaluation(config: EvalConfig) -> Dict[str, Any]:
         }
 
     def run_slot(payload: Dict[str, Any]) -> Dict[str, Any]:
-        raw_result = adapter.answer_mcq(payload["question"], payload["choices"])
+        raw_result = _safe_answer_mcq(adapter, payload["question"], payload["choices"])
         model_response = raw_result.get("model_response", "")
         predicted_choice, predicted_answer_type = decode_answer(
             model_response, payload["choices"], payload["choice_to_answer_type"],
@@ -255,6 +305,7 @@ def write_evaluation_results(config: EvalConfig, results: Dict[str, Any]) -> str
         config.ask_period,
         config.method,
         config.model,
+        stage_id=config.stage_id,
     )
     output_file = Path(output_path)
     output_file.parent.mkdir(parents=True, exist_ok=True)
@@ -323,7 +374,7 @@ def _run_mcqs_at_period(
     )
 
     def run_whole(payload: Dict[str, Any]) -> Dict[str, Any]:
-        raw_result = adapter.answer_mcq(payload["question"], payload["choices"])
+        raw_result = _safe_answer_mcq(adapter, payload["question"], payload["choices"])
         model_response = raw_result.get("model_response", "")
         predicted_choice, predicted_answer_type = decode_answer(
             model_response, payload["choices"], payload["choice_to_answer_type"],
@@ -347,7 +398,7 @@ def _run_mcqs_at_period(
         }
 
     def run_slot(payload: Dict[str, Any]) -> Dict[str, Any]:
-        raw_result = adapter.answer_mcq(payload["question"], payload["choices"])
+        raw_result = _safe_answer_mcq(adapter, payload["question"], payload["choices"])
         model_response = raw_result.get("model_response", "")
         predicted_choice, predicted_answer_type = decode_answer(
             model_response, payload["choices"], payload["choice_to_answer_type"],

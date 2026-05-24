@@ -1,0 +1,359 @@
+{
+  "source_rendered": "data/recall/mcq_work/financialConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/financialConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_03",
+  "items": [
+    {
+      "timestamp": "stage_03_H003",
+      "turn_role": "key",
+      "identifier_label": "health savings account payroll contribution tax decision",
+      "user_turn": "I’m considering enrolling in a high-deductible health plan, and my employer offers pre-tax health savings payroll deductions. I’m thinking about contributing €1,200 a year to a tax-advantaged health savings account, and I expect about €420 in medical expenses next year. Should I use the tax-advantaged health savings account, and how would the payroll contribution affect my taxes?",
+      "task_goal": "decide whether to use an tax-advantaged health savings account, based on whether the health plan makes me eligible and how a payroll contribution would affect my taxes",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "plan type",
+            "sensitive_value": "high-deductible health plan",
+            "identifier_label": "health savings account payroll contribution tax decision",
+            "question": "Hey — can you remind me what kind of health plan I was considering enrolling in for my health savings account payroll contribution tax decision?",
+            "choices": {
+              "A": "A point-of-service health plan.",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "high-deductible health plan"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "high-deductible health plan"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "A point-of-service health plan."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "A point-of-service health plan."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "high-deductible health plan"
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "anticipated annual hsa contribution",
+            "sensitive_value": "€1,200 per year",
+            "identifier_label": "health savings account payroll contribution tax decision",
+            "question": "Hey, do you remember — what annual amount was I thinking about putting into the health savings account?",
+            "choices": {
+              "A": "€1,200 per year",
+              "B": "€984 per year.",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€1,200 per year"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€984 per year."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "€1,200 per year"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "€984 per year."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_03_H005",
+      "turn_role": "key",
+      "identifier_label": "medical expenses paycheck set-aside",
+      "user_turn": "I’m trying to figure out a sensible amount to set aside from each paycheck for medical costs next year. I’m paid twice per month, and I expect to spend about €840 over the next 12 months. If I want to target €70 per paycheck in pretax contributions, does that actually line up with my expected spending?",
+      "task_goal": "Estimate how much to set aside from each paycheck for medical expenses, based on paycheck frequency, expected medical spending, and the pretax contribution amount to target.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "pretax contribution amount",
+            "sensitive_value": "€70 per paycheck",
+            "identifier_label": "medical expenses paycheck set-aside",
+            "question": "Do you remember — when I asked about the medical expenses paycheck set-aside, what pretax contribution amount per paycheck was I considering?",
+            "choices": {
+              "A": "€60 per paycheck",
+              "B": "€70 per paycheck",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€70 per paycheck"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€60 per paycheck"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "€60 per paycheck"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "€70 per paycheck"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_03_H008",
+      "turn_role": "probe",
+      "identifier_label": "knee physical therapy plan comparison",
+      "user_turn": "I need help figuring out which health plan makes more sense for a knee physical therapy series this year. The expected bill is €1,280, and I’m trying to compare the plan coverage rules carefully: one plan covers outpatient therapy after the deductible with 20% coinsurance, while the other charges a flat €30 copay per visit.",
+      "task_goal": "Choose the best health plan for a planned procedure this year by comparing how each option would cover the expected bill.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "planned procedure",
+            "sensitive_value": "knee physical therapy series",
+            "identifier_label": "knee physical therapy plan comparison",
+            "question": "Hey, do you remember what planned procedure I was trying to choose coverage for my knee physical therapy plan comparison?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "Physical therapy visits",
+              "C": "knee physical therapy series"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "knee physical therapy series"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Physical therapy visits"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "Physical therapy visits"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "knee physical therapy series"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_03_H010",
+      "turn_role": "probe",
+      "identifier_label": "open enrollment questions for the health plan network",
+      "user_turn": "I’m trying to get my open enrollment questions in order before I choose a plan. I want to keep using my local doctors instead of switching to a new clinic, and my primary care doctor is in-network at Metro Family Clinic. I also have one dermatology visit coming up in April, and I know the company enrollment window closes on March 22 at 5:00 PM, so I don’t want to miss anything. Can you draft a concise set of questions I should ask HR about the plan’s network rules, the exact enrollment deadline, and which providers are covered?",
+      "task_goal": "Draft a concise set of questions to ask HR before enrolling so I can confirm the plan’s network rules, enrollment deadline, and which providers are covered.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "enrollment timing pressure",
+            "sensitive_value": "the company enrollment window closes on March 22 at 5:00 PM",
+            "identifier_label": "open enrollment questions for the health plan network",
+            "question": "Quick memory check, do you remember the exact enrollment deadline I mentioned so I wouldn’t miss it for my open enrollment questions for the health plan network?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "the company enrollment window closes on March 22 at 5:00 PM",
+              "C": "The company enrollment window closes on March 29 at 5:00 PM"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "the company enrollment window closes on March 22 at 5:00 PM"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "The company enrollment window closes on March 29 at 5:00 PM"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "the company enrollment window closes on March 22 at 5:00 PM"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "The company enrollment window closes on March 29 at 5:00 PM"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

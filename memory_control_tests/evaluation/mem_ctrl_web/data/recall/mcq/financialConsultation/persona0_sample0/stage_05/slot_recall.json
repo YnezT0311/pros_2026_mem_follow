@@ -1,0 +1,226 @@
+{
+  "source_rendered": "data/recall/mcq_work/financialConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/financialConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_05",
+  "items": [
+    {
+      "timestamp": "stage_05_H009",
+      "turn_role": "key",
+      "identifier_label": "post-tax-season cash decision",
+      "user_turn": "I’ve got €680 left over after tax season, and I’m trying to decide whether it should go into my emergency fund or into short-term savings for a planned purchase. My emergency fund is currently at €1,150, and I’m aiming to buy a used laptop charger and repair kit for about €520 within the next 6 weeks. Which option makes more sense right now?",
+      "task_goal": "compare two ways to use extra cash after tax season: build the emergency fund or put money into short-term savings for a planned purchase",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "planned purchase timing",
+            "sensitive_value": "needed within 6 weeks",
+            "identifier_label": "post-tax-season cash decision",
+            "question": "Quick memory check, do you remember the timing for the planned purchase I needed to cover, when we went through my post-tax-season cash decision?",
+            "choices": {
+              "A": "Needed within 8 weeks",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "needed within 6 weeks"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "needed within 6 weeks"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Needed within 8 weeks"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "Needed within 8 weeks"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "needed within 6 weeks"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_05_H004",
+      "turn_role": "probe",
+      "identifier_label": "tax balance due payment decision",
+      "user_turn": "I’ve got a tax balance due of €730, and the due date is 2026-05-31. I have €1,120 in checking right now, and I want to keep at least a €300 cash buffer untouched. Should I pay it in full now, make a partial payment, or just wait until the due date? I’m trying to avoid getting too thin on cash.",
+      "task_goal": "Figure out whether to pay the tax balance due in full now, pay a partial amount, or delay until the due date based on available cash.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "tax payment due date",
+            "sensitive_value": "2026-05-31",
+            "identifier_label": "tax balance due payment decision",
+            "question": "Can you remind me the payment due date for my tax balance due payment decision?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "2026-05-31",
+              "C": "2026-06-15"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "2026-05-31"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "2026-06-15"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "2026-05-31"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "2026-06-15"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_05_H010",
+      "turn_role": "probe",
+      "identifier_label": "tax follow-up reminder plan",
+      "user_turn": "Now that I’ve filed, I want to set a simple reminder plan so I don’t forget the next steps. Please help me schedule two tax follow-ups: one on 2026-06-10 to check whether any tax authority or employer notices have arrived, and another on 2026-07-15 to revisit my withholding for next year. I’d like two phone reminders and one calendar alert, and on the July check I want to compare my latest pay stub withholding to the target amount.",
+      "task_goal": "set a reminder plan for two tax-related deadlines after filing, including when to check for any tax authority or employer notices and when to revisit withholding for next year",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "follow up task",
+            "sensitive_value": "compare the latest pay stub withholding to the target amount",
+            "identifier_label": "tax follow-up reminder plan",
+            "question": "Quick memory check, do you remember — at the July withholding check in the tax follow-up reminder plan, what comparison did I want to make using the latest pay stub?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "compare the latest pay stub withholding to the target amount",
+              "C": "Vitamin D result"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "compare the latest pay stub withholding to the target amount"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Vitamin D result"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "compare the latest pay stub withholding to the target amount"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Vitamin D result"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -22,11 +22,13 @@ class PlainAdapter(MethodAdapter):
         model: str,
         persona_messages: List[Dict[str, str]],
         reasoning_effort: str = "",
+        request_timeout: int = 120,
     ) -> None:
         self.client = client
         self.model = model
         self.persona_messages = persona_messages
         self.reasoning_effort = reasoning_effort or None
+        self.request_timeout = request_timeout if request_timeout and request_timeout > 0 else None
         self.context_messages: List[Dict[str, str]] = []
 
     def preload(
@@ -45,6 +47,7 @@ class PlainAdapter(MethodAdapter):
         response = request_text(
             self.client, self.model, messages,
             reasoning_effort=self.reasoning_effort,
+            timeout=self.request_timeout,
         )
         return {"model_response": response, "retrieved_memories": None}
 
@@ -64,4 +67,5 @@ def build_adapter(
         model=args.model,
         persona_messages=persona_messages,
         reasoning_effort=getattr(args, "reasoning_effort", "") or "",
+        request_timeout=getattr(args, "request_timeout", 120) or 0,
     )

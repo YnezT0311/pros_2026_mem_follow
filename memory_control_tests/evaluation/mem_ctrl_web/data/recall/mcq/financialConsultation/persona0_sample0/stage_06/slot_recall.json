@@ -1,0 +1,298 @@
+{
+  "source_rendered": "data/recall/mcq_work/financialConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/financialConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_06",
+  "items": [
+    {
+      "timestamp": "stage_06_H007",
+      "turn_role": "key",
+      "identifier_label": "booking message draft before payment",
+      "user_turn": "Could you draft a short message for me to confirm the Delcroix Family Trip Reservation before I pay? I want to make sure the dates from 2026-06-18 to 2026-06-25 are correct, and that the €180 deposit due at booking is still the right amount. Please also ask them to confirm the free cancellation until 7 days before arrival policy.",
+      "task_goal": "Draft a concise message to confirm a booking’s details and payment terms before committing funds.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "deposit amount",
+            "sensitive_value": "€180 deposit due at booking",
+            "identifier_label": "booking message draft before payment",
+            "question": "Hey, do you remember what deposit amount needed to be confirmed for my booking message draft before payment?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "€180 deposit due at booking",
+              "C": "€148 deposit due at booking"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€180 deposit due at booking"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€148 deposit due at booking"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "€180 deposit due at booking"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "€148 deposit due at booking"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_06_H004",
+      "turn_role": "probe",
+      "identifier_label": "Lyon to Barcelona trip transit budget",
+      "user_turn": "I’m planning a trip from Lyon to Barcelona for 4 travelers from 2026-06-18 to 2026-06-25, and I want to estimate transportation costs separately from lodging and meals. Please help me compare the flight, train, or gas cost, include any airport or transit fees, and suggest a local transport allowance for the stay.",
+      "task_goal": "Estimate transportation costs for getting to the trip destination and getting around locally, so I can set a separate transit budget without affecting other travel categories.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "trip dates",
+            "sensitive_value": "2026-06-18 to 2026-06-25",
+            "identifier_label": "Lyon to Barcelona trip transit budget",
+            "question": "Hey — can you remind me the trip dates I mentioned for my Lyon to Barcelona trip transit budget?",
+            "choices": {
+              "A": "2026-07-21 to 2026-06-25",
+              "B": "2026-06-18 to 2026-06-25",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "2026-06-18 to 2026-06-25"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "2026-07-21 to 2026-06-25"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "2026-07-21 to 2026-06-25"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "2026-06-18 to 2026-06-25"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_06_H008",
+      "turn_role": "probe",
+      "identifier_label": "quick cash-flow check for the June family trip",
+      "user_turn": "Could you do a quick cash-flow check for the trip? My checking balance is €1,265 right now, I’ve already set aside €520 for essentials that I don’t want to touch, and I want to make sure the trip still leaves enough in checking to cover my regular bills on time. The bill due dates I’m watching are 2026-06-03 and 2026-06-17.",
+      "task_goal": "Check whether the trip plan leaves enough room in checking to cover regular bills on time, using the bill due dates, the current checking balance, and the money already reserved for essentials.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "bill due date 2",
+            "sensitive_value": "2026-06-17",
+            "identifier_label": "quick cash-flow check for the June family trip",
+            "question": "Hey — can you remind me the second bill due date I was watching for my quick cash-flow check for the June family trip?",
+            "choices": {
+              "A": "2026-07-20",
+              "B": "2026-06-17",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "2026-06-17"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "2026-07-20"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "2026-07-20"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "2026-06-17"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_06_H010",
+      "turn_role": "probe",
+      "identifier_label": "carry-on trip packing checklist",
+      "user_turn": "I want to get ahead of packing so I don’t end up making last-minute purchases for our trip. We leave on 2026-06-21, we’ll be gone for 9 days, and I’m trying to keep it to carry-on only, so I need a checklist that makes sense for that. I also know I’m the type to forget my phone charger, so please make sure chargers are on the list along with the essentials and any toiletries or other things we should buy before we go.",
+      "task_goal": "create a packing checklist that avoids last-minute purchases",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "departure date",
+            "sensitive_value": "2026-06-21",
+            "identifier_label": "carry-on trip packing checklist",
+            "question": "Do you remember the departure date I gave for the trip, when we went through my carry-on trip packing checklist?",
+            "choices": {
+              "A": "2026-06-21",
+              "B": "2026-07-21",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "2026-06-21"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "2026-07-21"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "2026-06-21"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "2026-07-21"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

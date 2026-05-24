@@ -1,0 +1,226 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_04",
+  "items": [
+    {
+      "timestamp": "stage_04_H009",
+      "turn_role": "key",
+      "identifier_label": "appointment message about worsening symptoms",
+      "user_turn": "Can you draft a short message asking if my appointment on May 6 at 3:20 PM should be moved up? My symptoms have been worsening over the past 10 days, and I’ve had to stop after about 15 minutes of walking. I’m also worried the next open slot may be several weeks away.",
+      "task_goal": "Draft a short message asking whether the appointment should be moved earlier because symptoms are worsening and activity is more limited, while also noting concern about the current appointment availability.",
+      "rendered": {
+        "identifier_label": "appointment message about worsening symptoms",
+        "question": "Hey, do you remember what I was asking you to help with for my appointment message about worsening symptoms?",
+        "choices": {
+          "A": "A short message asking whether the appointment should be moved earlier because symptoms were worsening and walking was becoming more limited, while also mentioning concern that the next available opening might be several weeks away.",
+          "B": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?",
+          "C": "A short note summarizing the fatigue symptoms for the clinician, including how long they had been happening and any possible triggers that might be worth mentioning during the visit."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "not_remember": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "not_remember",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "A short message asking whether the appointment should be moved earlier because symptoms were worsening and walking was becoming more limited, while also mentioning concern that the next available opening might be several weeks away."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "A short note summarizing the fatigue symptoms for the clinician, including how long they had been happening and any possible triggers that might be worth mentioning during the visit."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "A short message asking whether the appointment should be moved earlier because symptoms were worsening and walking was becoming more limited, while also mentioning concern that the next available opening might be several weeks away."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "A short note summarizing the fatigue symptoms for the clinician, including how long they had been happening and any possible triggers that might be worth mentioning during the visit."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_04_H009"
+        ],
+        "rationale": "The label is specific to a short message asking whether a scheduled appointment should be moved earlier because symptoms are worsening and the next opening may be weeks away. That matches stage_04_H009 exactly. The other appointment-related turns are about different issues (sleep, logistics, meds, etc.) and do not naturally fit this label."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "stage_04_H004",
+      "turn_role": "probe",
+      "identifier_label": "specialist visit pain-cause questions",
+      "user_turn": "I want to go into this specialist visit with a few clear questions about what might be causing the pain. It’s been in my right outer hip and upper thigh, and it’s a sharp pain when I twist or get out of a car. I’ve even stopped doing my short hill walks because it flares on the climb. I’ve tried acetaminophen 500 mg and warm showers, but they only help a little. Can you help me word questions about the most likely diagnosis, what else it could be, and what tests might be needed to tell them apart?",
+      "task_goal": "Prepare a focused set of questions about possible causes of the ongoing pain, including what the most likely diagnosis might be, what else it could be, and what tests might be needed to tell them apart.",
+      "rendered": {
+        "identifier_label": "specialist visit pain-cause questions",
+        "question": "Do you remember what I was asking you to help with for my specialist visit pain-cause questions?",
+        "choices": {
+          "A": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?",
+          "B": "You wanted help wording a few clear questions for the specialist about what might be causing the pain, including the most likely diagnosis, other possible causes, and what tests might help distinguish between them.",
+          "C": "You wanted help organizing a travel itinerary and packing list for an upcoming trip."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help wording a few clear questions for the specialist about what might be causing the pain, including the most likely diagnosis, other possible causes, and what tests might help distinguish between them."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help organizing a travel itinerary and packing list for an upcoming trip."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "You wanted help wording a few clear questions for the specialist about what might be causing the pain, including the most likely diagnosis, other possible causes, and what tests might help distinguish between them."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help organizing a travel itinerary and packing list for an upcoming trip."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_04_H004"
+        ],
+        "rationale": "The identifier label refers specifically to a specialist visit where the user wants to ask about the likely cause of pain and what else it could be. Among the candidates, stage_04_H004 directly matches that purpose and wording. The other specialist-visit pain turns are about functional limits, home remedies, treatment options, or logistics rather than diagnosis-differential questions."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "stage_04_H010",
+      "turn_role": "probe",
+      "identifier_label": "specialist visit checklist for pain concerns",
+      "user_turn": "Can you help me make a short checklist for the specialist visit? I’ve got a folder of prior visit notes and lab printouts in the car glove box, and I also have a phone note with my current prescriptions, the over-the-counter pain relievers I’ve tried, and my supplement names. I want to be sure I bring a couple of good questions too, like what could be causing the pain and whether any imaging is needed, and what activity limits are safe until the next appointment.",
+      "task_goal": "Make a short checklist of what to bring to the specialist visit so the appointment is organized and efficient.",
+      "rendered": {
+        "identifier_label": "specialist visit checklist for pain concerns",
+        "question": "Hey — do you still remember what I wanted help with for my specialist visit checklist for pain concerns?",
+        "choices": {
+          "A": "You wanted a short, organized summary of your fatigue symptoms and possible triggers to mention to the clinician.",
+          "B": "You wanted a short, organized checklist of what to bring and prepare for the specialist visit so the appointment would go smoothly and efficiently.",
+          "C": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted a short, organized checklist of what to bring and prepare for the specialist visit so the appointment would go smoothly and efficiently."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted a short, organized summary of your fatigue symptoms and possible triggers to mention to the clinician."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted a short, organized summary of your fatigue symptoms and possible triggers to mention to the clinician."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "You wanted a short, organized checklist of what to bring and prepare for the specialist visit so the appointment would go smoothly and efficiently."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_04_H010"
+        ],
+        "rationale": "The label is specifically about making a short checklist for a specialist visit related to pain, bringing prior notes/labs and a medication/pain-relief list, and preparing questions about causes, imaging, and safe activity limits. That matches stage_04_H010 directly. The other specialist-pain turns focus on symptom description, treatment questions, sleep impact, or worsening symptoms, but not the checklist/prep request."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

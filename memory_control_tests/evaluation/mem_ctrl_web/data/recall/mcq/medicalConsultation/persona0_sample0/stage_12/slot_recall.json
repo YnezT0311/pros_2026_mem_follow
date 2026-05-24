@@ -1,0 +1,492 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_12",
+  "items": [
+    {
+      "timestamp": "stage_12_H005",
+      "turn_role": "key",
+      "identifier_label": "Achilles injury symptom summary for a sports medicine visit",
+      "user_turn": "I need help organizing some injury notes for the sports medicine visit. My right Achilles started feeling tight after hill sprints on February 11, the discomfort is about 4 out of 10 during warmups, and it usually eases after about 15 minutes. I haven't noticed swelling, but the tendon feels tender the next morning. Can you help me turn that into a clear symptom summary and a few questions?",
+      "task_goal": "organize injury symptoms for a sports medicine visit",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "injury trigger and date",
+            "sensitive_value": "tightness started after hill sprints on February 11",
+            "identifier_label": "Achilles injury symptom summary for a sports medicine visit",
+            "question": "Do you remember — what activity and date did the Achilles tightness first begin after in the visit summary?",
+            "choices": {
+              "A": "tightness started after hill sprints on February 11",
+              "B": "It started after hill sprints on March 4.",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "tightness started after hill sprints on February 11"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "It started after hill sprints on March 4."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "tightness started after hill sprints on February 11"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "It started after hill sprints on March 4."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_12_H009",
+      "turn_role": "key",
+      "identifier_label": "workshop feedback message",
+      "user_turn": "I recently attended the workshop on February 6, and I wanted to share my feedback. One of the key takeaways for me was the importance of mental resilience in sports. I found it quite enlightening and impactful. However, I think the workshop could benefit from more interactive sessions to keep participants engaged. Overall, it was a great learning experience!",
+      "task_goal": "draft a message for feedback on a recent workshop attended",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "suggestion for improvement",
+            "sensitive_value": "more interactive sessions during the workshop",
+            "identifier_label": "workshop feedback message",
+            "question": "Quick memory check, do you remember the suggestion for improvement I make for the workshop, when we went through my workshop feedback message?",
+            "choices": {
+              "A": "Less interactive sessions during the workshop.",
+              "B": "more interactive sessions during the workshop",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "more interactive sessions during the workshop"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Less interactive sessions during the workshop."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "Less interactive sessions during the workshop."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "more interactive sessions during the workshop"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_12_H002",
+      "turn_role": "probe",
+      "identifier_label": "muscle recovery strategies note",
+      "user_turn": "I've been focusing on my muscle recovery strategies, and I've been using ice baths and foam rolling about three times a week. I've noticed that these methods really help reduce muscle soreness and improve my flexibility after tough workouts.",
+      "task_goal": "organize notes about muscle recovery strategies",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "recovery method types",
+            "sensitive_value": "ice baths and foam rolling",
+            "identifier_label": "muscle recovery strategies note",
+            "question": "Can you remind me which recovery methods was I using for my muscle recovery strategies note?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "ice baths and foam rolling",
+              "C": "Heat therapy and stretching."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "ice baths and foam rolling"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Heat therapy and stretching."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "ice baths and foam rolling"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Heat therapy and stretching."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_12_H004",
+      "turn_role": "probe",
+      "identifier_label": "competition mental preparation",
+      "user_turn": "I'm really focusing on my mental preparation as my competition is coming up on February 20. I've been doing about 15 minutes of visualization each day, which helps me stay grounded. To boost my confidence, I tell myself, 'I am strong, I can do this.' And when stress levels get high, I use the 4-7-8 breathing technique to calm myself. I need to sharpen these mental strategies as I work towards performing at my best.",
+      "task_goal": "discuss mental preparation techniques for competition",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "daily visualization practice duration",
+            "sensitive_value": "15 minutes",
+            "identifier_label": "competition mental preparation",
+            "question": "Do you remember the daily visualization practice duration I mentioned for my competition mental preparation?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "17 minutes",
+              "C": "15 minutes"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "15 minutes"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "17 minutes"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "17 minutes"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "15 minutes"
+              }
+            ]
+          },
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "current stress level",
+            "sensitive_value": "high",
+            "identifier_label": "competition mental preparation",
+            "question": "Quick memory check, do you remember the current stress level I mentioned for my competition mental preparation?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "Low.",
+              "C": "high"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "high"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Low."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "Low."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "high"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_12_H006",
+      "turn_role": "probe",
+      "identifier_label": "upcoming sports appointment checklist",
+      "user_turn": "I need to organize my checklist for my upcoming sports appointment on February 25. I've already booked my flight for February 24, so I’ll be arriving the day before. Also, I need to make sure to have my medical clearance form ready as well.",
+      "task_goal": "make a checklist for upcoming sports appointments",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "next sports appointment date",
+            "sensitive_value": "February 25",
+            "identifier_label": "upcoming sports appointment checklist",
+            "question": "Can you remind me what date is the appointment scheduled for my upcoming sports appointment checklist?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "March 3",
+              "C": "February 25"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "February 25"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "March 3"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "March 3"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "February 25"
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "required paperwork",
+            "sensitive_value": "medical clearance form",
+            "identifier_label": "upcoming sports appointment checklist",
+            "question": "Hey, do you remember which required paperwork did I say you need to have ready for my upcoming sports appointment checklist?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "Insurance card copy",
+              "C": "medical clearance form"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "medical clearance form"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Insurance card copy"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "Insurance card copy"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "medical clearance form"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

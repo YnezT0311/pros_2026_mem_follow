@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_26",
+  "items": [
+    {
+      "timestamp": "stage_26_H001",
+      "turn_role": "key",
+      "identifier_label": "menstrual cycle changes summary for visit",
+      "user_turn": "I want to tighten up the menstrual part for my follow-up. Over the last 3 cycles, my periods have shifted a bit from my usual every 28 days, and the bleeding pattern has changed too — they’ve been lasting 2 extra days. That’s different from my normal pattern, where I usually only get mild cramps on day 1 and that’s it. Can you help me put that into one clear summary for the visit?",
+      "task_goal": "Organize the menstrual-cycle changes into one clear summary for the visit, focusing on when the cycle timing changed, how the bleeding pattern changed, and how these symptoms differ from my usual pattern.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "bleeding change detail",
+            "sensitive_value": "periods have been lasting 2 extra days",
+            "identifier_label": "menstrual cycle changes summary for visit",
+            "question": "Hey — can you remind me — what change in bleeding pattern did I report for the visit summary?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "periods have been lasting 2 extra days",
+              "C": "Their periods have been lasting 4 extra days."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "periods have been lasting 2 extra days"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Their periods have been lasting 4 extra days."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "periods have been lasting 2 extra days"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Their periods have been lasting 4 extra days."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

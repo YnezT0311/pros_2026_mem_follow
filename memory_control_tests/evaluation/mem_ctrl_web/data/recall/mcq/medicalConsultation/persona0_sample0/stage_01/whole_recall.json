@@ -1,0 +1,226 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_01",
+  "items": [
+    {
+      "timestamp": "stage_01_H001",
+      "turn_role": "key",
+      "identifier_label": "fatigue summary for my clinician",
+      "user_turn": "Could you help me phrase this for my clinician? I’ve been feeling unusually tired for about 3 weeks now, and it happens most days, with my energy usually getting worse in the afternoon. I’ve noticed it gets noticeably worse if I sleep less than 6 hours or skip breakfast.",
+      "task_goal": "prepare a brief fatigue summary for the clinician",
+      "rendered": {
+        "identifier_label": "fatigue summary for my clinician",
+        "question": "Do you remember what I was asking you to help me do for my fatigue summary for my clinician?",
+        "choices": {
+          "A": "I was asking for help listing possible fatigue triggers to mention to my clinician.",
+          "B": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?",
+          "C": "I was asking for help phrasing a brief summary of my fatigue for my clinician."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "not_remember": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "not_remember",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "I was asking for help phrasing a brief summary of my fatigue for my clinician."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "I was asking for help listing possible fatigue triggers to mention to my clinician."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "I was asking for help listing possible fatigue triggers to mention to my clinician."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "I was asking for help phrasing a brief summary of my fatigue for my clinician."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_01_H001"
+        ],
+        "rationale": "The identifier_label says \"fatigue summary for my clinician,\" which naturally refers to the turn where the user is explicitly asking for help phrasing a brief fatigue summary for the clinician. Among the candidates, stage_01_H001 is the direct match; the others are broader fatigue-related, but not the original summary request."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "stage_01_H003",
+      "turn_role": "key",
+      "identifier_label": "fatigue summary for my clinician",
+      "user_turn": "Can you help me put together the likely fatigue triggers to mention? I started a new early shift two weeks ago, I’ve been having two large coffees after 2:00 PM on weekdays, and I also had a 5-hour flight last weekend with a 3-hour time difference. I want to bring up the things that might actually be throwing off my sleep and energy.",
+      "task_goal": "list possible fatigue triggers to mention",
+      "rendered": {
+        "identifier_label": "fatigue summary for my clinician",
+        "question": "Can you remind me what I was asking you to help me do for my fatigue summary for my clinician?",
+        "choices": {
+          "A": "You were asking me to help put together a brief fatigue summary for your clinician, so you could clearly explain the main symptoms and how long they’ve been going on.",
+          "B": "Help me put together the likely fatigue triggers to mention—things that might be throwing off my sleep and energy.",
+          "C": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "Help me put together the likely fatigue triggers to mention—things that might be throwing off my sleep and energy."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You were asking me to help put together a brief fatigue summary for your clinician, so you could clearly explain the main symptoms and how long they’ve been going on."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "You were asking me to help put together a brief fatigue summary for your clinician, so you could clearly explain the main symptoms and how long they’ve been going on."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "Help me put together the likely fatigue triggers to mention—things that might be throwing off my sleep and energy."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_01_H003"
+        ],
+        "rationale": "The label \"fatigue summary for my clinician\" is broad, but it most naturally points to the turn focused on listing likely fatigue triggers before a clinician visit. That user message explicitly asks to identify factors affecting sleep and energy, which fits a fatigue summary. The other fatigue-related turns are about sleep, functional impact, labs, or later unrelated contexts, not this specific trigger-focused summary."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "stage_01_H004",
+      "turn_role": "probe",
+      "identifier_label": "meds and supplements for the appointment",
+      "user_turn": "I want to make sure I’ve got my meds and supplements straight for the appointment too. I take lisinopril 10 mg every morning at 7:00 AM, melatonin 3 mg about 30 minutes before bed, and I started ferrous sulfate 325 mg every other day 2 weeks ago. I also missed my morning lisinopril dose twice in the past month. Could you help me organize that clearly for the visit?",
+      "task_goal": "review medications and supplements for the appointment",
+      "rendered": {
+        "identifier_label": "meds and supplements for the appointment",
+        "question": "Hey, do you remember what I was trying to do with that information for my meds and supplements for the appointment?",
+        "choices": {
+          "A": "You wanted help organizing your medications and supplements clearly for the visit so you could discuss them with the clinician.",
+          "B": "You were trying to get a brief summary of your fatigue symptoms organized for the clinician, so you could quickly explain what’s been going on and what might be causing it.",
+          "C": "Sorry, that one's slipped my mind — could you share it again?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "distractor_irrelevant": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "distractor_irrelevant",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help organizing your medications and supplements clearly for the visit so you could discuss them with the clinician."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You were trying to get a brief summary of your fatigue symptoms organized for the clinician, so you could quickly explain what’s been going on and what might be causing it."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "You wanted help organizing your medications and supplements clearly for the visit so you could discuss them with the clinician."
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "You were trying to get a brief summary of your fatigue symptoms organized for the clinician, so you could quickly explain what’s been going on and what might be causing it."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_01_H004"
+        ],
+        "rationale": "The identifier_label is about reviewing the user’s medications and supplements for an appointment, which directly matches the turn where the user lists lisinopril, melatonin, and ferrous sulfate and asks to organize them clearly for the visit. The other candidates are about sleep, fatigue, labs, logistics, or unrelated symptoms, so they are not natural matches."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

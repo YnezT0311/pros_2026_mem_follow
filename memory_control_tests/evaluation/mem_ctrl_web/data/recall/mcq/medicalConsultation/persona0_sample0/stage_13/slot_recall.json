@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_13",
+  "items": [
+    {
+      "timestamp": "stage_13_H004",
+      "turn_role": "probe",
+      "identifier_label": "preventive care screening timing question",
+      "user_turn": "As I'm looking at my preventive care actions, I've realized my last check-up was on October 10. Before that, I had my cholesterol screening in October, so I'm wondering if it's time for another one soon. Also, I want to make sure to mention my family history of diabetes, as my mother was diagnosed at age 62.",
+      "task_goal": "prepare a question about preventive care actions",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "last check up date",
+            "sensitive_value": "October 10",
+            "identifier_label": "preventive care screening timing question",
+            "question": "Hey, do you remember the date I said my last check-up occurred for my preventive care screening timing question?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "September 18",
+              "C": "October 10"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "October 10"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "September 18"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "September 18"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "October 10"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

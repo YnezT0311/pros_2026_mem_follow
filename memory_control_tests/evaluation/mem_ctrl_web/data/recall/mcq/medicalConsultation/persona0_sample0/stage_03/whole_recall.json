@@ -1,0 +1,298 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_03",
+  "items": [
+    {
+      "timestamp": "stage_03_H001",
+      "turn_role": "key",
+      "identifier_label": "annual exam lab summary",
+      "user_turn": "Can you help me put my recent labs into a simple summary for my annual visit? I’ve got ALT 58 U/L, Hemoglobin A1c 5.8%, LDL cholesterol 142 mg/dL, and Vitamin D 22 ng/mL, and I want to know which ones are high or low and what I should ask the clinician about follow-up or repeat testing.",
+      "task_goal": "Summarize the recent lab results for the annual exam visit, including which tests were checked, any notable highs or lows, and what to ask the clinician about them.",
+      "rendered": {
+        "identifier_label": "annual exam lab summary",
+        "question": "Hey, do you remember what I was asking you to do for my annual exam lab summary?",
+        "choices": {
+          "A": "Sorry, that one's slipped my mind — could you share it again?",
+          "B": "You wanted a simple summary of your recent annual exam labs, noting which tests were checked, which results looked high or low, and what follow-up or repeat-testing questions to ask the clinician.",
+          "C": "You were asking for a brief summary of your fatigue, including likely triggers, how it affects daily activities, and a few concise points they could share with the clinician at the visit."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted a simple summary of your recent annual exam labs, noting which tests were checked, which results looked high or low, and what follow-up or repeat-testing questions to ask the clinician."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You were asking for a brief summary of your fatigue, including likely triggers, how it affects daily activities, and a few concise points they could share with the clinician at the visit."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "You wanted a simple summary of your recent annual exam labs, noting which tests were checked, which results looked high or low, and what follow-up or repeat-testing questions to ask the clinician."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "You were asking for a brief summary of your fatigue, including likely triggers, how it affects daily activities, and a few concise points they could share with the clinician at the visit."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_03_H001"
+        ],
+        "rationale": "The label 'annual exam lab summary' most naturally refers to the single annual-visit lab summary turn that asks to summarize recent labs and note highs/lows and follow-up questions. Among the candidates, stage_03_H001 directly matches that content. The other annual-exam turns are about vaccines, screening, sleep, blood pressure, or logistics rather than a lab summary."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "stage_03_H003",
+      "turn_role": "key",
+      "identifier_label": "annual exam vaccine questions",
+      "user_turn": "For my annual exam, I want to be ready to ask about vaccines. My last flu shot was in October, and my last Tdap was in 2016, so I want to know which shots might be due. My childhood vaccine record is kept in a blue folder at home, in case they want that history. I also want to mention that after my last flu shot I had a sore arm and a low-grade fever for one day, so I’m wondering if that matters for side effects this time.",
+      "task_goal": "Organize questions about vaccines for the annual exam, including which shots are due, what vaccine history to mention, and whether there are any side-effect concerns to ask about.",
+      "rendered": {
+        "identifier_label": "annual exam vaccine questions",
+        "question": "Hey — do you still remember — what was the main thing I wanted help with in the \"annual exam vaccine questions\" conversation?",
+        "choices": {
+          "A": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?",
+          "B": "You wanted help organizing questions for your annual exam about vaccines: which shots might be due, what vaccine history to mention, and whether any side effects from past vaccines should be brought up.",
+          "C": "You wanted help making a brief summary of your fatigue symptoms for the clinician, including possible triggers and when the tiredness seems to get worse."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help organizing questions for your annual exam about vaccines: which shots might be due, what vaccine history to mention, and whether any side effects from past vaccines should be brought up."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help making a brief summary of your fatigue symptoms for the clinician, including possible triggers and when the tiredness seems to get worse."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "You wanted help organizing questions for your annual exam about vaccines: which shots might be due, what vaccine history to mention, and whether any side effects from past vaccines should be brought up."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help making a brief summary of your fatigue symptoms for the clinician, including possible triggers and when the tiredness seems to get worse."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_03_H003"
+        ],
+        "rationale": "The label 'annual exam vaccine questions' specifically refers to the user turn about preparing vaccine-related questions for an annual exam, including which shots are due, what vaccine history to mention, and side-effect concerns after a prior flu shot. Among the candidates, only stage_03_H003 matches that content directly."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "stage_03_H009",
+      "turn_role": "key",
+      "identifier_label": "fatigue and ferritin portal message",
+      "user_turn": "Can you help me draft a portal message about my serum ferritin? It came back at 14 ng/mL, and last year it was 19 ng/mL. I’ve been more tired than usual during afternoon workouts, so I’m trying to understand what that number may mean and whether I should do anything now or just wait until my appointment.",
+      "task_goal": "Draft a portal message asking the clinician how to interpret one lab result and whether any next step is recommended.",
+      "rendered": {
+        "identifier_label": "fatigue and ferritin portal message",
+        "question": "Hey, do you remember what I was asking you to help with for my fatigue and ferritin portal message?",
+        "choices": {
+          "A": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?",
+          "B": "You wanted help drafting a brief fatigue summary for your clinician that highlighted the main symptoms and timeline, so it would be easy to share in the portal.",
+          "C": "You wanted help writing a portal message to your clinician asking how to interpret the lab result and whether any next step was recommended."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "distractor_irrelevant": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "distractor_irrelevant",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help writing a portal message to your clinician asking how to interpret the lab result and whether any next step was recommended."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help drafting a brief fatigue summary for your clinician that highlighted the main symptoms and timeline, so it would be easy to share in the portal."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help drafting a brief fatigue summary for your clinician that highlighted the main symptoms and timeline, so it would be easy to share in the portal."
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "You wanted help writing a portal message to your clinician asking how to interpret the lab result and whether any next step was recommended."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_03_H009"
+        ],
+        "rationale": "The label points to the specific portal message about serum ferritin and afternoon workout fatigue. Among the candidates, stage_03_H009 is the exact match: it asks to draft a portal message about ferritin 14 ng/mL vs 19 ng/mL and mentions being more tired during afternoon workouts. The other lab or fatigue-related turns are broader or about different tests/symptoms."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "stage_03_H002",
+      "turn_role": "probe",
+      "identifier_label": "cancer screening questions at the annual visit",
+      "user_turn": "I want to make sure I ask the right cancer screening questions at this visit. I’m 45, my mom had breast cancer when she was 52, and I’d like to know which screenings are age-appropriate for me now, how that family history changes the plan, and whether I’m due for anything based on when I last had them done — my last colonoscopy was in June and my last Pap test was in September.",
+      "task_goal": "Prepare screening questions for cancer prevention, focusing on whether the recommended screenings are age-appropriate, how family history changes the plan, and when the last screening was done so the clinician can tell what is due now.",
+      "rendered": {
+        "identifier_label": "cancer screening questions at the annual visit",
+        "question": "Can you remind me what was the thing I wanted help with for my cancer screening questions at the annual visit?",
+        "choices": {
+          "A": "You wanted help organizing a brief fatigue summary for the clinician, including possible triggers, how long it has been happening, and what to mention at the annual visit so the doctor could understand the symptom quickly.",
+          "B": "You wanted help preparing a set of cancer screening questions for the visit, aimed at figuring out which screenings are appropriate now, how family history should affect the plan, and whether anything is due based on when prior screenings were last done.",
+          "C": "Sorry, that one's slipped my mind — could you share it again?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help preparing a set of cancer screening questions for the visit, aimed at figuring out which screenings are appropriate now, how family history should affect the plan, and whether anything is due based on when prior screenings were last done."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help organizing a brief fatigue summary for the clinician, including possible triggers, how long it has been happening, and what to mention at the annual visit so the doctor could understand the symptom quickly."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help organizing a brief fatigue summary for the clinician, including possible triggers, how long it has been happening, and what to mention at the annual visit so the doctor could understand the symptom quickly."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "You wanted help preparing a set of cancer screening questions for the visit, aimed at figuring out which screenings are appropriate now, how family history should affect the plan, and whether anything is due based on when prior screenings were last done."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_03_H002"
+        ],
+        "rationale": "The label specifically refers to the annual-exam cancer screening question. Among the candidates, stage_03_H002 is the direct match because it is explicitly about preparing screening questions for cancer prevention and includes age, family history, and prior colonoscopy/Pap timing. The other annual-exam turns are about labs, vaccines, sleep, or general preventive care rather than cancer screening."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

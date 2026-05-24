@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_07",
+  "items": [
+    {
+      "timestamp": "stage_07_H002",
+      "turn_role": "probe",
+      "identifier_label": "August stomach note after barbecue",
+      "user_turn": "During this August mood-and-sleep check-in, I also want a short note about a stomach issue that started after a weekend barbecue. I've had mild nausea with a crampy upper-stomach feeling for about 6 days. It shows up on 3 of those days, mostly after fried food or very large dinners, and it usually settles if I keep the next meal smaller.",
+      "task_goal": "summarize an August check-in stomach note after a weekend barbecue",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "additional symptom",
+            "sensitive_value": "crampy upper-stomach feeling",
+            "identifier_label": "August stomach note after barbecue",
+            "question": "Can you remind me the additional symptom or stomach feeling I mentioned for my August stomach note after barbecue?",
+            "choices": {
+              "A": "Slight swelling",
+              "B": "crampy upper-stomach feeling",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "crampy upper-stomach feeling"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Slight swelling"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "Slight swelling"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "crampy upper-stomach feeling"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

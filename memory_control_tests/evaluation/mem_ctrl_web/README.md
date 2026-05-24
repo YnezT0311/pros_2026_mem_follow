@@ -2,6 +2,8 @@
 
 This folder is the self-contained web-evaluation bundle for local ChatGPT and Claude testing.
 
+The default web protocol is stage-local: each session feeds one `Conversation Stage NN`, asks that stage's MCQs, then clears memory and deletes the conversation before the next stage. The legacy full-topic concat protocol is still available through the `*_long_context_*` scripts.
+
 Layout:
 
 ```text
@@ -9,19 +11,22 @@ mem_ctrl_web/
   data/
     benchmark_work_v2/
       baseline/<topic>/<sample>/conversation_package.json
-      <topic>/<sample>/mcq_questions.json
-      <topic>/<sample>/memory_targets.json
-      <topic>/<sample>/<sample>.no_store.transformed_history.json
-      <topic>/<sample>/<sample>.forget.transformed_history.json
+    recall/mcq/
+      <topic>/<sample>/whole_recall.json
+      <topic>/<sample>/slot_recall.json
+      <topic>/<sample>/stage_XX/whole_recall.json
+      <topic>/<sample>/stage_XX/slot_recall.json
+    generated/
+      <topic>/<sample>/conversation_package.json
   chatgpt/
   claude/
 ```
 
-The bundled `data/` is the minimal web-eval subset. It uses the same benchmark work directory shape as the API and memory-system evaluation.
+The default data source is the bundled `mem_ctrl_web/data/recall/mcq`. The stage subdirectories are inspection-friendly copies; the web runners can also read the top-level `whole_recall.json` and `slot_recall.json` files directly. The matching source conversations live in `mem_ctrl_web/data/generated`.
 
 ## Quick Test
 
-The quick test runs only `travelPlanning` / `Conversation Stage 01`, asks only Stage 01 `whole_recall` MCQs, and covers only `baseline` plus `no_store`.
+The quick test runs only `travelPlanning` / `Conversation Stage 01`, asks only Stage 01 `whole_recall` MCQs, and covers `baseline`, `no_store`, and `forget`.
 
 Before running either web test:
 
@@ -79,7 +84,8 @@ memory_control_tests/evaluation/mem_ctrl_web
 After either route, your local folder should contain:
 
 ```text
-mem_ctrl_web/data/benchmark_work_v2
+mem_ctrl_web/data/recall/mcq
+mem_ctrl_web/data/generated
 mem_ctrl_web/chatgpt
 mem_ctrl_web/claude
 ```
@@ -112,13 +118,13 @@ python -m patchright install chrome
 TOPICS="travelPlanning financialConsultation medicalConsultation" WORLDS="baseline no_store forget" bash run_claude_eval.sh
 ```
 
-Both runners default to:
+Both default runners now use:
 
 ```text
-../data/benchmark_work_v2
+../data/recall/mcq
 ```
 
-Override with `DATA=/path/to/benchmark_work_v2` if needed.
+Override with `DATA=/path/to/recall/mcq` if needed. Use `run_chatgpt_long_context_eval.sh`, `run_claude_long_context_eval.sh`, or pass `--long_context` for the old full-topic concat protocol.
 
 Full eval defaults to all samples, because `LIMIT=0` means no sample limit. For debugging, add `LIMIT=1`. To run one topic only, use `TOPIC=financialConsultation` instead of `TOPICS="..."`.
 
@@ -127,4 +133,4 @@ Resume behavior:
 - Completed sessions are skipped.
 - Interrupted sessions resume from their existing `session_trace.jsonl`.
 - Do not manually clear Memory or delete the active conversation before resuming an interrupted session.
-- The current bundle has one sample/persona per topic, so the full three-topic run has three topic/persona inputs per world.
+- The current bundle has one sample/persona per topic. In stage-local mode, each topic/persona/world is split into one session per stage that has active MCQs.

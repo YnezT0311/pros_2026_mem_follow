@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/financialConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/financialConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_07",
+  "items": [
+    {
+      "timestamp": "stage_07_H006",
+      "turn_role": "probe",
+      "identifier_label": "automatic transfer to high-yield savings",
+      "user_turn": "I'd like to set up a monthly automatic transfer of €150 to my high-yield savings account starting with my next paycheck on July 1st. Can you help me arrange that?",
+      "task_goal": "set a monthly automatic transfer for savings",
+      "rendered": {
+        "identifier_label": "automatic transfer to high-yield savings",
+        "question": "Hey, do you remember what I was trying to set up for my automatic transfer to high-yield savings?",
+        "choices": {
+          "A": "You were trying to figure out how much to move into emergency savings this month, likely as part of a broader budgeting plan.",
+          "B": "You wanted help arranging a monthly automatic transfer to savings.",
+          "C": "Sorry, that one's slipped my mind — could you share it again?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help arranging a monthly automatic transfer to savings."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You were trying to figure out how much to move into emergency savings this month, likely as part of a broader budgeting plan."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "You were trying to figure out how much to move into emergency savings this month, likely as part of a broader budgeting plan."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "You wanted help arranging a monthly automatic transfer to savings."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_07_H006"
+        ],
+        "rationale": "The identifier_label 'automatic transfer to high-yield savings' directly matches the July turn about setting up a monthly automatic transfer of €150 to a high-yield savings account starting with the next paycheck. None of the other turns are about an automatic transfer to a high-yield savings account."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

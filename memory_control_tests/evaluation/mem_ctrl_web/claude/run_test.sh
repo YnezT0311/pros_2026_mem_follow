@@ -11,16 +11,17 @@ HISTORY_RATE="${HISTORY_RATE:-0.2}"
 SESSION_DIR="${SESSION_DIR:-./claude_session}"
 SCRIPT_PATH="./evaluate_claude_web.py"
 TOPIC="${TOPIC:-travelPlanning}"
-DATA_DIR="${DATA:-../data/benchmark_work_v2}"
+DATA_DIR="${DATA:-../data/recall/mcq}"
 STAGE_ID="${STAGE_ID:-stage_01}"
 
-WORLDS=(baseline no_store)
+WORLDS=(baseline no_store forget)
 
 mkdir -p "$RESULTS"
 
 echo "============================================"
-echo "Starting Claude Stage 01 smoke test"
+echo "Starting Claude stage-local smoke test"
 echo "Topic: $TOPIC"
+echo "Stage: $STAGE_ID"
 echo "Worlds: ${WORLDS[*]}"
 echo "MCQs: whole_recall only"
 echo "Data dir: $DATA_DIR"
@@ -56,5 +57,5 @@ done
 
 echo ""
 echo "============================================"
-echo "Stage 01 smoke test done. Results in $RESULTS/"
+echo "Stage-local smoke test done. Results in $RESULTS/"
 echo "============================================"

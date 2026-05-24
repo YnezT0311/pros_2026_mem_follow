@@ -1,0 +1,154 @@
+{
+  "source_rendered": "data/recall/mcq_work/financialConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/financialConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_10",
+  "items": [
+    {
+      "timestamp": "stage_10_H003",
+      "turn_role": "key",
+      "identifier_label": "year-end savings target progress check",
+      "user_turn": "I'm trying to assess my savings progress before the year ends. Currently, I have €3,420 saved up, but my target amount is €5,000, and I want to reach that by the end of this year.",
+      "task_goal": "compete current savings versus target savings goals",
+      "rendered": {
+        "identifier_label": "year-end savings target progress check",
+        "question": "Hey, do you remember what I was trying to do before the year ended for my year-end savings target progress check?",
+        "choices": {
+          "A": "You wanted to compare your current savings against their savings goal to see how close you were to reaching it by year-end.",
+          "B": "You were trying to review their holiday shopping list and decide which purchases to postpone until next month.",
+          "C": "Sorry, that one's slipped my mind — could you share it again?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "distractor_irrelevant": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "distractor_irrelevant",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted to compare your current savings against their savings goal to see how close you were to reaching it by year-end."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You were trying to review their holiday shopping list and decide which purchases to postpone until next month."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "You wanted to compare your current savings against their savings goal to see how close you were to reaching it by year-end."
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "You were trying to review their holiday shopping list and decide which purchases to postpone until next month."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_10_H003"
+        ],
+        "rationale": "The label \"year-end savings target progress check\" most naturally refers to the December turn where the user explicitly asks to assess savings progress toward a year-end target. The other turns involve savings goals or transfer decisions, but they are not as directly about checking progress against a year-end savings target."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "stage_10_H002",
+      "turn_role": "probe",
+      "identifier_label": "monthly spending trends budget review",
+      "user_turn": "I'd like to analyze my monthly spending trends. My total monthly income is €3,450, and my current rent is €1,200. I usually spend about €320 on groceries, €200 on utilities, and I set aside €180 for entertainment. I think understanding these spending categories and major expenses will help me with my budgeting.",
+      "task_goal": "analyze monthly spending trends",
+      "rendered": {
+        "identifier_label": "monthly spending trends budget review",
+        "question": "Hey — do you still remember what I was asking you to help me do for my monthly spending trends budget review?",
+        "choices": {
+          "A": "You were asking for help planning a vacation itinerary and comparing flight options.",
+          "B": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?",
+          "C": "You wanted help analyzing monthly spending trends"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "not_remember": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "not_remember",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help analyzing monthly spending trends"
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You were asking for help planning a vacation itinerary and comparing flight options."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "You were asking for help planning a vacation itinerary and comparing flight options."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "You wanted help analyzing monthly spending trends"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_10_H002"
+        ],
+        "rationale": "The identifier_label \"monthly spending trends budget review\" most naturally refers to the turn explicitly asking to analyze monthly spending trends and budgeting around income, rent, groceries, utilities, and entertainment. Among the candidates, stage_10_H002 is the closest and most direct match. The other turns are about different topics such as savings, debt, insurance, or seasonal budgets, so they do not fit as naturally."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/travelPlanning/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/travelPlanning/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_09",
+  "items": [
+    {
+      "timestamp": "stage_09_H003",
+      "turn_role": "key",
+      "identifier_label": "Auckland Airport arrival transfer comparison",
+      "user_turn": "I'm arriving at Auckland Airport (AKL) at 2:00 PM and will have one 18-inch carry-on and a folded travel walker with me. Can you help me compare airport transfer options that would be suitable given my luggage and mobility constraints?",
+      "task_goal": "compare airport transfer options for one arrival window",
+      "rendered": {
+        "identifier_label": "Auckland Airport arrival transfer comparison",
+        "question": "Hey — do you still remember what I was trying to do in that earlier message, when we went through my Auckland Airport arrival transfer comparison?",
+        "choices": {
+          "A": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?",
+          "B": "I was asking for restaurant recommendations near the airport.",
+          "C": "You were asking me to compare airport transfer options for one arrival window"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "distractor_irrelevant": "B",
+          "remember_correct": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "distractor_irrelevant",
+          "C": "remember_correct"
+        },
+        "remember_correct_choice": "C",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You were asking me to compare airport transfer options for one arrival window"
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "I was asking for restaurant recommendations near the airport."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "I was asking for restaurant recommendations near the airport."
+          },
+          {
+            "choice": "C",
+            "answer_type": "remember_correct",
+            "text": "You were asking me to compare airport transfer options for one arrival window"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_09_H003"
+        ],
+        "rationale": "The identifier label explicitly refers to an Auckland Airport arrival transfer comparison, which naturally matches the turn about arriving at AKL at 2:00 PM with a carry-on and folded travel walker and asking to compare suitable airport transfer options. No other candidate is about Auckland/AKL."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

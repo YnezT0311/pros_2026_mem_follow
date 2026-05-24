@@ -49,7 +49,7 @@ def topic_from_rendered(rendered: str) -> str:
         return parts[-3]
     raise ValueError(
         f"Cannot infer topic from rendered path {rendered!r}; expected "
-        "'<...>/data/mcq_work/<topic>/<persona>/mcq_questions.json'."
+        "'<...>/data/recall/mcq_work/<topic>/<persona>/mcq_questions.json'."
     )
 
 
@@ -60,6 +60,7 @@ def default_output_path(
     method: str,
     model: str,
     *,
+    stage_id: str = "",
     no_use_restrict_period: str = "",
     no_use_release_period: str = "",
 ) -> str:
@@ -69,9 +70,9 @@ def default_output_path(
         suffix = f".{world}.restrict_{period_tag(no_use_restrict_period or 'all_stages')}"
         if no_use_release_period:
             suffix += f".release_{period_tag(no_use_release_period)}"
-        suffix += f".test_{period_tag(ask_period)}.{method_tag}_{model_tag}.json"
+        suffix += f".test_{period_tag(stage_id or ask_period)}.{method_tag}_{model_tag}.json"
     else:
-        suffix = f".{world}.{period_tag(ask_period)}.{method_tag}_{model_tag}.json"
+        suffix = f".{world}.{period_tag(stage_id or ask_period)}.{method_tag}_{model_tag}.json"
 
     topic = topic_from_rendered(rendered)
     stem = rendered_stem(rendered)

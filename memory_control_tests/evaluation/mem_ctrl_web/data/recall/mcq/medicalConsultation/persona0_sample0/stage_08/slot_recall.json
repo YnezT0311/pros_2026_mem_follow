@@ -1,0 +1,215 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_08",
+  "items": [
+    {
+      "timestamp": "stage_08_H009",
+      "turn_role": "key",
+      "identifier_label": "thyroid portal message",
+      "user_turn": "Could you help me draft a spring portal message for my clinician? I'm a bit concerned about my recent Thyroid Function Test; the result came back at 5.2 mIU/L. I'd like to ask what this result indicates about my thyroid function and whether it changes anything before my next routine visit.",
+      "task_goal": "draft a spring portal message asking what a thyroid lab result indicates",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "result value",
+            "sensitive_value": "5.2 mIU/L",
+            "identifier_label": "thyroid portal message",
+            "question": "Quick memory check, do you remember the thyroid lab result value I mentioned for my thyroid portal message?",
+            "choices": {
+              "A": "7.2 mIU/L",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "5.2 mIU/L"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "5.2 mIU/L"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "7.2 mIU/L"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "7.2 mIU/L"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "5.2 mIU/L"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_08_H010",
+      "turn_role": "probe",
+      "identifier_label": "appointment logistics checklist",
+      "user_turn": "I need to prepare for an appointment on September 30 at 10:00 AM. I want to make sure I have all the necessary documents, like the insurance card and a printout of the medication list, ready to bring along. Also, it’s really important to note that I need wheelchair access because of mobility issues.",
+      "task_goal": "make an appointment logistics checklist",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "documents to bring",
+            "sensitive_value": "insurance card and medication list printout",
+            "identifier_label": "appointment logistics checklist",
+            "question": "Hey, do you remember the documents I wanted to have ready to bring to the appointment for my appointment logistics checklist?",
+            "choices": {
+              "A": "insurance card and medication list printout",
+              "B": "You wanted to bring my current medication list and the pharmacy printout from the last refill.",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "insurance card and medication list printout"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "You wanted to bring my current medication list and the pharmacy printout from the last refill."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "insurance card and medication list printout"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "You wanted to bring my current medication list and the pharmacy printout from the last refill."
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "access constraint",
+            "sensitive_value": "requires wheelchair access due to mobility issues",
+            "identifier_label": "appointment logistics checklist",
+            "question": "Quick memory check, do you remember what accessibility need was noted for the appointment, when we went through my appointment logistics checklist?",
+            "choices": {
+              "A": "I needed limited pharmacy access during transit because of mobility issues.",
+              "B": "requires wheelchair access due to mobility issues",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "requires wheelchair access due to mobility issues"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "I needed limited pharmacy access during transit because of mobility issues."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "I needed limited pharmacy access during transit because of mobility issues."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "requires wheelchair access due to mobility issues"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

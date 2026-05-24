@@ -1,0 +1,287 @@
+{
+  "source_rendered": "data/recall/mcq_work/travelPlanning/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/travelPlanning/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_05",
+  "items": [
+    {
+      "timestamp": "stage_05_H003",
+      "turn_role": "key",
+      "identifier_label": "New York City holiday return flight planning",
+      "user_turn": "I’m looking at return flights home and want help comparing departure windows. I’ll need to check out of the hotel by 12:00 PM, and I’m planning to use a rideshare to get to the airport. I want to leave myself 2 hours 15 minutes for transit, baggage drop, and security. My preferred return window is 1:30 PM to 4:30 PM, and I want to figure out which departure time best fits a same-day checkout without feeling rushed.",
+      "task_goal": "compare return flight timing options for the trip home and decide which departure window best fits a same-day checkout and airport transit buffer",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "hotel checkout time",
+            "sensitive_value": "12:00 PM",
+            "identifier_label": "New York City holiday return flight planning",
+            "question": "Quick memory check, do you remember the time I needed to be out of the hotel by for my New York City holiday return flight planning?",
+            "choices": {
+              "A": "12:00 PM",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "10:30 AM"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "not_remember": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "not_remember",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "12:00 PM"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "10:30 AM"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "12:00 PM"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "10:30 AM"
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "preferred return window",
+            "sensitive_value": "1:30 PM to 4:30 PM",
+            "identifier_label": "New York City holiday return flight planning",
+            "question": "Hey — can you remind me — what return-flight departure window was I hoping to stay within for the trip home?",
+            "choices": {
+              "A": "11:00 AM to 2:00 PM",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "1:30 PM to 4:30 PM"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "1:30 PM to 4:30 PM"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "11:00 AM to 2:00 PM"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "11:00 AM to 2:00 PM"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "1:30 PM to 4:30 PM"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_05_H002",
+      "turn_role": "probe",
+      "identifier_label": "NYC winter trip flight arrival choice",
+      "user_turn": "I’m flying out of Chicago, and for the NYC trip I’d like to land somewhere between 1:00 PM and 4:00 PM if possible. My first day is intentionally light—just some sightseeing and a casual dinner—so I don’t want to arrive too wiped out. I’m usually moderately sensitive to jet lag, so I’m trying to pick the arrival time that gives me the best shot at feeling decent right away.",
+      "task_goal": "Compare flight arrival options for the trip start so I can pick the best one for the first day in New York City.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "preferred arrival window",
+            "sensitive_value": "1:00 PM to 4:00 PM",
+            "identifier_label": "NYC winter trip flight arrival choice",
+            "question": "Quick memory check, do you remember the arrival window I wanted if possible for my NYC winter trip flight arrival choice?",
+            "choices": {
+              "A": "3:00 PM to 4:00 PM",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "1:00 PM to 4:00 PM"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "1:00 PM to 4:00 PM"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "3:00 PM to 4:00 PM"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "3:00 PM to 4:00 PM"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "1:00 PM to 4:00 PM"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_05_H008",
+      "turn_role": "probe",
+      "identifier_label": "New York hotel bag drop plan",
+      "user_turn": "I’m trying to keep the hotel day easy—my checkout is at 12:00 PM, and I’ll have one checked suitcase plus a personal item. The hotel says we can drop luggage between 10:45 AM and 12:15 PM, and I’m planning to pick it back up sometime between 5:30 PM and 7:00 PM. What’s the best way to handle the bags so we can still make good use of the day in New York?",
+      "task_goal": "Plan where to leave bags around hotel check-in or checkout timing so the trip day stays workable.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "hotel check in time",
+            "sensitive_value": "3:00 PM",
+            "identifier_label": "New York hotel bag drop plan",
+            "question": "Hey — can you remind me the hotel check in time I was working around for my New York hotel bag drop plan?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "3:00 PM",
+              "C": "5:00 PM"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "3:00 PM"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "5:00 PM"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "3:00 PM"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "5:00 PM"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

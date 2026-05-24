@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/financialConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/financialConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_07",
+  "items": [
+    {
+      "timestamp": "stage_07_H004",
+      "turn_role": "probe",
+      "identifier_label": "investment contributions risk comparison",
+      "user_turn": "I'm trying to make a decision about how to allocate my new investment contributions, which will be €240 per month. Right now, my asset mix includes 58% in stocks, 32% in bonds, and 10% in cash. I feel comfortable tolerating a drop of up to 8% on this new slice of contributions, so I'm considering both conservative and aggressive options. Can you help me compare them?",
+      "task_goal": "Compare two risk levels for new investment contributions based on the current asset mix: a more conservative option and a more aggressive option, so the user can judge which better fits their risk tolerance.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "new contribution amount",
+            "sensitive_value": "€240 per month",
+            "identifier_label": "investment contributions risk comparison",
+            "question": "Can you remind me how much money was being added each month for my investment contributions risk comparison?",
+            "choices": {
+              "A": "€197 per month",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "€240 per month"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€240 per month"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€197 per month"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "€197 per month"
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "€240 per month"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,337 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_05",
+  "items": [
+    {
+      "timestamp": "stage_05_H009",
+      "turn_role": "key",
+      "identifier_label": "hydrochlorothiazide missed-dose portal message",
+      "user_turn": "Can you help me draft a patient portal message about my hydrochlorothiazide 25 mg? I missed 2 doses in the last 10 days, and I want to ask whether I should take the next dose as scheduled or do anything different to catch up.",
+      "task_goal": "Draft a patient portal message asking about missed doses of one medication, including which medicine was missed, how many doses were missed, and what the next question should be.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "missed dose count",
+            "sensitive_value": "2 doses",
+            "identifier_label": "hydrochlorothiazide missed-dose portal message",
+            "question": "Can you remind me — how many doses did I say were missed in the message draft?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "2 doses",
+              "C": "4 doses"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "2 doses"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "4 doses"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "2 doses"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "4 doses"
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "missed dose window",
+            "sensitive_value": "in the last 10 days",
+            "identifier_label": "hydrochlorothiazide missed-dose portal message",
+            "question": "Hey — can you remind me — over what time span did the missed doses happen in the message draft?",
+            "choices": {
+              "A": "In the last 12 days",
+              "B": "in the last 10 days",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "in the last 10 days"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "In the last 12 days"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "In the last 12 days"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "in the last 10 days"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_05_H006",
+      "turn_role": "probe",
+      "identifier_label": "clinician sleep summary note",
+      "user_turn": "Could you help me draft a short sleep update for my clinician? I’ve been going to bed around 10:45 PM, but it usually takes me about 40 minutes to fall asleep, and I wake up 2 to 3 times a night, though it’s usually brief. By morning I feel foggy, and it makes it harder to focus during the first part of the workday.",
+      "task_goal": "Make a short sleep summary for the clinician that clearly covers bedtime/sleep onset, how often I wake up at night, and whether the poor sleep is affecting my daytime energy or focus.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "sleep onset delay",
+            "sensitive_value": "takes about 40 minutes to fall asleep on most nights",
+            "identifier_label": "clinician sleep summary note",
+            "question": "Can you remind me how long does it usually take me to fall asleep after bedtime for my clinician sleep summary note?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "takes about 40 minutes to fall asleep on most nights",
+              "C": "Takes 70 to 90 minutes to fall asleep"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "takes about 40 minutes to fall asleep on most nights"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Takes 70 to 90 minutes to fall asleep"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "takes about 40 minutes to fall asleep on most nights"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Takes 70 to 90 minutes to fall asleep"
+              }
+            ]
+          },
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "night awakenings",
+            "sensitive_value": "wakes up 2 to 3 times a night, usually briefly",
+            "identifier_label": "clinician sleep summary note",
+            "question": "Quick memory check, do you remember how often do I wake up during the night, and is it usually brief for my clinician sleep summary note?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "wakes up 2 to 3 times a night, usually briefly",
+              "C": "Wakes once around 3:00 AM"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "wakes up 2 to 3 times a night, usually briefly"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Wakes once around 3:00 AM"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "wakes up 2 to 3 times a night, usually briefly"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "Wakes once around 3:00 AM"
+              }
+            ]
+          },
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "daytime impact",
+            "sensitive_value": "feels foggy and less able to focus during the first part of the workday",
+            "identifier_label": "clinician sleep summary note",
+            "question": "Hey — can you remind me the daytime impact I mentioned from the poor sleep for my clinician sleep summary note?",
+            "choices": {
+              "A": "feels foggy and less able to focus during the first part of the workday",
+              "B": "Often feels extremely tired in the afternoons",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "feels foggy and less able to focus during the first part of the workday"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "Often feels extremely tired in the afternoons"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "feels foggy and less able to focus during the first part of the workday"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "Often feels extremely tired in the afternoons"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

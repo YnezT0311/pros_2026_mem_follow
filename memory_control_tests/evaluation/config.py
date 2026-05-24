@@ -87,6 +87,7 @@ class EvalConfig:
     method: str
     model: str = "gpt-oss-120b"
     ask_period: str = "all_stages"
+    stage_id: str = ""
     # When non-empty, run all listed periods in one process with a single
     # incremental preload. Each period writes its own output file.
     # Falls back to single `ask_period` when empty.
@@ -98,6 +99,7 @@ class EvalConfig:
     api_key_file: str = "keys/openrouter_key.txt"
     reasoning_effort: str = ""
     workers: int = 10
+    request_timeout: int = 120
     method_config: Dict[str, Any] = field(default_factory=dict)
 
     def adapter_args(self) -> SimpleNamespace:
@@ -112,12 +114,14 @@ class EvalConfig:
             "method": self.method,
             "model": self.model,
             "ask_period": self.ask_period,
+            "stage_id": self.stage_id,
             "world": self.world,
             "sidecar": self.sidecar,
             "output": self.output,
             "api_key_file": self.api_key_file,
             "reasoning_effort": self.reasoning_effort,
             "workers": self.workers,
+            "request_timeout": self.request_timeout,
         }
         values.update(self.method_config)
         return SimpleNamespace(**values)
@@ -151,6 +155,11 @@ def parse_eval_config() -> EvalConfig:
     parser.add_argument("--model", default="gpt-oss-120b")
     parser.add_argument("--ask_period", default="all_stages")
     parser.add_argument(
+        "--stage_id",
+        default="",
+        help='Optional stage-local evaluation target such as "stage_01".',
+    )
+    parser.add_argument(
         "--ask_periods",
         default="",
         help=(
@@ -173,12 +182,19 @@ def parse_eval_config() -> EvalConfig:
         default=10,
         help="Max parallel MCQ workers. Only used by stateless adapters.",
     )
+    parser.add_argument(
+        "--request_timeout",
+        type=int,
+        default=120,
+        help="Per API request timeout in seconds. Use 0 to leave the SDK default.",
+    )
     args = parser.parse_args()
     return EvalConfig(
         rendered=args.rendered,
         method=args.method,
         model=args.model,
         ask_period=args.ask_period,
+        stage_id=args.stage_id,
         ask_periods=_resolve_period_list(args.ask_periods),
         world=args.world,
         sidecar=args.sidecar,
@@ -186,5 +202,6 @@ def parse_eval_config() -> EvalConfig:
         api_key_file=args.api_key_file,
         reasoning_effort=args.reasoning_effort,
         workers=args.workers,
+        request_timeout=args.request_timeout,
         method_config=load_method_config(args.method, args.method_config),
     )

@@ -1,0 +1,154 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_01",
+  "items": [
+    {
+      "timestamp": "stage_01_H003",
+      "turn_role": "key",
+      "identifier_label": "fatigue summary for my clinician",
+      "user_turn": "Can you help me put together the likely fatigue triggers to mention? I started a new early shift two weeks ago, I’ve been having two large coffees after 2:00 PM on weekdays, and I also had a 5-hour flight last weekend with a 3-hour time difference. I want to bring up the things that might actually be throwing off my sleep and energy.",
+      "task_goal": "list possible fatigue triggers to mention",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "recent travel",
+            "sensitive_value": "a 5-hour flight last weekend with a 3-hour time difference",
+            "identifier_label": "fatigue summary for my clinician",
+            "question": "Hey, do you remember the recent trip I mentioned that could have affected my sleep for my fatigue summary for my clinician?",
+            "choices": {
+              "A": "I had a 7-hour flight last weekend with a 3-hour time difference.",
+              "B": "I do not remember that exact detail from the earlier request.",
+              "C": "a 5-hour flight last weekend with a 3-hour time difference"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "not_remember": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "not_remember",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "B",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "a 5-hour flight last weekend with a 3-hour time difference"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "I had a 7-hour flight last weekend with a 3-hour time difference."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "I had a 7-hour flight last weekend with a 3-hour time difference."
+              },
+              {
+                "choice": "B",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "a 5-hour flight last weekend with a 3-hour time difference"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_01_H010",
+      "turn_role": "probe",
+      "identifier_label": "fatigue summary for my clinician",
+      "user_turn": "I want to send a quick message to the clinician asking what I should bring or prepare before the whole-health check-in. I’ve been having fatigue and poor sleep, so I’m planning to track sleep quality, morning energy, and any midday crashes for the next 5 days. Should I also bring a medication list? And I need to know if there are any scheduling or access issues I should mention too, since I depend on a 9:00 AM bus that only runs every 30 minutes and I can only do a morning appointment if it starts before 10:30 AM.",
+      "task_goal": "Draft a short clinician message asking what to bring, track, or prepare before the whole-health check-in.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "transport constraint",
+            "sensitive_value": "depends on a 9:00 AM bus that only runs every 30 minutes",
+            "identifier_label": "fatigue summary for my clinician",
+            "question": "Can you remind me the transportation situation I mentioned when explaining scheduling limits for my fatigue summary for my clinician?",
+            "choices": {
+              "A": "They depended on parking that was limited near the clinic.",
+              "B": "depends on a 9:00 AM bus that only runs every 30 minutes",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "depends on a 9:00 AM bus that only runs every 30 minutes"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "They depended on parking that was limited near the clinic."
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "They depended on parking that was limited near the clinic."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "depends on a 9:00 AM bus that only runs every 30 minutes"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

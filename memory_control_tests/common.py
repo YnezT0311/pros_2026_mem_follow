@@ -103,6 +103,7 @@ def build_transformed_history_path(
     world: str,
     release_period: Optional[str] = None,
     restrict_period: Optional[str] = None,
+    stage_id: str = "",
 ) -> Optional[Path]:
     if world == "baseline":
         return None
@@ -115,11 +116,12 @@ def build_transformed_history_path(
             if stem.endswith(suffix):
                 stem = stem[: -len(suffix)]
                 break
+    stage_suffix = f".{period_tag(stage_id)}" if stage_id else ""
     if world == "no_use":
         setting = build_no_use_setting_tag(restrict_period or "all_stages", release_period)
-        filename = f"{stem}.{world}.{setting}.transformed_history.json"
+        filename = f"{stem}.{world}{stage_suffix}.{setting}.transformed_history.json"
     else:
-        filename = f"{stem}.{world}.transformed_history.json"
+        filename = f"{stem}.{world}{stage_suffix}.transformed_history.json"
     parts = rendered.parts
     try:
         test_idx = parts.index("test")

@@ -9,10 +9,12 @@ from openai import OpenAI
 from ..common import final_conversation_stage_key, period_tag, stage_id_to_conversation_key
 from ..transforms import (
     MEMORY_CONTROL_METADATA_KEY,
+    MEMORY_CONTROL_STAGE_TRANSFORM_VERSION,
     MEMORY_CONTROL_TRANSFORM_VERSION,
     apply_no_store,
     apply_no_use,
     apply_randomized_forget,
+    apply_stage_local_forget,
 )
 
 
@@ -22,6 +24,9 @@ DEFAULT_MODEL_ALIASES = {
     "gpt-oss-120b": "openai/gpt-oss-120b",
     "gpt-5.4-mini": "openai/gpt-5.4-mini",
     "gpt-5-mini": "openai/gpt-5-mini",
+    "deepseek": "deepseek/deepseek-v4-pro",
+    "deepseek-v4-pro": "deepseek/deepseek-v4-pro",
+    "deepseek-v3.1-terminus": "deepseek/deepseek-v3.1-terminus",
     "gemini-3.1-pro-preview": "google/gemini-3.1-pro-preview",
 }
 
@@ -141,7 +146,13 @@ def request_text(
     if reasoning_effort:
         chat_kwargs["extra_body"] = {"reasoning": {"effort": reasoning_effort}}
     completion = client.chat.completions.create(**chat_kwargs)
-    message = completion.choices[0].message
+    embedded_error = getattr(completion, "error", None)
+    if embedded_error:
+        raise RuntimeError(f"Chat completion returned embedded error: {embedded_error}")
+    choices = getattr(completion, "choices", None)
+    if not choices:
+        raise RuntimeError(f"Chat completion returned no choices: {completion}")
+    message = choices[0].message
     content = getattr(message, "content", None)
     if isinstance(content, str) and content.strip():
         return content.strip()
@@ -308,6 +319,7 @@ def apply_world_transform(
     target_references: List[str],
     no_use_restrict_period: str,
     no_use_release_period: str,
+    stage_id: str = "",
 ) -> Dict[str, Any]:
     if world == "baseline":
         return conversation
@@ -316,6 +328,8 @@ def apply_world_transform(
     if world == "no_store":
         no_store_insertions = []
         for turn in sidecar.get("key_turns", []):
+            if stage_id and str(turn.get("stage_id", "")).strip() != stage_id:
+                continue
             timestamp = turn.get("timestamp")
             if not timestamp:
                 continue
@@ -334,16 +348,26 @@ def apply_world_transform(
                 }
             )
         metadata = dict(transformed.get(MEMORY_CONTROL_METADATA_KEY, {}))
-        metadata["transform_version"] = MEMORY_CONTROL_TRANSFORM_VERSION
+        metadata["transform_version"] = (
+            MEMORY_CONTROL_STAGE_TRANSFORM_VERSION if stage_id else MEMORY_CONTROL_TRANSFORM_VERSION
+        )
         metadata["no_store_insertions"] = no_store_insertions
         metadata["no_store_policy"] = {
             "placement": "same_user_turn_as_key",
-            "ask_position": "end_of_all_stages",
+            "ask_position": "end_of_stage" if stage_id else "end_of_all_stages",
+            "stage_id": stage_id,
         }
         transformed[MEMORY_CONTROL_METADATA_KEY] = metadata
         return transformed
 
     if world == "forget":
+        if stage_id:
+            return apply_stage_local_forget(
+                transformed,
+                key_turns=sidecar.get("key_turns", []),
+                target_references=target_references,
+                stage_id=stage_id,
+            )
         return apply_randomized_forget(
             transformed,
             key_turns=sidecar.get("key_turns", []),

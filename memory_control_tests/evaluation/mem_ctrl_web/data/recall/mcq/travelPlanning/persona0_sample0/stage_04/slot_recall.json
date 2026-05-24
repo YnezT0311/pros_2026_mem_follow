@@ -1,0 +1,154 @@
+{
+  "source_rendered": "data/recall/mcq_work/travelPlanning/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/travelPlanning/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_04",
+  "items": [
+    {
+      "timestamp": "stage_04_H006",
+      "turn_role": "probe",
+      "identifier_label": "Seattle scouting trip transit pass",
+      "user_turn": "For my Seattle scouting trip from September 9 through September 16, can you help me figure out if a monthly transit pass is worth it? I’m expecting 16 planned rides, and I think single rides are $2.75 each while the monthly pass is $99.",
+      "task_goal": "figure out whether a monthly transit pass would pay off for the September Seattle trip by comparing the pass price against the cost of planned single rides",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "planned rides count",
+            "sensitive_value": "16 planned rides",
+            "identifier_label": "Seattle scouting trip transit pass",
+            "question": "Do you remember how many rides was I expecting to take during the trip for my Seattle scouting trip transit pass?",
+            "choices": {
+              "A": "16 planned rides",
+              "B": "18 planned rides",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "remember_correct": "A",
+              "distractor_irrelevant": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "remember_correct",
+              "B": "distractor_irrelevant",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "A",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "16 planned rides"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "18 planned rides"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "remember_correct",
+                "text": "16 planned rides"
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "18 planned rides"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_04_H008",
+      "turn_role": "probe",
+      "identifier_label": "South Lake Union to Seattle Convention Center walk",
+      "user_turn": "I need to get from my hotel near South Lake Union to the Seattle Convention Center Arch Building by 8:15 AM, and the walk is about 1.8 miles. Do you think walking the full route is realistic, or should I plan on transit to keep it safe with the deadline?",
+      "task_goal": "decide whether walking the full route is realistic or if transit is the better option for a time-sensitive trip",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "personal_trip_constraint",
+            "sensitive_key": "arrival deadline",
+            "sensitive_value": "8:15 AM",
+            "identifier_label": "South Lake Union to Seattle Convention Center walk",
+            "question": "Can you remind me what arrival deadline I was trying to meet in the earlier request, when we went through my South Lake Union to Seattle Convention Center walk?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "8:15 AM",
+              "C": "6:45 AM"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "8:15 AM"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "6:45 AM"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "8:15 AM"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "6:45 AM"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/financialConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/financialConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_17",
+  "items": [
+    {
+      "timestamp": "stage_17_H010",
+      "turn_role": "probe",
+      "identifier_label": "investment option check budget subscription services request",
+      "user_turn": "I've been reviewing my total monthly spending, which is around €1,200, and I noticed that my current subscriptions add up to €150 per month. I'm trying to cut back and set a desired limit of €100 for future subscriptions. How would you suggest I go about adjusting my budget?",
+      "task_goal": "set a budget for subscription services",
+      "rendered": {
+        "identifier_label": "investment option check budget subscription services request",
+        "question": "Hey, do you remember — what was I trying to get help with in my earlier request about budgeting for subscription services?",
+        "choices": {
+          "A": "You wanted help setting a budget for subscription services",
+          "B": "I was asking for help choosing between different investment options.",
+          "C": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "distractor_irrelevant": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "distractor_irrelevant",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "B",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help setting a budget for subscription services"
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "I was asking for help choosing between different investment options."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "You wanted help setting a budget for subscription services"
+          },
+          {
+            "choice": "B",
+            "answer_type": "distractor_irrelevant",
+            "text": "I was asking for help choosing between different investment options."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_17_H010"
+        ],
+        "rationale": "Deterministic fallback: the request-level identifier is derived from a task_goal that appears once in the target pool."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_02",
+  "items": [
+    {
+      "timestamp": "stage_02_H002",
+      "turn_role": "probe",
+      "identifier_label": "new medication symptom pattern update",
+      "user_turn": "It’s been kind of frustrating because the symptom doesn’t stay constant — it shows up mainly in the late afternoon and then fades by evening. When it does hit, each episode lasts about 20 to 30 minutes. I’m also noticing it has been happening more often over the past 4 days, so I’m worried it may be getting worse.",
+      "task_goal": "Describe whether the symptom is constant or comes and goes, with a clear sense of how it behaves across the day.",
+      "rendered": {
+        "identifier_label": "new medication symptom pattern update",
+        "question": "Do you remember what was the main point I was trying to communicate about how the symptom behaves over the day for my new medication symptom pattern update?",
+        "choices": {
+          "A": "The symptom wasn’t constant; it came and went, mostly showing up later in the day and then easing off, with each episode lasting a short while and seeming to happen more often overall.",
+          "B": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?",
+          "C": "A brief summary for the clinician would be that the fatigue seemed tied to common triggers and was worth keeping an eye on, especially if it continued to affect daily activities."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "not_remember": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "not_remember",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "The symptom wasn’t constant; it came and went, mostly showing up later in the day and then easing off, with each episode lasting a short while and seeming to happen more often overall."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "A brief summary for the clinician would be that the fatigue seemed tied to common triggers and was worth keeping an eye on, especially if it continued to affect daily activities."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "The symptom wasn’t constant; it came and went, mostly showing up later in the day and then easing off, with each episode lasting a short while and seeming to happen more often overall."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "A brief summary for the clinician would be that the fatigue seemed tied to common triggers and was worth keeping an eye on, especially if it continued to affect daily activities."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_02_H002"
+        ],
+        "rationale": "The label is specifically about an update on a symptom pattern that is changing over time, which naturally matches the February side-effect follow-up turn describing a symptom that appears in the late afternoon, fades by evening, lasts 20–30 minutes, and has become more frequent over the past 4 days. The other candidates are either about different symptoms, broader visit prep, or medication changes rather than this exact pattern update."
+      },
+      "is_identifier_unique_to_target": true
+    },
+    {
+      "timestamp": "stage_02_H006",
+      "turn_role": "probe",
+      "identifier_label": "sleep-impact note for follow-up visit",
+      "user_turn": "Can you help me write a short sleep note for my follow-up? Most nights it takes me about 45 minutes to fall asleep, and I usually wake up once around 2:00 AM and stay up for 15 to 20 minutes. I’m only getting about 5.5 hours of sleep on a typical night, and I feel groggy and slower with concentration until late morning.",
+      "task_goal": "Make a brief sleep-impact note for the follow-up that says when sleep onset or waking happened, how many hours were slept, and how the sleep change affected the day.",
+      "rendered": {
+        "identifier_label": "sleep-impact note for follow-up visit",
+        "question": "Hey, do you remember what I was asking you to help write for my sleep-impact note for follow-up visit?",
+        "choices": {
+          "A": "You were asking for a note about general tiredness and energy levels for the follow-up, without specifically focusing on sleep.",
+          "B": "You wanted a brief sleep note for the follow-up that summarized their sleep difficulties, how much sleep you were getting, and how it was affecting their day.",
+          "C": "Sorry, that one's slipped my mind — could you share it again?"
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "distractor_irrelevant": "A",
+          "remember_correct": "B",
+          "not_remember": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "distractor_irrelevant",
+          "B": "remember_correct",
+          "C": "not_remember"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "A",
+        "not_remember_choice": "C",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted a brief sleep note for the follow-up that summarized their sleep difficulties, how much sleep you were getting, and how it was affecting their day."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You were asking for a note about general tiredness and energy levels for the follow-up, without specifically focusing on sleep."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "distractor_irrelevant",
+            "text": "You were asking for a note about general tiredness and energy levels for the follow-up, without specifically focusing on sleep."
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "You wanted a brief sleep note for the follow-up that summarized their sleep difficulties, how much sleep you were getting, and how it was affecting their day."
+          },
+          {
+            "choice": "C",
+            "answer_type": "not_remember",
+            "text": "Sorry, that one's slipped my mind — could you share it again?"
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_02_H006"
+        ],
+        "rationale": "The label \"sleep-impact note for follow-up visit\" most naturally refers to the turn that specifically asks for a short sleep note describing sleep onset, nighttime waking, total sleep time, and daytime grogginess. That is exactly stage_02_H006. The other sleep-related turns are either broader, in different contexts, or emphasize different details such as sleep quality, routine, or pain-related sleep disruption."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

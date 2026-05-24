@@ -1,0 +1,287 @@
+{
+  "source_rendered": "data/recall/mcq_work/financialConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/financialConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/financialConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_24",
+  "items": [
+    {
+      "timestamp": "stage_24_H005",
+      "turn_role": "key",
+      "identifier_label": "utility bill payment decision",
+      "user_turn": "I need to decide what to do about my utility bill: it’s €186.40, due on November 6, and they’re offering a payment plan of 3 payments of €62. I have €220 available for it, but I’d like to keep at least a €40 buffer afterward. Can you tell me whether I should pay it in full now or take the payment plan?",
+      "task_goal": "Compare the utility payment plan versus paying the full bill now, factoring in the due date and near-term cash flow.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "utility bill amount",
+            "sensitive_value": "€186.40",
+            "identifier_label": "utility bill payment decision",
+            "question": "Do you remember the total bill amount for my utility bill payment decision?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "€153.00",
+              "C": "€186.40"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€186.40"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€153.00"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "€153.00"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "€186.40"
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "available cash for payment",
+            "sensitive_value": "€220",
+            "identifier_label": "utility bill payment decision",
+            "question": "Hey, do you remember how much cash was available to put toward the bill for my utility bill payment decision?",
+            "choices": {
+              "A": "€180",
+              "B": "€220",
+              "C": "I do not remember that exact detail from the earlier request."
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "distractor_irrelevant": "A",
+              "remember_correct": "B",
+              "not_remember": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "distractor_irrelevant",
+              "B": "remember_correct",
+              "C": "not_remember"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "A",
+            "not_remember_choice": "C",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€220"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€180"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "distractor_irrelevant",
+                "text": "€180"
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "€220"
+              },
+              {
+                "choice": "C",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_24_H002",
+      "turn_role": "probe",
+      "identifier_label": "nonessential subscriptions review",
+      "user_turn": "I want to cut back on the nonessential subscriptions for the rest of the year, and I’m trying to decide what to pause or cancel. Right now I have a Premium Streaming Service that renews at €17.99/month, and an Online Learning Platform that’s tied to €42 per month for 20 GB mobile hotspot service. Could you help me figure out which one is worth keeping, and which one I should pause or cancel based on cost and actual use?",
+      "task_goal": "Decide which nonessential subscriptions to pause or cancel for the rest of the year, based on their monthly cost and how much they are actually used.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "subscription 1 monthly cost",
+            "sensitive_value": "€17.99/month starting at renewal",
+            "identifier_label": "nonessential subscriptions review",
+            "question": "Hey — can you remind me the monthly renewal amount I mentioned for the premium streaming subscription, when we went through my nonessential subscriptions review?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "€15/month starting at renewal",
+              "C": "€17.99/month starting at renewal"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "distractor_irrelevant": "B",
+              "remember_correct": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "distractor_irrelevant",
+              "C": "remember_correct"
+            },
+            "remember_correct_choice": "C",
+            "distractor_irrelevant_choice": "B",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€17.99/month starting at renewal"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€15/month starting at renewal"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "distractor_irrelevant",
+                "text": "€15/month starting at renewal"
+              },
+              {
+                "choice": "C",
+                "answer_type": "remember_correct",
+                "text": "€17.99/month starting at renewal"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "timestamp": "stage_24_H010",
+      "turn_role": "probe",
+      "identifier_label": "extra cash debt vs essentials decision",
+      "user_turn": "I’m trying to decide what to do with the extra cash this month. I have a debt balance of €2,180, and the minimum payment is €62 per month, but I only have €420 cash available right now. I also need to keep at least €140 set aside for essentials, so I don’t want to stretch things too far. Should I make a bigger payment on the debt this month, or is it safer to keep the money for essentials?",
+      "task_goal": "Decide whether to direct the available cash toward one debt payment this month or keep it for essentials, using the debt balance and minimum payment to judge how much can safely be paid without overstretching the budget.",
+      "rendered": {
+        "items": [
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "essential buffer needed",
+            "sensitive_value": "€140",
+            "identifier_label": "extra cash debt vs essentials decision",
+            "question": "Do you remember how much money needed to be kept aside for essentials for my extra cash debt vs essentials decision?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "€140",
+              "C": "€115"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "€140"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "€115"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "€140"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "€115"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

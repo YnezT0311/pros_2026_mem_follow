@@ -10,7 +10,7 @@ LIMIT="${LIMIT:-0}"
 HISTORY_RATE="${HISTORY_RATE:-0.2}"
 SESSION_DIR="${SESSION_DIR:-./chatgpt_session}"
 SCRIPT_PATH="./evaluate_chatgpt_web.py"
-DATA_DIR="${DATA:-../data/benchmark_work_v2}"
+DATA_DIR="${DATA:-../data/recall/mcq}"
 
 if [[ -n "${TOPICS:-}" ]]; then
   TOPICS_STR="$TOPICS"
@@ -27,14 +27,12 @@ read -r -a WORLDS <<< "$WORLDS_STR"
 mkdir -p "$RESULTS"
 
 echo "============================================"
-echo "Starting ChatGPT web evaluation"
+echo "Starting ChatGPT web stage-local evaluation"
 echo "Personas per topic/world: $LIMIT (0 = all)"
 echo "Topics: ${TOPIC_LIST[*]}"
 echo "Worlds: ${WORLDS[*]}"
-echo "Timing profile: $TIMING"
 echo "Data dir: $DATA_DIR"
 echo "Results dir: $RESULTS"
-echo "Session dir: $SESSION_DIR"
 echo "============================================"
 
 echo ""
@@ -49,7 +47,7 @@ for TOPIC_NAME in "${TOPIC_LIST[@]}"; do
   for WORLD in "${WORLDS[@]}"; do
     WORLD_LABEL="$(printf '%s' "$WORLD" | tr '[:lower:]' '[:upper:]')"
     echo ""
-    echo "[$idx/$total] ${TOPIC_NAME} / ${WORLD_LABEL}"
+    echo "[$idx/$total] ${TOPIC_NAME} / ${WORLD_LABEL} / stage-local"
     python "$SCRIPT_PATH" \
       --topic "$TOPIC_NAME" \
       --world "$WORLD" \

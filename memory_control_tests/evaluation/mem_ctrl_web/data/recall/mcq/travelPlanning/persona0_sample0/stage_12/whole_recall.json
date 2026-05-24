@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/travelPlanning/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/travelPlanning/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/travelPlanning/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_12",
+  "items": [
+    {
+      "timestamp": "stage_12_H001",
+      "turn_role": "key",
+      "identifier_label": "Toronto family reunion lodging areas",
+      "user_turn": "I'm trying to decide between two neighborhoods for our stay in Toronto. I really want a place that's near local eateries and shops so we can walk to dining and activities easily. Also, nighttime comfort is important to me—I’d prefer a quiet street or at least a softer interior courtyard to ensure a good night’s sleep. Plus, it would be great if the lodging is within a 10-minute walk to a subway station for public transport.",
+      "task_goal": "choose between two lodging areas",
+      "rendered": {
+        "identifier_label": "Toronto family reunion lodging areas",
+        "question": "Quick check, do you remember what I wanted help deciding for my Toronto family reunion lodging areas?",
+        "choices": {
+          "A": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?",
+          "B": "You wanted help choosing between two neighborhoods to stay in, based on overall convenience and comfort for the reunion.",
+          "C": "You wanted help deciding which Tokyo neighborhood would be the best base for the trip, mainly by comparing convenience, transit access, and overall comfort."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "not_remember": "A",
+          "remember_correct": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "not_remember",
+          "B": "remember_correct",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "B",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "A",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help choosing between two neighborhoods to stay in, based on overall convenience and comfort for the reunion."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help deciding which Tokyo neighborhood would be the best base for the trip, mainly by comparing convenience, transit access, and overall comfort."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "not_remember",
+            "text": "I don't have that earlier exchange clearly anymore. Could you refresh me on it?"
+          },
+          {
+            "choice": "B",
+            "answer_type": "remember_correct",
+            "text": "You wanted help choosing between two neighborhoods to stay in, based on overall convenience and comfort for the reunion."
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "You wanted help deciding which Tokyo neighborhood would be the best base for the trip, mainly by comparing convenience, transit access, and overall comfort."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_12_H001"
+        ],
+        "rationale": "The identifier_label mentions Toronto lodging areas, and the motivating user turn is specifically about comparing two Toronto neighborhoods for a stay with preferences for walkable local amenities, quiet nighttime conditions, and subway access. Among the candidates, stage_12_H001 is the direct match. The label is not specific enough to point naturally to the other Toronto turns, which focus on airports, transit, dining, or packing rather than neighborhood selection."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}

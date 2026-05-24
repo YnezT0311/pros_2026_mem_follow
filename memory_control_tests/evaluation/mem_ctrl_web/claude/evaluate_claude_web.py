@@ -25,12 +25,19 @@ import asyncio
 import json
 import random
 import re
+import sys
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Optional
 
 from patchright.async_api import BrowserContext, Page, async_playwright
+
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from memory_control_tests.evaluation.shared import apply_world_transform  # noqa: E402
 
 CLAUDE_URL = "https://claude.ai/"
 DEFAULT_TIMING_PROFILE = str(Path(__file__).with_name("human_timing.json"))
@@ -218,6 +225,7 @@ class Phase:
 class TestSession:
     session_key: str
     phases: list[Phase]
+    source_conversation: str = ""
 
 
 @dataclass
@@ -268,7 +276,7 @@ def _choice_for_answer_type(choice_to_answer_type: dict, answer_type: str) -> st
 
 def _sample_id_from_rendered_path(path: Path, topic: str) -> str:
     stem = path.name
-    if stem == "mcq_questions.json":
+    if stem in {"mcq_questions.json", "whole_recall.json"}:
         return f"{topic}_{path.parent.name}"
     for suffix in (".mcq_questions.json",):
         if stem.endswith(suffix):
@@ -282,13 +290,32 @@ def _sample_id_from_rendered_path(path: Path, topic: str) -> str:
 
 def _rendered_path_for_sample(data_dir: str, topic: str, sample_id: str) -> Optional[Path]:
     root = Path(data_dir)
+    persona = sample_id.replace(f"{topic}_", "", 1)
     candidates = [
-        root / topic / sample_id.replace(f"{topic}_", "", 1) / "mcq_questions.json",
+        root / topic / persona / "mcq_questions.json",
+        root / topic / persona / "whole_recall.json",
     ]
     for candidate in candidates:
         if candidate.exists():
             return candidate
     return None
+
+
+def _resolve_existing_path(path: str, data_dir: str = "") -> Path:
+    raw = Path(path)
+    candidates = [raw]
+    if data_dir:
+        data_root = Path(data_dir)
+        candidates.append(data_root / raw)
+        for parent in [data_root, *data_root.parents]:
+            if parent.name == "data":
+                candidates.append(parent / raw.relative_to("data") if raw.parts and raw.parts[0] == "data" else parent / raw)
+                break
+    candidates.append(PROJECT_ROOT / raw)
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return raw
 
 
 def _resolve_full_conversation_path(path: str) -> str:
@@ -315,6 +342,27 @@ def _stage_filter_matches(item: dict[str, Any], stage_id_filter: str) -> bool:
     return timestamp.startswith(f"{stage_id_filter}_")
 
 
+def _stage_id_from_timestamp(timestamp: str) -> str:
+    match = re.match(r"^(stage_\d+)_", str(timestamp or ""))
+    return match.group(1) if match else ""
+
+
+def _load_split_mcq_payloads(rendered_path: Path) -> tuple[dict, dict]:
+    if rendered_path.name == "whole_recall.json":
+        whole_payload = json.loads(rendered_path.read_text(encoding="utf-8"))
+        slot_path = rendered_path.with_name("slot_recall.json")
+        slot_payload = json.loads(slot_path.read_text(encoding="utf-8")) if slot_path.exists() else {}
+        return whole_payload, slot_payload
+    rendered = json.loads(rendered_path.read_text(encoding="utf-8"))
+    return {
+        "source_conversation": rendered.get("source_conversation", ""),
+        "source_sidecar": rendered.get("source_sidecar", ""),
+        "items": rendered.get("whole_recall_set", []),
+    }, {
+        "items": rendered.get("slot_recall_set", []),
+    }
+
+
 def _load_mcq_items(
     data_dir: str,
     topic: str,
@@ -330,11 +378,11 @@ def _load_mcq_items(
             f"MCQ file not found for {sample_id}: expected "
             f"<data_dir>/{topic}/<persona>/mcq_questions.json"
         )
-    rendered = json.loads(rendered_path.read_text(encoding="utf-8"))
+    whole_payload, slot_payload = _load_split_mcq_payloads(rendered_path)
     if qa_family_filter not in {"", "whole_recall", "slot_recall"}:
         raise ValueError(f"Unknown qa_family_filter: {qa_family_filter}")
     if qa_family_filter in {"", "whole_recall"}:
-        whole_items = rendered.get("whole_recall_set", [])
+        whole_items = whole_payload.get("items", [])
     else:
         whole_items = []
     for item in whole_items:
@@ -362,7 +410,7 @@ def _load_mcq_items(
             correct_choice=expected_choice or remember_choice,
         ))
     if qa_family_filter in {"", "slot_recall"}:
-        slot_items = rendered.get("slot_recall_set", [])
+        slot_items = slot_payload.get("items", [])
     else:
         slot_items = []
     for item in slot_items:
@@ -395,10 +443,32 @@ def _load_mcq_items(
 def _discover_samples(data_dir: str, topic: str) -> list[str]:
     root = Path(data_dir)
     rendered = sorted(root.glob(f"**/{topic}/*/mcq_questions.json"))
+    if not rendered:
+        rendered = sorted(root.glob(f"**/{topic}/*/whole_recall.json"))
     return sorted(_sample_id_from_rendered_path(path, topic) for path in rendered)
 
 
-def _load_conv(sample_id: str, data_dir: str, world: str) -> tuple[dict, str]:
+def _transformed_history_path_for_sample(rendered_path: Path, world: str, stage_id: str = "") -> Path:
+    suffix = f".{stage_id}" if stage_id else ""
+    stem = rendered_path.parent.name if rendered_path.name in {"mcq_questions.json", "whole_recall.json"} else rendered_path.stem
+    return rendered_path.parent / f"{stem}.{world}{suffix}.transformed_history.json"
+
+
+def _target_references_from_items(items: list[dict[str, Any]], stage_id: str = "") -> dict[str, str]:
+    refs: dict[str, str] = {}
+    for item in items:
+        timestamp = str(item.get("timestamp", "")).strip()
+        if stage_id and not timestamp.startswith(f"{stage_id}_"):
+            continue
+        label = str(item.get("identifier_label", "")).strip()
+        if label:
+            refs[timestamp] = f"the {label[0].lower() + label[1:]}"
+        elif item.get("task_goal"):
+            refs[timestamp] = str(item.get("task_goal")).strip()
+    return refs
+
+
+def _load_conv(sample_id: str, data_dir: str, world: str, stage_id: str = "") -> tuple[dict, str]:
     topic = sample_id.split("_")[0]
     rendered_path = _rendered_path_for_sample(data_dir, topic, sample_id)
     if not rendered_path:
@@ -406,13 +476,37 @@ def _load_conv(sample_id: str, data_dir: str, world: str) -> tuple[dict, str]:
             f"MCQ file not found for {sample_id}: expected "
             f"<data_dir>/{topic}/<persona>/mcq_questions.json"
         )
+    whole_payload, _ = _load_split_mcq_payloads(rendered_path)
+    source_conversation = str(whole_payload.get("source_conversation", ""))
     if world == "baseline":
-        rendered = json.loads(rendered_path.read_text(encoding="utf-8"))
-        path = Path(_resolve_full_conversation_path(rendered["source_conversation"]))
-        if not path.exists() and not path.is_absolute():
-            path = Path(data_dir) / path
+        path = _resolve_existing_path(_resolve_full_conversation_path(source_conversation), data_dir)
     else:
-        path = build_transformed_history_path(str(rendered_path), world)
+        path = _transformed_history_path_for_sample(rendered_path, world, stage_id)
+        if not path.exists():
+            source_path = _resolve_existing_path(_resolve_full_conversation_path(source_conversation), data_dir)
+            source_conv = json.loads(source_path.read_text(encoding="utf-8"))
+            sidecar_path = _resolve_existing_path(
+                str(whole_payload.get("source_sidecar") or whole_payload.get("source_memory_targets") or ""),
+                data_dir,
+            )
+            sidecar = json.loads(sidecar_path.read_text(encoding="utf-8")) if sidecar_path.exists() else {}
+            refs_by_ts = _target_references_from_items(whole_payload.get("items", []), stage_id)
+            target_refs = [
+                refs_by_ts.get(str(turn.get("timestamp", "")).strip(), str(turn.get("task_goal", "that earlier request")))
+                for turn in sidecar.get("key_turns", [])
+                if not stage_id or str(turn.get("stage_id", "")).strip() == stage_id
+            ]
+            transformed = apply_world_transform(
+                source_conv,
+                sidecar,
+                world,
+                target_refs,
+                "all_stages",
+                "",
+                stage_id=stage_id,
+            )
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(transformed, ensure_ascii=False, indent=2), encoding="utf-8")
     if not path.exists():
         raise FileNotFoundError(f"Conversation not found for {sample_id} (world={world}):\n  {path}")
     return json.loads(path.read_text(encoding="utf-8")), str(path)
@@ -487,22 +581,42 @@ def _plan_sessions(
     world: str,
     mcq_items: list[McqItem],
     stage_id_filter: str = "",
+    long_context: bool = False,
 ) -> list[TestSession]:
     _ = sample_id
     if world not in {"baseline", "no_store", "forget"}:
         raise ValueError(f"Unknown world: {world}")
     items = list(mcq_items)
     random.shuffle(items)
+    if not stage_id_filter and not long_context:
+        sessions: list[TestSession] = []
+        stage_ids = sorted(
+            {_stage_id_from_timestamp(item.timestamp) for item in items if _stage_id_from_timestamp(item.timestamp)},
+            key=lambda sid: int(sid.split("_", 1)[1]),
+        )
+        for stage_id in stage_ids:
+            stage_items = [item for item in items if _stage_id_from_timestamp(item.timestamp) == stage_id]
+            stage_key = _stage_id_to_conversation_key(stage_id)
+            sessions.append(TestSession(
+                session_key=f"{world}_{stage_id}",
+                phases=[Phase(
+                    label=stage_key,
+                    user_turns=_stage_user_turns(conv, stage_key),
+                    mcq_items=stage_items,
+                )],
+            ))
+        return sessions
     label = _stage_id_to_conversation_key(stage_id_filter) if stage_id_filter else "all_stages"
     session_suffix = stage_id_filter or "all_stages"
     return [TestSession(
         session_key=f"{world}_{session_suffix}",
-        phases=[Phase(
-            label=label,
-            user_turns=_selected_user_turns(conv, stage_id_filter),
-            mcq_items=items,
-        )],
-    )]
+                phases=[Phase(
+                    label=label,
+                    user_turns=_selected_user_turns(conv, stage_id_filter),
+                    mcq_items=items,
+                )],
+                source_conversation="",
+            )]
 
 
 def _build_mcq_prompt(item: McqItem) -> str:
@@ -2049,12 +2163,6 @@ async def evaluate(args: argparse.Namespace) -> None:
         try:
             for i, sample_id in enumerate(all_samples):
                 print(f"\n[{i+1}/{len(all_samples)}] {sample_id}")
-                try:
-                    conv, conv_source = _load_conv(sample_id, args.data_dir, args.world)
-                except FileNotFoundError as e:
-                    print(f"  SKIP: {e}")
-                    continue
-
                 mcq_items = _load_mcq_items(
                     args.data_dir,
                     args.topic,
@@ -2067,7 +2175,50 @@ async def evaluate(args: argparse.Namespace) -> None:
                     print("  SKIP: no MCQ items found")
                     continue
 
-                sessions = _plan_sessions(sample_id, conv, args.world, mcq_items, args.stage_id_filter)
+                sessions: list[TestSession] = []
+                try:
+                    if args.stage_id_filter or args.long_context:
+                        conv, conv_source = _load_conv(
+                            sample_id, args.data_dir, args.world, args.stage_id_filter
+                        )
+                        sessions = _plan_sessions(
+                            sample_id,
+                            conv,
+                            args.world,
+                            mcq_items,
+                            args.stage_id_filter,
+                            long_context=args.long_context,
+                        )
+                        for sess in sessions:
+                            sess.source_conversation = conv_source
+                    else:
+                        stage_ids = sorted(
+                            {
+                                _stage_id_from_timestamp(item.timestamp)
+                                for item in mcq_items
+                                if _stage_id_from_timestamp(item.timestamp)
+                            },
+                            key=lambda sid: int(sid.split("_", 1)[1]),
+                        )
+                        for stage_id in stage_ids:
+                            conv, conv_source = _load_conv(sample_id, args.data_dir, args.world, stage_id)
+                            stage_key = _stage_id_to_conversation_key(stage_id)
+                            stage_items = [
+                                item for item in mcq_items
+                                if _stage_id_from_timestamp(item.timestamp) == stage_id
+                            ]
+                            sessions.append(TestSession(
+                                session_key=f"{args.world}_{stage_id}",
+                                phases=[Phase(
+                                    label=stage_key,
+                                    user_turns=_stage_user_turns(conv, stage_key),
+                                    mcq_items=stage_items,
+                                )],
+                                source_conversation=conv_source,
+                            ))
+                except FileNotFoundError as e:
+                    print(f"  SKIP: {e}")
+                    continue
                 persona_output_path = _claude_persona_output_path(output_root, args.topic, args.world, sample_id)
                 persona_output_path.parent.mkdir(parents=True, exist_ok=True)
                 persona_output_paths.append(persona_output_path)
@@ -2227,7 +2378,7 @@ async def evaluate(args: argparse.Namespace) -> None:
                                 args.history_rate,
                                 sample_id,
                                 args.world,
-                                conv_source,
+                                sess.source_conversation or "",
                                 live_log_path=artifacts["log"],
                                 live_trace_jsonl_path=artifacts["trace_jsonl"],
                                 attempt_index=attempt_idx,
@@ -2262,7 +2413,7 @@ async def evaluate(args: argparse.Namespace) -> None:
                         args.world,
                         sample_id,
                         sess,
-                        conv_source,
+                        sess.source_conversation or "",
                         session_result,
                         status=session_status,
                         error=session_error,
@@ -2354,6 +2505,8 @@ def main() -> None:
     parser.add_argument("--wait_for_ready_enter", action="store_true")
     parser.add_argument("--stage_id_filter", default="",
                         help='Optional stage filter such as "stage_01"; feeds only that stage and asks only its MCQs.')
+    parser.add_argument("--long_context", action="store_true",
+                        help="Use the legacy full-topic session instead of one session per stage.")
     parser.add_argument("--qa_family_filter", default="",
                         help='Optional MCQ family filter: "whole_recall" or "slot_recall".')
     parser.add_argument(

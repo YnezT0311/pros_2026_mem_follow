@@ -1,0 +1,82 @@
+{
+  "source_rendered": "data/recall/mcq_work/medicalConsultation/persona0_sample0/mcq_questions.json",
+  "source_sidecar": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_memory_targets": "data/recall/mcq_work/medicalConsultation/persona0_sample0/memory_targets.json",
+  "source_conversation": "data/generated/medicalConsultation/persona0_sample0/conversation_package.json",
+  "model": "gpt-5.4-mini",
+  "stage_id": "stage_15",
+  "items": [
+    {
+      "timestamp": "stage_15_H004",
+      "turn_role": "probe",
+      "identifier_label": "lisinopril side-effects clarification request",
+      "user_turn": "I've been meaning to bring up some side effects of my current medication. Since I started taking lisinopril about three weeks ago, I've noticed mild lightheadedness, especially when I stand up quickly. It's been happening mostly in the mornings and I’d rate the episodes a 4 out of 10 in severity. I missed a couple of doses last month, too, which I wonder might have impacted how I feel. Also, I've been experiencing mild nausea after taking melatonin. I could use some clarity on these effects.",
+      "task_goal": "discuss possible side effects of current medications",
+      "rendered": {
+        "identifier_label": "lisinopril side-effects clarification request",
+        "question": "Hey — do you still remember what I was asking you to help with for my lisinopril side-effects clarification request?",
+        "choices": {
+          "A": "You wanted help understanding whether the symptoms you were noticing could be side effects of your current medications and what those effects might mean.",
+          "B": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?",
+          "C": "You were asking for help choosing a new workout routine and setting up a weekly exercise plan."
+        },
+        "choice_order": [
+          "A",
+          "B",
+          "C"
+        ],
+        "answer_type_to_choice": {
+          "remember_correct": "A",
+          "not_remember": "B",
+          "distractor_irrelevant": "C"
+        },
+        "choice_to_answer_type": {
+          "A": "remember_correct",
+          "B": "not_remember",
+          "C": "distractor_irrelevant"
+        },
+        "remember_correct_choice": "A",
+        "distractor_irrelevant_choice": "C",
+        "not_remember_choice": "B",
+        "answers_unshuffled": [
+          {
+            "answer_type": "remember_correct",
+            "text": "You wanted help understanding whether the symptoms you were noticing could be side effects of your current medications and what those effects might mean."
+          },
+          {
+            "answer_type": "distractor_irrelevant",
+            "text": "You were asking for help choosing a new workout routine and setting up a weekly exercise plan."
+          },
+          {
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          }
+        ],
+        "answers_shuffled": [
+          {
+            "choice": "A",
+            "answer_type": "remember_correct",
+            "text": "You wanted help understanding whether the symptoms you were noticing could be side effects of your current medications and what those effects might mean."
+          },
+          {
+            "choice": "B",
+            "answer_type": "not_remember",
+            "text": "Hmm, I don't remember that earlier conversation clearly. Could you remind me?"
+          },
+          {
+            "choice": "C",
+            "answer_type": "distractor_irrelevant",
+            "text": "You were asking for help choosing a new workout routine and setting up a weekly exercise plan."
+          }
+        ]
+      },
+      "disambiguation": {
+        "matched_timestamps": [
+          "stage_15_H004"
+        ],
+        "rationale": "The label specifically points to the turn where the user asks for clarification about lisinopril side effects (lightheadedness after starting lisinopril, missed doses, and nausea after melatonin). Other turns may mention lisinopril or side effects, but this one most directly matches the exact interaction motivating the label."
+      },
+      "is_identifier_unique_to_target": true
+    }
+  ]
+}
