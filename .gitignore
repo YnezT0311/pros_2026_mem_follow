@@ -32,6 +32,21 @@ tmp/
 _archived_langmem_runs/
 _legacy_buggy_langmem/
 
+# Generated v2 data artifacts
+data/generated/
+data/benchmark_work_v2/
+data/test_v2/
+
+# 12k variants and long-context result snapshots are generated/experimental artifacts.
+data_12k/
+eval_results_12k/
+eval_results_long_context/
+gen_data/*_12k/
+memory_control_tests/evaluation_12k/
+
+# Dev-only prompt/subagent harness; production uses gen_data/gen_conversation/generate.py
+gen_data/gen_conversation/agent_workflow.py
+
 # Top-level one-shot scripts (belong under tmp/ per CLAUDE.md)
 /record_human_timing.py
 /record_timing_terminal.py
