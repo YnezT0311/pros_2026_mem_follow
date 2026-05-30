@@ -105,7 +105,7 @@ def _is_fresh_transformed_history(
             return (
                 bool(metadata.get("no_use_insertions", []))
                 and isinstance(policy, dict)
-                and policy.get("placement") == "deterministic_random_after_key_turn_same_stage"
+                and policy.get("placement") == "median_of_key_plus_probe_turns"
             )
         return bool(metadata.get("no_use_insertions", []))
     return True
