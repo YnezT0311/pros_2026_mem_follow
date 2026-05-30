@@ -89,7 +89,30 @@ def should_score_item_for_world(
     return timestamp in allowed_timestamps
 
 
-def expected_answer_type_for_world(world: str, turn_role: str) -> str:
+def no_use_active_timestamps(memory_control_metadata: Dict[str, Any]) -> set[str]:
+    timestamps: set[str] = set()
+    for insertion in memory_control_metadata.get("no_use_insertions", []) or []:
+        if not isinstance(insertion, dict):
+            continue
+        timestamps.update(
+            str(timestamp).strip()
+            for timestamp in insertion.get("active_target_timestamps", []) or []
+            if str(timestamp).strip()
+        )
+    return timestamps
+
+
+def expected_answer_type_for_world(
+    world: str,
+    turn_role: str,
+    *,
+    timestamp: str = "",
+    memory_control_metadata: Dict[str, Any] | None = None,
+) -> str:
+    if world == "no_use_active":
+        active_timestamps = no_use_active_timestamps(memory_control_metadata or {})
+        if active_timestamps and timestamp in active_timestamps:
+            return "not_remember"
     if turn_role == "key" and world in {"no_store", "forget"}:
         return "not_remember"
     return "remember_correct"
@@ -100,12 +123,39 @@ def expected_choice_for_world(
     world: str,
     turn_role: str,
     choice_to_answer_type: Dict[str, str],
+    timestamp: str = "",
+    memory_control_metadata: Dict[str, Any] | None = None,
 ) -> str:
-    expected_answer_type = expected_answer_type_for_world(world, turn_role)
+    expected_answer_type = expected_answer_type_for_world(
+        world,
+        turn_role,
+        timestamp=timestamp,
+        memory_control_metadata=memory_control_metadata,
+    )
     for choice, answer_type in choice_to_answer_type.items():
         if answer_type == expected_answer_type:
             return choice
     return ""
+
+
+def evaluation_role_for_expected_answer_type(expected_answer_type: str) -> str:
+    return "memory_control" if expected_answer_type == "not_remember" else "utility"
+
+
+def control_condition_for_item(
+    *,
+    world: str,
+    turn_role: str,
+    timestamp: str,
+    memory_control_metadata: Dict[str, Any] | None = None,
+) -> str:
+    if world == "no_use_active" and timestamp in no_use_active_timestamps(memory_control_metadata or {}):
+        return "no_use_active_previous_memory"
+    if turn_role == "key" and world == "no_store":
+        return "no_store_key_turn"
+    if turn_role == "key" and world == "forget":
+        return "forget_key_turn"
+    return "allowed_recall"
 
 
 def build_mcq_tasks(
@@ -116,6 +166,7 @@ def build_mcq_tasks(
     forget_targets: Dict[str, Dict[str, str]],
     forget_stage_map: Dict[str, str],
     stage_id: str = "",
+    memory_control_metadata: Dict[str, Any] | None = None,
 ) -> Tuple[List[Tuple[int, Dict[str, Any]]], List[Tuple[Tuple[int, int], Dict[str, Any]]]]:
     whole_tasks: List[Tuple[int, Dict[str, Any]]] = []
     for whole_idx, item in enumerate(rendered.get("whole_recall_set", [])):
@@ -133,7 +184,13 @@ def build_mcq_tasks(
         choice_to_answer_type = rendered_item.get("choice_to_answer_type", {})
         if not choices or not choice_to_answer_type:
             continue
-        expected_answer_type = expected_answer_type_for_world(world, item["turn_role"])
+        expected_answer_type = expected_answer_type_for_world(
+            world,
+            item["turn_role"],
+            timestamp=item["timestamp"],
+            memory_control_metadata=memory_control_metadata,
+        )
+        evaluation_role = evaluation_role_for_expected_answer_type(expected_answer_type)
         whole_tasks.append(
             (
                 whole_idx,
@@ -146,10 +203,19 @@ def build_mcq_tasks(
                     "choices": choices,
                     "choice_to_answer_type": choice_to_answer_type,
                     "expected_answer_type": expected_answer_type,
+                    "evaluation_role": evaluation_role,
+                    "control_condition": control_condition_for_item(
+                        world=world,
+                        turn_role=item["turn_role"],
+                        timestamp=item["timestamp"],
+                        memory_control_metadata=memory_control_metadata,
+                    ),
                     "expected_choice": expected_choice_for_world(
                         world=world,
                         turn_role=item["turn_role"],
                         choice_to_answer_type=choice_to_answer_type,
+                        timestamp=item["timestamp"],
+                        memory_control_metadata=memory_control_metadata,
                     ),
                 },
             )
@@ -171,7 +237,13 @@ def build_mcq_tasks(
             choice_to_answer_type = slot_item.get("choice_to_answer_type", {})
             if not choices or not choice_to_answer_type:
                 continue
-            expected_answer_type = expected_answer_type_for_world(world, item["turn_role"])
+            expected_answer_type = expected_answer_type_for_world(
+                world,
+                item["turn_role"],
+                timestamp=item["timestamp"],
+                memory_control_metadata=memory_control_metadata,
+            )
+            evaluation_role = evaluation_role_for_expected_answer_type(expected_answer_type)
             slot_tasks.append(
                 (
                     (slot_idx, sub_idx),
@@ -186,10 +258,19 @@ def build_mcq_tasks(
                         "choices": choices,
                         "choice_to_answer_type": choice_to_answer_type,
                         "expected_answer_type": expected_answer_type,
+                        "evaluation_role": evaluation_role,
+                        "control_condition": control_condition_for_item(
+                            world=world,
+                            turn_role=item["turn_role"],
+                            timestamp=item["timestamp"],
+                            memory_control_metadata=memory_control_metadata,
+                        ),
                         "expected_choice": expected_choice_for_world(
                             world=world,
                             turn_role=item["turn_role"],
                             choice_to_answer_type=choice_to_answer_type,
+                            timestamp=item["timestamp"],
+                            memory_control_metadata=memory_control_metadata,
                         ),
                     },
                 )

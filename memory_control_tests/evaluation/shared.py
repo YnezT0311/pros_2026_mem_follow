@@ -15,6 +15,7 @@ from ..transforms import (
     apply_no_use,
     apply_randomized_forget,
     apply_stage_local_forget,
+    apply_stage_local_no_use,
 )
 
 
@@ -24,6 +25,10 @@ DEFAULT_MODEL_ALIASES = {
     "gpt-oss-120b": "openai/gpt-oss-120b",
     "gpt-5.4-mini": "openai/gpt-5.4-mini",
     "gpt-5-mini": "openai/gpt-5-mini",
+    "gpt-5.5": "openai/gpt-5.5",
+    "gpt5.5": "openai/gpt-5.5",
+    "opus-4.7": "anthropic/claude-opus-4.7",
+    "claude-opus-4.7": "anthropic/claude-opus-4.7",
     "deepseek": "deepseek/deepseek-v4-pro",
     "deepseek-v4-pro": "deepseek/deepseek-v4-pro",
     "deepseek-v3.1-terminus": "deepseek/deepseek-v3.1-terminus",
@@ -374,12 +379,21 @@ def apply_world_transform(
             target_references=target_references,
         )
 
-    if world == "no_use":
+    if world in {"no_use", "no_use_active", "no_use_release"}:
+        release = world == "no_use_release" or bool(no_use_release_period)
+        if stage_id:
+            return apply_stage_local_no_use(
+                transformed,
+                key_turns=sidecar.get("key_turns", []),
+                probe_turns=sidecar.get("protected_probe_turns", []),
+                stage_id=stage_id,
+                release=release,
+            )
         instruction_period = final_conversation_stage_key(transformed)
         return apply_no_use(
             transformed,
             restrict_period=instruction_period,
-            release_period=(instruction_period if no_use_release_period else None),
+            release_period=(instruction_period if release else None),
         )
 
     raise ValueError(f"Unsupported world: {world}")

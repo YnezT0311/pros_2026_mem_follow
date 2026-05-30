@@ -5,7 +5,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
 TIMING="human_timing.json"
-DATA="./data"
+DATA="${DATA:-data/recall/mcq_work}"
+TOPIC="${TOPIC:-travelPlanning}"
 RESULTS="./results"
 LIMIT="${LIMIT:-4}"
 HISTORY_RATE="${HISTORY_RATE:-0.2}"
@@ -31,7 +32,7 @@ SCRIPT_PATH="memory_control_tests/evaluation/chatgpt/evaluate_chatgpt_web.py"
 #   use memory_control_tests/evaluation/chatgpt/record_chatgpt_web_clicks.py separately for selector debugging.
 
 # Default worlds to run. Override with:
-#   WORLDS="baseline forget no_store" memory_control_tests/evaluation/chatgpt/run_chatgpt_eval.sh
+#   TOPIC=financialConsultation WORLDS="baseline forget no_store" scripts/evaluation/chatgpt/run_chatgpt_eval.sh
 WORLDS_STR="${WORLDS:-baseline forget no_store}"
 read -r -a WORLDS <<< "$WORLDS_STR"
 
@@ -40,6 +41,8 @@ mkdir -p "$RESULTS"
 echo "============================================"
 echo "Starting ChatGPT web evaluation"
 echo "Personas per world: $LIMIT"
+echo "Topic: $TOPIC"
+echo "Data dir: $DATA"
 echo "Worlds: ${WORLDS[*]}"
 echo "============================================"
 
@@ -55,7 +58,7 @@ for WORLD in "${WORLDS[@]}"; do
   echo ""
   echo "[$idx/${#WORLDS[@]}] ${WORLD_LABEL}"
   python "$SCRIPT_PATH" \
-    --topic travelPlanning \
+    --topic "$TOPIC" \
     --world "$WORLD" \
     --limit "$LIMIT" \
     --timing_profile "$TIMING" \

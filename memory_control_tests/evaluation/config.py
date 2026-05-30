@@ -9,7 +9,7 @@ from typing import Any, Dict
 
 
 METHODS = ("plain", "mem0", "langmem", "amem", "memoryos", "memtree")
-WORLDS = ("baseline", "no_store", "forget")
+WORLDS = ("baseline", "no_store", "forget", "no_use_active", "no_use_release")
 
 
 METHOD_DEFAULTS: Dict[str, Dict[str, Any]] = {

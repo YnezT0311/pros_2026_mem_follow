@@ -47,7 +47,12 @@ find_rendered_files() {
     return
   fi
   if [[ -d "$DATA_ROOT/$topic" ]]; then
-    find "$DATA_ROOT/$topic" -mindepth 2 -maxdepth 2 -name 'mcq_questions.json' | sort
+    mapfile -t rendered_files < <(find "$DATA_ROOT/$topic" -mindepth 2 -maxdepth 2 -name 'mcq_questions.json' | sort)
+    if [[ "${#rendered_files[@]}" -gt 0 ]]; then
+      printf '%s\n' "${rendered_files[@]}"
+      return
+    fi
+    find "$DATA_ROOT/$topic" -mindepth 2 -maxdepth 2 -name 'whole_recall.json' | sort
     return
   fi
 }
@@ -67,7 +72,16 @@ for topic in "${TOPICS[@]}"; do
     fi
 
     if [[ "$STAGE_IDS_STR" == "auto" ]]; then
-      mapfile -t STAGE_LIST < <(jq -r '[.whole_recall_set[], .slot_recall_set[]] | .[] | .timestamp | capture("(?<stage>stage_[0-9]+)_").stage' "$rendered" | sort -u -V)
+      if [[ "$(basename "$rendered")" == "whole_recall.json" ]]; then
+        slot_rendered="$(dirname "$rendered")/slot_recall.json"
+        if [[ -f "$slot_rendered" ]]; then
+          mapfile -t STAGE_LIST < <(jq -r '.items[] | .timestamp | capture("(?<stage>stage_[0-9]+)_").stage' "$slot_rendered" "$rendered" | sort -u -V)
+        else
+          mapfile -t STAGE_LIST < <(jq -r '.items[] | .timestamp | capture("(?<stage>stage_[0-9]+)_").stage' "$rendered" | sort -u -V)
+        fi
+      else
+        mapfile -t STAGE_LIST < <(jq -r '[.whole_recall_set[], .slot_recall_set[]] | .[] | .timestamp | capture("(?<stage>stage_[0-9]+)_").stage' "$rendered" | sort -u -V)
+      fi
     else
       read -r -a STAGE_LIST <<< "$STAGE_IDS_STR"
     fi

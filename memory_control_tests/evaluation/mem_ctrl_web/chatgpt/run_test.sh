@@ -14,7 +14,7 @@ TOPIC="${TOPIC:-travelPlanning}"
 DATA_DIR="${DATA:-../data/recall/mcq}"
 STAGE_ID="${STAGE_ID:-stage_01}"
 
-WORLDS=(baseline no_store forget)
+WORLDS=(baseline no_store forget no_use_active no_use_release)
 
 mkdir -p "$RESULTS"
 

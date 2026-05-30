@@ -19,6 +19,7 @@ from .methods import build_method_adapter
 from .paths import default_output_path
 from .shared import (
     MEMORY_CONTROL_METADATA_KEY,
+    MEMORY_CONTROL_STAGE_TRANSFORM_VERSION,
     MEMORY_CONTROL_TRANSFORM_VERSION,
     apply_world_transform,
     build_label_map,
@@ -78,12 +79,13 @@ def _is_fresh_transformed_history(
 ) -> bool:
     if world == "baseline":
         return True
-    if world not in {"forget", "no_store"}:
+    if world not in {"forget", "no_store", "no_use", "no_use_active", "no_use_release"}:
         return True
     metadata = cached.get(MEMORY_CONTROL_METADATA_KEY, {}) if isinstance(cached, dict) else {}
     if not isinstance(metadata, dict):
         return False
-    if metadata.get("transform_version") != MEMORY_CONTROL_TRANSFORM_VERSION:
+    expected_version = MEMORY_CONTROL_STAGE_TRANSFORM_VERSION if stage_id else MEMORY_CONTROL_TRANSFORM_VERSION
+    if metadata.get("transform_version") != expected_version:
         return False
 
     key_turns = sidecar.get("key_turns", []) if isinstance(sidecar, dict) else []
@@ -97,6 +99,15 @@ def _is_fresh_transformed_history(
         return len(metadata.get("forget_insertions", [])) == key_count
     if world == "no_store":
         return len(metadata.get("no_store_insertions", [])) == key_count
+    if world in {"no_use", "no_use_active", "no_use_release"}:
+        policy = metadata.get("no_use_policy", {})
+        if stage_id:
+            return (
+                bool(metadata.get("no_use_insertions", []))
+                and isinstance(policy, dict)
+                and policy.get("placement") == "deterministic_random_after_key_turn_same_stage"
+            )
+        return bool(metadata.get("no_use_insertions", []))
     return True
 
 
@@ -158,9 +169,34 @@ def _load_transformed_conversation(
     return transformed, transformed_history_path
 
 
+def _load_rendered(path: str) -> Dict[str, Any]:
+    rendered_path = Path(path)
+    rendered = json.loads(rendered_path.read_text(encoding="utf-8"))
+    if rendered_path.name != "whole_recall.json":
+        return rendered
+
+    slot_path = rendered_path.with_name("slot_recall.json")
+    slot_rendered: Dict[str, Any] = {}
+    if slot_path.exists():
+        slot_rendered = json.loads(slot_path.read_text(encoding="utf-8"))
+
+    combined = {
+        "source_rendered": rendered.get("source_rendered", str(rendered_path)),
+        "source_sidecar": rendered.get("source_sidecar") or slot_rendered.get("source_sidecar", ""),
+        "source_memory_targets": rendered.get("source_memory_targets")
+        or slot_rendered.get("source_memory_targets", ""),
+        "source_conversation": rendered.get("source_conversation")
+        or slot_rendered.get("source_conversation", ""),
+        "model": rendered.get("model") or slot_rendered.get("model", ""),
+        "whole_recall_set": rendered.get("items", []),
+        "slot_recall_set": slot_rendered.get("items", []),
+    }
+    return combined
+
+
 def run_evaluation(config: EvalConfig) -> Dict[str, Any]:
     args = config.adapter_args()
-    rendered = json.loads(Path(config.rendered).read_text(encoding="utf-8"))
+    rendered = _load_rendered(config.rendered)
     conversation_path = _resolve_full_conversation_path(rendered["source_conversation"])
     conversation = json.loads(Path(conversation_path).read_text(encoding="utf-8"))
     sidecar = load_sidecar(rendered, config.sidecar)
@@ -224,6 +260,7 @@ def run_evaluation(config: EvalConfig) -> Dict[str, Any]:
         forget_targets=forget_eval_targets,
         forget_stage_map=forget_stage_map,
         stage_id=config.stage_id,
+        memory_control_metadata=transformed_conversation.get("_memory_control_metadata", {}),
     )
 
     def run_whole(payload: Dict[str, Any]) -> Dict[str, Any]:
@@ -237,6 +274,8 @@ def run_evaluation(config: EvalConfig) -> Dict[str, Any]:
             "turn_role": payload["turn_role"],
             "identifier_label": payload["identifier_label"],
             "forget_stage": payload["forget_stage"],
+            "evaluation_role": payload.get("evaluation_role", ""),
+            "control_condition": payload.get("control_condition", ""),
             "question": payload["question"],
             "choices": payload["choices"],
             "choice_to_answer_type": payload["choice_to_answer_type"],
@@ -261,6 +300,8 @@ def run_evaluation(config: EvalConfig) -> Dict[str, Any]:
             "turn_role": payload["turn_role"],
             "identifier_label": payload["identifier_label"],
             "forget_stage": payload["forget_stage"],
+            "evaluation_role": payload.get("evaluation_role", ""),
+            "control_condition": payload.get("control_condition", ""),
             "sensitive_key": payload["sensitive_key"],
             "sensitive_value": payload["sensitive_value"],
             "question": payload["question"],
