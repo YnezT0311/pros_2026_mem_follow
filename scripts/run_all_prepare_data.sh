@@ -27,7 +27,7 @@ echo "TOPICS=${TOPICS}"
 echo "WORKERS=${WORKERS}"
 
 for topic in ${TOPICS}; do
-  command="python prepare_data.py --model gpt-5-mini \
+  command="python -m gen_data.gen_conversation_12k.prepare_data --model gpt-5-mini \
            --api_mode ${API_MODE} \
            --topics ${topic} \
            --n_persona ${end_persona_id} --n_samples 1 --s_persona ${start_persona_id} --s_samples 0 \

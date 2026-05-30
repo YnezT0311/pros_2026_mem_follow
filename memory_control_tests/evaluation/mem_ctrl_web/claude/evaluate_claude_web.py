@@ -212,6 +212,8 @@ class McqItem:
     expected_answer_type: str
     remember_correct_choice: str
     correct_choice: str
+    evaluation_role: str = "utility"
+    control_condition: str = "allowed_recall"
 
 
 @dataclass
@@ -265,6 +267,45 @@ def _expected_answer_type(world: str, turn_role: str) -> str:
     if turn_role == "key" and world in {"no_store", "forget"}:
         return "not_remember"
     return "remember_correct"
+
+
+def _apply_no_use_expected_types(items: list[McqItem], conv: dict, world: str) -> None:
+    if world != "no_use_active":
+        return
+    metadata = conv.get("_memory_control_metadata", {}) if isinstance(conv, dict) else {}
+    active_timestamps: set[str] = set()
+    for insertion in metadata.get("no_use_insertions", []) or []:
+        if isinstance(insertion, dict):
+            active_timestamps.update(
+                str(timestamp).strip()
+                for timestamp in insertion.get("active_target_timestamps", []) or []
+                if str(timestamp).strip()
+            )
+    if not active_timestamps:
+        return
+    for item in items:
+        item.expected_answer_type = "not_remember" if item.timestamp in active_timestamps else "remember_correct"
+        item.correct_choice = _choice_for_answer_type(item.choice_to_answer_type, item.expected_answer_type)
+        _refresh_item_labels(item, world)
+
+
+def _evaluation_role(expected_answer_type: str) -> str:
+    return "memory_control" if expected_answer_type == "not_remember" else "utility"
+
+
+def _control_condition(world: str, item: McqItem) -> str:
+    if world == "no_use_active" and item.expected_answer_type == "not_remember":
+        return "no_use_active_previous_memory"
+    if world == "no_store" and item.turn_role == "key":
+        return "no_store_key_turn"
+    if world == "forget" and item.turn_role == "key":
+        return "forget_key_turn"
+    return "allowed_recall"
+
+
+def _refresh_item_labels(item: McqItem, world: str) -> None:
+    item.evaluation_role = _evaluation_role(item.expected_answer_type)
+    item.control_condition = _control_condition(world, item)
 
 
 def _choice_for_answer_type(choice_to_answer_type: dict, answer_type: str) -> str:
@@ -437,6 +478,8 @@ def _load_mcq_items(
                 remember_correct_choice=remember_choice,
                 correct_choice=expected_choice or remember_choice,
             ))
+    for item in items:
+        _refresh_item_labels(item, world)
     return items
 
 
@@ -776,6 +819,8 @@ def _records_from_trace(
             "qa_family": item.qa_family,
             "timestamp": item.timestamp,
             "turn_role": item.turn_role,
+            "evaluation_role": item.evaluation_role,
+            "control_condition": item.control_condition,
             "identifier_label": item.identifier_label,
             "sensitive_key": item.sensitive_key,
             "sensitive_value": item.sensitive_value,
@@ -1940,6 +1985,8 @@ async def _run_session(
                 "qa_family": item.qa_family,
                 "timestamp": item.timestamp,
                 "turn_role": item.turn_role,
+                "evaluation_role": item.evaluation_role,
+                "control_condition": item.control_condition,
                 "identifier_label": item.identifier_label,
                 "sensitive_key": item.sensitive_key,
                 "sensitive_value": item.sensitive_value,
@@ -2000,6 +2047,8 @@ async def _run_session(
                     "mcq_index": k,
                     "qa_family": item.qa_family,
                     "turn_role": item.turn_role,
+                    "evaluation_role": item.evaluation_role,
+                    "control_condition": item.control_condition,
                     "timestamp": item.timestamp,
                     "question": item.question,
                     "user_input": prompt,
@@ -2027,6 +2076,8 @@ async def _run_session(
                     "mcq_index": k,
                     "qa_family": item.qa_family,
                     "turn_role": item.turn_role,
+                    "evaluation_role": item.evaluation_role,
+                    "control_condition": item.control_condition,
                     "timestamp": item.timestamp,
                     "question": item.question,
                     "user_input": prompt,
@@ -2181,6 +2232,7 @@ async def evaluate(args: argparse.Namespace) -> None:
                         conv, conv_source = _load_conv(
                             sample_id, args.data_dir, args.world, args.stage_id_filter
                         )
+                        _apply_no_use_expected_types(mcq_items, conv, args.world)
                         sessions = _plan_sessions(
                             sample_id,
                             conv,
@@ -2202,6 +2254,7 @@ async def evaluate(args: argparse.Namespace) -> None:
                         )
                         for stage_id in stage_ids:
                             conv, conv_source = _load_conv(sample_id, args.data_dir, args.world, stage_id)
+                            _apply_no_use_expected_types(mcq_items, conv, args.world)
                             stage_key = _stage_id_to_conversation_key(stage_id)
                             stage_items = [
                                 item for item in mcq_items
@@ -2488,7 +2541,11 @@ async def evaluate(args: argparse.Namespace) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate Claude web on MemoryCtrl recall MCQs via Playwright")
     parser.add_argument("--topic", default="travelPlanning")
-    parser.add_argument("--world", default="baseline", choices=["baseline", "forget", "no_store"])
+    parser.add_argument(
+        "--world",
+        default="baseline",
+        choices=["baseline", "forget", "no_store", "no_use_active", "no_use_release"],
+    )
     parser.add_argument("--data_dir", default="data")
     parser.add_argument("--output", default="results/claude_web_baseline.jsonl")
     parser.add_argument("--timing_profile", default=DEFAULT_TIMING_PROFILE)

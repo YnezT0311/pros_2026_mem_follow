@@ -33,7 +33,7 @@ def model_tag_for_filename(method: str, model: str) -> str:
 def rendered_stem(rendered: str) -> str:
     path = Path(rendered)
     name = path.name
-    if name == "mcq_questions.json":
+    if name in {"mcq_questions.json", "whole_recall.json"}:
         return path.parent.name
     for suffix in (".mcq_questions.json",):
         if name.endswith(suffix):
@@ -47,9 +47,12 @@ def topic_from_rendered(rendered: str) -> str:
         return parts[-3]
     if len(parts) >= 3 and parts[-1] == "mcq_questions.json":
         return parts[-3]
+    if len(parts) >= 3 and parts[-1] == "whole_recall.json":
+        return parts[-3]
     raise ValueError(
         f"Cannot infer topic from rendered path {rendered!r}; expected "
-        "'<...>/data/recall/mcq_work/<topic>/<persona>/mcq_questions.json'."
+        "'<...>/data/recall/mcq_work/<topic>/<persona>/mcq_questions.json' "
+        "or '<...>/data/recall/mcq/<topic>/<persona>/whole_recall.json'."
     )
 
 
@@ -71,6 +74,8 @@ def default_output_path(
         if no_use_release_period:
             suffix += f".release_{period_tag(no_use_release_period)}"
         suffix += f".test_{period_tag(stage_id or ask_period)}.{method_tag}_{model_tag}.json"
+    elif world in {"no_use_active", "no_use_release"}:
+        suffix = f".{world}.{period_tag(stage_id or ask_period)}.{method_tag}_{model_tag}.json"
     else:
         suffix = f".{world}.{period_tag(stage_id or ask_period)}.{method_tag}_{model_tag}.json"
 

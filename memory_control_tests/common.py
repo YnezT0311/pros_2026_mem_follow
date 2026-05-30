@@ -234,6 +234,14 @@ def build_recall_summary(
         else "Key turns are forbidden facts in non-baseline worlds; high not_remember_rate is desirable and high remember_correct_rate is undesirable."
     )
     probe_goal = "Probe turns are allowed facts in all worlds; high remember_correct_rate and low not_remember_rate are desirable."
+    memory_control_items = [
+        item for item in whole_recall_results + slot_recall_results
+        if item.get("evaluation_role") == "memory_control"
+    ]
+    utility_items = [
+        item for item in whole_recall_results + slot_recall_results
+        if item.get("evaluation_role") == "utility"
+    ]
     return {
         "whole_recall": rate_answer_type_summary(whole_recall_results),
         "slot_recall": rate_answer_type_summary(slot_recall_results),
@@ -249,9 +257,25 @@ def build_recall_summary(
         "slot_recall_probe_turns": rate_answer_type_summary(
             [item for item in slot_recall_results if item.get("turn_role") == "probe"]
         ),
+        "memory_control_items": rate_answer_type_summary(memory_control_items),
+        "utility_items": rate_answer_type_summary(utility_items),
+        "whole_recall_memory_control_items": rate_answer_type_summary(
+            [item for item in whole_recall_results if item.get("evaluation_role") == "memory_control"]
+        ),
+        "whole_recall_utility_items": rate_answer_type_summary(
+            [item for item in whole_recall_results if item.get("evaluation_role") == "utility"]
+        ),
+        "slot_recall_memory_control_items": rate_answer_type_summary(
+            [item for item in slot_recall_results if item.get("evaluation_role") == "memory_control"]
+        ),
+        "slot_recall_utility_items": rate_answer_type_summary(
+            [item for item in slot_recall_results if item.get("evaluation_role") == "utility"]
+        ),
         "interpretation": {
             "key_turns": key_goal,
             "probe_turns": probe_goal,
+            "memory_control_items": "Items whose expected answer is not_remember under the current world/instruction scope.",
+            "utility_items": "Items whose expected answer is remember_correct under the current world/instruction scope.",
         },
     }
 

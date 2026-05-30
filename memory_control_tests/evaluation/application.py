@@ -89,13 +89,24 @@ def _run_one_item(
     choices = item.get("choices") if isinstance(item.get("choices"), dict) else {}
     labels = [str(label).upper() for label in choices.keys()]
     expected_choice = str(item.get("expected_choice", "")).upper()
-    response = request_text(
-        client,
-        model,
-        _messages_for_request(item),
-        reasoning_effort=reasoning_effort or None,
-        timeout=request_timeout,
-    )
+    last_exc: Optional[Exception] = None
+    response = ""
+    for attempt in range(4):
+        try:
+            response = request_text(
+                client,
+                model,
+                _messages_for_request(item),
+                reasoning_effort=reasoning_effort or None,
+                timeout=request_timeout,
+            )
+            break
+        except Exception as exc:  # noqa: BLE001
+            last_exc = exc
+            time.sleep(2 ** attempt)
+    else:
+        if last_exc is not None:
+            raise last_exc
     predicted_choice = extract_choice(response, labels)
     return {
         "id": item.get("id"),
@@ -150,7 +161,26 @@ def run_application_eval(
         }
         for future in as_completed(future_to_index):
             idx = future_to_index[future]
-            results[idx] = future.result()
+            try:
+                results[idx] = future.result()
+            except Exception as exc:  # noqa: BLE001
+                item = items[idx]
+                results[idx] = {
+                    "id": item.get("id"),
+                    "topic": item.get("topic"),
+                    "stage_id": item.get("stage_id"),
+                    "target_turn_id": item.get("target_turn_id"),
+                    "world": item.get("world"),
+                    "expected_choice": str(item.get("expected_choice", "")).upper(),
+                    "predicted_choice": "",
+                    "is_expected": False,
+                    "expected_behavior": item.get("expected_behavior"),
+                    "choice_roles": item.get("choice_roles"),
+                    "question": item.get("question"),
+                    "choices": item.get("choices") if isinstance(item.get("choices"), dict) else {},
+                    "model_response": f"<error: {exc}>",
+                    "elapsed_seconds": 0.0,
+                }
 
     complete_results = [row for row in results if row is not None]
     payload = {
