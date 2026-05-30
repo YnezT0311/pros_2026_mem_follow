@@ -21,7 +21,7 @@ else
 fi
 read -r -a TOPIC_LIST <<< "$TOPICS_STR"
 
-WORLDS_STR="${WORLDS:-baseline no_store forget}"
+WORLDS_STR="${WORLDS:-baseline no_store forget no_use_active no_use_release}"
 read -r -a WORLDS <<< "$WORLDS_STR"
 
 mkdir -p "$RESULTS"

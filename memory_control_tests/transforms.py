@@ -22,7 +22,7 @@ TEMPLATES = json.loads(
 
 MEMORY_CONTROL_METADATA_KEY = "_memory_control_metadata"
 MEMORY_CONTROL_TRANSFORM_VERSION = "stage_all_v2"
-MEMORY_CONTROL_STAGE_TRANSFORM_VERSION = "stage_local_v1"
+MEMORY_CONTROL_STAGE_TRANSFORM_VERSION = "stage_local_v2"
 DEFAULT_FORGET_MIN_SPACING_USER_TURNS = 6
 DEFAULT_FORGET_MIN_FINAL_GAP_USER_TURNS = 5
 
@@ -635,6 +635,254 @@ def apply_stage_local_forget(
         "preferred_min_gap_after_key_user_turns": min_gap_after_key_user_turns,
         "total_stage_original_user_turns": len(stage_user_positions),
         "total_stage_transformed_user_turns": len(stage_user_positions) + len(insertions),
+    }
+    out[MEMORY_CONTROL_METADATA_KEY] = metadata
+    return out
+
+
+def _stage_user_positions_for_lines(lines: List[str]) -> List[Dict[str, Any]]:
+    return [
+        {"line_index": line_idx, "stage_user_turn_index": user_idx}
+        for user_idx, line_idx in enumerate(
+            idx for idx, line in enumerate(lines)
+            if isinstance(line, str) and line.startswith("User:")
+        )
+    ]
+
+
+def _choose_stage_boundary(
+    positions: List[Dict[str, Any]],
+    *,
+    start_user_index: int,
+    seed_parts: List[str],
+) -> Dict[str, Any]:
+    candidates = [
+        pos for pos in positions
+        if int(pos["stage_user_turn_index"]) >= start_user_index
+    ]
+    if not candidates:
+        return {
+            "line_index": -1,
+            "stage_user_turn_index": len(positions),
+            "insertion_mode": "append_to_stage_end",
+        }
+    rng = random.Random(_stable_seed(*seed_parts))
+    chosen = candidates[rng.randrange(len(candidates))]
+    return {
+        "line_index": chosen["line_index"],
+        "stage_user_turn_index": chosen["stage_user_turn_index"],
+        "insertion_mode": "before_later_user_turn_same_stage",
+    }
+
+
+def apply_stage_local_no_use(
+    data: Dict,
+    key_turns: List[Dict[str, Any]],
+    probe_turns: List[Dict[str, Any]],
+    stage_id: str,
+    *,
+    release: bool = False,
+    template_index: Optional[int] = None,
+    min_gap_after_key_user_turns: int = 1,
+) -> Dict:
+    """Insert one stage-local no-use instruction after a target key turn."""
+    out = copy.deepcopy(data)
+    stage_key = stage_id_to_conversation_key(stage_id)
+    lines = out.get(stage_key, [])
+    if not stage_key or not isinstance(lines, list):
+        metadata = dict(out.get(MEMORY_CONTROL_METADATA_KEY, {}))
+        metadata["transform_version"] = MEMORY_CONTROL_STAGE_TRANSFORM_VERSION
+        metadata["no_use_insertions"] = []
+        out[MEMORY_CONTROL_METADATA_KEY] = metadata
+        return out
+
+    stage_user_positions = _stage_user_positions_for_lines(lines)
+    stage_key_turns = [
+        turn for turn in key_turns or []
+        if str((turn or {}).get("stage_id", "")).strip() == stage_id
+    ]
+    if not stage_user_positions or not stage_key_turns:
+        metadata = dict(out.get(MEMORY_CONTROL_METADATA_KEY, {}))
+        metadata["transform_version"] = MEMORY_CONTROL_STAGE_TRANSFORM_VERSION
+        metadata["no_use_insertions"] = []
+        out[MEMORY_CONTROL_METADATA_KEY] = metadata
+        return out
+
+    keyed_positions: List[Dict[str, Any]] = []
+    for turn in stage_key_turns:
+        key_pos = _find_key_position(out, turn)
+        if not key_pos or key_pos.get("stage") != stage_key:
+            continue
+        key_stage_user_index = sum(
+            1 for pos in stage_user_positions
+            if pos["line_index"] <= key_pos["line_index"]
+        ) - 1
+        keyed_positions.append(
+            {
+                "turn": turn,
+                "key_pos": key_pos,
+                "key_stage_user_turn_index": key_stage_user_index,
+            }
+        )
+    if not keyed_positions:
+        metadata = dict(out.get(MEMORY_CONTROL_METADATA_KEY, {}))
+        metadata["transform_version"] = MEMORY_CONTROL_STAGE_TRANSFORM_VERSION
+        metadata["no_use_insertions"] = []
+        out[MEMORY_CONTROL_METADATA_KEY] = metadata
+        return out
+
+    # no_use re-partitions turns purely by POSITION relative to the instruction:
+    # turns before -> not_remember (memory_control), turns after -> remember (utility).
+    # Original key/probe roles do NOT decide the no_use class; position does. We place
+    # the instruction at the MEDIAN of the merged key+probe MCQ turns so each stage
+    # yields both classes (ceil(N/2) before, floor(N/2) after; N=1 -> the lone turn is
+    # not_remember). slot_recall reuses this same placement because it is driven by the
+    # shared sidecar key/probe turns + seed.
+    # NOTE: no_use utility = MCQ turns after the instruction (expected remember). It is
+    # NOT aligned turn-by-turn with the baseline world -- only per-world scores are
+    # comparable (same MCQ set, repartitioned by instruction position). If a strict
+    # no_use-specific baseline is needed later, add a separate baseline test instead of
+    # reusing the shared one.
+    def _stage_user_index_of(turn):
+        pos = _find_key_position(out, turn)
+        if not pos or pos.get("stage") != stage_key:
+            return None
+        return sum(1 for p in stage_user_positions if p["line_index"] <= pos["line_index"]) - 1
+
+    mcq_turns = []
+    for turn in list(key_turns or []) + list(probe_turns or []):
+        if str((turn or {}).get("stage_id", "")).strip() != stage_id:
+            continue
+        ts = str((turn or {}).get("timestamp", "")).strip()
+        idx = _stage_user_index_of(turn)
+        if ts and idx is not None:
+            mcq_turns.append((idx, ts))
+    mcq_turns = sorted(set(mcq_turns))
+    n_mcq = len(mcq_turns)
+    total_user = len(stage_user_positions)
+    split = (n_mcq + 1) // 2  # ceil(N/2) MCQ turns fall before the instruction
+    s_split = mcq_turns[split - 1][0] if split >= 1 else -1
+    s_next = mcq_turns[split][0] if split < n_mcq else None
+    target_timestamp = mcq_turns[split - 1][1] if split >= 1 else ""
+    key_stage_user_index = s_split
+
+    # Instruction goes after the split-th MCQ turn (seeded random gap 1-3 user turns) but
+    # never past the (split+1)-th MCQ turn, so the before/after counts stay ceil/floor.
+    gap = random.Random(_stable_seed("stage_local_no_use_place", stage_id)).randint(1, 3)
+    restrict_user_index = (s_split if s_split >= 0 else 0) + gap
+    if s_next is not None:
+        restrict_user_index = min(restrict_user_index, s_next)
+    restrict_user_index = min(restrict_user_index, total_user)
+    pos_by_user_index = {
+        int(p["stage_user_turn_index"]): int(p["line_index"]) for p in stage_user_positions
+    }
+    if restrict_user_index >= total_user:
+        restrict_line_index = len(lines)
+        restrict_mode = "append_to_stage_end"
+    else:
+        restrict_line_index = pos_by_user_index[restrict_user_index]
+        restrict_mode = "before_later_user_turn_same_stage"
+    restrict = {
+        "line_index": restrict_line_index,
+        "stage_user_turn_index": restrict_user_index,
+        "insertion_mode": restrict_mode,
+    }
+
+    group = TEMPLATES.get("no_use", {})
+    if template_index is None:
+        rng = random.Random(_stable_seed("stage_local_no_use_template", stage_id, target_timestamp))
+        restrict_user = rng.choice(group.get("restrict_user", []) or [""])
+        restrict_assistant = rng.choice(group.get("restrict_assistant", []) or [""])
+        release_user = rng.choice(group.get("release_user", []) or [""])
+        release_assistant = rng.choice(group.get("release_assistant", []) or [""])
+    else:
+        restrict_user = _pick(group.get("restrict_user", []), template_index)
+        restrict_assistant = _pick(group.get("restrict_assistant", []), template_index)
+        release_user = _pick(group.get("release_user", []), template_index)
+        release_assistant = _pick(group.get("release_assistant", []), template_index)
+
+    active_target_timestamps: List[str] = []
+    for turn in list(key_turns or []) + list(probe_turns or []):
+        if str((turn or {}).get("stage_id", "")).strip() != stage_id:
+            continue
+        pos = _find_key_position(out, turn)
+        if not pos or pos.get("stage") != stage_key:
+            continue
+        turn_stage_user_index = sum(
+            1 for stage_pos in stage_user_positions
+            if stage_pos["line_index"] <= pos["line_index"]
+        ) - 1
+        timestamp = str((turn or {}).get("timestamp", "")).strip()
+        if timestamp and turn_stage_user_index < int(restrict["stage_user_turn_index"]):
+            active_target_timestamps.append(timestamp)
+
+    lines[restrict_line_index:restrict_line_index] = [
+        f"User: {restrict_user}",
+        f"Assistant: {restrict_assistant}",
+    ]
+
+    release_info: Dict[str, Any] = {}
+    if release:
+        transformed_positions = _stage_user_positions_for_lines(lines)
+        total_t = len(transformed_positions)
+        # active -> release: at least 1 turn between (R >= restrict_index + 2);
+        # release -> end-of-stage: more than 1 turn after release (R <= total_t - 2).
+        lo = int(restrict["stage_user_turn_index"]) + 2
+        hi = total_t - 2
+        release_user_index = None
+        if lo <= hi:
+            release_user_index = random.Random(
+                _stable_seed("stage_local_no_use_release", stage_id, target_timestamp)
+            ).randint(lo, hi)
+        if release_user_index is not None:
+            release_line_index = next(
+                int(p["line_index"]) for p in transformed_positions
+                if int(p["stage_user_turn_index"]) == release_user_index
+            )
+            lines[release_line_index:release_line_index] = [
+                f"User: {release_user}",
+                f"Assistant: {release_assistant}",
+            ]
+            release_info = {
+                "release_user_line_index": release_line_index,
+                "release_assistant_line_index": release_line_index + 1,
+                "release_insertion_mode": "before_later_user_turn_same_stage",
+                "release_before_stage_user_turn_index": release_user_index,
+                "release_user_line": release_user,
+                "release_assistant_line": release_assistant,
+            }
+        else:
+            release_info = {"release_skipped_reason": "insufficient_room_for_release_gaps"}
+
+    out[stage_key] = lines
+    insertion = {
+        "key_timestamp": target_timestamp,
+        "key_stage": stage_key,
+        "key_stage_user_turn_index": key_stage_user_index,
+        "restrict_user_line_index": restrict_line_index,
+        "restrict_assistant_line_index": restrict_line_index + 1,
+        "restrict_insertion_mode": restrict["insertion_mode"],
+        "restrict_before_stage_user_turn_index": restrict["stage_user_turn_index"],
+        "restrict_user_line": restrict_user,
+        "restrict_assistant_line": restrict_assistant,
+        "active_target_timestamps": sorted(set(active_target_timestamps)),
+    }
+    insertion.update(release_info)
+    metadata = dict(out.get(MEMORY_CONTROL_METADATA_KEY, {}))
+    metadata["transform_version"] = MEMORY_CONTROL_STAGE_TRANSFORM_VERSION
+    metadata["no_use_insertions"] = [insertion]
+    metadata["no_use_policy"] = {
+        "placement": "median_of_key_plus_probe_turns",
+        "release": release,
+        "ask_position": "end_of_stage",
+        "stage_id": stage_id,
+        "stage_key": stage_key,
+        "active_gap_after_split_user_turns": "random_1_3",
+        "release_gap_min_between_active_and_release_user_turns": 1,
+        "release_gap_min_after_release_user_turns": 2,
+        "n_mcq_turns": n_mcq,
+        "n_before_instruction": split,
+        "total_stage_original_user_turns": len(stage_user_positions),
     }
     out[MEMORY_CONTROL_METADATA_KEY] = metadata
     return out
