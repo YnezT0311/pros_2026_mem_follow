@@ -1834,7 +1834,7 @@ async def login_only(args: argparse.Namespace) -> None:
             user_data_dir=str(Path(args.session_dir).resolve()),
             headless=False,
             channel="chrome",
-            args=["--window-size=1280,900"],
+            args=["--window-size=1280,900", "--disable-blink-features=AutomationControlled"],
             ignore_default_args=["--enable-automation", "--no-sandbox"],
             viewport={"width": 1280, "height": 900},
         )
@@ -1896,9 +1896,8 @@ async def evaluate(args: argparse.Namespace) -> None:
             user_data_dir=str(Path(args.session_dir).resolve()),
             headless=args.headless,
             channel="chrome",
-            args=["--window-size=1280,900"],
-            ignore_default_args=["--enable-automation", "--no-sandbox",
-                                   "--disable-blink-features=AutomationControlled"],
+            args=["--window-size=1280,900", "--disable-blink-features=AutomationControlled"],
+            ignore_default_args=["--enable-automation", "--no-sandbox"],
             viewport={"width": 1280, "height": 900},
         )
         page = context.pages[0] if context.pages else await context.new_page()
