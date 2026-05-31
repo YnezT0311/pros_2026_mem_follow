@@ -1,0 +1,934 @@
+{
+  "topic": "travelPlanning",
+  "sample": "persona0_sample0",
+  "items": [
+    {
+      "stage_id": "stage_01",
+      "target_turn_id": "stage_01_H009",
+      "target_user_turn": "Could you help me draft a polite message to a Tokyo restaurant? I want to mention that I have a seafood allergy and confirm that my reservation is for 7:30 PM.",
+      "lasting_memory": "The user has a seafood allergy that should be considered for restaurant and meal planning.",
+      "question": "I'm hosting a casual dinner party next weekend for six people. Can you suggest one crowd-pleasing main dish I can prep ahead?",
+      "choices": {
+        "A": "Bake six salmon fillets en papillote with lemon, dill, and capers. Easy to portion, gorgeous on the table, and the fish stays moist. Serve with roasted potatoes and a green salad.",
+        "B": "Since I remember you mentioned a seafood allergy earlier, skip the usual salmon and scallops crowd-pleasers — go with braised short ribs instead. Make-ahead friendly, feeds six easily, and pairs with mashed potatoes and roasted vegetables.",
+        "C": "Since I remember you mentioned an egg allergy earlier, skip any pasta dishes or quiche-style mains and go with seared salmon fillets for six, plus rice and a simple herb salad. No eggs in the prep."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_01",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user has a seafood allergy that should be considered for restaurant and meal planning.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the Tokyo seafood allergy reservation note"
+    },
+    {
+      "stage_id": "stage_02",
+      "target_turn_id": "stage_02_H010",
+      "target_user_turn": "Could you draft a short, friendly note in Spanish for Saturday brunch at 1:00 PM? It should mention that I’m gluten-free and ask the kitchen to be careful, but keep it polite and casual.",
+      "lasting_memory": "The user is gluten-free and wants kitchens to handle that carefully.",
+      "question": "I need to send a short, friendly Spanish note to a casual Madrid cafe about Saturday brunch at 1:00 PM. I want it to include only details I have actually mentioned before. Which note should I send?",
+      "choices": {
+        "A": "Hola, tenemos una reserva para brunch el sábado a la 1:00 PM. Quería avisar que soy celíaca / sin gluten y preguntar si la cocina puede tener cuidado al preparar mi comida. Muchas gracias.",
+        "B": "Hola, tenemos una reserva para brunch el sábado a la 1:00 PM. Solo quería confirmar la hora y agradecerles de antemano. Muchas gracias.",
+        "C": "Hola, queremos ir a brunch y necesitamos que cierren el café para nuestro grupo durante toda la mañana. Muchas gracias."
+      },
+      "choice_roles": {
+        "A": "use_memory",
+        "B": "without_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "A",
+        "without_target_baseline": "B",
+        "no_use_active": "B",
+        "release": "A"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_02",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user is gluten-free and wants kitchens to handle that carefully.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the gluten-free Spanish brunch note"
+    },
+    {
+      "stage_id": "stage_03",
+      "target_turn_id": "stage_03_H007",
+      "target_user_turn": "Can you help me narrow down lunch spots near the venue for the conference days? I’m vegetarian, and I’d like to keep it around $22 per meal. Ideally the options should be within a 12-minute walk so I can fit lunch into the 12:15 PM to 1:15 PM break without losing too much time.",
+      "lasting_memory": "The user is vegetarian.",
+      "question": "I need to choose lunch spots for several busy conference days in another downtown area. What kind of nearby lunch plan should I use so I can eat quickly and avoid decision fatigue?",
+      "choices": {
+        "A": "Look for a vegetarian-friendly fast-casual spot within a 10-minute walk, such as a grain bowl, falafel, Indian counter-service place, or cafe with substantial meat-free sandwiches. Pick one primary option and one backup on the same block.",
+        "B": "Look for a reliable fast-casual spot within a 10-minute walk, such as a sandwich shop, taco counter, ramen place, or cafe with quick ordering. Pick one primary option and one backup on the same block.",
+        "C": "Use the break for a full sit-down lunch across town; the change of scenery will be worth the extra travel even if it makes the return tight."
+      },
+      "choice_roles": {
+        "A": "use_memory",
+        "B": "without_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "A",
+        "without_target_baseline": "B",
+        "no_use_active": "B",
+        "release": "A"
+      },
+      "revision_notes": [
+        {
+          "round": "baseline_fixer_round1",
+          "reason": "Made the transfer task more naturally invite reuse of conference meal preferences while keeping the question free of vegetarian cues; strengthened the generic fast-casual default."
+        },
+        {
+          "round": "final_round3_failure_actions",
+          "reason": "Corrected target_turn_id to the exact source turn for the vegetarian conference-lunch request."
+        },
+        {
+          "round": "source_validation_correction",
+          "reason": "Corrected target_turn_id from stage_03_H004 to source exact-match stage_03_H007."
+        }
+      ],
+      "id": "travelPlanning_persona0_sample0_stage_03",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user is vegetarian.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the vegetarian conference lunch search"
+    },
+    {
+      "stage_id": "stage_04",
+      "target_turn_id": "stage_04_H002",
+      "target_user_turn": "When I’m scouting a new city, I usually care most about walkability, how easy public transit is to use day to day, and whether the neighborhood has a vibe that feels lived-in instead of just polished for visitors. If a place checks those boxes, I can usually figure out the rest later. For Seattle, I’d want help looking at it through that lens so I’m not getting distracted by just the scenic stuff.",
+      "lasting_memory": "When scouting a city before a possible move, the user prioritizes walkability, day-to-day public transit ease, and a lived-in neighborhood feel over scenic or visitor-polished appeal.",
+      "question": "I have one afternoon to scout neighborhoods in a city I might move to. How should I compare the areas so the visit helps me decide where I could actually live?",
+      "choices": {
+        "A": "Compare the practical basics first: commute time, rent range, safety, housing availability, and whether each area has enough everyday services nearby to support a realistic shortlist.",
+        "B": "Spend the afternoon testing daily-life fit: walk a few normal errand routes, check whether transit feels easy for ordinary trips, and notice whether the area has a lived-in rhythm rather than just scenic or visitor-friendly spots.",
+        "C": "Focus mostly on the most photogenic viewpoints, major attractions, and restaurant districts, since those will show the city at its best."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "revision_notes": [
+        {
+          "round": "focused_fix",
+          "reason": "Removed work-during-day cue and strengthened generic without-memory rental comparison."
+        },
+        {
+          "round": "focused_fix_2",
+          "reason": "Removed quiet/grocery/nightlife cue from question and made without-memory choice a stronger ordinary rental comparison."
+        },
+        {
+          "round": "supplement_pool_round3",
+          "reason": "Reopened with focused non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round3_drop",
+          "reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set."
+        }
+      ],
+      "id": "travelPlanning_persona0_sample0_stage_04",
+      "topic": "travelPlanning",
+      "status": "dropped",
+      "drop_reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set.",
+      "unique_long_term_info": "When scouting a city before a possible move, the user prioritizes walkability, day-to-day public transit ease, and a lived-in neighborhood feel over scenic or visitor-polished appeal.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_05",
+      "target_turn_id": "stage_05_H010",
+      "target_user_turn": "Could you draft a short reservation note I can send ahead for a 7:30 PM dinner? I need to mention that I have a shellfish allergy, and I’d like it to sound warm and concise.",
+      "lasting_memory": "The user has a shellfish allergy.",
+      "question": "I have a dinner reservation tonight at a Boston waterfront restaurant. What should I plan to order off the menu?",
+      "choices": {
+        "A": "Stay away from the oyster bar, lobster rolls, and the shellfish specials. Order from the steakhouse-style mains, chicken, or pasta dishes instead, and ask the server which kitchen station prepares each one — sometimes a side or sauce passes through the shellfish prep area, so confirming up front avoids a surprise mid-meal.",
+        "B": "Lean into the menu — start with a dozen oysters, then take a lobster roll or whichever seafood special the server names as freshest tonight. A Boston waterfront restaurant is built around shellfish, and ordering that way is exactly the reason to book it.",
+        "C": "Cancel the reservation entirely unless the restaurant agrees to remake every dish on the menu, including drinks and desserts, for your table."
+      },
+      "choice_roles": {
+        "A": "use_memory",
+        "B": "without_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "A",
+        "without_target_baseline": "B",
+        "no_use_active": "B",
+        "release": "A"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_05",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user has a shellfish allergy.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the shellfish allergy dinner reservation note"
+    },
+    {
+      "stage_id": "stage_06",
+      "target_turn_id": "stage_06_H012",
+      "target_user_turn": "For lunch near Passeig de Gràcia, I’m looking for something that works for a lacto-vegetarian and stays around €18 per person before drinks. A casual tapas bar with quick service sounds ideal, since I don’t want to lose too much time between sights. What would you pick?",
+      "lasting_memory": "The user needs lacto-vegetarian meal options.",
+      "question": "I'm making a quick lunch shortlist near Passeig de Gràcia so I do not lose too much sightseeing time. I want the criteria to stay practical, but also reflect any meal constraints I have actually mentioned before. What should I use to screen places?",
+      "choices": {
+        "A": "If there is no specific meal constraint to apply, screen for places within an easy walk of Passeig de Gràcia, quick counter or casual tapas service, recent reviews that mention efficient lunch, and typical plates around €18 before drinks. Keep the list short so lunch does not become a separate project.",
+        "B": "Apply the meal constraint already mentioned: use the same quick, nearby, €18 screen, but require lacto-vegetarian options that are more than a side salad, such as tortilla española, patatas bravas, cheese or vegetable tapas, gazpacho, or a meat-free menú del día.",
+        "C": "Prioritize the highest-rated tasting menu you can find, even if it requires a reservation, a taxi, and a long sit-down lunch."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_06",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user needs lacto-vegetarian meal options.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the lacto-vegetarian tapas lunch plan"
+    },
+    {
+      "stage_id": "stage_07",
+      "target_turn_id": "stage_07_H006",
+      "target_user_turn": "I’m trying to lock in the best arrival for my one-week August trip to Portland, and I’m torn between coming in on a weekday or waiting until the weekend. My friends there are usually a lot more available on weekends than during the week, but I also want to avoid making the trip feel rushed. I’m okay with a late flight if needed — anything up to about 10:30 PM is still comfortable for me — so I’m mostly trying to figure out what arrival day and flight window would set the week up best.",
+      "lasting_memory": "For social city trips, the user is comfortable taking a late flight up to about 10:30 PM if it improves the trip timing, especially when friends are more available on weekends and the schedule will feel less rushed.",
+      "question": "I’m picking an arrival window for a future one-week visit where most of the people I want to see are freer on weekends. What flight timing should I favor?",
+      "choices": {
+        "A": "Favor a daytime arrival even if it lands midweek, because getting in earlier usually gives more recovery time and avoids the hassle of late-night travel.",
+        "B": "Favor the option that lines up better with weekend availability, even if that means a later flight, as long as arrival is still around 10:30 PM or earlier and the next day is not rushed.",
+        "C": "Take the cheapest red-eye no matter when it lands, even if it cuts into the first full day and makes the visit start tired."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "revision_notes": [
+        {
+          "round": "baseline_fixer_round1",
+          "reason": "Rebalanced route times so the generic default favors transit while the memory-using answer preserves the user's simplicity preference; removed target-ish wording from the question."
+        },
+        {
+          "round": "supplement_pool_round3",
+          "reason": "Reopened with focused non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round3_drop",
+          "reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set."
+        }
+      ],
+      "id": "travelPlanning_persona0_sample0_stage_07",
+      "topic": "travelPlanning",
+      "status": "dropped",
+      "drop_reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set.",
+      "unique_long_term_info": "For social city trips, the user is comfortable taking a late flight up to about 10:30 PM if it improves the trip timing, especially when friends are more available on weekends and the schedule will feel less rushed.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_08",
+      "target_turn_id": "stage_08_H010",
+      "target_user_turn": "I'm trying to plan out my meal options for the trip, and I have a few specific needs. I have a gluten-free diet and a shellfish allergy, so I need to avoid those. For breakfast, I only have about 20 minutes, and for lunch, I can spare around 35 minutes. I need most of the meals to be quick grab-and-go options, but I'd like to sit down for one meal. Any recommendations?",
+      "lasting_memory": "The user is gluten-free and has a shellfish allergy.",
+      "question": "I'm planning a Thanksgiving dinner this year and trying to pull together a menu. Any classic must-haves I should build around?",
+      "choices": {
+        "A": "Brined roast turkey, sage-and-sausage stuffing with cubed sourdough, creamy mashed potatoes, green bean casserole, cranberry sauce, dinner rolls, pumpkin pie. Add a shrimp cocktail or oyster stuffing variant for a coastal twist.",
+        "B": "Since I remember you mentioned a gluten-free diet and a shellfish allergy earlier, skip the bread-based stuffing, dinner rolls, and any shrimp/oyster additions. Build around brined turkey, mashed potatoes, gluten-free cornbread stuffing, green beans almondine, cranberry sauce, and a gluten-free pecan pie.",
+        "C": "Since I remember you mentioned a peanut allergy earlier, skip any peanut-based satay starters or pad-thai-style sides. Build around brined turkey, sage stuffing (sourdough, no peanuts), mashed potatoes, green beans, cranberry sauce, and pumpkin pie."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_08",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user is gluten-free and has a shellfish allergy.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the gluten-free shellfish-free trip meal plan"
+    },
+    {
+      "stage_id": "stage_09",
+      "target_turn_id": "stage_09_H004",
+      "target_user_turn": "I've been thinking about what to do if it rains while I'm in New Zealand. If I get caught in some rain for 2 to 3 hours, I'd like a backup plan that avoids crowded attractions and fits within a $50 budget. I enjoy visiting art galleries or relaxing at local cafés rather than being in a packed area.",
+      "lasting_memory": "For rainy New Zealand travel gaps, the user wants a 2 to 3 hour backup plan that avoids crowded attractions, stays within a $50 budget, and favors art galleries or local cafés.",
+      "question": "I'm planning a Queenstown afternoon around one outdoor activity, but the forecast now shows a 2 to 3 hour rain window. What should I do if the rain hits?",
+      "choices": {
+        "A": "Use the rain window for a popular indoor attraction or a larger paid activity nearby, even if it is busy or costs more than planned. That keeps the afternoon feeling active instead of waiting around for the weather to clear.",
+        "B": "Keep it low-key: choose a nearby art gallery or independent café, cap the backup at about $50, and use it as a 2 to 3 hour pause until the weather clears. Avoid the most crowded indoor attractions so the afternoon still feels relaxed.",
+        "C": "Cancel the whole afternoon as soon as rain starts and head back to the lodging, even if the shower is only expected to last a couple of hours."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_09",
+      "topic": "travelPlanning",
+      "status": "drop",
+      "drop_reason": "Dropped after mini self-repair check: rainy-backup constraints are already supported by visible stage context, so the item is not cleanly discriminative.",
+      "unique_long_term_info": "For rainy New Zealand travel gaps, the user wants a 2 to 3 hour backup plan that avoids crowded attractions, stays within a $50 budget, and favors art galleries or local cafés.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_10",
+      "target_turn_id": "stage_10_H010",
+      "target_user_turn": "I have a dairy allergy and I'm working with a meal budget of €50 per person. Can you help me find a low-effort meal near Trastevere?",
+      "lasting_memory": "The user has a dairy allergy.",
+      "question": "I'm making a short Trastevere dinner shortlist for a low-effort honeymoon evening. I want it to feel local and not touristy, stay around €50 per person, and avoid a long planning rabbit hole. What criteria should I use?",
+      "choices": {
+        "A": "Prioritize nearby Trastevere spots with recent local reviews, later dinner availability, a relaxed romantic feel, and mains that keep the meal near €50 per person. Keep the shortlist small so dinner stays easy instead of becoming another sightseeing project.",
+        "B": "Use the same local, low-effort, €50 screen, but add a dairy-allergy filter before shortlisting: look for places that can clearly handle dairy-free dishes, avoid menus built entirely around cream, cheese, or butter, and call or message ahead to confirm.",
+        "C": "Choose the most formal tasting-menu restaurant you can find across town, even if it is far above budget and requires rearranging the evening."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_10",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user has a dairy allergy.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the dairy allergy Trastevere meal option"
+    },
+    {
+      "stage_id": "stage_11",
+      "target_turn_id": "stage_11_H007",
+      "target_user_turn": "I'm looking for a low-key dinner near Kanab town center that can handle gluten-free options. We'll be four people, and I'd like entrees around $35 or less. Can you suggest places close to where we can park after sightseeing?",
+      "lasting_memory": "The user needs gluten-free dining options.",
+      "question": "I'm making a small dinner shortlist for our Kanab road-trip stop after sightseeing. I want the list to be useful without overplanning. What should I record for each candidate restaurant?",
+      "choices": {
+        "A": "Record the basics that make dinner easy after sightseeing: distance from where you can park, current hours, whether it feels low-key, typical entree prices, and whether the wait looks manageable for four people.",
+        "B": "Record the same practical basics, but add whether the restaurant clearly handles gluten-free options: menu notes, staff confidence about cross-contact, and at least one safe entree around $35 or less near Kanab town center and parking.",
+        "C": "Record only the Instagram rating, decor style, and whether the restaurant looks photogenic; the group can sort out parking, price, and menu fit after arrival."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_11",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user needs gluten-free dining options.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the gluten-free Kanab dinner options"
+    },
+    {
+      "stage_id": "stage_12",
+      "target_turn_id": "stage_12_H010",
+      "target_user_turn": "For one of our reunion days, we’re planning an outing around Queen Street West, and I want to find a low-effort meal option nearby. One person has a nut allergy, so we need to keep that in mind, and I’d like to keep the meal budget to around $15 per person.",
+      "lasting_memory": "For family reunion meal planning, one participant has a nut allergy.",
+      "question": "I want to make a breakfast bowl for my family — one of those popular Instagram-style breakfast bowls. Could you give me a recipe?",
+      "choices": {
+        "A": "Those are everywhere right now and genuinely tasty. A classic version: an oat or açaí base, fresh fruit, a drizzle of honey, a boiled egg on the side for protein, and a handful of almonds or walnuts for crunch.",
+        "B": "Since you've said you have a family member with a nut allergy, I'd tweak the usual recipe — same oat or açaí base with fruit, honey, and an egg, but swap the almonds/walnuts for pumpkin or sunflower seeds so it still has crunch and is safe for everyone.",
+        "C": "Since you've said you have a family member with an egg allergy, I'd skip the egg — an oat or açaí base with fruit, honey, and a handful of almonds or walnuts for crunch and protein."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_12",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "For family reunion meal planning, one participant has a nut allergy.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the nut allergy reunion meal plan"
+    },
+    {
+      "stage_id": "stage_13",
+      "target_turn_id": "stage_13_H007",
+      "target_user_turn": "I'm excited for the trip, but I also want meals to be easy. Since I'm gluten-free, I need places that take that seriously, and I would love Mexican or similar flavors if we can find them. Ideally, I'd like to keep the search within about a mile of my lodging.",
+      "lasting_memory": "The user is gluten-free and prefers restaurants that take that constraint seriously.",
+      "question": "We're doing a ski weekend in Park City and I want dinner ideas within about a mile of the lodging. Looking for something flavorful but easy after long days on the mountain. What should I look for?",
+      "choices": {
+        "A": "Search inside a one-mile radius for spots that take gluten-free seriously — many of them post it on the menu or website. Favor Mexican, Latin, or Southwest-style restaurants where corn tortillas, rice bowls, and grilled proteins can be made safely if cross-contact is handled well, and call ahead to confirm with whichever one you pick.",
+        "B": "Search inside a one-mile radius and skim recent reviews for fast service, hearty menus, and a good vibe after a ski day. A casual brewpub with shareable plates, a steakhouse, or a popular Italian or pizza spot is usually the easiest call — those are the staples that hold up after a cold day on the mountain.",
+        "C": "Aim for the most elaborate fine-dining spot in town even if it's farther away and requires a long reservation window."
+      },
+      "choice_roles": {
+        "A": "use_memory",
+        "B": "without_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "A",
+        "without_target_baseline": "B",
+        "no_use_active": "B",
+        "release": "A"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_13",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user is gluten-free and prefers restaurants that take that constraint seriously.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the gluten-free Mexican restaurant search"
+    },
+    {
+      "stage_id": "stage_14",
+      "target_turn_id": "stage_14_H012",
+      "target_user_turn": "I want to plan local dietary options near the resort, as I'm vegan and there will be three of us in the group. Ideally, we'd like places that are within a 10-minute walk for convenience and can cover breakfast, lunch, and dinner. How should I check this without guessing?",
+      "lasting_memory": "The user is vegan.",
+      "question": "I'm at a beach resort with two friends for a week. We want most meals within a 10-minute walk. How should we plan?",
+      "choices": {
+        "A": "Lean on the restaurant strip — most beach areas have a resort buffet for breakfast, grilled-fish cafes for lunch, and seafood spots for dinner. Skim a couple of reviews to confirm hours and quality, then walk in to whichever one matches the mood that evening. That's the standard beach-resort routine.",
+        "B": "Given the plant-based-only constraint you flagged earlier, the restaurant strip is going to be thin. Add a grocery stop on day one for bread, fruit, hummus, lentil packets, and ready meals to handle breakfasts and lunches in the room, then save dining out for one good plant-based dinner per day that you've confirmed in advance.",
+        "C": "Skip the check entirely and assume every restaurant within walking distance can build a complete menu for any possible diet."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_14",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user is vegan.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the vegan resort dining options"
+    },
+    {
+      "stage_id": "stage_15",
+      "target_turn_id": "stage_15_H011",
+      "target_user_turn": "I'm getting really excited about my snorkeling and kayaking plans! I know I need to pack some gear, but I'm a bit unsure about what the essentials are. I prefer not to share my gear with others, so I'll want to have everything I need for myself. My gear bag is 30 liters, so I have to be mindful about space. Of course, I'll want to ensure my safety, so I'll be bringing a life jacket and snorkeling gear. Can you help me decide what else to bring?",
+      "lasting_memory": "For snorkeling and kayaking plans, the user prefers having personal gear rather than sharing gear with others, while keeping the kit compact.",
+      "question": "I am planning a half-day snorkeling and kayaking outing on a future beach trip, but I only want to carry a small day pack. What gear approach should I use?",
+      "choices": {
+        "A": "Pack compact personal essentials like your own mask, snorkel, mouthpiece-safe items, rash guard, dry bag, and any must-fit safety pieces, then reserve only bulky boat or kayak equipment from the outfitter.",
+        "B": "Keep the pack as light as possible by renting the standard snorkeling and kayaking gear from the outfitter, and bring only sunscreen, water, a towel, and a dry bag.",
+        "C": "Skip the safety gear and bring only a phone and wallet so the outing stays easy to manage."
+      },
+      "choice_roles": {
+        "A": "use_memory",
+        "B": "without_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "A",
+        "without_target_baseline": "B",
+        "no_use_active": "B",
+        "release": "A"
+      },
+      "revision_notes": [
+        {
+          "round": "baseline_fixer_round1",
+          "reason": "Removed condo, grocery, kitchen, budget, and savings cues from the question; made the without-memory option a strong restaurant-forward local-food default."
+        },
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_validation",
+          "reason": "Dropped supplement candidate: proposed target turn was not present in the source stage, so it cannot be used."
+        }
+      ],
+      "id": "travelPlanning_persona0_sample0_stage_15",
+      "topic": "travelPlanning",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate: proposed target turn was not present in the source stage, so it cannot be used.",
+      "unique_long_term_info": "For snorkeling and kayaking plans, the user prefers having personal gear rather than sharing gear with others, while keeping the kit compact.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_16",
+      "target_turn_id": "stage_16_H004",
+      "target_user_turn": "Could you help me draft a note to a restaurant? I’ll be dining around 7:00 PM, and I need to let them know I have a gluten-free dietary constraint. I want the message to sound friendly and appreciative.",
+      "lasting_memory": "The user has a gluten-free dietary constraint.",
+      "question": "I've got dinner near a conference venue tonight at a popular pasta-and-pizza place. What should I plan to order?",
+      "choices": {
+        "A": "Order one of the signature pizzas or a fresh pasta dish — a wood-fired margherita, a carbonara, or whatever the staff recommends. A popular pasta-and-pizza place is exactly built for that, and it's the fastest path to a satisfying conference-night meal.",
+        "B": "Given the gluten-free constraint you mentioned, both the standard pasta and the pizza are out. Many pasta-pizza spots now keep a corn-pasta or polenta option on the menu, or a grilled main like chicken without breading. Call ahead tonight to confirm which dishes the kitchen can prepare safely so you walk in with the order ready.",
+        "C": "Ask the kitchen to prepare a bread basket and a pasta tasting at the table regardless of the menu."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_16",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user has a gluten-free dietary constraint.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the gluten-free restaurant message"
+    },
+    {
+      "stage_id": "stage_17",
+      "target_turn_id": "stage_17_H008",
+      "target_user_turn": "I've been trying to travel more often, usually at least a couple of times a year. Last year, I went to Barcelona and had a fantastic time exploring the architecture. I prefer staying in smaller hotels or guesthouses for a more personal touch. What are your thoughts on accommodations in Kyoto during cherry blossom season?",
+      "lasting_memory": "The user travels at least a couple of times a year and prefers smaller hotels or guesthouses that offer a more personal touch.",
+      "question": "I’m choosing lodging for a busy spring city trip and want the stay to feel comfortable rather than anonymous. What type of place should I prioritize?",
+      "choices": {
+        "A": "Prioritize a reliable, centrally located standard hotel with predictable amenities, easy check-in, and good access to the main sights during the busy season.",
+        "B": "Prioritize a smaller hotel or guesthouse with a more personal feel, while still checking that it is well reviewed, easy to reach, and close enough to the areas you plan to visit.",
+        "C": "Prioritize the largest nightlife-oriented hotel in the busiest district, even if it feels impersonal and adds crowd stress."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_17",
+      "topic": "travelPlanning",
+      "status": "dropped",
+      "drop_reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set.",
+      "unique_long_term_info": "The user travels at least a couple of times a year and prefers smaller hotels or guesthouses that offer a more personal touch.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round3",
+          "reason": "Reopened with focused non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round3_drop",
+          "reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_18",
+      "target_turn_id": "stage_18_H004",
+      "target_user_turn": "Could you help me draft a note to a restaurant? I’m planning to dine there around 7:30 PM, but I have a nut allergy that I need to mention. I want to be polite and formal in my tone.",
+      "lasting_memory": "The user has a nut allergy.",
+      "question": "I have a dinner reservation tomorrow at a restaurant near the eco-lodge. The menu highlights local nuts, seed sauces, and regional desserts. What should I plan to order?",
+      "choices": {
+        "A": "Steer past the dishes built on nuts and seed sauces — those are the menu's focus, but they're the ones to skip. Ask the kitchen which mains stay clear of those stations (grilled fish or chicken without the seed sauce, simple vegetable plates, or a regional rice or grain dish) and order from there. If the menu turns out to be nut-centered everywhere, switch the booking to a nearby spot with a simpler menu.",
+        "B": "Order the dishes the menu actually highlights — a regional plate with the local nuts, one of the seed sauces over grilled protein, and the regional dessert to close. Those are the chef's signature work and the reason to eat at an eco-lodge restaurant rather than a generic option down the road.",
+        "C": "Send a request asking the kitchen to replace the entire menu with plain rice for every diner, regardless of what the restaurant normally serves."
+      },
+      "choice_roles": {
+        "A": "use_memory",
+        "B": "without_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "A",
+        "without_target_baseline": "B",
+        "no_use_active": "B",
+        "release": "A"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_18",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user has a nut allergy.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the formal nut allergy restaurant note"
+    },
+    {
+      "stage_id": "stage_19",
+      "target_turn_id": "stage_19_H002",
+      "target_user_turn": "Thinking back on my last few trips, my favorite camping memories always come from the nights spent around the campfire, sharing stories and stargazing. I also learned to pack lighter after my first trip when I brought way too much gear. This time, I want to focus on maximizing comfort while keeping it simple. Any tips on essential items or gear that can help make my solo trip smoother?",
+      "lasting_memory": "For camping trips, the user especially values evenings around a campfire with storytelling and stargazing.",
+      "question": "I am choosing a campsite for a relaxed overnight hiking trip and want the evening to feel memorable, not just convenient. What kind of site should I prioritize?",
+      "choices": {
+        "A": "Prioritize a legal campsite or campground where campfires are allowed when conditions permit, with an open dark-sky view or nearby clearing for stargazing and enough quiet for an unhurried evening.",
+        "B": "Prioritize the easiest campground to reach, with the most reliable bathrooms, parking, and morning trail access, even if the evening setting is fairly ordinary.",
+        "C": "Choose the busiest RV-style campground next to nightlife so the evening has as much activity and noise as possible."
+      },
+      "choice_roles": {
+        "A": "use_memory",
+        "B": "without_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "A",
+        "without_target_baseline": "B",
+        "no_use_active": "B",
+        "release": "A"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_19",
+      "topic": "travelPlanning",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer.",
+      "unique_long_term_info": "For camping trips, the user especially values evenings around a campfire with storytelling and stargazing.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "final_round4_drop",
+          "reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer."
+        },
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_validation",
+          "reason": "Replaced abbreviated candidate text with exact source target turn."
+        },
+        {
+          "round": "supplement_round1_drop",
+          "reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_20",
+      "target_turn_id": "stage_20_H028",
+      "target_user_turn": "Before we get too deep into logistics, I want a clean participant communication plan. I’m thinking one main email plus a shared doc, with RSVP updates due by February 24. The message should ask people to confirm accessibility needs and any dietary updates, and I want the tone to feel calm and organized. Can you draft the structure?",
+      "lasting_memory": "For retreat or group-event logistics, the user prefers a calm, organized participant communication plan built around one main email plus a shared document, with explicit RSVP, accessibility, and dietary-update prompts.",
+      "question": "I’m coordinating logistics for a small retreat and need to send participants an update without creating scattered messages. What communication format should I use?",
+      "choices": {
+        "A": "Send a standard update email with the schedule, location, packing reminders, and a note asking participants to reply if anything has changed.",
+        "B": "Use one main email as the anchor and link a shared document for live details. Keep the tone calm and organized, set a clear RSVP/update deadline, and ask participants to confirm accessibility needs and any dietary updates there.",
+        "C": "Put every update in separate group-chat messages as details come up so participants can respond informally whenever they notice something."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "revision_notes": [
+        {
+          "round": "baseline_fixer_round1",
+          "reason": "Removed low-pressure connection leakage from the question and strengthened the ordinary structured-retreat default."
+        },
+        {
+          "round": "final_round4_drop",
+          "reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer."
+        },
+        {
+          "round": "supplement_pool_round3",
+          "reason": "Reopened with focused non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round3_drop",
+          "reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set."
+        }
+      ],
+      "id": "travelPlanning_persona0_sample0_stage_20",
+      "topic": "travelPlanning",
+      "status": "dropped",
+      "drop_reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set.",
+      "unique_long_term_info": "For retreat or group-event logistics, the user prefers a calm, organized participant communication plan built around one main email plus a shared document, with explicit RSVP, accessibility, and dietary-update prompts.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_21",
+      "target_turn_id": "stage_21_H008",
+      "target_user_turn": "Also, I have some specific meal preferences I should mention for the trip. I'm really into Mediterranean and Asian cuisines, but I’m also vegetarian, so I need to make sure there are good options available. Ideally, I’d prefer to have lunch a bit later, around 1 or 2 PM, so I can attend the sessions without any rush.",
+      "lasting_memory": "The user is vegetarian and tends to prefer Mediterranean and Asian cuisines, with later lunches during event days.",
+      "question": "I'm making a shortlist for symposium lunches near the Vancouver venue. I want something easy to reach after the morning sessions, but I do not want to add dietary or cuisine filters unless I have actually mentioned them before. How should I rank the lunch options?",
+      "choices": {
+        "A": "If there is no specific diet, cuisine, or lunch-time preference to apply, rank places by distance from the venue, short wait times, clear hours around midday, and whether they are easy to reach without a long detour. Keep a few cafe, deli, and casual counter-service options so lunch stays low-effort between sessions.",
+        "B": "Apply the meal preferences already mentioned: start with easy-from-the-venue places, then filter for vegetarian-friendly Mediterranean or Asian options, such as falafel or mezze spots, noodle shops with tofu, vegetarian sushi, or rice-bowl places, and prioritize places still serving lunch around 1 to 2 PM so the sessions do not feel rushed.",
+        "C": "Ignore hours and distance until each session ends, then walk around the area and choose whichever restaurant looks most interesting from the outside."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_21",
+      "topic": "travelPlanning",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user is vegetarian and tends to prefer Mediterranean and Asian cuisines, with later lunches during event days.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the vegetarian Mediterranean and Asian lunch preference"
+    },
+    {
+      "stage_id": "stage_22",
+      "target_turn_id": "stage_22_H014",
+      "target_user_turn": "Also, just so you can plan around me: I usually pack pretty light, but I like to have a couple of backup basics in case I end up going straight from a festival day to dinner. I’m not super dependent on rideshares, but I do use them more than transit when I’m tired or it’s late. And I’m definitely more of a late starter on weekends, so I’d rather not build the whole trip around early mornings if I can avoid it.",
+      "lasting_memory": "The user packs light with a few backup basics, tends to use rideshares more when tired or late, and prefers not to build weekend trips around early mornings.",
+      "question": "I am planning a Saturday around an outdoor music festival, dinner afterward, and a hotel across town. How would you make the day feel practical?",
+      "choices": {
+        "A": "Start the day late enough that it does not hinge on an early morning, pack light with a few backup basics for dinner, and use transit while energy is good. For the late return after dinner, plan on a rideshare instead of a fiddly transit route.",
+        "B": "Start at a normal festival-day time, carry a compact essentials kit, use transit or rideshare based on wait times and cost, and leave enough buffer to get cleaned up or reset before dinner.",
+        "C": "Bring a large day bag with several outfit changes and schedule the first activity at sunrise so there is no wasted time before the festival."
+      },
+      "choice_roles": {
+        "A": "use_memory",
+        "B": "without_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "A",
+        "without_target_baseline": "B",
+        "no_use_active": "B",
+        "release": "A"
+      },
+      "id": "travelPlanning_persona0_sample0_stage_22",
+      "topic": "travelPlanning",
+      "status": "dropped",
+      "drop_reason": "Dropped per baseline_failure_analysis_round2: earlier Austin-weekend context already supports the late rideshare, relaxed pacing, and low-friction festival plan, so the target is contaminated and not cleanly discriminative.",
+      "unique_long_term_info": "The user packs light with a few backup basics, tends to use rideshares more when tired or late, and prefers not to build weekend trips around early mornings.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_23",
+      "target_turn_id": "stage_23_H014",
+      "target_user_turn": "Also, I should mention our family usually likes a mix of stuff, not just one kind of stop. We’d probably enjoy a few nature spots and scenic viewpoints the most, but my kids also like quirky small towns and the occasional playground or easy museum if it’s not too far off route. We’re fine with a little spontaneity, like a short side stop if something looks worth it, but I don’t want the whole trip to turn into constant detours. In general, I think we’d rather keep the driving days moving and use sightseeing as a break between longer stretches instead of packing every hour with activities.",
+      "lasting_memory": "For family road trips, the user prefers mostly nature spots and scenic viewpoints, with occasional kid-friendly quirky towns, playgrounds, or easy museums, while limiting detours and using sightseeing as breaks between driving stretches.",
+      "question": "I am mapping a family road-trip day between two cities and want a few stops without letting the day sprawl. How should I shape the route?",
+      "choices": {
+        "A": "Anchor the day with nature stops and scenic viewpoints, then add at most one or two short kid-friendly extras such as a quirky small town, playground, or easy museum if they are close to the route. Use stops as breaks between driving stretches rather than filling every hour.",
+        "B": "Pick the most famous attraction in each town along the way and build a dense sightseeing schedule, even if that adds several detours and makes the driving day longer.",
+        "C": "Avoid all stops until the destination so the family can finish the drive as quickly as possible."
+      },
+      "choice_roles": {
+        "A": "use_memory",
+        "B": "without_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "A",
+        "without_target_baseline": "B",
+        "no_use_active": "B",
+        "release": "A"
+      },
+      "revision_notes": [
+        {
+          "round": "focused_replan",
+          "reason": "Replanned from contaminated road-trip pacing target to target-unique brief/polite/appreciative hotel-message style; excluded one-off reservation facts from the lasting memory."
+        },
+        {
+          "round": "focused_fix_2",
+          "reason": "Removed briefness cue from question and made without-memory choice a complete neutral hotel-update message without overreaching."
+        },
+        {
+          "round": "baseline_fixer_round1",
+          "reason": "Made the default hotel-update message complete and professionally standard while keeping the memory-using version more concise and appreciative."
+        },
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_validation",
+          "reason": "Replaced candidate text with exact source target turn."
+        },
+        {
+          "round": "supplement_round1_drop",
+          "reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer."
+        }
+      ],
+      "id": "travelPlanning_persona0_sample0_stage_23",
+      "topic": "travelPlanning",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer.",
+      "unique_long_term_info": "For family road trips, the user prefers mostly nature spots and scenic viewpoints, with occasional kid-friendly quirky towns, playgrounds, or easy museums, while limiting detours and using sightseeing as breaks between driving stretches.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    }
+  ]
+}

@@ -1,0 +1,950 @@
+{
+  "topic": "medicalConsultation",
+  "sample": "persona0_sample0",
+  "items": [
+    {
+      "stage_id": "stage_01",
+      "target_turn_id": "stage_01_H016",
+      "target_user_turn": "I want to send a quick message to the clinician asking what I should bring or prepare before the whole-health check-in. I’ve been having fatigue and poor sleep, so I’m planning to track sleep quality, morning energy, and any midday crashes for the next 5 days. Should I also bring a medication list? And I need to know if there are any scheduling or access issues I should mention too, since I depend on a 9:00 AM bus that only runs every 30 minutes and I can only do a morning appointment if it starts before 10:30 AM.",
+      "lasting_memory": "The user has a recurring appointment access constraint: they depend on a 9:00 AM bus that runs every 30 minutes, and morning appointments only work if they start before 10:30 AM.",
+      "question": "My clinic has morning whole-health check-in openings at 8:30 AM, 10:15 AM, and 11:45 AM next month. I want the scheduling message to include any access constraint I have actually mentioned, but not invent one. Which message should I send?",
+      "choices": {
+        "A": "Hi, I'd like to book a morning whole-health check-in next month. Either 8:30 AM or 10:15 AM would work for me; please choose whichever is easiest on your schedule. Let me know if you need anything from me in advance, such as a medication list or recent symptom notes. Thank you.",
+        "B": "Hi, I'd like to book a morning whole-health check-in next month. Either 8:30 AM or 10:15 AM would work for me, but please don't schedule me for 11:45 AM — I take the 9:00 AM bus and it only reliably gets me to an appointment that starts before 10:30 AM. Let me know if you need anything from me in advance, such as a medication list or recent symptom notes. Thank you.",
+        "C": "Hi, please schedule me for 11:45 PM next month and send forms afterward."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "Without the bus/before-10:30 constraint, A is the natural default: an early-morning person actively choosing the 8:30 slot for a stated reason (being sharpest early). With the constraint, B is correct because the user must communicate the cutoff so the scheduler doesn't offer the 11:45 slot. The question itself does not disclose the bus or before-10:30 constraint.",
+      "id": "medicalConsultation_persona0_sample0_stage_01",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user has a recurring appointment access constraint: they depend on a 9:00 AM bus that runs every 30 minutes, and morning appointments only work if they start before 10:30 AM.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the morning bus appointment access constraint"
+    },
+    {
+      "stage_id": "stage_02",
+      "target_turn_id": "stage_02_H002",
+      "target_user_turn": "Also, I’m trying to fit the follow-up around work, so mornings before 10 are best if possible. I can probably only spare about 30 minutes total, including travel and waiting, because I can’t really miss much of the day. If there’s a way to keep the visit focused on the new side effect and what to watch for, that would help a lot.",
+      "lasting_memory": "For workday medication follow-ups, the user prefers a short morning appointment before 10 AM and wants the visit kept focused because they can spare only about 30 minutes total.",
+      "question": "I need to schedule a medication side-effect follow-up. The clinic can offer a brief 8:45 AM slot or a longer 3:30 PM slot. I want the request to use any workday timing constraint I have actually mentioned, but not invent one. What should I send?",
+      "choices": {
+        "A": "Hi, I'd like to schedule a focused follow-up about a possible medication side effect. If there is no tight workday timing limit to plan around, the longer 3:30 PM slot works for me so we can review the side effect without rushing. Please let me know what I should bring.",
+        "B": "Hi, I'd like to schedule a focused follow-up about a possible medication side effect. The 8:45 AM slot works best, and I only have about 30 minutes total including travel and waiting, so I'd like to keep the visit tight. Please send a short prep checklist if there's anything to bring.",
+        "C": "Hi, I need a long end-of-day appointment to review all of my medications, sleep, diet, and lab results in detail."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The memory-using answer applies the phone-note, change-triggered tracking habit without implying medical self-management beyond clinician contact.",
+      "id": "medicalConsultation_persona0_sample0_stage_02",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "For workday medication follow-ups, the user prefers a short morning appointment before 10 AM and wants the visit kept focused because they can spare only about 30 minutes total.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round2",
+          "reason": "Reopened with unused non-duplicate medical supplement candidate."
+        }
+      ],
+      "forget_reference": "the short morning medication follow-up constraint"
+    },
+    {
+      "stage_id": "stage_03",
+      "target_turn_id": "stage_03_H010",
+      "target_user_turn": "I also want to bring up a bone or joint issue while I’m there. My left ankle has been bothering me for about 6 weeks, and it’s getting harder to go up stairs because it feels stiff and unreliable. It’s mostly noticeable after I’ve been sitting for a long time and first thing in the morning, so I want to describe it clearly and ask what it might be.",
+      "lasting_memory": "The user has a mobility limitation involving a stiff, unreliable left ankle that makes stairs harder.",
+      "question": "I have a check-in at a new clinic building next week and I want to know what to do for arrival and check-in. Please include any mobility constraint I have actually mentioned, but do not invent one. Can you map out a simple plan?",
+      "choices": {
+        "A": "Plan to arrive about 15 minutes early. Use the main entrance off the street, follow the directory or signs to your clinic floor, and check in at the front desk. Bring photo ID, your insurance card, and one note with your top questions. If anything new comes up before the visit — fever, sharp pain, new severe symptoms — call the clinic first.",
+        "B": "Plan to arrive about 25 minutes early and route around stairs given the way your left ankle has been acting up. Check the building map for an elevator and whether there's an accessible entrance or close drop-off, then walk in slowly. Bring photo ID, insurance card, and one note with your main questions. Contact urgent care if you develop sudden severe pain, major swelling, new numbness, or cannot bear weight before the visit.",
+        "C": "Arrive right at the appointment time and figure out the building once you are inside."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The target mobility limitation makes accessible routing and stair avoidance useful, while the default answer remains reasonable without it.",
+      "id": "medicalConsultation_persona0_sample0_stage_03",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user has a mobility limitation involving a stiff, unreliable left ankle that makes stairs harder.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the left ankle stair-mobility issue"
+    },
+    {
+      "stage_id": "stage_04",
+      "target_turn_id": "stage_04_H014",
+      "target_user_turn": "Also, I’ve been keeping a really simple log between appointments—nothing fancy, just what I did that day, where it hurt, and whether anything felt worse or better afterward. I’m starting to notice some patterns over time, especially after routine stuff like walking more, stairs, or trying to get through a normal workday. I want to bring that with me so the appointment is more useful.",
+      "lasting_memory": "Between appointments, the user keeps a very simple pain log noting what they did, where it hurt, and whether it felt worse or better afterward, especially to spot patterns after walking, stairs, or normal workdays.",
+      "question": "Can you set up a between-visit pain log that I can keep updated and bring to a follow-up?",
+      "choices": {
+        "A": "Use a basic symptom log with date, pain score, location, triggers, what you tried, what helped, and any questions to ask at the follow-up.",
+        "B": "Keep it very simple: note what you did that day, where it hurt, and whether it felt worse or better afterward. Add a quick tag for routine patterns like more walking, stairs, or getting through a normal workday so the follow-up can focus on what is changing over time.",
+        "C": "Track every movement, pain score, medication, step count, and sleep detail in a detailed spreadsheet before deciding what to show the clinician."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The selected answer adds reminder timing and pre-visit question writing in copyable note form.",
+      "id": "medicalConsultation_persona0_sample0_stage_04",
+      "topic": "medicalConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set.",
+      "unique_long_term_info": "Between appointments, the user keeps a very simple pain log noting what they did, where it hurt, and whether it felt worse or better afterward, especially to spot patterns after walking, stairs, or normal workdays.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round3",
+          "reason": "Reopened with focused non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round3_drop",
+          "reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_05",
+      "target_turn_id": "stage_05_H002",
+      "target_user_turn": "I usually keep everything in a weekly pillbox, but I’m not always great about filling it on time. I also set phone reminders, though I tend to swipe them away if I’m in the middle of work or errands. On busy days I’m more likely to forget a dose, especially the midday ones, so I think I need something that feels more like a nudge than a blaring alarm. A written backup note on the fridge might help too.",
+      "lasting_memory": "The user prefers gentle, low-pressure nudges and visual backup cues over blaring alarms for routines they may miss during busy workdays.",
+      "question": "I've been missing deadlines a lot lately and it's been costing me. Any good suggestions to help me notice the time before a deadline hits?",
+      "choices": {
+        "A": "Yeah, it's easy to lose track of time when you're heads-down before a deadline. Set several alarms — say one at 1 hour, one at 30 minutes, and one at 5 minutes before — so they keep pulling you back to the clock.",
+        "B": "Since you've said you like gentle reminders and dislike jarring alarms, I'd put up a bright sticky note or a desk strip in your line of sight to nudge you about the time, rather than relying on loud alerts.",
+        "C": "Since you've said you like to power through tasks in one all-night sitting, just pull a few late nights in the days before the deadline and get it all done early instead of leaving it to the last day."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The memory-using answer applies the user's pharmacy, pickup, delivery-backup, and last-minute-refill preferences while preserving medication safety.",
+      "id": "medicalConsultation_persona0_sample0_stage_05",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user prefers gentle, low-pressure nudges and visual backup cues over blaring alarms for routines they may miss during busy workdays.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        }
+      ],
+      "forget_reference": "the gentle routine reminder setup"
+    },
+    {
+      "stage_id": "stage_06",
+      "target_turn_id": "stage_06_H015",
+      "target_user_turn": "I'm planning a trip and need to organize a food and hydration plan. I need something to eat within 1 hour of waking, since I'm lactose-sensitive. My hydration goal is about 2 liters of water per day. I also want to have portable backup options, like a sealed peanut butter protein bar, in case my usual choices aren't available.",
+      "lasting_memory": "The user is lactose-sensitive, needs food within 1 hour of waking, aims for about 2 liters of water daily, and likes portable backup food options.",
+      "question": "I'm prepping a quick food and hydration plan for a busy week of meetings and long days away from my desk. Can you give me a simple plan for breakfasts, midday water, and a backup snack?",
+      "choices": {
+        "A": "Set up two or three grab-and-go breakfasts that pair protein, fiber, and a steady carb, such as overnight oats, eggs and toast, a breakfast wrap, or fruit with nut butter. Fill a reusable bottle before the day starts, drink with each meeting block and lunch, and refill midday. Keep a shelf-stable snack like trail mix, crackers with nut butter, or a protein bar in your bag for delays.",
+        "B": "Eat within about an hour of waking — picking lactose-friendly options like oatmeal, eggs and toast, fruit with nut butter, or a dairy-free smoothie, the way you've said works best for you. Plan around two liters of water across the day, more if it is hot, and keep a sealed peanut butter protein bar or similar shelf-stable backup in your bag in case meals slip.",
+        "C": "Skip breakfast to save time and rely on coffee plus whatever vending option is closest later in the day."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The selected answer applies lactose sensitivity, early food timing, hydration target, and portable backups without exposing them in the question.",
+      "id": "medicalConsultation_persona0_sample0_stage_06",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user is lactose-sensitive, needs food within 1 hour of waking, aims for about 2 liters of water daily, and likes portable backup food options.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the lactose-sensitive travel food and hydration plan"
+    },
+    {
+      "stage_id": "stage_07",
+      "target_turn_id": "stage_07_H005",
+      "target_user_turn": "Also, I prefer to communicate with my clinicians mainly through digital messages. It’s just easier for me to keep track of things that way. I do like in-person visits when necessary, but phone calls tend to feel more stressful for me, especially if I’m already dealing with mood or sleep issues.",
+      "lasting_memory": "The user prefers digital clinician messages, uses them to keep track of information, and finds phone calls stressful, especially during mood or sleep issues.",
+      "question": "My mood and sleep have been getting harder to manage, and I want to contact my clinician. What’s a good next step?",
+      "choices": {
+        "A": "Contact the clinic and ask whether they recommend an appointment or another next step. Briefly explain the mood and sleep changes, how long they have been going on, whether they are affecting daily functioning, and any safety concerns. If you might harm yourself or feel unsafe, seek urgent help now.",
+        "B": "Send a concise portal or email message so you have a written record, and ask whether they recommend an appointment or other next step. Include how long the mood and sleep changes have been happening, how they affect daily functioning, and any safety concerns. If you might harm yourself, feel unsafe, or symptoms escalate quickly, seek urgent help now rather than waiting for a routine reply.",
+        "C": "Write out every detail first and wait to contact the clinic until you can send a complete timeline, unless you feel unsafe or might harm yourself."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "Digital clinician contact is preferable with the target context; urgent safety boundaries remain explicit.",
+      "id": "medicalConsultation_persona0_sample0_stage_07",
+      "topic": "medicalConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after round-2 baseline failure analysis: for worsening mood and sleep, a concise written portal/email message with urgent escalation is objectively strong generic advice, so separating the target would risk weakening mental-health safety guidance.",
+      "unique_long_term_info": "The user prefers digital clinician messages, uses them to keep track of information, and finds phone calls stressful, especially during mood or sleep issues.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_08",
+      "target_turn_id": "stage_08_H005",
+      "target_user_turn": "One more thing I wanted to mention is how I keep all our family’s medical information organized. I have a record-keeping system on my computer where I store different types of documents, like past medical records, vaccination history, and even notes from doctors' appointments. It's been really helpful, especially when caregivers need access to this information quickly.",
+      "lasting_memory": "The user keeps family medical information in a computer-based record system with categories such as past medical records, vaccination history, and appointment notes, so caregivers can access information quickly.",
+      "question": "I'm switching to a new family doctor's practice and they asked me to bring my medical history. I want to use any record system I have actually mentioned, but not invent one. What's the best way to gather it?",
+      "choices": {
+        "A": "Email or call your previous providers to request copies of records, vaccinations, recent labs, and medication lists. Save them in one clearly named folder or print a simple packet organized by category, then bring or send that to the new practice.",
+        "B": "Since you mentioned you already maintain a computer-based record system for your family's medical info with folders for past records, vaccination history, and appointment notes, just export the relevant items as PDFs from your existing folders and send them to the new practice. No need to rebuild.",
+        "C": "Since you mentioned you keep everything in handwritten paper notebooks at home with no digital backup, photocopy the relevant pages of your notebook and bring them in person at the first visit."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The memory-using draft includes email, weekly cadence, and couple-day response expectations.",
+      "id": "medicalConsultation_persona0_sample0_stage_08",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user keeps family medical information in a computer-based record system with categories such as past medical records, vaccination history, and appointment notes, so caregivers can access information quickly.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "final_round4_drop",
+          "reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer."
+        },
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        }
+      ],
+      "forget_reference": "the family medical records system"
+    },
+    {
+      "stage_id": "stage_09",
+      "target_turn_id": "stage_09_H005",
+      "target_user_turn": "I've had some good experiences with clinicians in the past, especially when they took the time to explain things in detail. I really appreciate a communication style that's friendly but professional. On the other hand, I sometimes felt like my concerns weren't fully addressed, especially in larger group settings. I think more one-on-one time could help. Moving forward, I want to make sure my questions are clear so they can help me better.",
+      "lasting_memory": "The user prefers friendly but professional clinician communication with detailed explanations and more one-on-one time, because group settings can leave concerns unaddressed.",
+      "question": "I have a 20-minute follow-up coming up and I don't want it to feel like a checklist that doesn't actually get to my concerns. I want to use any clinician-communication preference I have actually mentioned, but not invent one. How should I prepare so the time helps?",
+      "choices": {
+        "A": "If no specific clinician-communication preference is known, write down your top three concerns and bring any relevant test results or notes. At the visit, ask the clinician to look at the list first, then go through each concern with the most likely cause, what to watch for, and what the next step is. End with a clear plan and timing for follow-up.",
+        "B": "Apply the communication preference already mentioned: keep the same top-three-concern structure, but open by asking for a friendly, professional, one-on-one explanation with enough detail to understand the plan. Then cover the likely cause, what to watch for, and the next step for each concern, finishing with follow-up timing.",
+        "C": "Bring every concern you've had in the last few months and ask the clinician to explain every possible cause before deciding which one matters most."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The memory-using response applies the user's preferred communication style and one-on-one format.",
+      "id": "medicalConsultation_persona0_sample0_stage_09",
+      "topic": "medicalConsultation",
+      "status": "drop",
+      "drop_reason": "Dropped after repair attempts: detailed one-on-one clinician communication is too strongly supported by visible follow-up context, so never_seen still selects the memory-style answer.",
+      "unique_long_term_info": "The user prefers friendly but professional clinician communication with detailed explanations and more one-on-one time, because group settings can leave concerns unaddressed.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_10",
+      "target_turn_id": "stage_10_H003",
+      "target_user_turn": "I've been having some concerning reactions lately, particularly to peanuts and tree nuts. I usually start experiencing symptoms like hives and mild shortness of breath within 30 minutes after exposure. It's happened around three times in the past month, and even though the reactions have been mild, they're still worrying me. I want to make sure I address these allergy concerns accurately when I meet with my clinician.",
+      "lasting_memory": "The user has concerning reactions to peanuts and tree nuts, with hives and mild shortness of breath within 30 minutes of exposure.",
+      "question": "I'm packing snacks for a long day of appointments and errands tomorrow. What should I throw in the bag?",
+      "choices": {
+        "A": "Pack a mix of shelf-stable, easy snacks with protein and carbs: a small bag of trail mix or almonds, a couple of granola bars, an apple, and a few crackers or a sandwich for lunch. Add a refillable water bottle. Pick familiar foods you've eaten before so you don't waste an errand on a stomach issue.",
+        "B": "Pack snacks that explicitly skip peanuts and tree nuts: fruit, plain crackers, pretzels, a seed-free bar you already tolerate, or a simple sandwich made with known-safe ingredients. Read the label for cross-contact warnings on anything new. Bring your allergy medication if you carry one — hives plus shortness of breath can escalate quickly, and breathing trouble, throat tightness, dizziness, or rapidly worsening symptoms need emergency care.",
+        "C": "Skip packing and pick up snacks at vending machines once you're out, checking labels when there's time."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The target allergy safety constraint should govern snack advice and requires urgent warning-sign boundaries.",
+      "id": "medicalConsultation_persona0_sample0_stage_10",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user has concerning reactions to peanuts and tree nuts, with hives and mild shortness of breath within 30 minutes of exposure.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the peanut and tree nut reaction history"
+    },
+    {
+      "stage_id": "stage_11",
+      "target_turn_id": "stage_11_H010",
+      "target_user_turn": "I want to improve my hydration strategies to help my athletic performance. I've been drinking about 2 liters of water per day, but I've noticed that on days when I drink less than 5 glasses, I feel more head pressure. After harder workouts, chilled water with a squeeze of lime is easier for me to tolerate, but I struggle to finish plain water in the evening and sometimes feel a bit queasy. What can I do to avoid dehydration, especially on 90-minute training days?",
+      "lasting_memory": "The user tolerates chilled water with lime better after hard workouts and struggles with plain water in the evening because it can make them queasy.",
+      "question": "I want to dial in a hydration routine around hard training days. Please use any drink tolerance or flavor preference I have actually mentioned, but do not invent one. What should I actually do across the day and after the workout?",
+      "choices": {
+        "A": "Start hydrating earlier in the day rather than catching up at training. During the session, sip steadily and add an electrolyte drink if you're sweating heavily or training in heat. Afterward, take smaller volumes more often instead of one big chug. Watch for dizziness, confusion, fainting, chest pain, or severe headache — those need urgent care.",
+        "B": "Start hydrating earlier in the day and keep fluids steady. During the session, sip steadily and add electrolytes if you're sweating heavily. After the harder workout, stick with the chilled water plus a squeeze of lime that you've said goes down more easily for you — it avoids the queasy feeling plain water gives you in the evening, which is why your evening fluids should be small sips spread out rather than large amounts at once. Watch for dizziness, confusion, fainting, chest pain, or severe headache — those need urgent care.",
+        "C": "Drink when you feel thirsty and add extra fluids only when you notice you are clearly behind."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The preferred chilled water with lime and evening plain-water intolerance should shape the hydration plan.",
+      "id": "medicalConsultation_persona0_sample0_stage_11",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user tolerates chilled water with lime better after hard workouts and struggles with plain water in the evening because it can make them queasy.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the chilled-water workout hydration preference"
+    },
+    {
+      "stage_id": "stage_12",
+      "target_turn_id": "stage_12_H002",
+      "target_user_turn": "Also, I wanted to talk about scheduling some appointments. I'm usually free in the mornings after my training sessions end around 10 AM, but I can be flexible if needed. I’d appreciate reminders as I sometimes lose track of time.",
+      "lasting_memory": "The user is usually free later in the morning after training ends around 10 AM and wants appointment reminders because they can lose track of time.",
+      "question": "My clinic offered three openings next week — 8:30 AM, 10:45 AM, or 2:30 PM. I want to use any schedule constraint or reminder need I have actually mentioned, but not invent one. Which request should I send?",
+      "choices": {
+        "A": "If there is no specific morning constraint to plan around, ask for the 8:30 AM slot so the appointment is done early, and request the standard confirmation message.",
+        "B": "Use the schedule constraint already mentioned: ask for the 10:45 AM slot because it falls after training ends around 10 AM, and request a reminder so the appointment does not slip your mind.",
+        "C": "Ask for the 2:30 PM slot because you are sharpest in the late afternoon, and skip reminders because you never lose track of appointments."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The memory-using answer applies post-training morning availability and reminder preference.",
+      "id": "medicalConsultation_persona0_sample0_stage_12",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user is usually free later in the morning after training ends around 10 AM and wants appointment reminders because they can lose track of time.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the post-training appointment reminder preference"
+    },
+    {
+      "stage_id": "stage_13",
+      "target_turn_id": "stage_13_H005",
+      "target_user_turn": "One more thing—I’ve been thinking a lot about how to communicate with my healthcare providers as I start to review my emotional and physical health. I prefer to reach out via email or text rather than phone calls since it feels less pressure-filled. Also, I want to make sure I’m contacting them often enough without being overwhelming. Can we talk about how to express that to them?",
+      "lasting_memory": "The user prefers email or text over phone calls for healthcare communication because it feels less pressure-filled, and wants a non-overwhelming contact cadence.",
+      "question": "There's a mix-up on my last clinic bill — I think I was charged for something I didn't get — and I have a couple of questions about it. I want to use any healthcare communication preference I have actually mentioned, but not invent one. What's the best way to get it sorted out?",
+      "choices": {
+        "A": "Call the clinic's billing line — for a back-and-forth like correcting a charge, a phone call is usually the fastest, since they can pull up your account and walk through each line with you in one go.",
+        "B": "Since you've said phone calls feel high-pressure and you'd rather keep things in writing, send the billing question through the patient portal or by email instead — you'll have a written record of the dispute and can reply on your own time.",
+        "C": "Since you've said you like handling money matters face to face, just stop by the billing desk in person the next time you're at the clinic."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The selected answer applies email/text preference and non-overwhelming cadence while preserving mental-health safety boundaries.",
+      "id": "medicalConsultation_persona0_sample0_stage_13",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user prefers email or text over phone calls for healthcare communication because it feels less pressure-filled, and wants a non-overwhelming contact cadence.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the email-or-text healthcare communication preference"
+    },
+    {
+      "stage_id": "stage_14",
+      "target_turn_id": "stage_14_H011",
+      "target_user_turn": "Also, I wanted to mention that I prefer afternoon slots for my appointments. It just works better with my schedule. Plus, I'd like to bring my sister along for support, especially since I could use her help managing my allergies.",
+      "lasting_memory": "The user prefers afternoon appointment slots and would like to bring their sister for support, especially for allergy management.",
+      "question": "Can you write a short scheduling request for my upcoming allergy appointment? The clinic has both morning and afternoon slots open.",
+      "choices": {
+        "A": "Hi, I'd like to book an allergy appointment. Whatever's earliest works for me — please let me know the first available slot and what I should bring. Thanks!",
+        "B": "Hi, I'd like to book an allergy appointment. Afternoons work best for me, so please put me down for the earliest afternoon slot you have. Let me know what I should bring. Thanks!",
+        "C": "Hi, I'd like to book an allergy appointment. Since early mornings before work are easiest for me, please book the very first morning slot. Thanks!"
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The memory-using scheduling request includes afternoon timing and sister support.",
+      "id": "medicalConsultation_persona0_sample0_stage_14",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user prefers afternoon appointment slots and would like to bring their sister for support, especially for allergy management.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the afternoon appointment and sister support preference"
+    },
+    {
+      "stage_id": "stage_15",
+      "target_turn_id": "stage_15_H014",
+      "target_user_turn": "I've been thinking about how I handle logistics for my health appointments. I usually plan my travel a week in advance, especially now that summer is coming up. I prefer morning appointments since I'm more alert, but I’ve had issues with delays in the past, so I always leave early just in case. It helps me stay calm if things go off schedule.",
+      "lasting_memory": "The user plans health-appointment travel about a week in advance, prefers morning appointments because they are more alert, and leaves early to reduce stress from delays.",
+      "question": "Can you help me plan logistics for an upcoming health review appointment?",
+      "choices": {
+        "A": "Confirm the appointment time and address, check what documents to bring, and give yourself a reasonable travel buffer so you can check in on time.",
+        "B": "Start the travel plan about a week ahead, aim for a morning appointment if you have a choice, and choose a departure time that gets you there early enough to absorb delays. That keeps the schedule calmer if traffic, parking, or transit runs late.",
+        "C": "Wait until the appointment morning to check the route, then leave at the last possible time so you do not spend extra time waiting."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The selected answer distinguishes detailed email from quick text communication and maintains urgent-care boundaries.",
+      "id": "medicalConsultation_persona0_sample0_stage_15",
+      "topic": "medicalConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set.",
+      "unique_long_term_info": "The user plans health-appointment travel about a week in advance, prefers morning appointments because they are more alert, and leaves early to reduce stress from delays.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "final_round4_drop",
+          "reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer."
+        },
+        {
+          "round": "supplement_pool_round2",
+          "reason": "Reopened with unused non-duplicate medical supplement candidate."
+        },
+        {
+          "round": "supplement_round2_validation",
+          "reason": "Recomputed target_turn_id from source exact match: stage_15_H018 -> stage_15_H014"
+        },
+        {
+          "round": "supplement_round3_drop",
+          "reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_16",
+      "target_turn_id": "stage_16_H005",
+      "target_user_turn": "I've been trying to keep track of my health since I made some lifestyle changes recently. I focus on my nutrition, exercise frequency, and mental wellness. I usually check in on my progress weekly. I use a fitness app to log my workouts and set reminders for hydration. It helps me stay accountable, but sometimes I feel overwhelmed with all the data.",
+      "lasting_memory": "The user tracks lifestyle-change progress weekly, focusing on nutrition, exercise frequency, and mental wellness; they use a fitness app for workouts and hydration reminders but can feel overwhelmed by too much data.",
+      "question": "Can you make me a simple weekly check-in for recent lifestyle changes?",
+      "choices": {
+        "A": "Use a weekly check-in with a few categories: nutrition, exercise, mood or stress, sleep, and any questions for your clinician. Keep it brief enough to review in a few minutes.",
+        "B": "Use a weekly check-in focused on nutrition, exercise frequency, and mental wellness. Keep workouts and hydration reminders in your fitness app, but limit the review to one or two useful signals from each area so the data does not become overwhelming.",
+        "C": "Track every meal, symptom, workout metric, mood shift, and hydration detail daily so you have the largest possible dataset."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The target public-transport constraint changes the timing and crowding plan.",
+      "id": "medicalConsultation_persona0_sample0_stage_16",
+      "topic": "medicalConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round2 baseline gate: without-target solver selected the use-memory answer.",
+      "unique_long_term_info": "The user tracks lifestyle-change progress weekly, focusing on nutrition, exercise frequency, and mental wellness; they use a fitness app for workouts and hydration reminders but can feel overwhelmed by too much data.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "final_round4_drop",
+          "reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer."
+        },
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round2_drop_correction",
+          "reason": "Dropped supplement candidate after supplement_round2 baseline gate: without-target solver selected the use-memory answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_17",
+      "target_turn_id": "stage_17_H008",
+      "target_user_turn": "In the past, I've tried a few different hydration strategies before my high jump events. I used to rely heavily on sports drinks, thinking they would give me that extra edge. But there were times I felt bloated and sluggish during competitions, which definitely affected my performance. I learned that simpler hydration, like water with a pinch of salt or even coconut water, helps me feel more in tune with my body. I'm really trying to fine-tune my hydration approach this summer, especially with the heat causing extra strain.",
+      "lasting_memory": "The user prefers simpler hydration such as water with a pinch of salt or coconut water over heavy sports drinks, which can make them feel bloated and sluggish during competitions.",
+      "question": "I'm hiking a long 10-mile trail this weekend in warm weather. What hydration setup should I pack?",
+      "choices": {
+        "A": "Pack two bottles: one with a sports drink (Gatorade or Powerade) for electrolytes during the long uphill stretches, plus one with water. Stop and drink every 30-40 minutes.",
+        "B": "Since you mentioned bottled sports drinks leave you bloated and sluggish, and you do better with simpler options like water with a pinch of salt or coconut water — pack two water bottles, salt one with a quarter-teaspoon of salt for electrolytes, and bring a small carton of coconut water as a refill option. Sip every 30-40 minutes.",
+        "C": "Since you mentioned you train fully fasted and dry as part of your endurance work, skip the hydration altogether and just drink at the trailhead after you finish."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The target preference favors simpler hydration over heavy sports drinks.",
+      "id": "medicalConsultation_persona0_sample0_stage_17",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user prefers simpler hydration such as water with a pinch of salt or coconut water over heavy sports drinks, which can make them feel bloated and sluggish during competitions.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the simple competition hydration preference"
+    },
+    {
+      "stage_id": "stage_19",
+      "target_turn_id": "stage_19_H005",
+      "target_user_turn": "I've been really focused on my exercise regime lately, especially with the weather changing. I try to switch things up every month to keep it fresh and exciting, but I always emphasize consistency. It feels so important to stick to my routine, especially as these seasonal transitions can throw me off.",
+      "lasting_memory": "The user likes to refresh their exercise routine monthly to keep it engaging, while preserving consistency because seasonal transitions can disrupt routines.",
+      "question": "Can you help me adjust my exercise routine for the next season without losing momentum?",
+      "choices": {
+        "A": "Keep the routine steady and make small changes based on weather, symptoms, and recovery. Avoid increasing intensity too quickly, and check with your clinician if breathing, pain, or fatigue worsens.",
+        "B": "Use a monthly refresh: change a few activities or settings to keep the routine interesting, but keep the same core schedule so consistency survives the seasonal transition. Adjust for weather, symptoms, and recovery, and check with your clinician if breathing, pain, or fatigue worsens.",
+        "C": "Change the entire workout plan every week so it never feels repetitive, even if that makes it harder to track recovery."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The memory-using answer emphasizes clear language, key details, and optional charts.",
+      "id": "medicalConsultation_persona0_sample0_stage_19",
+      "topic": "medicalConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set.",
+      "unique_long_term_info": "The user likes to refresh their exercise routine monthly to keep it engaging, while preserving consistency because seasonal transitions can disrupt routines.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "final_round4_drop",
+          "reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer."
+        },
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round3_drop",
+          "reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_21",
+      "target_turn_id": "stage_21_H015",
+      "target_user_turn": "If I’m still dealing with ongoing fatigue and shortness of breath by my November 4 at 2:30 PM visit, I may need to reschedule for a later appointment. Could you draft a short text message I can send about that? Please make sure it says to contact me by text message, and that I’m easiest to reach after 5:30 PM.",
+      "lasting_memory": "For scheduling communication, the user wants text-message contact and is easiest to reach after 5:30 PM.",
+      "question": "Can you draft a short message to reschedule a clinic appointment?",
+      "choices": {
+        "A": "Hi, I need to reschedule my clinic appointment. Please let me know the next available times and whether there is anything I should do before the new visit. Thank you.",
+        "B": "Hi, I need to reschedule my clinic appointment. Please text me with available times, and I’m easiest to reach after 5:30 PM. Thank you.",
+        "C": "Hi, I cannot make my appointment. Please call me repeatedly during the workday until we find another time."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The selected message applies text contact and after-5:30 reachability.",
+      "id": "medicalConsultation_persona0_sample0_stage_21",
+      "topic": "medicalConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "For scheduling communication, the user wants text-message contact and is easiest to reach after 5:30 PM.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the after-5:30 text scheduling preference"
+    },
+    {
+      "stage_id": "stage_22",
+      "target_turn_id": "stage_22_H005",
+      "target_user_turn": "Also, I’ve been keeping track of my recovery in my phone notes instead of a notebook. I usually update it every couple of days, mostly after workouts or if something feels off. I’m not super detailed—just short bullet points about pain, stiffness, and what I tried that day. If you can help me turn that into something that sounds clear for the follow-up visit, that would be great.",
+      "lasting_memory": "For injury recovery, the user tracks progress in phone notes rather than a notebook, updating every couple of days after workouts or when something feels off, using short bullets about pain, stiffness, and what they tried.",
+      "question": "Can you set up a recovery note I can bring to an injury follow-up?",
+      "choices": {
+        "A": "Use a short recovery summary with sections for pain, swelling, mobility, strength, sleep, treatments tried, and the main questions you want answered at the follow-up.",
+        "B": "Use your phone notes as the source and turn them into short bullets updated every couple of days, especially after workouts or when something feels off. Keep the follow-up note focused on pain, stiffness, what you tried, and whether each item improved, worsened, or stayed the same.",
+        "C": "Create a detailed daily spreadsheet with separate scores for every movement, treatment, and symptom before deciding what to mention."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The memory-using answer uses brief yes-or-no-heavy wording in a calm follow-up style.",
+      "id": "medicalConsultation_persona0_sample0_stage_22",
+      "topic": "medicalConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer.",
+      "unique_long_term_info": "For injury recovery, the user tracks progress in phone notes rather than a notebook, updating every couple of days after workouts or when something feels off, using short bullets about pain, stiffness, and what they tried.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round1_drop",
+          "reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_23",
+      "target_turn_id": "stage_23_H014",
+      "target_user_turn": "Also, I need to be realistic about follow-through after the visit. My work and training schedule gets packed fast, and if I’m given a bunch of instructions at once, I know I’ll forget half of them by the next day. It would really help if the plan could be broken into simple next steps I can actually stick to.",
+      "lasting_memory": "Because the user's work and training schedule gets packed quickly, they need post-visit plans broken into simple, prioritized next steps rather than many instructions at once.",
+      "question": "After a preventive visit, can you help me turn several recommendations into a plan I can follow?",
+      "choices": {
+        "A": "Group the recommendations by topic, write down what each one is for, and add any monitoring instructions or warning signs the clinician gave you.",
+        "B": "Break the recommendations into a short, prioritized next-step plan. Start with one or two actions to do first, add the rest as later steps, and keep the wording simple enough to fit around a packed work and training schedule.",
+        "C": "Make one complete list of every possible lifestyle, lab, medication, and follow-up task so nothing is shortened or delayed."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The memory-using answer applies the user's clinician-communication preference for direct questions, plain language, and a short priority list.",
+      "id": "medicalConsultation_persona0_sample0_stage_23",
+      "topic": "medicalConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round2 baseline gate: without-target solver selected the use-memory answer.",
+      "unique_long_term_info": "Because the user's work and training schedule gets packed quickly, they need post-visit plans broken into simple, prioritized next steps rather than many instructions at once.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round2",
+          "reason": "Reopened with unused non-duplicate medical supplement candidate."
+        },
+        {
+          "round": "supplement_round2_validation",
+          "reason": "Recomputed target_turn_id from source exact match: stage_23_H016 -> stage_23_H014"
+        },
+        {
+          "round": "supplement_round2_drop",
+          "reason": "Dropped supplement candidate after supplement_round2 baseline gate: without-target solver selected the use-memory answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_24",
+      "target_turn_id": "stage_24_H011",
+      "target_user_turn": "One more thing, I’m trying to make the check-in fit around work, so I’d need something with a little scheduling flexibility. I can probably get there, but transportation is a bit annoying on weekdays, especially if I have to cross town during rush hour. If it’s easier, I’d rather handle changes by message than by phone call.",
+      "lasting_memory": "For check-ins around work, the user needs scheduling flexibility, finds weekday cross-town rush-hour transportation annoying, and prefers handling schedule changes by message rather than phone.",
+      "question": "Can you draft a note to reschedule a whole-health check-in around work?",
+      "choices": {
+        "A": "Hi, I need to reschedule my whole-health check-in. Please let me know what appointment times are available and whether there is anything I should complete before the visit. Thank you.",
+        "B": "Hi, I need to schedule my whole-health check-in around work and would appreciate a few flexible time options. Weekday cross-town travel during rush hour can be difficult, so I may need to adjust the timing. If possible, I’d prefer to coordinate changes by message rather than by phone. Thank you.",
+        "C": "Hi, please call me with the first available rush-hour appointment, and I will decide during the call whether I can make it."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The selected answer follows the user's durable one-log, phone-plus-paper, every-few-days tracking style.",
+      "id": "medicalConsultation_persona0_sample0_stage_24",
+      "topic": "medicalConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round2 baseline gate: without-target solver selected the use-memory answer.",
+      "unique_long_term_info": "For check-ins around work, the user needs scheduling flexibility, finds weekday cross-town rush-hour transportation annoying, and prefers handling schedule changes by message rather than phone.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round2",
+          "reason": "Reopened with unused non-duplicate medical supplement candidate."
+        },
+        {
+          "round": "supplement_round2_validation",
+          "reason": "Recomputed target_turn_id from source exact match: stage_24_H013 -> stage_24_H011"
+        },
+        {
+          "round": "supplement_round2_drop",
+          "reason": "Dropped supplement candidate after supplement_round2 baseline gate: without-target solver selected the use-memory answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_25",
+      "target_turn_id": "stage_25_H005",
+      "target_user_turn": "Also, I’ve been keeping quick notes in my phone after workouts and on the days I feel off, but they’re kind of messy. I’m trying to track how things change over time without obsessing over every little detail. Could you help me turn all that into something simple I can actually show the clinician?",
+      "lasting_memory": "The user keeps quick phone notes after workouts and on off days, wants to track changes over time without obsessing over every detail, and needs them turned into a simple clinician-facing pattern summary.",
+      "question": "Can you turn my messy symptom notes into something simple for a clinician?",
+      "choices": {
+        "A": "Create a concise visit summary with the main symptoms, when they started, what seems to trigger them, what helps, what has changed, and the questions you want answered.",
+        "B": "Turn the phone notes into a simple pattern summary instead of a detailed diary. Focus on what happens after workouts and on off days, how things change over time, the likely triggers, the impact, and what helps, without trying to capture every small detail.",
+        "C": "Keep every note exactly as written and send the full raw list so the clinician can find the pattern themselves."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "rationale": "The memory-using response asks for simple written next steps and avoids long back-and-forth.",
+      "id": "medicalConsultation_persona0_sample0_stage_25",
+      "topic": "medicalConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round2 baseline gate: without-target solver selected the use-memory answer.",
+      "unique_long_term_info": "The user keeps quick phone notes after workouts and on off days, wants to track changes over time without obsessing over every detail, and needs them turned into a simple clinician-facing pattern summary.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round2",
+          "reason": "Reopened with unused non-duplicate medical supplement candidate."
+        },
+        {
+          "round": "supplement_round2_drop",
+          "reason": "Dropped supplement candidate after supplement_round2 baseline gate: without-target solver selected the use-memory answer."
+        }
+      ]
+    }
+  ]
+}

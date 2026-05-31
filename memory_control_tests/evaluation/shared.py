@@ -40,7 +40,10 @@ def resolve_model_name(model: str, aliases: Optional[Dict[str, str]] = None) -> 
     merged_aliases = dict(DEFAULT_MODEL_ALIASES)
     if aliases:
         merged_aliases.update(aliases)
-    return merged_aliases.get(model, model)
+    resolved = merged_aliases.get(model, model)
+    if os.getenv("MEMORYCTRL_NATIVE_OPENAI", "").strip() == "1" and resolved.startswith("openai/"):
+        return resolved.split("/", 1)[1]
+    return resolved
 
 
 def load_openai_credentials(

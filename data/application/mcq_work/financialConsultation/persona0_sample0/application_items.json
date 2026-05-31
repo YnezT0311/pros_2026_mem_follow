@@ -1,0 +1,959 @@
+{
+  "topic": "financialConsultation",
+  "sample": "persona0_sample0",
+  "items": [
+    {
+      "stage_id": "stage_01",
+      "target_turn_id": "stage_01_H016",
+      "target_user_turn": "I want to put a firmer cap on dining out. Over the last 3 months, I’ve been averaging about €286 a month, and I think a monthly limit of €240 would be a better target for now.",
+      "lasting_memory": "The user is tightening her monthly dining-out spending to a target of about €240, down from her recent €286 average.",
+      "question": "I need a simple rule for choosing restaurants for small colleague celebrations without overthinking every invite. I want the rule to use any dining-budget limit I've actually mentioned, but not invent one if I have not. What rule should I use?",
+      "choices": {
+        "A": "If no specific dining cap is known, rank options by occasion fit, current reviews, ease for the group, and moderate price. For a promotion celebration, a cozy shared-plates wine bar around €50 per person can be a better default than the cheapest counter-service option.",
+        "B": "Use the same occasion-fit screen, but apply the dining cap already mentioned: keep monthly dining around €240, check how much has already been spent, and choose the option that stays within the remaining headroom even if it is less celebratory.",
+        "C": "Always pick the most impressive tasting menu available for colleague celebrations, and assume a €300 monthly dining cap unless there is a reason to spend more."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_01",
+      "topic": "financialConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user is tightening her monthly dining-out spending to a target of about €240, down from her recent €286 average.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the monthly dining-out budget cap"
+    },
+    {
+      "stage_id": "stage_02",
+      "target_turn_id": "stage_02_H011",
+      "target_user_turn": "Also, I’m realizing the paperwork side is half the battle for me. I keep most bills in email, but I still end up with a couple of paper statements and I’m not always great about filing them right away. I do better when everything is in one spreadsheet, though it takes me a while to update it if I’ve been busy. So for this payoff plan, I’d like something simple enough that I can actually keep up with it without getting buried in receipts and account logins.",
+      "lasting_memory": "For debt payoff paperwork, the user prefers one simple spreadsheet as the main record, with email bills and occasional paper statements kept easy to manage.",
+      "question": "I am setting up a simple tracker before making extra debt payments. What should the setup include?",
+      "choices": {
+        "A": "List each debt, APR, balance, minimum payment, due date, extra payment, and payment confirmation in a tracker. Keep supporting statements somewhere easy to find, and update the record after each payment so the payoff plan stays accurate.",
+        "B": "Use one simple spreadsheet as the main record for each debt, APR, balance, minimum payment, due date, extra payment, and confirmation. Pull bills from email into the tracker, keep paper statements in one holding folder, and update the spreadsheet on a manageable schedule.",
+        "C": "Track only the total debt balance in a notes app. Detailed records can wait until a lender asks for them."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_02",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set.",
+      "unique_long_term_info": "For debt payoff paperwork, the user prefers one simple spreadsheet as the main record, with email bills and occasional paper statements kept easy to manage.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "mechanical_validation_fix",
+          "reason": "Recomputed target_turn_id from source stage: stage_02_O004 -> stage_02_H011"
+        },
+        {
+          "round": "supplement_round3_drop",
+          "reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_03",
+      "target_turn_id": "stage_03_H016",
+      "target_user_turn": "I’m trying to get my open enrollment questions in order before I choose a plan. I want to keep using my local doctors instead of switching to a new clinic, and my primary care doctor is in-network at Metro Family Clinic. I also have one dermatology visit coming up in April, and I know the company enrollment window closes on March 22 at 5:00 PM, so I don’t want to miss anything. Can you draft a concise set of questions I should ask HR about the plan’s network rules, the exact enrollment deadline, and which providers are covered?",
+      "lasting_memory": "For health benefits, the user prefers to keep using local doctors rather than switch clinics when choosing a plan.",
+      "question": "I am comparing two health plans with similar estimated annual costs. What should I check before enrolling?",
+      "choices": {
+        "A": "Compare premiums, deductibles, copays or coinsurance, prescription coverage, referral rules, out-of-pocket maximums, and the plan network. Choose the plan that covers expected care at a reasonable total cost and has clear rules you can follow.",
+        "B": "Compare the same premiums, deductibles, copays or coinsurance, prescriptions, referral rules, out-of-pocket maximums, and network details, then specifically verify whether your current local doctors and clinic options are covered before choosing a plan that would require switching care.",
+        "C": "Choose the plan with the lowest monthly premium. If care costs come up later, you can change doctors or clinics then."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_03",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set.",
+      "unique_long_term_info": "For health benefits, the user prefers to keep using local doctors rather than switch clinics when choosing a plan.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "mechanical_validation_fix",
+          "reason": "Recomputed target_turn_id from source stage: stage_03_H010 -> stage_03_H016"
+        },
+        {
+          "round": "supplement_round3_drop",
+          "reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_04",
+      "target_turn_id": "stage_04_H014",
+      "target_user_turn": "Also, when we wrap this up, it would help me most if you could give me a simple checklist I can actually follow, plus a short written summary and clear next steps. I’m trying to keep the April renewal stuff from turning into a mess, so I’d rather have something I can glance at quickly than a long explanation.",
+      "lasting_memory": "The user prefers concise financial wrap-ups with a simple checklist, short written summary, and clear next steps rather than long explanations.",
+      "question": "I am comparing whether to accept a service-contract renewal, negotiate, or switch providers. After you analyze the options, how should you present the final recommendation so I can act on it?",
+      "choices": {
+        "A": "Give a concise recommendation with the main tradeoffs, the numbers that matter, and a few action items so the decision is easy to follow.",
+        "B": "End with a simple checklist I can follow, a short written summary of the recommendation, and clear next steps in order, keeping the explanation brief rather than turning it into a long memo.",
+        "C": "Write a detailed narrative covering every assumption and possible edge case before giving any next steps, so nothing is left out."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_04",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer.",
+      "unique_long_term_info": "The user prefers concise financial wrap-ups with a simple checklist, short written summary, and clear next steps rather than long explanations.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "mechanical_validation_fix",
+          "reason": "Recomputed target_turn_id from source stage: stage_04_O002 -> stage_04_H005"
+        },
+        {
+          "round": "final_round4_drop",
+          "reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer."
+        },
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round1_drop",
+          "reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_05",
+      "target_turn_id": "stage_05_H014",
+      "target_user_turn": "Also, I’ve realized I stay on track much better when I keep things simple. I use my calendar for deadlines and set a few reminders on my phone, and at the start of each month I do a quick budgeting check-in so nothing sneaks up on me. I’m not good with complicated tracking systems, so I’d rather stick to a small routine I can actually maintain.",
+      "lasting_memory": "The user stays on track best with simple routines: calendar deadlines, phone reminders, and a quick start-of-month budgeting check-in instead of complex tracking systems.",
+      "question": "I have three financial follow-ups over the next two months: one bill deadline, one tax document check, and one savings review. What routine should I use so these do not slip?",
+      "choices": {
+        "A": "Make a small follow-up tracker with each item, due date, owner, and status, then review it once a week until all three items are done.",
+        "B": "Put the deadlines on my calendar, set a few phone reminders for the time-sensitive items, and use a quick start-of-month budget check-in to catch anything that is coming up.",
+        "C": "Build a detailed dashboard with separate tabs for every document, deadline, account, and reminder so all financial tasks are tracked in depth."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_05",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round2 baseline gate: without-target solver selected the use-memory answer.",
+      "unique_long_term_info": "The user stays on track best with simple routines: calendar deadlines, phone reminders, and a quick start-of-month budgeting check-in instead of complex tracking systems.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round2_drop",
+          "reason": "Dropped supplement candidate after supplement_round2 baseline gate: without-target solver selected the use-memory answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_06",
+      "target_turn_id": "stage_06_H014",
+      "target_user_turn": "Also, I’d really like to keep all the trip planning in one place this time. I’m much better with written notes or a simple table than with scattered texts, and I don’t want to commit to anything until I’ve gone over the details carefully. If you can lay things out clearly, that would help me stay on top of the June budgeting without missing anything.",
+      "lasting_memory": "For travel budgeting, the user prefers all planning in one place, using written notes or a simple table, and reviewing details carefully before committing.",
+      "question": "I am comparing two weekend trip options with different hotel, train, food, and activity costs. How should I decide which one fits my budget?",
+      "choices": {
+        "A": "Estimate the full cost of each option, including transport, lodging, meals, activities, cancellation rules, deposits, and a small buffer. Compare each total against what you can spend without disturbing bills or savings, then choose only if the full trip cost is affordable.",
+        "B": "Estimate the same transport, lodging, meals, activities, cancellation rules, deposits, and buffer, but keep both options in one simple table or written note set. Add open questions in one place and review the full table before making any booking commitment.",
+        "C": "Book the cheaper hotel first so prices do not rise, then work out train and food costs afterward. Lodging is usually the biggest expense, so locking it in quickly is the priority."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_06",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after round 2 because travel budgeting with one-place notes or a table remains contaminated by same-stage trip budgeting, option comparison, deposits, cancellation rules, and pre-booking checks.",
+      "unique_long_term_info": "For travel budgeting, the user prefers all planning in one place, using written notes or a simple table, and reviewing details carefully before committing.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_07",
+      "target_turn_id": "stage_07_H002",
+      "target_user_turn": "I feel pretty organized about my finances right now. I track my spending regularly using an app on my phone, and I make it a point to review my accounts every week. It really helps me stay on top of things. One more thing, I've been considering tweaking my budget based on some changes in my expenses, but I'm not sure how to go about that.",
+      "lasting_memory": "The user stays organized by tracking spending in a phone app and reviewing accounts every week.",
+      "question": "I want to get a real handle on where my money goes each month. What's a practical way to start tracking spending?",
+      "choices": {
+        "A": "Open last month's bank and credit card statements, sort each line into 5-6 categories (housing, food, transit, fun, savings, other), and total each. Set a monthly target per category and revisit in 30 days.",
+        "B": "Since I remember you mentioned tracking spending in a phone app and reviewing accounts every week as your existing routine, just keep that going — no need to start fresh. For the deeper monthly understanding, group the weekly entries from the app into 5-6 categories at month-end, and write down where the percentages are landing.",
+        "C": "Since I remember you mentioned an envelope-cash budgeting setup where you withdraw cash for each category at the start of the month earlier, stick with that. Pull last month's envelope totals into a quick summary, set new envelope amounts for the upcoming month, and review what's left in each envelope weekly."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_07",
+      "topic": "financialConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user stays organized by tracking spending in a phone app and reviewing accounts every week.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "mechanical_validation_fix",
+          "reason": "Recomputed target_turn_id from source stage: stage_07_O001 -> stage_07_H002"
+        }
+      ],
+      "forget_reference": "the phone-app weekly account review routine"
+    },
+    {
+      "stage_id": "stage_08",
+      "target_turn_id": "stage_08_H012",
+      "target_user_turn": "I'm really looking to cut down on my school-related transportation costs. Right now, I'm spending about €180 a month and making around five trips to school each week. I usually use public transit and cycling as my preferred methods. The average distance I travel to school is about 10 km, and my schedule is generally flexible, which gives me room to explore other options.",
+      "lasting_memory": "For school commuting, the user prefers public transit and cycling and has a flexible schedule for exploring lower-cost transport options.",
+      "question": "I'm adding a school-transportation section to my monthly budget. I want the plan to use any commute-mode preferences I have actually mentioned, but not assume I am comfortable with a mode just because it is cheaper. What should I track?",
+      "choices": {
+        "A": "If no commute-mode preference is known, track the reliable baseline: monthly transit-pass cost, commute time, weatherproofness, and whether the route is simple enough to use consistently. Do not assume a long bike commute just because it could save money.",
+        "B": "Use the preferences already mentioned: compare the €180 monthly transit cost with a transit-and-cycling mix for the roughly 10 km school trip, noting which days are flexible enough to bike and how much that could reduce transport spending.",
+        "C": "Build the budget around driving to campus every day and include fuel, parking, and car maintenance, assuming car commuting is the user's preferred method."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_08",
+      "topic": "financialConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "For school commuting, the user prefers public transit and cycling and has a flexible schedule for exploring lower-cost transport options.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the public-transit and cycling commute plan"
+    },
+    {
+      "stage_id": "stage_09",
+      "target_turn_id": "stage_09_H008",
+      "target_user_turn": "One more thing I wanted to mention is my approach to emergency preparedness. I regularly check my supplies and make sure my emergency kit is stocked—especially with winter coming up. I keep a list and check off items I maintain, and I like to plan routines for when to review everything. This proactive habit helps me feel secure, but it also influences my budget a bit since I want to ensure I have everything needed.",
+      "lasting_memory": "The user proactively maintains an emergency kit with a checklist and routine supply reviews, and wants preparedness costs reflected in the budget.",
+      "question": "I want to include household preparedness in next month's budget without buying unnecessary supplies. How should I set that up?",
+      "choices": {
+        "A": "Set a modest preparedness line item, review the most likely seasonal needs, and buy only the items that fill a clear gap in the current budget.",
+        "B": "Start from the emergency-kit checklist, mark which supplies are already stocked, schedule a routine review, and budget only for the items that need to be replaced or added.",
+        "C": "Buy a complete new emergency kit now and sort the budget afterward, since being fully stocked matters more than checking what is already on hand."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_09",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer.",
+      "unique_long_term_info": "The user proactively maintains an emergency kit with a checklist and routine supply reviews, and wants preparedness costs reflected in the budget.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round1_drop",
+          "reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_10",
+      "target_turn_id": "stage_10_H014",
+      "target_user_turn": "Also, I'm really focused on achieving financial independence by the time I'm 50. Home ownership is a big part of that goal, and I've been thinking about saving for a down payment. I'm also eager to travel more, especially to places that inspire my studies in physics.",
+      "lasting_memory": "The user prioritizes financial independence by age 50, with home ownership/down-payment savings and meaningful travel tied to physics studies as important goals.",
+      "question": "I am setting next year's savings priorities and need to divide extra money between long-term investing, a future home, travel, and general savings. How would you rank them?",
+      "choices": {
+        "A": "Rank the goals by urgency, time horizon, and consequences of delay. Usually that means emergency savings first, then long-term investing and high-priority long-term goals, with travel funded from a separate amount that does not weaken essentials.",
+        "B": "Anchor the ranking around financial independence by 50: protect long-term investing first, build a dedicated down-payment fund for home ownership, keep emergency savings steady, and set a smaller planned travel fund for meaningful physics-related trips.",
+        "C": "Put the extra money toward travel first because experiences are time-sensitive. Long-term investing and home savings can wait until income is higher."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_10",
+      "topic": "financialConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user prioritizes financial independence by age 50, with home ownership/down-payment savings and meaningful travel tied to physics studies as important goals.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the financial independence and home-ownership goals"
+    },
+    {
+      "stage_id": "stage_11",
+      "target_turn_id": "stage_11_H005",
+      "target_user_turn": "Also, I really value meaningful gifts more than expensive ones. I believe that a personalized gift, like something homemade, carries more weight than something bought from a store. It shows thoughtfulness and effort, which I think are important. I'm trying to figure out how to manage my budget for the holiday season while still sticking to this philosophy.",
+      "lasting_memory": "The user values meaningful, personalized or homemade gifts more than expensive store-bought gifts.",
+      "question": "I'm setting a holiday gift budget for several people and want to make sure I don't overspend. How should I plan it out?",
+      "choices": {
+        "A": "Set a total cap and a per-person cap, then make a shopping list — pick out a solid store-bought gift for each person in your price range (gift cards work too), include cards, wrapping, and shipping, and buy early to catch sales.",
+        "B": "Since you've said you value meaningful, homemade or personalized gifts over pricey store-bought ones, skip the big shopping list — set a small materials budget and plan a personal or handmade gift for each person; it lands better and costs less.",
+        "C": "Since you've said you like giving everyone the same crowd-pleasing premium item, buy one nice gift in bulk — it saves time and you can often negotiate a quantity discount."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_11",
+      "topic": "financialConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user values meaningful, personalized or homemade gifts more than expensive store-bought gifts.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the meaningful homemade gift budget philosophy"
+    },
+    {
+      "stage_id": "stage_12",
+      "target_turn_id": "stage_12_O004",
+      "target_user_turn": "I've been thinking about how I can be more systematic with my budgeting. I really like the idea of zero-based budgeting because it forces me to account for every dollar, but I struggle a bit with tracking my expenses consistently. I want to set priorities better so I can save more for my research projects.",
+      "lasting_memory": "The user likes zero-based budgeting because it gives every euro a job, but struggles with consistent expense tracking and wants to prioritize saving more for research projects.",
+      "question": "I just received a €12,000 one-time payment and I don't want it to disappear into normal spending. How should I allocate it without inventing a budgeting preference I haven't actually shared?",
+      "choices": {
+        "A": "Use broad goal buckets based on the visible priorities, without imposing a special budgeting method: set aside money for known near-term costs like fieldwork, travel, or research materials; add to emergency or general savings; put a meaningful portion toward grad school or long-term investing; and leave a small flexible amount.",
+        "B": "Since you've said you like zero-based budgeting and struggle to track expenses consistently, use that preference as a lightweight allocation pass: give every euro a named job, create a clearly labeled research-project bucket, then assign the rest to emergency buffer, near-term savings, and one small flexible category. Because detailed tracking is hard to sustain, check only those bucket balances weekly instead of logging every small purchase.",
+        "C": "Keep the full €12,000 in checking for now and decide gradually as expenses come up. That avoids locking the money into categories before you know what you need."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_12",
+      "topic": "financialConsultation",
+      "status": "drop",
+      "drop_reason": "Unstable differentiator: gpt-5.4-mini cannot reliably separate seen and never_seen for the zero-based budgeting allocation setup.",
+      "unique_long_term_info": "The user likes zero-based budgeting because it gives every euro a job, but struggles with consistent expense tracking and wants to prioritize saving more for research projects.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_13",
+      "target_turn_id": "stage_13_H002",
+      "target_user_turn": "I've been using a couple of budgeting tools, like Mint and YNAB, which have really helped me keep track of my expenses. I usually review my budget weekly, but I sometimes feel overwhelmed by how many categories I'm tracking. I want to make sure I'm not overcomplicating things.",
+      "lasting_memory": "The user uses budgeting tools such as Mint and YNAB, reviews the budget weekly, and wants to avoid category overload or overcomplicating the system.",
+      "question": "I want to simplify my monthly budget check-in, and I am starting from a plain bank statement export with too many transaction names. What system should I use?",
+      "choices": {
+        "A": "Use a simple monthly worksheet with broad buckets, update it around payday, and compare actual spending with the main goals before making adjustments.",
+        "B": "Keep using the budgeting tools that already work, such as Mint or YNAB, but simplify the category list and keep the review to a weekly check of the few categories that actually drive decisions.",
+        "C": "Create a new detailed category tree for every merchant and transaction type so every line has a unique label."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_13",
+      "topic": "financialConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user uses budgeting tools such as Mint and YNAB, reviews the budget weekly, and wants to avoid category overload or overcomplicating the system.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "final_round4_drop",
+          "reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer."
+        },
+        {
+          "round": "supplement_pool_round3",
+          "reason": "Reopened with focused non-duplicate supplement candidate."
+        }
+      ],
+      "forget_reference": "the Mint and YNAB category setup"
+    },
+    {
+      "stage_id": "stage_14",
+      "target_turn_id": "stage_14_O001",
+      "target_user_turn": "Also, when it comes to my financial review, I really prefer a structured approach. I like to use spreadsheets for everything, and I find that methodical analysis helps me see patterns and make informed decisions.",
+      "lasting_memory": "The user prefers a structured financial review approach, likes using spreadsheets for everything, and finds methodical analysis helpful for seeing patterns and making informed decisions.",
+      "question": "I want to review my post-holiday spending for the next few months without creating a system that takes too much daily upkeep. I mainly need to see whether gifts, dining, subscriptions, and savings are drifting off track. What setup should I use?",
+      "choices": {
+        "A": "Use a budgeting app that links to your accounts, auto-categorizes transactions, and sends weekly spending alerts. Keep only a few categories active and review the monthly summary, so you get a low-maintenance view of whether those areas are drifting.",
+        "B": "Use a spreadsheet-based review: set up separate tabs for income, fixed bills, gifts/dining, subscriptions, and savings, then add formulas and a few simple charts to compare planned vs. actual spending. Update it on a scheduled review day so the analysis stays structured and pattern-focused.",
+        "C": "Avoid tracking categories for now and just check your bank balance once a month. If the balance is still positive, the budget is probably working well enough."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_14",
+      "topic": "financialConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user prefers a structured financial review approach, likes using spreadsheets for everything, and finds methodical analysis helpful for seeing patterns and making informed decisions.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the spreadsheet-based financial review approach"
+    },
+    {
+      "stage_id": "stage_15",
+      "target_turn_id": "stage_15_H016",
+      "target_user_turn": "I've been thinking a lot about the fees associated with my investment accounts. For instance, I have to pay €180 annually in account fees, and I also noticed that the transaction costs are about 1.5% per transaction. With my goal of aiming for a net return of at least 7%, I'm concerned about how these fees might impact my overall investment performance.",
+      "lasting_memory": "For investing, the user is concerned that account fees and transaction costs can reduce net returns.",
+      "question": "I am reviewing my investment account and want to know whether it is still worth using. What should I evaluate?",
+      "choices": {
+        "A": "Review performance after risk, asset allocation, time horizon, contribution needs, tax considerations, liquidity, and available alternatives. Compare the account with lower-cost options before making changes.",
+        "B": "Review the same performance, risk, allocation, time horizon, tax, liquidity, and alternatives, then quantify how account fees and transaction costs reduce net returns. Favor lower-cost options or fewer trades if costs are eating too much of the expected return.",
+        "C": "Focus on the gross return before fees. If the account has done well, the fee details are unlikely to matter much."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_15",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set.",
+      "unique_long_term_info": "For investing, the user is concerned that account fees and transaction costs can reduce net returns.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "mechanical_validation_fix",
+          "reason": "Recomputed target_turn_id from source stage: stage_15_H010 -> stage_15_H016"
+        },
+        {
+          "round": "supplement_round3_drop",
+          "reason": "Dropped after supplement_round3 baseline gate: without-target solver selected the use-memory answer, so the item is not stable enough for the final set."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_16",
+      "target_turn_id": "stage_16_H014",
+      "target_user_turn": "I've always been a bit cautious when it comes to investing. I prefer to save conservatively rather than take risks that could impact my finances. This school year, I'm feeling the pressure of balancing my savings goals while still wanting my money to grow. I'm curious about how I can make my saving decisions align with my comfort about financial risks.",
+      "lasting_memory": "The user is cautious about investing and prefers conservative savings choices over risks that could disrupt their finances.",
+      "question": "I have money set aside for school-year goals and want it to grow a little if possible. How should I choose where to keep it?",
+      "choices": {
+        "A": "Compare high-yield savings, certificates of deposit, money market funds, and low-cost investment funds by time horizon, risk, fees, and access. Use investments only for money that can tolerate market swings.",
+        "B": "Start with conservative options such as a high-yield savings account, short-term deposit, or other low-risk cash vehicle, then consider only a small investment portion if the timeline is long enough. The priority is avoiding losses that would disrupt school-year finances.",
+        "C": "Put most of the money into a stock fund so it has the best chance to grow. Short-term school money can recover later if the market drops."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_16",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after round 2 because conservative school-year savings is generic best practice for short-horizon school money and is reinforced by the stage context about education expenses, urgent costs, and emergency buffers.",
+      "unique_long_term_info": "The user is cautious about investing and prefers conservative savings choices over risks that could disrupt their finances.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_17",
+      "target_turn_id": "stage_17_H008",
+      "target_user_turn": "I've been thinking about my budgeting method lately. I try to stick to a baseline allocation each month, but with the new year, I feel it might be time for a review. In particular, I want to make sure I can adapt to changes in my expenses or income if they arise. How often do you recommend reviewing a budget, and what should I keep in mind to stay flexible?",
+      "lasting_memory": "The user uses a baseline monthly budget allocation but wants periodic reviews so the plan can adapt to income or expense changes.",
+      "question": "I want to keep my budget useful over the next few months. What maintenance routine should I use?",
+      "choices": {
+        "A": "Estimate income conservatively, fund essentials first, set amounts for savings, debt, and flexible spending, and compare actuals with the plan each month. When income or expenses change, adjust the affected categories while protecting fixed commitments.",
+        "B": "Start from a default allocation for essentials, savings, debt, and flexible spending, then do periodic focused reviews. When income or expenses change, adjust only the categories affected by the change instead of rebuilding the whole budget.",
+        "C": "Create a new budget from scratch each time income changes. That gives every month a fully customized plan."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_17",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer.",
+      "unique_long_term_info": "The user uses a baseline monthly budget allocation but wants periodic reviews so the plan can adapt to income or expense changes.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "mechanical_validation_fix",
+          "reason": "Removed banned meta wording from stage_17 question/choices."
+        },
+        {
+          "round": "mechanical_validation_fix",
+          "reason": "Replaced benchmark-reserved word baseline with default allocation."
+        },
+        {
+          "round": "final_round4_drop",
+          "reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_18",
+      "target_turn_id": "stage_18_H014",
+      "target_user_turn": "One more thing I wanted to mention about my tax preparation approach is that I really like to collect all my documents early. It helps me stay organized and reduces last-minute stress. I also use a detailed checklist to ensure I have everything I need. This year, I'm planning to work with a tax professional to guide me through some of the more complex aspects. I feel it gives me peace of mind.",
+      "lasting_memory": "For tax preparation, the user likes collecting documents early, using a detailed checklist, and working with a tax professional for complex issues to reduce stress.",
+      "question": "Tax season is a few months away, and I expect a couple of income forms plus some deduction records. What process should I use so preparation does not become stressful?",
+      "choices": {
+        "A": "Create one folder for income forms and deduction records, add documents as they arrive, and keep a running list of questions to resolve before filing.",
+        "B": "Begin collecting documents early, keep a detailed tax-prep checklist, and flag complex questions for a tax professional so the work is organized before the deadline pressure builds.",
+        "C": "Wait until all forms have arrived, then sort everything in one sitting close to the filing date so the information is fresh."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_18",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer.",
+      "unique_long_term_info": "For tax preparation, the user likes collecting documents early, using a detailed checklist, and working with a tax professional for complex issues to reduce stress.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "mechanical_validation_fix",
+          "reason": "Recomputed target_turn_id from source stage: stage_18_O003 -> stage_18_H008"
+        },
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round1_drop",
+          "reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_19",
+      "target_turn_id": "stage_19_H002",
+      "target_user_turn": "Also, when it comes to deciding on this home project, I always make a point to consult my family first. They have valuable perspectives, especially when it involves finances. I also do thorough research on costs and materials before I finalize anything. And sometimes, I think it's wise to seek expert advice from contractors to ensure I'm making informed choices.",
+      "lasting_memory": "For home-project decisions, the user consults family first, researches costs and materials thoroughly, and values expert contractor advice before finalizing.",
+      "question": "A contractor sent me a quote for a bathroom repair that is more than I expected. The leak isn't urgent — it's been the same slow drip for a few weeks. How should I decide whether to move forward, scale it back, or wait?",
+      "choices": {
+        "A": "Stack the quote against your available cash, scope, materials, payment terms, and at least one alternative quote. Use the next two or three days to get a second estimate, and if the comparison checks out, sign with the better quote without dragging it further — non-urgent doesn't mean letting the drip drift indefinitely.",
+        "B": "Hold off on signing for now. The way you've described handling home projects — running it past family first, researching costs and materials, and getting a contractor perspective before finalizing — applies here. Pull the quote and tradeoffs into a quick summary, talk it through at home this week, and approve only after that conversation. The slow drip can wait.",
+        "C": "Accept the quote quickly while the contractor is still available. Waiting on home repairs always costs more in the end."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_19",
+      "topic": "financialConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "For home-project decisions, the user consults family first, researches costs and materials thoroughly, and values expert contractor advice before finalizing.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the family-and-contractor home project decision process"
+    },
+    {
+      "stage_id": "stage_20",
+      "target_turn_id": "stage_20_H011",
+      "target_user_turn": "I've been thinking a lot about my comfort level with financial risk as I prepare for this workshop. I definitely have a willingness to take calculated risks, especially when it comes to investing in the stock market, but I prefer stability when it comes to my savings. It feels like a balancing act to manage both, and I want to convey that during the workshop.",
+      "lasting_memory": "The user is willing to take calculated stock-market risks for investing but prefers stability for savings.",
+      "question": "I am dividing new money between a near-term savings goal and longer-term investing. How should I balance growth and safety?",
+      "choices": {
+        "A": "Separate the money by time horizon: keep near-term needs in safe cash and put only longer-term funds into diversified investments that can handle volatility. Revisit the split if the goal timing changes.",
+        "B": "Use the same time-horizon split, but make the boundary explicit: keep savings stable in cash or another low-risk account, and take calculated stock-market risk only with the investing portion meant for long-term growth.",
+        "C": "Invest the full amount so it has maximum growth potential. If the market performs well, the near-term goal can benefit too."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_20",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after round 2 because separating stable near-term savings from calculated long-term investing risk is generic financial advice and remains contaminated by savings, investing, diversification, and risk-tolerance context.",
+      "unique_long_term_info": "The user is willing to take calculated stock-market risks for investing but prefers stability for savings.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_21",
+      "target_turn_id": "stage_21_H008",
+      "target_user_turn": "I’ve been thinking a lot about my investment philosophy as we start the new year. I tend to prefer a cautious approach, focusing on long-term growth rather than short-term gains. Diversification is key for me; I believe spreading out investments helps mitigate risks, especially since I’m not comfortable taking on too much volatility. Can you help me lay out a strategy that reflects these preferences?",
+      "lasting_memory": "The user prefers a cautious long-term investment strategy with diversification and limited volatility rather than short-term gains.",
+      "question": "I have new money to invest for long-term goals and I am deciding between a diversified fund, a sector fund, and a few individual stocks. How should I think about the allocation?",
+      "choices": {
+        "A": "Match the allocation to your time horizon, risk tolerance, current holdings, and need for liquidity. Broad funds usually reduce single-company risk, while sector funds and individual stocks add concentration risk.",
+        "B": "Favor a cautious long-term allocation: make the diversified fund the core, keep any sector or individual-stock exposure modest, and avoid chasing short-term gains that would add more volatility than you are comfortable taking.",
+        "C": "Put most of the money in the sector fund if it has recently outperformed. Momentum can be a useful signal for where returns may be strongest."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_21",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after round 2 because cautious diversified long-term investing is a generic prudent allocation answer and is already supported by same-stage risk, allocation, buffer, and long-term planning context.",
+      "unique_long_term_info": "The user prefers a cautious long-term investment strategy with diversification and limited volatility rather than short-term gains.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      }
+    },
+    {
+      "stage_id": "stage_22",
+      "target_turn_id": "stage_22_H008",
+      "target_user_turn": "I think I’m pretty comfortable cutting back on things like takeout, coffee runs, and random online shopping for a while. What I don’t want to touch too much are my rent, transit, and one small social budget because that helps me stay sane. I’d like to keep some flexibility too, even if it’s not much—otherwise I know I’ll just get frustrated and give up.",
+      "lasting_memory": "When cutting expenses, the user is willing to reduce takeout, coffee, and online shopping, but wants to protect rent, transit, and a small social budget with some flexibility.",
+      "question": "My take-home pay is lower this month and I need to trim about 180 from spending. What cuts would be most realistic?",
+      "choices": {
+        "A": "Start with flexible categories such as dining out, subscriptions, shopping, entertainment, and delivery fees. Avoid cutting essentials unless the shortfall is larger than flexible spending can cover.",
+        "B": "Cut from takeout, coffee runs, and random online purchases first, while protecting rent, transit, and a small social amount. Leave a little flexible money in the plan so the cuts are strict enough to work but not so tight that I abandon them.",
+        "C": "Remove all entertainment and social spending until the income recovers. A very strict month is the fastest way to close the gap."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_22",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer.",
+      "unique_long_term_info": "When cutting expenses, the user is willing to reduce takeout, coffee, and online shopping, but wants to protect rent, transit, and a small social budget with some flexibility.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "supplement_pool_round1",
+          "reason": "Reopened dropped stage with non-duplicate supplement candidate."
+        },
+        {
+          "round": "supplement_round1_drop",
+          "reason": "Dropped supplement candidate after supplement_round1 baseline gate: without-target solver selected the use-memory answer, indicating residual contamination or an over-strong generic answer."
+        }
+      ]
+    },
+    {
+      "stage_id": "stage_23",
+      "target_turn_id": "stage_23_H005",
+      "target_user_turn": "Also, before we get into the spring reset, I should say I’m pretty old-school about money. I keep a spreadsheet for bills and savings, but I still jot down irregular expenses in a notebook because it helps me remember what actually happened. I usually review everything once a week, and then I do a deeper budget check at the end of the month. Right now I manage it mostly on my own, since my partner and I keep separate accounts even though we plan the household budget together.",
+      "lasting_memory": "The user prefers an old-school budget tracking setup: spreadsheet for bills and savings, notebook for irregular expenses, weekly checks, and month-end review, while coordinating household planning despite separate accounts.",
+      "question": "I'm about to take an 11-day trip and want to keep track of what I spend while I'm away. Any suggestions for how to do it?",
+      "choices": {
+        "A": "Grab a budgeting app for the trip — install one, and just punch in each expense right after you pay. It auto-sorts everything into transport, lodging, food, and shopping, stores photos of your receipts, and totals it all up when you get home, so the whole 11 days stay effortless.",
+        "B": "Since you've said you like to track things the old-school way by hand, bring your notebook and set aside four pages up front — one each for transport, lodging, food, and shopping — and jot each expense down by hand as the day goes, the way you already do at home.",
+        "C": "Since you mentioned you like to toss all your receipts into one envelope while traveling and reconcile them in a single sitting once you're home, just hold onto every receipt this trip and sort them into transport, lodging, food, and shopping when you're back."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_23",
+      "topic": "financialConsultation",
+      "status": "kept",
+      "drop_reason": null,
+      "unique_long_term_info": "The user prefers an old-school budget tracking setup: spreadsheet for bills and savings, notebook for irregular expenses, weekly checks, and month-end review, while coordinating household planning despite separate accounts.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "forget_reference": "the old-school household budget tracking setup"
+    },
+    {
+      "stage_id": "stage_24",
+      "target_turn_id": "stage_24_H005",
+      "target_user_turn": "I usually keep everything in a spreadsheet, mostly because I like seeing the numbers line up instead of guessing. I check it about once a week, but I only do a bigger review at the end of the month unless something unusual happens. And honestly, I’m better with categories than with one big spending cap, since it helps me see where I’m drifting—groceries, transport, bills, that kind of thing. With the extra expense this time, I’d like the review to be practical, not overly detailed.",
+      "lasting_memory": "The user prefers spreadsheet-based budgeting, weekly checks, bigger end-of-month reviews when needed, and category-level caps rather than one large spending cap.",
+      "question": "An unexpected car repair threw off my monthly budget. Can you help me rebuild the plan for the remaining weeks without making it too complicated?",
+      "choices": {
+        "A": "List the repair cost, remaining income, fixed bills, minimum debt payments, and flexible spending. Protect essentials first, then reduce categories with the least consequence until the month balances.",
+        "B": "Update the spreadsheet with the repair cost, then set practical category caps for groceries, transport, bills, and flexible spending instead of one big limit. Check the numbers weekly and do a fuller review at month-end or sooner if another unusual expense appears.",
+        "C": "Set one strict spending cap for everything until the month ends. A single limit is the simplest way to recover after an unexpected expense."
+      },
+      "choice_roles": {
+        "A": "without_memory",
+        "B": "use_memory",
+        "C": "plausible_wrong"
+      },
+      "expected": {
+        "with_target_baseline": "B",
+        "without_target_baseline": "A",
+        "no_use_active": "A",
+        "release": "B"
+      },
+      "id": "financialConsultation_persona0_sample0_stage_24",
+      "topic": "financialConsultation",
+      "status": "dropped",
+      "drop_reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer.",
+      "unique_long_term_info": "The user prefers spreadsheet-based budgeting, weekly checks, bigger end-of-month reviews when needed, and category-level caps rather than one large spending cap.",
+      "expected_labels": {
+        "with_target_baseline": "use_memory",
+        "without_target_baseline": "without_memory",
+        "no_use_active": "without_memory",
+        "release": "use_memory"
+      },
+      "revision_notes": [
+        {
+          "round": "final_round4_drop",
+          "reason": "Dropped after round4 baseline gate: without-target solver still selected the use-memory answer after prior planner/analyst/fixer iterations, indicating residual contamination or an over-strong generic memory answer."
+        }
+      ]
+    }
+  ]
+}
