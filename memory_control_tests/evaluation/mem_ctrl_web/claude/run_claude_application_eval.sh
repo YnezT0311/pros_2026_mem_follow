@@ -1,0 +1,70 @@
+#!/bin/bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+TIMING="${TIMING:-./human_timing.json}"
+RESULTS="${RESULTS:-./application_results}"
+LIMIT="${LIMIT:-0}"
+HISTORY_RATE="${HISTORY_RATE:-0.2}"
+SESSION_DIR="${SESSION_DIR:-./claude_application_session}"
+SCRIPT_PATH="./evaluate_claude_web.py"
+DATA_DIR="${DATA:-../data/application/mcq}"
+
+if [[ -n "${TOPICS:-}" ]]; then
+  TOPICS_STR="$TOPICS"
+elif [[ -n "${TOPIC:-}" ]]; then
+  TOPICS_STR="$TOPIC"
+else
+  TOPICS_STR="travelPlanning financialConsultation medicalConsultation"
+fi
+read -r -a TOPIC_LIST <<< "$TOPICS_STR"
+
+WORLDS_STR="${WORLDS:-seen_baseline never_seen_baseline no_store forget no_use_active no_use_release}"
+read -r -a WORLDS <<< "$WORLDS_STR"
+
+mkdir -p "$RESULTS"
+
+echo "============================================"
+echo "Starting Claude web application evaluation"
+echo "Items per topic/world: $LIMIT (0 = all)"
+echo "Topics: ${TOPIC_LIST[*]}"
+echo "Worlds: ${WORLDS[*]}"
+echo "Data dir: $DATA_DIR"
+echo "Results dir: $RESULTS"
+echo "Session dir: $SESSION_DIR"
+echo "============================================"
+
+echo ""
+echo "[0/${#WORLDS[@]}] LOGIN — complete Claude login in the browser, then press Enter"
+python "$SCRIPT_PATH" \
+  --login \
+  --session_dir "$SESSION_DIR" \
+  --timing_profile "$TIMING"
+
+idx=1
+total=$(( ${#TOPIC_LIST[@]} * ${#WORLDS[@]} ))
+for TOPIC_NAME in "${TOPIC_LIST[@]}"; do
+  for WORLD in "${WORLDS[@]}"; do
+    WORLD_LABEL="$(printf '%s' "$WORLD" | tr '[:lower:]' '[:upper:]')"
+    echo ""
+    echo "[$idx/$total] ${TOPIC_NAME} / ${WORLD_LABEL} / application"
+    python "$SCRIPT_PATH" \
+      --dataset application \
+      --topic "$TOPIC_NAME" \
+      --world "$WORLD" \
+      --limit "$LIMIT" \
+      --timing_profile "$TIMING" \
+      --data_dir "$DATA_DIR" \
+      --history_rate "$HISTORY_RATE" \
+      --session_dir "$SESSION_DIR" \
+      --output "$RESULTS/${TOPIC_NAME}_${WORLD}.jsonl"
+    idx=$((idx + 1))
+  done
+done
+
+echo ""
+echo "============================================"
+echo "All done. Results in $RESULTS/"
+echo "============================================"

@@ -491,6 +491,138 @@ def _discover_samples(data_dir: str, topic: str) -> list[str]:
     return sorted(_sample_id_from_rendered_path(path, topic) for path in rendered)
 
 
+APPLICATION_WORLD_ALIASES = {
+    "baseline": "seen_baseline",
+    "seen_baseline": "seen_baseline",
+    "never_seen_baseline": "never_seen_baseline",
+    "no_store": "no_store",
+    "forget": "forget",
+    "no_use_active": "no_use_active",
+    "no_use_release": "no_use_release",
+}
+
+
+def _application_world_name(world: str) -> str:
+    return APPLICATION_WORLD_ALIASES.get(world, world)
+
+
+def _application_world_path(data_dir: str, world: str) -> Path:
+    root = Path(data_dir)
+    world_name = _application_world_name(world)
+    candidates = [
+        root / f"{world_name}.json",
+        root / "by_world" / f"{world_name}.json",
+        root / "mcq" / "by_world" / f"{world_name}.json",
+        root / "application" / "mcq" / "by_world" / f"{world_name}.json",
+    ]
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return candidates[0]
+
+
+def _load_application_world_records(data_dir: str, world: str) -> list[dict[str, Any]]:
+    path = _application_world_path(data_dir, world)
+    if not path.exists():
+        raise FileNotFoundError(f"Application world file not found: {path}")
+    data = json.loads(path.read_text(encoding="utf-8"))
+    items = data.get("items", []) if isinstance(data, dict) else []
+    if not isinstance(items, list):
+        raise ValueError(f"Application world file has no list field 'items': {path}")
+    return items
+
+
+def _discover_application_samples(data_dir: str, topic: str, world: str) -> list[str]:
+    samples: set[str] = set()
+    for item in _load_application_world_records(data_dir, world):
+        if item.get("topic") != topic:
+            continue
+        item_id = str(item.get("id") or "")
+        sample = item_id.replace(f"{topic}_", "", 1).split("_stage_", 1)[0]
+        if sample:
+            samples.add(f"{topic}_{sample}")
+    return sorted(samples)
+
+
+def _application_expected_answer_type(record: dict[str, Any]) -> str:
+    return str(record.get("expected_behavior") or "application_expected")
+
+
+def _application_mcq_item(record: dict[str, Any], sample_id: str) -> McqItem:
+    choices = record.get("choices") if isinstance(record.get("choices"), dict) else {}
+    choice_roles = record.get("choice_roles") if isinstance(record.get("choice_roles"), dict) else {}
+    expected_choice = str(record.get("expected_choice") or "").upper()
+    expected_type = _application_expected_answer_type(record)
+    remember_choice = next((c for c, role in choice_roles.items() if role == "use_memory"), expected_choice)
+    return McqItem(
+        sample_id=sample_id,
+        qa_family="application",
+        timestamp=f"{record.get('stage_id', '')}_{record.get('id', '')}",
+        turn_role="application",
+        identifier_label=str(record.get("target_turn_id") or record.get("id") or ""),
+        user_turn="",
+        sensitive_key="",
+        sensitive_value="",
+        question=str(record.get("question") or ""),
+        choices=choices,
+        choice_order=list(choices.keys()),
+        choice_to_answer_type=choice_roles,
+        expected_answer_type=expected_type,
+        remember_correct_choice=remember_choice,
+        correct_choice=expected_choice,
+        evaluation_role="application",
+        control_condition=str(record.get("world") or ""),
+    )
+
+
+def _application_user_turns(record: dict[str, Any]) -> list[str]:
+    context_messages = record.get("context_messages")
+    if not isinstance(context_messages, list):
+        messages = record.get("messages", [])
+        context_messages = messages[:-1] if isinstance(messages, list) else []
+    return [
+        str(message.get("content") or "").strip()
+        for message in context_messages
+        if isinstance(message, dict)
+        and message.get("role") == "user"
+        and str(message.get("content") or "").strip()
+    ]
+
+
+def _load_application_sessions(
+    data_dir: str,
+    topic: str,
+    sample_id: str,
+    world: str,
+    stage_id_filter: str = "",
+):
+    records = []
+    sample_tail = sample_id.replace(f"{topic}_", "", 1)
+    for record in _load_application_world_records(data_dir, world):
+        if record.get("topic") != topic:
+            continue
+        if not str(record.get("id", "")).startswith(f"{topic}_{sample_tail}_stage_"):
+            continue
+        if stage_id_filter and record.get("stage_id") != stage_id_filter:
+            continue
+        records.append(record)
+    sessions: list[TestSession] = []
+    world_name = _application_world_name(world)
+    for record in records:
+        item = _application_mcq_item(record, sample_id)
+        stage_id = str(record.get("stage_id") or "stage_unknown")
+        sessions.append(TestSession(
+            session_key=f"{world_name}_{stage_id}_{_slug(str(record.get('id') or 'item'))}",
+            phases=[Phase(
+                label=f"Application {stage_id}",
+                user_turns=_application_user_turns(record),
+                mcq_items=[item],
+            )],
+            source_conversation=str(_application_world_path(data_dir, world)),
+        ))
+    return sessions
+
+
 def _transformed_history_path_for_sample(rendered_path: Path, world: str, stage_id: str = "") -> Path:
     suffix = f".{stage_id}" if stage_id else ""
     stem = rendered_path.parent.name if rendered_path.name in {"mcq_questions.json", "whole_recall.json"} else rendered_path.stem
@@ -2176,7 +2308,10 @@ async def evaluate(args: argparse.Namespace) -> None:
     run_debug_dir = output_root.parent / "claude_web_results" / "_run_debug"
     run_debug_dir.mkdir(parents=True, exist_ok=True)
 
-    all_samples = _discover_samples(args.data_dir, args.topic)
+    if args.dataset == "application":
+        all_samples = _discover_application_samples(args.data_dir, args.topic, args.world)
+    else:
+        all_samples = _discover_samples(args.data_dir, args.topic)
     if args.sample_id_filter:
         all_samples = [s for s in all_samples if s.startswith(args.sample_id_filter)]
     if args.limit:
@@ -2229,64 +2364,80 @@ async def evaluate(args: argparse.Namespace) -> None:
         try:
             for i, sample_id in enumerate(all_samples):
                 print(f"\n[{i+1}/{len(all_samples)}] {sample_id}")
-                mcq_items = _load_mcq_items(
-                    args.data_dir,
-                    args.topic,
-                    sample_id,
-                    args.world,
-                    args.stage_id_filter,
-                    args.qa_family_filter,
-                )
-                if not mcq_items:
-                    print("  SKIP: no MCQ items found")
-                    continue
-
-                sessions: list[TestSession] = []
-                try:
-                    if args.stage_id_filter or args.long_context:
-                        conv, conv_source = _load_conv(
-                            sample_id, args.data_dir, args.world, args.stage_id_filter
-                        )
-                        _apply_no_use_expected_types(mcq_items, conv, args.world)
-                        sessions = _plan_sessions(
+                if args.dataset == "application":
+                    try:
+                        sessions = _load_application_sessions(
+                            args.data_dir,
+                            args.topic,
                             sample_id,
-                            conv,
                             args.world,
-                            mcq_items,
                             args.stage_id_filter,
-                            long_context=args.long_context,
                         )
-                        for sess in sessions:
-                            sess.source_conversation = conv_source
-                    else:
-                        stage_ids = sorted(
-                            {
-                                _stage_id_from_timestamp(item.timestamp)
-                                for item in mcq_items
-                                if _stage_id_from_timestamp(item.timestamp)
-                            },
-                            key=lambda sid: int(sid.split("_", 1)[1]),
-                        )
-                        for stage_id in stage_ids:
-                            conv, conv_source = _load_conv(sample_id, args.data_dir, args.world, stage_id)
+                    except FileNotFoundError as e:
+                        print(f"  SKIP: {e}")
+                        continue
+                    if not sessions:
+                        print("  SKIP: no application MCQ sessions found")
+                        continue
+                else:
+                    mcq_items = _load_mcq_items(
+                        args.data_dir,
+                        args.topic,
+                        sample_id,
+                        args.world,
+                        args.stage_id_filter,
+                        args.qa_family_filter,
+                    )
+                    if not mcq_items:
+                        print("  SKIP: no MCQ items found")
+                        continue
+
+                    sessions: list[TestSession] = []
+                    try:
+                        if args.stage_id_filter or args.long_context:
+                            conv, conv_source = _load_conv(
+                                sample_id, args.data_dir, args.world, args.stage_id_filter
+                            )
                             _apply_no_use_expected_types(mcq_items, conv, args.world)
-                            stage_key = _stage_id_to_conversation_key(stage_id)
-                            stage_items = [
-                                item for item in mcq_items
-                                if _stage_id_from_timestamp(item.timestamp) == stage_id
-                            ]
-                            sessions.append(TestSession(
-                                session_key=f"{args.world}_{stage_id}",
-                                phases=[Phase(
-                                    label=stage_key,
-                                    user_turns=_stage_user_turns(conv, stage_key),
-                                    mcq_items=stage_items,
-                                )],
-                                source_conversation=conv_source,
-                            ))
-                except FileNotFoundError as e:
-                    print(f"  SKIP: {e}")
-                    continue
+                            sessions = _plan_sessions(
+                                sample_id,
+                                conv,
+                                args.world,
+                                mcq_items,
+                                args.stage_id_filter,
+                                long_context=args.long_context,
+                            )
+                            for sess in sessions:
+                                sess.source_conversation = conv_source
+                        else:
+                            stage_ids = sorted(
+                                {
+                                    _stage_id_from_timestamp(item.timestamp)
+                                    for item in mcq_items
+                                    if _stage_id_from_timestamp(item.timestamp)
+                                },
+                                key=lambda sid: int(sid.split("_", 1)[1]),
+                            )
+                            for stage_id in stage_ids:
+                                conv, conv_source = _load_conv(sample_id, args.data_dir, args.world, stage_id)
+                                _apply_no_use_expected_types(mcq_items, conv, args.world)
+                                stage_key = _stage_id_to_conversation_key(stage_id)
+                                stage_items = [
+                                    item for item in mcq_items
+                                    if _stage_id_from_timestamp(item.timestamp) == stage_id
+                                ]
+                                sessions.append(TestSession(
+                                    session_key=f"{args.world}_{stage_id}",
+                                    phases=[Phase(
+                                        label=stage_key,
+                                        user_turns=_stage_user_turns(conv, stage_key),
+                                        mcq_items=stage_items,
+                                    )],
+                                    source_conversation=conv_source,
+                                ))
+                    except FileNotFoundError as e:
+                        print(f"  SKIP: {e}")
+                        continue
                 persona_output_path = _claude_persona_output_path(output_root, args.topic, args.world, sample_id)
                 persona_output_path.parent.mkdir(parents=True, exist_ok=True)
                 persona_output_paths.append(persona_output_path)
@@ -2554,12 +2705,21 @@ async def evaluate(args: argparse.Namespace) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Evaluate Claude web on MemoryCtrl recall MCQs via Playwright")
+    parser = argparse.ArgumentParser(description="Evaluate Claude web on MemoryCtrl recall or application MCQs via Playwright")
+    parser.add_argument("--dataset", default="recall", choices=["recall", "application"])
     parser.add_argument("--topic", default="travelPlanning")
     parser.add_argument(
         "--world",
         default="baseline",
-        choices=["baseline", "forget", "no_store", "no_use_active", "no_use_release"],
+        choices=[
+            "baseline",
+            "seen_baseline",
+            "never_seen_baseline",
+            "forget",
+            "no_store",
+            "no_use_active",
+            "no_use_release",
+        ],
     )
     parser.add_argument("--data_dir", default="data")
     parser.add_argument("--output", default="results/claude_web_baseline.jsonl")
