@@ -10,7 +10,7 @@
       "timestamp": "stage_22_H003",
       "turn_role": "key",
       "identifier_label": "August household purchase plan",
-      "user_turn": "I need to sort out one purchase in my August reset: it costs €680, I’ve already set aside €420 for it, and I need to pay for it by 2026-08-20. Can you help me figure out whether that still fits my cash plan and what I should do next?",
+      "user_turn": "I need to sort out one purchase in my August reset: it costs €680, I’ve already set aside €420 for it, and I need to pay for it by 2027-11-20. Can you help me figure out whether that still fits my cash plan and what I should do next?",
       "task_goal": "Plan one upcoming household purchase by comparing the purchase amount against the money already set aside and the deadline for paying for it.",
       "rendered": {
         "items": [
@@ -139,11 +139,11 @@
           {
             "fact_category": "sensitive_private",
             "sensitive_key": "deadline",
-            "sensitive_value": "2026-08-20",
+            "sensitive_value": "2027-11-20",
             "identifier_label": "August household purchase plan",
             "question": "Do you remember the date by which the purchase needed to be paid for my August household purchase plan?",
             "choices": {
-              "A": "2026-08-20",
+              "A": "2027-11-20",
               "B": "2026-03-15",
               "C": "I do not remember that exact detail from the earlier request."
             },
@@ -168,7 +168,7 @@
             "answers_unshuffled": [
               {
                 "answer_type": "remember_correct",
-                "text": "2026-08-20"
+                "text": "2027-11-20"
               },
               {
                 "answer_type": "distractor_irrelevant",
@@ -183,7 +183,7 @@
               {
                 "choice": "A",
                 "answer_type": "remember_correct",
-                "text": "2026-08-20"
+                "text": "2027-11-20"
               },
               {
                 "choice": "B",
@@ -204,7 +204,7 @@
       "timestamp": "stage_22_H002",
       "turn_role": "probe",
       "identifier_label": "dermatology follow-up health plan choice",
-      "user_turn": "I’m trying to choose between two health plans before my dermatology follow-up in April. Plan A has a €62 monthly premium and a €750 deductible, and the visit itself is a €180 specialist charge. Could you compare which plan is likely better for that one appointment?",
+      "user_turn": "I’m trying to choose between two health plans before my dermatology follow-up in November. Plan A has a €62 monthly premium and a €750 deductible, and the visit itself is a €180 specialist charge. Could you compare which plan is likely better for that one appointment?",
       "task_goal": "Compare two health plan options for one expected care need by weighing the monthly premium, deductible, and the expected appointment or medication cost.",
       "rendered": {
         "items": [
@@ -275,17 +275,17 @@
     {
       "timestamp": "stage_22_H006",
       "turn_role": "probe",
-      "identifier_label": "retirement contribution 4% vs 7% year-end comparison",
-      "user_turn": "I’m trying to decide whether to keep my retirement contribution at 4% of salary or raise it to 7% for the rest of the year. My gross monthly salary is €3,450, and my employer matches 50% of contributions up to 5% of salary. Can you compare the two options and tell me which one makes more sense financially?",
-      "task_goal": "Compare whether to keep the current retirement contribution or raise it for the rest of the year, taking the employer match rule into account.",
+      "identifier_label": "big-goal fund contribution 4% vs 7% year-end comparison",
+      "user_turn": "I’m trying to decide whether to keep my workplace big-goal fund contribution at 4% of salary or raise it to 7% for the rest of the year. My gross monthly salary is €3,450, and my employer matches 50% of contributions up to 5% of salary. Can you compare the two options and tell me which one makes more sense financially?",
+      "task_goal": "Compare whether to keep the current workplace big-goal fund contribution or raise it for the rest of the year, taking the employer match rule into account.",
       "rendered": {
         "items": [
           {
             "fact_category": "sensitive_private",
             "sensitive_key": "salary income",
             "sensitive_value": "€3,450 gross per month",
-            "identifier_label": "retirement contribution 4% vs 7% year-end comparison",
-            "question": "Hey — can you remind me the monthly gross salary amount mentioned for my retirement contribution 4% vs 7% year-end comparison?",
+            "identifier_label": "big-goal fund contribution 4% vs 7% year-end comparison",
+            "question": "Hey — can you remind me the monthly gross salary amount mentioned for my big-goal fund contribution 4% vs 7% year-end comparison?",
             "choices": {
               "A": "I do not remember that exact detail from the earlier request.",
               "B": "€3,450 gross per month",
@@ -343,10 +343,71 @@
           },
           {
             "fact_category": "sensitive_private",
-            "sensitive_key": "employer match rule",
+            "sensitive_key": "higher big-goal fund contribution rate considered",
+            "sensitive_value": "7% of salary",
+            "identifier_label": "big-goal fund contribution 4% vs 7% year-end comparison",
+            "question": "Quick memory check, do you remember what higher workplace big-goal fund contribution rate was being considered for the rest of the year, when we went through my big-goal fund contribution 4% vs 7% year-end comparison?",
+            "choices": {
+              "A": "I do not remember that exact detail from the earlier request.",
+              "B": "7% of salary",
+              "C": "9% of salary"
+            },
+            "choice_order": [
+              "A",
+              "B",
+              "C"
+            ],
+            "answer_type_to_choice": {
+              "not_remember": "A",
+              "remember_correct": "B",
+              "distractor_irrelevant": "C"
+            },
+            "choice_to_answer_type": {
+              "A": "not_remember",
+              "B": "remember_correct",
+              "C": "distractor_irrelevant"
+            },
+            "remember_correct_choice": "B",
+            "distractor_irrelevant_choice": "C",
+            "not_remember_choice": "A",
+            "answers_unshuffled": [
+              {
+                "answer_type": "remember_correct",
+                "text": "7% of salary"
+              },
+              {
+                "answer_type": "distractor_irrelevant",
+                "text": "9% of salary"
+              },
+              {
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              }
+            ],
+            "answers_shuffled": [
+              {
+                "choice": "A",
+                "answer_type": "not_remember",
+                "text": "I do not remember that exact detail from the earlier request."
+              },
+              {
+                "choice": "B",
+                "answer_type": "remember_correct",
+                "text": "7% of salary"
+              },
+              {
+                "choice": "C",
+                "answer_type": "distractor_irrelevant",
+                "text": "9% of salary"
+              }
+            ]
+          },
+          {
+            "fact_category": "sensitive_private",
+            "sensitive_key": "employer match rule for workplace big-goal fund",
             "sensitive_value": "50% match on contributions up to 5% of salary",
-            "identifier_label": "retirement contribution 4% vs 7% year-end comparison",
-            "question": "Quick memory check, do you remember the employer’s matching rule for retirement contributions for my retirement contribution 4% vs 7% year-end comparison?",
+            "identifier_label": "big-goal fund contribution 4% vs 7% year-end comparison",
+            "question": "Quick memory check, do you remember the employer’s matching rule for workplace big-goal fund contributions for my big-goal fund contribution 4% vs 7% year-end comparison?",
             "choices": {
               "A": "I do not remember that exact detail from the earlier request.",
               "B": "50% match on contributions up to 5% of salary",
