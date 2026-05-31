@@ -2098,6 +2098,21 @@ async def _run_session(
                 })
             results.append(rec)
 
+        # Delete chat between stages (after each phase except the last)
+        if phase != session.phases[-1]:
+            _log(f"    [{phase.label}] Deleting chat before next stage...")
+            deleted_count, delete_error = await _delete_all_chat_history(
+                page,
+                debug_log=lambda message: _append_text_line(artifacts["log"], message),
+                on_interstitial=_record_interstitial,
+            )
+            _log(f"    [{phase.label}] Deleted {deleted_count} chat(s)" + (f" | error={delete_error}" if delete_error else ""))
+            _append_text_line(
+                artifacts["log"],
+                f"BETWEEN-STAGE DELETE: after {phase.label}, removed {deleted_count} chat(s)"
+                + (f" | last_error={delete_error}" if delete_error else ""),
+            )
+
     return SessionRunResult(records=results, trace=trace, log_lines=log_lines)
 
 

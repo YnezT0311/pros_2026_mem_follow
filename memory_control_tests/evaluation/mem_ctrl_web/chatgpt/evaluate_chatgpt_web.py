@@ -1571,6 +1571,12 @@ async def _run_session(
 
             results.append(rec)
 
+        # Delete chat between stages (after each phase except the last)
+        if phase != session.phases[-1]:
+            _log(f"    [{phase.label}] Deleting chat before next stage...")
+            ok = await _delete_current_chat(page)
+            _log(f"    [{phase.label}] Chat deleted" + (" (ok)" if ok else " (FAILED)"))
+
     return SessionRunResult(records=results, trace=trace, log_lines=log_lines)
 
 
