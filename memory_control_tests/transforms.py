@@ -533,11 +533,18 @@ def apply_stage_local_forget(
         return out
 
     planned: List[Dict[str, Any]] = []
-    key_reference_pairs = [
-        (turn, ref)
-        for turn, ref in zip(key_turns or [], target_references or [])
+    # `target_references` is built parallel to the STAGE-FILTERED key turns
+    # (callers iterate key_turns and drop everything outside this stage_id).
+    # So filter key_turns to the stage FIRST, then zip. Zipping the full,
+    # unfiltered key_turns against the shorter stage-filtered refs misaligns
+    # them: the refs pair with whichever key turns lead the list, and the
+    # stage_id guard then drops every pair except for the stage whose key turns
+    # happen to come first (historically only stage_01 ever got a forget turn).
+    stage_key_turns = [
+        turn for turn in (key_turns or [])
         if str((turn or {}).get("stage_id", "")).strip() == stage_id
     ]
+    key_reference_pairs = list(zip(stage_key_turns, target_references or []))
     for idx, (turn, target_reference) in enumerate(key_reference_pairs):
         timestamp = str((turn or {}).get("timestamp", "")).strip()
         key_pos = _find_key_position(out, turn)
