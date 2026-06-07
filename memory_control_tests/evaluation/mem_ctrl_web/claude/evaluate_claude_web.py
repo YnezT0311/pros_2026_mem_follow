@@ -1454,10 +1454,12 @@ async def _delete_all_chat_history(
             if consecutive_errors >= 3:
                 _dbg("[delete_all_chat_history] 3 consecutive errors; stopping delete-all loop")
                 break
-            # transient failure (e.g. row re-render) — refresh and keep going
+            # transient failure (e.g. stuck modal / row re-render) — recover IN
+            # PLACE. Do NOT page.goto(): a full reload collapses (unpins) the
+            # sidebar, after which chat rows are inert and nothing deletes.
             try:
-                await page.goto(CLAUDE_URL)
-                await page.wait_for_timeout(1200)
+                await page.keyboard.press("Escape")
+                await page.wait_for_timeout(600)
                 await _ensure_sidebar_expanded(page, debug_log=_dbg)
             except Exception:
                 pass

@@ -157,10 +157,15 @@ async def run(args: argparse.Namespace) -> None:
                 break
             stalls += 1
             if stalls <= 2:
-                log(f"  no progress (remaining≈{remaining}); refreshing and retrying...")
-                await page.goto(ev.CLAUDE_URL)
+                log(f"  no progress (remaining≈{remaining}); recovering in place...")
+                # Do NOT page.goto(): a full reload collapses the sidebar and the
+                # rows go inert. Just dismiss any stuck modal and re-pin sidebar.
+                try:
+                    await page.keyboard.press("Escape")
+                except Exception:
+                    pass
+                await page.wait_for_timeout(600)
                 await ev._ensure_sidebar_expanded(page, debug_log=(log if args.debug else None))
-                await page.wait_for_timeout(1500)
                 continue
             log("  STALLED: rows present but cannot delete. Re-run with --debug and send me "
                 "the output (which confirm selector, if any, matched).")
