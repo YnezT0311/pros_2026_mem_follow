@@ -1330,33 +1330,45 @@ async def _ensure_sidebar_expanded(page: Page, debug_log=None) -> bool:
         if debug_log is not None:
             debug_log(message)
 
+    async def _rows_visible() -> bool:
+        try:
+            row = page.locator(SEL_CHAT_ROW).first
+            return await row.count() > 0 and await row.is_visible(timeout=300)
+        except Exception:
+            return False
+
     try:
+        # Ground truth = are chat rows visible? If yes, the sidebar is open —
+        # do NOT click (clicking the toggle again would close it and make rows
+        # inert, which was the "removed 0 chat(s)" symptom).
+        if await _rows_visible():
+            _dbg("[sidebar] chat rows already visible; not toggling")
+            return True
         toggle = page.locator('button[data-testid="pin-sidebar-toggle"]').first
         if await toggle.count() == 0:
             _dbg("[sidebar] pin-sidebar-toggle not found; assuming already open")
             return True
-        pressed = await toggle.get_attribute("aria-pressed")
-        if pressed == "true":
-            _dbg("[sidebar] already pinned open")
-            return True
-        _dbg(f"[sidebar] pinning open (was aria-pressed={pressed!r})")
-        try:
-            await toggle.click(timeout=1500)
-        except Exception:
-            await toggle.click(force=True, timeout=1500)
-        await page.wait_for_timeout(500)
-        # Wait for the chat-list container to drop its aria-hidden / inert state.
-        for _ in range(10):
-            try:
-                row = page.locator(SEL_CHAT_ROW).first
-                if await row.count() > 0 and await row.is_visible(timeout=300):
-                    _dbg("[sidebar] chat rows visible after pin")
+        # Closed -> open it. aria-label is "Open sidebar" when closed,
+        # "Close sidebar" when open. Toggle up to twice, using row visibility
+        # (not aria-pressed) as the success signal.
+        for attempt in range(2):
+            label = (await toggle.get_attribute("aria-label") or "").strip().lower()
+            if label.startswith("close"):
+                _dbg(f"[sidebar] aria-label={label!r} indicates already open")
+                if await _rows_visible():
                     return True
+            _dbg(f"[sidebar] opening sidebar (attempt {attempt + 1}, aria-label={label!r})")
+            try:
+                await toggle.click(timeout=1500)
             except Exception:
-                pass
-            await page.wait_for_timeout(300)
-        _dbg("[sidebar] pinned but chat rows not yet visible — continuing anyway")
-        return True
+                await toggle.click(force=True, timeout=1500)
+            for _ in range(8):
+                if await _rows_visible():
+                    _dbg("[sidebar] chat rows visible after opening")
+                    return True
+                await page.wait_for_timeout(300)
+        _dbg("[sidebar] could not confirm chat rows visible after toggling")
+        return False
     except Exception as exc:
         _dbg(f"[sidebar] expand failed: {exc}")
         return False
