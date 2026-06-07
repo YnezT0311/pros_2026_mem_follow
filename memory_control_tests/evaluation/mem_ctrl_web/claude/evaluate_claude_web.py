@@ -75,6 +75,18 @@ SEL_DELETE_CONFIRM = '[data-testid="delete-modal-confirm"]'
 SEL_CHAT_MENU_TRIGGER = 'button[aria-label^="More options for "]'
 SEL_CHAT_ROW = 'a[data-dd-action-name="sidebar-chat-item"]'
 SEL_CHAT_ROW_MENU_TRIGGER = 'a[data-dd-action-name="sidebar-chat-item"] + div button[aria-label^="More options for "]'
+# Fallback confirm-button selectors for the delete-chat modal. The hard-coded
+# data-testid (SEL_DELETE_CONFIRM) goes stale when claude.ai updates its UI, so
+# the modal would open but never get confirmed and chats piled up. Try several.
+DELETE_CONFIRM_SELECTORS = [
+    SEL_DELETE_CONFIRM,
+    '[role="dialog"] [data-testid="delete-modal-confirm"]',
+    'div[role="dialog"] button:has-text("Delete")',
+    '[role="dialog"] button:has-text("Delete")',
+    'div[role="alertdialog"] button:has-text("Delete")',
+    'button:has-text("Delete chat")',
+    'button:has-text("Delete conversation")',
+]
 SEL_ADDED_MEMORY_BUTTON = 'button[aria-expanded]:has(span:has-text("Added memory"))'
 SEL_ADDED_MEMORY_STATUS = 'span[role="status"][aria-live="polite"]'
 SEL_ASK_USER_OPTIONS = 'button[id^="ask-user-option-question-"]'
@@ -283,8 +295,13 @@ def _apply_no_use_expected_types(items: list[McqItem], conv: dict, world: str) -
             )
     if not active_timestamps:
         return
+    # Only flip items restricted by THIS conv's stage; never reset others. This is
+    # called once per stage in the per-stage loop, so resetting non-active items here
+    # would let the last stage (e.g. stage_23) clobber every earlier stage's labels.
     for item in items:
-        item.expected_answer_type = "not_remember" if item.timestamp in active_timestamps else "remember_correct"
+        if item.timestamp not in active_timestamps:
+            continue
+        item.expected_answer_type = "not_remember"
         item.correct_choice = _choice_for_answer_type(item.choice_to_answer_type, item.expected_answer_type)
         _refresh_item_labels(item, world)
 
@@ -937,8 +954,8 @@ def _records_from_trace(
             continue
         item = item_by_phase_and_key[key]
         predicted = str(event.get("predicted_choice", "")) or "none"
-        predicted_answer_type = (
-            event.get("predicted_answer_type")
+        offline_predicted_answer_type = (
+            event.get("offline_predicted_answer_type")
             or item.choice_to_answer_type.get(predicted, "none")
         )
         event_error = event.get("error")
@@ -967,7 +984,7 @@ def _records_from_trace(
             "session_memory_events": [],
             "model_response": event.get("assistant_output", ""),
             "predicted_choice": predicted,
-            "predicted_answer_type": predicted_answer_type,
+            "offline_predicted_answer_type": offline_predicted_answer_type,
             "is_expected": predicted == item.correct_choice,
             "error": event_error,
         })
@@ -1345,6 +1362,33 @@ async def _ensure_sidebar_expanded(page: Page, debug_log=None) -> bool:
         return False
 
 
+async def _click_delete_confirm(page: Page, debug_log=None) -> bool:
+    """Click the delete-chat modal's confirm button using several fallbacks.
+
+    The original hard-coded data-testid goes stale on claude.ai UI changes, so
+    try: testid -> in-dialog "Delete" text -> Enter key.
+    """
+    for sel in DELETE_CONFIRM_SELECTORS:
+        try:
+            loc = page.locator(sel).first
+            if await loc.count() == 0:
+                continue
+            await loc.wait_for(state="visible", timeout=1500)
+            await loc.click()
+            if debug_log is not None:
+                debug_log(f"[delete_all_chat_history] confirmed via selector: {sel}")
+            return True
+        except Exception:
+            continue
+    try:
+        await page.keyboard.press("Enter")
+        if debug_log is not None:
+            debug_log("[delete_all_chat_history] confirmed via Enter key")
+        return True
+    except Exception:
+        return False
+
+
 async def _delete_all_chat_history(
     page: Page,
     max_deletions: int = 50,
@@ -1357,6 +1401,7 @@ async def _delete_all_chat_history(
 
     deleted = 0
     last_error = ""
+    consecutive_errors = 0
     await page.goto(CLAUDE_URL)
     await page.wait_for_timeout(1500)
     await _handle_claude_interstitials(page, on_interstitial=on_interstitial)
@@ -1390,12 +1435,12 @@ async def _delete_all_chat_history(
             await page.wait_for_timeout(300)
 
             _dbg(await _locator_debug_snapshot(page, SEL_DELETE_CONFIRM, "delete confirm button in delete-all loop"))
-            confirm_btn = page.locator(SEL_DELETE_CONFIRM).first
-            await confirm_btn.wait_for(state="visible", timeout=2000)
-            await confirm_btn.click()
+            if not await _click_delete_confirm(page, debug_log=debug_log):
+                raise RuntimeError("delete-confirm button not found (modal open but not confirmed)")
             _dbg("[delete_all_chat_history] clicked delete confirm button")
             await page.wait_for_timeout(1200)
             deleted += 1
+            consecutive_errors = 0
             _dbg(f"[delete_all_chat_history] deleted count now {deleted}")
         except Exception as exc:
             last_error = str(exc)
@@ -1405,7 +1450,18 @@ async def _delete_all_chat_history(
                 _dbg("[delete_all_chat_history] pressed Escape after error")
             except Exception:
                 pass
-            break
+            consecutive_errors += 1
+            if consecutive_errors >= 3:
+                _dbg("[delete_all_chat_history] 3 consecutive errors; stopping delete-all loop")
+                break
+            # transient failure (e.g. row re-render) — refresh and keep going
+            try:
+                await page.goto(CLAUDE_URL)
+                await page.wait_for_timeout(1200)
+                await _ensure_sidebar_expanded(page, debug_log=_dbg)
+            except Exception:
+                pass
+            continue
 
     return deleted, last_error
 
@@ -2133,7 +2189,7 @@ async def _run_session(
                 "session_memory_events": list(session_memory_events),
                 "model_response": "",
                 "predicted_choice": "",
-                "predicted_answer_type": "",
+                "offline_predicted_answer_type": "",
                 "error": None,
             }
             user_input_sent = False
@@ -2154,7 +2210,7 @@ async def _run_session(
                 correct_type = item.choice_to_answer_type.get(item.correct_choice, "")
                 rec["model_response"] = response_text
                 rec["predicted_choice"] = predicted
-                rec["predicted_answer_type"] = predicted_type
+                rec["offline_predicted_answer_type"] = predicted_type
                 rec["is_expected"] = predicted == item.correct_choice
                 mem_triggered, mem_content = await _check_added_memory(page)
                 if mem_triggered:
@@ -2187,7 +2243,7 @@ async def _run_session(
                     "user_input_sent": True,
                     "assistant_output": response_text,
                     "predicted_choice": predicted,
-                    "predicted_answer_type": predicted_type,
+                    "offline_predicted_answer_type": predicted_type,
                     "remember_correct_choice": item.remember_correct_choice,
                     "expected_choice": item.correct_choice,
                     "expected_answer_type": item.expected_answer_type,
@@ -2216,7 +2272,7 @@ async def _run_session(
                     "user_input_sent": user_input_sent,
                     "assistant_output": "",
                     "predicted_choice": "",
-                    "predicted_answer_type": "",
+                    "offline_predicted_answer_type": "",
                     "remember_correct_choice": item.remember_correct_choice,
                     "expected_choice": item.correct_choice,
                     "expected_answer_type": item.expected_answer_type,
