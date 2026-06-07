@@ -4,25 +4,23 @@ Standalone "delete ALL Claude.ai conversations" helper.
 
 Why this exists
 ---------------
-The eval runner calls `_delete_all_chat_history` between sessions, but it:
-  * caps at max_deletions=50 (too few when conversations have piled up), and
-  * breaks the whole loop on the FIRST error,
-so in practice it often deletes 0 and chats accumulate.
+The eval runner's `_delete_all_chat_history` (a) caps at 50, (b) breaks on the
+first error, and (c) clicks a confirm button by a hard-coded data-testid
+(`delete-modal-confirm`) that goes stale when claude.ai changes its UI — so the
+delete modal opens but the final "Delete" never gets clicked and chats pile up.
 
-This script drives the same UI deletion but in an OUTER loop: it keeps invoking
-the batch deleter until the sidebar is empty (or a hard cap), so a single
-transient error or a >50 backlog no longer stops it. It also prints a clear
-diagnostic (how many sidebar rows it can see) so if 0 get deleted you can tell
-whether the list is genuinely empty or the selectors are stale.
+This script reuses the evaluator's persistent session + row/menu helpers but
+implements its own deletion loop with a ROBUST confirm step (multiple
+fallbacks: data-testid -> in-dialog "Delete" text -> Enter), runs in an outer
+loop until the sidebar is empty, and survives transient errors.
 
-Uses the SAME persistent browser session as the evaluator (`--session_dir`,
-default ./claude_session) — log in once with
-`python evaluate_claude_web.py --login` first.
+Log in once first:
+    python evaluate_claude_web.py --login
 
 Usage
 -----
-    python delete_all_conversations.py                 # delete everything
-    python delete_all_conversations.py --max-total 3000
+    python delete_all_conversations.py            # delete everything
+    python delete_all_conversations.py --debug    # verbose (use if it gets stuck)
     python delete_all_conversations.py --headless
 """
 import argparse
@@ -31,8 +29,19 @@ from pathlib import Path
 
 from patchright.async_api import BrowserContext, async_playwright
 
-# Reuse the evaluator's browser helpers (same directory).
-import evaluate_claude_web as ev
+import evaluate_claude_web as ev  # same directory; reuse browser helpers + selectors
+
+# Confirm-button fallbacks, tried in order. The modal is a role=dialog; the
+# confirm action is a button labelled "Delete" inside it.
+CONFIRM_SELECTORS = [
+    ev.SEL_DELETE_CONFIRM,                                  # original data-testid
+    '[role="dialog"] [data-testid="delete-modal-confirm"]',
+    'div[role="dialog"] button:has-text("Delete")',
+    '[role="dialog"] button:has-text("Delete")',
+    'div[role="alertdialog"] button:has-text("Delete")',
+    'button:has-text("Delete chat")',
+    'button:has-text("Delete conversation")',
+]
 
 
 async def _count_rows(page) -> int:
@@ -40,6 +49,53 @@ async def _count_rows(page) -> int:
         return await page.locator(ev.SEL_CHAT_ROW).count()
     except Exception:
         return -1
+
+
+async def _click_confirm(page, log, debug: bool) -> bool:
+    """Click the delete-confirm button using several fallbacks; finally try Enter."""
+    for sel in CONFIRM_SELECTORS:
+        try:
+            loc = page.locator(sel).first
+            if await loc.count() == 0:
+                continue
+            await loc.wait_for(state="visible", timeout=1500)
+            await loc.click()
+            if debug:
+                log(f"    confirmed via selector: {sel}")
+            return True
+        except Exception:
+            continue
+    # last resort: many modals confirm on Enter
+    try:
+        await page.keyboard.press("Enter")
+        if debug:
+            log("    confirmed via Enter key")
+        return True
+    except Exception:
+        return False
+
+
+async def _delete_one(page, log, debug: bool) -> bool:
+    """Delete the top conversation row. Returns True if a deletion was performed."""
+    rows = page.locator(ev.SEL_CHAT_ROW)
+    if await rows.count() == 0:
+        return False
+    await ev._hover_chat_row(page, 0, debug_log=(log if debug else None))
+    trigger = page.locator(ev.SEL_CHAT_ROW_MENU_TRIGGER).first
+    await trigger.wait_for(state="visible", timeout=3000)
+    await ev._focus_chat_row_for_menu(page, trigger)
+    await trigger.click()
+    await page.wait_for_timeout(300)
+
+    delete_item = page.locator(ev.SEL_DELETE_CHAT_TRIGGER).first
+    await delete_item.wait_for(state="visible", timeout=2500)
+    await delete_item.click()
+    await page.wait_for_timeout(400)
+
+    if not await _click_confirm(page, log, debug):
+        raise RuntimeError("delete-confirm button not found (modal open but not confirmed)")
+    await page.wait_for_timeout(1000)
+    return True
 
 
 async def run(args: argparse.Namespace) -> None:
@@ -64,74 +120,71 @@ async def run(args: argparse.Namespace) -> None:
         try:
             await ev._wait_for_claude_ready(page, timeout=60_000)
         except Exception as exc:
-            log(f"WARNING: Claude not confirmed ready ({exc}). Make sure you are logged in:\n"
+            log(f"WARNING: Claude not confirmed ready ({exc}). Log in first:\n"
                 f"  python evaluate_claude_web.py --login --session_dir {args.session_dir}")
 
-        # Diagnostic: how many conversation rows can we see?
         await ev._ensure_sidebar_expanded(page, debug_log=(log if args.debug else None))
         await page.wait_for_timeout(1000)
         seen = await _count_rows(page)
-        log(f"\nVisible sidebar conversation rows (selector {ev.SEL_CHAT_ROW!r}): {seen}")
+        log(f"\nVisible sidebar conversations ({ev.SEL_CHAT_ROW!r}): {seen}")
         if seen == 0:
-            log("Nothing visible to delete. If you KNOW there are conversations, the sidebar "
-                "selector is likely stale (claude.ai changed) — re-run with --debug and send me "
-                "the output so I can fix the selectors.")
-            if not args.headless:
-                loop = asyncio.get_event_loop()
-                await loop.run_in_executor(None, input, "Press Enter to close...")
-            await context.close()
+            log("Nothing to delete (or the row selector is stale — try --debug).")
+            await _pause_close(context, page, args)
             return
 
-        # Outer loop: keep deleting batches until empty / no progress / cap.
-        total = 0
-        stalls = 0
+        total, stalls = 0, 0
         while total < args.max_total:
-            deleted, err = await ev._delete_all_chat_history(
-                page,
-                max_deletions=min(args.batch, args.max_total - total),
-                debug_log=(log if args.debug else None),
-            )
-            total += deleted
+            try:
+                did = await _delete_one(page, log, args.debug)
+            except Exception as exc:
+                did = False
+                log(f"  delete error: {exc}")
+                try:
+                    await page.keyboard.press("Escape")
+                except Exception:
+                    pass
+
+            if did:
+                total += 1
+                stalls = 0
+                if total % 10 == 0 or args.debug:
+                    log(f"  deleted {total} (remaining≈{await _count_rows(page)})")
+                continue
+
+            # no deletion this iteration
             remaining = await _count_rows(page)
-            log(f"  batch: deleted={deleted}  total={total}  remaining≈{remaining}"
-                + (f"  last_error={err}" if err else ""))
             if remaining == 0:
                 break
-            if deleted == 0:
-                stalls += 1
-                if stalls == 1 and err:
-                    log("  (no progress this batch — retrying once after a short wait)")
-                    await page.wait_for_timeout(2000)
-                    await page.goto(ev.CLAUDE_URL)
-                    await ev._ensure_sidebar_expanded(page, debug_log=(log if args.debug else None))
-                    continue
-                log("  STALLED: rows are present but none could be deleted — the menu/delete "
-                    "selectors are likely stale. Re-run with --debug and send me the snapshot.")
-                break
-            stalls = 0
+            stalls += 1
+            if stalls <= 2:
+                log(f"  no progress (remaining≈{remaining}); refreshing and retrying...")
+                await page.goto(ev.CLAUDE_URL)
+                await ev._ensure_sidebar_expanded(page, debug_log=(log if args.debug else None))
+                await page.wait_for_timeout(1500)
+                continue
+            log("  STALLED: rows present but cannot delete. Re-run with --debug and send me "
+                "the output (which confirm selector, if any, matched).")
+            break
 
-        final = await _count_rows(page)
-        log(f"\nDone. Deleted {total} conversation(s). Remaining visible: {final}.")
-        if final and final > 0:
-            log("Some conversations remain — re-run the script (it resumes), or delete the "
-                "stragglers manually, or send me --debug output if it's stuck at 0 progress.")
-        if not args.headless:
-            loop = asyncio.get_event_loop()
-            await loop.run_in_executor(None, input, "Press Enter to close the browser...")
-        await context.close()
+        log(f"\nDone. Deleted {total} conversation(s). Remaining visible: {await _count_rows(page)}.")
+        await _pause_close(context, page, args)
+
+
+async def _pause_close(context, page, args) -> None:
+    if not args.headless:
+        loop = asyncio.get_event_loop()
+        await loop.run_in_executor(None, input, "Press Enter to close the browser...")
+    await context.close()
 
 
 def main() -> None:
     p = argparse.ArgumentParser(description="Delete ALL Claude.ai conversations (standalone).")
     p.add_argument("--session_dir", default="./claude_session",
                    help="Persistent browser profile (same one the evaluator uses).")
-    p.add_argument("--batch", type=int, default=200,
-                   help="Deletions attempted per inner batch before re-counting.")
-    p.add_argument("--max-total", type=int, default=5000,
-                   help="Safety cap on total deletions.")
+    p.add_argument("--max-total", type=int, default=5000, help="Safety cap on total deletions.")
     p.add_argument("--headless", action="store_true")
     p.add_argument("--debug", action="store_true",
-                   help="Print selector snapshots (use this if nothing deletes).")
+                   help="Verbose: print which confirm selector matched / row snapshots.")
     args = p.parse_args()
     asyncio.run(run(args))
 
